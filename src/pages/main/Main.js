@@ -7,11 +7,8 @@ const Main = () => {
       data-bs-offset={200}
       className="bg-white position-relative"
     >
-      {/*begin::Main*/}
       <div className="d-flex flex-column flex-root">
-        {/*begin::Header Section*/}
         <div className="mb-0" id="home">
-          {/*begin::Wrapper*/}
           <div
             className="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
             style={{
@@ -19,190 +16,8 @@ const Main = () => {
                 "url(assets/media/svg/illustrations/landing.svg)",
             }}
           >
-            {/*begin::Header*/}
-            <div
-              className="landing-header"
-              data-kt-sticky="true"
-              data-kt-sticky-name="landing-header"
-              data-kt-sticky-offset="{default: '200px', lg: '300px'}"
-            >
-              {/*begin::Container*/}
-              <div className="container">
-                {/*begin::Wrapper*/}
-                <div className="d-flex align-items-center justify-content-between">
-                  {/*begin::Logo*/}
-                  <div className="d-flex align-items-center flex-equal">
-                    {/*begin::Mobile menu toggle*/}
-                    <button
-                      className="btn btn-icon btn-active-color-primary me-3 d-flex d-lg-none"
-                      id="kt_landing_menu_toggle"
-                    >
-                      {/*begin::Svg Icon | path: icons/duotune/abstract/abs015.svg*/}
-                      <span className="svg-icon svg-icon-2hx">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={24}
-                          height={24}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
-                          <path
-                            d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z"
-                            fill="black"
-                          />
-                          <path
-                            opacity="0.3"
-                            d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z"
-                            fill="black"
-                          />
-                        </svg>
-                      </span>
-                      {/*end::Svg Icon*/}
-                    </button>
-                    {/*end::Mobile menu toggle*/}
-                    {/*begin::Logo image*/}
-                    <a href="../../demo11/dist/landing.html">
-                      <img
-                        alt="Logo"
-                        src="assets/media/logos/logo-landing.svg"
-                        className="logo-default h-25px h-lg-30px"
-                      />
-                      <img
-                        alt="Logo"
-                        src="assets/media/logos/logo-landing-dark.svg"
-                        className="logo-sticky h-20px h-lg-25px"
-                      />
-                    </a>
-                    {/*end::Logo image*/}
-                  </div>
-                  {/*end::Logo*/}
-                  {/*begin::Menu wrapper*/}
-                  <div className="d-lg-block" id="kt_header_nav_wrapper">
-                    <div
-                      className="d-lg-block p-5 p-lg-0"
-                      data-kt-drawer="true"
-                      data-kt-drawer-name="landing-menu"
-                      data-kt-drawer-activate="{default: true, lg: false}"
-                      data-kt-drawer-overlay="true"
-                      data-kt-drawer-width="200px"
-                      data-kt-drawer-direction="start"
-                      data-kt-drawer-toggle="#kt_landing_menu_toggle"
-                      data-kt-swapper="true"
-                      data-kt-swapper-mode="prepend"
-                      data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav_wrapper'}"
-                    >
-                      {/*begin::Menu*/}
-                      <div
-                        className="menu menu-column flex-nowrap menu-rounded menu-lg-row menu-title-gray-500 menu-state-title-primary nav nav-flush fs-5 fw-bold"
-                        id="kt_landing_menu"
-                      >
-                        {/*begin::Menu item*/}
-                        <div className="menu-item">
-                          {/*begin::Menu link*/}
-                          <a
-                            className="menu-link nav-link active py-3 px-4 px-xxl-6 georgian"
-                            href="#kt_body"
-                            data-kt-scroll-toggle="true"
-                            data-kt-drawer-dismiss="true"
-                          >
-                            მთავარი
-                          </a>
-                          {/*end::Menu link*/}
-                        </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
-                        <div className="menu-item">
-                          {/*begin::Menu link*/}
-                          <a
-                            className="menu-link nav-link py-3 px-4 px-xxl-6 georgian"
-                            href="#how-it-works"
-                            data-kt-scroll-toggle="true"
-                            data-kt-drawer-dismiss="true"
-                          >
-                            როგორ მუშაობს?
-                          </a>
-                          {/*end::Menu link*/}
-                        </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
-                        <div className="menu-item">
-                          {/*begin::Menu link*/}
-                          <a
-                            className="menu-link nav-link py-3 px-4 px-xxl-6 georgian"
-                            href="#achievements"
-                            data-kt-scroll-toggle="true"
-                            data-kt-drawer-dismiss="true"
-                          >
-                            ჩვენ შესახებ
-                          </a>
-                          {/*end::Menu link*/}
-                        </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
-                        <div className="menu-item">
-                          {/*begin::Menu link*/}
-                          <a
-                            className="menu-link nav-link py-3 px-4 px-xxl-6"
-                            href="#team"
-                            data-kt-scroll-toggle="true"
-                            data-kt-drawer-dismiss="true"
-                          >
-                            Team
-                          </a>
-                          {/*end::Menu link*/}
-                        </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
-                        <div className="menu-item">
-                          {/*begin::Menu link*/}
-                          <a
-                            className="menu-link nav-link py-3 px-4 px-xxl-6"
-                            href="#portfolio"
-                            data-kt-scroll-toggle="true"
-                            data-kt-drawer-dismiss="true"
-                          >
-                            Portfolio
-                          </a>
-                          {/*end::Menu link*/}
-                        </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
-                        <div className="menu-item">
-                          {/*begin::Menu link*/}
-                          <a
-                            className="menu-link nav-link py-3 px-4 px-xxl-6"
-                            href="#pricing"
-                            data-kt-scroll-toggle="true"
-                            data-kt-drawer-dismiss="true"
-                          >
-                            Pricing
-                          </a>
-                          {/*end::Menu link*/}
-                        </div>
-                        {/*end::Menu item*/}
-                      </div>
-                      {/*end::Menu*/}
-                    </div>
-                  </div>
-                  {/*end::Menu wrapper*/}
-                  {/*begin::Toolbar*/}
-                  <div className="flex-equal text-end ms-1">
-                    <a href="#" className="btn btn-success georgian">
-                      ავტორიზაცია
-                    </a>
-                  </div>
-                  {/*end::Toolbar*/}
-                </div>
-                {/*end::Wrapper*/}
-              </div>
-              {/*end::Container*/}
-            </div>
-            {/*end::Header*/}
-            {/*begin::Landing hero*/}
             <div className="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9">
-              {/*begin::Heading*/}
               <div className="text-center mb-5 mb-lg-10 py-10 py-lg-20">
-                {/*begin::Title*/}
                 <h1 className="text-white lh-base fw-bolder fs-2x fs-lg-3x mb-15 georgian">
                   გამოთვალე მარტივად
                   <br />
@@ -219,8 +34,6 @@ const Main = () => {
                     </span>
                   </span>
                 </h1>
-                {/*end::Title*/}
-                {/*begin::Action*/}
                 <a
                   href="#"
                   className="btn btn-primary georgian"
@@ -240,29 +53,20 @@ const Main = () => {
                   </svg>
                   <b>გამოთვალე!</b>
                 </a>
-                {/*end::Action*/}
-                {/*begin::Modal - Create App*/}
                 <div
                   className="modal fade"
                   id="kt_modal_create_app"
                   tabIndex={-1}
                   aria-hidden="true"
                 >
-                  {/*begin::Modal dialog*/}
                   <div className="modal-dialog modal-dialog-centered mw-900px">
-                    {/*begin::Modal content*/}
                     <div className="modal-content">
-                      {/*begin::Modal header*/}
                       <div className="modal-header">
-                        {/*begin::Modal title*/}
                         <h2 className="georgian">ობიექტის დამატება</h2>
-                        {/*end::Modal title*/}
-                        {/*begin::Close*/}
                         <div
                           className="btn btn-sm btn-icon btn-active-color-primary"
                           data-bs-dismiss="modal"
                         >
-                          {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
                           <span className="svg-icon svg-icon-1">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -292,37 +96,24 @@ const Main = () => {
                               />
                             </svg>
                           </span>
-                          {/*end::Svg Icon*/}
                         </div>
-                        {/*end::Close*/}
                       </div>
-                      {/*end::Modal header*/}
-                      {/*begin::Modal body*/}
                       <div className="modal-body py-lg-10 px-lg-10">
-                        {/*begin::Stepper*/}
                         <div
                           className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
                           id="kt_modal_create_app_stepper"
                         >
-                          {/*begin::Aside*/}
                           <div className="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                            {/*begin::Nav*/}
                             <div className="stepper-nav ps-lg-10">
-                              {/*begin::Step 1*/}
                               <div
                                 className="stepper-item current"
                                 data-kt-stepper-element="nav"
                               >
-                                {/*begin::Line*/}
                                 <div className="stepper-line w-40px" />
-                                {/*end::Line*/}
-                                {/*begin::Icon*/}
                                 <div className="stepper-icon w-40px h-40px">
                                   <i className="stepper-check fas fa-check" />
                                   <span className="stepper-number">1</span>
                                 </div>
-                                {/*end::Icon*/}
-                                {/*begin::Label*/}
                                 <div className="stepper-label">
                                   <h3 className="stepper-title georgian">
                                     კატეგორია
@@ -331,24 +122,16 @@ const Main = () => {
                                     ობიექტის აღწერა
                                   </div>
                                 </div>
-                                {/*end::Label*/}
                               </div>
-                              {/*end::Step 1*/}
-                              {/*begin::Step 2*/}
                               <div
                                 className="stepper-item"
                                 data-kt-stepper-element="nav"
                               >
-                                {/*begin::Line*/}
                                 <div className="stepper-line w-40px" />
-                                {/*end::Line*/}
-                                {/*begin::Icon*/}
                                 <div className="stepper-icon w-40px h-40px">
                                   <i className="stepper-check fas fa-check" />
                                   <span className="stepper-number">2</span>
                                 </div>
-                                {/*begin::Icon*/}
-                                {/*begin::Label*/}
                                 <div className="stepper-label">
                                   <h3 className="stepper-title georgian">
                                     მდგომარეობა
@@ -357,24 +140,16 @@ const Main = () => {
                                     სამუშაოს განსაზღვრება
                                   </div>
                                 </div>
-                                {/*begin::Label*/}
                               </div>
-                              {/*end::Step 2*/}
-                              {/*begin::Step 3*/}
                               <div
                                 className="stepper-item"
                                 data-kt-stepper-element="nav"
                               >
-                                {/*begin::Line*/}
                                 <div className="stepper-line w-40px" />
-                                {/*end::Line*/}
-                                {/*begin::Icon*/}
                                 <div className="stepper-icon w-40px h-40px">
                                   <i className="stepper-check fas fa-check" />
                                   <span className="stepper-number">3</span>
                                 </div>
-                                {/*end::Icon*/}
-                                {/*begin::Label*/}
                                 <div className="stepper-label">
                                   <h3 className="stepper-title georgian">
                                     სამუშაოები
@@ -383,78 +158,53 @@ const Main = () => {
                                     შესასრულებელი სამუშაო
                                   </div>
                                 </div>
-                                {/*end::Label*/}
                               </div>
-                              {/*end::Step 3*/}
-                              {/*begin::Step 4*/}
                               <div
                                 className="stepper-item"
                                 data-kt-stepper-element="nav"
                               >
-                                {/*begin::Line*/}
                                 <div className="stepper-line w-40px" />
-                                {/*end::Line*/}
-                                {/*begin::Icon*/}
                                 <div className="stepper-icon w-40px h-40px">
                                   <i className="stepper-check fas fa-check" />
                                   <span className="stepper-number">4</span>
                                 </div>
-                                {/*end::Icon*/}
-                                {/*begin::Label*/}
                                 <div className="stepper-label">
                                   <h3 className="stepper-title">Billing</h3>
                                   <div className="stepper-desc">
                                     Provide payment details
                                   </div>
                                 </div>
-                                {/*end::Label*/}
                               </div>
-                              {/*end::Step 4*/}
-                              {/*begin::Step 5*/}
                               <div
                                 className="stepper-item"
                                 data-kt-stepper-element="nav"
                               >
-                                {/*begin::Line*/}
                                 <div className="stepper-line w-40px" />
-                                {/*end::Line*/}
-                                {/*begin::Icon*/}
                                 <div className="stepper-icon w-40px h-40px">
                                   <i className="stepper-check fas fa-check" />
                                   <span className="stepper-number">5</span>
                                 </div>
-                                {/*end::Icon*/}
-                                {/*begin::Label*/}
                                 <div className="stepper-label">
                                   <h3 className="stepper-title">Completed</h3>
                                   <div className="stepper-desc">
                                     Review and Submit
                                   </div>
                                 </div>
-                                {/*end::Label*/}
                               </div>
-                              {/*end::Step 5*/}
                             </div>
-                            {/*end::Nav*/}
                           </div>
-                          {/*begin::Aside*/}
-                          {/*begin::Content*/}
                           <div className="flex-row-fluid py-lg-5 px-lg-15">
-                            {/*begin::Form*/}
                             <form
                               className="form"
                               noValidate="novalidate"
                               id=""
                             >
-                              {/*begin::Step 1*/}
                               <div
                                 className="current"
                                 data-kt-stepper-element="content"
                               >
                                 <div className="w-100">
-                                  {/*begin::Input group*/}
                                   <div className="fv-row mb-10">
-                                    {/*begin::Label*/}
                                     <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                                       <span className="required georgian">
                                         ქონების ტიპი
@@ -465,8 +215,6 @@ const Main = () => {
                                         title="მიუთითეთ სამუშაო ობიექტის ტიპი"
                                       />
                                     </label>
-                                    {/*end::Label*/}
-                                    {/*begin::Input*/}
                                     <select
                                       className="form-select form-select-solid georgian"
                                       aria-label="Select example"
@@ -604,21 +352,13 @@ const Main = () => {
                                       </span>
                                       <div className="fv-plugins-message-container invalid-feedback" />
                                     </div>
-                                    {/*end::Input*/}
                                   </div>
-                                  {/*end::Input group*/}
-                                  {/*begin::Input group*/}
                                   <div className="row mb-10">
-                                    {/*begin::Col*/}
                                     <div className="col-md-12 fv-row">
-                                      {/*begin::Label*/}
                                       <label className="required fs-6 fw-bold form-label georgian mb-2">
                                         მდებარეობა / რაიონი
                                       </label>
-                                      {/*end::Label*/}
-                                      {/*begin::Row*/}
                                       <div className="row fv-row">
-                                        {/*begin::Col*/}
                                         <div className="col-6">
                                           <select
                                             name="locale"
@@ -636,8 +376,6 @@ const Main = () => {
                                             <option value={7}>ჩხალთა</option>
                                           </select>
                                         </div>
-                                        {/*end::Col*/}
-                                        {/*begin::Col*/}
                                         <div className="col-6">
                                           <select
                                             name="locale"
@@ -667,25 +405,15 @@ const Main = () => {
                                             </option>
                                           </select>
                                         </div>
-                                        {/*end::Col*/}
                                       </div>
-                                      {/*end::Row*/}
                                     </div>
-                                    {/*end::Col*/}
                                   </div>
-                                  {/*end::Input group*/}
-                                  {/*begin::Input group*/}
                                   <div className="row mb-10">
-                                    {/*begin::Col*/}
                                     <div className="col-md-12 fv-row">
-                                      {/*begin::Label*/}
                                       <label className="required fs-6 fw-bold form-label georgian mb-2">
                                         მისამართი / ტელეფონი
                                       </label>
-                                      {/*end::Label*/}
-                                      {/*begin::Row*/}
                                       <div className="row fv-row">
-                                        {/*begin::Col*/}
                                         <div className="col-6">
                                           <input
                                             type="text"
@@ -700,22 +428,14 @@ const Main = () => {
                                             placeholder="ტელეფონი"
                                           />
                                         </div>
-                                        {/*end::Col*/}
                                       </div>
-                                      {/*end::Row*/}
                                     </div>
-                                    {/*end::Col*/}
                                   </div>
-                                  {/*end::Input group*/}
                                 </div>
                               </div>
-                              {/*end::Step 1*/}
-                              {/*begin::Step 2*/}
                               <div data-kt-stepper-element="content">
                                 <div className="w-100">
-                                  {/*begin::Input group*/}
                                   <div className="fv-row">
-                                    {/*begin::Label*/}
                                     <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                                       <span className="required georgian">
                                         მდგომარეობა
@@ -726,17 +446,11 @@ const Main = () => {
                                         title="მიუთითეთ ობიექტის მდგომარეობა"
                                       />
                                     </label>
-                                    {/*end::Label*/}
-                                    {/*begin:Options*/}
                                     <div className="fv-row">
-                                      {/*begin:Option*/}
                                       <label className="d-flex flex-stack mb-5 cursor-pointer">
-                                        {/*begin:Label*/}
                                         <span className="d-flex align-items-center me-2">
-                                          {/*begin:Icon*/}
                                           <span className="symbol symbol-50px me-6">
                                             <span className="symbol-label bg-light-primary">
-                                              {/*begin::Svg Icon | path: icons/duotune/maps/map004.svg*/}
                                               <span className="svg-icon svg-icon-1 svg-icon-primary">
                                                 <svg
                                                   xmlns="http://www.w3.org/2000/svg"
@@ -756,11 +470,8 @@ const Main = () => {
                                                   />
                                                 </svg>
                                               </span>
-                                              {/*end::Svg Icon*/}
                                             </span>
                                           </span>
-                                          {/*end:Icon*/}
-                                          {/*begin:Info*/}
                                           <span className="d-flex flex-column">
                                             <span className="fw-bolder georgian fs-6">
                                               ახალი აშენებული
@@ -770,10 +481,7 @@ const Main = () => {
                                               just one SEO
                                             </span>
                                           </span>
-                                          {/*end:Info*/}
                                         </span>
-                                        {/*end:Label*/}
-                                        {/*begin:Input*/}
                                         <span className="form-check form-check-custom form-check-solid">
                                           <input
                                             className="form-check-input"
@@ -782,17 +490,11 @@ const Main = () => {
                                             defaultValue={1}
                                           />
                                         </span>
-                                        {/*end:Input*/}
                                       </label>
-                                      {/*end::Option*/}
-                                      {/*begin:Option*/}
                                       <label className="d-flex flex-stack mb-5 cursor-pointer">
-                                        {/*begin:Label*/}
                                         <span className="d-flex align-items-center me-2">
-                                          {/*begin:Icon*/}
                                           <span className="symbol symbol-50px me-6">
                                             <span className="symbol-label bg-light-danger">
-                                              {/*begin::Svg Icon | path: icons/duotune/general/gen024.svg*/}
                                               <span className="svg-icon svg-icon-1 svg-icon-danger">
                                                 <svg
                                                   xmlns="http://www.w3.org/2000/svg"
@@ -844,11 +546,8 @@ const Main = () => {
                                                   </g>
                                                 </svg>
                                               </span>
-                                              {/*end::Svg Icon*/}
                                             </span>
                                           </span>
-                                          {/*end:Icon*/}
-                                          {/*begin:Info*/}
                                           <span className="d-flex flex-column">
                                             <span className="fw-bolder georgian fs-6">
                                               ძველი აშენებული
@@ -858,10 +557,7 @@ const Main = () => {
                                               just one aspect
                                             </span>
                                           </span>
-                                          {/*end:Info*/}
                                         </span>
-                                        {/*end:Label*/}
-                                        {/*begin:Input*/}
                                         <span className="form-check form-check-custom form-check-solid">
                                           <input
                                             className="form-check-input"
@@ -870,16 +566,10 @@ const Main = () => {
                                             defaultValue={2}
                                           />
                                         </span>
-                                        {/*end:Input*/}
                                       </label>
-                                      {/*end::Option*/}
                                     </div>
-                                    {/*end:Options*/}
                                   </div>
-                                  {/*end::Input group*/}
-                                  {/*begin::Input group*/}
                                   <div className="fv-row">
-                                    {/*begin::Label*/}
                                     <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                                       <span className="required georgian">
                                         არსებული მდგომარეობა
@@ -890,19 +580,13 @@ const Main = () => {
                                         title="ობიექტის არსებული მდგომარეობა"
                                       />
                                     </label>
-                                    {/*end::Label*/}
-                                    {/*begin:Option*/}
                                     <label className="d-flex flex-stack cursor-pointer mb-5">
-                                      {/*begin:Label*/}
                                       <span className="d-flex align-items-center me-2">
-                                        {/*begin:Icon*/}
                                         <span className="symbol symbol-50px me-6">
                                           <span className="symbol-label bg-light-warning">
                                             <i className="fab fa-html5 text-warning fs-2x" />
                                           </span>
                                         </span>
-                                        {/*end:Icon*/}
-                                        {/*begin:Info*/}
                                         <span className="d-flex flex-column">
                                           <span className="fw-bolder georgian fs-6">
                                             შავი კარკასი
@@ -911,10 +595,7 @@ const Main = () => {
                                             სამუშაოები სრულ რემონტამდე.
                                           </span>
                                         </span>
-                                        {/*end:Info*/}
                                       </span>
-                                      {/*end:Label*/}
-                                      {/*begin:Input*/}
                                       <span className="form-check form-check-custom form-check-solid">
                                         <input
                                           className="form-check-input"
@@ -924,21 +605,14 @@ const Main = () => {
                                           defaultValue={1}
                                         />
                                       </span>
-                                      {/*end:Input*/}
                                     </label>
-                                    {/*end::Option*/}
-                                    {/*begin:Option*/}
                                     <label className="d-flex flex-stack cursor-pointer mb-5">
-                                      {/*begin:Label*/}
                                       <span className="d-flex align-items-center me-2">
-                                        {/*begin:Icon*/}
                                         <span className="symbol symbol-50px me-6">
                                           <span className="symbol-label bg-light-success">
                                             <i className="fab fa-react text-success fs-2x" />
                                           </span>
                                         </span>
-                                        {/*end:Icon*/}
-                                        {/*begin:Info*/}
                                         <span className="d-flex flex-column">
                                           <span className="fw-bolder georgian fs-6">
                                             თეთრი კარკასი
@@ -947,10 +621,7 @@ const Main = () => {
                                             სამუშაოები სრულ რემონტამდე.
                                           </span>
                                         </span>
-                                        {/*end:Info*/}
                                       </span>
-                                      {/*end:Label*/}
-                                      {/*begin:Input*/}
                                       <span className="form-check form-check-custom form-check-solid">
                                         <input
                                           className="form-check-input"
@@ -959,21 +630,14 @@ const Main = () => {
                                           defaultValue={2}
                                         />
                                       </span>
-                                      {/*end:Input*/}
                                     </label>
-                                    {/*end::Option*/}
-                                    {/*begin:Option*/}
                                     <label className="d-flex flex-stack cursor-pointer mb-5">
-                                      {/*begin:Label*/}
                                       <span className="d-flex align-items-center me-2">
-                                        {/*begin:Icon*/}
                                         <span className="symbol symbol-50px me-6">
                                           <span className="symbol-label bg-light-danger">
                                             <i className="fab fa-angular text-danger fs-2x" />
                                           </span>
                                         </span>
-                                        {/*end:Icon*/}
-                                        {/*begin:Info*/}
                                         <span className="d-flex flex-column">
                                           <span className="fw-bolder georgian fs-6">
                                             მწვანე კარკასი
@@ -982,10 +646,7 @@ const Main = () => {
                                             სამუშაოები სრულ რემონტამდე.
                                           </span>
                                         </span>
-                                        {/*end:Info*/}
                                       </span>
-                                      {/*end:Label*/}
-                                      {/*begin:Input*/}
                                       <span className="form-check form-check-custom form-check-solid">
                                         <input
                                           className="form-check-input"
@@ -994,25 +655,16 @@ const Main = () => {
                                           defaultValue={3}
                                         />
                                       </span>
-                                      {/*end:Input*/}
                                     </label>
-                                    {/*end::Option*/}
                                   </div>
-                                  {/*end::Input group*/}
                                 </div>
                               </div>
-                              {/*end::Step 2*/}
-                              {/*begin::Step 3*/}
                               <div data-kt-stepper-element="content">
                                 <div className="w-100">
-                                  {/*begin::Input group*/}
                                   <div className="fv-row mb-10">
-                                    {/*begin::Label*/}
                                     <label className="required fs-5 georgian fw-bold mb-2">
                                       ობიექტის დასახელება
                                     </label>
-                                    {/*end::Label*/}
-                                    {/*begin::Input*/}
                                     <input
                                       type="text"
                                       className="form-control georgian form-control-lg form-control-solid"
@@ -1020,21 +672,13 @@ const Main = () => {
                                       placeholder=""
                                       defaultValue="ობიექტის დასახელება"
                                     />
-                                    {/*end::Input*/}
                                   </div>
-                                  {/*end::Input group*/}
-                                  {/*begin::Input group*/}
                                   <div className="row mb-10">
-                                    {/*begin::Col*/}
                                     <div className="col-md-12 fv-row">
-                                      {/*begin::Label*/}
                                       <label className="required fs-6 fw-bold form-label georgian mb-2">
                                         შესასრულებელი სამუშაოები
                                       </label>
-                                      {/*end::Label*/}
-                                      {/*begin::Row*/}
                                       <div className="row fv-row">
-                                        {/*begin::Col*/}
                                         <div className="col-6">
                                           <div className="d-flex flex-column">
                                             <div className="form-check form-check-custom form-check-solid mb-2">
@@ -1123,8 +767,6 @@ const Main = () => {
                                             </div>
                                           </div>
                                         </div>
-                                        {/*end::Col*/}
-                                        {/*begin::Col*/}
                                         <div className="col-6">
                                           <div className="d-flex flex-column">
                                             <div className="form-check form-check-custom form-check-solid mb-2">
@@ -1227,22 +869,14 @@ const Main = () => {
                                             </div>
                                           </div>
                                         </div>
-                                        {/*end::Col*/}
                                       </div>
-                                      {/*end::Row*/}
                                     </div>
-                                    {/*end::Col*/}
                                   </div>
-                                  {/*end::Input group*/}
                                 </div>
                               </div>
-                              {/*end::Step 3*/}
-                              {/*begin::Step 4*/}
                               <div data-kt-stepper-element="content">
                                 <div className="w-100">
-                                  {/*begin::Input group*/}
                                   <div className="d-flex flex-column mb-7 fv-row">
-                                    {/*begin::Label*/}
                                     <label className="d-flex align-items-center fs-6 fw-bold form-label mb-2">
                                       <span className="required">
                                         Name On Card
@@ -1253,7 +887,6 @@ const Main = () => {
                                         title="Specify a card holder's name"
                                       />
                                     </label>
-                                    {/*end::Label*/}
                                     <input
                                       type="text"
                                       className="form-control form-control-solid"
@@ -1262,17 +895,11 @@ const Main = () => {
                                       defaultValue="Max Doe"
                                     />
                                   </div>
-                                  {/*end::Input group*/}
-                                  {/*begin::Input group*/}
                                   <div className="d-flex flex-column mb-7 fv-row">
-                                    {/*begin::Label*/}
                                     <label className="required fs-6 fw-bold form-label mb-2">
                                       Card Number
                                     </label>
-                                    {/*end::Label*/}
-                                    {/*begin::Input wrapper*/}
                                     <div className="position-relative">
-                                      {/*begin::Input*/}
                                       <input
                                         type="text"
                                         className="form-control form-control-solid"
@@ -1280,8 +907,6 @@ const Main = () => {
                                         name="card_number"
                                         defaultValue="4111 1111 1111 1111"
                                       />
-                                      {/*end::Input*/}
-                                      {/*begin::Card logos*/}
                                       <div className="position-absolute translate-middle-y top-50 end-0 me-5">
                                         <img
                                           src="assets/media/svg/card-logos/visa.svg"
@@ -1299,23 +924,14 @@ const Main = () => {
                                           className="h-25px"
                                         />
                                       </div>
-                                      {/*end::Card logos*/}
                                     </div>
-                                    {/*end::Input wrapper*/}
                                   </div>
-                                  {/*end::Input group*/}
-                                  {/*begin::Input group*/}
                                   <div className="row mb-10">
-                                    {/*begin::Col*/}
                                     <div className="col-md-8 fv-row">
-                                      {/*begin::Label*/}
                                       <label className="required fs-6 fw-bold form-label mb-2">
                                         Expiration Date
                                       </label>
-                                      {/*end::Label*/}
-                                      {/*begin::Row*/}
                                       <div className="row fv-row">
-                                        {/*begin::Col*/}
                                         <div className="col-6">
                                           <select
                                             name="card_expiry_month"
@@ -1339,8 +955,6 @@ const Main = () => {
                                             <option value={12}>12</option>
                                           </select>
                                         </div>
-                                        {/*end::Col*/}
-                                        {/*begin::Col*/}
                                         <div className="col-6">
                                           <select
                                             name="card_expiry_year"
@@ -1363,14 +977,9 @@ const Main = () => {
                                             <option value={2031}>2031</option>
                                           </select>
                                         </div>
-                                        {/*end::Col*/}
                                       </div>
-                                      {/*end::Row*/}
                                     </div>
-                                    {/*end::Col*/}
-                                    {/*begin::Col*/}
                                     <div className="col-md-4 fv-row">
-                                      {/*begin::Label*/}
                                       <label className="d-flex align-items-center fs-6 fw-bold form-label mb-2">
                                         <span className="required">CVV</span>
                                         <i
@@ -1379,10 +988,7 @@ const Main = () => {
                                           title="Enter a card CVV code"
                                         />
                                       </label>
-                                      {/*end::Label*/}
-                                      {/*begin::Input wrapper*/}
                                       <div className="position-relative">
-                                        {/*begin::Input*/}
                                         <input
                                           type="text"
                                           className="form-control form-control-solid"
@@ -1391,10 +997,7 @@ const Main = () => {
                                           placeholder="CVV"
                                           name="card_cvv"
                                         />
-                                        {/*end::Input*/}
-                                        {/*begin::CVV icon*/}
                                         <div className="position-absolute translate-middle-y top-50 end-0 me-3">
-                                          {/*begin::Svg Icon | path: icons/duotune/finance/fin002.svg*/}
                                           <span className="svg-icon svg-icon-2hx">
                                             <svg
                                               xmlns="http://www.w3.org/2000/svg"
@@ -1414,18 +1017,11 @@ const Main = () => {
                                               />
                                             </svg>
                                           </span>
-                                          {/*end::Svg Icon*/}
                                         </div>
-                                        {/*end::CVV icon*/}
                                       </div>
-                                      {/*end::Input wrapper*/}
                                     </div>
-                                    {/*end::Col*/}
                                   </div>
-                                  {/*end::Input group*/}
-                                  {/*begin::Input group*/}
                                   <div className="d-flex flex-stack">
-                                    {/*begin::Label*/}
                                     <div className="me-5">
                                       <label className="fs-6 fw-bold form-label">
                                         Save Card for further billing?
@@ -1435,8 +1031,6 @@ const Main = () => {
                                         budget planning
                                       </div>
                                     </div>
-                                    {/*end::Label*/}
-                                    {/*begin::Switch*/}
                                     <label className="form-check form-switch form-check-custom form-check-solid">
                                       <input
                                         className="form-check-input"
@@ -1448,26 +1042,17 @@ const Main = () => {
                                         Save Card
                                       </span>
                                     </label>
-                                    {/*end::Switch*/}
                                   </div>
-                                  {/*end::Input group*/}
                                 </div>
                               </div>
-                              {/*end::Step 4*/}
-                              {/*begin::Step 5*/}
                               <div data-kt-stepper-element="content">
                                 <div className="w-100 text-center">
-                                  {/*begin::Heading*/}
                                   <h1 className="fw-bolder text-dark mb-3">
                                     Release!
                                   </h1>
-                                  {/*end::Heading*/}
-                                  {/*begin::Description*/}
                                   <div className="text-muted fw-bold fs-3">
                                     Submit your app to kickstart your project.
                                   </div>
-                                  {/*end::Description*/}
-                                  {/*begin::Illustration*/}
                                   <div className="text-center px-4 py-15">
                                     <img
                                       src="assets/media/illustrations/sketchy-1/9.png"
@@ -1475,20 +1060,15 @@ const Main = () => {
                                       className="w-100 mh-300px"
                                     />
                                   </div>
-                                  {/*end::Illustration*/}
                                 </div>
                               </div>
-                              {/*end::Step 5*/}
-                              {/*begin::Actions*/}
                               <div className="d-flex flex-stack pt-10">
-                                {/*begin::Wrapper*/}
                                 <div className="me-2">
                                   <button
                                     type="button"
                                     className="btn georgian btn-lg btn-light-primary me-3"
                                     data-kt-stepper-action="previous"
                                   >
-                                    {/*begin::Svg Icon | path: icons/duotune/arrows/arr063.svg*/}
                                     <span className="svg-icon svg-icon-3 me-1">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -1512,11 +1092,9 @@ const Main = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}უკან
+                                    უკან
                                   </button>
                                 </div>
-                                {/*end::Wrapper*/}
-                                {/*begin::Wrapper*/}
                                 <div>
                                   <button
                                     type="button"
@@ -1525,7 +1103,6 @@ const Main = () => {
                                   >
                                     <span className="indicator-label georgian">
                                       გაგზავნა
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr064.svg*/}
                                       <span className="svg-icon svg-icon-3 ms-2 me-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -1550,7 +1127,6 @@ const Main = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </span>
                                     <span className="indicator-progress georgian">
                                       გთხოვთ დაიცადოთ...
@@ -1563,7 +1139,6 @@ const Main = () => {
                                     data-kt-stepper-action="next"
                                   >
                                     გაგრძელება
-                                    {/*begin::Svg Icon | path: icons/duotune/arrows/arr064.svg*/}
                                     <span className="svg-icon svg-icon-3 ms-1 me-0">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -1588,31 +1163,18 @@ const Main = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </button>
                                 </div>
-                                {/*end::Wrapper*/}
                               </div>
-                              {/*end::Actions*/}
                             </form>
-                            {/*end::Form*/}
                           </div>
-                          {/*end::Content*/}
                         </div>
-                        {/*end::Stepper*/}
                       </div>
-                      {/*end::Modal body*/}
                     </div>
-                    {/*end::Modal content*/}
                   </div>
-                  {/*end::Modal dialog*/}
                 </div>
-                {/*end::Modal - Create App*/}
               </div>
-              {/*end::Heading*/}
-              {/*begin::Clients*/}
               <div className="d-flex flex-center flex-wrap position-relative px-5">
-                {/*begin::Client*/}
                 <div
                   className="d-flex flex-center m-3 m-md-6"
                   data-bs-toggle="tooltip"
@@ -1624,8 +1186,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Client*/}
-                {/*begin::Client*/}
                 <div
                   className="d-flex flex-center m-3 m-md-6"
                   data-bs-toggle="tooltip"
@@ -1637,8 +1197,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Client*/}
-                {/*begin::Client*/}
                 <div
                   className="d-flex flex-center m-3 m-md-6"
                   data-bs-toggle="tooltip"
@@ -1650,8 +1208,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Client*/}
-                {/*begin::Client*/}
                 <div
                   className="d-flex flex-center m-3 m-md-6"
                   data-bs-toggle="tooltip"
@@ -1663,8 +1219,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Client*/}
-                {/*begin::Client*/}
                 <div
                   className="d-flex flex-center m-3 m-md-6"
                   data-bs-toggle="tooltip"
@@ -1676,8 +1230,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Client*/}
-                {/*begin::Client*/}
                 <div
                   className="d-flex flex-center m-3 m-md-6"
                   data-bs-toggle="tooltip"
@@ -1689,8 +1241,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Client*/}
-                {/*begin::Client*/}
                 <div
                   className="d-flex flex-center m-3 m-md-6"
                   data-bs-toggle="tooltip"
@@ -1702,8 +1252,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Client*/}
-                {/*begin::Client*/}
                 <div
                   className="d-flex flex-center m-3 m-md-6"
                   data-bs-toggle="tooltip"
@@ -1715,14 +1263,9 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Client*/}
               </div>
-              {/*end::Clients*/}
             </div>
-            {/*end::Landing hero*/}
           </div>
-          {/*end::Wrapper*/}
-          {/*begin::Curve bottom*/}
           <div className="landing-curve landing-dark-color mb-10 mb-lg-20">
             <svg
               viewBox="15 12 1470 48"
@@ -1735,16 +1278,10 @@ const Main = () => {
               />
             </svg>
           </div>
-          {/*end::Curve bottom*/}
         </div>
-        {/*end::Header Section*/}
-        {/*begin::How It Works Section*/}
         <div className="mb-n10 mb-lg-n20 z-index-2">
-          {/*begin::Container*/}
           <div className="container">
-            {/*begin::Heading*/}
             <div className="text-center mb-17">
-              {/*begin::Title*/}
               <h3
                 className="fs-2hx text-dark mb-5 georgian"
                 id="how-it-works"
@@ -1752,44 +1289,28 @@ const Main = () => {
               >
                 როგორ მუშაობს?
               </h3>
-              {/*end::Title*/}
-              {/*begin::Text*/}
               <div className="fs-5 text-muted fw-bold georgian">
                 თუ თქვენ თავად აპირებთ გაუძღვეთ რემონტს
                 <br />
                 მაშინ ჩვენი პროგრამა თქვენთვის ნამდვილი აღმოჩენაა
               </div>
-              {/*end::Text*/}
             </div>
-            {/*end::Heading*/}
-            {/*begin::Row*/}
             <div className="row w-100 gy-10 mb-md-20">
-              {/*begin::Col*/}
               <div className="col-md-4 px-5">
-                {/*begin::Story*/}
                 <div className="text-center mb-10 mb-md-0">
-                  {/*begin::Illustration*/}
                   <img
                     src="assets/media/illustrations/sketchy-1/2.png"
                     className="mh-125px mb-9"
                     alt=""
                   />
-                  {/*end::Illustration*/}
-                  {/*begin::Heading*/}
                   <div className="d-flex flex-center mb-5">
-                    {/*begin::Badge*/}
                     <span className="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">
                       1
                     </span>
-                    {/*end::Badge*/}
-                    {/*begin::Title*/}
                     <div className="fs-5 fs-lg-3 fw-bolder text-dark georgian">
                       გაიერეთ რეგისტრაცია
                     </div>
-                    {/*end::Title*/}
                   </div>
-                  {/*end::Heading*/}
-                  {/*begin::Description*/}
                   <div className="fw-bold fs-6 fs-lg-4 text-muted">
                     Save thousands to millions of bucks
                     <br />
@@ -1797,37 +1318,23 @@ const Main = () => {
                     <br />
                     amazing and great
                   </div>
-                  {/*end::Description*/}
                 </div>
-                {/*end::Story*/}
               </div>
-              {/*end::Col*/}
-              {/*begin::Col*/}
               <div className="col-md-4 px-5">
-                {/*begin::Story*/}
                 <div className="text-center mb-10 mb-md-0">
-                  {/*begin::Illustration*/}
                   <img
                     src="assets/media/illustrations/sketchy-1/8.png"
                     className="mh-125px mb-9"
                     alt=""
                   />
-                  {/*end::Illustration*/}
-                  {/*begin::Heading*/}
                   <div className="d-flex flex-center mb-5">
-                    {/*begin::Badge*/}
                     <span className="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">
                       2
                     </span>
-                    {/*end::Badge*/}
-                    {/*begin::Title*/}
                     <div className="fs-5 fs-lg-3 fw-bolder text-dark georgian">
                       აირჩიეთ სამუშაოები
                     </div>
-                    {/*end::Title*/}
                   </div>
-                  {/*end::Heading*/}
-                  {/*begin::Description*/}
                   <div className="fw-bold fs-6 fs-lg-4 text-muted">
                     Save thousands to millions of bucks
                     <br />
@@ -1835,37 +1342,23 @@ const Main = () => {
                     <br />
                     amazing and great
                   </div>
-                  {/*end::Description*/}
                 </div>
-                {/*end::Story*/}
               </div>
-              {/*end::Col*/}
-              {/*begin::Col*/}
               <div className="col-md-4 px-5">
-                {/*begin::Story*/}
                 <div className="text-center mb-10 mb-md-0">
-                  {/*begin::Illustration*/}
                   <img
                     src="assets/media/illustrations/sketchy-1/12.png"
                     className="mh-125px mb-9"
                     alt=""
                   />
-                  {/*end::Illustration*/}
-                  {/*begin::Heading*/}
                   <div className="d-flex flex-center mb-5">
-                    {/*begin::Badge*/}
                     <span className="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">
                       3
                     </span>
-                    {/*end::Badge*/}
-                    {/*begin::Title*/}
                     <div className="fs-5 fs-lg-3 fw-bolder text-dark georgian">
                       საიწყე დათვლა
                     </div>
-                    {/*end::Title*/}
                   </div>
-                  {/*end::Heading*/}
-                  {/*begin::Description*/}
                   <div className="fw-bold fs-6 fs-lg-4 text-muted">
                     Save thousands to millions of bucks
                     <br />
@@ -1873,16 +1366,10 @@ const Main = () => {
                     <br />
                     amazing and great
                   </div>
-                  {/*end::Description*/}
                 </div>
-                {/*end::Story*/}
               </div>
-              {/*end::Col*/}
             </div>
-            {/*end::Row*/}
-            {/*begin::Product slider*/}
             <div className="tns tns-default">
-              {/*begin::Slider*/}
               <div
                 data-tns="true"
                 data-tns-loop="true"
@@ -1898,7 +1385,6 @@ const Main = () => {
                 data-tns-prev-button="#kt_team_slider_prev1"
                 data-tns-next-button="#kt_team_slider_next1"
               >
-                {/*begin::Item*/}
                 <div className="text-center px-5 pt-5 pt-lg-10 px-lg-10">
                   <img
                     src="assets/media/product-demos/demo1.png"
@@ -1906,8 +1392,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center px-5 pt-5 pt-lg-10 px-lg-10">
                   <img
                     src="assets/media/product-demos/demo2.png"
@@ -1915,8 +1399,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center px-5 pt-5 pt-lg-10 px-lg-10">
                   <img
                     src="assets/media/product-demos/demo4.png"
@@ -1924,8 +1406,6 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center px-5 pt-5 pt-lg-10 px-lg-10">
                   <img
                     src="assets/media/product-demos/demo5.png"
@@ -1933,15 +1413,11 @@ const Main = () => {
                     alt=""
                   />
                 </div>
-                {/*end::Item*/}
               </div>
-              {/*end::Slider*/}
-              {/*begin::Slider button*/}
               <button
                 className="btn btn-icon btn-active-color-primary"
                 id="kt_team_slider_prev1"
               >
-                {/*begin::Svg Icon | path: icons/duotune/arrows/arr074.svg*/}
                 <span className="svg-icon svg-icon-3x">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1956,15 +1432,11 @@ const Main = () => {
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
               </button>
-              {/*end::Slider button*/}
-              {/*begin::Slider button*/}
               <button
                 className="btn btn-icon btn-active-color-primary"
                 id="kt_team_slider_next1"
               >
-                {/*begin::Svg Icon | path: icons/duotune/arrows/arr071.svg*/}
                 <span className="svg-icon svg-icon-3x">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1979,18 +1451,11 @@ const Main = () => {
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
               </button>
-              {/*end::Slider button*/}
             </div>
-            {/*end::Product slider*/}
           </div>
-          {/*end::Container*/}
         </div>
-        {/*end::How It Works Section*/}
-        {/*begin::Statistics Section*/}
         <div className="mt-sm-n10">
-          {/*begin::Curve top*/}
           <div className="landing-curve landing-dark-color">
             <svg
               viewBox="15 -1 1470 48"
@@ -2003,23 +1468,16 @@ const Main = () => {
               />
             </svg>
           </div>
-          {/*end::Curve top*/}
-          {/*begin::Wrapper*/}
           <div className="pb-15 pt-18 landing-dark-bg">
-            {/*begin::Container*/}
             <div className="container">
-              {/*begin::Heading*/}
               <div
                 className="text-center mt-15 mb-18"
                 id="achievements"
                 data-kt-scroll-offset="{default: 100, lg: 150}"
               >
-                {/*begin::Title*/}
                 <h3 className="fs-2hx text-white fw-bolder mb-5 georgian">
                   კომპანიის შესახებ
                 </h3>
-                {/*end::Title*/}
-                {/*begin::Description*/}
                 <div className="fs-5 text-gray-700 fw-bold georgian">
                   კომპანია „ReCounter“ დაარსდა 2022 წელს და პირველად
                   საქართველოში
@@ -2028,14 +1486,9 @@ const Main = () => {
                   ხარჯთაღრიცხა <br />
                   ჩვენი პლატფორმის დახმარებით.
                 </div>
-                {/*end::Description*/}
               </div>
-              {/*end::Heading*/}
-              {/*begin::Statistics*/}
               <div className="d-flex flex-center">
-                {/*begin::Items*/}
                 <div className="d-flex flex-wrap flex-center justify-content-lg-between mb-15 mx-auto w-xl-900px">
-                  {/*begin::Item*/}
                   <div
                     className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
                     style={{
@@ -2043,8 +1496,6 @@ const Main = () => {
                         'url("assets/media/svg/misc/octagon.svg")',
                     }}
                   >
-                    {/*begin::Symbol*/}
-                    {/*begin::Svg Icon | path: icons/duotune/general/gen025.svg*/}
                     <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -2090,11 +1541,7 @@ const Main = () => {
                         />
                       </svg>
                     </span>
-                    {/*end::Svg Icon*/}
-                    {/*end::Symbol*/}
-                    {/*begin::Info*/}
                     <div className="mb-0">
-                      {/*begin::Value*/}
                       <div className="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
                         <div
                           className="min-w-70px"
@@ -2105,17 +1552,11 @@ const Main = () => {
                           0
                         </div>
                       </div>
-                      {/*end::Value*/}
-                      {/*begin::Label*/}
                       <span className="text-gray-600 fw-bold fs-5 lh-0">
                         Known Companies
                       </span>
-                      {/*end::Label*/}
                     </div>
-                    {/*end::Info*/}
                   </div>
-                  {/*end::Item*/}
-                  {/*begin::Item*/}
                   <div
                     className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
                     style={{
@@ -2123,8 +1564,6 @@ const Main = () => {
                         'url("assets/media/svg/misc/octagon.svg")',
                     }}
                   >
-                    {/*begin::Symbol*/}
-                    {/*begin::Svg Icon | path: icons/duotune/graphs/gra008.svg*/}
                     <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -2149,11 +1588,7 @@ const Main = () => {
                         />
                       </svg>
                     </span>
-                    {/*end::Svg Icon*/}
-                    {/*end::Symbol*/}
-                    {/*begin::Info*/}
                     <div className="mb-0">
-                      {/*begin::Value*/}
                       <div className="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
                         <div
                           className="min-w-70px"
@@ -2164,17 +1599,11 @@ const Main = () => {
                           0
                         </div>
                       </div>
-                      {/*end::Value*/}
-                      {/*begin::Label*/}
                       <span className="text-gray-600 fw-bold fs-5 lh-0">
                         Statistic Reports
                       </span>
-                      {/*end::Label*/}
                     </div>
-                    {/*end::Info*/}
                   </div>
-                  {/*end::Item*/}
-                  {/*begin::Item*/}
                   <div
                     className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
                     style={{
@@ -2182,8 +1611,6 @@ const Main = () => {
                         'url("assets/media/svg/misc/octagon.svg")',
                     }}
                   >
-                    {/*begin::Symbol*/}
-                    {/*begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg*/}
                     <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -2208,11 +1635,7 @@ const Main = () => {
                         />
                       </svg>
                     </span>
-                    {/*end::Svg Icon*/}
-                    {/*end::Symbol*/}
-                    {/*begin::Info*/}
                     <div className="mb-0">
-                      {/*begin::Value*/}
                       <div className="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
                         <div
                           className="min-w-70px"
@@ -2223,21 +1646,13 @@ const Main = () => {
                           0
                         </div>
                       </div>
-                      {/*end::Value*/}
-                      {/*begin::Label*/}
                       <span className="text-gray-600 fw-bold fs-5 lh-0">
                         Secure Payments
                       </span>
-                      {/*end::Label*/}
                     </div>
-                    {/*end::Info*/}
                   </div>
-                  {/*end::Item*/}
                 </div>
-                {/*end::Items*/}
               </div>
-              {/*end::Statistics*/}
-              {/*begin::Testimonial*/}
               <div className="fs-2 fw-bold text-muted text-center mb-3 georgian">
                 <span className="fs-1 lh-1 text-gray-700 ">“</span>ჩვენი
                 პლატფორმის გამოყენების შედეგად თქვენ მიიღებთ:
@@ -2256,12 +1671,8 @@ const Main = () => {
                   ReCounter.Ge
                 </a>
               </div>
-              {/*end::Author*/}
             </div>
-            {/*end::Container*/}
           </div>
-          {/*end::Wrapper*/}
-          {/*begin::Curve bottom*/}
           <div className="landing-curve landing-dark-color">
             <svg
               viewBox="15 12 1470 48"
@@ -2274,16 +1685,10 @@ const Main = () => {
               />
             </svg>
           </div>
-          {/*end::Curve bottom*/}
         </div>
-        {/*end::Statistics Section*/}
-        {/*begin::Team Section*/}
         <div className="py-10 py-lg-20">
-          {/*begin::Container*/}
           <div className="container">
-            {/*begin::Heading*/}
             <div className="text-center mb-12">
-              {/*begin::Title*/}
               <h3
                 className="fs-2hx text-dark mb-5"
                 id="team"
@@ -2291,8 +1696,6 @@ const Main = () => {
               >
                 Our Great Team
               </h3>
-              {/*end::Title*/}
-              {/*begin::Sub-title*/}
               <div className="fs-5 text-muted fw-bold">
                 It’s no doubt that when a development takes longer to complete,
                 additional costs to
@@ -2300,12 +1703,8 @@ const Main = () => {
                 integrate and test each extra feature creeps up and haunts most
                 of us.
               </div>
-              {/*end::Sub-title=*/}
             </div>
-            {/*end::Heading*/}
-            {/*begin::Slider*/}
             <div className="tns tns-default">
-              {/*begin::Wrapper*/}
               <div
                 data-tns="true"
                 data-tns-loop="true"
@@ -2322,217 +1721,144 @@ const Main = () => {
                 data-tns-next-button="#kt_team_slider_next"
                 data-tns-responsive="{1200: {items: 3}, 992: {items: 2}}"
               >
-                {/*begin::Item*/}
                 <div className="text-center">
-                  {/*begin::Photo*/}
                   <div
                     className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                     style={{
                       backgroundImage: 'url("assets/media/avatars/150-2.jpg")',
                     }}
                   />
-                  {/*end::Photo*/}
-                  {/*begin::Person*/}
                   <div className="mb-0">
-                    {/*begin::Name*/}
                     <a
                       href="#"
                       className="text-dark fw-bolder text-hover-primary fs-3"
                     >
                       Paul Miles
                     </a>
-                    {/*end::Name*/}
-                    {/*begin::Position*/}
                     <div className="text-muted fs-6 fw-bold mt-1">
                       Development Lead
                     </div>
-                    {/*begin::Position*/}
                   </div>
-                  {/*end::Person*/}
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center">
-                  {/*begin::Photo*/}
                   <div
                     className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                     style={{
                       backgroundImage: 'url("assets/media/avatars/150-3.jpg")',
                     }}
                   />
-                  {/*end::Photo*/}
-                  {/*begin::Person*/}
                   <div className="mb-0">
-                    {/*begin::Name*/}
                     <a
                       href="#"
                       className="text-dark fw-bolder text-hover-primary fs-3"
                     >
                       Melisa Marcus
                     </a>
-                    {/*end::Name*/}
-                    {/*begin::Position*/}
                     <div className="text-muted fs-6 fw-bold mt-1">
                       Creative Director
                     </div>
-                    {/*begin::Position*/}
                   </div>
-                  {/*end::Person*/}
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center">
-                  {/*begin::Photo*/}
                   <div
                     className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                     style={{
                       backgroundImage: 'url("assets/media/avatars/150-4.jpg")',
                     }}
                   />
-                  {/*end::Photo*/}
-                  {/*begin::Person*/}
                   <div className="mb-0">
-                    {/*begin::Name*/}
                     <a
                       href="#"
                       className="text-dark fw-bolder text-hover-primary fs-3"
                     >
                       David Nilson
                     </a>
-                    {/*end::Name*/}
-                    {/*begin::Position*/}
                     <div className="text-muted fs-6 fw-bold mt-1">
                       Python Expert
                     </div>
-                    {/*begin::Position*/}
                   </div>
-                  {/*end::Person*/}
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center">
-                  {/*begin::Photo*/}
                   <div
                     className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                     style={{
                       backgroundImage: 'url("assets/media/avatars/150-5.jpg")',
                     }}
                   />
-                  {/*end::Photo*/}
-                  {/*begin::Person*/}
                   <div className="mb-0">
-                    {/*begin::Name*/}
                     <a
                       href="#"
                       className="text-dark fw-bolder text-hover-primary fs-3"
                     >
                       Anne Clarc
                     </a>
-                    {/*end::Name*/}
-                    {/*begin::Position*/}
                     <div className="text-muted fs-6 fw-bold mt-1">
                       Project Manager
                     </div>
-                    {/*begin::Position*/}
                   </div>
-                  {/*end::Person*/}
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center">
-                  {/*begin::Photo*/}
                   <div
                     className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                     style={{
                       backgroundImage: 'url("assets/media/avatars/150-6.jpg")',
                     }}
                   />
-                  {/*end::Photo*/}
-                  {/*begin::Person*/}
                   <div className="mb-0">
-                    {/*begin::Name*/}
                     <a
                       href="#"
                       className="text-dark fw-bolder text-hover-primary fs-3"
                     >
                       Ricky Hunt
                     </a>
-                    {/*end::Name*/}
-                    {/*begin::Position*/}
                     <div className="text-muted fs-6 fw-bold mt-1">
                       Art Director
                     </div>
-                    {/*begin::Position*/}
                   </div>
-                  {/*end::Person*/}
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center">
-                  {/*begin::Photo*/}
                   <div
                     className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                     style={{
                       backgroundImage: 'url("assets/media/avatars/150-7.jpg")',
                     }}
                   />
-                  {/*end::Photo*/}
-                  {/*begin::Person*/}
                   <div className="mb-0">
-                    {/*begin::Name*/}
                     <a
                       href="#"
                       className="text-dark fw-bolder text-hover-primary fs-3"
                     >
                       Alice Wayde
                     </a>
-                    {/*end::Name*/}
-                    {/*begin::Position*/}
                     <div className="text-muted fs-6 fw-bold mt-1">
                       Marketing Manager
                     </div>
-                    {/*begin::Position*/}
                   </div>
-                  {/*end::Person*/}
                 </div>
-                {/*end::Item*/}
-                {/*begin::Item*/}
                 <div className="text-center">
-                  {/*begin::Photo*/}
                   <div
                     className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                     style={{
                       backgroundImage: 'url("assets/media/avatars/150-8.jpg")',
                     }}
                   />
-                  {/*end::Photo*/}
-                  {/*begin::Person*/}
                   <div className="mb-0">
-                    {/*begin::Name*/}
                     <a
                       href="#"
                       className="text-dark fw-bolder text-hover-primary fs-3"
                     >
                       Carles Puyol
                     </a>
-                    {/*end::Name*/}
-                    {/*begin::Position*/}
                     <div className="text-muted fs-6 fw-bold mt-1">
                       QA Managers
                     </div>
-                    {/*begin::Position*/}
                   </div>
-                  {/*end::Person*/}
                 </div>
-                {/*end::Item*/}
               </div>
-              {/*end::Wrapper*/}
-              {/*begin::Button*/}
               <button
                 className="btn btn-icon btn-active-color-primary"
                 id="kt_team_slider_prev"
               >
-                {/*begin::Svg Icon | path: icons/duotune/arrows/arr074.svg*/}
                 <span className="svg-icon svg-icon-3x">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -2547,15 +1873,11 @@ const Main = () => {
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
               </button>
-              {/*end::Button*/}
-              {/*begin::Button*/}
               <button
                 className="btn btn-icon btn-active-color-primary"
                 id="kt_team_slider_next"
               >
-                {/*begin::Svg Icon | path: icons/duotune/arrows/arr071.svg*/}
                 <span className="svg-icon svg-icon-3x">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -2570,31 +1892,20 @@ const Main = () => {
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
               </button>
-              {/*end::Button*/}
             </div>
-            {/*end::Slider*/}
           </div>
-          {/*end::Container*/}
         </div>
-        {/*end::Team Section*/}
-        {/*begin::Projects Section*/}
         <div className="mb-lg-n15 position-relative z-index-2">
-          {/*begin::Container*/}
           <div className="container">
-            {/*begin::Card*/}
             <div
               className="card"
               style={{
                 filter: "drop-shadow(0px 0px 40px rgba(68, 81, 96, 0.08))",
               }}
             >
-              {/*begin::Card body*/}
               <div className="card-body p-lg-20">
-                {/*begin::Heading*/}
                 <div className="text-center mb-5 mb-lg-10">
-                  {/*begin::Title*/}
                   <h3
                     className="fs-2hx text-dark mb-5"
                     id="portfolio"
@@ -2602,12 +1913,8 @@ const Main = () => {
                   >
                     Our Projects
                   </h3>
-                  {/*end::Title*/}
                 </div>
-                {/*end::Heading*/}
-                {/*begin::Tabs wrapper*/}
                 <div className="d-flex flex-center mb-5 mb-lg-15">
-                  {/*begin::Tabs*/}
                   <ul className="nav border-transparent flex-center fs-5 fw-bold">
                     <li className="nav-item">
                       <a
@@ -2650,27 +1957,19 @@ const Main = () => {
                       </a>
                     </li>
                   </ul>
-                  {/*end::Tabs*/}
                 </div>
-                {/*end::Tabs wrapper*/}
-                {/*begin::Tabs content*/}
                 <div className="tab-content">
-                  {/*begin::Tab pane*/}
                   <div
                     className="tab-pane fade show active"
                     id="kt_landing_projects_latest"
                   >
-                    {/*begin::Row*/}
                     <div className="row g-10">
-                      {/*begin::Col*/}
                       <div className="col-lg-6">
-                        {/*begin::Item*/}
                         <a
                           className="d-block card-rounded overlay h-lg-100"
                           data-fslightbox="lightbox-projects"
                           href="assets/media/stock/600x600/img-23.jpg"
                         >
-                          {/*begin::Image*/}
                           <div
                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-lg-100 min-h-250px"
                             style={{
@@ -2678,29 +1977,19 @@ const Main = () => {
                                 'url("assets/media/stock/600x600/img-23.jpg")',
                             }}
                           />
-                          {/*end::Image*/}
-                          {/*begin::Action*/}
                           <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                             <i className="bi bi-eye-fill fs-3x text-white" />
                           </div>
-                          {/*end::Action*/}
                         </a>
-                        {/*end::Item*/}
                       </div>
-                      {/*end::Col*/}
-                      {/*begin::Col*/}
                       <div className="col-lg-6">
-                        {/*begin::Row*/}
                         <div className="row g-10 mb-10">
-                          {/*begin::Col*/}
                           <div className="col-lg-6">
-                            {/*begin::Item*/}
                             <a
                               className="d-block card-rounded overlay"
                               data-fslightbox="lightbox-projects"
                               href="assets/media/stock/600x600/img-22.jpg"
                             >
-                              {/*begin::Image*/}
                               <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                                 style={{
@@ -2708,25 +1997,17 @@ const Main = () => {
                                     'url("assets/media/stock/600x600/img-22.jpg")',
                                 }}
                               />
-                              {/*end::Image*/}
-                              {/*begin::Action*/}
                               <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                                 <i className="bi bi-eye-fill fs-3x text-white" />
                               </div>
-                              {/*end::Action*/}
                             </a>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Col*/}
-                          {/*begin::Col*/}
                           <div className="col-lg-6">
-                            {/*begin::Item*/}
                             <a
                               className="d-block card-rounded overlay"
                               data-fslightbox="lightbox-projects"
                               href="assets/media/stock/600x600/img-21.jpg"
                             >
-                              {/*begin::Image*/}
                               <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                                 style={{
@@ -2734,25 +2015,17 @@ const Main = () => {
                                     'url("assets/media/stock/600x600/img-21.jpg")',
                                 }}
                               />
-                              {/*end::Image*/}
-                              {/*begin::Action*/}
                               <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                                 <i className="bi bi-eye-fill fs-3x text-white" />
                               </div>
-                              {/*end::Action*/}
                             </a>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Row*/}
-                        {/*begin::Item*/}
                         <a
                           className="d-block card-rounded overlay"
                           data-fslightbox="lightbox-projects"
                           href="assets/media/stock/600x400/img-20.jpg"
                         >
-                          {/*begin::Image*/}
                           <div
                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                             style={{
@@ -2760,36 +2033,24 @@ const Main = () => {
                                 'url("assets/media/stock/600x600/img-20.jpg")',
                             }}
                           />
-                          {/*end::Image*/}
-                          {/*begin::Action*/}
                           <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                             <i className="bi bi-eye-fill fs-3x text-white" />
                           </div>
-                          {/*end::Action*/}
                         </a>
-                        {/*end::Item*/}
                       </div>
-                      {/*end::Col*/}
                     </div>
-                    {/*end::Row*/}
                   </div>
-                  {/*end::Tab pane*/}
-                  {/*begin::Tab pane*/}
                   <div
                     className="tab-pane fade"
                     id="kt_landing_projects_web_design"
                   >
-                    {/*begin::Row*/}
                     <div className="row g-10">
-                      {/*begin::Col*/}
                       <div className="col-lg-6">
-                        {/*begin::Item*/}
                         <a
                           className="d-block card-rounded overlay h-lg-100"
                           data-fslightbox="lightbox-projects"
                           href="assets/media/stock/600x600/img-11.jpg"
                         >
-                          {/*begin::Image*/}
                           <div
                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-lg-100 min-h-250px"
                             style={{
@@ -2797,29 +2058,19 @@ const Main = () => {
                                 'url("assets/media/stock/600x600/img-11.jpg")',
                             }}
                           />
-                          {/*end::Image*/}
-                          {/*begin::Action*/}
                           <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                             <i className="bi bi-eye-fill fs-3x text-white" />
                           </div>
-                          {/*end::Action*/}
                         </a>
-                        {/*end::Item*/}
                       </div>
-                      {/*end::Col*/}
-                      {/*begin::Col*/}
                       <div className="col-lg-6">
-                        {/*begin::Row*/}
                         <div className="row g-10 mb-10">
-                          {/*begin::Col*/}
                           <div className="col-lg-6">
-                            {/*begin::Item*/}
                             <a
                               className="d-block card-rounded overlay"
                               data-fslightbox="lightbox-projects"
                               href="assets/media/stock/600x600/img-12.jpg"
                             >
-                              {/*begin::Image*/}
                               <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                                 style={{
@@ -2827,25 +2078,17 @@ const Main = () => {
                                     'url("assets/media/stock/600x600/img-12.jpg")',
                                 }}
                               />
-                              {/*end::Image*/}
-                              {/*begin::Action*/}
                               <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                                 <i className="bi bi-eye-fill fs-3x text-white" />
                               </div>
-                              {/*end::Action*/}
                             </a>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Col*/}
-                          {/*begin::Col*/}
                           <div className="col-lg-6">
-                            {/*begin::Item*/}
                             <a
                               className="d-block card-rounded overlay"
                               data-fslightbox="lightbox-projects"
                               href="assets/media/stock/600x600/img-21.jpg"
                             >
-                              {/*begin::Image*/}
                               <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                                 style={{
@@ -2853,25 +2096,17 @@ const Main = () => {
                                     'url("assets/media/stock/600x600/img-21.jpg")',
                                 }}
                               />
-                              {/*end::Image*/}
-                              {/*begin::Action*/}
                               <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                                 <i className="bi bi-eye-fill fs-3x text-white" />
                               </div>
-                              {/*end::Action*/}
                             </a>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Row*/}
-                        {/*begin::Item*/}
                         <a
                           className="d-block card-rounded overlay"
                           data-fslightbox="lightbox-projects"
                           href="assets/media/stock/600x400/img-20.jpg"
                         >
-                          {/*begin::Image*/}
                           <div
                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                             style={{
@@ -2879,40 +2114,26 @@ const Main = () => {
                                 'url("assets/media/stock/600x600/img-20.jpg")',
                             }}
                           />
-                          {/*end::Image*/}
-                          {/*begin::Action*/}
                           <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                             <i className="bi bi-eye-fill fs-3x text-white" />
                           </div>
-                          {/*end::Action*/}
                         </a>
-                        {/*end::Item*/}
                       </div>
-                      {/*end::Col*/}
                     </div>
-                    {/*end::Row*/}
                   </div>
-                  {/*end::Tab pane*/}
-                  {/*begin::Tab pane*/}
                   <div
                     className="tab-pane fade"
                     id="kt_landing_projects_mobile_apps"
                   >
-                    {/*begin::Row*/}
                     <div className="row g-10">
-                      {/*begin::Col*/}
                       <div className="col-lg-6">
-                        {/*begin::Row*/}
                         <div className="row g-10 mb-10">
-                          {/*begin::Col*/}
                           <div className="col-lg-6">
-                            {/*begin::Item*/}
                             <a
                               className="d-block card-rounded overlay"
                               data-fslightbox="lightbox-projects"
                               href="assets/media/stock/600x600/img-16.jpg"
                             >
-                              {/*begin::Image*/}
                               <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                                 style={{
@@ -2920,25 +2141,17 @@ const Main = () => {
                                     'url("assets/media/stock/600x600/img-16.jpg")',
                                 }}
                               />
-                              {/*end::Image*/}
-                              {/*begin::Action*/}
                               <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                                 <i className="bi bi-eye-fill fs-3x text-white" />
                               </div>
-                              {/*end::Action*/}
                             </a>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Col*/}
-                          {/*begin::Col*/}
                           <div className="col-lg-6">
-                            {/*begin::Item*/}
                             <a
                               className="d-block card-rounded overlay"
                               data-fslightbox="lightbox-projects"
                               href="assets/media/stock/600x600/img-12.jpg"
                             >
-                              {/*begin::Image*/}
                               <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                                 style={{
@@ -2946,25 +2159,17 @@ const Main = () => {
                                     'url("assets/media/stock/600x600/img-12.jpg")',
                                 }}
                               />
-                              {/*end::Image*/}
-                              {/*begin::Action*/}
                               <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                                 <i className="bi bi-eye-fill fs-3x text-white" />
                               </div>
-                              {/*end::Action*/}
                             </a>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Row*/}
-                        {/*begin::Item*/}
                         <a
                           className="d-block card-rounded overlay"
                           data-fslightbox="lightbox-projects"
                           href="assets/media/stock/600x400/img-15.jpg"
                         >
-                          {/*begin::Image*/}
                           <div
                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                             style={{
@@ -2972,25 +2177,17 @@ const Main = () => {
                                 'url("assets/media/stock/600x600/img-15.jpg")',
                             }}
                           />
-                          {/*end::Image*/}
-                          {/*begin::Action*/}
                           <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                             <i className="bi bi-eye-fill fs-3x text-white" />
                           </div>
-                          {/*end::Action*/}
                         </a>
-                        {/*end::Item*/}
                       </div>
-                      {/*end::Col*/}
-                      {/*begin::Col*/}
                       <div className="col-lg-6">
-                        {/*begin::Item*/}
                         <a
                           className="d-block card-rounded overlay h-lg-100"
                           data-fslightbox="lightbox-projects"
                           href="assets/media/stock/600x600/img-23.jpg"
                         >
-                          {/*begin::Image*/}
                           <div
                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-lg-100 min-h-250px"
                             style={{
@@ -2998,36 +2195,24 @@ const Main = () => {
                                 'url("assets/media/stock/600x600/img-23.jpg")',
                             }}
                           />
-                          {/*end::Image*/}
-                          {/*begin::Action*/}
                           <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                             <i className="bi bi-eye-fill fs-3x text-white" />
                           </div>
-                          {/*end::Action*/}
                         </a>
-                        {/*end::Item*/}
                       </div>
-                      {/*end::Col*/}
                     </div>
-                    {/*end::Row*/}
                   </div>
-                  {/*end::Tab pane*/}
-                  {/*begin::Tab pane*/}
                   <div
                     className="tab-pane fade"
                     id="kt_landing_projects_development"
                   >
-                    {/*begin::Row*/}
                     <div className="row g-10">
-                      {/*begin::Col*/}
                       <div className="col-lg-6">
-                        {/*begin::Item*/}
                         <a
                           className="d-block card-rounded overlay h-lg-100"
                           data-fslightbox="lightbox-projects"
                           href="assets/media/stock/600x600/img-15.jpg"
                         >
-                          {/*begin::Image*/}
                           <div
                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-lg-100 min-h-250px"
                             style={{
@@ -3035,29 +2220,19 @@ const Main = () => {
                                 'url("assets/media/stock/600x600/img-15.jpg")',
                             }}
                           />
-                          {/*end::Image*/}
-                          {/*begin::Action*/}
                           <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                             <i className="bi bi-eye-fill fs-3x text-white" />
                           </div>
-                          {/*end::Action*/}
                         </a>
-                        {/*end::Item*/}
                       </div>
-                      {/*end::Col*/}
-                      {/*begin::Col*/}
                       <div className="col-lg-6">
-                        {/*begin::Row*/}
                         <div className="row g-10 mb-10">
-                          {/*begin::Col*/}
                           <div className="col-lg-6">
-                            {/*begin::Item*/}
                             <a
                               className="d-block card-rounded overlay"
                               data-fslightbox="lightbox-projects"
                               href="assets/media/stock/600x600/img-22.jpg"
                             >
-                              {/*begin::Image*/}
                               <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                                 style={{
@@ -3065,25 +2240,17 @@ const Main = () => {
                                     'url("assets/media/stock/600x600/img-22.jpg")',
                                 }}
                               />
-                              {/*end::Image*/}
-                              {/*begin::Action*/}
                               <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                                 <i className="bi bi-eye-fill fs-3x text-white" />
                               </div>
-                              {/*end::Action*/}
                             </a>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Col*/}
-                          {/*begin::Col*/}
                           <div className="col-lg-6">
-                            {/*begin::Item*/}
                             <a
                               className="d-block card-rounded overlay"
                               data-fslightbox="lightbox-projects"
                               href="assets/media/stock/600x600/img-21.jpg"
                             >
-                              {/*begin::Image*/}
                               <div
                                 className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                                 style={{
@@ -3091,25 +2258,17 @@ const Main = () => {
                                     'url("assets/media/stock/600x600/img-21.jpg")',
                                 }}
                               />
-                              {/*end::Image*/}
-                              {/*begin::Action*/}
                               <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                                 <i className="bi bi-eye-fill fs-3x text-white" />
                               </div>
-                              {/*end::Action*/}
                             </a>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Row*/}
-                        {/*begin::Item*/}
                         <a
                           className="d-block card-rounded overlay"
                           data-fslightbox="lightbox-projects"
                           href="assets/media/stock/600x400/img-14.jpg"
                         >
-                          {/*begin::Image*/}
                           <div
                             className="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px"
                             style={{
@@ -3117,33 +2276,19 @@ const Main = () => {
                                 'url("assets/media/stock/600x600/img-14.jpg")',
                             }}
                           />
-                          {/*end::Image*/}
-                          {/*begin::Action*/}
                           <div className="overlay-layer card-rounded bg-dark bg-opacity-25">
                             <i className="bi bi-eye-fill fs-3x text-white" />
                           </div>
-                          {/*end::Action*/}
                         </a>
-                        {/*end::Item*/}
                       </div>
-                      {/*end::Col*/}
                     </div>
-                    {/*end::Row*/}
                   </div>
-                  {/*end::Tab pane*/}
                 </div>
-                {/*end::Tabs content*/}
               </div>
-              {/*end::Card body*/}
             </div>
-            {/*end::Card*/}
           </div>
-          {/*end::Container*/}
         </div>
-        {/*end::Projects Section*/}
-        {/*begin::Pricing Section*/}
         <div className="mt-sm-n20">
-          {/*begin::Curve top*/}
           <div className="landing-curve landing-dark-color">
             <svg
               viewBox="15 -1 1470 48"
@@ -3156,14 +2301,9 @@ const Main = () => {
               />
             </svg>
           </div>
-          {/*end::Curve top*/}
-          {/*begin::Wrapper*/}
           <div className="py-20 landing-dark-bg">
-            {/*begin::Container*/}
             <div className="container">
-              {/*begin::Plans*/}
               <div className="d-flex flex-column container pt-lg-20">
-                {/*begin::Heading*/}
                 <div className="mb-13 text-center">
                   <h1
                     className="fs-2hx fw-bolder text-white mb-5"
@@ -3179,10 +2319,7 @@ const Main = () => {
                     amazing and outstanding cool and great useful admin
                   </div>
                 </div>
-                {/*end::Heading*/}
-                {/*begin::Pricing*/}
                 <div className="text-center" id="kt_pricing">
-                  {/*begin::Nav group*/}
                   <div
                     className="nav-group landing-dark-bg d-inline-flex mb-15"
                     data-kt-buttons="true"
@@ -3203,27 +2340,17 @@ const Main = () => {
                       Annual
                     </a>
                   </div>
-                  {/*end::Nav group*/}
-                  {/*begin::Row*/}
                   <div className="row g-10">
-                    {/*begin::Col*/}
                     <div className="col-xl-4">
                       <div className="d-flex h-100 align-items-center">
-                        {/*begin::Option*/}
                         <div className="w-100 d-flex flex-column flex-center rounded-3 bg-body py-15 px-10">
-                          {/*begin::Heading*/}
                           <div className="mb-7 text-center">
-                            {/*begin::Title*/}
                             <h1 className="text-dark mb-5 fw-boldest">
                               Startup
                             </h1>
-                            {/*end::Title*/}
-                            {/*begin::Description*/}
                             <div className="text-gray-400 fw-bold mb-5">
                               Best Settings for Startups
                             </div>
-                            {/*end::Description*/}
-                            {/*begin::Price*/}
                             <div className="text-center">
                               <span className="mb-2 text-primary">$</span>
                               <span
@@ -3241,17 +2368,12 @@ const Main = () => {
                                 / Mon
                               </span>
                             </div>
-                            {/*end::Price*/}
                           </div>
-                          {/*end::Heading*/}
-                          {/*begin::Features*/}
                           <div className="w-100 mb-10">
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
                                 Up to 10 Active Users
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-success">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3275,15 +2397,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
                                 Up to 30 Project Integrations
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-success">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3307,15 +2425,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-gray-800">
                                 Keen Analytics Platform
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                               <span className="svg-icon svg-icon-1">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3353,15 +2467,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-gray-800">
                                 Targets Timelines &amp; Files
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                               <span className="svg-icon svg-icon-1">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3399,15 +2509,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack">
                               <span className="fw-bold fs-6 text-gray-800">
                                 Unlimited Projects
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                               <span className="svg-icon svg-icon-1">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3445,39 +2551,24 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Features*/}
-                          {/*begin::Select*/}
                           <a href="#" className="btn btn-primary">
                             Select
                           </a>
-                          {/*end::Select*/}
                         </div>
-                        {/*end::Option*/}
                       </div>
                     </div>
-                    {/*end::Col*/}
-                    {/*begin::Col*/}
                     <div className="col-xl-4">
                       <div className="d-flex h-100 align-items-center">
-                        {/*begin::Option*/}
                         <div className="w-100 d-flex flex-column flex-center rounded-3 bg-primary py-20 px-10">
-                          {/*begin::Heading*/}
                           <div className="mb-7 text-center">
-                            {/*begin::Title*/}
                             <h1 className="text-white mb-5 fw-boldest">
                               Business
                             </h1>
-                            {/*end::Title*/}
-                            {/*begin::Description*/}
                             <div className="text-white opacity-75 fw-bold mb-5">
                               Best Settings for Business
                             </div>
-                            {/*end::Description*/}
-                            {/*begin::Price*/}
                             <div className="text-center">
                               <span className="mb-2 text-white">$</span>
                               <span
@@ -3495,17 +2586,12 @@ const Main = () => {
                                 / Mon
                               </span>
                             </div>
-                            {/*end::Price*/}
                           </div>
-                          {/*end::Heading*/}
-                          {/*begin::Features*/}
                           <div className="w-100 mb-10">
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-white opacity-75 text-start pe-3">
                                 Up to 10 Active Users
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-white">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3529,15 +2615,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-white opacity-75 text-start pe-3">
                                 Up to 30 Project Integrations
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-white">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3561,15 +2643,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-white opacity-75 text-start pe-3">
                                 Keen Analytics Platform
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-white">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3593,15 +2671,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-white opacity-75 text-start pe-3">
                                 Targets Timelines &amp; Files
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-white">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3625,15 +2699,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack">
                               <span className="fw-bold fs-6 text-white opacity-75">
                                 Unlimited Projects
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-white">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3671,42 +2741,27 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Features*/}
-                          {/*begin::Select*/}
                           <a
                             href="#"
                             className="btn btn-color-primary btn-active-light-primary btn-light"
                           >
                             Select
                           </a>
-                          {/*end::Select*/}
                         </div>
-                        {/*end::Option*/}
                       </div>
                     </div>
-                    {/*end::Col*/}
-                    {/*begin::Col*/}
                     <div className="col-xl-4">
                       <div className="d-flex h-100 align-items-center">
-                        {/*begin::Option*/}
                         <div className="w-100 d-flex flex-column flex-center rounded-3 bg-body py-15 px-10">
-                          {/*begin::Heading*/}
                           <div className="mb-7 text-center">
-                            {/*begin::Title*/}
                             <h1 className="text-dark mb-5 fw-boldest">
                               Enterprise
                             </h1>
-                            {/*end::Title*/}
-                            {/*begin::Description*/}
                             <div className="text-gray-400 fw-bold mb-5">
                               Best Settings for Enterprise
                             </div>
-                            {/*end::Description*/}
-                            {/*begin::Price*/}
                             <div className="text-center">
                               <span className="mb-2 text-primary">$</span>
                               <span
@@ -3724,17 +2779,12 @@ const Main = () => {
                                 / Mon
                               </span>
                             </div>
-                            {/*end::Price*/}
                           </div>
-                          {/*end::Heading*/}
-                          {/*begin::Features*/}
                           <div className="w-100 mb-10">
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
                                 Up to 10 Active Users
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-success">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3758,15 +2808,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
                                 Up to 30 Project Integrations
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-success">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3790,15 +2836,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
                                 Keen Analytics Platform
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-success">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3822,15 +2864,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack mb-5">
                               <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
                                 Targets Timelines &amp; Files
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-success">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3854,15 +2892,11 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
-                            {/*begin::Item*/}
                             <div className="d-flex flex-stack">
                               <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
                                 Unlimited Projects
                               </span>
-                              {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                               <span className="svg-icon svg-icon-1 svg-icon-success">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -3886,32 +2920,19 @@ const Main = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Item*/}
                           </div>
-                          {/*end::Features*/}
-                          {/*begin::Select*/}
                           <a href="#" className="btn btn-primary">
                             Select
                           </a>
-                          {/*end::Select*/}
                         </div>
-                        {/*end::Option*/}
                       </div>
                     </div>
-                    {/*end::Col*/}
                   </div>
-                  {/*end::Row*/}
                 </div>
-                {/*end::Pricing*/}
               </div>
-              {/*end::Plans*/}
             </div>
-            {/*end::Container*/}
           </div>
-          {/*end::Wrapper*/}
-          {/*begin::Curve bottom*/}
           <div className="landing-curve landing-dark-color">
             <svg
               viewBox="15 12 1470 48"
@@ -3924,16 +2945,10 @@ const Main = () => {
               />
             </svg>
           </div>
-          {/*end::Curve bottom*/}
         </div>
-        {/*end::Pricing Section*/}
-        {/*begin::Testimonials Section*/}
         <div className="mt-20 mb-n20 position-relative z-index-2">
-          {/*begin::Container*/}
           <div className="container">
-            {/*begin::Heading*/}
             <div className="text-center mb-17">
-              {/*begin::Title*/}
               <h3
                 className="fs-2hx text-dark mb-5"
                 id="clients"
@@ -3941,25 +2956,16 @@ const Main = () => {
               >
                 What Our Clients Say
               </h3>
-              {/*end::Title*/}
-              {/*begin::Description*/}
               <div className="fs-5 text-muted fw-bold">
                 Save thousands to millions of bucks by using single tool
                 <br />
                 for different amazing and great useful admin
               </div>
-              {/*end::Description*/}
             </div>
-            {/*end::Heading*/}
-            {/*begin::Row*/}
             <div className="row g-lg-10 mb-10 mb-lg-20">
-              {/*begin::Col*/}
               <div className="col-lg-4">
-                {/*begin::Testimonial*/}
                 <div className="d-flex flex-column justify-content-between h-lg-100 px-10 px-lg-0 pe-lg-10 mb-15 mb-lg-0">
-                  {/*begin::Wrapper*/}
                   <div className="mb-7">
-                    {/*begin::Rating*/}
                     <div className="rating mb-6">
                       <div className="rating-label me-2 checked">
                         <i className="bi bi-star-fill fs-5" />
@@ -3977,27 +2983,19 @@ const Main = () => {
                         <i className="bi bi-star-fill fs-5" />
                       </div>
                     </div>
-                    {/*end::Rating*/}
-                    {/*begin::Title*/}
                     <div className="fs-2 fw-bolder text-dark mb-3">
                       This is by far the cleanest template
                       <br />
                       and the most well structured
                     </div>
-                    {/*end::Title*/}
-                    {/*begin::Feedback*/}
                     <div className="text-gray-500 fw-bold fs-4">
                       The most well thought out design theme I have ever used.
                       The codes are up to tandard. The css styles are very
                       clean. In fact the cleanest and the most up to standard I
                       have ever seen.
                     </div>
-                    {/*end::Feedback*/}
                   </div>
-                  {/*end::Wrapper*/}
-                  {/*begin::Author*/}
                   <div className="d-flex align-items-center">
-                    {/*begin::Avatar*/}
                     <div className="symbol symbol-circle symbol-50px me-5">
                       <img
                         src="assets/media/avatars/150-2.jpg"
@@ -4005,8 +3003,6 @@ const Main = () => {
                         alt=""
                       />
                     </div>
-                    {/*end::Avatar*/}
-                    {/*begin::Name*/}
                     <div className="flex-grow-1">
                       <a
                         href="#"
@@ -4018,20 +3014,12 @@ const Main = () => {
                         Development Lead
                       </span>
                     </div>
-                    {/*end::Name*/}
                   </div>
-                  {/*end::Author*/}
                 </div>
-                {/*end::Testimonial*/}
               </div>
-              {/*end::Col*/}
-              {/*begin::Col*/}
               <div className="col-lg-4">
-                {/*begin::Testimonial*/}
                 <div className="d-flex flex-column justify-content-between h-lg-100 px-10 px-lg-0 pe-lg-10 mb-15 mb-lg-0">
-                  {/*begin::Wrapper*/}
                   <div className="mb-7">
-                    {/*begin::Rating*/}
                     <div className="rating mb-6">
                       <div className="rating-label me-2 checked">
                         <i className="bi bi-star-fill fs-5" />
@@ -4049,27 +3037,19 @@ const Main = () => {
                         <i className="bi bi-star-fill fs-5" />
                       </div>
                     </div>
-                    {/*end::Rating*/}
-                    {/*begin::Title*/}
                     <div className="fs-2 fw-bolder text-dark mb-3">
                       This is by far the cleanest template
                       <br />
                       and the most well structured
                     </div>
-                    {/*end::Title*/}
-                    {/*begin::Feedback*/}
                     <div className="text-gray-500 fw-bold fs-4">
                       The most well thought out design theme I have ever used.
                       The codes are up to tandard. The css styles are very
                       clean. In fact the cleanest and the most up to standard I
                       have ever seen.
                     </div>
-                    {/*end::Feedback*/}
                   </div>
-                  {/*end::Wrapper*/}
-                  {/*begin::Author*/}
                   <div className="d-flex align-items-center">
-                    {/*begin::Avatar*/}
                     <div className="symbol symbol-circle symbol-50px me-5">
                       <img
                         src="assets/media/avatars/150-3.jpg"
@@ -4077,8 +3057,6 @@ const Main = () => {
                         alt=""
                       />
                     </div>
-                    {/*end::Avatar*/}
-                    {/*begin::Name*/}
                     <div className="flex-grow-1">
                       <a
                         href="#"
@@ -4090,20 +3068,12 @@ const Main = () => {
                         Development Lead
                       </span>
                     </div>
-                    {/*end::Name*/}
                   </div>
-                  {/*end::Author*/}
                 </div>
-                {/*end::Testimonial*/}
               </div>
-              {/*end::Col*/}
-              {/*begin::Col*/}
               <div className="col-lg-4">
-                {/*begin::Testimonial*/}
                 <div className="d-flex flex-column justify-content-between h-lg-100 px-10 px-lg-0 pe-lg-10 mb-15 mb-lg-0">
-                  {/*begin::Wrapper*/}
                   <div className="mb-7">
-                    {/*begin::Rating*/}
                     <div className="rating mb-6">
                       <div className="rating-label me-2 checked">
                         <i className="bi bi-star-fill fs-5" />
@@ -4121,27 +3091,19 @@ const Main = () => {
                         <i className="bi bi-star-fill fs-5" />
                       </div>
                     </div>
-                    {/*end::Rating*/}
-                    {/*begin::Title*/}
                     <div className="fs-2 fw-bolder text-dark mb-3">
                       This is by far the cleanest template
                       <br />
                       and the most well structured
                     </div>
-                    {/*end::Title*/}
-                    {/*begin::Feedback*/}
                     <div className="text-gray-500 fw-bold fs-4">
                       The most well thought out design theme I have ever used.
                       The codes are up to tandard. The css styles are very
                       clean. In fact the cleanest and the most up to standard I
                       have ever seen.
                     </div>
-                    {/*end::Feedback*/}
                   </div>
-                  {/*end::Wrapper*/}
-                  {/*begin::Author*/}
                   <div className="d-flex align-items-center">
-                    {/*begin::Avatar*/}
                     <div className="symbol symbol-circle symbol-50px me-5">
                       <img
                         src="assets/media/avatars/150-18.jpg"
@@ -4149,8 +3111,6 @@ const Main = () => {
                         alt=""
                       />
                     </div>
-                    {/*end::Avatar*/}
-                    {/*begin::Name*/}
                     <div className="flex-grow-1">
                       <a
                         href="#"
@@ -4162,54 +3122,35 @@ const Main = () => {
                         Development Lead
                       </span>
                     </div>
-                    {/*end::Name*/}
                   </div>
-                  {/*end::Author*/}
                 </div>
-                {/*end::Testimonial*/}
               </div>
-              {/*end::Col*/}
             </div>
-            {/*end::Row*/}
-            {/*begin::Highlight*/}
             <div
               className="d-flex flex-stack flex-wrap flex-md-nowrap card-rounded shadow p-8 p-lg-12 mb-n5 mb-lg-n13"
               style={{
                 background: "linear-gradient(90deg, #20AA3E 0%, #03A588 100%)",
               }}
             >
-              {/*begin::Content*/}
               <div className="my-2 me-5">
-                {/*begin::Title*/}
                 <div className="fs-1 fs-lg-2qx fw-bolder text-white mb-2">
                   Start With Metronic Today,
                   <span className="fw-normal">Speed Up Development!</span>
                 </div>
-                {/*end::Title*/}
-                {/*begin::Description*/}
                 <div className="fs-6 fs-lg-5 text-white fw-bold opacity-75">
                   Join over 100,000 Professionals Community to Stay Ahead
                 </div>
-                {/*end::Description*/}
               </div>
-              {/*end::Content*/}
-              {/*begin::Link*/}
               <a
                 href="https://1.envato.market/EA4JP"
                 className="btn btn-lg btn-outline border-2 btn-outline-white flex-shrink-0 my-2"
               >
                 Purchase on Themeforest
               </a>
-              {/*end::Link*/}
             </div>
-            {/*end::Highlight*/}
           </div>
-          {/*end::Container*/}
         </div>
-        {/*end::Testimonials Section*/}
-        {/*begin::Footer Section*/}
         <div className="mb-0">
-          {/*begin::Curve top*/}
           <div className="landing-curve landing-dark-color">
             <svg
               viewBox="15 -1 1470 48"
@@ -4222,23 +3163,14 @@ const Main = () => {
               />
             </svg>
           </div>
-          {/*end::Curve top*/}
-          {/*begin::Wrapper*/}
           <div className="landing-dark-bg pt-20">
-            {/*begin::Container*/}
             <div className="container">
-              {/*begin::Row*/}
               <div className="row py-10 py-lg-20">
-                {/*begin::Col*/}
                 <div className="col-lg-6 pe-lg-16 mb-10 mb-lg-0">
-                  {/*begin::Block*/}
                   <div className="rounded landing-dark-border p-9 mb-10">
-                    {/*begin::Title*/}
                     <h2 className="text-white">
                       Would you need a Custom License?
                     </h2>
-                    {/*end::Title*/}
-                    {/*begin::Text*/}
                     <span className="fw-normal fs-4 text-gray-700">
                       Email us to
                       <a
@@ -4248,15 +3180,9 @@ const Main = () => {
                         support@keenthemes.com
                       </a>
                     </span>
-                    {/*end::Text*/}
                   </div>
-                  {/*end::Block*/}
-                  {/*begin::Block*/}
                   <div className="rounded landing-dark-border p-9">
-                    {/*begin::Title*/}
                     <h2 className="text-white">How About a Custom Project?</h2>
-                    {/*end::Title*/}
-                    {/*begin::Text*/}
                     <span className="fw-normal fs-4 text-gray-700">
                       Use Our Custom Development Service.
                       <a
@@ -4266,80 +3192,55 @@ const Main = () => {
                         Click to Get a Quote
                       </a>
                     </span>
-                    {/*end::Text*/}
                   </div>
-                  {/*end::Block*/}
                 </div>
-                {/*end::Col*/}
-                {/*begin::Col*/}
                 <div className="col-lg-6 ps-lg-16">
-                  {/*begin::Navs*/}
                   <div className="d-flex justify-content-center">
-                    {/*begin::Links*/}
                     <div className="d-flex fw-bold flex-column me-20">
-                      {/*begin::Subtitle*/}
                       <h4 className="fw-bolder text-gray-400 mb-6">
                         More for Metronic
                       </h4>
-                      {/*end::Subtitle*/}
-                      {/*begin::Link*/}
                       <a
                         href="#"
                         className="text-white opacity-50 text-hover-primary fs-5 mb-6"
                       >
                         FAQ
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a
                         href="#"
                         className="text-white opacity-50 text-hover-primary fs-5 mb-6"
                       >
                         Documentaions
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a
                         href="#"
                         className="text-white opacity-50 text-hover-primary fs-5 mb-6"
                       >
                         Video Tuts
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a
                         href="#"
                         className="text-white opacity-50 text-hover-primary fs-5 mb-6"
                       >
                         Changelog
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a
                         href="#"
                         className="text-white opacity-50 text-hover-primary fs-5 mb-6"
                       >
                         Github
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a
                         href="#"
                         className="text-white opacity-50 text-hover-primary fs-5"
                       >
                         Tutorials
                       </a>
-                      {/*end::Link*/}
                     </div>
-                    {/*end::Links*/}
-                    {/*begin::Links*/}
                     <div className="d-flex fw-bold flex-column ms-lg-20">
-                      {/*begin::Subtitle*/}
                       <h4 className="fw-bolder text-gray-400 mb-6">
                         Stay Connected
                       </h4>
-                      {/*end::Subtitle*/}
-                      {/*begin::Link*/}
                       <a href="#" className="mb-6">
                         <img
                           src="assets/media/svg/brand-logos/facebook-4.svg"
@@ -4350,8 +3251,6 @@ const Main = () => {
                           Facebook
                         </span>
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a href="#" className="mb-6">
                         <img
                           src="assets/media/svg/brand-logos/github.svg"
@@ -4362,8 +3261,6 @@ const Main = () => {
                           Github
                         </span>
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a href="#" className="mb-6">
                         <img
                           src="assets/media/svg/brand-logos/twitter.svg"
@@ -4374,8 +3271,6 @@ const Main = () => {
                           Twitter
                         </span>
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a href="#" className="mb-6">
                         <img
                           src="assets/media/svg/brand-logos/dribbble-icon-1.svg"
@@ -4386,8 +3281,6 @@ const Main = () => {
                           Dribbble
                         </span>
                       </a>
-                      {/*end::Link*/}
-                      {/*begin::Link*/}
                       <a href="#" className="mb-6">
                         <img
                           src="assets/media/svg/brand-logos/instagram-2-1.svg"
@@ -4398,30 +3291,15 @@ const Main = () => {
                           Instagram
                         </span>
                       </a>
-                      {/*end::Link*/}
                     </div>
-                    {/*end::Links*/}
                   </div>
-                  {/*end::Navs*/}
                 </div>
-                {/*end::Col*/}
               </div>
-              {/*end::Row*/}
             </div>
-            {/*end::Container*/}
-            {/*begin::Separator*/}
             <div className="landing-dark-separator" />
-            {/*end::Separator*/}
-            {/*begin::Container*/}
-
-            {/*end::Container*/}
           </div>
-          {/*end::Wrapper*/}
         </div>
-        {/*end::Footer Section*/}
-        {/*begin::Scrolltop*/}
         <div id="kt_scrolltop" className="scrolltop" data-kt-scrolltop="true">
-          {/*begin::Svg Icon | path: icons/duotune/arrows/arr066.svg*/}
           <span className="svg-icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -4446,19 +3324,8 @@ const Main = () => {
               />
             </svg>
           </span>
-          {/*end::Svg Icon*/}
         </div>
-        {/*end::Scrolltop*/}
       </div>
-      {/*end::Main*/}
-      {/*begin::Javascript*/}
-      {/*begin::Global Javascript Bundle(used by all pages)*/}
-      {/*end::Global Javascript Bundle*/}
-      {/*begin::Page Vendors Javascript(used by this page)*/}
-      {/*end::Page Vendors Javascript*/}
-      {/*begin::Page Custom Javascript(used by this page)*/}
-      {/*end::Page Custom Javascript*/}
-      {/*end::Javascript*/}
     </div>
   );
 };
