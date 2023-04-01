@@ -1,7 +1,8 @@
 @font-face {
   font-family: "BPG Arial Caps";
-  src: url("../../../public/assets/fonts/bpg-arial-caps-webfont.eot") /* IE9 Compat Modes */
-  /* src: url("../../../public/assets/fonts/bpg-arial-caps-webfont.eot?#iefix") */
+  src: url("../../../public/assets/fonts/bpg-arial-caps-webfont.eot")
+      /* IE9 Compat Modes */
+      /* src: url("../../../public/assets/fonts/bpg-arial-caps-webfont.eot?#iefix") */
       format("embedded-opentype"),
     /* IE6-IE8 */ url("../plugins/global/fonts/bpg-arial-caps-webfont.woff2")
       format("woff2"),
