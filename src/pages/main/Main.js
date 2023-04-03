@@ -53,6 +53,7 @@ const Main = () => {
               />
             </svg>
           </div>
+          
           <AboutCompany />
           <div className="landing-curve landing-dark-color">
             <svg
