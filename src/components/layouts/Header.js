@@ -1,7 +1,20 @@
+import { useState } from "react";
+import Login from "../login/Login";
+
 function Header() {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleLoginClick = () => {
+    if (!showPopup) {
+      setShowPopup(true);
+    } else {
+      setShowPopup(false);
+    }
+  };
+
   return (
     <div
-      className="landing-header"
+      className="landing-header header-bg"
       data-kt-sticky="true"
       data-kt-sticky-name="landing-header"
       data-kt-sticky-offset="{default: '200px', lg: '300px'}"
@@ -127,10 +140,14 @@ function Header() {
               </div>
             </div>
           </div>
-          <div className="flex-equal text-end ms-1">
-            <a href="#" className="btn btn-success georgian">
+          <div className="flex-equal ms-1">
+            <div
+              onClick={handleLoginClick}
+              className={` btn btn-success georgian `}
+            >
               ავტორიზაცია
-            </a>
+            </div>
+            {showPopup && <Login open={true} />}
           </div>
         </div>
       </div>
