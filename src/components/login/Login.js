@@ -2,9 +2,15 @@ import { useState } from "react";
 import Registration from "../registration/Registration";
 import styles from "../login/Login.module.css";
 
-function Login({ open }) {
+function Login({ open, handleLoginClick }) {
   const [showModal, setShowModal] = useState(open);
   const [showSecondModal, setShowSecondModal] = useState(false);
+
+  const [closeModal, setCloseModal] = useState(false);
+
+  const handleCloseModal = () => {
+    setCloseModal(false);
+  };
 
   const handleClick = () => {
     setShowModal(false);
@@ -32,9 +38,44 @@ function Login({ open }) {
       {showModal ? (
         <div className={`${styles.container}`}>
           <form onSubmit={handleSubmit}>
-            <div className="col">
-              <div onClick={handleClick} className={styles.registrationBtn}>
-                რეგისტრაცია
+            <div className="row">
+              <div className="d-flex justify-content-between align-items-center">
+                <div
+                  onClick={handleClick}
+                  className={`${styles.registrationBtn} row `}
+                >
+                  რეგისტრაცია
+                </div>
+                <svg
+                  onClick={handleLoginClick}
+                  className={styles.closeBtn}
+                  width="64px"
+                  height="64px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    stroke="#CCCCCC"
+                    strokeWidth="0.336"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <g id="Menu / Close_MD">
+                      <path
+                        id="Vector"
+                        d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
+                        stroke="#000000"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      ></path>
+                    </g>
+                  </g>
+                </svg>
               </div>
               <div className="d-grid gap-2">
                 <label>Email:</label>
@@ -66,7 +107,7 @@ function Login({ open }) {
                   className={` btn btn-success georgian ${styles.btn}`}
                   type="submit"
                 >
-                  Log in
+                  შესვლა
                 </button>
               </div>
             </div>

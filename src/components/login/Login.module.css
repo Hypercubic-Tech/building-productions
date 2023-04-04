@@ -6,7 +6,7 @@
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
-  width: 400px;
+  width: 324px;
   border-radius: 4px;
 }
 .btn {
@@ -17,4 +17,21 @@
   text-decoration: underline;
   cursor: pointer;
   margin: 10px 0;
+  display: inline-block;
+}
+.registrationBtn:hover {
+  text-decoration: none;
+}
+.closeBtn {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+.closeBtn path {
+  stroke: #00b1fe;
+  transition: 0.6s;
+}
+
+.closeBtn:hover path {
+  stroke: #0098da;
 }

@@ -21,8 +21,9 @@ function Header() {
     >
       <div className="container">
         <div className="d-flex align-items-center justify-content-between">
-          <div className="d-flex align-items-center flex-equal">
-            <button
+          <div className="d-flex align-items-center">
+            {/* flex-equal */}
+            {/* <button
               className="btn btn-icon btn-active-color-primary me-3 d-flex d-lg-none"
               id="kt_landing_menu_toggle"
             >
@@ -45,7 +46,7 @@ function Header() {
                   />
                 </svg>
               </span>
-            </button>
+            </button> */}
             <a href="../../demo11/dist/landing.html">
               <img
                 alt="Logo"
@@ -60,7 +61,7 @@ function Header() {
             </a>
           </div>
           <div className="d-lg-block" id="kt_header_nav_wrapper">
-            <div
+            {/* <div
               className="d-lg-block p-5 p-lg-0"
               data-kt-drawer="true"
               data-kt-drawer-name="landing-menu"
@@ -138,16 +139,19 @@ function Header() {
                   </a>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className="flex-equal ms-1">
+          <div className="ms-1">
+            {/* flex-equal*/}
             <div
               onClick={handleLoginClick}
               className={` btn btn-success georgian `}
             >
               ავტორიზაცია
             </div>
-            {showPopup && <Login open={true} />}
+            {showPopup && (
+              <Login handleLoginClick={handleLoginClick} open={true} />
+            )}
           </div>
         </div>
       </div>
