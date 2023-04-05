@@ -4,9 +4,28 @@ import logo2 from '../../../public/swiperImgs/logo2.jpg';
 import logo3 from '../../../public/swiperImgs/logo3.jpg'; 
 import logo4 from '../../../public/swiperImgs/logo4.jpg'; 
 
+const teemMembersData = [
+  {
+    teemMemberName: 'sergo sergo',
+    position: 'directori directori'
+  },
+  {
+    teemMemberName: 'sergo sergo',
+    position: 'directori directori'
+  },
+  {
+    teemMemberName: 'sergo sergo',
+    position: 'directori directori'
+  },
+  {
+    teemMemberName: 'sergo sergo',
+    position: 'directori directori'
+  }
+]
+
 const OurTeem = () => {
     return ( 
-        <div className="py-10 py-lg-20">
+      <div className="py-10 py-lg-20">
         <div className="container">
           <div className="text-center mb-12">
             <h3
@@ -25,7 +44,7 @@ const OurTeem = () => {
             </div>
           </div>
           <div className="tns tns-default">
-            <SwiperComp imgs={[logo1, logo2, logo3, logo4]} type={2} />
+            <SwiperComp imgs={[logo1, logo2, logo3, logo4]} type={2} teemMembers={teemMembersData} />
           </div>
         </div>
       </div>

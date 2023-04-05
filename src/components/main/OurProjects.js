@@ -1,4 +1,11 @@
+import { useState } from "react";
+
 const OurProjects = () => {
+  const [latest, setLatest] = useState(true);
+  const [webDesign, setWebDesign] = useState(false);
+  const [mobileApps, setMobileApps] = useState(false);
+  const [development, setDevelopment] = useState(false);
+
     return ( 
         <div className="mb-lg-n15 position-relative z-index-2">
         <div className="container">
@@ -22,8 +29,13 @@ const OurProjects = () => {
                 <ul className="nav border-transparent flex-center fs-5 fw-bold">
                   <li className="nav-item">
                     <a
-                      className="nav-link text-gray-500 text-active-primary px-3 px-lg-6 active"
-                      href="#"
+                      className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${[latest ? "active" : '' ]} `}
+                      onClick={() => {
+                        setLatest(true);
+                        setWebDesign(false);
+                        setDevelopment(false);
+                        setMobileApps(false);
+                      }}
                       data-bs-toggle="tab"
                       data-bs-target="#kt_landing_projects_latest"
                     >
@@ -32,8 +44,13 @@ const OurProjects = () => {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link text-gray-500 text-active-primary px-3 px-lg-6"
-                      href="#"
+                      className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${[webDesign ? "active" : '' ]}`}
+                      onClick={() => {
+                        setLatest(false);
+                        setWebDesign(true);
+                        setDevelopment(false);
+                        setMobileApps(false);
+                      }}
                       data-bs-toggle="tab"
                       data-bs-target="#kt_landing_projects_web_design"
                     >
@@ -42,8 +59,13 @@ const OurProjects = () => {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link text-gray-500 text-active-primary px-3 px-lg-6"
-                      href="#"
+                      className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${[mobileApps ? "active" : '' ]}`}
+                      onClick={() => {
+                        setLatest(false);
+                        setWebDesign(false);
+                        setDevelopment(false);
+                        setMobileApps(true);
+                      }}
                       data-bs-toggle="tab"
                       data-bs-target="#kt_landing_projects_mobile_apps"
                     >
@@ -52,8 +74,13 @@ const OurProjects = () => {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link text-gray-500 text-active-primary px-3 px-lg-6"
-                      href="#"
+                      className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${[development ? "active" : '' ]}`}
+                      onClick={() => {
+                        setLatest(false);
+                        setWebDesign(false);
+                        setDevelopment(true);
+                        setMobileApps(false);
+                      }}
                       data-bs-toggle="tab"
                       data-bs-target="#kt_landing_projects_development"
                     >
@@ -64,9 +91,10 @@ const OurProjects = () => {
               </div>
               <div className="tab-content">
                 <div
-                  className="tab-pane fade show active"
+                  className={`tab-pane fade ${[latest ? "active show" : '' ]}`}
                   id="kt_landing_projects_latest"
                 >
+                  {/* imgs */}
                   <div className="row g-10">
                     <div className="col-lg-6">
                       <a
@@ -145,7 +173,7 @@ const OurProjects = () => {
                   </div>
                 </div>
                 <div
-                  className="tab-pane fade"
+                  className={`tab-pane fade ${[webDesign ? "active show" : '' ]}`}
                   id="kt_landing_projects_web_design"
                 >
                   <div className="row g-10">
@@ -226,7 +254,7 @@ const OurProjects = () => {
                   </div>
                 </div>
                 <div
-                  className="tab-pane fade"
+                  className={`tab-pane fade ${[mobileApps ? "active show" : '' ]}`}
                   id="kt_landing_projects_mobile_apps"
                 >
                   <div className="row g-10">
@@ -307,7 +335,7 @@ const OurProjects = () => {
                   </div>
                 </div>
                 <div
-                  className="tab-pane fade"
+                  className={`tab-pane fade ${[development ? "active show" : '' ]}`}
                   id="kt_landing_projects_development"
                 >
                   <div className="row g-10">

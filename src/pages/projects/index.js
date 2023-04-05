@@ -1,16 +1,12 @@
 const Projects = () => {
   return (
     <>
-      {/*begin::Head*/}
       <div className="d-flex flex-column flex-root">
-        {/*begin::Page*/}
         <div className="page d-flex flex-row flex-column-fluid">
-          {/*begin::Wrapper*/}
           <div
             className="wrapper d-flex flex-column flex-row-fluid"
             id="kt_wrapper"
           >
-            {/*begin::Header*/}
             <div
               id="kt_header"
               className="header"
@@ -18,16 +14,12 @@ const Projects = () => {
               data-kt-sticky-name="header"
               data-kt-sticky-offset="{default: '200px', lg: '300px'}"
             >
-              {/*begin::Container*/}
               <div className="container-xxl d-flex flex-grow-1 flex-stack">
-                {/*begin::Header Logo*/}
                 <div className="d-flex align-items-center me-5">
-                  {/*begin::Heaeder menu toggle*/}
                   <div
                     className="d-lg-none btn btn-icon btn-active-color-primary w-30px h-30px ms-n2 me-3"
                     id="kt_header_menu_toggle"
                   >
-                    {/*begin::Svg Icon | path: icons/duotune/abstract/abs015.svg*/}
                     <span className="svg-icon svg-icon-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -47,9 +39,7 @@ const Projects = () => {
                         />
                       </svg>
                     </span>
-                    {/*end::Svg Icon*/}
                   </div>
-                  {/*end::Heaeder menu toggle*/}
                   <a href="../../demo11/dist/index.html">
                     <img
                       alt="Logo"
@@ -58,12 +48,8 @@ const Projects = () => {
                     />
                   </a>
                 </div>
-                {/*end::Header Logo*/}
-                {/*begin::Topbar*/}
                 <div className="d-flex align-items-center">
-                  {/*begin::Topbar*/}
                   <div className="d-flex align-items-center flex-shrink-0">
-                    {/*begin::Search*/}
                     <div
                       id="kt_header_search"
                       className="d-flex align-items-center w-lg-225px"
@@ -76,13 +62,11 @@ const Projects = () => {
                       data-kt-menu-permanent="true"
                       data-kt-menu-placement="bottom-end"
                     >
-                      {/*begin::Tablet and mobile search toggle*/}
                       <div
                         data-kt-search-element="toggle"
                         className="d-flex d-lg-none align-items-center"
                       >
                         <div className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px">
-                          {/*begin::Svg Icon | path: icons/duotune/general/gen004.svg*/}
                           <span className="svg-icon svg-icon-2">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -102,21 +86,14 @@ const Projects = () => {
                               />
                             </svg>
                           </span>
-                          {/*end::Svg Icon*/}
                         </div>
                       </div>
-                      {/*end::Tablet and mobile search toggle*/}
-                      {/*begin::Form*/}
                       <form
                         data-kt-search-element="form"
                         className="d-none d-lg-block w-100 mb-5 mb-lg-0 position-relative"
                         autoComplete="off"
                       >
-                        {/*begin::Hidden input(Added to disable form autocomplete)*/}
                         <input type="hidden" />
-                        {/*end::Hidden input*/}
-                        {/*begin::Icon*/}
-                        {/*begin::Svg Icon | path: icons/duotune/general/gen004.svg*/}
                         <span className="svg-icon svg-icon-2 svg-icon-gray-700 position-absolute top-50 translate-middle-y ms-4">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -136,9 +113,6 @@ const Projects = () => {
                             />
                           </svg>
                         </span>
-                        {/*end::Svg Icon*/}
-                        {/*end::Icon*/}
-                        {/*begin::Input*/}
                         <input
                           type="text"
                           className="form-control bg-transparent ps-13 fs-7 h-40px"
@@ -147,21 +121,16 @@ const Projects = () => {
                           placeholder="Quick Search"
                           data-kt-search-element="input"
                         />
-                        {/*end::Input*/}
-                        {/*begin::Spinner*/}
                         <span
                           className="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5"
                           data-kt-search-element="spinner"
                         >
                           <span className="spinner-border h-15px w-15px align-middle text-gray-400" />
                         </span>
-                        {/*end::Spinner*/}
-                        {/*begin::Reset*/}
                         <span
                           className="btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-4"
                           data-kt-search-element="clear"
                         >
-                          {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
                           <span className="svg-icon svg-icon-2 svg-icon-lg-1 me-0">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -191,47 +160,34 @@ const Projects = () => {
                               />
                             </svg>
                           </span>
-                          {/*end::Svg Icon*/}
                         </span>
-                        {/*end::Reset*/}
                       </form>
-                      {/*end::Form*/}
-                      {/*begin::Menu*/}
                       <div
                         data-kt-search-element="content"
                         className="menu menu-sub menu-sub-dropdown w-300px w-md-350px py-7 px-7 overflow-hidden"
                       >
-                        {/*begin::Wrapper*/}
                         <div data-kt-search-element="wrapper">
-                          {/*begin::Recently viewed*/}
                           <div
                             data-kt-search-element="results"
                             className="d-none"
                           >
-                            {/*begin::Items*/}
                             <div className="scroll-y mh-200px mh-lg-350px">
-                              {/*begin::Category title*/}
                               <h3
                                 className="fs-5 text-muted m-0 pb-5"
                                 data-kt-search-element="category-title"
                               >
                                 Users
                               </h3>
-                              {/*end::Category title*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <img
                                     src="assets/media/avatars/150-1.png"
                                     alt=""
                                   />
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Karina Clark
@@ -240,23 +196,17 @@ const Projects = () => {
                                     Marketing Manager
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <img
                                     src="assets/media/avatars/150-3.jpg"
                                     alt=""
                                   />
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Olivia Bold
@@ -265,23 +215,17 @@ const Projects = () => {
                                     Software Engineer
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <img
                                     src="assets/media/avatars/150-8.jpg"
                                     alt=""
                                   />
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Ana Clark
@@ -290,23 +234,17 @@ const Projects = () => {
                                     UI/UX Designer
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <img
                                     src="assets/media/avatars/150-11.jpg"
                                     alt=""
                                   />
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Nick Pitola
@@ -315,23 +253,17 @@ const Projects = () => {
                                     Art Director
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <img
                                     src="assets/media/avatars/150-12.jpg"
                                     alt=""
                                   />
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Edward Kulnic
@@ -340,23 +272,17 @@ const Projects = () => {
                                     System Administrator
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Category title*/}
                               <h3
                                 className="fs-5 text-muted m-0 pt-5 pb-5"
                                 data-kt-search-element="category-title"
                               >
                                 Customers
                               </h3>
-                              {/*end::Category title*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
                                     <img
@@ -366,8 +292,6 @@ const Projects = () => {
                                     />
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Company Rbranding
@@ -376,15 +300,11 @@ const Projects = () => {
                                     UI Design
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
                                     <img
@@ -394,8 +314,6 @@ const Projects = () => {
                                     />
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Company Re-branding
@@ -404,15 +322,11 @@ const Projects = () => {
                                     Web Development
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
                                     <img
@@ -422,8 +336,6 @@ const Projects = () => {
                                     />
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Business Analytics App
@@ -432,15 +344,11 @@ const Projects = () => {
                                     Administration
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
                                     <img
@@ -450,8 +358,6 @@ const Projects = () => {
                                     />
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     EcoLeaf App Launch
@@ -460,15 +366,11 @@ const Projects = () => {
                                     Marketing
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
                                     <img
@@ -478,8 +380,6 @@ const Projects = () => {
                                     />
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column justify-content-start fw-bold">
                                   <span className="fs-6 fw-bold">
                                     Tower Group Website
@@ -488,26 +388,19 @@ const Projects = () => {
                                     Google Adwords
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Category title*/}
                               <h3
                                 className="fs-5 text-muted m-0 pt-5 pb-5"
                                 data-kt-search-element="category-title"
                               >
                                 Projects
                               </h3>
-                              {/*end::Category title*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/general/gen005.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -527,11 +420,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <span className="fs-6 fw-bold">
                                     Si-Fi Project by AU Themes
@@ -540,18 +430,13 @@ const Projects = () => {
                                     #45670
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/general/gen032.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -595,11 +480,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <span className="fs-6 fw-bold">
                                     Shopix Mobile App Planning
@@ -608,18 +490,13 @@ const Projects = () => {
                                     #45690
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/communication/com012.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -651,11 +528,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <span className="fs-6 fw-bold">
                                     Finance Monitoring SAAS Discussion
@@ -664,18 +538,13 @@ const Projects = () => {
                                     #21090
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <a
                                 href="#"
                                 className="d-flex text-dark text-hover-primary align-items-center mb-5"
                               >
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/communication/com006.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -695,11 +564,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <span className="fs-6 fw-bold">
                                     Dashboard Analitics Launch
@@ -708,34 +574,23 @@ const Projects = () => {
                                     #34560
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </a>
-                              {/*end::Item*/}
                             </div>
-                            {/*end::Items*/}
                           </div>
-                          {/*end::Recently viewed*/}
-                          {/*begin::Recently viewed*/}
                           <div data-kt-search-element="main">
-                            {/*begin::Heading*/}
                             <div className="d-flex flex-stack fw-bold mb-5">
-                              {/*begin::Label*/}
                               <span className="text-muted fs-6 me-2">
                                 Recently Searched
                               </span>
-                              {/*end::Label*/}
-                              {/*begin::Toolbar*/}
                               <div
                                 className="d-flex"
                                 data-kt-search-element="toolbar"
                               >
-                                {/*begin::Preferences toggle*/}
                                 <div
                                   data-kt-search-element="preferences-show"
                                   className="btn btn-icon w-20px btn-sm btn-active-color-primary me-2 data-bs-toggle="
                                   title="Show search preferences"
                                 >
-                                  {/*begin::Svg Icon | path: icons/duotune/coding/cod001.svg*/}
                                   <span className="svg-icon svg-icon-1">
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
@@ -755,17 +610,13 @@ const Projects = () => {
                                       />
                                     </svg>
                                   </span>
-                                  {/*end::Svg Icon*/}
                                 </div>
-                                {/*end::Preferences toggle*/}
-                                {/*begin::Advanced search toggle*/}
                                 <div
                                   data-kt-search-element="advanced-options-form-show"
                                   className="btn btn-icon w-20px btn-sm btn-active-color-primary me-n1"
                                   data-bs-toggle="tooltip"
                                   title="Show more search options"
                                 >
-                                  {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                   <span className="svg-icon svg-icon-2">
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
@@ -780,21 +631,13 @@ const Projects = () => {
                                       />
                                     </svg>
                                   </span>
-                                  {/*end::Svg Icon*/}
                                 </div>
-                                {/*end::Advanced search toggle*/}
                               </div>
-                              {/*end::Toolbar*/}
                             </div>
-                            {/*end::Heading*/}
-                            {/*begin::Items*/}
                             <div className="scroll-y mh-200px mh-lg-325px">
-                              {/*begin::Item*/}
                               <div className="d-flex align-items-center mb-5">
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/electronics/elc004.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -819,11 +662,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <a
                                     href="#"
@@ -835,15 +675,10 @@ const Projects = () => {
                                     #45789
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </div>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <div className="d-flex align-items-center mb-5">
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/graphs/gra001.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -863,11 +698,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <a
                                     href="#"
@@ -879,15 +711,10 @@ const Projects = () => {
                                     #84050
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </div>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <div className="d-flex align-items-center mb-5">
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/graphs/gra006.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -907,11 +734,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <a
                                     href="#"
@@ -923,15 +747,10 @@ const Projects = () => {
                                     #84250
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </div>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <div className="d-flex align-items-center mb-5">
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/graphs/gra002.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -951,11 +770,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <a
                                     href="#"
@@ -967,15 +783,10 @@ const Projects = () => {
                                     #67945
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </div>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <div className="d-flex align-items-center mb-5">
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/communication/com010.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -995,11 +806,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <a
                                     href="#"
@@ -1011,15 +819,10 @@ const Projects = () => {
                                     #84250
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </div>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <div className="d-flex align-items-center mb-5">
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/finance/fin001.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -1039,11 +842,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <a
                                     href="#"
@@ -1055,15 +855,10 @@ const Projects = () => {
                                     #45690
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </div>
-                              {/*end::Item*/}
-                              {/*begin::Item*/}
                               <div className="d-flex align-items-center mb-5">
-                                {/*begin::Symbol*/}
                                 <div className="symbol symbol-40px me-4">
                                   <span className="symbol-label bg-light">
-                                    {/*begin::Svg Icon | path: icons/duotune/graphs/gra002.svg*/}
                                     <span className="svg-icon svg-icon-2 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -1083,11 +878,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </div>
-                                {/*end::Symbol*/}
-                                {/*begin::Title*/}
                                 <div className="d-flex flex-column">
                                   <a
                                     href="#"
@@ -1099,21 +891,14 @@ const Projects = () => {
                                     #24005
                                   </span>
                                 </div>
-                                {/*end::Title*/}
                               </div>
-                              {/*end::Item*/}
                             </div>
-                            {/*end::Items*/}
                           </div>
-                          {/*end::Recently viewed*/}
-                          {/*begin::Empty*/}
                           <div
                             data-kt-search-element="empty"
                             className="text-center d-none"
                           >
-                            {/*begin::Icon*/}
                             <div className="pt-10 pb-10">
-                              {/*begin::Svg Icon | path: icons/duotune/files/fil024.svg*/}
                               <span className="svg-icon svg-icon-4x opacity-50">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -1146,10 +931,7 @@ const Projects = () => {
                                   />
                                 </svg>
                               </span>
-                              {/*end::Svg Icon*/}
                             </div>
-                            {/*end::Icon*/}
-                            {/*begin::Message*/}
                             <div className="pb-15 fw-bold">
                               <h3 className="text-gray-600 fs-5 mb-2">
                                 No result found
@@ -1158,22 +940,15 @@ const Projects = () => {
                                 Please try again with a different query
                               </div>
                             </div>
-                            {/*end::Message*/}
                           </div>
-                          {/*end::Empty*/}
                         </div>
-                        {/*end::Wrapper*/}
-                        {/*begin::Preferences*/}
                         <form
                           data-kt-search-element="advanced-options-form"
                           className="pt-1 d-none"
                         >
-                          {/*begin::Heading*/}
                           <h3 className="fw-bold text-dark mb-7">
                             Advanced Search
                           </h3>
-                          {/*end::Heading*/}
-                          {/*begin::Input group*/}
                           <div className="mb-5">
                             <input
                               type="text"
@@ -1182,12 +957,8 @@ const Projects = () => {
                               name="query"
                             />
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="mb-5">
-                            {/*begin::Radio group*/}
                             <div className="nav-group nav-group-fluid">
-                              {/*begin::Option*/}
                               <label>
                                 <input
                                   type="radio"
@@ -1200,8 +971,6 @@ const Projects = () => {
                                   All
                                 </span>
                               </label>
-                              {/*end::Option*/}
-                              {/*begin::Option*/}
                               <label>
                                 <input
                                   type="radio"
@@ -1213,8 +982,6 @@ const Projects = () => {
                                   Users
                                 </span>
                               </label>
-                              {/*end::Option*/}
-                              {/*begin::Option*/}
                               <label>
                                 <input
                                   type="radio"
@@ -1226,8 +993,6 @@ const Projects = () => {
                                   Orders
                                 </span>
                               </label>
-                              {/*end::Option*/}
-                              {/*begin::Option*/}
                               <label>
                                 <input
                                   type="radio"
@@ -1239,12 +1004,8 @@ const Projects = () => {
                                   Projects
                                 </span>
                               </label>
-                              {/*end::Option*/}
                             </div>
-                            {/*end::Radio group*/}
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="mb-5">
                             <input
                               type="text"
@@ -1254,8 +1015,6 @@ const Projects = () => {
                               defaultValue=""
                             />
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="mb-5">
                             <input
                               type="text"
@@ -1265,12 +1024,8 @@ const Projects = () => {
                               defaultValue=""
                             />
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="mb-5">
-                            {/*begin::Radio group*/}
                             <div className="nav-group nav-group-fluid">
-                              {/*begin::Option*/}
                               <label>
                                 <input
                                   type="radio"
@@ -1283,8 +1038,6 @@ const Projects = () => {
                                   Has attachment
                                 </span>
                               </label>
-                              {/*end::Option*/}
-                              {/*begin::Option*/}
                               <label>
                                 <input
                                   type="radio"
@@ -1296,12 +1049,8 @@ const Projects = () => {
                                   Any
                                 </span>
                               </label>
-                              {/*end::Option*/}
                             </div>
-                            {/*end::Radio group*/}
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="mb-5">
                             <select
                               name="timezone"
@@ -1316,10 +1065,7 @@ const Projects = () => {
                               <option value="on">On</option>
                             </select>
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="row mb-8">
-                            {/*begin::Col*/}
                             <div className="col-6">
                               <input
                                 type="number"
@@ -1329,8 +1075,6 @@ const Projects = () => {
                                 defaultValue=""
                               />
                             </div>
-                            {/*end::Col*/}
-                            {/*begin::Col*/}
                             <div className="col-6">
                               <select
                                 name="date_typer"
@@ -1345,10 +1089,7 @@ const Projects = () => {
                                 <option value="years">Years</option>
                               </select>
                             </div>
-                            {/*end::Col*/}
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Actions*/}
                           <div className="d-flex justify-content-end">
                             <button
                               type="reset"
@@ -1365,20 +1106,14 @@ const Projects = () => {
                               Search
                             </a>
                           </div>
-                          {/*end::Actions*/}
                         </form>
-                        {/*end::Preferences*/}
-                        {/*begin::Preferences*/}
                         <form
                           data-kt-search-element="preferences"
                           className="pt-1 d-none"
                         >
-                          {/*begin::Heading*/}
                           <h3 className="fw-bold text-dark mb-7">
                             Search Preferences
                           </h3>
-                          {/*end::Heading*/}
-                          {/*begin::Input group*/}
                           <div className="pb-4 border-bottom">
                             <label className="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                               <span className="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">
@@ -1392,8 +1127,6 @@ const Projects = () => {
                               />
                             </label>
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="py-4 border-bottom">
                             <label className="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                               <span className="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">
@@ -1407,8 +1140,6 @@ const Projects = () => {
                               />
                             </label>
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="py-4 border-bottom">
                             <label className="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                               <span className="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">
@@ -1421,8 +1152,6 @@ const Projects = () => {
                               />
                             </label>
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="py-4 border-bottom">
                             <label className="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                               <span className="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">
@@ -1436,8 +1165,6 @@ const Projects = () => {
                               />
                             </label>
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Input group*/}
                           <div className="py-4 border-bottom">
                             <label className="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                               <span className="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">
@@ -1450,8 +1177,6 @@ const Projects = () => {
                               />
                             </label>
                           </div>
-                          {/*end::Input group*/}
-                          {/*begin::Actions*/}
                           <div className="d-flex justify-content-end pt-7">
                             <button
                               type="reset"
@@ -1467,21 +1192,14 @@ const Projects = () => {
                               Save Changes
                             </button>
                           </div>
-                          {/*end::Actions*/}
                         </form>
-                        {/*end::Preferences*/}
                       </div>
-                      {/*end::Menu*/}
                     </div>
-                    {/*end::Search*/}
-                    {/*begin::Activities*/}
                     <div className="d-flex align-items-center ms-3 ms-lg-4">
-                      {/*begin::Drawer toggle*/}
                       <div
                         className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
                         id="kt_activities_toggle"
                       >
-                        {/*begin::Svg Icon | path: icons/duotune/general/gen032.svg*/}
                         <span className="svg-icon svg-icon-1">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -1495,25 +1213,18 @@ const Projects = () => {
                             <path d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z" />
                           </svg>
                         </span>
-                        {/*end::Svg Icon*/}
                       </div>
-                      {/*end::Drawer toggle*/}
                     </div>
-                    {/*end::Activities*/}
-                    {/*begin::User*/}
                     <div
                       className="d-flex align-items-center ms-3 ms-lg-4"
                       id="kt_header_user_menu_toggle"
                     >
-                      {/*begin::Menu- wrapper*/}
-                      {/*begin::User icon(remove this button to use user avatar as menu toggle)*/}
                       <div
                         className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px"
                         data-kt-menu-trigger="click"
                         data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end"
                       >
-                        {/*begin::Svg Icon | path: icons/duotune/communication/com013.svg*/}
                         <span className="svg-icon svg-icon-1">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -1537,26 +1248,19 @@ const Projects = () => {
                             />
                           </svg>
                         </span>
-                        {/*end::Svg Icon*/}
                       </div>
-                      {/*end::User icon*/}
-                      {/*begin::Menu*/}
                       <div
                         className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
                         data-kt-menu="true"
                       >
-                        {/*begin::Menu item*/}
                         <div className="menu-item px-3">
                           <div className="menu-content d-flex align-items-center px-3">
-                            {/*begin::Avatar*/}
                             <div className="symbol symbol-50px me-5">
                               <img
                                 alt="Logo"
                                 src="assets/media/avatars/150-26.jpg"
                               />
                             </div>
-                            {/*end::Avatar*/}
-                            {/*begin::Username*/}
                             <div className="d-flex flex-column">
                               <div className="fw-bolder d-flex align-items-center fs-5">
                                 Max Smith
@@ -1571,14 +1275,9 @@ const Projects = () => {
                                 max@kt.com
                               </a>
                             </div>
-                            {/*end::Username*/}
                           </div>
                         </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu separator*/}
                         <div className="separator my-2" />
-                        {/*end::Menu separator*/}
-                        {/*begin::Menu item*/}
                         <div className="menu-item px-5">
                           <a
                             href="../../demo11/dist/account/overview.html"
@@ -1587,8 +1286,6 @@ const Projects = () => {
                             My Profile
                           </a>
                         </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
                         <div className="menu-item px-5">
                           <a
                             href="../../demo11/dist/pages/projects/list.html"
@@ -1602,8 +1299,6 @@ const Projects = () => {
                             </span>
                           </a>
                         </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
                         <div
                           className="menu-item px-5"
                           data-kt-menu-trigger="hover"
@@ -1613,9 +1308,7 @@ const Projects = () => {
                             <span className="menu-title">My Subscription</span>
                             <span className="menu-arrow" />
                           </a>
-                          {/*begin::Menu sub*/}
                           <div className="menu-sub menu-sub-dropdown w-175px py-4">
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/referrals.html"
@@ -1624,8 +1317,6 @@ const Projects = () => {
                                 Referrals
                               </a>
                             </div>
-                            {/*end::Menu item*/}
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/billing.html"
@@ -1634,8 +1325,6 @@ const Projects = () => {
                                 Billing
                               </a>
                             </div>
-                            {/*end::Menu item*/}
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/statements.html"
@@ -1644,8 +1333,6 @@ const Projects = () => {
                                 Payments
                               </a>
                             </div>
-                            {/*end::Menu item*/}
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/statements.html"
@@ -1659,11 +1346,7 @@ const Projects = () => {
                                 />
                               </a>
                             </div>
-                            {/*end::Menu item*/}
-                            {/*begin::Menu separator*/}
                             <div className="separator my-2" />
-                            {/*end::Menu separator*/}
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <div className="menu-content px-3">
                                 <label className="form-check form-switch form-check-custom form-check-solid">
@@ -1680,12 +1363,8 @@ const Projects = () => {
                                 </label>
                               </div>
                             </div>
-                            {/*end::Menu item*/}
                           </div>
-                          {/*end::Menu sub*/}
                         </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
                         <div className="menu-item px-5">
                           <a
                             href="../../demo11/dist/account/statements.html"
@@ -1694,11 +1373,7 @@ const Projects = () => {
                             My Statements
                           </a>
                         </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu separator*/}
                         <div className="separator my-2" />
-                        {/*end::Menu separator*/}
-                        {/*begin::Menu item*/}
                         <div
                           className="menu-item px-5"
                           data-kt-menu-trigger="hover"
@@ -1717,9 +1392,7 @@ const Projects = () => {
                               </span>
                             </span>
                           </a>
-                          {/*begin::Menu sub*/}
                           <div className="menu-sub menu-sub-dropdown w-175px py-4">
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/settings.html"
@@ -1735,8 +1408,6 @@ const Projects = () => {
                                 English
                               </a>
                             </div>
-                            {/*end::Menu item*/}
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/settings.html"
@@ -1752,8 +1423,6 @@ const Projects = () => {
                                 Spanish
                               </a>
                             </div>
-                            {/*end::Menu item*/}
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/settings.html"
@@ -1769,8 +1438,6 @@ const Projects = () => {
                                 German
                               </a>
                             </div>
-                            {/*end::Menu item*/}
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/settings.html"
@@ -1786,8 +1453,6 @@ const Projects = () => {
                                 Japanese
                               </a>
                             </div>
-                            {/*end::Menu item*/}
-                            {/*begin::Menu item*/}
                             <div className="menu-item px-3">
                               <a
                                 href="../../demo11/dist/account/settings.html"
@@ -1803,12 +1468,8 @@ const Projects = () => {
                                 French
                               </a>
                             </div>
-                            {/*end::Menu item*/}
                           </div>
-                          {/*end::Menu sub*/}
                         </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
                         <div className="menu-item px-5 my-1">
                           <a
                             href="../../demo11/dist/account/settings.html"
@@ -1817,8 +1478,6 @@ const Projects = () => {
                             Account Settings
                           </a>
                         </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu item*/}
                         <div className="menu-item px-5">
                           <a
                             href="../../demo11/dist/authentication/flows/basic/sign-in.html"
@@ -1827,11 +1486,7 @@ const Projects = () => {
                             Sign Out
                           </a>
                         </div>
-                        {/*end::Menu item*/}
-                        {/*begin::Menu separator*/}
                         <div className="separator my-2" />
-                        {/*end::Menu separator*/}
-                        {/*begin::Menu item*/}
                         <div className="menu-item px-5">
                           <div className="menu-content px-5">
                             <label
@@ -1853,28 +1508,16 @@ const Projects = () => {
                             </label>
                           </div>
                         </div>
-                        {/*end::Menu item*/}
                       </div>
-                      {/*end::Menu*/}
-                      {/*end::Menu wrapper*/}
                     </div>
-                    {/*end::User */}
-                    {/*begin::Sidebar Toggler*/}
-                    {/*end::Sidebar Toggler*/}
                   </div>
-                  {/*end::Topbar*/}
                 </div>
-                {/*end::Topbar*/}
               </div>
-              {/*end::Container*/}
-              {/*begin::Separator*/}
               <div className="separator" />
-              {/*end::Separator*/}
               <div
                 className="header-menu-container container-xxl d-flex flex-stack h-lg-75px"
                 id="kt_header_nav"
               >
-                {/*begin::Menu wrapper*/}
                 <div
                   className="header-menu flex-column flex-lg-row"
                   data-kt-drawer="true"
@@ -1888,7 +1531,6 @@ const Projects = () => {
                   data-kt-swapper-mode="prepend"
                   data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}"
                 >
-                  {/*begin::Menu*/}
                   <div
                     className="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch flex-grow-1"
                     id="#kt_header_menu"
@@ -1980,22 +1622,15 @@ const Projects = () => {
                       </span>
                     </div>
                   </div>
-                  {/*end::Menu*/}
                 </div>
-                {/*end::Menu wrapper*/}
               </div>
             </div>
-            {/*end::Header*/}
-            {/*begin::Toolbar*/}
             <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
-              {/*begin::Container*/}
               <div
                 id="kt_toolbar_container"
                 className="container-xxl d-flex flex-stack flex-wrap"
               >
-                {/*begin::Page title*/}
                 <div className="page-title d-flex flex-column me-3">
-                  {/*begin::Title*/}
                   <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -2009,8 +1644,6 @@ const Projects = () => {
                     </svg>
                     &nbsp;წერეთლის ქუჩა N114{" "}
                   </h1>
-                  {/*end::Title*/}
-                  {/*begin::Breadcrumb*/}
                   <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
                     <li className="breadcrumb-item text-gray-600 georgian">
                       ბინა
@@ -2025,14 +1658,9 @@ const Projects = () => {
                       29.03.2023 - 29.05.2023
                     </li>
                   </ul>
-                  {/*end::Breadcrumb*/}
                 </div>
-                {/*end::Page title*/}
-                {/*begin::Actions*/}
                 <div className="d-flex align-items-center py-2 py-md-1">
-                  {/*begin::Wrapper*/}
                   <div className="me-3">
-                    {/*begin::Menu*/}
                     <a
                       href="#"
                       className="btn btn-light-primary fw-bolder georgian"
@@ -2048,9 +1676,7 @@ const Projects = () => {
                       id="kt_menu_61484d4eae1ca"
                     ></div>
                   </div>
-                  {/*end::Wrapper*/}
                   <div className="d-flex align-items-center py-2 py-md-1">
-                    {/*begin::Button*/}
                     <a
                       href="#"
                       className="btn btn-primary fw-bolder georgian"
@@ -2070,37 +1696,23 @@ const Projects = () => {
                       </svg>
                       ნახაზები
                     </a>
-                    {/*end::Button*/}
                   </div>
                 </div>
-                {/*end::Actions*/}
               </div>
-              {/*end::Container*/}
             </div>
-            {/*end::Toolbar*/}
-            {/*begin::Container*/}
             <div
               id="kt_content_container"
               className="d-flex flex-column-fluid align-items-start container-xxl"
             >
-              {/*begin::Post*/}
               <div className="content flex-row-fluid" id="kt_content">
-                {/*begin::Row*/}
                 <div className="row gy-0 gx-10">
-                  {/*begin::Col*/}
                   <div className="col-xl-12">
-                    {/*begin::General Widget 1*/}
                     <div className="mb-10">
                       <div className="content flex-row-fluid" id="kt_content">
-                        {/*begin::Card*/}
                         <div className="card">
-                          {/*begin::Card header*/}
                           <div className="card-header border-0 pt-6">
-                            {/*begin::Card title*/}
                             <div className="card-title">
-                              {/*begin::Search*/}
                               <div className="d-flex align-items-center position-relative my-1">
-                                {/*begin::Svg Icon | path: icons/duotune/general/gen021.svg*/}
                                 <span className="svg-icon svg-icon-1 position-absolute ms-6">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -2125,7 +1737,6 @@ const Projects = () => {
                                     />
                                   </svg>
                                 </span>
-                                {/*end::Svg Icon*/}
                                 <input
                                   type="text"
                                   data-kt-user-table-filter="search"
@@ -2133,17 +1744,12 @@ const Projects = () => {
                                   placeholder="ძებნა"
                                 />
                               </div>
-                              {/*end::Search*/}
                             </div>
-                            {/*begin::Card title*/}
-                            {/*begin::Card toolbar*/}
                             <div className="card-toolbar">
-                              {/*begin::Toolbar*/}
                               <div
                                 className="d-flex justify-content-end"
                                 data-kt-user-table-toolbar="base"
                               >
-                                {/*begin::Filter*/}
                                 <button
                                   type="button"
                                   className="btn btn-light-primary me-3"
@@ -2166,27 +1772,20 @@ const Projects = () => {
                                   </span>
                                   <b className="georgian">ფილტრი</b>
                                 </button>
-                                {/*begin::Menu 1*/}
                                 <div
                                   className="menu menu-sub menu-sub-dropdown w-300px w-md-325px"
                                   data-kt-menu="true"
                                 >
-                                  {/*begin::Header*/}
                                   <div className="px-7 py-5">
                                     <div className="fs-5 text-dark fw-bolder">
                                       Filter Options
                                     </div>
                                   </div>
-                                  {/*end::Header*/}
-                                  {/*begin::Separator*/}
                                   <div className="separator border-gray-200" />
-                                  {/*end::Separator*/}
-                                  {/*begin::Content*/}
                                   <div
                                     className="px-7 py-5"
                                     data-kt-user-table-filter="form"
                                   >
-                                    {/*begin::Input group*/}
                                     <div className="mb-10">
                                       <label className="form-label fs-6 fw-bold">
                                         Role:
@@ -2211,8 +1810,6 @@ const Projects = () => {
                                         <option value="Trial">Trial</option>
                                       </select>
                                     </div>
-                                    {/*end::Input group*/}
-                                    {/*begin::Input group*/}
                                     <div className="mb-10">
                                       <label className="form-label fs-6 fw-bold">
                                         Two Step Verification:
@@ -2229,8 +1826,6 @@ const Projects = () => {
                                         <option value="Enabled">Enabled</option>
                                       </select>
                                     </div>
-                                    {/*end::Input group*/}
-                                    {/*begin::Actions*/}
                                     <div className="d-flex justify-content-end">
                                       <button
                                         type="reset"
@@ -2249,13 +1844,8 @@ const Projects = () => {
                                         Apply
                                       </button>
                                     </div>
-                                    {/*end::Actions*/}
                                   </div>
-                                  {/*end::Content*/}
                                 </div>
-                                {/*end::Menu 1*/}
-                                {/*end::Filter*/}
-                                {/*begin::Export*/}
                                 <button
                                   type="button"
                                   className="btn btn-light-primary me-3 georgian"
@@ -2337,23 +1927,16 @@ const Projects = () => {
                                 tabIndex={-1}
                                 aria-hidden="true"
                               >
-                                {/*begin::Modal dialog*/}
                                 <div className="modal-dialog modal-dialog-centered mw-650px">
-                                  {/*begin::Modal content*/}
                                   <div className="modal-content">
-                                    {/*begin::Modal header*/}
                                     <div className="modal-header">
-                                      {/*begin::Modal title*/}
                                       <h2 className="fw-bolder georgian">
                                         მონაცემების ამოღება
                                       </h2>
-                                      {/*end::Modal title*/}
-                                      {/*begin::Close*/}
                                       <div
                                         className="btn btn-icon btn-sm btn-active-icon-primary"
                                         data-kt-users-modal-action="close"
                                       >
-                                        {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
                                         <span className="svg-icon svg-icon-1">
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -2383,27 +1966,18 @@ const Projects = () => {
                                             />
                                           </svg>
                                         </span>
-                                        {/*end::Svg Icon*/}
                                       </div>
-                                      {/*end::Close*/}
                                     </div>
-                                    {/*end::Modal header*/}
-                                    {/*begin::Modal body*/}
                                     <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                      {/*begin::Form*/}
                                       <form
                                         id="kt_modal_export_users_form"
                                         className="form"
                                         action="#"
                                       >
-                                        {/*begin::Input group*/}
                                         <div className="fv-row mb-10">
-                                          {/*begin::Label*/}
                                           <label className="fs-6 fw-bold form-label mb-2 georgian">
                                             კატეგორია:
                                           </label>
-                                          {/*end::Label*/}
-                                          {/*begin::Input*/}
                                           <select
                                             name="role"
                                             data-control="select2"
@@ -2426,17 +2000,11 @@ const Projects = () => {
                                             </option>
                                             <option value={6}>ყველა</option>
                                           </select>
-                                          {/*end::Input*/}
                                         </div>
-                                        {/*end::Input group*/}
-                                        {/*begin::Input group*/}
                                         <div className="fv-row mb-10">
-                                          {/*begin::Label*/}
                                           <label className="required fs-6 fw-bold form-label mb-2 georgian">
                                             აირჩიეთ ფორმატი:
                                           </label>
-                                          {/*end::Label*/}
-                                          {/*begin::Input*/}
                                           <select
                                             name="format"
                                             data-control="select2"
@@ -2450,10 +2018,7 @@ const Projects = () => {
                                             <option value="cvs">CVS</option>
                                             <option value="zip">ZIP</option>
                                           </select>
-                                          {/*end::Input*/}
                                         </div>
-                                        {/*end::Input group*/}
-                                        {/*begin::Actions*/}
                                         <div className="text-center">
                                           <button
                                             type="reset"
@@ -2476,44 +2041,30 @@ const Projects = () => {
                                             </span>
                                           </button>
                                         </div>
-                                        {/*end::Actions*/}
                                       </form>
-                                      {/*end::Form*/}
                                     </div>
-                                    {/*end::Modal body*/}
                                   </div>
-                                  {/*end::Modal content*/}
                                 </div>
-                                {/*end::Modal dialog*/}
                               </div>
-                              {/*end::Modal - New Card*/}
-                              {/*begin::Modal - Add task*/}
                               <div
                                 className="modal fade"
                                 id="kt_modal_add_user"
                                 tabIndex={-1}
                                 aria-hidden="true"
                               >
-                                {/*begin::Modal dialog*/}
                                 <div className="modal-dialog modal-dialog-centered mw-650px">
-                                  {/*begin::Modal content*/}
                                   <div className="modal-content">
-                                    {/*begin::Modal header*/}
                                     <div
                                       className="modal-header"
                                       id="kt_modal_add_user_header"
                                     >
-                                      {/*begin::Modal title*/}
                                       <h2 className="fw-bolder georgian">
                                         პროდუქციის დამატება
                                       </h2>
-                                      {/*end::Modal title*/}
-                                      {/*begin::Close*/}
                                       <div
                                         className="btn btn-icon btn-sm btn-active-icon-primary"
                                         data-kt-users-modal-action="close"
                                       >
-                                        {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
                                         <span className="svg-icon svg-icon-1">
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -2543,20 +2094,14 @@ const Projects = () => {
                                             />
                                           </svg>
                                         </span>
-                                        {/*end::Svg Icon*/}
                                       </div>
-                                      {/*end::Close*/}
                                     </div>
-                                    {/*end::Modal header*/}
-                                    {/*begin::Modal body*/}
                                     <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                      {/*begin::Form*/}
                                       <form
                                         id="kt_modal_add_user_form"
                                         className="form"
                                         action="#"
                                       >
-                                        {/*begin::Scroll*/}
                                         <div
                                           className="d-flex flex-column scroll-y me-n7 pe-7"
                                           id="kt_modal_add_user_scroll"
@@ -2569,7 +2114,6 @@ const Projects = () => {
                                         >
                                           <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                             <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                              {/*begin::Image input*/}
                                               <div
                                                 className="image-input image-input-outline"
                                                 data-kt-image-input="true"
@@ -2578,7 +2122,6 @@ const Projects = () => {
                                                     "url(assets/media/avatars/blank.png)",
                                                 }}
                                               >
-                                                {/*begin::Preview existing avatar*/}
                                                 <div
                                                   className="image-input-wrapper w-125px h-125px"
                                                   style={{
@@ -2586,8 +2129,6 @@ const Projects = () => {
                                                       "url(assets/media/avatars/150-1.png)",
                                                   }}
                                                 />
-                                                {/*end::Preview existing avatar*/}
-                                                {/*begin::Label*/}
                                                 <label
                                                   className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                   data-kt-image-input-action="change"
@@ -2595,7 +2136,6 @@ const Projects = () => {
                                                   title="Change avatar"
                                                 >
                                                   <i className="bi bi-pencil-fill fs-7" />
-                                                  {/*begin::Inputs*/}
                                                   <input
                                                     type="file"
                                                     name="avatar"
@@ -2605,10 +2145,7 @@ const Projects = () => {
                                                     type="hidden"
                                                     name="avatar_remove"
                                                   />
-                                                  {/*end::Inputs*/}
                                                 </label>
-                                                {/*end::Label*/}
-                                                {/*begin::Cancel*/}
                                                 <span
                                                   className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                   data-kt-image-input-action="cancel"
@@ -2617,8 +2154,6 @@ const Projects = () => {
                                                 >
                                                   <i className="bi bi-x fs-2" />
                                                 </span>
-                                                {/*end::Cancel*/}
-                                                {/*begin::Remove*/}
                                                 <span
                                                   className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                   data-kt-image-input-action="remove"
@@ -2627,15 +2162,9 @@ const Projects = () => {
                                                 >
                                                   <i className="bi bi-x fs-2" />
                                                 </span>
-                                                {/*end::Remove*/}
                                               </div>
-                                              {/*end::Image input*/}
                                             </span>
-                                            {/*end::Svg Icon*/}
-                                            {/*end::Icon*/}
-                                            {/*begin::Wrapper*/}
                                             <div className="d-flex flex-stack flex-grow-1">
-                                              {/*begin::Content*/}
                                               <div className="fw-bold">
                                                 <h4 className="text-gray-900 fw-bolder georgian">
                                                   სურათი
@@ -2648,12 +2177,9 @@ const Projects = () => {
                                                   ფორმატი!
                                                 </div>
                                               </div>
-                                              {/*end::Content*/}
                                             </div>
-                                            {/*end::Wrapper*/}
                                           </div>
                                           <div className="row mb-5">
-                                            {/*begin::Col*/}
                                             <div className="col-md-8 fv-row fv-plugins-icon-container">
                                               <label className="required fs-5 fw-bold mb-2 georgian">
                                                 დასახელება
@@ -2752,8 +2278,6 @@ const Projects = () => {
                                             </div>
                                           </div>
                                         </div>
-                                        {/*end::Scroll*/}
-                                        {/*begin::Actions*/}
                                         <div className="text-center pt-15">
                                           <button
                                             type="reset"
@@ -2776,31 +2300,19 @@ const Projects = () => {
                                             </span>
                                           </button>
                                         </div>
-                                        {/*end::Actions*/}
                                       </form>
-                                      {/*end::Form*/}
                                     </div>
-                                    {/*end::Modal body*/}
                                   </div>
-                                  {/*end::Modal content*/}
                                 </div>
-                                {/*end::Modal dialog*/}
                               </div>
-                              {/*end::Modal - Add task*/}
                             </div>
-                            {/*end::Card toolbar*/}
                           </div>
-                          {/*end::Card header*/}
-                          {/*begin::Card body*/}
                           <div className="card-body pt-0">
-                            {/*begin::Table*/}
                             <table
                               className="table align-middle table-row-dashed fs-6 gy-5"
                               id="kt_table_users"
                             >
-                              {/*begin::Table head*/}
                               <thead>
-                                {/*begin::Table row*/}
                                 <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                                   <th className="w-10px pe-2">
                                     <div className="form-check form-check-sm form-check-custom form-check-solid me-3">
@@ -2830,14 +2342,9 @@ const Projects = () => {
                                     ცვლილება
                                   </th>
                                 </tr>
-                                {/*end::Table row*/}
                               </thead>
-                              {/*end::Table head*/}
-                              {/*begin::Table body*/}
                               <tbody className="text-gray-600 fw-bold">
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -2847,10 +2354,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="https://www.domino.com.ge/products/electrical-goods/cables-and-wires/cable-wire/%E1%83%99%E1%83%90%E1%83%91%E1%83%94%E1%83%9A%E1%83%98-sakcable-%E1%83%9E%E1%83%A3%E1%83%9C%E1%83%9E-3x2.5-h03vvh2-u-h05vvh2-u/">
                                         <div className="symbol-label georgian">
@@ -2862,8 +2366,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column georgian">
                                       <a
                                         href="https://www.domino.com.ge/products/electrical-goods/cables-and-wires/cable-wire/%E1%83%99%E1%83%90%E1%83%91%E1%83%94%E1%83%9A%E1%83%98-sakcable-%E1%83%9E%E1%83%A3%E1%83%9C%E1%83%9E-3x2.5-h03vvh2-u-h05vvh2-u/"
@@ -2873,26 +2375,15 @@ const Projects = () => {
                                       </a>
                                       <span>გორგია / ნოვა</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td className="georgian">მეტრი</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td className="georgian">
                                     <div>120</div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td className="georgian">3.50 ლარი</td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td className="georgian">
                                     <b>420 ლარი</b>
                                   </td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -2901,7 +2392,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       შეცვლა
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -2916,13 +2406,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -2932,8 +2420,6 @@ const Projects = () => {
                                           &nbsp;გადაკეთება
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -2944,16 +2430,10 @@ const Projects = () => {
                                           &nbsp;წაშლა
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -2963,10 +2443,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-danger text-danger">
@@ -2974,8 +2451,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -2985,30 +2460,19 @@ const Projects = () => {
                                       </a>
                                       <span>melody@altbox.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Analyst</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       20 mins ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>25 Jul 2021, 5:20 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3017,7 +2481,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3032,14 +2495,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3048,8 +2508,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3059,16 +2517,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3078,10 +2530,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -3093,8 +2542,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3104,26 +2551,15 @@ const Projects = () => {
                                       </a>
                                       <span>max@kt.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Developer</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       3 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>21 Feb 2021, 6:05 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3132,7 +2568,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3147,14 +2582,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3163,8 +2595,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3174,16 +2604,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3193,10 +2617,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -3208,8 +2629,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3219,30 +2638,19 @@ const Projects = () => {
                                       </a>
                                       <span>sean@dellito.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Support</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       5 hours ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>20 Dec 2021, 2:40 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3251,7 +2659,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3266,14 +2673,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3282,8 +2686,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3293,16 +2695,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3312,10 +2708,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -3327,8 +2720,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3338,30 +2729,19 @@ const Projects = () => {
                                       </a>
                                       <span>brian@exchange.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Developer</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       2 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>24 Jun 2021, 10:30 am</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3370,7 +2750,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3385,14 +2764,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3401,8 +2777,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3412,16 +2786,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3431,10 +2799,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-warning text-warning">
@@ -3442,8 +2807,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3453,26 +2816,15 @@ const Projects = () => {
                                       </a>
                                       <span>mikaela@pexcom.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Administrator</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       5 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>22 Sep 2021, 2:40 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3481,7 +2833,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3496,14 +2847,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3512,8 +2860,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3523,16 +2869,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3542,10 +2882,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -3557,8 +2894,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3568,26 +2903,15 @@ const Projects = () => {
                                       </a>
                                       <span>f.mitcham@kpmg.com.au</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Trial</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       3 weeks ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>15 Apr 2021, 6:43 am</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3596,7 +2920,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3611,14 +2934,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3627,8 +2947,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3638,16 +2956,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3657,10 +2969,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-danger text-danger">
@@ -3668,8 +2977,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3679,26 +2986,15 @@ const Projects = () => {
                                       </a>
                                       <span>olivia@corpmail.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Administrator</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       Yesterday
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>10 Mar 2021, 11:30 am</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3707,7 +3003,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3722,14 +3017,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3738,8 +3030,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3749,16 +3039,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3768,10 +3052,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-primary text-primary">
@@ -3779,8 +3060,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3790,30 +3069,19 @@ const Projects = () => {
                                       </a>
                                       <span>owen.neil@gmail.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Analyst</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       20 mins ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>15 Apr 2021, 5:20 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3822,7 +3090,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3837,14 +3104,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3853,8 +3117,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3864,16 +3126,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3883,10 +3139,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -3898,8 +3151,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3909,26 +3160,15 @@ const Projects = () => {
                                       </a>
                                       <span>dam@consilting.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Developer</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       3 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>22 Sep 2021, 2:40 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -3937,7 +3177,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3952,14 +3191,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -3968,8 +3204,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -3979,16 +3213,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -3998,10 +3226,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-danger text-danger">
@@ -4009,8 +3234,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4020,30 +3243,19 @@ const Projects = () => {
                                       </a>
                                       <span>emma@intenso.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Support</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       5 hours ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>24 Jun 2021, 6:43 am</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4052,7 +3264,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4067,14 +3278,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4083,8 +3291,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -4094,16 +3300,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -4113,10 +3313,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -4128,8 +3325,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4139,30 +3334,19 @@ const Projects = () => {
                                       </a>
                                       <span>ana.cf@limtel.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Developer</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       2 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>10 Mar 2021, 11:05 am</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4171,7 +3355,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4186,14 +3369,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4202,8 +3382,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -4213,16 +3391,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -4232,10 +3404,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-info text-info">
@@ -4243,8 +3412,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4254,26 +3421,15 @@ const Projects = () => {
                                       </a>
                                       <span>robert@benko.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Administrator</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       5 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>05 May 2021, 6:43 am</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4282,7 +3438,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4297,14 +3452,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4313,8 +3465,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -4324,16 +3474,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -4343,10 +3487,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -4358,8 +3499,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4369,26 +3508,15 @@ const Projects = () => {
                                       </a>
                                       <span>miller@mapple.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Trial</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       3 weeks ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>05 May 2021, 10:30 am</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4397,7 +3525,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4412,14 +3539,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4428,8 +3552,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -4439,16 +3561,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -4458,10 +3574,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-success text-success">
@@ -4469,8 +3582,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4480,26 +3591,15 @@ const Projects = () => {
                                       </a>
                                       <span>lucy.m@fentech.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Administrator</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       Yesterday
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>15 Apr 2021, 5:30 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4508,7 +3608,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4523,14 +3622,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4539,8 +3635,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -4550,16 +3644,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -4569,10 +3657,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-danger text-danger">
@@ -4580,8 +3665,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4591,30 +3674,19 @@ const Projects = () => {
                                       </a>
                                       <span>melody@altbox.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Analyst</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       20 mins ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>20 Dec 2021, 5:20 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4623,7 +3695,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4638,14 +3709,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4654,8 +3722,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -4665,16 +3731,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -4684,10 +3744,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -4699,8 +3756,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4710,26 +3765,15 @@ const Projects = () => {
                                       </a>
                                       <span>max@kt.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Developer</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       3 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>25 Oct 2021, 10:30 am</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4738,7 +3782,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4753,14 +3796,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4769,8 +3809,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -4780,16 +3818,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -4799,10 +3831,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -4814,8 +3843,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4825,30 +3852,19 @@ const Projects = () => {
                                       </a>
                                       <span>sean@dellito.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Support</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       5 hours ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>22 Sep 2021, 5:20 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4857,7 +3873,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4872,14 +3887,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4888,8 +3900,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -4899,16 +3909,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -4918,10 +3922,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -4933,8 +3934,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -4944,30 +3943,19 @@ const Projects = () => {
                                       </a>
                                       <span>brian@exchange.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Developer</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       2 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td>
                                     <div className="badge badge-light-success fw-bolder">
                                       Enabled
                                     </div>
                                   </td>
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>10 Mar 2021, 8:43 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -4976,7 +3964,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -4991,14 +3978,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -5007,8 +3991,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -5018,16 +4000,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -5037,10 +4013,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label fs-3 bg-light-warning text-warning">
@@ -5048,8 +4021,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -5059,26 +4030,15 @@ const Projects = () => {
                                       </a>
                                       <span>mikaela@pexcom.com</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Administrator</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       5 days ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>19 Aug 2021, 5:20 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -5087,7 +4047,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -5102,14 +4061,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -5118,8 +4074,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -5129,16 +4083,10 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
-                                {/*begin::Table row*/}
                                 <tr>
-                                  {/*begin::Checkbox*/}
                                   <td>
                                     <div className="form-check form-check-sm form-check-custom form-check-solid">
                                       <input
@@ -5148,10 +4096,7 @@ const Projects = () => {
                                       />
                                     </div>
                                   </td>
-                                  {/*end::Checkbox*/}
-                                  {/*begin::User=*/}
                                   <td className="d-flex align-items-center">
-                                    {/*begin:: Avatar */}
                                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                       <a href="../../demo11/dist/apps/user-management/users/view.html">
                                         <div className="symbol-label">
@@ -5163,8 +4108,6 @@ const Projects = () => {
                                         </div>
                                       </a>
                                     </div>
-                                    {/*end::Avatar*/}
-                                    {/*begin::User details*/}
                                     <div className="d-flex flex-column">
                                       <a
                                         href="../../demo11/dist/apps/user-management/users/view.html"
@@ -5174,26 +4117,15 @@ const Projects = () => {
                                       </a>
                                       <span>f.mitcham@kpmg.com.au</span>
                                     </div>
-                                    {/*begin::User details*/}
                                   </td>
-                                  {/*end::User=*/}
-                                  {/*begin::Role=*/}
                                   <td>Trial</td>
-                                  {/*end::Role=*/}
-                                  {/*begin::Last login=*/}
                                   <td>
                                     <div className="badge badge-light fw-bolder">
                                       3 weeks ago
                                     </div>
                                   </td>
-                                  {/*end::Last login=*/}
-                                  {/*begin::Two step=*/}
                                   <td />
-                                  {/*end::Two step=*/}
-                                  {/*begin::Joined*/}
                                   <td>19 Aug 2021, 2:40 pm</td>
-                                  {/*begin::Joined*/}
-                                  {/*begin::Action=*/}
                                   <td className="text-end">
                                     <a
                                       href="#"
@@ -5202,7 +4134,6 @@ const Projects = () => {
                                       data-kt-menu-placement="bottom-end"
                                     >
                                       Actions
-                                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr072.svg*/}
                                       <span className="svg-icon svg-icon-5 m-0">
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -5217,14 +4148,11 @@ const Projects = () => {
                                           />
                                         </svg>
                                       </span>
-                                      {/*end::Svg Icon*/}
                                     </a>
-                                    {/*begin::Menu*/}
                                     <div
                                       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                       data-kt-menu="true"
                                     >
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="../../demo11/dist/apps/user-management/users/view.html"
@@ -5233,8 +4161,6 @@ const Projects = () => {
                                           Edit
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
-                                      {/*begin::Menu item*/}
                                       <div className="menu-item px-3">
                                         <a
                                           href="#"
@@ -5244,37 +4170,21 @@ const Projects = () => {
                                           Delete
                                         </a>
                                       </div>
-                                      {/*end::Menu item*/}
                                     </div>
-                                    {/*end::Menu*/}
                                   </td>
-                                  {/*end::Action=*/}
                                 </tr>
-                                {/*end::Table row*/}
                               </tbody>
-                              {/*end::Table body*/}
                             </table>
-                            {/*end::Table*/}
                           </div>
-                          {/*end::Card body*/}
                         </div>
-                        {/*end::Card*/}
                       </div>
                     </div>
-                    {/*end::General Widget 1*/}
                   </div>
-                  {/*end::Col*/}
                 </div>
-                {/*end::Row*/}
               </div>
-              {/*end::Post*/}
             </div>
-            {/*end::Container*/}
-            {/*begin::Footer*/}
             <div className="footer py-4 d-flex flex-lg-column" id="kt_footer">
-              {/*begin::Container*/}
               <div className="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between">
-                {/*begin::Copyright*/}
                 <div className="text-dark order-2 order-md-1">
                   <span className="text-muted fw-bold me-1">2021©</span>
                   <a
@@ -5285,8 +4195,6 @@ const Projects = () => {
                     Keenthemes
                   </a>
                 </div>
-                {/*end::Copyright*/}
-                {/*begin::Menu*/}
                 <ul className="menu menu-gray-600 menu-hover-primary fw-bold order-1">
                   <li className="menu-item">
                     <a
@@ -5316,19 +4224,11 @@ const Projects = () => {
                     </a>
                   </li>
                 </ul>
-                {/*end::Menu*/}
               </div>
-              {/*end::Container*/}
             </div>
-            {/*end::Footer*/}
           </div>
-          {/*end::Wrapper*/}
         </div>
-        {/*end::Page*/}
       </div>
-      {/*end::Root*/}
-      {/*begin::Drawers*/}
-      {/*begin::Chat drawer*/}
       <div
         id="kt_drawer_chat"
         className="bg-body"
@@ -5341,16 +4241,12 @@ const Projects = () => {
         data-kt-drawer-toggle="#kt_drawer_chat_toggle"
         data-kt-drawer-close="#kt_drawer_chat_close"
       >
-        {/*begin::Messenger*/}
         <div className="card w-100 rounded-0" id="kt_drawer_chat_messenger">
-          {/*begin::Card header*/}
           <div
             className="card-header pe-5"
             id="kt_drawer_chat_messenger_header"
           >
-            {/*begin::Card toolbar*/}
             <div className="card-toolbar">
-              {/*begin::Menu*/}
               <div className="me-2">
                 <button
                   className="btn btn-sm btn-icon btn-active-light-primary"
@@ -5359,19 +4255,15 @@ const Projects = () => {
                 >
                   <i className="bi bi-three-dots fs-3" />
                 </button>
-                {/*begin::Menu 3*/}
                 <div
                   className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3"
                   data-kt-menu="true"
                 >
-                  {/*begin::Heading*/}
                   <div className="menu-item px-3">
                     <div className="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
                       Contacts
                     </div>
                   </div>
-                  {/*end::Heading*/}
-                  {/*begin::Menu item*/}
                   <div className="menu-item px-3">
                     <a
                       href="#"
@@ -5382,8 +4274,6 @@ const Projects = () => {
                       Add Contact
                     </a>
                   </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu item*/}
                   <div className="menu-item px-3">
                     <a
                       href="#"
@@ -5399,8 +4289,6 @@ const Projects = () => {
                       />
                     </a>
                   </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu item*/}
                   <div
                     className="menu-item px-3"
                     data-kt-menu-trigger="hover"
@@ -5410,9 +4298,7 @@ const Projects = () => {
                       <span className="menu-title">Groups</span>
                       <span className="menu-arrow" />
                     </a>
-                    {/*begin::Menu sub*/}
                     <div className="menu-sub menu-sub-dropdown w-175px py-4">
-                      {/*begin::Menu item*/}
                       <div className="menu-item px-3">
                         <a
                           href="#"
@@ -5423,8 +4309,6 @@ const Projects = () => {
                           Create Group
                         </a>
                       </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
                       <div className="menu-item px-3">
                         <a
                           href="#"
@@ -5435,8 +4319,6 @@ const Projects = () => {
                           Invite Members
                         </a>
                       </div>
-                      {/*end::Menu item*/}
-                      {/*begin::Menu item*/}
                       <div className="menu-item px-3">
                         <a
                           href="#"
@@ -5447,12 +4329,8 @@ const Projects = () => {
                           Settings
                         </a>
                       </div>
-                      {/*end::Menu item*/}
                     </div>
-                    {/*end::Menu sub*/}
                   </div>
-                  {/*end::Menu item*/}
-                  {/*begin::Menu item*/}
                   <div className="menu-item px-3 my-1">
                     <a
                       href="#"
@@ -5463,17 +4341,12 @@ const Projects = () => {
                       Settings
                     </a>
                   </div>
-                  {/*end::Menu item*/}
                 </div>
-                {/*end::Menu 3*/}
               </div>
-              {/*end::Menu*/}
-              {/*begin::Close*/}
               <div
                 className="btn btn-sm btn-icon btn-active-light-primary"
                 id="kt_drawer_chat_close"
               >
-                {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
                 <span className="svg-icon svg-icon-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -5503,38 +4376,24 @@ const Projects = () => {
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
               </div>
-              {/*end::Close*/}
             </div>
-            {/*end::Card toolbar*/}
           </div>
-          {/*end::Card header*/}
         </div>
-        {/*end::Messenger*/}
       </div>
-      {/*end::Chat drawer*/}
-      {/*end::Drawers*/}
-      {/*begin::Modals*/}
-      {/*begin::Modal - Invite Friends*/}
       <div
         className="modal fade"
         id="kt_modal_invite_friends"
         tabIndex={-1}
         aria-hidden="true"
       >
-        {/*begin::Modal dialog*/}
         <div className="modal-dialog mw-650px">
-          {/*begin::Modal content*/}
           <div className="modal-content">
-            {/*begin::Modal header*/}
             <div className="modal-header pb-0 border-0 justify-content-end">
-              {/*begin::Close*/}
               <div
                 className="btn btn-sm btn-icon btn-active-color-primary"
                 data-bs-dismiss="modal"
               >
-                {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
                 <span className="svg-icon svg-icon-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -5564,19 +4423,11 @@ const Projects = () => {
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
               </div>
-              {/*end::Close*/}
             </div>
-            {/*begin::Modal header*/}
-            {/*begin::Modal body*/}
             <div className="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
-              {/*begin::Heading*/}
               <div className="text-center mb-13">
-                {/*begin::Title*/}
                 <h1 className="mb-3">Invite a Friend</h1>
-                {/*end::Title*/}
-                {/*begin::Description*/}
                 <div className="text-muted fw-bold fs-5">
                   If you need more info, please check out
                   <a href="#" className="link-primary fw-bolder">
@@ -5584,10 +4435,7 @@ const Projects = () => {
                   </a>
                   .
                 </div>
-                {/*end::Description*/}
               </div>
-              {/*end::Heading*/}
-              {/*begin::Google Contacts Invite*/}
               <div className="btn btn-light-primary fw-bolder w-100 mb-8">
                 <img
                   alt="Logo"
@@ -5596,39 +4444,25 @@ const Projects = () => {
                 />
                 Invite Gmail Contacts
               </div>
-              {/*end::Google Contacts Invite*/}
-              {/*begin::Separator*/}
               <div className="separator d-flex flex-center mb-8">
                 <span className="text-uppercase bg-body fs-7 fw-bold text-muted px-3">
                   or
                 </span>
               </div>
-              {/*end::Separator*/}
-              {/*begin::Textarea*/}
               <textarea
                 className="form-control form-control-solid mb-8"
                 rows={3}
                 placeholder="Type or paste emails here"
                 defaultValue={""}
               />
-              {/*end::Textarea*/}
-              {/*begin::Users*/}
               <div className="mb-10">
-                {/*begin::Heading*/}
                 <div className="fs-6 fw-bold mb-2">Your Invitations</div>
-                {/*end::Heading*/}
-                {/*begin::List*/}
                 <div className="mh-300px scroll-y me-n7 pe-7">
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <img alt="Pic" src="assets/media/avatars/150-1.png" />
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5640,10 +4474,7 @@ const Projects = () => {
                           e.smith@kpmg.com.au
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5657,21 +4488,14 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <span className="symbol-label bg-light-danger text-danger fw-bold">
                           M
                         </span>
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5683,10 +4507,7 @@ const Projects = () => {
                           melody@altbox.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5700,19 +4521,12 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <img alt="Pic" src="assets/media/avatars/150-26.jpg" />
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5722,10 +4536,7 @@ const Projects = () => {
                         </a>
                         <div className="fw-bold text-muted">max@kt.com</div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5739,19 +4550,12 @@ const Projects = () => {
                         </option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <img alt="Pic" src="assets/media/avatars/150-4.jpg" />
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5763,10 +4567,7 @@ const Projects = () => {
                           sean@dellito.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5780,21 +4581,14 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <span className="symbol-label bg-light-danger text-danger fw-bold">
                           O
                         </span>
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5806,10 +4600,7 @@ const Projects = () => {
                           olivia@corpmail.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5823,21 +4614,14 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <span className="symbol-label bg-light-primary text-primary fw-bold">
                           N
                         </span>
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5849,10 +4633,7 @@ const Projects = () => {
                           owen.neil@gmail.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5866,19 +4647,12 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <img alt="Pic" src="assets/media/avatars/150-6.jpg" />
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5890,10 +4664,7 @@ const Projects = () => {
                           dam@consilting.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5907,21 +4678,14 @@ const Projects = () => {
                         </option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <span className="symbol-label bg-light-danger text-danger fw-bold">
                           E
                         </span>
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5933,10 +4697,7 @@ const Projects = () => {
                           emma@intenso.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5950,19 +4711,12 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <img alt="Pic" src="assets/media/avatars/150-7.jpg" />
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -5974,10 +4728,7 @@ const Projects = () => {
                           ana.cf@limtel.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -5991,21 +4742,14 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <span className="symbol-label bg-light-info text-info fw-bold">
                           A
                         </span>
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -6017,10 +4761,7 @@ const Projects = () => {
                           robert@benko.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -6034,19 +4775,12 @@ const Projects = () => {
                         </option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <img alt="Pic" src="assets/media/avatars/150-17.jpg" />
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -6058,10 +4792,7 @@ const Projects = () => {
                           miller@mapple.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -6075,21 +4806,14 @@ const Projects = () => {
                         </option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <span className="symbol-label bg-light-success text-success fw-bold">
                           L
                         </span>
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -6101,10 +4825,7 @@ const Projects = () => {
                           lucy.m@fentech.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -6118,19 +4839,12 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <img alt="Pic" src="assets/media/avatars/150-10.jpg" />
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -6142,10 +4856,7 @@ const Projects = () => {
                           ethan@loop.com.au
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -6159,21 +4870,14 @@ const Projects = () => {
                         <option value={3}>Can Edit</option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
-                  {/*begin::User*/}
                   <div className="d-flex flex-stack py-4">
-                    {/*begin::Details*/}
                     <div className="d-flex align-items-center">
-                      {/*begin::Avatar*/}
                       <div className="symbol symbol-35px symbol-circle">
                         <span className="symbol-label bg-light-info text-info fw-bold">
                           A
                         </span>
                       </div>
-                      {/*end::Avatar*/}
-                      {/*begin::Details*/}
                       <div className="ms-5">
                         <a
                           href="#"
@@ -6185,10 +4889,7 @@ const Projects = () => {
                           robert@benko.com
                         </div>
                       </div>
-                      {/*end::Details*/}
                     </div>
-                    {/*end::Details*/}
-                    {/*begin::Access menu*/}
                     <div className="ms-2 w-100px">
                       <select
                         className="form-select form-select-solid form-select-sm"
@@ -6202,24 +4903,16 @@ const Projects = () => {
                         </option>
                       </select>
                     </div>
-                    {/*end::Access menu*/}
                   </div>
-                  {/*end::User*/}
                 </div>
-                {/*end::List*/}
               </div>
-              {/*end::Users*/}
-              {/*begin::Notice*/}
               <div className="d-flex flex-stack">
-                {/*begin::Label*/}
                 <div className="me-5 fw-bold">
                   <label className="fs-6">Adding Users by Team Members</label>
                   <div className="fs-7 text-muted">
                     If you need more info, please check budget planning
                   </div>
                 </div>
-                {/*end::Label*/}
-                {/*begin::Switch*/}
                 <label className="form-check form-switch form-check-custom form-check-solid">
                   <input
                     className="form-check-input"
@@ -6231,39 +4924,25 @@ const Projects = () => {
                     Allowed
                   </span>
                 </label>
-                {/*end::Switch*/}
               </div>
-              {/*end::Notice*/}
             </div>
-            {/*end::Modal body*/}
           </div>
-          {/*end::Modal content*/}
         </div>
-        {/*end::Modal dialog*/}
       </div>
-      {/*end::Modal - Invite Friend*/}
-      {/*begin::Modal - Create App*/}
       <div
         className="modal fade"
         id="kt_modal_create_app"
         tabIndex={-1}
         aria-hidden="true"
       >
-        {/*begin::Modal dialog*/}
         <div className="modal-dialog modal-dialog-centered mw-900px">
-          {/*begin::Modal content*/}
           <div className="modal-content">
-            {/*begin::Modal header*/}
             <div className="modal-header">
-              {/*begin::Modal title*/}
               <h2 className="georgian">ობიექტის დამატება</h2>
-              {/*end::Modal title*/}
-              {/*begin::Close*/}
               <div
                 className="btn btn-sm btn-icon btn-active-color-primary"
                 data-bs-dismiss="modal"
               >
-                {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
                 <span className="svg-icon svg-icon-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -6293,142 +4972,88 @@ const Projects = () => {
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
               </div>
-              {/*end::Close*/}
             </div>
-            {/*end::Modal header*/}
-            {/*begin::Modal body*/}
             <div className="modal-body py-lg-10 px-lg-10">
-              {/*begin::Stepper*/}
               <div
                 className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
                 id="kt_modal_create_app_stepper"
               >
-                {/*begin::Aside*/}
                 <div className="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                  {/*begin::Nav*/}
                   <div className="stepper-nav ps-lg-10">
-                    {/*begin::Step 1*/}
                     <div
                       className="stepper-item current"
                       data-kt-stepper-element="nav"
                     >
-                      {/*begin::Line*/}
                       <div className="stepper-line w-40px" />
-                      {/*end::Line*/}
-                      {/*begin::Icon*/}
                       <div className="stepper-icon w-40px h-40px">
                         <i className="stepper-check fas fa-check" />
                         <span className="stepper-number">1</span>
                       </div>
-                      {/*end::Icon*/}
-                      {/*begin::Label*/}
                       <div className="stepper-label">
                         <h3 className="stepper-title georgian">კატეგორია</h3>
                         <div className="stepper-desc georgian">
                           ობიექტის აღწერა
                         </div>
                       </div>
-                      {/*end::Label*/}
                     </div>
-                    {/*end::Step 1*/}
-                    {/*begin::Step 2*/}
                     <div className="stepper-item" data-kt-stepper-element="nav">
-                      {/*begin::Line*/}
                       <div className="stepper-line w-40px" />
-                      {/*end::Line*/}
-                      {/*begin::Icon*/}
                       <div className="stepper-icon w-40px h-40px">
                         <i className="stepper-check fas fa-check" />
                         <span className="stepper-number">2</span>
                       </div>
-                      {/*begin::Icon*/}
-                      {/*begin::Label*/}
                       <div className="stepper-label">
                         <h3 className="stepper-title georgian">მდგომარეობა</h3>
                         <div className="stepper-desc georgian">
                           სამუშაოს განსაზღვრება
                         </div>
                       </div>
-                      {/*begin::Label*/}
                     </div>
-                    {/*end::Step 2*/}
-                    {/*begin::Step 3*/}
                     <div className="stepper-item" data-kt-stepper-element="nav">
-                      {/*begin::Line*/}
                       <div className="stepper-line w-40px" />
-                      {/*end::Line*/}
-                      {/*begin::Icon*/}
                       <div className="stepper-icon w-40px h-40px">
                         <i className="stepper-check fas fa-check" />
                         <span className="stepper-number">3</span>
                       </div>
-                      {/*end::Icon*/}
-                      {/*begin::Label*/}
                       <div className="stepper-label">
                         <h3 className="stepper-title georgian">სამუშაოები</h3>
                         <div className="stepper-desc georgian">
                           შესასრულებელი სამუშაო
                         </div>
                       </div>
-                      {/*end::Label*/}
                     </div>
-                    {/*end::Step 3*/}
-                    {/*begin::Step 4*/}
                     <div className="stepper-item" data-kt-stepper-element="nav">
-                      {/*begin::Line*/}
                       <div className="stepper-line w-40px" />
-                      {/*end::Line*/}
-                      {/*begin::Icon*/}
                       <div className="stepper-icon w-40px h-40px">
                         <i className="stepper-check fas fa-check" />
                         <span className="stepper-number">4</span>
                       </div>
-                      {/*end::Icon*/}
-                      {/*begin::Label*/}
                       <div className="stepper-label">
                         <h3 className="stepper-title">Billing</h3>
                         <div className="stepper-desc">
                           Provide payment details
                         </div>
                       </div>
-                      {/*end::Label*/}
                     </div>
-                    {/*end::Step 4*/}
-                    {/*begin::Step 5*/}
                     <div className="stepper-item" data-kt-stepper-element="nav">
-                      {/*begin::Line*/}
                       <div className="stepper-line w-40px" />
-                      {/*end::Line*/}
-                      {/*begin::Icon*/}
                       <div className="stepper-icon w-40px h-40px">
                         <i className="stepper-check fas fa-check" />
                         <span className="stepper-number">5</span>
                       </div>
-                      {/*end::Icon*/}
-                      {/*begin::Label*/}
                       <div className="stepper-label">
                         <h3 className="stepper-title">Completed</h3>
                         <div className="stepper-desc">Review and Submit</div>
                       </div>
-                      {/*end::Label*/}
                     </div>
-                    {/*end::Step 5*/}
                   </div>
-                  {/*end::Nav*/}
                 </div>
-                {/*begin::Aside*/}
-                {/*begin::Content*/}
                 <div className="flex-row-fluid py-lg-5 px-lg-15">
-                  {/*begin::Form*/}
                   <form className="form" noValidate="novalidate" id="">
-                    {/*begin::Step 1*/}
                     <div className="current" data-kt-stepper-element="content">
                       <div className="w-100">
-                        {/*begin::Input group*/}
                         <div className="fv-row mb-10">
-                          {/*begin::Label*/}
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                             <span className="required georgian">
                               ქონების ტიპი
@@ -6439,8 +5064,6 @@ const Projects = () => {
                               title="მიუთითეთ სამუშაო ობიექტის ტიპი"
                             />
                           </label>
-                          {/*end::Label*/}
-                          {/*begin::Input*/}
                           <select
                             className="form-select form-select-solid georgian"
                             aria-label="Select example"
@@ -6450,21 +5073,13 @@ const Projects = () => {
                             <option value={3}>კომერციული ფართი</option>
                             <option value={4}>სასტუმრო</option>
                           </select>
-                          {/*end::Input*/}
                         </div>
-                        {/*end::Input group*/}
-                        {/*begin::Input group*/}
                         <div className="row mb-10">
-                          {/*begin::Col*/}
                           <div className="col-md-12 fv-row">
-                            {/*begin::Label*/}
                             <label className="required fs-6 fw-bold form-label georgian mb-2">
                               მდებარეობა / რაიონი
                             </label>
-                            {/*end::Label*/}
-                            {/*begin::Row*/}
                             <div className="row fv-row">
-                              {/*begin::Col*/}
                               <div className="col-6">
                                 <select
                                   name="locale"
@@ -6480,8 +5095,6 @@ const Projects = () => {
                                   <option value={7}>ჩხალთა</option>
                                 </select>
                               </div>
-                              {/*end::Col*/}
-                              {/*begin::Col*/}
                               <div className="col-6">
                                 <select
                                   name="locale"
@@ -6497,25 +5110,15 @@ const Projects = () => {
                                   <option value={7}>თბილისის შემოგარენი</option>
                                 </select>
                               </div>
-                              {/*end::Col*/}
                             </div>
-                            {/*end::Row*/}
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Input group*/}
-                        {/*begin::Input group*/}
                         <div className="row mb-10">
-                          {/*begin::Col*/}
                           <div className="col-md-12 fv-row">
-                            {/*begin::Label*/}
                             <label className="required fs-6 fw-bold form-label georgian mb-2">
                               მისამართი / ტელეფონი
                             </label>
-                            {/*end::Label*/}
-                            {/*begin::Row*/}
                             <div className="row fv-row">
-                              {/*begin::Col*/}
                               <div className="col-6">
                                 <input
                                   type="text"
@@ -6530,22 +5133,14 @@ const Projects = () => {
                                   placeholder="ტელეფონი"
                                 />
                               </div>
-                              {/*end::Col*/}
                             </div>
-                            {/*end::Row*/}
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Input group*/}
                       </div>
                     </div>
-                    {/*end::Step 1*/}
-                    {/*begin::Step 2*/}
                     <div data-kt-stepper-element="content">
                       <div className="w-100">
-                        {/*begin::Input group*/}
                         <div className="fv-row">
-                          {/*begin::Label*/}
                           <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                             <span className="required georgian">
                               მდგომარეობა
@@ -6556,17 +5151,11 @@ const Projects = () => {
                               title="მიუთითეთ ობიექტის მდგომარეობა"
                             />
                           </label>
-                          {/*end::Label*/}
-                          {/*begin:Options*/}
                           <div className="fv-row">
-                            {/*begin:Option*/}
                             <label className="d-flex flex-stack mb-5 cursor-pointer">
-                              {/*begin:Label*/}
                               <span className="d-flex align-items-center me-2">
-                                {/*begin:Icon*/}
                                 <span className="symbol symbol-50px me-6">
                                   <span className="symbol-label bg-light-primary">
-                                    {/*begin::Svg Icon | path: icons/duotune/maps/map004.svg*/}
                                     <span className="svg-icon svg-icon-1 svg-icon-primary">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -6586,11 +5175,8 @@ const Projects = () => {
                                         />
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </span>
-                                {/*end:Icon*/}
-                                {/*begin:Info*/}
                                 <span className="d-flex flex-column">
                                   <span className="fw-bolder georgian fs-6">
                                     ახალი აშენებული
@@ -6600,10 +5186,7 @@ const Projects = () => {
                                     SEO
                                   </span>
                                 </span>
-                                {/*end:Info*/}
                               </span>
-                              {/*end:Label*/}
-                              {/*begin:Input*/}
                               <span className="form-check form-check-custom form-check-solid">
                                 <input
                                   className="form-check-input"
@@ -6612,17 +5195,11 @@ const Projects = () => {
                                   defaultValue={1}
                                 />
                               </span>
-                              {/*end:Input*/}
                             </label>
-                            {/*end::Option*/}
-                            {/*begin:Option*/}
                             <label className="d-flex flex-stack mb-5 cursor-pointer">
-                              {/*begin:Label*/}
                               <span className="d-flex align-items-center me-2">
-                                {/*begin:Icon*/}
                                 <span className="symbol symbol-50px me-6">
                                   <span className="symbol-label bg-light-danger">
-                                    {/*begin::Svg Icon | path: icons/duotune/general/gen024.svg*/}
                                     <span className="svg-icon svg-icon-1 svg-icon-danger">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -6674,11 +5251,8 @@ const Projects = () => {
                                         </g>
                                       </svg>
                                     </span>
-                                    {/*end::Svg Icon*/}
                                   </span>
                                 </span>
-                                {/*end:Icon*/}
-                                {/*begin:Info*/}
                                 <span className="d-flex flex-column">
                                   <span className="fw-bolder georgian fs-6">
                                     ძველი აშენებული
@@ -6688,10 +5262,7 @@ const Projects = () => {
                                     aspect
                                   </span>
                                 </span>
-                                {/*end:Info*/}
                               </span>
-                              {/*end:Label*/}
-                              {/*begin:Input*/}
                               <span className="form-check form-check-custom form-check-solid">
                                 <input
                                   className="form-check-input"
@@ -6700,16 +5271,10 @@ const Projects = () => {
                                   defaultValue={2}
                                 />
                               </span>
-                              {/*end:Input*/}
                             </label>
-                            {/*end::Option*/}
                           </div>
-                          {/*end:Options*/}
                         </div>
-                        {/*end::Input group*/}
-                        {/*begin::Input group*/}
                         <div className="fv-row">
-                          {/*begin::Label*/}
                           <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                             <span className="required georgian">
                               არსებული მდგომარეობა
@@ -6720,19 +5285,13 @@ const Projects = () => {
                               title="ობიექტის არსებული მდგომარეობა"
                             />
                           </label>
-                          {/*end::Label*/}
-                          {/*begin:Option*/}
                           <label className="d-flex flex-stack cursor-pointer mb-5">
-                            {/*begin:Label*/}
                             <span className="d-flex align-items-center me-2">
-                              {/*begin:Icon*/}
                               <span className="symbol symbol-50px me-6">
                                 <span className="symbol-label bg-light-warning">
                                   <i className="fab fa-html5 text-warning fs-2x" />
                                 </span>
                               </span>
-                              {/*end:Icon*/}
-                              {/*begin:Info*/}
                               <span className="d-flex flex-column">
                                 <span className="fw-bolder georgian fs-6">
                                   შავი კარკასი
@@ -6741,10 +5300,7 @@ const Projects = () => {
                                   სამუშაოები სრულ რემონტამდე.
                                 </span>
                               </span>
-                              {/*end:Info*/}
                             </span>
-                            {/*end:Label*/}
-                            {/*begin:Input*/}
                             <span className="form-check form-check-custom form-check-solid">
                               <input
                                 className="form-check-input"
@@ -6754,21 +5310,14 @@ const Projects = () => {
                                 defaultValue={1}
                               />
                             </span>
-                            {/*end:Input*/}
                           </label>
-                          {/*end::Option*/}
-                          {/*begin:Option*/}
                           <label className="d-flex flex-stack cursor-pointer mb-5">
-                            {/*begin:Label*/}
                             <span className="d-flex align-items-center me-2">
-                              {/*begin:Icon*/}
                               <span className="symbol symbol-50px me-6">
                                 <span className="symbol-label bg-light-success">
                                   <i className="fab fa-react text-success fs-2x" />
                                 </span>
                               </span>
-                              {/*end:Icon*/}
-                              {/*begin:Info*/}
                               <span className="d-flex flex-column">
                                 <span className="fw-bolder georgian fs-6">
                                   თეთრი კარკასი
@@ -6777,10 +5326,7 @@ const Projects = () => {
                                   სამუშაოები სრულ რემონტამდე.
                                 </span>
                               </span>
-                              {/*end:Info*/}
                             </span>
-                            {/*end:Label*/}
-                            {/*begin:Input*/}
                             <span className="form-check form-check-custom form-check-solid">
                               <input
                                 className="form-check-input"
@@ -6789,21 +5335,14 @@ const Projects = () => {
                                 defaultValue={2}
                               />
                             </span>
-                            {/*end:Input*/}
                           </label>
-                          {/*end::Option*/}
-                          {/*begin:Option*/}
                           <label className="d-flex flex-stack cursor-pointer mb-5">
-                            {/*begin:Label*/}
                             <span className="d-flex align-items-center me-2">
-                              {/*begin:Icon*/}
                               <span className="symbol symbol-50px me-6">
                                 <span className="symbol-label bg-light-danger">
                                   <i className="fab fa-angular text-danger fs-2x" />
                                 </span>
                               </span>
-                              {/*end:Icon*/}
-                              {/*begin:Info*/}
                               <span className="d-flex flex-column">
                                 <span className="fw-bolder georgian fs-6">
                                   მწვანე კარკასი
@@ -6812,10 +5351,7 @@ const Projects = () => {
                                   სამუშაოები სრულ რემონტამდე.
                                 </span>
                               </span>
-                              {/*end:Info*/}
                             </span>
-                            {/*end:Label*/}
-                            {/*begin:Input*/}
                             <span className="form-check form-check-custom form-check-solid">
                               <input
                                 className="form-check-input"
@@ -6824,25 +5360,16 @@ const Projects = () => {
                                 defaultValue={3}
                               />
                             </span>
-                            {/*end:Input*/}
                           </label>
-                          {/*end::Option*/}
                         </div>
-                        {/*end::Input group*/}
                       </div>
                     </div>
-                    {/*end::Step 2*/}
-                    {/*begin::Step 3*/}
                     <div data-kt-stepper-element="content">
                       <div className="w-100">
-                        {/*begin::Input group*/}
                         <div className="fv-row mb-10">
-                          {/*begin::Label*/}
                           <label className="required fs-5 georgian fw-bold mb-2">
                             ობიექტის დასახელება
                           </label>
-                          {/*end::Label*/}
-                          {/*begin::Input*/}
                           <input
                             type="text"
                             className="form-control georgian form-control-lg form-control-solid"
@@ -6850,21 +5377,13 @@ const Projects = () => {
                             placeholder=""
                             defaultValue="ობიექტის დასახელება"
                           />
-                          {/*end::Input*/}
                         </div>
-                        {/*end::Input group*/}
-                        {/*begin::Input group*/}
                         <div className="row mb-10">
-                          {/*begin::Col*/}
                           <div className="col-md-12 fv-row">
-                            {/*begin::Label*/}
                             <label className="required fs-6 fw-bold form-label georgian mb-2">
                               შესასრულებელი სამუშაოები
                             </label>
-                            {/*end::Label*/}
-                            {/*begin::Row*/}
                             <div className="row fv-row">
-                              {/*begin::Col*/}
                               <div className="col-6">
                                 <div className="d-flex flex-column">
                                   <div className="form-check form-check-custom form-check-solid mb-2">
@@ -6953,8 +5472,6 @@ const Projects = () => {
                                   </div>
                                 </div>
                               </div>
-                              {/*end::Col*/}
-                              {/*begin::Col*/}
                               <div className="col-6">
                                 <div className="d-flex flex-column">
                                   <div className="form-check form-check-custom form-check-solid mb-2">
@@ -7057,22 +5574,14 @@ const Projects = () => {
                                   </div>
                                 </div>
                               </div>
-                              {/*end::Col*/}
                             </div>
-                            {/*end::Row*/}
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Input group*/}
                       </div>
                     </div>
-                    {/*end::Step 3*/}
-                    {/*begin::Step 4*/}
                     <div data-kt-stepper-element="content">
                       <div className="w-100">
-                        {/*begin::Input group*/}
                         <div className="d-flex flex-column mb-7 fv-row">
-                          {/*begin::Label*/}
                           <label className="d-flex align-items-center fs-6 fw-bold form-label mb-2">
                             <span className="required">Name On Card</span>
                             <i
@@ -7081,7 +5590,6 @@ const Projects = () => {
                               title="Specify a card holder's name"
                             />
                           </label>
-                          {/*end::Label*/}
                           <input
                             type="text"
                             className="form-control form-control-solid"
@@ -7090,17 +5598,11 @@ const Projects = () => {
                             defaultValue="Max Doe"
                           />
                         </div>
-                        {/*end::Input group*/}
-                        {/*begin::Input group*/}
                         <div className="d-flex flex-column mb-7 fv-row">
-                          {/*begin::Label*/}
                           <label className="required fs-6 fw-bold form-label mb-2">
                             Card Number
                           </label>
-                          {/*end::Label*/}
-                          {/*begin::Input wrapper*/}
                           <div className="position-relative">
-                            {/*begin::Input*/}
                             <input
                               type="text"
                               className="form-control form-control-solid"
@@ -7108,8 +5610,6 @@ const Projects = () => {
                               name="card_number"
                               defaultValue="4111 1111 1111 1111"
                             />
-                            {/*end::Input*/}
-                            {/*begin::Card logos*/}
                             <div className="position-absolute translate-middle-y top-50 end-0 me-5">
                               <img
                                 src="assets/media/svg/card-logos/visa.svg"
@@ -7127,23 +5627,14 @@ const Projects = () => {
                                 className="h-25px"
                               />
                             </div>
-                            {/*end::Card logos*/}
                           </div>
-                          {/*end::Input wrapper*/}
                         </div>
-                        {/*end::Input group*/}
-                        {/*begin::Input group*/}
                         <div className="row mb-10">
-                          {/*begin::Col*/}
                           <div className="col-md-8 fv-row">
-                            {/*begin::Label*/}
                             <label className="required fs-6 fw-bold form-label mb-2">
                               Expiration Date
                             </label>
-                            {/*end::Label*/}
-                            {/*begin::Row*/}
                             <div className="row fv-row">
-                              {/*begin::Col*/}
                               <div className="col-6">
                                 <select
                                   name="card_expiry_month"
@@ -7167,8 +5658,6 @@ const Projects = () => {
                                   <option value={12}>12</option>
                                 </select>
                               </div>
-                              {/*end::Col*/}
-                              {/*begin::Col*/}
                               <div className="col-6">
                                 <select
                                   name="card_expiry_year"
@@ -7191,14 +5680,9 @@ const Projects = () => {
                                   <option value={2031}>2031</option>
                                 </select>
                               </div>
-                              {/*end::Col*/}
                             </div>
-                            {/*end::Row*/}
                           </div>
-                          {/*end::Col*/}
-                          {/*begin::Col*/}
                           <div className="col-md-4 fv-row">
-                            {/*begin::Label*/}
                             <label className="d-flex align-items-center fs-6 fw-bold form-label mb-2">
                               <span className="required">CVV</span>
                               <i
@@ -7207,10 +5691,7 @@ const Projects = () => {
                                 title="Enter a card CVV code"
                               />
                             </label>
-                            {/*end::Label*/}
-                            {/*begin::Input wrapper*/}
                             <div className="position-relative">
-                              {/*begin::Input*/}
                               <input
                                 type="text"
                                 className="form-control form-control-solid"
@@ -7219,10 +5700,7 @@ const Projects = () => {
                                 placeholder="CVV"
                                 name="card_cvv"
                               />
-                              {/*end::Input*/}
-                              {/*begin::CVV icon*/}
                               <div className="position-absolute translate-middle-y top-50 end-0 me-3">
-                                {/*begin::Svg Icon | path: icons/duotune/finance/fin002.svg*/}
                                 <span className="svg-icon svg-icon-2hx">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -7239,18 +5717,11 @@ const Projects = () => {
                                     />
                                   </svg>
                                 </span>
-                                {/*end::Svg Icon*/}
                               </div>
-                              {/*end::CVV icon*/}
                             </div>
-                            {/*end::Input wrapper*/}
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Input group*/}
-                        {/*begin::Input group*/}
                         <div className="d-flex flex-stack">
-                          {/*begin::Label*/}
                           <div className="me-5">
                             <label className="fs-6 fw-bold form-label">
                               Save Card for further billing?
@@ -7260,8 +5731,6 @@ const Projects = () => {
                               planning
                             </div>
                           </div>
-                          {/*end::Label*/}
-                          {/*begin::Switch*/}
                           <label className="form-check form-switch form-check-custom form-check-solid">
                             <input
                               className="form-check-input"
@@ -7273,24 +5742,15 @@ const Projects = () => {
                               Save Card
                             </span>
                           </label>
-                          {/*end::Switch*/}
                         </div>
-                        {/*end::Input group*/}
                       </div>
                     </div>
-                    {/*end::Step 4*/}
-                    {/*begin::Step 5*/}
                     <div data-kt-stepper-element="content">
                       <div className="w-100 text-center">
-                        {/*begin::Heading*/}
                         <h1 className="fw-bolder text-dark mb-3">Release!</h1>
-                        {/*end::Heading*/}
-                        {/*begin::Description*/}
                         <div className="text-muted fw-bold fs-3">
                           Submit your app to kickstart your project.
                         </div>
-                        {/*end::Description*/}
-                        {/*begin::Illustration*/}
                         <div className="text-center px-4 py-15">
                           <img
                             src="assets/media/illustrations/sketchy-1/9.png"
@@ -7298,20 +5758,15 @@ const Projects = () => {
                             className="w-100 mh-300px"
                           />
                         </div>
-                        {/*end::Illustration*/}
                       </div>
                     </div>
-                    {/*end::Step 5*/}
-                    {/*begin::Actions*/}
                     <div className="d-flex flex-stack pt-10">
-                      {/*begin::Wrapper*/}
                       <div className="me-2">
                         <button
                           type="button"
                           className="btn georgian btn-lg btn-light-primary me-3"
                           data-kt-stepper-action="previous"
                         >
-                          {/*begin::Svg Icon | path: icons/duotune/arrows/arr063.svg*/}
                           <span className="svg-icon svg-icon-3 me-1">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -7335,11 +5790,8 @@ const Projects = () => {
                               />
                             </svg>
                           </span>
-                          {/*end::Svg Icon*/}უკან
                         </button>
                       </div>
-                      {/*end::Wrapper*/}
-                      {/*begin::Wrapper*/}
                       <div>
                         <button
                           type="button"
@@ -7348,7 +5800,6 @@ const Projects = () => {
                         >
                           <span className="indicator-label georgian">
                             გაგზავნა
-                            {/*begin::Svg Icon | path: icons/duotune/arrows/arr064.svg*/}
                             <span className="svg-icon svg-icon-3 ms-2 me-0">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -7373,7 +5824,6 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </span>
                           <span className="indicator-progress georgian">
                             გთხოვთ დაიცადოთ...
@@ -7386,7 +5836,6 @@ const Projects = () => {
                           data-kt-stepper-action="next"
                         >
                           გაგრძელება
-                          {/*begin::Svg Icon | path: icons/duotune/arrows/arr064.svg*/}
                           <span className="svg-icon svg-icon-3 ms-1 me-0">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -7411,45 +5860,29 @@ const Projects = () => {
                               />
                             </svg>
                           </span>
-                          {/*end::Svg Icon*/}
                         </button>
                       </div>
-                      {/*end::Wrapper*/}
                     </div>
-                    {/*end::Actions*/}
                   </form>
-                  {/*end::Form*/}
                 </div>
-                {/*end::Content*/}
               </div>
-              {/*end::Stepper*/}
             </div>
-            {/*end::Modal body*/}
           </div>
-          {/*end::Modal content*/}
         </div>
-        {/*end::Modal dialog*/}
       </div>
-      {/*end::Modal - Create App*/}
-      {/*begin::Modal - Upgrade plan*/}
       <div
         className="modal fade"
         id="kt_modal_upgrade_plan"
         tabIndex={-1}
         aria-hidden="true"
       >
-        {/*begin::Modal dialog*/}
         <div className="modal-dialog modal-xl">
-          {/*begin::Modal content*/}
           <div className="modal-content rounded">
-            {/*begin::Modal header*/}
             <div className="modal-header justify-content-end border-0 pb-0">
-              {/*begin::Close*/}
               <div
                 className="btn btn-sm btn-icon btn-active-color-primary"
                 data-bs-dismiss="modal"
               >
-                {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
                 <span className="svg-icon svg-icon-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -7479,14 +5912,9 @@ const Projects = () => {
                     />
                   </svg>
                 </span>
-                {/*end::Svg Icon*/}
               </div>
-              {/*end::Close*/}
             </div>
-            {/*end::Modal header*/}
-            {/*begin::Modal body*/}
             <div className="modal-body pt-0 pb-15 px-5 px-xl-20">
-              {/*begin::Heading*/}
               <div className="mb-13 text-center">
                 <h1 className="mb-3">Upgrade a Plan</h1>
                 <div className="text-muted fw-bold fs-5">
@@ -7497,10 +5925,7 @@ const Projects = () => {
                   .
                 </div>
               </div>
-              {/*end::Heading*/}
-              {/*begin::Plans*/}
               <div className="d-flex flex-column">
-                {/*begin::Nav group*/}
                 <div
                   className="nav-group nav-group-outline mx-auto"
                   data-kt-buttons="true"
@@ -7520,22 +5945,15 @@ const Projects = () => {
                     Annual
                   </a>
                 </div>
-                {/*end::Nav group*/}
-                {/*begin::Row*/}
                 <div className="row mt-10">
-                  {/*begin::Col*/}
                   <div className="col-lg-6 mb-10 mb-lg-0">
-                    {/*begin::Tabs*/}
                     <div className="nav flex-column">
-                      {/*begin::Tab link*/}
                       <div
                         className="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 active mb-6"
                         data-bs-toggle="tab"
                         data-bs-target="#kt_upgrade_plan_startup"
                       >
-                        {/*end::Description*/}
                         <div className="d-flex align-items-center me-2">
-                          {/*begin::Radio*/}
                           <div className="form-check form-check-custom form-check-solid form-check-success me-6">
                             <input
                               className="form-check-input"
@@ -7545,8 +5963,6 @@ const Projects = () => {
                               defaultValue="startup"
                             />
                           </div>
-                          {/*end::Radio*/}
-                          {/*begin::Info*/}
                           <div className="flex-grow-1">
                             <h2 className="d-flex align-items-center fs-2 fw-bolder flex-wrap">
                               Startup
@@ -7555,10 +5971,7 @@ const Projects = () => {
                               Best for startups
                             </div>
                           </div>
-                          {/*end::Info*/}
                         </div>
-                        {/*end::Description*/}
-                        {/*begin::Price*/}
                         <div className="ms-5">
                           <span className="mb-2">$</span>
                           <span
@@ -7572,18 +5985,13 @@ const Projects = () => {
                             /<span data-kt-element="period">Mon</span>
                           </span>
                         </div>
-                        {/*end::Price*/}
                       </div>
-                      {/*end::Tab link*/}
-                      {/*begin::Tab link*/}
                       <div
                         className="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6"
                         data-bs-toggle="tab"
                         data-bs-target="#kt_upgrade_plan_advanced"
                       >
-                        {/*end::Description*/}
                         <div className="d-flex align-items-center me-2">
-                          {/*begin::Radio*/}
                           <div className="form-check form-check-custom form-check-solid form-check-success me-6">
                             <input
                               className="form-check-input"
@@ -7592,8 +6000,6 @@ const Projects = () => {
                               defaultValue="advanced"
                             />
                           </div>
-                          {/*end::Radio*/}
-                          {/*begin::Info*/}
                           <div className="flex-grow-1">
                             <h2 className="d-flex align-items-center fs-2 fw-bolder flex-wrap">
                               Advanced
@@ -7602,10 +6008,7 @@ const Projects = () => {
                               Best for 100+ team size
                             </div>
                           </div>
-                          {/*end::Info*/}
                         </div>
-                        {/*end::Description*/}
-                        {/*begin::Price*/}
                         <div className="ms-5">
                           <span className="mb-2">$</span>
                           <span
@@ -7619,18 +6022,13 @@ const Projects = () => {
                             /<span data-kt-element="period">Mon</span>
                           </span>
                         </div>
-                        {/*end::Price*/}
                       </div>
-                      {/*end::Tab link*/}
-                      {/*begin::Tab link*/}
                       <div
                         className="nav-link btn btn-outline btn-outline-dashed btn-color-dark btn-active btn-active-primary d-flex flex-stack text-start p-6 mb-6"
                         data-bs-toggle="tab"
                         data-bs-target="#kt_upgrade_plan_enterprise"
                       >
-                        {/*end::Description*/}
                         <div className="d-flex align-items-center me-2">
-                          {/*begin::Radio*/}
                           <div className="form-check form-check-custom form-check-solid form-check-success me-6">
                             <input
                               className="form-check-input"
@@ -7639,8 +6037,6 @@ const Projects = () => {
                               defaultValue="enterprise"
                             />
                           </div>
-                          {/*end::Radio*/}
-                          {/*begin::Info*/}
                           <div className="flex-grow-1">
                             <h2 className="d-flex align-items-center fs-2 fw-bolder flex-wrap">
                               Enterprise
@@ -7652,10 +6048,7 @@ const Projects = () => {
                               Best value for 1000+ team
                             </div>
                           </div>
-                          {/*end::Info*/}
                         </div>
-                        {/*end::Description*/}
-                        {/*begin::Price*/}
                         <div className="ms-5">
                           <span className="mb-2">$</span>
                           <span
@@ -7669,14 +6062,9 @@ const Projects = () => {
                             /<span data-kt-element="period">Mon</span>
                           </span>
                         </div>
-                        {/*end::Price*/}
                       </div>
-                      {/*end::Tab link*/}
-                      {/*begin::Tab link*/}
                       <div className="nav-link btn btn-outline btn-outline-dashed btn-color-dark d-flex flex-stack text-start p-6">
-                        {/*end::Description*/}
                         <div className="d-flex align-items-center me-2">
-                          {/*begin::Radio*/}
                           <div className="form-check form-check-custom form-check-solid form-check-success me-6">
                             <input
                               className="form-check-input"
@@ -7685,8 +6073,6 @@ const Projects = () => {
                               defaultValue="custom"
                             />
                           </div>
-                          {/*end::Radio*/}
-                          {/*begin::Info*/}
                           <div className="flex-grow-1">
                             <h2 className="d-flex align-items-center fs-2 fw-bolder flex-wrap">
                               Custom
@@ -7695,32 +6081,21 @@ const Projects = () => {
                               Requet a custom license
                             </div>
                           </div>
-                          {/*end::Info*/}
                         </div>
-                        {/*end::Description*/}
-                        {/*begin::Price*/}
                         <div className="ms-5">
                           <a href="#" className="btn btn-sm btn-primary">
                             Contact Us
                           </a>
                         </div>
-                        {/*end::Price*/}
                       </div>
-                      {/*end::Tab link*/}
                     </div>
-                    {/*end::Tabs*/}
                   </div>
-                  {/*end::Col*/}
-                  {/*begin::Col*/}
                   <div className="col-lg-6">
-                    {/*begin::Tab content*/}
                     <div className="tab-content rounded h-100 bg-light p-10">
-                      {/*begin::Tab Pane*/}
                       <div
                         className="tab-pane fade show active"
                         id="kt_upgrade_plan_startup"
                       >
-                        {/*begin::Heading*/}
                         <div className="pb-5">
                           <h2 className="fw-bolder text-dark">
                             What’s in Startup Plan?
@@ -7729,15 +6104,11 @@ const Projects = () => {
                             Optimal for 10+ team size and new startup
                           </div>
                         </div>
-                        {/*end::Heading*/}
-                        {/*begin::Body*/}
                         <div className="pt-1">
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Up to 10 Active Users
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -7761,15 +6132,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Up to 30 Project Integrations
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -7793,15 +6160,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Analytics Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -7825,15 +6188,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-muted flex-grow-1">
                               Finance Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                             <span className="svg-icon svg-icon-1">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -7871,15 +6230,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-muted flex-grow-1">
                               Accounting Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                             <span className="svg-icon svg-icon-1">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -7917,15 +6272,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-muted flex-grow-1">
                               Network Platform
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                             <span className="svg-icon svg-icon-1">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -7963,15 +6314,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center">
                             <span className="fw-bold fs-5 text-muted flex-grow-1">
                               Unlimited Cloud Space
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                             <span className="svg-icon svg-icon-1">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8009,19 +6356,13 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
                         </div>
-                        {/*end::Body*/}
                       </div>
-                      {/*end::Tab Pane*/}
-                      {/*begin::Tab Pane*/}
                       <div
                         className="tab-pane fade"
                         id="kt_upgrade_plan_advanced"
                       >
-                        {/*begin::Heading*/}
                         <div className="pb-5">
                           <h2 className="fw-bolder text-dark">
                             What’s in Startup Plan?
@@ -8030,15 +6371,11 @@ const Projects = () => {
                             Optimal for 100+ team size and grown company
                           </div>
                         </div>
-                        {/*end::Heading*/}
-                        {/*begin::Body*/}
                         <div className="pt-1">
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Up to 10 Active Users
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8062,15 +6399,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Up to 30 Project Integrations
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8094,15 +6427,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Analytics Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8126,15 +6455,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Finance Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8158,15 +6483,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Accounting Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8190,15 +6511,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-muted flex-grow-1">
                               Network Platform
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                             <span className="svg-icon svg-icon-1">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8236,15 +6553,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center">
                             <span className="fw-bold fs-5 text-muted flex-grow-1">
                               Unlimited Cloud Space
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen040.svg*/}
                             <span className="svg-icon svg-icon-1">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8282,19 +6595,13 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
                         </div>
-                        {/*end::Body*/}
                       </div>
-                      {/*end::Tab Pane*/}
-                      {/*begin::Tab Pane*/}
                       <div
                         className="tab-pane fade"
                         id="kt_upgrade_plan_enterprise"
                       >
-                        {/*begin::Heading*/}
                         <div className="pb-5">
                           <h2 className="fw-bolder text-dark">
                             What’s in Startup Plan?
@@ -8303,15 +6610,11 @@ const Projects = () => {
                             Optimal for 1000+ team and enterpise
                           </div>
                         </div>
-                        {/*end::Heading*/}
-                        {/*begin::Body*/}
                         <div className="pt-1">
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Up to 10 Active Users
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8335,15 +6638,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Up to 30 Project Integrations
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8367,15 +6666,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Analytics Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8399,15 +6694,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Finance Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8431,15 +6722,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Accounting Module
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8463,15 +6750,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center mb-7">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Network Platform
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8495,15 +6778,11 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
-                          {/*begin::Item*/}
                           <div className="d-flex align-items-center">
                             <span className="fw-bold fs-5 text-gray-700 flex-grow-1">
                               Unlimited Cloud Space
                             </span>
-                            {/*begin::Svg Icon | path: icons/duotune/general/gen043.svg*/}
                             <span className="svg-icon svg-icon-1 svg-icon-success">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -8527,22 +6806,13 @@ const Projects = () => {
                                 />
                               </svg>
                             </span>
-                            {/*end::Svg Icon*/}
                           </div>
-                          {/*end::Item*/}
                         </div>
-                        {/*end::Body*/}
                       </div>
-                      {/*end::Tab Pane*/}
                     </div>
-                    {/*end::Tab content*/}
                   </div>
-                  {/*end::Col*/}
                 </div>
-                {/*end::Row*/}
               </div>
-              {/*end::Plans*/}
-              {/*begin::Actions*/}
               <div className="d-flex flex-center flex-row-fluid pt-12">
                 <button
                   type="reset"
@@ -8555,19 +6825,11 @@ const Projects = () => {
                   Upgrade Plan
                 </button>
               </div>
-              {/*end::Actions*/}
             </div>
-            {/*end::Modal body*/}
           </div>
-          {/*end::Modal content*/}
         </div>
-        {/*end::Modal dialog*/}
       </div>
-      {/*end::Modal - Upgrade plan*/}
-      {/*end::Modals*/}
-      {/*begin::Scrolltop*/}
       <div id="kt_scrolltop" className="scrolltop" data-kt-scrolltop="true">
-        {/*begin::Svg Icon | path: icons/duotune/arrows/arr066.svg*/}
         <span className="svg-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -8592,19 +6854,7 @@ const Projects = () => {
             />
           </svg>
         </span>
-        {/*end::Svg Icon*/}
       </div>
-      {/*end::Scrolltop*/}
-      {/*end::Main*/}
-      {/*begin::Javascript*/}
-      {/*begin::Global Javascript Bundle(used by all pages)*/}
-      {/*end::Global Javascript Bundle*/}
-      {/*begin::Page Vendors Javascript(used by this page)*/}
-      {/*end::Page Vendors Javascript*/}
-      {/*begin::Page Custom Javascript(used by this page)*/}
-      {/*end::Page Custom Javascript*/}
-      {/*end::Javascript*/}
-      {/*end::Body*/}
     </>
   );
 };

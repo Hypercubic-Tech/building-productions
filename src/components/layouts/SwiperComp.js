@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,9 +8,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import styles from "../../styles/swiperComp/SwiperComp.module.css"
 
-const SwiperComp = ({imgs, type}) => {
+
+const SwiperComp = ({imgs, type, teemMembers}) => {
   return (
-    <div style={{display: 'flex'}}>
+    <div >
       {type === 1 && <Swiper
         modules={[Navigation, Pagination, A11y]}
         slidesPerView={1}
@@ -20,12 +20,10 @@ const SwiperComp = ({imgs, type}) => {
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log('slide change')}
       >
-        {imgs.map(item => {
+        {imgs?.map((item, i) => {
           return(
-            <SwiperSlide>
-              <div className={styles.swiper}>
-                <Image src={item} alt="My Image" width={300} height={200} />
-              </div>
+            <SwiperSlide key={i} className={styles.swiper} >
+                <Image class="img-fluid" src={item} alt="My Image" width={300} height={200} />
             </SwiperSlide>  
           );
         })}
@@ -41,14 +39,19 @@ const SwiperComp = ({imgs, type}) => {
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log('slide change')}
       >
-      {imgs.map(item => {
-        return(
-          <SwiperSlide>
-            <div className={styles.swiper}>
-              <Image src={item} alt="My Image" width={300} height={200} />
-            </div>
-          </SwiperSlide>  
-        );
+      {
+        teemMembers.map((it, index) => {
+      imgs.map((item, i) => {
+          return(
+            <SwiperSlide key={i}>
+              <div className={styles.swiper}>
+                <Image src={item} alt="My Image" width={300} height={200} />
+                <h1 className={styles.name} key={index}> {it.teemMemberName}</h1>
+                <p className={styles.position} key={ index + "p"}>{it.position}</p>
+              </div>
+            </SwiperSlide>  
+          );
+        })
       })}
       </Swiper>}
     </div>
