@@ -6,12 +6,6 @@ function Login({ open, handleLoginClick }) {
   const [showModal, setShowModal] = useState(open);
   const [showSecondModal, setShowSecondModal] = useState(false);
 
-  const [closeModal, setCloseModal] = useState(false);
-
-  const handleCloseModal = () => {
-    setCloseModal(false);
-  };
-
   const handleClick = () => {
     setShowModal(false);
     setShowSecondModal(true);
@@ -39,12 +33,15 @@ function Login({ open, handleLoginClick }) {
         <div className={`${styles.container}`}>
           <form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="d-flex justify-content-between align-items-center">
-                <div
-                  onClick={handleClick}
-                  className={`${styles.registrationBtn} row `}
-                >
-                  რეგისტრაცია
+              <div className="d-flex justify-content-between">
+                <div>
+                  <div className="text-muted">არ ხარ დარეგისტრირებული?</div>
+                  <div
+                    onClick={handleClick}
+                    className={`${styles.registrationBtn} row `}
+                  >
+                    დარეგისტრირდი
+                  </div>
                 </div>
                 <svg
                   onClick={handleLoginClick}
@@ -78,7 +75,7 @@ function Login({ open, handleLoginClick }) {
                 </svg>
               </div>
               <div className="d-grid gap-2">
-                <label>Email:</label>
+                <label className="mt-2">Email:</label>
                 <input
                   autoComplete="username"
                   required
@@ -91,7 +88,7 @@ function Login({ open, handleLoginClick }) {
                 />
               </div>
               <div className="d-grid gap-2">
-                <label>Password:</label>
+                <label className="mt-2">Password:</label>
                 <input
                   autoComplete="current-password"
                   required
