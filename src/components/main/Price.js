@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-const Price = () => {
+const Price = ({price}) => {
   const [monthly, setMonthly] = useState(true);
   const [annual, setAnnual] = useState(false);
+  const [selected, setSelected] = useState(3);
 
     return ( 
         <div className="mt-sm-n20">
@@ -66,25 +67,25 @@ const Price = () => {
                 <div className="row g-10">
                   <div className="col-xl-4">
                     <div className="d-flex h-100 align-items-center">
-                      <div className="w-100 d-flex flex-column flex-center rounded-3 bg-body py-15 px-10">
+                      <div className={`w-100 d-flex flex-column flex-center rounded-3 ${selected === 1 ? 'bg-primary' : 'bg-body'} py-15 px-10`}>
                         <div className="mb-7 text-center">
-                          <h1 className="text-dark mb-5 fw-boldest">
+                          <h1 className={`${selected === 1 ? 'text-white mb-5 fw-boldest' : 'text-dark mb-5 fw-boldest'}`}>
                             Startup
                           </h1>
-                          <div className="text-gray-400 fw-bold mb-5">
+                          <div className={`${selected === 1 ? 'text-white opacity-75 fw-bold mb-5' : 'text-gray-400 fw-bold mb-5'}`}>
                             Best Settings for Startups
                           </div>
                           <div className="text-center">
-                            <span className="mb-2 text-primary">$</span>
+                            <span className={`${selected === 1 ? 'mb-2 text-white' : 'mb-2 text-primary'}`}>$</span>
                             <span
-                              className="fs-3x fw-bolder text-primary"
+                              className={`${selected === 1 ? 'fs-3x fw-bolder text-white' : 'fs-3x fw-bolder text-primary'}`}
                               data-kt-plan-price-month={99}
                               data-kt-plan-price-annual={999}
                             >
-                              99
+                              {price.startup}
                             </span>
                             <span
-                              className="fs-7 fw-bold opacity-50"
+                              className={`${selected === 1 ? 'fs-7 fw-bold text-white opacity-75' : 'fs-7 fw-bold opacity-50'}`}
                               data-kt-plan-price-month="Mon"
                               data-kt-plan-price-annual="Ann"
                             >
@@ -94,10 +95,10 @@ const Price = () => {
                         </div>
                         <div className="w-100 mb-10">
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
+                            <span className={`${selected === 1 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Up to 10 Active Users
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-success">
+                            <span className={`${selected === 1 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -122,10 +123,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
+                            <span className={`${selected === 1 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Up to 30 Project Integrations
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-success">
+                            <span className={`${selected === 1 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -150,10 +151,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-gray-800">
+                            <span className={`${selected === 1 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Keen Analytics Platform
                             </span>
-                            <span className="svg-icon svg-icon-1">
+                            <span className={`${selected === 1 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -192,10 +193,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-gray-800">
+                            <span className={`${selected === 1 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Targets Timelines &amp; Files
                             </span>
-                            <span className="svg-icon svg-icon-1">
+                            <span className={`${selected === 1 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -234,10 +235,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack">
-                            <span className="fw-bold fs-6 text-gray-800">
+                            <span className={`${selected === 1 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Unlimited Projects
                             </span>
-                            <span className="svg-icon svg-icon-1">
+                            <span className={`${selected === 1 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -276,7 +277,10 @@ const Price = () => {
                             </span>
                           </div>
                         </div>
-                        <a href="#" className="btn btn-primary">
+                        <a 
+                        onClick={() => {setSelected(1)}} 
+                        className={`${selected === 1 ? 'btn btn-color-primary btn-active-light-primary btn-light' : 'btn btn-primary'}`}
+                        >
                           Select
                         </a>
                       </div>
@@ -284,25 +288,25 @@ const Price = () => {
                   </div>
                   <div className="col-xl-4">
                     <div className="d-flex h-100 align-items-center">
-                      <div className="w-100 d-flex flex-column flex-center rounded-3 bg-primary py-20 px-10">
+                      <div className={`w-100 d-flex flex-column flex-center rounded-3 ${selected === 2 ? 'bg-primary' : 'bg-body'} py-15 px-10`}>
                         <div className="mb-7 text-center">
-                          <h1 className="text-white mb-5 fw-boldest">
+                          <h1 className={`${selected === 2 ? 'text-white mb-5 fw-boldest' : 'text-dark mb-5 fw-boldest'}`}>
                             Business
                           </h1>
-                          <div className="text-white opacity-75 fw-bold mb-5">
+                          <div className={`${selected === 2 ? 'text-white opacity-75 fw-bold mb-5' : 'text-gray-400 fw-bold mb-5'}`}>
                             Best Settings for Business
                           </div>
                           <div className="text-center">
-                            <span className="mb-2 text-white">$</span>
+                            <span className={`${selected === 2 ? 'mb-2 text-white' : 'mb-2 text-primary'}`}>$</span>
                             <span
-                              className="fs-3x fw-bolder text-white"
+                              className={`${selected === 2 ? 'fs-3x fw-bolder text-white' : 'fs-3x fw-bolder text-primary'}`}
                               data-kt-plan-price-month={199}
                               data-kt-plan-price-annual={1999}
                             >
-                              199
+                              {price.business}
                             </span>
                             <span
-                              className="fs-7 fw-bold text-white opacity-75"
+                              className={`${selected === 2 ? 'fs-7 fw-bold text-white opacity-75' : 'fs-7 fw-bold opacity-50'}`}
                               data-kt-plan-price-month="Mon"
                               data-kt-plan-price-annual="Ann"
                             >
@@ -312,10 +316,10 @@ const Price = () => {
                         </div>
                         <div className="w-100 mb-10">
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-white opacity-75 text-start pe-3">
+                            <span className={`${selected === 2 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Up to 10 Active Users
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-white">
+                            <span className={`${selected === 2 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -340,10 +344,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-white opacity-75 text-start pe-3">
+                            <span className={`${selected === 2 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Up to 30 Project Integrations
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-white">
+                            <span className={`${selected === 2 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -368,10 +372,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-white opacity-75 text-start pe-3">
+                            <span className={`${selected === 2 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Keen Analytics Platform
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-white">
+                            <span className={`${selected === 2 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -396,10 +400,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-white opacity-75 text-start pe-3">
+                            <span className={`${selected === 2 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Targets Timelines &amp; Files
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-white">
+                            <span className={`${selected === 2 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -424,10 +428,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack">
-                            <span className="fw-bold fs-6 text-white opacity-75">
+                            <span className={`${selected === 2 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Unlimited Projects
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-white">
+                            <span className={`${selected === 2 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -467,8 +471,8 @@ const Price = () => {
                           </div>
                         </div>
                         <a
-                          href="#"
-                          className="btn btn-color-primary btn-active-light-primary btn-light"
+                          onClick={() => {setSelected(2)}}
+                          className={`${selected === 2 ? 'btn btn-color-primary btn-active-light-primary btn-light' : 'btn btn-primary'}`}
                         >
                           Select
                         </a>
@@ -477,25 +481,25 @@ const Price = () => {
                   </div>
                   <div className="col-xl-4">
                     <div className="d-flex h-100 align-items-center">
-                      <div className="w-100 d-flex flex-column flex-center rounded-3 bg-body py-15 px-10">
+                      <div className={`w-100 d-flex flex-column flex-center rounded-3 ${selected === 3 ? 'bg-primary' : 'bg-body'} py-15 px-10`}>
                         <div className="mb-7 text-center">
-                          <h1 className="text-dark mb-5 fw-boldest">
+                          <h1 className={`${selected === 3 ? 'text-white mb-5 fw-boldest' : 'text-dark mb-5 fw-boldest'}`}>
                             Enterprise
                           </h1>
-                          <div className="text-gray-400 fw-bold mb-5">
+                          <div className={`${selected === 3 ? 'text-white opacity-75 fw-bold mb-5' : 'text-gray-400 fw-bold mb-5'}`}>
                             Best Settings for Enterprise
                           </div>
                           <div className="text-center">
-                            <span className="mb-2 text-primary">$</span>
+                            <span className={`${selected === 3 ? 'mb-2 text-white' : 'mb-2 text-primary'}`}>$</span>
                             <span
-                              className="fs-3x fw-bolder text-primary"
+                              className={`${selected === 3 ? 'fs-3x fw-bolder text-white' : 'fs-3x fw-bolder text-primary'}`}
                               data-kt-plan-price-month={999}
                               data-kt-plan-price-annual={9999}
                             >
-                              999
+                              {price.enterprise}
                             </span>
                             <span
-                              className="fs-7 fw-bold opacity-50"
+                              className={`${selected === 3 ? 'fs-7 fw-bold text-white opacity-75' : 'fs-7 fw-bold opacity-50'}`}
                               data-kt-plan-price-month="Mon"
                               data-kt-plan-price-annual="Ann"
                             >
@@ -505,10 +509,10 @@ const Price = () => {
                         </div>
                         <div className="w-100 mb-10">
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
+                            <span className={`${selected === 3 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Up to 10 Active Users
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-success">
+                            <span className={`${selected === 3 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -533,10 +537,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
+                            <span className={`${selected === 3 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Up to 30 Project Integrations
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-success">
+                            <span className={`${selected === 3 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -561,10 +565,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
+                            <span className={`${selected === 3 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Keen Analytics Platform
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-success">
+                            <span className={`${selected === 3 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -589,10 +593,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack mb-5">
-                            <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
+                            <span className={`${selected === 3 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Targets Timelines &amp; Files
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-success">
+                            <span className={`${selected === 3 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -617,10 +621,10 @@ const Price = () => {
                             </span>
                           </div>
                           <div className="d-flex flex-stack">
-                            <span className="fw-bold fs-6 text-gray-800 text-start pe-3">
+                            <span className={`${selected === 3 ? 'fw-bold fs-6 text-white opacity-75': 'fw-bold fs-6 text-gray-800 text-start pe-3'}`}>
                               Unlimited Projects
                             </span>
-                            <span className="svg-icon svg-icon-1 svg-icon-success">
+                            <span className={`${selected === 3 ? 'svg-icon svg-icon-1 svg-icon-white': 'svg-icon svg-icon-1 svg-icon-success'}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width={24}
@@ -645,7 +649,10 @@ const Price = () => {
                             </span>
                           </div>
                         </div>
-                        <a href="#" className="btn btn-primary">
+                        <a 
+                        onClick={() => {setSelected(3)}} 
+                        className={`${selected === 3 ? 'btn btn-color-primary btn-active-light-primary btn-light' : 'btn btn-primary'}`}
+                        >
                           Select
                         </a>
                       </div>

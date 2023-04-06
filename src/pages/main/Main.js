@@ -6,6 +6,12 @@ import OurProjects from "@/components/main/OurProjects";
 import Price from "@/components/main/Price";
 import WhatOuerClientsSay from "@/components/main/WhatOurClientsSay";
 
+const priceData = {
+  startup: 98,
+  business: 98,
+  enterprise: 98,
+}
+
 const Main = () => {
   return (
     <div
@@ -70,7 +76,7 @@ const Main = () => {
         </div>
         <OurTeem />
         <OurProjects />
-        <Price />
+        <Price price={priceData} />
         <WhatOuerClientsSay />
         <div className="mb-0">
           <div className="landing-curve landing-dark-color">

@@ -24,7 +24,7 @@ const OurTeem = () => {
             of us.
           </div>
         </div>
-        <div className="tns tns-default">
+        <div className="tns tns-default active">
           <div
             data-tns="true"
             data-tns-loop="true"
@@ -155,7 +155,7 @@ const OurTeem = () => {
                 </div>
               </div>
             </div>
-            <div className="text-center">
+            <div className="text-center ">
               <div
                 className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                 style={{
