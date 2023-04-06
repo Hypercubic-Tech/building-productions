@@ -1,4 +1,9 @@
+import { useState } from "react";
+
 const Price = () => {
+  const [monthly, setMonthly] = useState(true);
+  const [annual, setAnnual] = useState(false);
+
     return ( 
         <div className="mt-sm-n20">
         <div className="landing-curve landing-dark-color">
@@ -38,15 +43,21 @@ const Price = () => {
                   style={{ border: "1px dashed #2B4666" }}
                 >
                   <a
-                    href="#"
-                    className="btn btn-color-gray-600 btn-active btn-active-success px-6 py-3 me-2 active"
+                    onClick={() => {
+                      setMonthly(true);
+                      setAnnual(false);
+                    }}
+                    className={`btn btn-color-gray-600 btn-active btn-active-success px-6 py-3 me-2 ${[monthly ? "active" : '' ]} `}
                     data-kt-plan="month"
                   >
                     Monthly
                   </a>
                   <a
-                    href="#"
-                    className="btn btn-color-gray-600 btn-active btn-active-success px-6 py-3"
+                    onClick={() => {
+                      setMonthly(false);
+                      setAnnual(true);
+                    }}
+                    className={`btn btn-color-gray-600 btn-active btn-active-success px-6 py-3 me-2 ${[annual ? "active" : '' ]} `}
                     data-kt-plan="annual"
                   >
                     Annual
