@@ -4,9 +4,19 @@ const AddProject = () => {
   const [step, setStep] = useState(1);
   const [backBtn, setBackBtn] = useState(false);
 
-  const step1Data = {
+  const step1Data = [
+    {
+      id: 1,
+      type: ['ბინა', 'სახლი-აგარაკი', 'კომერციული ფართი', 'სასტუმრო'],
+      city: ['თბილისი', 'რუსთავი', 'ბათუმი', 'აბასთუმანი', 'აბაშა', 'ჩხალთა'],
+      sector: ['გლდანის რაიონი', 'დიდუბის რაიონი', 'ჩუღურეთის რაიონი', 'ვაკის რაიონი', 'საბურთალოს რაიონი', 'მთაწმინდის რაიონი', 'თბილისის შემოგარენი']
+    },
+    {
+      id: 1,
+
+    }
     
-  }
+  ]
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
       return "completed";
@@ -30,6 +40,7 @@ const AddProject = () => {
       setStep(step - 1);
     }
   };
+
   return (
     <div className="modal-dialog modal-dialog-centered mw-900px">
       {/*begin::Modal content*/}
@@ -220,93 +231,6 @@ const AddProject = () => {
                         <option value={'komerciuli-farti'}>კომერციული ფართი</option>
                         <option value={'sastumro'}>სასტუმრო</option>
                       </select>
-                      <div className="col-6">
-                        <select
-                          name="card_expiry_month"
-                          className="form-select form-select-solid select2-hidden-accessible"
-                          data-control="select2"
-                          data-hide-search="true"
-                          data-placeholder="Month"
-                          data-select2-id="select2-data-64-5t42"
-                          tabIndex={-1}
-                          aria-hidden="true"
-                        >
-                          <option data-select2-id="select2-data-66-3x5f" />
-                          <option
-                            value={1}
-                            data-select2-id="select2-data-107-2ghu"
-                          >
-                            1
-                          </option>
-                          <option
-                            value={2}
-                            data-select2-id="select2-data-108-rwew"
-                          >
-                            2
-                          </option>
-                          <option
-                            value={3}
-                            data-select2-id="select2-data-109-i5sv"
-                          >
-                            3
-                          </option>
-                          <option
-                            value={4}
-                            data-select2-id="select2-data-110-jith"
-                          >
-                            4
-                          </option>
-                          <option
-                            value={5}
-                            data-select2-id="select2-data-111-xl2a"
-                          >
-                            5
-                          </option>
-                          <option
-                            value={6}
-                            data-select2-id="select2-data-112-kstu"
-                          >
-                            6
-                          </option>
-                          <option
-                            value={7}
-                            data-select2-id="select2-data-113-s8qs"
-                          >
-                            7
-                          </option>
-                          <option
-                            value={8}
-                            data-select2-id="select2-data-114-hkfn"
-                          >
-                            8
-                          </option>
-                          <option
-                            value={9}
-                            data-select2-id="select2-data-115-ort0"
-                          >
-                            9
-                          </option>
-                          <option
-                            value={10}
-                            data-select2-id="select2-data-116-yumq"
-                          >
-                            10
-                          </option>
-                          <option
-                            value={11}
-                            data-select2-id="select2-data-117-u6n2"
-                          >
-                            11
-                          </option>
-                          <option
-                            value={12}
-                            data-select2-id="select2-data-118-rgru"
-                          >
-                            12
-                          </option>
-                        </select>
-                        <div className="fv-plugins-message-container invalid-feedback" />
-                      </div>
                       {/*end::Input*/}
                     </div>
                     {/*end::Input group*/}
@@ -957,6 +881,7 @@ const AddProject = () => {
                 </div>
                 {/*end::Step 5*/}
                 {/*begin::Actions*/}
+
                 <div className="d-flex flex-stack pt-10">
                   {/*begin::Wrapper*/}
                   <div className="me-2">
@@ -1075,6 +1000,7 @@ const AddProject = () => {
                   </div>
                   {/*end::Wrapper*/}
                 </div>
+
                 {/*end::Actions*/}
               </form>
               {/*end::Form*/}
