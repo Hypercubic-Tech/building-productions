@@ -4,19 +4,26 @@ const AddProject = () => {
   const [step, setStep] = useState(1);
   const [backBtn, setBackBtn] = useState(false);
 
-  const step1Data = [
+  const [sendData, setSendData] = useState([
     {
-      id: 1,
-      type: ['ბინა', 'სახლი-აგარაკი', 'კომერციული ფართი', 'სასტუმრო'],
-      city: ['თბილისი', 'რუსთავი', 'ბათუმი', 'აბასთუმანი', 'აბაშა', 'ჩხალთა'],
-      sector: ['გლდანის რაიონი', 'დიდუბის რაიონი', 'ჩუღურეთის რაიონი', 'ვაკის რაიონი', 'საბურთალოს რაიონი', 'მთაწმინდის რაიონი', 'თბილისის შემოგარენი']
+      kategoria: {
+        qonebisTipi: "",
+        qalaqi: "",
+        raioni: "",
+        misamarti: "",
+        telefoni: "",
+      },
+      mdgomareoba: {
+        mdgomareoba: "",
+        arsebuliMdgomareoba: "",
+      },
+      samushaoebi: {
+        obieqtisDasaxeleba: "",
+        shesasrulebeliSamushaoebi: "",
+      },
     },
-    {
-      id: 1,
-
-    }
-    
-  ]
+  ]);
+  
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
       return "completed";
@@ -39,6 +46,19 @@ const AddProject = () => {
       setBackBtn(true);
       setStep(step - 1);
     }
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    setSendData((prevState) => {
+      const newData = [...prevState];
+      newData[0].samushaoebi.shesasrulebeliSamushaoebi = checked
+        ? [...newData[0].samushaoebi.shesasrulebeliSamushaoebi, value]
+        : newData[0].samushaoebi.shesasrulebeliSamushaoebi.filter(
+            (val) => val !== value
+          );
+      return newData;
+    });
   };
 
   return (
@@ -172,7 +192,7 @@ const AddProject = () => {
                 </div>
                 {/*end::Step 3*/}
                 {/*begin::Step 4*/}
-               
+
                 {/*end::Step 4*/}
                 {/*begin::Step 5*/}
                 <div
@@ -224,12 +244,31 @@ const AddProject = () => {
                       {/*end::Label*/}
                       {/*begin::Input*/}
                       <select
-                        onChange={(e) => console.log(e.target.value)} className="form-select form-select-solid georgian"
+                        onChange={(event) =>
+                          setSendData((prevSendData) => [
+                            {
+                              ...prevSendData[0],
+                              kategoria: {
+                                ...prevSendData[0].kategoria,
+                                qonebisTipi: event.target.value,
+                              },
+                              mdgomareoba: {
+                                ...prevSendData[0].mdgomareoba,
+                              },
+                              samushaoebi: {
+                                ...prevSendData[0].samushaoebi,
+                              },
+                            },
+                          ])
+                        }
+                        className="form-select form-select-solid georgian"
                       >
-                        <option value={'bina'}>ბინა</option>
-                        <option value={'saxli-agaraki'}>სახლი-აგარაკი</option>
-                        <option value={'komerciuli-farti'}>კომერციული ფართი</option>
-                        <option value={'sastumro'}>სასტუმრო</option>
+                        <option value={"bina"}>ბინა</option>
+                        <option value={"saxli-agaraki"}>სახლი-აგარაკი</option>
+                        <option value={"komerciuli-farti"}>
+                          კომერციული ფართი
+                        </option>
+                        <option value={"sastumro"}>სასტუმრო</option>
                       </select>
                       {/*end::Input*/}
                     </div>
@@ -248,6 +287,23 @@ const AddProject = () => {
                           {/*begin::Col*/}
                           <div className="col-6">
                             <select
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                      qalaqi: event.target.value,
+                                    },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
+                                    },
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
@@ -265,6 +321,23 @@ const AddProject = () => {
                           {/*begin::Col*/}
                           <div className="col-6">
                             <select
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                      raioni: event.target.value,
+                                    },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
+                                    },
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
@@ -299,6 +372,23 @@ const AddProject = () => {
                           {/*begin::Col*/}
                           <div className="col-6">
                             <input
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                      misamarti: event.target.value,
+                                    },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
+                                    },
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
                               type="text"
                               className="form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
@@ -306,6 +396,23 @@ const AddProject = () => {
                           </div>
                           <div className="col-6">
                             <input
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                      telefoni: event.target.value,
+                                    },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
+                                    },
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
                               type="text"
                               className="form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
@@ -378,7 +485,7 @@ const AddProject = () => {
                                 ახალი აშენებული
                               </span>
                               <span className="fs-7 text-muted">
-                                Creating a clear text structure is just one SEO
+                                Creating a clear text
                               </span>
                             </span>
                             {/*end:Info*/}
@@ -387,10 +494,27 @@ const AddProject = () => {
                           {/*begin:Input*/}
                           <span className="form-check form-check-custom form-check-solid">
                             <input
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                    },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
+                                      mdgomareoba: event.target.value,
+                                    },
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
                               className="form-check-input"
                               type="radio"
                               name="category"
-                              defaultValue={1}
+                              defaultValue={"ახალი აშენებული"}
                             />
                           </span>
                           {/*end:Input*/}
@@ -475,10 +599,27 @@ const AddProject = () => {
                           {/*begin:Input*/}
                           <span className="form-check form-check-custom form-check-solid">
                             <input
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                    },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
+                                      mdgomareoba: event.target.value,
+                                    },
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
                               className="form-check-input"
                               type="radio"
                               name="category"
-                              defaultValue={2}
+                              defaultValue={"ძველი აშენებული"}
                             />
                           </span>
                           {/*end:Input*/}
@@ -528,11 +669,28 @@ const AddProject = () => {
                         {/*begin:Input*/}
                         <span className="form-check form-check-custom form-check-solid">
                           <input
+                            onChange={(event) =>
+                              setSendData((prevSendData) => [
+                                {
+                                  ...prevSendData[0],
+                                  kategoria: {
+                                    ...prevSendData[0].kategoria,
+                                  },
+                                  mdgomareoba: {
+                                    ...prevSendData[0].mdgomareoba,
+                                    arsebuliMdgomareoba: event.target.value,
+                                  },
+                                  samushaoebi: {
+                                    ...prevSendData[0].samushaoebi,
+                                  },
+                                },
+                              ])
+                            }
                             className="form-check-input"
                             type="radio"
                             defaultChecked="checked"
                             name="framework"
-                            defaultValue={1}
+                            defaultValue={"შავი კარკასი"}
                           />
                         </span>
                         {/*end:Input*/}
@@ -564,10 +722,27 @@ const AddProject = () => {
                         {/*begin:Input*/}
                         <span className="form-check form-check-custom form-check-solid">
                           <input
+                            onChange={(event) =>
+                              setSendData((prevSendData) => [
+                                {
+                                  ...prevSendData[0],
+                                  kategoria: {
+                                    ...prevSendData[0].kategoria,
+                                  },
+                                  mdgomareoba: {
+                                    ...prevSendData[0].mdgomareoba,
+                                    arsebuliMdgomareoba: event.target.value,
+                                  },
+                                  samushaoebi: {
+                                    ...prevSendData[0].samushaoebi,
+                                  },
+                                },
+                              ])
+                            }
                             className="form-check-input"
                             type="radio"
                             name="framework"
-                            defaultValue={2}
+                            defaultValue={"თეთრი კარკასი"}
                           />
                         </span>
                         {/*end:Input*/}
@@ -599,10 +774,27 @@ const AddProject = () => {
                         {/*begin:Input*/}
                         <span className="form-check form-check-custom form-check-solid">
                           <input
+                            onChange={(event) =>
+                              setSendData((prevSendData) => [
+                                {
+                                  ...prevSendData[0],
+                                  kategoria: {
+                                    ...prevSendData[0].kategoria,
+                                  },
+                                  mdgomareoba: {
+                                    ...prevSendData[0].mdgomareoba,
+                                    arsebuliMdgomareoba: event.target.value,
+                                  },
+                                  samushaoebi: {
+                                    ...prevSendData[0].samushaoebi,
+                                  },
+                                },
+                              ])
+                            }
                             className="form-check-input"
                             type="radio"
                             name="framework"
-                            defaultValue={3}
+                            defaultValue={"მწვანე კარკასი"}
                           />
                         </span>
                         {/*end:Input*/}
@@ -628,11 +820,28 @@ const AddProject = () => {
                       {/*end::Label*/}
                       {/*begin::Input*/}
                       <input
+                        onChange={(e) =>
+                          setSendData((prevSendData) => [
+                            {
+                              ...prevSendData[0],
+                              kategoria: {
+                                ...prevSendData[0].kategoria,
+                              },
+                              mdgomareoba: {
+                                ...prevSendData[0].mdgomareoba,
+                              },
+                              samushaoebi: {
+                                ...prevSendData[0].samushaoebi,
+                                obieqtisDasaxeleba: e.target.value,
+                              },
+                            },
+                          ])
+                        }
                         type="text"
                         className="form-control georgian form-control-lg form-control-solid"
                         name="dbname"
-                        placeholder=""
-                        defaultValue="ობიექტის დასახელება"
+                        placeholder="ობიექტის დასახელება"
+                        defaultValue=""
                       />
                       {/*end::Input*/}
                     </div>
@@ -653,6 +862,7 @@ const AddProject = () => {
                             <div className="d-flex flex-column">
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -667,6 +877,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -681,6 +892,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -695,6 +907,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -709,6 +922,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -723,6 +937,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -743,6 +958,7 @@ const AddProject = () => {
                             <div className="d-flex flex-column">
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -757,6 +973,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -771,6 +988,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -785,12 +1003,14 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
                                   id="preventDuplicates"
                                 />
                                 <label
+                                  onChange={handleCheckboxChange}
                                   className="form-check-label georgian"
                                   htmlFor="closeButton"
                                 >
@@ -799,6 +1019,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -813,6 +1034,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -827,6 +1049,7 @@ const AddProject = () => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue=""
@@ -852,7 +1075,7 @@ const AddProject = () => {
                 </div>
                 {/*end::Step 3*/}
                 {/*begin::Step 4*/}
-               
+
                 {/*end::Step 4*/}
                 {/*begin::Step 5*/}
                 <div
