@@ -7,9 +7,16 @@ import Price from "@/components/main/Price";
 import WhatOuerClientsSay from "@/components/main/WhatOurClientsSay";
 
 const priceData = {
-  startup: 98,
-  business: 98,
-  enterprise: 98,
+  monthlyPrice: {
+    startup: 50,
+    business: 150,
+    enterprise: 200,
+  },
+  annualPrice: {
+    startup: 500,
+    business: 700,
+    enterprise: 1000,
+  }
 }
 
 const Main = () => {

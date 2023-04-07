@@ -79,7 +79,7 @@ const OurTeem = () => {
                 </div>
               </div>
             </div>
-            <div className="text-center">
+            <div className="text-center" >
               <div
                 className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                 style={{

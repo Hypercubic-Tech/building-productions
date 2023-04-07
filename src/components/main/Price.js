@@ -82,14 +82,14 @@ const Price = ({price}) => {
                               data-kt-plan-price-month={99}
                               data-kt-plan-price-annual={999}
                             >
-                              {price.startup}
+                              {monthly ? `${price.monthlyPrice.startup}` : `${price.annualPrice.startup}`}
                             </span>
                             <span
                               className={`${selected === 1 ? 'fs-7 fw-bold text-white opacity-75' : 'fs-7 fw-bold opacity-50'}`}
                               data-kt-plan-price-month="Mon"
                               data-kt-plan-price-annual="Ann"
                             >
-                              / Mon
+                              / {monthly ? 'Mon' : 'Year'}
                             </span>
                           </div>
                         </div>
@@ -303,14 +303,14 @@ const Price = ({price}) => {
                               data-kt-plan-price-month={199}
                               data-kt-plan-price-annual={1999}
                             >
-                              {price.business}
+                              {monthly ? `${price.monthlyPrice.business}` : `${price.annualPrice.business}`}
                             </span>
                             <span
                               className={`${selected === 2 ? 'fs-7 fw-bold text-white opacity-75' : 'fs-7 fw-bold opacity-50'}`}
                               data-kt-plan-price-month="Mon"
                               data-kt-plan-price-annual="Ann"
                             >
-                              / Mon
+                              / {monthly ? 'Mon' : 'Year'}
                             </span>
                           </div>
                         </div>
@@ -496,14 +496,14 @@ const Price = ({price}) => {
                               data-kt-plan-price-month={999}
                               data-kt-plan-price-annual={9999}
                             >
-                              {price.enterprise}
+                              {monthly ? `${price.monthlyPrice.enterprise}` : `${price.annualPrice.enterprise}`}
                             </span>
                             <span
                               className={`${selected === 3 ? 'fs-7 fw-bold text-white opacity-75' : 'fs-7 fw-bold opacity-50'}`}
                               data-kt-plan-price-month="Mon"
                               data-kt-plan-price-annual="Ann"
                             >
-                              / Mon
+                              / {monthly ? 'Mon' : 'Year'}
                             </span>
                           </div>
                         </div>
