@@ -3,7 +3,6 @@ import { useState } from "react";
 const AddProject = () => {
   const [step, setStep] = useState(1);
   const [backBtn, setBackBtn] = useState(false);
-
   const [sendData, setSendData] = useState([
     {
       kategoria: {
@@ -23,11 +22,69 @@ const AddProject = () => {
       },
     },
   ]);
-  
-  const getStatusClass = (stepIndex) => {
-    if (stepIndex < step) {
+
+  const defaultData = [
+    {
+      title: "კატეგორია",
+      teaser: "ობიექტის აღწერა",
+      num: 1,
+      values: {
+        type: ["ბინა", "სასტუმრო", "კომერციული ფართი", "სასტუმრო"],
+        city: ["თბილისი", "რუსთავი", "ქუთაისი", "ბათუმი"],
+        district: [
+          "გლდანის რაიონი",
+          "მთაწმინდის რაიონი",
+          "ვაკე-საბურთალო",
+          "ჩუღურეთი",
+        ],
+        address: "",
+        mobileNumber: "",
+      },
+    },
+    {
+      title: "მდგომარეობა",
+      teaser: "სამუშაოს განსაზღვრება",
+      num: 2,
+      values: {
+        condition: ["ძველი აშენებული", "ახალი აშენებული"],
+        currentCondition: ["შავი კარკასი", "თეთრი კარკასი", "მწვანე კარკასი"],
+      },
+    },
+    {
+      title: "სამუშაოები",
+      teaser: "შესასრულებელი სამუშაო",
+      num: 3,
+      values: {
+        nameOfObj: "",
+        worksToDo: [
+          "დემონტაჟი",
+          "ტიხრები",
+          "ჭერი",
+          "ლესვა",
+          "იატაკის მოხვეწა",
+          "სანტექნიკა",
+          "გათბობა გაგრილება",
+          "ელექტროობა",
+          "ფილის დაგება/გაკვრა",
+          "იატაკის საფარი",
+          "კარ-ფანჯარა",
+          "დალაგება",
+        ],
+      },
+    },
+    {
+      title: "დამატება",
+      teaser: "",
+      num: 4,
+      values: {},
+    },
+  ];
+
+  const getStatusClass = (index) => {
+    console.log(step)
+    if (index < step) {
       return "completed";
-    } else if (stepIndex === step) {
+    } else if (index === step) {
       return "current";
     } else {
       return "pending";
@@ -37,7 +94,6 @@ const AddProject = () => {
   const stepChangeHandler = () => {
     if (step < 4) {
       setStep(step + 1);
-      console.log("step changed", step);
     }
   };
 
@@ -113,6 +169,7 @@ const AddProject = () => {
         {/*begin::Modal body*/}
         <div className="modal-body py-lg-10 px-lg-10">
           {/*begin::Stepper*/}
+
           <div
             className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
             id="kt_modal_create_app_stepper"
@@ -122,99 +179,46 @@ const AddProject = () => {
               {/*begin::Nav*/}
               <div className="stepper-nav ps-lg-10">
                 {/*begin::Step 1*/}
-                <div
-                  className={`${"stepper-item"} ${getStatusClass(1)}`}
-                  data-kt-stepper-element="nav"
-                >
-                  {/*begin::Line*/}
-                  <div className="stepper-line w-40px" />
-                  {/*end::Line*/}
-                  {/*begin::Icon*/}
-                  <div className="stepper-icon w-40px h-40px">
-                    <i className="stepper-check fas fa-check" />
-                    <span className="stepper-number">1</span>
-                  </div>
-                  {/*end::Icon*/}
-                  {/*begin::Label*/}
-                  <div className="stepper-label">
-                    <h3 className="stepper-title georgian">კატეგორია</h3>
-                    <div className="stepper-desc georgian">ობიექტის აღწერა</div>
-                  </div>
-                  {/*end::Label*/}
-                </div>
+                {defaultData.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`${"stepper-item"} ${getStatusClass(index)}`}
+                      data-kt-stepper-element="nav"
+                    >
+                      {/*begin::Line*/}
+                      <div className="stepper-line w-40px" />
+                      {/*end::Line*/}
+                      {/*begin::Icon*/}
+                      <div className="stepper-icon w-40px h-40px">
+                        <i className="stepper-check fas fa-check" />
+                        <span className="stepper-number">{item.num}</span>
+                      </div>
+                      {/*end::Icon*/}
+                      {/*begin::Label*/}
+                      <div className="stepper-label">
+                        <h3 className="stepper-title georgian">{item.title}</h3>
+                        <div className="stepper-desc georgian">
+                          {item.teaser}
+                        </div>
+                      </div>
+                      {/*end::Label*/}
+                    </div>
+                  );
+                })}
+
                 {/*end::Step 1*/}
                 {/*begin::Step 2*/}
-                <div
-                  className={`${"stepper-item"} ${getStatusClass(2)}`}
-                  data-kt-stepper-element="nav"
-                >
-                  {/*begin::Line*/}
-                  <div className="stepper-line w-40px" />
-                  {/*end::Line*/}
-                  {/*begin::Icon*/}
-                  <div className="stepper-icon w-40px h-40px">
-                    <i className="stepper-check fas fa-check" />
-                    <span className="stepper-number">2</span>
-                  </div>
-                  {/*begin::Icon*/}
-                  {/*begin::Label*/}
-                  <div className="stepper-label">
-                    <h3 className="stepper-title georgian">მდგომარეობა</h3>
-                    <div className="stepper-desc georgian">
-                      სამუშაოს განსაზღვრება
-                    </div>
-                  </div>
-                  {/*begin::Label*/}
-                </div>
+
                 {/*end::Step 2*/}
                 {/*begin::Step 3*/}
-                <div
-                  className={`${"stepper-item"} ${getStatusClass(3)}`}
-                  data-kt-stepper-element="nav"
-                >
-                  {/*begin::Line*/}
-                  <div className="stepper-line w-40px" />
-                  {/*end::Line*/}
-                  {/*begin::Icon*/}
-                  <div className="stepper-icon w-40px h-40px">
-                    <i className="stepper-check fas fa-check" />
-                    <span className="stepper-number">3</span>
-                  </div>
-                  {/*end::Icon*/}
-                  {/*begin::Label*/}
-                  <div className="stepper-label">
-                    <h3 className="stepper-title georgian">სამუშაოები</h3>
-                    <div className="stepper-desc georgian">
-                      შესასრულებელი სამუშაო
-                    </div>
-                  </div>
-                  {/*end::Label*/}
-                </div>
+
                 {/*end::Step 3*/}
                 {/*begin::Step 4*/}
 
                 {/*end::Step 4*/}
                 {/*begin::Step 5*/}
-                <div
-                  className={`${"stepper-item"} ${getStatusClass(4)}`}
-                  data-kt-stepper-element="nav"
-                >
-                  {/*begin::Line*/}
-                  <div className="stepper-line w-40px" />
-                  {/*end::Line*/}
-                  {/*begin::Icon*/}
-                  <div className="stepper-icon w-40px h-40px">
-                    <i className="stepper-check fas fa-check" />
-                    <span className="stepper-number">5</span>
-                  </div>
-                  {/*end::Icon*/}
-                  {/*begin::Label*/}
-                  <div className="stepper-label">
-                    <h3 className="stepper-title">Completed</h3>
-                    <div className="stepper-desc">Review and Submit</div>
-                  </div>
-                  {/*end::Label*/}
-                </div>
+
                 {/*end::Step 5*/}
               </div>
               {/*end::Nav*/}
@@ -880,7 +884,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="ტიხრები"
                                   id="addBehaviorOnToastClick"
                                 />
                                 <label
@@ -895,7 +899,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="ჭეერი"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -910,7 +914,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="ლესვა"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -925,7 +929,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="იატაკის მოხვეწა"
                                   id="debugInfo"
                                 />
                                 <label
@@ -940,7 +944,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="სანტექნიკა"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -961,7 +965,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="გათბობა, გაგრილება"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -976,7 +980,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="ელექტროობა"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -991,7 +995,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="ფილის დაგება/გაკვრა"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -1006,7 +1010,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="სამღებრო სამუშაოები"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -1022,7 +1026,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="იატაკის საფარი"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -1037,7 +1041,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="კარ-ფანჯარა"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -1052,7 +1056,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
+                                  defaultValue="დალაგება"
                                   id="preventDuplicates"
                                 />
                                 <label
@@ -1075,9 +1079,6 @@ const AddProject = () => {
                 </div>
                 {/*end::Step 3*/}
                 {/*begin::Step 4*/}
-
-                {/*end::Step 4*/}
-                {/*begin::Step 5*/}
                 <div
                   className={getStatusClass(4)}
                   data-kt-stepper-element="content"
@@ -1102,9 +1103,8 @@ const AddProject = () => {
                     {/*end::Illustration*/}
                   </div>
                 </div>
-                {/*end::Step 5*/}
+                {/*end::Step 4*/}
                 {/*begin::Actions*/}
-
                 <div className="d-flex flex-stack pt-10">
                   {/*begin::Wrapper*/}
                   <div className="me-2">
@@ -1146,6 +1146,7 @@ const AddProject = () => {
                   {/*begin::Wrapper*/}
                   <div>
                     <button
+                      onClick={() => console.log(sendData)}
                       style={{ display: step === 4 ? "" : "none" }}
                       type="button"
                       className="btn btn-lg btn-primary"
@@ -1223,7 +1224,6 @@ const AddProject = () => {
                   </div>
                   {/*end::Wrapper*/}
                 </div>
-
                 {/*end::Actions*/}
               </form>
               {/*end::Form*/}
