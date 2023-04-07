@@ -1,4 +1,4 @@
-import SwiperComp from "../layouts/SwiperComp";
+// import SwiperComp from "../layouts/SwiperComp";
 
 import logo1 from '../../../public/swiperImgs/logo1.jpg'; 
 import logo2 from '../../../public/swiperImgs/logo2.jpg'; 
