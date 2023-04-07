@@ -1,17 +1,104 @@
 import { useState, useEffect } from "react";
 
 const AboutCompany = () => {
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(650);
+  const [isCounting, setIsCounting] = useState(false);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (count < 3) {
-        setCount(count + 1);
+    function handleScroll() {
+      if (window.scrollY >= 930 && !isCounting) {
+        setIsCounting(true);
       }
-    }, 1000);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isCounting]);
+
+  useEffect(() => {
+    let intervalId;
+
+    if (isCounting) {
+      intervalId = setInterval(() => {
+        if (count < 700) {
+          setCount(count + 1);
+        } else {
+          setIsCounting(false);
+        }
+      }, 50);
+    }
 
     return () => clearInterval(intervalId);
-  }, [count]);
+  }, [isCounting, count]);
+
+  const [count1, setCount1] = useState(30);
+  const [isCounting1, setIsCounting1] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      if (window.scrollY >= 930 && !isCounting1) {
+        setIsCounting1(true);
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isCounting1]);
+
+  useEffect(() => {
+    let intervalId;
+
+    if (isCounting1) {
+      intervalId = setInterval(() => {
+        if (count1 < 80) {
+          setCount1(count1 + 1);
+        } else {
+          setIsCounting1(false);
+        }
+      }, 50);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [isCounting1, count1]);
+
+  const [count2, setCount2] = useState(0);
+  const [isCounting2, setIsCounting2] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      if (window.scrollY >= 930 && !isCounting2) {
+        setIsCounting2(true);
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isCounting2]);
+
+  useEffect(() => {
+    let intervalId;
+
+    if (isCounting2) {
+      intervalId = setInterval(() => {
+        if (count2 < 35) {
+          setCount2(count2 + 1);
+        } else {
+          setIsCounting2(false);
+        }
+      }, 50);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [isCounting2, count2]);
 
   return (
     <div className="pb-15 pt-18 landing-dark-bg">
@@ -86,8 +173,7 @@ const AboutCompany = () => {
                     data-kt-countup-value={700}
                     data-kt-countup-suffix="+"
                   >
-                    <p>{count}</p>
-                    {/* this is spartaa */}
+                    <p>{count}+</p>
                   </div>
                 </div>
                 <span className="text-gray-600 fw-bold fs-5 lh-0">
@@ -133,7 +219,7 @@ const AboutCompany = () => {
                     data-kt-countup-value={80}
                     data-kt-countup-suffix="K+"
                   >
-                    0
+                    <p>{count1}K+</p>
                   </div>
                 </div>
                 <span className="text-gray-600 fw-bold fs-5 lh-0">
@@ -179,7 +265,7 @@ const AboutCompany = () => {
                     data-kt-countup-value={35}
                     data-kt-countup-suffix="M+"
                   >
-                    0
+                    <p>{count2}M+</p>
                   </div>
                 </div>
                 <span className="text-gray-600 fw-bold fs-5 lh-0">
