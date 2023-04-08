@@ -28,63 +28,97 @@ const AddProject = () => {
       title: "კატეგორია",
       teaser: "ობიექტის აღწერა",
       num: 1,
-      values: {
-        type: ["ბინა", "სასტუმრო", "კომერციული ფართი", "სასტუმრო"],
-        city: ["თბილისი", "რუსთავი", "ქუთაისი", "ბათუმი"],
-        district: [
-          "გლდანის რაიონი",
-          "მთაწმინდის რაიონი",
-          "ვაკე-საბურთალო",
-          "ჩუღურეთი",
-        ],
-        address: "",
-        mobileNumber: "",
-      },
+      values: [
+        {
+          inputType: "select",
+          title: 'ქონების ტიპი',
+          teaser: 'მიუთითეთ სამუშაო ობიექტის ტიპი',
+          items: ["ბინა", "სასტუმრო", "კომერციული ფართი", "სასტუმრო"],
+          subItems: [],
+        },
+        {
+          inputType: "select",
+          title: 'მდებარეობა/რაიონი',
+          items: ["თბილისი", "რუსთავი", "ქუთაისი", "ბათუმი"],
+          subItems: [
+            "გლდანის რაიონი",
+            "მთაწმინდის რაიონი",
+            "ვაკე-საბურთალო",
+            "ჩუღურეთი",
+          ],
+        },
+        {
+          inputType: "text",
+          title: "მისამართი/ტელეფონი",
+          items: "",
+          subItems: "",
+        },
+      ],
     },
     {
       title: "მდგომარეობა",
       teaser: "სამუშაოს განსაზღვრება",
       num: 2,
-      values: {
-        condition: ["ძველი აშენებული", "ახალი აშენებული"],
-        currentCondition: ["შავი კარკასი", "თეთრი კარკასი", "მწვანე კარკასი"],
-      },
+      values: [
+        {
+          inputType: "checkbox",
+          title: 'მდგომარეობა',
+          items: ["ძველი აშენებული", "ახალი აშენებული"],
+          subItems: [],
+        },
+        {
+          inputType: "checkbox",
+          title: 'არსებული მდგომარეობა',
+          items: ["შავი კარკასი", "თეთრი კარკასი", "მწვანე კარკასი"],
+          subItems: [],
+        },
+      ],
     },
     {
       title: "სამუშაოები",
       teaser: "შესასრულებელი სამუშაო",
       num: 3,
-      values: {
-        nameOfObj: "",
-        worksToDo: [
-          "დემონტაჟი",
-          "ტიხრები",
-          "ჭერი",
-          "ლესვა",
-          "იატაკის მოხვეწა",
-          "სანტექნიკა",
-          "გათბობა გაგრილება",
-          "ელექტროობა",
-          "ფილის დაგება/გაკვრა",
-          "იატაკის საფარი",
-          "კარ-ფანჯარა",
-          "დალაგება",
-        ],
-      },
+      values: [
+        {
+          inputType: "text",
+          title: 'ობიექტის დასახელება',
+          items: [],
+          subItems: [],
+        },
+        {
+          inputType: "checkbox",
+          title: 'შესასრულებელი სამუშაოები',
+          items: [
+            "დემონტაჟი",
+            "ტიხრები",
+            "ჭერი",
+            "ლესვა",
+            "იატაკის მოხვეწა",
+            "სანტექნიკა",
+            "გათბობა გაგრილება",
+            "ელექტროობა",
+            "ფილის დაგება/გაკვრა",
+            "იატაკის საფარი",
+            "კარ-ფანჯარა",
+            "დალაგება",
+          ],
+          subItems: [],
+        },
+      ],
     },
     {
-      title: "დამატება",
-      teaser: "",
+      title: "გადახედე",
+      teaser: "და დაამატე",
       num: 4,
-      values: {},
+      values: [{}],
     },
   ];
 
-  const getStatusClass = (index) => {
-    console.log(step)
-    if (index < step) {
+  const getStatusClass = (indexStep) => {
+    console.log(step);
+    if (indexStep < step) {
       return "completed";
-    } else if (index === step) {
+    } else if (indexStep === step) {
       return "current";
     } else {
       return "pending";
@@ -230,207 +264,218 @@ const AddProject = () => {
               {/*begin::Form*/}
               <form className="form" noValidate="novalidate" id="">
                 {/*begin::Step 1*/}
-                <div
-                  className={getStatusClass(1)}
-                  data-kt-stepper-element="content"
-                >
-                  <div className="w-100">
-                    {/*begin::Input group*/}
-                    <div className="fv-row mb-10">
-                      {/*begin::Label*/}
-                      <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                        <span className="required georgian">ქონების ტიპი</span>
-                        <i
-                          className="fas fa-exclamation-circle ms-2 fs-7"
-                          title="მიუთითეთ სამუშაო ობიექტის ტიპი"
-                        />
-                      </label>
-                      {/*end::Label*/}
-                      {/*begin::Input*/}
-                      <select
-                        onChange={(event) =>
-                          setSendData((prevSendData) => [
-                            {
-                              ...prevSendData[0],
-                              kategoria: {
-                                ...prevSendData[0].kategoria,
-                                qonebisTipi: event.target.value,
-                              },
-                              mdgomareoba: {
-                                ...prevSendData[0].mdgomareoba,
-                              },
-                              samushaoebi: {
-                                ...prevSendData[0].samushaoebi,
-                              },
-                            },
-                          ])
-                        }
-                        className="form-select form-select-solid georgian"
-                      >
-                        <option value={"bina"}>ბინა</option>
-                        <option value={"saxli-agaraki"}>სახლი-აგარაკი</option>
-                        <option value={"komerciuli-farti"}>
-                          კომერციული ფართი
-                        </option>
-                        <option value={"sastumro"}>სასტუმრო</option>
-                      </select>
-                      {/*end::Input*/}
-                    </div>
-                    {/*end::Input group*/}
-                    {/*begin::Input group*/}
-                    <div className="row mb-10">
-                      {/*begin::Col*/}
-                      <div className="col-md-12 fv-row">
+                {defaultData.map((item) => {
+                  return item.values.map((values, index) => {
+                    return  <div
+                    key={index}
+                    className={getStatusClass(index)}
+                    data-kt-stepper-element="content"
+                  >
+                    <div className="w-100">
+                      {/*begin::Input group*/}
+                      <div className="fv-row mb-10">
                         {/*begin::Label*/}
-                        <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მდებარეობა / რაიონი
+                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                          <span className="required georgian">{values.title}</span>
+                          <i
+                            className="fas fa-exclamation-circle ms-2 fs-7"
+                            title={values.teaser}
+                          />
                         </label>
                         {/*end::Label*/}
-                        {/*begin::Row*/}
-                        <div className="row fv-row">
-                          {/*begin::Col*/}
-                          <div className="col-6">
-                            <select
-                              onChange={(event) =>
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
-                                      qalaqi: event.target.value,
-                                    },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
-                                    },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
-                                    },
-                                  },
-                                ])
-                              }
-                              name="locale"
-                              className="form-select form-select-solid georgian"
-                              data-placeholder="მდებარეობა"
-                            >
-                              <option value={1}>თბილისი</option>
-                              <option value={2}>რუსთავი</option>
-                              <option value={3}>ქუთაისი</option>
-                              <option value={4}>ბათუმი</option>
-                              <option value={5}>აბასთუმანი</option>
-                              <option value={6}>აბაშა</option>
-                              <option value={7}>ჩხალთა</option>
-                            </select>
-                          </div>
-                          {/*end::Col*/}
-                          {/*begin::Col*/}
-                          <div className="col-6">
-                            <select
-                              onChange={(event) =>
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
-                                      raioni: event.target.value,
-                                    },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
-                                    },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
-                                    },
-                                  },
-                                ])
-                              }
-                              name="locale"
-                              className="form-select form-select-solid georgian"
-                              data-placeholder="მდებარეობა"
-                            >
-                              <option value={1}>გლდანის რაიონი</option>
-                              <option value={2}>დიდუბის რაიონი</option>
-                              <option value={3}>ვაკის რაიონი</option>
-                              <option value={4}>საურთალოს რაიონი</option>
-                              <option value={5}>მთაწმინდის რაიონი</option>
-                              <option value={6}>ჩუღურეთის რაიონი</option>
-                              <option value={7}>თბილისის შემოგარენი</option>
-                            </select>
-                          </div>
-                          {/*end::Col*/}
-                        </div>
-                        {/*end::Row*/}
+                        {/*begin::Input*/}
+                        <select
+                          onChange={(event) =>
+                            setSendData((prevSendData) => [
+                              {
+                                ...prevSendData[0],
+                                kategoria: {
+                                  ...prevSendData[0].kategoria,
+                                  qonebisTipi: event.target.value,
+                                },
+                                mdgomareoba: {
+                                  ...prevSendData[0].mdgomareoba,
+                                },
+                                samushaoebi: {
+                                  ...prevSendData[0].samushaoebi,
+                                },
+                              },
+                            ])
+                          }
+                          className="form-select form-select-solid georgian"
+                        >
+                          <option value={"saxli-agaraki"}>სახლი-აგარაკი</option>
+                          <option value={"komerciuli-farti"}>
+                            კომერციული ფართი
+                          </option>
+                          <option value={"sastumro"}>სასტუმრო</option>
+                        </select>
+                        {/*end::Input*/}
                       </div>
-                      {/*end::Col*/}
-                    </div>
-                    {/*end::Input group*/}
-                    {/*begin::Input group*/}
-                    <div className="row mb-10">
-                      {/*begin::Col*/}
-                      <div className="col-md-12 fv-row">
-                        {/*begin::Label*/}
-                        <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მისამართი / ტელეფონი
-                        </label>
-                        {/*end::Label*/}
-                        {/*begin::Row*/}
-                        <div className="row fv-row">
-                          {/*begin::Col*/}
-                          <div className="col-6">
-                            <input
-                              onChange={(event) =>
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
-                                      misamarti: event.target.value,
+                      {/*end::Input group*/}
+                      {/*begin::Input group*/}
+                      <div className="row mb-10">
+                        {/*begin::Col*/}
+                        <div className="col-md-12 fv-row">
+                          {/*begin::Label*/}
+                          <label className="required fs-6 fw-bold form-label georgian mb-2">
+                            მდებარეობა / რაიონი
+                          </label>
+                          {/*end::Label*/}
+                          {/*begin::Row*/}
+                          <div className="row fv-row">
+                            {/*begin::Col*/}
+                            <div className="col-6">
+                              <select
+                                onChange={(event) =>
+                                  setSendData((prevSendData) => [
+                                    {
+                                      ...prevSendData[0],
+                                      kategoria: {
+                                        ...prevSendData[0].kategoria,
+                                        qalaqi: event.target.value,
+                                      },
+                                      mdgomareoba: {
+                                        ...prevSendData[0].mdgomareoba,
+                                      },
+                                      samushaoebi: {
+                                        ...prevSendData[0].samushaoebi,
+                                      },
                                     },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
+                                  ])
+                                }
+                                name="locale"
+                                className="form-select form-select-solid georgian"
+                                data-placeholder="მდებარეობა"
+                              >
+                                <option value={1}>თბილისი</option>
+                                <option value={2}>რუსთავი</option>
+                                <option value={3}>ქუთაისი</option>
+                                <option value={4}>ბათუმი</option>
+                                <option value={5}>აბასთუმანი</option>
+                                <option value={6}>აბაშა</option>
+                                <option value={7}>ჩხალთა</option>
+                              </select>
+                            </div>
+                            {/*end::Col*/}
+                            {/*begin::Col*/}
+                            <div className="col-6">
+                              <select
+                                onChange={(event) =>
+                                  setSendData((prevSendData) => [
+                                    {
+                                      ...prevSendData[0],
+                                      kategoria: {
+                                        ...prevSendData[0].kategoria,
+                                        raioni: event.target.value,
+                                      },
+                                      mdgomareoba: {
+                                        ...prevSendData[0].mdgomareoba,
+                                      },
+                                      samushaoebi: {
+                                        ...prevSendData[0].samushaoebi,
+                                      },
                                     },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
-                                    },
-                                  },
-                                ])
-                              }
-                              type="text"
-                              className="form-control georgian form-control-solid"
-                              placeholder="ზუსტი მისამართი"
-                            />
+                                  ])
+                                }
+                                name="locale"
+                                className="form-select form-select-solid georgian"
+                                data-placeholder="მდებარეობა"
+                              >
+                                <option value={1}>გლდანის რაიონი</option>
+                                <option value={2}>დიდუბის რაიონი</option>
+                                <option value={3}>ვაკის რაიონი</option>
+                                <option value={4}>საურთალოს რაიონი</option>
+                                <option value={5}>მთაწმინდის რაიონი</option>
+                                <option value={6}>ჩუღურეთის რაიონი</option>
+                                <option value={7}>თბილისის შემოგარენი</option>
+                              </select>
+                            </div>
+                            {/*end::Col*/}
                           </div>
-                          <div className="col-6">
-                            <input
-                              onChange={(event) =>
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
-                                      telefoni: event.target.value,
-                                    },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
-                                    },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
-                                    },
-                                  },
-                                ])
-                              }
-                              type="text"
-                              className="form-control georgian form-control-solid"
-                              placeholder="ტელეფონი"
-                            />
-                          </div>
-                          {/*end::Col*/}
+                          {/*end::Row*/}
                         </div>
-                        {/*end::Row*/}
+                        {/*end::Col*/}
                       </div>
-                      {/*end::Col*/}
+                      {/*end::Input group*/}
+                      {/*begin::Input group*/}
+                      <div className="row mb-10">
+                        {/*begin::Col*/}
+                        <div className="col-md-12 fv-row">
+                          {/*begin::Label*/}
+                          <label className="required fs-6 fw-bold form-label georgian mb-2">
+                            მისამართი / ტელეფონი
+                          </label>
+                          {/*end::Label*/}
+                          {/*begin::Row*/}
+                          <div className="row fv-row">
+                            {/*begin::Col*/}
+                            <div className="col-6">
+                              <input
+                                onChange={(event) =>
+                                  setSendData((prevSendData) => [
+                                    {
+                                      ...prevSendData[0],
+                                      kategoria: {
+                                        ...prevSendData[0].kategoria,
+                                        misamarti: event.target.value,
+                                      },
+                                      mdgomareoba: {
+                                        ...prevSendData[0].mdgomareoba,
+                                      },
+                                      samushaoebi: {
+                                        ...prevSendData[0].samushaoebi,
+                                      },
+                                    },
+                                  ])
+                                }
+                                type="text"
+                                className="form-control georgian form-control-solid"
+                                placeholder="ზუსტი მისამართი"
+                              />
+                            </div>
+                            <div className="col-6">
+                              <input
+                                onChange={(event) =>
+                                  setSendData((prevSendData) => [
+                                    {
+                                      ...prevSendData[0],
+                                      kategoria: {
+                                        ...prevSendData[0].kategoria,
+                                        telefoni: event.target.value,
+                                      },
+                                      mdgomareoba: {
+                                        ...prevSendData[0].mdgomareoba,
+                                      },
+                                      samushaoebi: {
+                                        ...prevSendData[0].samushaoebi,
+                                      },
+                                    },
+                                  ])
+                                }
+                                type="text"
+                                className="form-control georgian form-control-solid"
+                                placeholder="ტელეფონი"
+                              />
+                            </div>
+                            {/*end::Col*/}
+                          </div>
+                          {/*end::Row*/}
+                        </div>
+                        {/*end::Col*/}
+                      </div>
+                      {/*end::Input group*/}
                     </div>
-                    {/*end::Input group*/}
-                  </div>
-                </div>
+                  </div>;
+                  });
+                })}
+
+                {/* {defaultData?.values.map((item, index) => {
+                  return (
+                    <div>hi</div>
+                  )
+                })} */}
+               
                 {/*end::Step 1*/}
                 {/*begin::Step 2*/}
                 <div
@@ -899,7 +944,7 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue="ჭეერი"
+                                  defaultValue="ჭერი"
                                   id="preventDuplicates"
                                 />
                                 <label
