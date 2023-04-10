@@ -67,16 +67,15 @@ const Products = ({ProductData}) => {
                                 >
                                 {product.title}
                                 </a>
-                                <span>{product.momwodebeli}</span>
+                                <span>{product.seler}</span>
                             </div>
                             </td>
-                            <td className="georgian">მეტრი</td>
+                            <td className="georgian">{product.count}</td>
                             <td className="georgian">
-                            <div>120</div>
                             </td>
                             <td className="georgian">{product.price}</td>
                             <td className="georgian">
-                            <b>{product.total}</b>
+                            <b>{product.address}</b>
                             </td>
                             <td className="text-end">
                             <div className="menu-item px-3">
