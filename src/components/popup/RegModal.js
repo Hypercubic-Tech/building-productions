@@ -1,15 +1,7 @@
-import styles from "../registration/Registration.module.css";
+import styles from "../popup/RegModal.module.css";
 import { useState } from "react";
 
-function Registration() {
-  const [none, setNone] = useState(false);
-
-  const closeHandler = () => {
-    if (!none) {
-      setNone(true);
-    } else setNone(false);
-  };
-
+function RegModal(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,15 +19,13 @@ function Registration() {
     console.log("Password:", password);
   };
   return (
-    <div className={`${styles.container} ${none ? styles.none : ""}`}>
+    <div className={`${styles.container}`}>
       <form onSubmit={handleSubmit}>
         <div className="col">
           <div className="d-flex justify-content-between align-items-center">
             <div className="text-muted">პროფილის შექმნა</div>
             <svg
-              onClick={() => {
-                closeHandler();
-              }}
+              onClick={props.onClose}
               className={`${styles.closeBtn}`}
               width="64px"
               height="64px"
@@ -104,4 +94,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default RegModal;
