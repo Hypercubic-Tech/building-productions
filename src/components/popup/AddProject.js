@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 const AddProject = () => {
+  const [close, setClose] = useState(false);
   const [step, setStep] = useState(1);
   const [backBtn, setBackBtn] = useState(false);
+
   const [sendData, setSendData] = useState([
     {
       kategoria: {
@@ -13,112 +15,20 @@ const AddProject = () => {
         telefoni: "",
       },
       mdgomareoba: {
-        mdgomareoba: "",
-        arsebuliMdgomareoba: "",
+        mdgomareoba: [],
+        arsebuliMdgomareoba: [],
       },
       samushaoebi: {
         obieqtisDasaxeleba: "",
-        shesasrulebeliSamushaoebi: "",
+        shesasrulebeliSamushaoebi: [],
       },
     },
   ]);
 
-  const defaultData = [
-    {
-      title: "კატეგორია",
-      teaser: "ობიექტის აღწერა",
-      num: 1,
-      values: [
-        {
-          inputType: "select",
-          title: 'ქონების ტიპი',
-          teaser: 'მიუთითეთ სამუშაო ობიექტის ტიპი',
-          items: ["ბინა", "სასტუმრო", "კომერციული ფართი", "სასტუმრო"],
-          subItems: [],
-        },
-        {
-          inputType: "select",
-          title: 'მდებარეობა/რაიონი',
-          items: ["თბილისი", "რუსთავი", "ქუთაისი", "ბათუმი"],
-          subItems: [
-            "გლდანის რაიონი",
-            "მთაწმინდის რაიონი",
-            "ვაკე-საბურთალო",
-            "ჩუღურეთი",
-          ],
-        },
-        {
-          inputType: "text",
-          title: "მისამართი/ტელეფონი",
-          items: "",
-          subItems: "",
-        },
-      ],
-    },
-    {
-      title: "მდგომარეობა",
-      teaser: "სამუშაოს განსაზღვრება",
-      num: 2,
-      values: [
-        {
-          inputType: "checkbox",
-          title: 'მდგომარეობა',
-          items: ["ძველი აშენებული", "ახალი აშენებული"],
-          subItems: [],
-        },
-        {
-          inputType: "checkbox",
-          title: 'არსებული მდგომარეობა',
-          items: ["შავი კარკასი", "თეთრი კარკასი", "მწვანე კარკასი"],
-          subItems: [],
-        },
-      ],
-    },
-    {
-      title: "სამუშაოები",
-      teaser: "შესასრულებელი სამუშაო",
-      num: 3,
-      values: [
-        {
-          inputType: "text",
-          title: 'ობიექტის დასახელება',
-          items: [],
-          subItems: [],
-        },
-        {
-          inputType: "checkbox",
-          title: 'შესასრულებელი სამუშაოები',
-          items: [
-            "დემონტაჟი",
-            "ტიხრები",
-            "ჭერი",
-            "ლესვა",
-            "იატაკის მოხვეწა",
-            "სანტექნიკა",
-            "გათბობა გაგრილება",
-            "ელექტროობა",
-            "ფილის დაგება/გაკვრა",
-            "იატაკის საფარი",
-            "კარ-ფანჯარა",
-            "დალაგება",
-          ],
-          subItems: [],
-        },
-      ],
-    },
-    {
-      title: "გადახედე",
-      teaser: "და დაამატე",
-      num: 4,
-      values: [{}],
-    },
-  ];
-
-  const getStatusClass = (indexStep) => {
-    console.log(step);
-    if (indexStep < step) {
+  const getStatusClass = (stepIndex) => {
+    if (stepIndex < step) {
       return "completed";
-    } else if (indexStep === step) {
+    } else if (stepIndex === step) {
       return "current";
     } else {
       return "pending";
@@ -128,6 +38,7 @@ const AddProject = () => {
   const stepChangeHandler = () => {
     if (step < 4) {
       setStep(step + 1);
+      console.log("step changed", step);
     }
   };
 
@@ -141,18 +52,29 @@ const AddProject = () => {
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
     setSendData((prevState) => {
-      const newData = [...prevState];
-      newData[0].samushaoebi.shesasrulebeliSamushaoebi = checked
-        ? [...newData[0].samushaoebi.shesasrulebeliSamushaoebi, value]
-        : newData[0].samushaoebi.shesasrulebeliSamushaoebi.filter(
+      const newData = JSON.parse(JSON.stringify(prevState));
+      if (checked) {
+        newData[0].samushaoebi.shesasrulebeliSamushaoebi = [
+          ...newData[0].samushaoebi.shesasrulebeliSamushaoebi,
+          value,
+        ];
+      } else {
+        newData[0].samushaoebi.shesasrulebeliSamushaoebi =
+          newData[0].samushaoebi.shesasrulebeliSamushaoebi.filter(
             (val) => val !== value
           );
+      }
       return newData;
     });
   };
 
+  const finishHandler = () => {
+    console.log(sendData);
+    setClose(true)
+  }
+
   return (
-    <div className="modal-dialog modal-dialog-centered mw-900px">
+    <div style={{display: close ? 'none' : ''}} className="modal-dialog modal-dialog-centered mw-900px">
       {/*begin::Modal content*/}
       <div className="modal-content">
         {/*begin::Modal header*/}
@@ -211,48 +133,100 @@ const AddProject = () => {
             {/*begin::Aside*/}
             <div className="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
               {/*begin::Nav*/}
+              {/*begin::Step 1*/}
               <div className="stepper-nav ps-lg-10">
                 {/*begin::Step 1*/}
-                {defaultData.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={`${"stepper-item"} ${getStatusClass(index)}`}
-                      data-kt-stepper-element="nav"
-                    >
-                      {/*begin::Line*/}
-                      <div className="stepper-line w-40px" />
-                      {/*end::Line*/}
-                      {/*begin::Icon*/}
-                      <div className="stepper-icon w-40px h-40px">
-                        <i className="stepper-check fas fa-check" />
-                        <span className="stepper-number">{item.num}</span>
-                      </div>
-                      {/*end::Icon*/}
-                      {/*begin::Label*/}
-                      <div className="stepper-label">
-                        <h3 className="stepper-title georgian">{item.title}</h3>
-                        <div className="stepper-desc georgian">
-                          {item.teaser}
-                        </div>
-                      </div>
-                      {/*end::Label*/}
-                    </div>
-                  );
-                })}
-
-                {/*end::Step 1*/}
+                <div
+                  className={`${"stepper-item"} ${getStatusClass(1)}`}
+                  data-kt-stepper-element="nav"
+                >
+                  {/*begin::Line*/}
+                  <div className="stepper-line w-40px" />
+                  {/*end::Line*/}
+                  {/*begin::Icon*/}
+                  <div className="stepper-icon w-40px h-40px">
+                    <i className="stepper-check fas fa-check" />
+                    <span className="stepper-number">1</span>
+                  </div>
+                  {/*end::Icon*/}
+                  {/*begin::Label*/}
+                  <div className="stepper-label">
+                    <h3 className="stepper-title georgian">კატეგორია</h3>
+                    <div className="stepper-desc georgian">ობიექტის აღწერა</div>
+                  </div>
+                  {/*end::Label*/}
+                </div>
                 {/*begin::Step 2*/}
-
+                <div
+                  className={`${"stepper-item"} ${getStatusClass(2)}`}
+                  data-kt-stepper-element="nav"
+                >
+                  {/*begin::Line*/}
+                  <div className="stepper-line w-40px" />
+                  {/*end::Line*/}
+                  {/*begin::Icon*/}
+                  <div className="stepper-icon w-40px h-40px">
+                    <i className="stepper-check fas fa-check" />
+                    <span className="stepper-number">2</span>
+                  </div>
+                  {/*begin::Icon*/}
+                  {/*begin::Label*/}
+                  <div className="stepper-label">
+                    <h3 className="stepper-title georgian">მდგომარეობა</h3>
+                    <div className="stepper-desc georgian">
+                      სამუშაოს განსაზღვრება
+                    </div>
+                  </div>
+                  {/*begin::Label*/}
+                </div>
                 {/*end::Step 2*/}
                 {/*begin::Step 3*/}
-
+                <div
+                  className={`${"stepper-item"} ${getStatusClass(3)}`}
+                  data-kt-stepper-element="nav"
+                >
+                  {/*begin::Line*/}
+                  <div className="stepper-line w-40px" />
+                  {/*end::Line*/}
+                  {/*begin::Icon*/}
+                  <div className="stepper-icon w-40px h-40px">
+                    <i className="stepper-check fas fa-check" />
+                    <span className="stepper-number">3</span>
+                  </div>
+                  {/*end::Icon*/}
+                  {/*begin::Label*/}
+                  <div className="stepper-label">
+                    <h3 className="stepper-title georgian">სამუშაოები</h3>
+                    <div className="stepper-desc georgian">
+                      შესასრულებელი სამუშაო
+                    </div>
+                  </div>
+                  {/*end::Label*/}
+                </div>
                 {/*end::Step 3*/}
                 {/*begin::Step 4*/}
-
                 {/*end::Step 4*/}
                 {/*begin::Step 5*/}
-
+                <div
+                  className={`${"stepper-item"} ${getStatusClass(4)}`}
+                  data-kt-stepper-element="nav"
+                >
+                  {/*begin::Line*/}
+                  <div className="stepper-line w-40px" />
+                  {/*end::Line*/}
+                  {/*begin::Icon*/}
+                  <div className="stepper-icon w-40px h-40px">
+                    <i className="stepper-check fas fa-check" />
+                    <span className="stepper-number">5</span>
+                  </div>
+                  {/*end::Icon*/}
+                  {/*begin::Label*/}
+                  <div className="stepper-label">
+                    <h3 className="stepper-title">Completed</h3>
+                    <div className="stepper-desc">Review and Submit</div>
+                  </div>
+                  {/*end::Label*/}
+                </div>
                 {/*end::Step 5*/}
               </div>
               {/*end::Nav*/}
@@ -264,218 +238,221 @@ const AddProject = () => {
               {/*begin::Form*/}
               <form className="form" noValidate="novalidate" id="">
                 {/*begin::Step 1*/}
-                {defaultData.map((item) => {
-                  return item.values.map((values, index) => {
-                    return  <div
-                    key={index}
-                    className={getStatusClass(index)}
-                    data-kt-stepper-element="content"
-                  >
-                    <div className="w-100">
-                      {/*begin::Input group*/}
-                      <div className="fv-row mb-10">
+                <div
+                  className={getStatusClass(1)}
+                  data-kt-stepper-element="content"
+                >
+                  <div className="w-100">
+                    {/*begin::Input group*/}
+                    <div className="fv-row mb-10">
+                      {/*begin::Label*/}
+                      <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                        <span className="required georgian">ქონების ტიპი</span>
+                        <i
+                          className="fas fa-exclamation-circle ms-2 fs-7"
+                          title="მიუთითეთ სამუშაო ობიექტის ტიპი"
+                        />
+                      </label>
+                      {/*end::Label*/}
+                      {/*begin::Input*/}
+                      <select
+                        onChange={(event) =>
+                          setSendData((prevSendData) => [
+                            {
+                              ...prevSendData[0],
+                              kategoria: {
+                                ...prevSendData[0].kategoria,
+                                qonebisTipi: event.target.value,
+                              },
+                              mdgomareoba: {
+                                ...prevSendData[0].mdgomareoba,
+                              },
+                              samushaoebi: {
+                                ...prevSendData[0].samushaoebi,
+                              },
+                            },
+                          ])
+                        }
+                        className="form-select form-select-solid georgian"
+                      >
+                        <option value={"ბინა"}>ბინა</option>
+                        <option value={"სახლი-აგარაკი"}>სახლი-აგარაკი</option>
+                        <option value={"კომერციული ფართი"}>
+                          კომერციული ფართი
+                        </option>
+                        <option value={"სასტუმრო"}>სასტუმრო</option>
+                      </select>
+                      {/*end::Input*/}
+                    </div>
+                    {/*end::Input group*/}
+                    {/*begin::Input group*/}
+                    <div className="row mb-10">
+                      {/*begin::Col*/}
+                      <div className="col-md-12 fv-row">
                         {/*begin::Label*/}
-                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                          <span className="required georgian">{values.title}</span>
-                          <i
-                            className="fas fa-exclamation-circle ms-2 fs-7"
-                            title={values.teaser}
-                          />
+                        <label className="required fs-6 fw-bold form-label georgian mb-2">
+                          მდებარეობა / რაიონი
                         </label>
                         {/*end::Label*/}
-                        {/*begin::Input*/}
-                        <select
-                          onChange={(event) =>
-                            setSendData((prevSendData) => [
-                              {
-                                ...prevSendData[0],
-                                kategoria: {
-                                  ...prevSendData[0].kategoria,
-                                  qonebisTipi: event.target.value,
-                                },
-                                mdgomareoba: {
-                                  ...prevSendData[0].mdgomareoba,
-                                },
-                                samushaoebi: {
-                                  ...prevSendData[0].samushaoebi,
-                                },
-                              },
-                            ])
-                          }
-                          className="form-select form-select-solid georgian"
-                        >
-                          <option value={"saxli-agaraki"}>სახლი-აგარაკი</option>
-                          <option value={"komerciuli-farti"}>
-                            კომერციული ფართი
-                          </option>
-                          <option value={"sastumro"}>სასტუმრო</option>
-                        </select>
-                        {/*end::Input*/}
-                      </div>
-                      {/*end::Input group*/}
-                      {/*begin::Input group*/}
-                      <div className="row mb-10">
-                        {/*begin::Col*/}
-                        <div className="col-md-12 fv-row">
-                          {/*begin::Label*/}
-                          <label className="required fs-6 fw-bold form-label georgian mb-2">
-                            მდებარეობა / რაიონი
-                          </label>
-                          {/*end::Label*/}
-                          {/*begin::Row*/}
-                          <div className="row fv-row">
-                            {/*begin::Col*/}
-                            <div className="col-6">
-                              <select
-                                onChange={(event) =>
-                                  setSendData((prevSendData) => [
-                                    {
-                                      ...prevSendData[0],
-                                      kategoria: {
-                                        ...prevSendData[0].kategoria,
-                                        qalaqi: event.target.value,
-                                      },
-                                      mdgomareoba: {
-                                        ...prevSendData[0].mdgomareoba,
-                                      },
-                                      samushaoebi: {
-                                        ...prevSendData[0].samushaoebi,
-                                      },
+                        {/*begin::Row*/}
+                        <div className="row fv-row">
+                          {/*begin::Col*/}
+                          <div className="col-6">
+                            <select
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                      qalaqi: event.target.value,
                                     },
-                                  ])
-                                }
-                                name="locale"
-                                className="form-select form-select-solid georgian"
-                                data-placeholder="მდებარეობა"
-                              >
-                                <option value={1}>თბილისი</option>
-                                <option value={2}>რუსთავი</option>
-                                <option value={3}>ქუთაისი</option>
-                                <option value={4}>ბათუმი</option>
-                                <option value={5}>აბასთუმანი</option>
-                                <option value={6}>აბაშა</option>
-                                <option value={7}>ჩხალთა</option>
-                              </select>
-                            </div>
-                            {/*end::Col*/}
-                            {/*begin::Col*/}
-                            <div className="col-6">
-                              <select
-                                onChange={(event) =>
-                                  setSendData((prevSendData) => [
-                                    {
-                                      ...prevSendData[0],
-                                      kategoria: {
-                                        ...prevSendData[0].kategoria,
-                                        raioni: event.target.value,
-                                      },
-                                      mdgomareoba: {
-                                        ...prevSendData[0].mdgomareoba,
-                                      },
-                                      samushaoebi: {
-                                        ...prevSendData[0].samushaoebi,
-                                      },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
                                     },
-                                  ])
-                                }
-                                name="locale"
-                                className="form-select form-select-solid georgian"
-                                data-placeholder="მდებარეობა"
-                              >
-                                <option value={1}>გლდანის რაიონი</option>
-                                <option value={2}>დიდუბის რაიონი</option>
-                                <option value={3}>ვაკის რაიონი</option>
-                                <option value={4}>საურთალოს რაიონი</option>
-                                <option value={5}>მთაწმინდის რაიონი</option>
-                                <option value={6}>ჩუღურეთის რაიონი</option>
-                                <option value={7}>თბილისის შემოგარენი</option>
-                              </select>
-                            </div>
-                            {/*end::Col*/}
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
+                              name="locale"
+                              className="form-select form-select-solid georgian"
+                              data-placeholder="მდებარეობა"
+                            >
+                              <option value={"თბილისი"}>თბილისი</option>
+                              <option value={"რუსთავი"}>რუსთავი</option>
+                              <option value={"ქუთაისი"}>ქუთაისი</option>
+                              <option value={"ბათუმი"}>ბათუმი</option>
+                              <option value={"აბასთუმანი"}>აბასთუმანი</option>
+                              <option value={"აბაშა"}>აბაშა</option>
+                              <option value={"ჩხალა"}>ჩხალთა</option>
+                            </select>
                           </div>
-                          {/*end::Row*/}
-                        </div>
-                        {/*end::Col*/}
-                      </div>
-                      {/*end::Input group*/}
-                      {/*begin::Input group*/}
-                      <div className="row mb-10">
-                        {/*begin::Col*/}
-                        <div className="col-md-12 fv-row">
-                          {/*begin::Label*/}
-                          <label className="required fs-6 fw-bold form-label georgian mb-2">
-                            მისამართი / ტელეფონი
-                          </label>
-                          {/*end::Label*/}
-                          {/*begin::Row*/}
-                          <div className="row fv-row">
-                            {/*begin::Col*/}
-                            <div className="col-6">
-                              <input
-                                onChange={(event) =>
-                                  setSendData((prevSendData) => [
-                                    {
-                                      ...prevSendData[0],
-                                      kategoria: {
-                                        ...prevSendData[0].kategoria,
-                                        misamarti: event.target.value,
-                                      },
-                                      mdgomareoba: {
-                                        ...prevSendData[0].mdgomareoba,
-                                      },
-                                      samushaoebi: {
-                                        ...prevSendData[0].samushaoebi,
-                                      },
+                          {/*end::Col*/}
+                          {/*begin::Col*/}
+                          <div className="col-6">
+                            <select
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                      raioni: event.target.value,
                                     },
-                                  ])
-                                }
-                                type="text"
-                                className="form-control georgian form-control-solid"
-                                placeholder="ზუსტი მისამართი"
-                              />
-                            </div>
-                            <div className="col-6">
-                              <input
-                                onChange={(event) =>
-                                  setSendData((prevSendData) => [
-                                    {
-                                      ...prevSendData[0],
-                                      kategoria: {
-                                        ...prevSendData[0].kategoria,
-                                        telefoni: event.target.value,
-                                      },
-                                      mdgomareoba: {
-                                        ...prevSendData[0].mdgomareoba,
-                                      },
-                                      samushaoebi: {
-                                        ...prevSendData[0].samushaoebi,
-                                      },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
                                     },
-                                  ])
-                                }
-                                type="text"
-                                className="form-control georgian form-control-solid"
-                                placeholder="ტელეფონი"
-                              />
-                            </div>
-                            {/*end::Col*/}
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
+                              name="locale"
+                              className="form-select form-select-solid georgian"
+                              data-placeholder="მდებარეობა"
+                            >
+                              <option value={"გლდანის რაიონი"}>
+                                გლდანის რაიონი
+                              </option>
+                              <option value={"დიდუბის რაიონი"}>
+                                დიდუბის რაიონი
+                              </option>
+                              <option value={"ვაკის რაიონი"}>
+                                ვაკის რაიონი
+                              </option>
+                              <option value={"საურთალოს რაიონი"}>
+                                საურთალოს რაიონი
+                              </option>
+                              <option value={"მთაწმინდის რაიონი"}>
+                                მთაწმინდის რაიონი
+                              </option>
+                              <option value={"ჩუღურეთის რაიონი"}>
+                                ჩუღურეთის რაიონი
+                              </option>
+                              <option value={"თბილისის შემოგარენი"}>
+                                თბილისის შემოგარენი
+                              </option>
+                            </select>
                           </div>
-                          {/*end::Row*/}
+                          {/*end::Col*/}
                         </div>
-                        {/*end::Col*/}
+                        {/*end::Row*/}
                       </div>
-                      {/*end::Input group*/}
+                      {/*end::Col*/}
                     </div>
-                  </div>;
-                  });
-                })}
-
-                {/* {defaultData?.values.map((item, index) => {
-                  return (
-                    <div>hi</div>
-                  )
-                })} */}
-               
+                    {/*end::Input group*/}
+                    {/*begin::Input group*/}
+                    <div className="row mb-10">
+                      {/*begin::Col*/}
+                      <div className="col-md-12 fv-row">
+                        {/*begin::Label*/}
+                        <label className="required fs-6 fw-bold form-label georgian mb-2">
+                          მისამართი / ტელეფონი
+                        </label>
+                        {/*end::Label*/}
+                        {/*begin::Row*/}
+                        <div className="row fv-row">
+                          {/*begin::Col*/}
+                          <div className="col-6">
+                            <input
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                      misamarti: event.target.value,
+                                    },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
+                                    },
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
+                              type="text"
+                              className="form-control georgian form-control-solid"
+                              placeholder="ზუსტი მისამართი"
+                            />
+                          </div>
+                          <div className="col-6">
+                            <input
+                              onChange={(event) =>
+                                setSendData((prevSendData) => [
+                                  {
+                                    ...prevSendData[0],
+                                    kategoria: {
+                                      ...prevSendData[0].kategoria,
+                                      telefoni: event.target.value,
+                                    },
+                                    mdgomareoba: {
+                                      ...prevSendData[0].mdgomareoba,
+                                    },
+                                    samushaoebi: {
+                                      ...prevSendData[0].samushaoebi,
+                                    },
+                                  },
+                                ])
+                              }
+                              type="text"
+                              className="form-control georgian form-control-solid"
+                              placeholder="ტელეფონი"
+                            />
+                          </div>
+                          {/*end::Col*/}
+                        </div>
+                        {/*end::Row*/}
+                      </div>
+                      {/*end::Col*/}
+                    </div>
+                    {/*end::Input group*/}
+                  </div>
+                </div>
                 {/*end::Step 1*/}
                 {/*begin::Step 2*/}
                 <div
@@ -890,7 +867,6 @@ const AddProject = () => {
                         className="form-control georgian form-control-lg form-control-solid"
                         name="dbname"
                         placeholder="ობიექტის დასახელება"
-                        defaultValue=""
                       />
                       {/*end::Input*/}
                     </div>
@@ -914,12 +890,11 @@ const AddProject = () => {
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
-                                  defaultValue=""
-                                  id="closeButton"
+                                  defaultValue="დემონტაჟი"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   დემონტაჟი
                                 </label>
@@ -930,11 +905,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="ტიხრები"
-                                  id="addBehaviorOnToastClick"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   ტიხრები
                                 </label>
@@ -945,12 +919,8 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="ჭერი"
-                                  id="preventDuplicates"
                                 />
-                                <label
-                                  className="form-check-label georgian"
-                                  htmlFor="closeButton"
-                                >
+                                <label className="form-check-label georgian">
                                   ჭერი
                                 </label>
                               </div>
@@ -960,11 +930,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="ლესვა"
-                                  id="preventDuplicates"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   ლესვა
                                 </label>
@@ -975,12 +944,8 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="იატაკის მოხვეწა"
-                                  id="debugInfo"
                                 />
-                                <label
-                                  className="form-check-label georgian"
-                                  htmlFor="closeButton"
-                                >
+                                <label className="form-check-label georgian">
                                   იატაკის მოხვეწა
                                 </label>
                               </div>
@@ -990,11 +955,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="სანტექნიკა"
-                                  id="preventDuplicates"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   სანტექნიკა
                                 </label>
@@ -1011,11 +975,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="გათბობა, გაგრილება"
-                                  id="preventDuplicates"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   გათბობა, გაგრილება
                                 </label>
@@ -1026,11 +989,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="ელექტროობა"
-                                  id="preventDuplicates"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   ელექტროობა
                                 </label>
@@ -1041,11 +1003,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="ფილის დაგება/გაკვრა"
-                                  id="preventDuplicates"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   ფილის დაგება/გაკვრა
                                 </label>
@@ -1056,12 +1017,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="სამღებრო სამუშაოები"
-                                  id="preventDuplicates"
                                 />
                                 <label
-                                  onChange={handleCheckboxChange}
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   სამღებრო სამუშაოები
                                 </label>
@@ -1072,11 +1031,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="იატაკის საფარი"
-                                  id="preventDuplicates"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   იატაკის საფარი
                                 </label>
@@ -1087,11 +1045,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="კარ-ფანჯარა"
-                                  id="preventDuplicates"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   კარ-ფანჯარა
                                 </label>
@@ -1102,11 +1059,10 @@ const AddProject = () => {
                                   className="form-check-input"
                                   type="checkbox"
                                   defaultValue="დალაგება"
-                                  id="preventDuplicates"
                                 />
                                 <label
+                                  onClick={(e) => e.preventDefault()}
                                   className="form-check-label georgian"
-                                  htmlFor="closeButton"
                                 >
                                   დალაგება
                                 </label>
@@ -1124,6 +1080,9 @@ const AddProject = () => {
                 </div>
                 {/*end::Step 3*/}
                 {/*begin::Step 4*/}
+
+                {/*end::Step 4*/}
+                {/*begin::Step 5*/}
                 <div
                   className={getStatusClass(4)}
                   data-kt-stepper-element="content"
@@ -1148,8 +1107,10 @@ const AddProject = () => {
                     {/*end::Illustration*/}
                   </div>
                 </div>
+                {/*end::Step 5*/}
                 {/*end::Step 4*/}
                 {/*begin::Actions*/}
+
                 <div className="d-flex flex-stack pt-10">
                   {/*begin::Wrapper*/}
                   <div className="me-2">
@@ -1191,13 +1152,13 @@ const AddProject = () => {
                   {/*begin::Wrapper*/}
                   <div>
                     <button
-                      onClick={() => console.log(sendData)}
+                      onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}
                       type="button"
                       className="btn btn-lg btn-primary"
                     >
                       <span className="indicator-label georgian">
-                        გაგზავნა
+                        დამატება
                         {/*begin::Svg Icon | path: icons/duotune/arrows/arr064.svg*/}
                         <span className="svg-icon svg-icon-3 ms-2 me-0">
                           <svg
@@ -1269,6 +1230,7 @@ const AddProject = () => {
                   </div>
                   {/*end::Wrapper*/}
                 </div>
+
                 {/*end::Actions*/}
               </form>
               {/*end::Form*/}
