@@ -70,24 +70,22 @@ const AddProject = () => {
 
   const finishHandler = () => {
     console.log(sendData);
-    setClose(true)
-  }
+    setClose(true);
+  };
 
   return (
-    <div style={{display: close ? 'none' : ''}} className="modal-dialog modal-dialog-centered mw-900px">
-      {/*begin::Modal content*/}
+    <div
+      style={{ display: close ? "none" : "" }}
+      className="modal-dialog modal-dialog-centered mw-900px"
+    >
       <div className="modal-content">
-        {/*begin::Modal header*/}
         <div className="modal-header">
-          {/*begin::Modal title*/}
           <h2 className="georgian">ობიექტის დამატება</h2>
-          {/*end::Modal title*/}
-          {/*begin::Close*/}
+
           <div
             className="btn btn-sm btn-icon btn-active-color-primary"
             data-bs-dismiss="modal"
           >
-            {/*begin::Svg Icon | path: icons/duotune/arrows/arr061.svg*/}
             <span className="svg-icon svg-icon-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -117,135 +115,89 @@ const AddProject = () => {
                 />
               </svg>
             </span>
-            {/*end::Svg Icon*/}
           </div>
-          {/*end::Close*/}
         </div>
-        {/*end::Modal header*/}
-        {/*begin::Modal body*/}
-        <div className="modal-body py-lg-10 px-lg-10">
-          {/*begin::Stepper*/}
 
+        <div className="modal-body py-lg-10 px-lg-10">
           <div
             className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
             id="kt_modal_create_app_stepper"
           >
-            {/*begin::Aside*/}
             <div className="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-              {/*begin::Nav*/}
-              {/*begin::Step 1*/}
               <div className="stepper-nav ps-lg-10">
-                {/*begin::Step 1*/}
                 <div
                   className={`${"stepper-item"} ${getStatusClass(1)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/*begin::Line*/}
                   <div className="stepper-line w-40px" />
-                  {/*end::Line*/}
-                  {/*begin::Icon*/}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">1</span>
                   </div>
-                  {/*end::Icon*/}
-                  {/*begin::Label*/}
                   <div className="stepper-label">
                     <h3 className="stepper-title georgian">კატეგორია</h3>
                     <div className="stepper-desc georgian">ობიექტის აღწერა</div>
                   </div>
-                  {/*end::Label*/}
                 </div>
-                {/*begin::Step 2*/}
+
                 <div
                   className={`${"stepper-item"} ${getStatusClass(2)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/*begin::Line*/}
                   <div className="stepper-line w-40px" />
-                  {/*end::Line*/}
-                  {/*begin::Icon*/}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">2</span>
                   </div>
-                  {/*begin::Icon*/}
-                  {/*begin::Label*/}
                   <div className="stepper-label">
                     <h3 className="stepper-title georgian">მდგომარეობა</h3>
                     <div className="stepper-desc georgian">
                       სამუშაოს განსაზღვრება
                     </div>
                   </div>
-                  {/*begin::Label*/}
                 </div>
-                {/*end::Step 2*/}
-                {/*begin::Step 3*/}
+
                 <div
                   className={`${"stepper-item"} ${getStatusClass(3)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/*begin::Line*/}
                   <div className="stepper-line w-40px" />
-                  {/*end::Line*/}
-                  {/*begin::Icon*/}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">3</span>
                   </div>
-                  {/*end::Icon*/}
-                  {/*begin::Label*/}
                   <div className="stepper-label">
                     <h3 className="stepper-title georgian">სამუშაოები</h3>
                     <div className="stepper-desc georgian">
                       შესასრულებელი სამუშაო
                     </div>
                   </div>
-                  {/*end::Label*/}
                 </div>
-                {/*end::Step 3*/}
-                {/*begin::Step 4*/}
-                {/*end::Step 4*/}
-                {/*begin::Step 5*/}
+
                 <div
                   className={`${"stepper-item"} ${getStatusClass(4)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/*begin::Line*/}
                   <div className="stepper-line w-40px" />
-                  {/*end::Line*/}
-                  {/*begin::Icon*/}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">5</span>
                   </div>
-                  {/*end::Icon*/}
-                  {/*begin::Label*/}
                   <div className="stepper-label">
                     <h3 className="stepper-title">Completed</h3>
                     <div className="stepper-desc">Review and Submit</div>
                   </div>
-                  {/*end::Label*/}
                 </div>
-                {/*end::Step 5*/}
               </div>
-              {/*end::Nav*/}
             </div>
-            {/* left panel */}
-            {/*begin::Aside*/}
-            {/*begin::Content*/}
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              {/*begin::Form*/}
               <form className="form" noValidate="novalidate" id="">
-                {/*begin::Step 1*/}
                 <div
                   className={getStatusClass(1)}
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
-                    {/*begin::Input group*/}
                     <div className="fv-row mb-10">
-                      {/*begin::Label*/}
                       <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                         <span className="required georgian">ქონების ტიპი</span>
                         <i
@@ -253,8 +205,6 @@ const AddProject = () => {
                           title="მიუთითეთ სამუშაო ობიექტის ტიპი"
                         />
                       </label>
-                      {/*end::Label*/}
-                      {/*begin::Input*/}
                       <select
                         onChange={(event) =>
                           setSendData((prevSendData) => [
@@ -282,21 +232,14 @@ const AddProject = () => {
                         </option>
                         <option value={"სასტუმრო"}>სასტუმრო</option>
                       </select>
-                      {/*end::Input*/}
                     </div>
-                    {/*end::Input group*/}
-                    {/*begin::Input group*/}
+
                     <div className="row mb-10">
-                      {/*begin::Col*/}
                       <div className="col-md-12 fv-row">
-                        {/*begin::Label*/}
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
                           მდებარეობა / რაიონი
                         </label>
-                        {/*end::Label*/}
-                        {/*begin::Row*/}
                         <div className="row fv-row">
-                          {/*begin::Col*/}
                           <div className="col-6">
                             <select
                               onChange={(event) =>
@@ -329,8 +272,6 @@ const AddProject = () => {
                               <option value={"ჩხალა"}>ჩხალთა</option>
                             </select>
                           </div>
-                          {/*end::Col*/}
-                          {/*begin::Col*/}
                           <div className="col-6">
                             <select
                               onChange={(event) =>
@@ -377,25 +318,16 @@ const AddProject = () => {
                               </option>
                             </select>
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Row*/}
                       </div>
-                      {/*end::Col*/}
                     </div>
-                    {/*end::Input group*/}
-                    {/*begin::Input group*/}
+
                     <div className="row mb-10">
-                      {/*begin::Col*/}
                       <div className="col-md-12 fv-row">
-                        {/*begin::Label*/}
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
                           მისამართი / ტელეფონი
                         </label>
-                        {/*end::Label*/}
-                        {/*begin::Row*/}
                         <div className="row fv-row">
-                          {/*begin::Col*/}
                           <div className="col-6">
                             <input
                               onChange={(event) =>
@@ -444,25 +376,18 @@ const AddProject = () => {
                               placeholder="ტელეფონი"
                             />
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Row*/}
                       </div>
-                      {/*end::Col*/}
                     </div>
-                    {/*end::Input group*/}
                   </div>
                 </div>
-                {/*end::Step 1*/}
-                {/*begin::Step 2*/}
+
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
-                    {/*begin::Input group*/}
                     <div className="fv-row">
-                      {/*begin::Label*/}
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                         <span className="required georgian">მდგომარეობა</span>
                         <i
@@ -471,17 +396,11 @@ const AddProject = () => {
                           title="მიუთითეთ ობიექტის მდგომარეობა"
                         />
                       </label>
-                      {/*end::Label*/}
-                      {/*begin:Options*/}
                       <div className="fv-row">
-                        {/*begin:Option*/}
                         <label className="d-flex flex-stack mb-5 cursor-pointer">
-                          {/*begin:Label*/}
                           <span className="d-flex align-items-center me-2">
-                            {/*begin:Icon*/}
                             <span className="symbol symbol-50px me-6">
                               <span className="symbol-label bg-light-primary">
-                                {/*begin::Svg Icon | path: icons/duotune/maps/map004.svg*/}
                                 <span className="svg-icon svg-icon-1 svg-icon-primary">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -501,11 +420,8 @@ const AddProject = () => {
                                     />
                                   </svg>
                                 </span>
-                                {/*end::Svg Icon*/}
                               </span>
                             </span>
-                            {/*end:Icon*/}
-                            {/*begin:Info*/}
                             <span className="d-flex flex-column">
                               <span className="fw-bolder georgian fs-6">
                                 ახალი აშენებული
@@ -514,10 +430,7 @@ const AddProject = () => {
                                 Creating a clear text
                               </span>
                             </span>
-                            {/*end:Info*/}
                           </span>
-                          {/*end:Label*/}
-                          {/*begin:Input*/}
                           <span className="form-check form-check-custom form-check-solid">
                             <input
                               onChange={(event) =>
@@ -543,17 +456,11 @@ const AddProject = () => {
                               defaultValue={"ახალი აშენებული"}
                             />
                           </span>
-                          {/*end:Input*/}
                         </label>
-                        {/*end::Option*/}
-                        {/*begin:Option*/}
                         <label className="d-flex flex-stack mb-5 cursor-pointer">
-                          {/*begin:Label*/}
                           <span className="d-flex align-items-center me-2">
-                            {/*begin:Icon*/}
                             <span className="symbol symbol-50px me-6">
                               <span className="symbol-label bg-light-danger">
-                                {/*begin::Svg Icon | path: icons/duotune/general/gen024.svg*/}
                                 <span className="svg-icon svg-icon-1 svg-icon-danger">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -605,11 +512,8 @@ const AddProject = () => {
                                     </g>
                                   </svg>
                                 </span>
-                                {/*end::Svg Icon*/}
                               </span>
                             </span>
-                            {/*end:Icon*/}
-                            {/*begin:Info*/}
                             <span className="d-flex flex-column">
                               <span className="fw-bolder georgian fs-6">
                                 ძველი აშენებული
@@ -619,10 +523,7 @@ const AddProject = () => {
                                 aspect
                               </span>
                             </span>
-                            {/*end:Info*/}
                           </span>
-                          {/*end:Label*/}
-                          {/*begin:Input*/}
                           <span className="form-check form-check-custom form-check-solid">
                             <input
                               onChange={(event) =>
@@ -648,16 +549,11 @@ const AddProject = () => {
                               defaultValue={"ძველი აშენებული"}
                             />
                           </span>
-                          {/*end:Input*/}
                         </label>
-                        {/*end::Option*/}
                       </div>
-                      {/*end:Options*/}
                     </div>
-                    {/*end::Input group*/}
-                    {/*begin::Input group*/}
+
                     <div className="fv-row">
-                      {/*begin::Label*/}
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                         <span className="required georgian">
                           არსებული მდგომარეობა
@@ -668,19 +564,13 @@ const AddProject = () => {
                           title="ობიექტის არსებული მდგომარეობა"
                         />
                       </label>
-                      {/*end::Label*/}
-                      {/*begin:Option*/}
                       <label className="d-flex flex-stack cursor-pointer mb-5">
-                        {/*begin:Label*/}
                         <span className="d-flex align-items-center me-2">
-                          {/*begin:Icon*/}
                           <span className="symbol symbol-50px me-6">
                             <span className="symbol-label bg-light-warning">
                               <i className="fab fa-html5 text-warning fs-2x" />
                             </span>
                           </span>
-                          {/*end:Icon*/}
-                          {/*begin:Info*/}
                           <span className="d-flex flex-column">
                             <span className="fw-bolder georgian fs-6">
                               შავი კარკასი
@@ -689,10 +579,7 @@ const AddProject = () => {
                               სამუშაოები სრულ რემონტამდე.
                             </span>
                           </span>
-                          {/*end:Info*/}
                         </span>
-                        {/*end:Label*/}
-                        {/*begin:Input*/}
                         <span className="form-check form-check-custom form-check-solid">
                           <input
                             onChange={(event) =>
@@ -719,21 +606,14 @@ const AddProject = () => {
                             defaultValue={"შავი კარკასი"}
                           />
                         </span>
-                        {/*end:Input*/}
                       </label>
-                      {/*end::Option*/}
-                      {/*begin:Option*/}
                       <label className="d-flex flex-stack cursor-pointer mb-5">
-                        {/*begin:Label*/}
                         <span className="d-flex align-items-center me-2">
-                          {/*begin:Icon*/}
                           <span className="symbol symbol-50px me-6">
                             <span className="symbol-label bg-light-success">
                               <i className="fab fa-react text-success fs-2x" />
                             </span>
                           </span>
-                          {/*end:Icon*/}
-                          {/*begin:Info*/}
                           <span className="d-flex flex-column">
                             <span className="fw-bolder georgian fs-6">
                               თეთრი კარკასი
@@ -742,10 +622,7 @@ const AddProject = () => {
                               სამუშაოები სრულ რემონტამდე.
                             </span>
                           </span>
-                          {/*end:Info*/}
                         </span>
-                        {/*end:Label*/}
-                        {/*begin:Input*/}
                         <span className="form-check form-check-custom form-check-solid">
                           <input
                             onChange={(event) =>
@@ -771,21 +648,14 @@ const AddProject = () => {
                             defaultValue={"თეთრი კარკასი"}
                           />
                         </span>
-                        {/*end:Input*/}
                       </label>
-                      {/*end::Option*/}
-                      {/*begin:Option*/}
                       <label className="d-flex flex-stack cursor-pointer mb-5">
-                        {/*begin:Label*/}
                         <span className="d-flex align-items-center me-2">
-                          {/*begin:Icon*/}
                           <span className="symbol symbol-50px me-6">
                             <span className="symbol-label bg-light-danger">
                               <i className="fab fa-angular text-danger fs-2x" />
                             </span>
                           </span>
-                          {/*end:Icon*/}
-                          {/*begin:Info*/}
                           <span className="d-flex flex-column">
                             <span className="fw-bolder georgian fs-6">
                               მწვანე კარკასი
@@ -794,10 +664,7 @@ const AddProject = () => {
                               სამუშაოები სრულ რემონტამდე.
                             </span>
                           </span>
-                          {/*end:Info*/}
                         </span>
-                        {/*end:Label*/}
-                        {/*begin:Input*/}
                         <span className="form-check form-check-custom form-check-solid">
                           <input
                             onChange={(event) =>
@@ -823,28 +690,20 @@ const AddProject = () => {
                             defaultValue={"მწვანე კარკასი"}
                           />
                         </span>
-                        {/*end:Input*/}
                       </label>
-                      {/*end::Option*/}
                     </div>
-                    {/*end::Input group*/}
                   </div>
                 </div>
-                {/*end::Step 2*/}
-                {/*begin::Step 3*/}
+
                 <div
                   className={getStatusClass(3)}
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
-                    {/*begin::Input group*/}
                     <div className="fv-row mb-10">
-                      {/*begin::Label*/}
                       <label className="required fs-5 georgian fw-bold mb-2">
                         ობიექტის დასახელება
                       </label>
-                      {/*end::Label*/}
-                      {/*begin::Input*/}
                       <input
                         onChange={(e) =>
                           setSendData((prevSendData) => [
@@ -868,21 +727,14 @@ const AddProject = () => {
                         name="dbname"
                         placeholder="ობიექტის დასახელება"
                       />
-                      {/*end::Input*/}
                     </div>
-                    {/*end::Input group*/}
-                    {/*begin::Input group*/}
+
                     <div className="row mb-10">
-                      {/*begin::Col*/}
                       <div className="col-md-12 fv-row">
-                        {/*begin::Label*/}
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
                           შესასრულებელი სამუშაოები
                         </label>
-                        {/*end::Label*/}
-                        {/*begin::Row*/}
                         <div className="row fv-row">
-                          {/*begin::Col*/}
                           <div className="col-6">
                             <div className="d-flex flex-column">
                               <div className="form-check form-check-custom form-check-solid mb-2">
@@ -965,8 +817,6 @@ const AddProject = () => {
                               </div>
                             </div>
                           </div>
-                          {/*end::Col*/}
-                          {/*begin::Col*/}
                           <div className="col-6">
                             <div className="d-flex flex-column">
                               <div className="form-check form-check-custom form-check-solid mb-2">
@@ -1069,34 +919,21 @@ const AddProject = () => {
                               </div>
                             </div>
                           </div>
-                          {/*end::Col*/}
                         </div>
-                        {/*end::Row*/}
                       </div>
-                      {/*end::Col*/}
                     </div>
-                    {/*end::Input group*/}
                   </div>
                 </div>
-                {/*end::Step 3*/}
-                {/*begin::Step 4*/}
 
-                {/*end::Step 4*/}
-                {/*begin::Step 5*/}
                 <div
                   className={getStatusClass(4)}
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100 text-center">
-                    {/*begin::Heading*/}
                     <h1 className="fw-bolder text-dark mb-3">Release!</h1>
-                    {/*end::Heading*/}
-                    {/*begin::Description*/}
                     <div className="text-muted fw-bold fs-3">
                       Submit your app to kickstart your project.
                     </div>
-                    {/*end::Description*/}
-                    {/*begin::Illustration*/}
                     <div className="text-center px-4 py-15">
                       <img
                         src="assets/media/illustrations/sketchy-1/9.png"
@@ -1104,15 +941,10 @@ const AddProject = () => {
                         className="w-100 mh-300px"
                       />
                     </div>
-                    {/*end::Illustration*/}
                   </div>
                 </div>
-                {/*end::Step 5*/}
-                {/*end::Step 4*/}
-                {/*begin::Actions*/}
 
                 <div className="d-flex flex-stack pt-10">
-                  {/*begin::Wrapper*/}
                   <div className="me-2">
                     <button
                       style={{ display: step === 1 ? "none" : "" }}
@@ -1120,7 +952,6 @@ const AddProject = () => {
                       type="button"
                       className="btn georgian btn-lg btn-light-primary me-3"
                     >
-                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr063.svg*/}
                       <span className="svg-icon svg-icon-3 me-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -1144,12 +975,9 @@ const AddProject = () => {
                           />
                         </svg>
                       </span>
-                      {/*end::Svg Icon*/}უკან
+                      უკან
                     </button>
                   </div>
-                  {/* back button */}
-                  {/*end::Wrapper*/}
-                  {/*begin::Wrapper*/}
                   <div>
                     <button
                       onClick={finishHandler}
@@ -1159,7 +987,6 @@ const AddProject = () => {
                     >
                       <span className="indicator-label georgian">
                         დამატება
-                        {/*begin::Svg Icon | path: icons/duotune/arrows/arr064.svg*/}
                         <span className="svg-icon svg-icon-3 ms-2 me-0">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -1184,14 +1011,12 @@ const AddProject = () => {
                             />
                           </svg>
                         </span>
-                        {/*end::Svg Icon*/}
                       </span>
                       <span className="indicator-progress georgian">
                         გთხოვთ დაიცადოთ...
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
                     </button>
-                    {/* send button */}
                     <button
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}
@@ -1199,7 +1024,6 @@ const AddProject = () => {
                       className="btn btn-lg georgian btn-primary"
                     >
                       გაგრძელება
-                      {/*begin::Svg Icon | path: icons/duotune/arrows/arr064.svg*/}
                       <span className="svg-icon svg-icon-3 ms-1 me-0">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -1224,25 +1048,14 @@ const AddProject = () => {
                           />
                         </svg>
                       </span>
-                      {/*end::Svg Icon*/}
                     </button>
-                    {/* next button */}
                   </div>
-                  {/*end::Wrapper*/}
                 </div>
-
-                {/*end::Actions*/}
               </form>
-              {/*end::Form*/}
             </div>
-            {/* right panel */}
-            {/*end::Content*/}
           </div>
-          {/*end::Stepper*/}
         </div>
-        {/*end::Modal body*/}
       </div>
-      {/*end::Modal content*/}
     </div>
   );
 };
