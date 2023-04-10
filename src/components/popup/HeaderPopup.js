@@ -10,6 +10,7 @@ const HeaderPopup = () => {
     setAddProject(true);
     setClose(true);
   };
+
   const data = [
     {
       id: 0,
@@ -43,10 +44,6 @@ const HeaderPopup = () => {
     },
   ];
 
-  //   className="modal"
-  //         style={{ display: "block", opacity: close ? "0" : "1" }}
-  //         tabIndex={-1}
-  //         role="dialog"
   return (
     <>
     <div
