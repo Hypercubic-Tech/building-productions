@@ -1,27 +1,16 @@
 import { useState, useEffect, useRef } from "react";
-// import Login from "../login/Login";
 import AuthModal from "../popup/AuthModal";
 
 function DefaultHeader() {
-  //   const [showPopup, setShowPopup] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
-  //   const handleLoginClick = () => {
-  //     if (!showPopup) {
-  //       setShowPopup(true);
-  //     } else {
-  //       setShowPopup(false);
-  //     }
-  //   };
+  // const handleLogin = () => {
+  //   setLoggedIn(true);
+  // };
 
-  //   const [loggedIn, setLoggedIn] = useState(false);
-
-  //   const handleLogin = () => {
-  //     setLoggedIn(true);
-  //   };
-
-  //   const handleLogout = () => {
-  //     setLoggedIn(false);
-  //   };
+  // const handleLogout = () => {
+  //   setLoggedIn(false);
+  // };
 
   const [showAuthModal, setShowAuthModal] = useState(false);
   const modalRef = useRef(null);
