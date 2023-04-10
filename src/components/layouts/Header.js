@@ -1,9 +1,9 @@
-import DefaultHeader from "./DefaultHeader";
+// import DefaultHeader from "./DefaultHeader";
 import HeaderLogged from "./HeaderLogged";
 
 function Header({ loggedIn }) {
-  // return <>{loggedIn ? <HeaderLogged /> : <DefaultHeader />}</>;
-  return <HeaderLogged />
+  // return <>{loggedIn ? <HeaderLogged true /> : <DefaultHeader />}</>;
+  return <HeaderLogged true />;
 }
 
 export default Header;
