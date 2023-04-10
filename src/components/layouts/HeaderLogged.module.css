@@ -1,0 +1,15 @@
+.activeBg {
+  background-color: #e4e6ef;
+}
+.modalWindow {
+  position: fixed;
+  z-index: 9;
+  height: 100px;
+  width: 140px;
+  top: 70px;
+  right: 0;
+}
+.modalWindow > div {
+  cursor: pointer;
+  display: inline;
+}

@@ -2,8 +2,8 @@
 import HeaderLogged from "./HeaderLogged";
 
 function Header({ loggedIn }) {
-  // return <>{loggedIn ? <HeaderLogged true /> : <DefaultHeader />}</>;
-  return <HeaderLogged true />;
+  // return <>{loggedIn ? <HeaderLogged /> : <DefaultHeader />}</>;
+  return <HeaderLogged />;
 }
 
 export default Header;
