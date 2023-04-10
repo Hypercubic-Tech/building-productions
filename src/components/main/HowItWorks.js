@@ -1,9 +1,9 @@
 // import SwiperComp from "../layouts/SwiperComp";
 
-import logo1 from '../../../public/swiperImgs/logo1.jpg'; 
-import logo2 from '../../../public/swiperImgs/logo2.jpg'; 
-import logo3 from '../../../public/swiperImgs/logo3.jpg'; 
-import logo4 from '../../../public/swiperImgs/logo4.jpg'; 
+// import logo1 from '../../../public/swiperImgs/logo1.jpg'; 
+// import logo2 from '../../../public/swiperImgs/logo2.jpg'; 
+// import logo3 from '../../../public/swiperImgs/logo3.jpg'; 
+// import logo4 from '../../../public/swiperImgs/logo4.jpg'; 
 
 const HowItWorks = () => {
   return ( 

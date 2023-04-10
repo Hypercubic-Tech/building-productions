@@ -1,16 +1,17 @@
-import { useState } from "react";
-import Login from "../login/Login";
+import { useState, useEffect, useRef } from "react";
+// import Login from "../login/Login";
+import AuthModal from "../popup/AuthModal";
 
 function DefaultHeader() {
-  const [showPopup, setShowPopup] = useState(false);
+  //   const [showPopup, setShowPopup] = useState(false);
 
-  const handleLoginClick = () => {
-    if (!showPopup) {
-      setShowPopup(true);
-    } else {
-      setShowPopup(false);
-    }
-  };
+  //   const handleLoginClick = () => {
+  //     if (!showPopup) {
+  //       setShowPopup(true);
+  //     } else {
+  //       setShowPopup(false);
+  //     }
+  //   };
 
   //   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -21,6 +22,36 @@ function DefaultHeader() {
   //   const handleLogout = () => {
   //     setLoggedIn(false);
   //   };
+
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const modalRef = useRef(null);
+
+  const handleAuthClick = () => {
+    setShowAuthModal(true);
+  };
+
+  const handleClose = () => {
+    setShowAuthModal(false);
+    console.log("dsfsdf");
+  };
+
+  const handleOutsideClick = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowAuthModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showAuthModal) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [showAuthModal]);
 
   return (
     <>
@@ -155,13 +186,17 @@ function DefaultHeader() {
             <div className="ms-1">
               {/* flex-equal*/}
               <div
-                onClick={handleLoginClick}
                 className={` btn btn-success georgian `}
+                onClick={handleAuthClick}
               >
                 ავტორიზაცია
               </div>
-              {showPopup && (
-                <Login handleLoginClick={handleLoginClick} open={true} />
+              {showAuthModal && (
+                <div ref={modalRef}>
+                  <div>
+                    <AuthModal onClose={handleClose} />
+                  </div>
+                </div>
               )}
             </div>
           </div>
