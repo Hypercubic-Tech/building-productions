@@ -1,10 +1,18 @@
 import { useState } from "react";
 
-const AddProject = () => {
-  const [close, setClose] = useState(false);
-  const [step, setStep] = useState(1);
-  const [backBtn, setBackBtn] = useState(false);
+import styles from "../../styles/main/heading/Heading.module.css";
 
+const AddProject = () => {
+  const [step, setStep] = useState(1);
+  const [close, setClose] = useState(false);
+  const [backBtn, setBackBtn] = useState(false);
+  const [err, setErr] = useState(false);
+  const [validate, setValidate] = useState({
+    addressInput: false,
+    mobileInput: false,
+    buildingInput: false,
+    objectInput: false,
+  });
   const [sendData, setSendData] = useState([
     {
       kategoria: {
@@ -25,6 +33,56 @@ const AddProject = () => {
     },
   ]);
 
+  const validationHandler = (event) => {
+    const addressInput = document.getElementById("input-validation-address");
+    const mobileInput = document.getElementById("input-validation-mobile");
+    const buildingInput = document.getElementById("input-validation-building");
+    const objectInput = document.getElementById("input-validation-object");
+    let errors = [];
+
+    if (addressInput.value === "") {
+      setValidate((prev) => ({ ...prev, addressInput: false }));
+      errors.push("შეავსეთ მისამართი");
+    } else {
+      setValidate((prev) => ({ ...prev, addressInput: true }));
+    }
+    if (mobileInput.value === "") {
+      setValidate((prev) => ({ ...prev, mobileInput: false }));
+      errors.push("შეავსეთ მობილური ნომერი");
+    } else {
+      setValidate((prev) => ({ ...prev, mobileInput: true }));
+    }
+    if (objectInput.value === "") {
+      setValidate((prev) => ({ ...prev, objectInput: false }));
+      errors.push("მონიშნე ობიექტის მდგომერობა");
+    } else {
+      setValidate((prev) => ({ ...prev, objectInput: true }));
+    }
+    if (!buildingInput.value) {
+      setValidate((prev) => ({ ...prev, buildingInput: false }));
+      errors.push("შეავსეთ ობიექტის დასახელებაXXX");
+    } else {
+      setValidate((prev) => ({ ...prev, buildingInput: true }));
+    }
+
+  //   if (errors.length) {
+  //     console.log(errors)
+  //     setNotificationElement(errors.map((error, index) => {
+  //       return <p key={index}>{error}</p>
+  //     }))
+  //     //  notificationElement = (
+  //     //   <div>
+  //     //     {errors.map((error, index) => (
+  //     //       <p key={index}>{error}</p>
+  //     //     ))}
+  //     //   </div>
+  //     // );
+  //     // show the notification element
+  //   } else {
+  //     // hide the notification element
+  //   }
+  };
+
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
       return "completed";
@@ -36,9 +94,23 @@ const AddProject = () => {
   };
 
   const stepChangeHandler = () => {
+    if (step < 2) {
+      if (validate.addressInput && validate.mobileInput) {
+        setStep(step + 1);
+        console.log("step changed", step);
+      }
+    }
+    if (step < 3) {
+      if (validate.buildingInput) {
+        setStep(step + 1);
+        console.log("step changed", step);
+      }
+    }
     if (step < 4) {
-      setStep(step + 1);
-      console.log("step changed", step);
+      if (validate.objectInput) {
+        setStep(step + 1);
+        console.log("step changed", step);
+      }
     }
   };
 
@@ -73,6 +145,7 @@ const AddProject = () => {
     setClose(true);
   };
 
+  // console.log(notificationElement);
   return (
     <div
       style={{ display: close ? "none" : "" }}
@@ -206,7 +279,7 @@ const AddProject = () => {
                         />
                       </label>
                       <select
-                        onChange={(event) =>
+                        onChange={(event) => {
                           setSendData((prevSendData) => [
                             {
                               ...prevSendData[0],
@@ -221,9 +294,10 @@ const AddProject = () => {
                                 ...prevSendData[0].samushaoebi,
                               },
                             },
-                          ])
-                        }
-                        className="form-select form-select-solid georgian"
+                          ]);
+                          //
+                        }}
+                        className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
                         <option value={"ბინა"}>ბინა</option>
                         <option value={"სახლი-აგარაკი"}>სახლი-აგარაკი</option>
@@ -330,7 +404,8 @@ const AddProject = () => {
                         <div className="row fv-row">
                           <div className="col-6">
                             <input
-                              onChange={(event) =>
+                              id="input-validation-address"
+                              onChange={(event) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
@@ -345,8 +420,9 @@ const AddProject = () => {
                                       ...prevSendData[0].samushaoebi,
                                     },
                                   },
-                                ])
-                              }
+                                ]);
+                                validationHandler();
+                              }}
                               type="text"
                               className="form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
@@ -354,7 +430,8 @@ const AddProject = () => {
                           </div>
                           <div className="col-6">
                             <input
-                              onChange={(event) =>
+                              id="input-validation-mobile"
+                              onChange={(event) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
@@ -369,9 +446,10 @@ const AddProject = () => {
                                       ...prevSendData[0].samushaoebi,
                                     },
                                   },
-                                ])
-                              }
-                              type="text"
+                                ]);
+                                validationHandler();
+                              }}
+                              type="number"
                               className="form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
                             />
@@ -433,7 +511,8 @@ const AddProject = () => {
                           </span>
                           <span className="form-check form-check-custom form-check-solid">
                             <input
-                              onChange={(event) =>
+                              id="input-validation-building"
+                              onChange={(event) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
@@ -448,8 +527,13 @@ const AddProject = () => {
                                       ...prevSendData[0].samushaoebi,
                                     },
                                   },
-                                ])
-                              }
+                                ]);
+                                validationHandler();
+                                setValidate((prev) => ({
+                                  ...prev,
+                                  buildingInput: true,
+                                }));
+                              }}
                               className="form-check-input"
                               type="radio"
                               name="category"
@@ -526,7 +610,8 @@ const AddProject = () => {
                           </span>
                           <span className="form-check form-check-custom form-check-solid">
                             <input
-                              onChange={(event) =>
+                              id="input-validation-building"
+                              onChange={(event) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
@@ -541,8 +626,13 @@ const AddProject = () => {
                                       ...prevSendData[0].samushaoebi,
                                     },
                                   },
-                                ])
-                              }
+                                ]);
+                                validationHandler();
+                                setValidate((prev) => ({
+                                  ...prev,
+                                  buildingInput: true,
+                                }));
+                              }}
                               className="form-check-input"
                               type="radio"
                               name="category"
@@ -582,6 +672,7 @@ const AddProject = () => {
                         </span>
                         <span className="form-check form-check-custom form-check-solid">
                           <input
+                            id="input-validation"
                             onChange={(event) =>
                               setSendData((prevSendData) => [
                                 {
@@ -625,6 +716,7 @@ const AddProject = () => {
                         </span>
                         <span className="form-check form-check-custom form-check-solid">
                           <input
+                            id="input-validation"
                             onChange={(event) =>
                               setSendData((prevSendData) => [
                                 {
@@ -667,6 +759,7 @@ const AddProject = () => {
                         </span>
                         <span className="form-check form-check-custom form-check-solid">
                           <input
+                            id="input-validation"
                             onChange={(event) =>
                               setSendData((prevSendData) => [
                                 {
@@ -705,7 +798,8 @@ const AddProject = () => {
                         ობიექტის დასახელება
                       </label>
                       <input
-                        onChange={(e) =>
+                        id="input-validation-object"
+                        onChange={(event) => {
                           setSendData((prevSendData) => [
                             {
                               ...prevSendData[0],
@@ -717,11 +811,12 @@ const AddProject = () => {
                               },
                               samushaoebi: {
                                 ...prevSendData[0].samushaoebi,
-                                obieqtisDasaxeleba: e.target.value,
+                                obieqtisDasaxeleba: event.target.value,
                               },
                             },
-                          ])
-                        }
+                          ]);
+                          validationHandler();
+                        }}
                         type="text"
                         className="form-control georgian form-control-lg form-control-solid"
                         name="dbname"
@@ -978,6 +1073,7 @@ const AddProject = () => {
                       უკან
                     </button>
                   </div>
+
                   <div>
                     <button
                       onClick={finishHandler}
@@ -1017,6 +1113,7 @@ const AddProject = () => {
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
                     </button>
+                    {/* <div>{notificationElement && notificationElement} ჰი</div> */}
                     <button
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}

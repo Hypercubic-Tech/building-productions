@@ -155,7 +155,7 @@ function HeaderLogged() {
                   </span>
                 </span>
               </form>
-              {/* <div
+              <div
                 data-kt-search-element="content"
                 className="menu menu-sub menu-sub-dropdown w-300px w-md-350px py-7 px-7 overflow-hidden"
               >
@@ -1151,7 +1151,7 @@ function HeaderLogged() {
                     </button>
                   </div>
                 </form>
-              </div> */}
+              </div>
             </div>
             <div className="d-flex align-items-center ms-3 ms-lg-4">
               <div
@@ -1211,7 +1211,7 @@ function HeaderLogged() {
                 className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
                 data-kt-menu="true"
               >
-                {/* <div className="menu-item px-3">
+                <div className="menu-item px-3">
                   <div className="menu-content d-flex align-items-center px-3">
                     <div className="symbol symbol-50px me-5">
                       <img alt="Logo" src="assets/media/avatars/150-26.jpg" />
@@ -1231,8 +1231,8 @@ function HeaderLogged() {
                       </a>
                     </div>
                   </div>
-                </div> */}
-                {/* <div className="separator my-2" />
+                </div>
+                <div className="separator my-2" />
                 <div className="menu-item px-5">
                   <a
                     href="../../demo11/dist/account/overview.html"
@@ -1240,8 +1240,8 @@ function HeaderLogged() {
                   >
                     My Profile
                   </a>
-                </div> */}
-                {/* <div className="menu-item px-5">
+                </div>
+                <div className="menu-item px-5">
                   <a
                     href="../../demo11/dist/pages/projects/list.html"
                     className="menu-link px-5"
@@ -1253,8 +1253,8 @@ function HeaderLogged() {
                       </span>
                     </span>
                   </a>
-                </div> */}
-                {/* <div
+                </div>
+                <div
                   className="menu-item px-5"
                   data-kt-menu-trigger="hover"
                   data-kt-menu-placement="left-start"
@@ -1319,17 +1319,17 @@ function HeaderLogged() {
                       </div>
                     </div>
                   </div>
-                </div> */}
-                {/* <div className="menu-item px-5">
+                </div>
+                <div className="menu-item px-5">
                   <a
                     href="../../demo11/dist/account/statements.html"
                     className="menu-link px-5"
                   >
                     My Statements
                   </a>
-                </div> */}
-                {/* <div className="separator my-2" /> */}
-                {/* <div
+                </div>
+                <div className="separator my-2" />
+                <div
                   className="menu-item px-5"
                   data-kt-menu-trigger="hover"
                   data-kt-menu-placement="left-start"
@@ -1424,15 +1424,15 @@ function HeaderLogged() {
                       </a>
                     </div>
                   </div>
-                </div> */}
-                {/* <div className="menu-item px-5 my-1">
+                </div>
+                <div className="menu-item px-5 my-1">
                   <a
                     href="../../demo11/dist/account/settings.html"
                     className="menu-link px-5"
                   >
                     Account Settings
                   </a>
-                </div> */}
+                </div>
                 <div className="menu-item px-5">
                   <a
                     href="../../demo11/dist/authentication/flows/basic/sign-in.html"
@@ -1441,7 +1441,7 @@ function HeaderLogged() {
                     Sign Out
                   </a>
                 </div>
-                {/* <div className="separator my-2" />
+                <div className="separator my-2" />
                 <div className="menu-item px-5">
                   <div className="menu-content px-5">
                     <label
@@ -1462,7 +1462,7 @@ function HeaderLogged() {
                       </span>
                     </label>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>
