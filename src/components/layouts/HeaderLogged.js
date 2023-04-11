@@ -2,28 +2,30 @@ import styles from "../layouts/HeaderLogged.module.css";
 import { useState, useEffect, useRef } from "react";
 
 function HeaderLogged() {
-  const [showModal, setShowModal] = useState(false);
-  const modalRef = useRef(null);
-
-  const toggleModal = () => setShowModal(!showModal);
-
-  const handleOverlayClick = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setShowModal(false);
-    }
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
-    if (showModal) {
-      document.addEventListener("mousedown", handleOverlayClick);
-    } else {
-      document.removeEventListener("mousedown", handleOverlayClick);
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        closeModal();
+      }
     }
 
+    document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
-      document.removeEventListener("mousedown", handleOverlayClick);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showModal]);
+  }, [ref]);
+
+  function openModal() {
+    setIsModalOpen((prevState) => !prevState);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+  }
 
   return (
     <div
@@ -204,9 +206,9 @@ function HeaderLogged() {
             </div>
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
-                onClick={toggleModal}
+                onClick={openModal}
                 className={` ${
-                  showModal ? styles.activeBg : ""
+                  isModalOpen ? styles.activeBg : ""
                 } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
                 data-kt-menu-trigger="click"
                 data-kt-menu-attach="parent"
@@ -235,10 +237,43 @@ function HeaderLogged() {
                     />
                   </svg>
                 </span>
+                {isModalOpen && (
+                  <div className={styles.backdrop} onClick={closeModal}></div>
+                )}
               </div>
-              {showModal && (
-                <div ref={modalRef} className={`${styles.modalWindow}`}>
-                  <div>გამოსვლა</div>
+              {isModalOpen && (
+                <div ref={ref} className={`${styles.modalWindow}`}>
+                  <div className={styles.hover}>გამოსვლა</div>
+                  <svg
+                    onClick={closeModal}
+                    className={styles.closeBtn}
+                    width="64px"
+                    height="64px"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      stroke="#CCCCCC"
+                      strokeWidth="0.336"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="Menu / Close_MD">
+                        <path
+                          id="Vector"
+                          d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
+                          stroke="#000000"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
                 </div>
               )}
             </div>
