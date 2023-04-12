@@ -43,28 +43,34 @@ const AddProject = () => {
     if (addressInput.value === "") {
       setValidate((prev) => ({ ...prev, addressInput: false }));
       errors.push("შეავსეთ მისამართი");
-    } else {
+    } 
+    if (!addressInput.value === "") {
       setValidate((prev) => ({ ...prev, addressInput: true }));
+
     }
     if (mobileInput.value === "") {
       setValidate((prev) => ({ ...prev, mobileInput: false }));
       errors.push("შეავსეთ მობილური ნომერი");
-    } else {
+    } 
+    if (!mobileInput.value === "") {
       setValidate((prev) => ({ ...prev, mobileInput: true }));
     }
-    if (objectInput.value === "") {
-      setValidate((prev) => ({ ...prev, objectInput: false }));
-      errors.push("მონიშნე ობიექტის მდგომერობა");
-    } else {
-      setValidate((prev) => ({ ...prev, objectInput: true }));
-    }
-    if (!buildingInput.value) {
-      setValidate((prev) => ({ ...prev, buildingInput: false }));
-      errors.push("შეავსეთ ობიექტის დასახელებაXXX");
-    } else {
-      setValidate((prev) => ({ ...prev, buildingInput: true }));
-    }
+    // if (objectInput.value === false) {
+    //   // setValidate((prev) => ({ ...prev, objectInput: false }));
+    //   errors.push("მონიშნე ობიექტის მდგომერობა");
+    // } else {
+    //   setValidate((prev) => ({ ...prev, objectInput: true }));
+    // }
+    // console.log(validate.objectInput, 'object input')
 
+    // if (!buildingInput.value) {
+    //   setValidate((prev) => ({ ...prev, buildingInput: false }));
+    //   errors.push("შეავსეთ ობიექტის დასახელებაXXX");
+    // } else {
+    //   setValidate((prev) => ({ ...prev, buildingInput: true }));
+    // }
+    // console.log(validate.buildingInput, 'building')
+    console.log(errors, 'erros')
   //   if (errors.length) {
   //     console.log(errors)
   //     setNotificationElement(errors.map((error, index) => {
@@ -95,18 +101,22 @@ const AddProject = () => {
 
   const stepChangeHandler = () => {
     if (step < 2) {
+      console.log(validate.addressInput, 'address')
+      console.log(validate.mobileInput, 'mobile input')
       if (validate.addressInput && validate.mobileInput) {
         setStep(step + 1);
         console.log("step changed", step);
       }
     }
     if (step < 3) {
+      console.log(validate.buildingInput)
       if (validate.buildingInput) {
         setStep(step + 1);
         console.log("step changed", step);
       }
     }
     if (step < 4) {
+      console.log(validate.objectInput)
       if (validate.objectInput) {
         setStep(step + 1);
         console.log("step changed", step);
