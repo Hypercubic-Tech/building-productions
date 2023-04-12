@@ -4,6 +4,68 @@ import { useState } from "react";
 function RegModal(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formError, setFormError] = useState("");
+
+  //
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("Email:", email);
+    console.log("Password:", password);
+
+    // perform client-side validation before submitting form
+    const emailValidationResult = validateEmail(email);
+    const passwordValidationResult = validatePassword(password);
+
+    if (!emailValidationResult.isValid) {
+      setFormError(emailValidationResult.message);
+      return;
+    }
+
+    if (!passwordValidationResult.isValid) {
+      setFormError(passwordValidationResult.message);
+      return;
+    }
+
+    // send form data to server for server-side validation
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password, confirmPassword }),
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      // handle successful registration
+    } else {
+      setFormError(result.message);
+    }
+  };
+
+  const validateEmail = (value) => {
+    // validate email format
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(value)) {
+      return { isValid: false, message: "Please enter a valid email address" };
+    }
+
+    return { isValid: true };
+  };
+
+  const validatePassword = (value) => {
+    // validate password length
+    if (value.length < 6) {
+      return {
+        isValid: false,
+        message: "Password must be at least 6 characters long",
+      };
+    }
+
+    return { isValid: true };
+  };
+
+  //
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -13,11 +75,6 @@ function RegModal(props) {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
   return (
     <div className={`${styles.container}`}>
       <form onSubmit={handleSubmit}>

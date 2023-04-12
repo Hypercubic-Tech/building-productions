@@ -21,7 +21,6 @@ function DefaultHeader() {
 
   const handleClose = () => {
     setShowAuthModal(false);
-    console.log("dsfsdf");
   };
 
   const handleOutsideClick = (event) => {
