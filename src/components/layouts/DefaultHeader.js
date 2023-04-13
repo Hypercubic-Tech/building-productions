@@ -18,7 +18,6 @@ function DefaultHeader() {
 
   const animation = useSpring({
     opacity: showAuthModal ? 1 : 0,
-    transform: showAuthModal ? "translateY(0)" : "translateY(-100%)",
   });
 
   const handleAuthClick = () => {
