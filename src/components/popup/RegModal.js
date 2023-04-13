@@ -1,16 +1,43 @@
 import styles from "../popup/RegModal.module.css";
 import { useState } from "react";
+import axios from "../../pages/api/axios";
 
 function RegModal(props) {
   const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
 
+  const handleNameChange = (event) => {
+    setFullName(event.target.value);
+  };
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!email || !password || !fullName) {
+      console.log("Please fill all fields");
+    } else {
+      await axios
+        .post("/api/register", {
+          email,
+          password,
+          fullName,
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    }
+    console.log("Email:", email);
+    console.log("Password:", password);
+    console.log("name", fullName);
   };
 
   return (
@@ -49,6 +76,19 @@ function RegModal(props) {
                 </g>
               </g>
             </svg>
+          </div>
+          <div className="d-grid gap-2 mt-n1">
+            <label className="mt-2">Full name</label>
+            <input
+              autoComplete="username"
+              required
+              id="full-name"
+              className="form-control"
+              placeholder="Your name"
+              type="text"
+              value={fullName}
+              onChange={handleNameChange}
+            />
           </div>
           <div className="d-grid gap-2 mt-n1">
             <label className="mt-2">Email:</label>
