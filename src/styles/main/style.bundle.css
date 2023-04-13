@@ -48982,6 +48982,9 @@ body {
   background-color: #fff;
   border: 0;
 }
-.header-bg{
+.header-bg {
   background-color: #12263c;
+}
+.modal {
+  display: flex !important;
 }
