@@ -1,10 +1,4 @@
-import { useState } from "react";
-
-import HeaderPopup from "../popup/HeaderPopup";
-import styles from "../../styles/main/heading/Heading.module.css";
-
 const Heading = () => {
-  const [headerPopup, setHeaderPopup] = useState(false);
   return (
     <div className="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9">
       <div className="text-center mb-5 mb-lg-10 py-10 py-lg-20">
@@ -130,13 +124,6 @@ const Heading = () => {
             alt=""
           />
         </div>
-      </div>
-      <button onClick={() => setHeaderPopup(true)}>
-        {" "}
-        #### TEMPORARY BTN ####{" "}
-      </button>
-      <div style={{ display: headerPopup ? "block" : "none", width: "100%" }}>
-        <HeaderPopup />
       </div>
     </div>
   );
