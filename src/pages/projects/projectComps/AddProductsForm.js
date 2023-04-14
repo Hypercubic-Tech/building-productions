@@ -12,13 +12,15 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
         quantity: '',
         total: '',
         img: null
-    })
+    });
+
+    const handleSubmit = () => {
+        console.log(formData);
+        setSelect(null);
+    };
 
     return (
         <form
-            onSubmit={(e) => {
-                e.preventDefault();
-            }}
             id="kt_modal_add_user_form"
             className="form"
         >
@@ -218,11 +220,11 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
                 >
                     Discard
                 </button>
-                <button
+                <div
                     onClick={() => { 
-                        setSelect(null)
-                        pushTempArray(formData)
-                     }}
+                        setFormData((formData) => ({ ...formData, total: Number(price * quantity) }));
+                        handleSubmit();
+                    }}
                     type="submit"
                     className="btn btn-primary"
                     data-kt-users-modal-action="submit"
@@ -230,7 +232,7 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
                     <span className="indicator-label">
                         Submit
                     </span>
-                </button>
+                </div>
             </div>
         </form>
     );

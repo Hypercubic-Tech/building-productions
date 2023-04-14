@@ -10,6 +10,7 @@ const productsData = [
         unit: 'ცალი',
         price: 3.5,
         quantity: 34,
+        total: 50,
         img: "assets/media/avatars/150-1.png"
     }
 ];

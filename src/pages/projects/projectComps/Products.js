@@ -74,7 +74,7 @@ const Products = ({ProductData}) => {
                             <td className="georgian">{product.quantity}</td>
                             <td className="georgian">{product.price}</td>
                             <td className="georgian">
-                            <b>{Number(product.price) * Number(product.quantity)}</b>
+                            <b>{ Number(product.total)}</b>
                             </td>
                             <td className="text-end">
                             <div className="menu-item px-3">
