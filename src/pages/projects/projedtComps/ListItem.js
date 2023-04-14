@@ -4,11 +4,12 @@ import AddProductHandler from "./AddProductsForm";
 
 const productsData = [
     {
-        title: 'shეჯჯლექტრო სადენი მრავალწვერიანი 3X2.5',
+        title: 'სადენი მრავალწვერიანი 3X2.5',
         address: '',
-        seler: 'გორგია / ნოვა',
-        count: '420 ლარი',
-        price: '3.5h0 ლარი',
+        seler: 'გორგია',
+        unit: 'ცალი',
+        price: 3.5,
+        quantity: 34,
         img: "assets/media/avatars/150-1.png"
     }
 ];

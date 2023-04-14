@@ -1,12 +1,15 @@
 import { useState } from "react";
 
 const AddProductForm = ({setSelect, pushTempArray}) => {
+    const [price, setPrice] = useState(0);
+    const [quantity, setQuantity] = useState(0);
     const [formData, setFormData] = useState({
         title: '',
         address: '',
         seler: '',
-        prise: '',
-        count: '',
+        price: '',
+        unit: '',
+        quantity: '',
         total: '',
         img: null
     })
@@ -15,7 +18,6 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
         <form
             onSubmit={(e) => {
                 e.preventDefault();
-                console.log(formData)
             }}
             id="kt_modal_add_user_form"
             className="form"
@@ -158,7 +160,11 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
                             რაოდენობა
                         </label>
                         <input
-                            type="text"
+                            onChange={(e) => {
+                                setFormData((formData) => ({ ...formData, quantity: Number(e.target.value) }))
+                                setQuantity(e.target.value)
+                            }}
+                            type="number"
                             className="form-control form-control-solid georgian"
                             placeholder="პრო: რაოდენობა"
                             name="quantity"
@@ -171,7 +177,7 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
                         </label>
                         <select
                             onClick={(e) => {
-                                setFormData((formData) => ({ ...formData, count: e.target.value }))
+                                setFormData((formData) => ({ ...formData, unit: e.target.value }))
                             }}
                             name="count"
                             className="form-select form-select-solid georgian"
@@ -190,13 +196,14 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
                             ღირეულება
                         </label>
                         <input
-                            onClick={(e) => {
-                                setFormData((formData) => ({ ...formData, prise: e.target.value }))
+                            onChange={(e) => {
+                                setFormData((formData) => ({ ...formData, price: Number(e.target.value) }))
+                                setPrice(e.target.value)
                             }}
                             type="number"
                             className="form-control form-control-solid georgian"
                             placeholder="პროდ: ღირებულება"
-                            name="prise"
+                            name="price"
                         />
                         <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
@@ -222,10 +229,6 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
                 >
                     <span className="indicator-label">
                         Submit
-                    </span>
-                    <span className="indicator-progress">
-                        Please wait...
-                        <span className="spinner-border spinner-border-sm align-middle ms-2" />
                     </span>
                 </button>
             </div>

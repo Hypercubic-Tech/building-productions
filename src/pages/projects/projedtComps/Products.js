@@ -53,7 +53,7 @@ const Products = ({ProductData}) => {
                                 <a href="https://www.domino.com.ge/products/electrical-goods/cables-and-wires/cable-wire/%E1%83%99%E1%83%90%E1%83%91%E1%83%94%E1%83%9A%E1%83%98-sakcable-%E1%83%9E%E1%83%A3%E1%83%9C%E1%83%9E-3x2.5-h03vvh2-u-h05vvh2-u/">
                                 <div className="symbol-label georgian">
                                     <img
-                                    src={product.img}
+                                    // src={`./assets/media/avatars/ ${product.img}`}
                                     alt="ელექტრო სადენი მრავალწვერიანი 3X2.5"
                                     className="w-100"
                                     />
@@ -70,12 +70,11 @@ const Products = ({ProductData}) => {
                                 <span>{product.seler}</span>
                             </div>
                             </td>
-                            <td className="georgian">{product.count}</td>
-                            <td className="georgian">
-                            </td>
+                            <td className="georgian">{product.unit}</td>
+                            <td className="georgian">{product.quantity}</td>
                             <td className="georgian">{product.price}</td>
                             <td className="georgian">
-                            <b>{product.address}</b>
+                            <b>{Number(product.price) * Number(product.quantity)}</b>
                             </td>
                             <td className="text-end">
                             <div className="menu-item px-3">
