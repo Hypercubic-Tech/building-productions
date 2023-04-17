@@ -4,11 +4,6 @@ const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
-  const [errors, setErrors] = useState({
-      stepOne: [],
-      stepTwo: [],
-      stepThree: [],
-  })
   const [sendData, setSendData] = useState([
     {
       kategoria: {
@@ -29,40 +24,65 @@ const AddProject = ({ dismiss }) => {
     },
   ]);
 
-  
-
+  let errors = {
+    stepOne: [],
+    stepTwo: [],
+    stepThree: [],
+  };
   const validationHandler = () => {
-
     if (sendData[0].kategoria.qonebisTipi === "") {
-      setErrors.stepOne.push("შეავსეთ ქონების ტიპი");
+      errors.stepOne.push("შეავსეთ ქონების ტიპი")
+      // setErrors((prevState) => ({
+      //   ...prevState,
+      //   stepOne: [...prevState.stepOne, "შეავსეთ ქონების ტიპი"],
+      // }));
     }
     if (sendData[0].kategoria.qalaqi === "") {
-      setErrors.stepOne.push("შეავსეთ ქალაქი");
+      errors.stepOne.push("მონიშნეთ ქალაქი")
+      // setErrors((prevState) => ({
+      //   ...prevState,
+      //   stepOne: [...prevState.stepOne, "მონიშნეთ ქალაქი"],
+      // }));
     }
     if (sendData[0].kategoria.raioni === "") {
-      setErrors.stepOne.push("შეავსეთ რაიონი");
+      errors.stepOne.push("მონიშნეთ რაიონი")
+
+      // setErrors((prevState) => ({
+      //   ...prevState,
+      //   stepOne: [...prevState.stepOne, "მონიშნეთ რაიონი"],
+      // }));
     }
     if (sendData[0].kategoria.misamarti === "") {
-      setErrors.stepOne.push("შეავსეთ ზუსტი მისამართი");
+      errors.stepOne.push("შეავსეთ მისამართი")
+
+      // setErrors((prevState) => ({
+      //   ...prevState,
+      //   stepOne: [...prevState.stepOne, "შეავსეთ ზუსტი მისამართი"],
+      // }));
     }
     if (sendData[0].kategoria.telefoni === "") {
-      setErrors.stepOne.push("შეავსეთ მობილურის ნომერი");
+      errors.stepOne.push("შეავსეთ ტელეფონის ნომერი")
+
+      // setErrors((prevState) => ({
+      //   ...prevState,
+      //   stepOne: [...prevState.stepOne, "შეავსეთ მობილურის ნომერი"],
+      // }));
     }
-    // end of step one
+    // // end of step one
 
     if (sendData[0].mdgomareoba.arsebuliMdgomareoba.length === 0) {
-      setErrors.stepTwo.push("მონიშნეთ არსებული მდგომარეობა");
+      errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა")
     }
     if (sendData[0].mdgomareoba.mdgomareoba.length === 0) {
-      setErrors.stepTwo.push("მონიშნეთ მდგომარეობა");
+      errors.stepTwo.push("მონიშნეთ მდგომეროება")
     }
     // end of step two
 
     if (sendData[0].samushaoebi.obieqtisDasaxeleba === "") {
-      setErrors.stepThree.push("შეავსეთ ობიექტის დასახელება");
+      errors.stepThree.push("შეავსეთ ობიექტის დასახელება")
     }
     if (sendData[0].samushaoebi.shesasrulebeliSamushaoebi.length === 0) {
-      setErrors.stepThree.push("მონიშნეთ შესრულებული სამუშაოები");
+      errors.stepThree.push("მონიშნეთ შესასრულებელი სამუშაოები")
     }
     // end of step three
 
@@ -81,43 +101,16 @@ const AddProject = ({ dismiss }) => {
 
   const stepChangeHandler = () => {
     if (step < 4) {
-      if(errors.stepOne.length === 0) {
+      if (errors.stepOne.length === 0) {
         setStep(step + 1);
+        if (errors.stepTwo.length === 0) {
+          setStep(step + 1);
+          if (errors.stepThree.length === 0) {
+            setStep(step + 1);
+          }
+        }
       }
-      
-      // if (validate.stepOne.status) {
-      //   setStep(step + 1);
-      //   if (validate.stepTwo.status) {
-      //     setStep(step + 1);
-      //   }
-      //   console.log(validate.stepTwo.status, 's2 status')
-      // }
-      // console.log(validate.stepOne.addressInput, "address");
-      // console.log(validate.stepOne.mobileInput, "mobile");
-      // console.log(validate.stepOne.status, "status");
     }
-    // if (step < 2) {
-    //   console.log(validate.addressInput, 'address')
-    //   console.log(validate.mobileInput, 'mobile input')
-    //   if (validate.addressInput && validate.mobileInput) {
-    //     setStep(step + 1);
-    //     console.log("step changed", step);
-    //   }
-    // }
-    // if (step < 3) {
-    //   console.log(validate.buildingInput)
-    //   if (validate.buildingInput) {
-    //     setStep(step + 1);
-    //     console.log("step changed", step);
-    //   }
-    // }
-    // if (step < 4) {
-    //   console.log(validate.objectInput)
-    //   if (validate.objectInput) {
-    //     setStep(step + 1);
-    //     console.log("step changed", step);
-    //   }
-    // }
   };
 
   const prevStepHandler = () => {
