@@ -32,6 +32,7 @@ function AuthModal(props) {
       let data = res.data;
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('email', data.email);
+      localStorage.setItem('role', data.role);
     });
   };
 
