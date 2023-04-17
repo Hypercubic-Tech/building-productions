@@ -1,22 +1,14 @@
 import { useState } from "react";
 
-const AddProject = ({dismiss}) => {
+const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
-  const [validate, setValidate] = useState({
-    stepOne : {
-      addressInput: false,
-      mobileInput: false,
-      status: false
-    },
-    stepTwo : {
-      buildingInput: false,
-      objectInput: false,
-      status: false,
-    },
-
-  });
+  const [errors, setErrors] = useState({
+      stepOne: [],
+      stepTwo: [],
+      stepThree: [],
+  })
   const [sendData, setSendData] = useState([
     {
       kategoria: {
@@ -37,24 +29,44 @@ const AddProject = ({dismiss}) => {
     },
   ]);
 
-  const validationHandler = (event) => {
-    const addressInput = document.getElementById("input-validation-address");
-    const mobileInput = document.getElementById("input-validation-mobile");
-    const buildingInput = document.getElementById("input-validation-building");
-    const objectInput = document.getElementById("input-validation-object");
-    let errors = [];
-
-    if (addressInput.value === "" || addressInput.value === null) {
-      setValidate((prev) => ({ ...prev, addressInput: false }));
-      errors.push("შეავსეთ მისამართი"); 
-    } 
-    if (mobileInput.value === "") {
-      setValidate((prev) => ({ ...prev, mobileInput: false }));
-      errors.push("შეავსეთ მობილური ნომერი");
-    } 
   
-    console.log(errors, 'erros')
- 
+
+  const validationHandler = () => {
+
+    if (sendData[0].kategoria.qonebisTipi === "") {
+      setErrors.stepOne.push("შეავსეთ ქონების ტიპი");
+    }
+    if (sendData[0].kategoria.qalaqi === "") {
+      setErrors.stepOne.push("შეავსეთ ქალაქი");
+    }
+    if (sendData[0].kategoria.raioni === "") {
+      setErrors.stepOne.push("შეავსეთ რაიონი");
+    }
+    if (sendData[0].kategoria.misamarti === "") {
+      setErrors.stepOne.push("შეავსეთ ზუსტი მისამართი");
+    }
+    if (sendData[0].kategoria.telefoni === "") {
+      setErrors.stepOne.push("შეავსეთ მობილურის ნომერი");
+    }
+    // end of step one
+
+    if (sendData[0].mdgomareoba.arsebuliMdgomareoba.length === 0) {
+      setErrors.stepTwo.push("მონიშნეთ არსებული მდგომარეობა");
+    }
+    if (sendData[0].mdgomareoba.mdgomareoba.length === 0) {
+      setErrors.stepTwo.push("მონიშნეთ მდგომარეობა");
+    }
+    // end of step two
+
+    if (sendData[0].samushaoebi.obieqtisDasaxeleba === "") {
+      setErrors.stepThree.push("შეავსეთ ობიექტის დასახელება");
+    }
+    if (sendData[0].samushaoebi.shesasrulebeliSamushaoebi.length === 0) {
+      setErrors.stepThree.push("მონიშნეთ შესრულებული სამუშაოები");
+    }
+    // end of step three
+
+    console.log(errors);
   };
 
   const getStatusClass = (stepIndex) => {
@@ -68,8 +80,21 @@ const AddProject = ({dismiss}) => {
   };
 
   const stepChangeHandler = () => {
-    if(step < 2 ) {
-
+    if (step < 4) {
+      if(errors.stepOne.length === 0) {
+        setStep(step + 1);
+      }
+      
+      // if (validate.stepOne.status) {
+      //   setStep(step + 1);
+      //   if (validate.stepTwo.status) {
+      //     setStep(step + 1);
+      //   }
+      //   console.log(validate.stepTwo.status, 's2 status')
+      // }
+      // console.log(validate.stepOne.addressInput, "address");
+      // console.log(validate.stepOne.mobileInput, "mobile");
+      // console.log(validate.stepOne.status, "status");
     }
     // if (step < 2) {
     //   console.log(validate.addressInput, 'address')
@@ -126,7 +151,6 @@ const AddProject = ({dismiss}) => {
     setClose(true);
   };
 
-  // console.log(notificationElement);
   return (
     <div
       style={{ display: close ? "none" : "" }}
@@ -277,8 +301,9 @@ const AddProject = ({dismiss}) => {
                               },
                             },
                           ]);
-                          //
+                          // validationHandler;
                         }}
+                        onBlur={validationHandler}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
                         <option value={"ბინა"}>ბინა</option>
@@ -298,7 +323,7 @@ const AddProject = ({dismiss}) => {
                         <div className="row fv-row">
                           <div className="col-6">
                             <select
-                              onChange={(event) =>
+                              onChange={(event) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
@@ -313,8 +338,10 @@ const AddProject = ({dismiss}) => {
                                       ...prevSendData[0].samushaoebi,
                                     },
                                   },
-                                ])
-                              }
+                                ]);
+                                // validationHandler;
+                              }}
+                              onBlur={validationHandler}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
@@ -330,7 +357,7 @@ const AddProject = ({dismiss}) => {
                           </div>
                           <div className="col-6">
                             <select
-                              onChange={(event) =>
+                              onChange={(event) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
@@ -345,8 +372,10 @@ const AddProject = ({dismiss}) => {
                                       ...prevSendData[0].samushaoebi,
                                     },
                                   },
-                                ])
-                              }
+                                ]);
+                                // validationHandler;
+                              }}
+                              onBlur={validationHandler}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
@@ -403,10 +432,9 @@ const AddProject = ({dismiss}) => {
                                     },
                                   },
                                 ]);
-                                // $$$$ 
-                                setValidate((prev) => ({ ...prev, addressInput: true }));
-                                // validationHandler();
+                                // validationHandler;
                               }}
+                              onBlur={validationHandler}
                               type="text"
                               className="form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
@@ -431,9 +459,9 @@ const AddProject = ({dismiss}) => {
                                     },
                                   },
                                 ]);
-                                setValidate((prev) => ({ ...prev, mobileInput: true }));
-                                // $$$
+                                // validationHandler;
                               }}
+                              onBlur={validationHandler}
                               type="number"
                               className="form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
@@ -444,7 +472,7 @@ const AddProject = ({dismiss}) => {
                     </div>
                   </div>
                 </div>
-
+                {/* STEP */}
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -513,12 +541,15 @@ const AddProject = ({dismiss}) => {
                                     },
                                   },
                                 ]);
-                                validationHandler();
-                                setValidate((prev) => ({
-                                  ...prev,
-                                  buildingInput: true,
-                                }));
+                                // setValidate((prev) => ({
+                                //   ...prev,
+                                //   stepTwo: {
+                                //     ...prev.stepTwo,
+                                //     buildingInput: true,
+                                //   },
+                                // }));
                               }}
+                              onBlur={validationHandler}
                               className="form-check-input"
                               type="radio"
                               name="category"
@@ -612,12 +643,15 @@ const AddProject = ({dismiss}) => {
                                     },
                                   },
                                 ]);
-                                validationHandler();
-                                setValidate((prev) => ({
-                                  ...prev,
-                                  buildingInput: true,
-                                }));
+                                // setValidate((prev) => ({
+                                //   ...prev,
+                                //   stepTwo: {
+                                //     ...prev.stepTwo,
+                                //     buildingInput: true,
+                                //   },
+                                // }));
                               }}
+                              onBlur={validationHandler}
                               className="form-check-input"
                               type="radio"
                               name="category"
@@ -675,6 +709,7 @@ const AddProject = ({dismiss}) => {
                                 },
                               ])
                             }
+                            onBlur={validationHandler}
                             className="form-check-input"
                             type="radio"
                             defaultChecked="checked"
@@ -719,6 +754,7 @@ const AddProject = ({dismiss}) => {
                                 },
                               ])
                             }
+                            onBlur={validationHandler}
                             className="form-check-input"
                             type="radio"
                             name="framework"
@@ -762,6 +798,7 @@ const AddProject = ({dismiss}) => {
                                 },
                               ])
                             }
+                            onBlur={validationHandler}
                             className="form-check-input"
                             type="radio"
                             name="framework"
@@ -800,8 +837,9 @@ const AddProject = ({dismiss}) => {
                               },
                             },
                           ]);
-                          validationHandler();
+                          // validationHandler;
                         }}
+                        onBlur={validationHandler}
                         type="text"
                         className="form-control georgian form-control-lg form-control-solid"
                         name="dbname"
@@ -819,6 +857,7 @@ const AddProject = ({dismiss}) => {
                             <div className="d-flex flex-column">
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -833,6 +872,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -847,6 +887,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -858,6 +899,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -872,6 +914,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -883,6 +926,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -901,6 +945,7 @@ const AddProject = ({dismiss}) => {
                             <div className="d-flex flex-column">
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -915,6 +960,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -929,6 +975,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -943,6 +990,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -957,6 +1005,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -971,6 +1020,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
@@ -985,6 +1035,7 @@ const AddProject = ({dismiss}) => {
                               </div>
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
+                                  onBlur={validationHandler}
                                   onChange={handleCheckboxChange}
                                   className="form-check-input"
                                   type="checkbox"
