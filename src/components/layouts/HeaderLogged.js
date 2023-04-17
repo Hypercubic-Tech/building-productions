@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 
 import HeaderPopup from "../popup/HeaderPopup";
+import axiosInstance from "@/pages/api/axios";
 
 import styles from "../layouts/HeaderLogged.module.css";
 
@@ -42,6 +43,16 @@ function HeaderLogged() {
     } else {
       setPopup(false);
     }
+  };
+
+  const handleLogout = () => {
+    console.log('hi')
+    axiosInstance.get('/api/logout', {
+      email: localStorage.getItem('email')
+    })
+    .then(res => {
+      console.log(res)
+    });
   };
 
   return (
@@ -267,10 +278,9 @@ function HeaderLogged() {
                 <animated.div
                   className="modal"
                   style={animation}
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <div ref={ref} className={`${styles.modalWindow}`}>
-                    <div className={styles.hover}>გამოსვლა</div>
+                    <div onClick={() => handleLogout} className={styles.hover}>გამოსვლა</div>
                     <svg
                       onClick={closeModal}
                       className={styles.closeBtn}

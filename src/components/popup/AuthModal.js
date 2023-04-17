@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "../popup/AuthModal.module.css";
 import RegModal from "./RegModal";
+import axiosInstance from "@/pages/api/axios";
 
 function AuthModal(props) {
   const [showRegModal, setShowRegModal] = useState(false);
@@ -23,6 +24,16 @@ function AuthModal(props) {
     event.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
+    axiosInstance.post("/api/login", {
+      email,
+      password
+    })
+    .then(res => {
+      let data = res.data;
+      localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('email', data.email);
+      localStorage.setItem('role', data.role);
+    });
   };
 
   return (
