@@ -3,8 +3,8 @@ import { useState } from "react";
 import axios from "../../pages/api/axios";
 
 function RegModal(props) {
-  const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleEmailChange = (event) => {
@@ -22,19 +22,22 @@ function RegModal(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!email || !password || !fullName) {
-      console.log("Please fill all fields");
+    const { email, password, fullName } = event.target.elements;
+
+    if (!fullName.value || !email.value || !password.value) {
     } else {
-      await axios
-        .post("/api/register", {
-          email,
-          password,
-          fullName,
-        })
-        .then((res) => {
-          console.log(res);
+      try {
+        const response = await axios.post("/api/register", {
+          email: email.value,
+          password: password.value,
+          fullName: fullName.value,
         });
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
     }
+
     console.log("Email:", email);
     console.log("Password:", password);
     console.log("name", fullName);
@@ -82,7 +85,7 @@ function RegModal(props) {
             <input
               autoComplete="username"
               required
-              id="full-name"
+              id="fullName"
               className="form-control"
               placeholder="Your name"
               type="text"
@@ -93,7 +96,7 @@ function RegModal(props) {
           <div className="d-grid gap-2 mt-n1">
             <label className="mt-2">Email:</label>
             <input
-              autoComplete="username"
+              autoComplete="email"
               required
               id="email"
               className="form-control"
