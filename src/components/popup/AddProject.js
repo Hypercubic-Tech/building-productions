@@ -4,22 +4,23 @@ const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
+
   const [sendData, setSendData] = useState([
     {
-      kategoria: {
-        qonebisTipi: "",
-        qalaqi: "",
-        raioni: "",
-        misamarti: "",
-        telefoni: "",
+      category: {
+        propertyType: "",
+        city: "",
+        district: "",
+        address: "",
+        phone: "",
       },
-      mdgomareoba: {
-        mdgomareoba: [],
-        arsebuliMdgomareoba: [],
+      condition: {
+        condition: [],
+        currentCondition: [],
       },
-      samushaoebi: {
-        obieqtisDasaxeleba: "",
-        shesasrulebeliSamushaoebi: [],
+      works: {
+        objectName: "",
+        worksToDo: [],
       },
     },
   ]);
@@ -30,59 +31,36 @@ const AddProject = ({ dismiss }) => {
     stepThree: [],
   };
   const validationHandler = () => {
-    if (sendData[0].kategoria.qonebisTipi === "") {
-      errors.stepOne.push("შეავსეთ ქონების ტიპი")
-      // setErrors((prevState) => ({
-      //   ...prevState,
-      //   stepOne: [...prevState.stepOne, "შეავსეთ ქონების ტიპი"],
-      // }));
+    if (sendData[0].category.propertyType === "") {
+      errors.stepOne.push("შეავსეთ ქონების ტიპი");
     }
-    if (sendData[0].kategoria.qalaqi === "") {
-      errors.stepOne.push("მონიშნეთ ქალაქი")
-      // setErrors((prevState) => ({
-      //   ...prevState,
-      //   stepOne: [...prevState.stepOne, "მონიშნეთ ქალაქი"],
-      // }));
+    if (sendData[0].category.city === "") {
+      errors.stepOne.push("მონიშნეთ ქალაქი");
     }
-    if (sendData[0].kategoria.raioni === "") {
-      errors.stepOne.push("მონიშნეთ რაიონი")
-
-      // setErrors((prevState) => ({
-      //   ...prevState,
-      //   stepOne: [...prevState.stepOne, "მონიშნეთ რაიონი"],
-      // }));
+    if (sendData[0].category.district === "") {
+      errors.stepOne.push("მონიშნეთ რაიონი");
     }
-    if (sendData[0].kategoria.misamarti === "") {
-      errors.stepOne.push("შეავსეთ მისამართი")
-
-      // setErrors((prevState) => ({
-      //   ...prevState,
-      //   stepOne: [...prevState.stepOne, "შეავსეთ ზუსტი მისამართი"],
-      // }));
+    if (sendData[0].category.address === "") {
+      errors.stepOne.push("შეავსეთ მისამართი");
     }
-    if (sendData[0].kategoria.telefoni === "") {
-      errors.stepOne.push("შეავსეთ ტელეფონის ნომერი")
-
-      // setErrors((prevState) => ({
-      //   ...prevState,
-      //   stepOne: [...prevState.stepOne, "შეავსეთ მობილურის ნომერი"],
-      // }));
+    if (sendData[0].category.phone === "") {
+      errors.stepOne.push("შეავსეთ ტელეფონის ნომერი");
     }
     // // end of step one
 
-    if (sendData[0].mdgomareoba.arsebuliMdgomareoba.length === 0) {
-      errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა")
+    if (sendData[0].condition.currentCondition.length === 0) {
+      errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა");
     }
-    if (sendData[0].mdgomareoba.mdgomareoba.length === 0) {
-      errors.stepTwo.push("მონიშნეთ მდგომეროება")
+    if (sendData[0].condition.condition.length === 0) {
+      errors.stepTwo.push("მონიშნეთ მდგომეროება");
     }
     // end of step two
 
-    if (sendData[0].samushaoebi.obieqtisDasaxeleba === "") {
-      errors.stepThree.push("შეავსეთ ობიექტის დასახელება")
+    if (sendData[0].works.objectName === "") {
+      errors.stepThree.push("შეავსეთ ობიექტის დასახელება");
     }
-    if (sendData[0].samushaoebi.shesasrulebeliSamushaoebi.length === 0) {
-      errors.stepThree.push("მონიშნეთ შესასრულებელი სამუშაოები")
+    if (sendData[0].works.worksToDo.length === 0) {
+      errors.stepThree.push("მონიშნეთ შესასრულებელი სამუშაოები");
     }
     // end of step three
 
@@ -125,13 +103,13 @@ const AddProject = ({ dismiss }) => {
     setSendData((prevState) => {
       const newData = JSON.parse(JSON.stringify(prevState));
       if (checked) {
-        newData[0].samushaoebi.shesasrulebeliSamushaoebi = [
-          ...newData[0].samushaoebi.shesasrulebeliSamushaoebi,
+        newData[0].works.worksToDo = [
+          ...newData[0].works.worksToDo,
           value,
         ];
       } else {
-        newData[0].samushaoebi.shesasrulebeliSamushaoebi =
-          newData[0].samushaoebi.shesasrulebeliSamushaoebi.filter(
+        newData[0].works.worksToDo =
+          newData[0].works.worksToDo.filter(
             (val) => val !== value
           );
       }
@@ -282,15 +260,15 @@ const AddProject = ({ dismiss }) => {
                           setSendData((prevSendData) => [
                             {
                               ...prevSendData[0],
-                              kategoria: {
-                                ...prevSendData[0].kategoria,
-                                qonebisTipi: event.target.value,
+                              category: {
+                                ...prevSendData[0].category,
+                                propertyType: event.target.value,
                               },
-                              mdgomareoba: {
-                                ...prevSendData[0].mdgomareoba,
+                              condition: {
+                                ...prevSendData[0].condition,
                               },
-                              samushaoebi: {
-                                ...prevSendData[0].samushaoebi,
+                              works: {
+                                ...prevSendData[0].works,
                               },
                             },
                           ]);
@@ -320,15 +298,15 @@ const AddProject = ({ dismiss }) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
-                                      qalaqi: event.target.value,
+                                    category: {
+                                      ...prevSendData[0].category,
+                                      city: event.target.value,
                                     },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
+                                    condition: {
+                                      ...prevSendData[0].condition,
                                     },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
+                                    works: {
+                                      ...prevSendData[0].works,
                                     },
                                   },
                                 ]);
@@ -354,15 +332,15 @@ const AddProject = ({ dismiss }) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
-                                      raioni: event.target.value,
+                                    category: {
+                                      ...prevSendData[0].category,
+                                      district: event.target.value,
                                     },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
+                                    condition: {
+                                      ...prevSendData[0].condition,
                                     },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
+                                    works: {
+                                      ...prevSendData[0].works,
                                     },
                                   },
                                 ]);
@@ -413,15 +391,15 @@ const AddProject = ({ dismiss }) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
-                                      misamarti: event.target.value,
+                                    category: {
+                                      ...prevSendData[0].category,
+                                      address: event.target.value,
                                     },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
+                                    condition: {
+                                      ...prevSendData[0].condition,
                                     },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
+                                    works: {
+                                      ...prevSendData[0].works,
                                     },
                                   },
                                 ]);
@@ -440,15 +418,15 @@ const AddProject = ({ dismiss }) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
-                                      telefoni: event.target.value,
+                                    category: {
+                                      ...prevSendData[0].category,
+                                      phone: event.target.value,
                                     },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
+                                    condition: {
+                                      ...prevSendData[0].condition,
                                     },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
+                                    works: {
+                                      ...prevSendData[0].works,
                                     },
                                   },
                                 ]);
@@ -522,15 +500,15 @@ const AddProject = ({ dismiss }) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
+                                    category: {
+                                      ...prevSendData[0].category,
                                     },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
-                                      mdgomareoba: event.target.value,
+                                    condition: {
+                                      ...prevSendData[0].condition,
+                                      condition: event.target.value,
                                     },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
+                                    works: {
+                                      ...prevSendData[0].works,
                                     },
                                   },
                                 ]);
@@ -624,15 +602,15 @@ const AddProject = ({ dismiss }) => {
                                 setSendData((prevSendData) => [
                                   {
                                     ...prevSendData[0],
-                                    kategoria: {
-                                      ...prevSendData[0].kategoria,
+                                    category: {
+                                      ...prevSendData[0].category,
                                     },
-                                    mdgomareoba: {
-                                      ...prevSendData[0].mdgomareoba,
-                                      mdgomareoba: event.target.value,
+                                    condition: {
+                                      ...prevSendData[0].condition,
+                                      condition: event.target.value,
                                     },
-                                    samushaoebi: {
-                                      ...prevSendData[0].samushaoebi,
+                                    works: {
+                                      ...prevSendData[0].works,
                                     },
                                   },
                                 ]);
@@ -689,15 +667,15 @@ const AddProject = ({ dismiss }) => {
                               setSendData((prevSendData) => [
                                 {
                                   ...prevSendData[0],
-                                  kategoria: {
-                                    ...prevSendData[0].kategoria,
+                                  category: {
+                                    ...prevSendData[0].category,
                                   },
-                                  mdgomareoba: {
-                                    ...prevSendData[0].mdgomareoba,
-                                    arsebuliMdgomareoba: event.target.value,
+                                  condition: {
+                                    ...prevSendData[0].condition,
+                                    currentCondition: event.target.value,
                                   },
-                                  samushaoebi: {
-                                    ...prevSendData[0].samushaoebi,
+                                  works: {
+                                    ...prevSendData[0].works,
                                   },
                                 },
                               ])
@@ -734,15 +712,15 @@ const AddProject = ({ dismiss }) => {
                               setSendData((prevSendData) => [
                                 {
                                   ...prevSendData[0],
-                                  kategoria: {
-                                    ...prevSendData[0].kategoria,
+                                  category: {
+                                    ...prevSendData[0].category,
                                   },
-                                  mdgomareoba: {
-                                    ...prevSendData[0].mdgomareoba,
-                                    arsebuliMdgomareoba: event.target.value,
+                                  condition: {
+                                    ...prevSendData[0].condition,
+                                    currentCondition: event.target.value,
                                   },
-                                  samushaoebi: {
-                                    ...prevSendData[0].samushaoebi,
+                                  works: {
+                                    ...prevSendData[0].works,
                                   },
                                 },
                               ])
@@ -778,15 +756,15 @@ const AddProject = ({ dismiss }) => {
                               setSendData((prevSendData) => [
                                 {
                                   ...prevSendData[0],
-                                  kategoria: {
-                                    ...prevSendData[0].kategoria,
+                                  category: {
+                                    ...prevSendData[0].category,
                                   },
-                                  mdgomareoba: {
-                                    ...prevSendData[0].mdgomareoba,
-                                    arsebuliMdgomareoba: event.target.value,
+                                  condition: {
+                                    ...prevSendData[0].condition,
+                                    currentCondition: event.target.value,
                                   },
-                                  samushaoebi: {
-                                    ...prevSendData[0].samushaoebi,
+                                  works: {
+                                    ...prevSendData[0].works,
                                   },
                                 },
                               ])
@@ -818,15 +796,15 @@ const AddProject = ({ dismiss }) => {
                           setSendData((prevSendData) => [
                             {
                               ...prevSendData[0],
-                              kategoria: {
-                                ...prevSendData[0].kategoria,
+                              category: {
+                                ...prevSendData[0].category,
                               },
-                              mdgomareoba: {
-                                ...prevSendData[0].mdgomareoba,
+                              condition: {
+                                ...prevSendData[0].condition,
                               },
-                              samushaoebi: {
-                                ...prevSendData[0].samushaoebi,
-                                obieqtisDasaxeleba: event.target.value,
+                              works: {
+                                ...prevSendData[0].works,
+                                objectName: event.target.value,
                               },
                             },
                           ]);
