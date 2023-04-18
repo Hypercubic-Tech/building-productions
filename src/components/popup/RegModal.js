@@ -27,6 +27,7 @@ function RegModal(props) {
     if (!fullName.value || !email.value || !password.value) {
     } else {
       try {
+        console.log(email.value, password.value, fullName.value, "test");
         const response = await axios.post("/api/register", {
           email: email.value,
           password: password.value,
