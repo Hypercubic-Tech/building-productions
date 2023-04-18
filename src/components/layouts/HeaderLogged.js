@@ -1,9 +1,14 @@
-import styles from "../layouts/HeaderLogged.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 
+import HeaderPopup from "../popup/HeaderPopup";
+import axiosInstance from "@/pages/api/axios";
+
+import styles from "../layouts/HeaderLogged.module.css";
+
 function HeaderLogged() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [popup, setPopup] = useState(false);
   const ref = useRef(null);
 
   const animation = useSpring({
@@ -31,6 +36,24 @@ function HeaderLogged() {
   function closeModal() {
     setIsModalOpen(false);
   }
+
+  const popupHandler = () => {
+    if (!popup) {
+      setPopup(true);
+    } else {
+      setPopup(false);
+    }
+  };
+
+  const handleLogout = () => {
+    console.log('hi')
+    axiosInstance.get('/api/logout', {
+      email: localStorage.getItem('email')
+    })
+    .then(res => {
+      console.log(res)
+    });
+  };
 
   return (
     <div
@@ -191,8 +214,8 @@ function HeaderLogged() {
             </div>
             <div className="d-flex align-items-center ms-3 ms-lg-4">
               <div
+                onClick={popupHandler}
                 className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
-                id="kt_activities_toggle"
               >
                 <span className="svg-icon svg-icon-1">
                   <svg
@@ -208,6 +231,11 @@ function HeaderLogged() {
                   </svg>
                 </span>
               </div>
+              {popup && (
+                <div className={styles.popup}>
+                  <HeaderPopup />
+                </div>
+              )}
             </div>
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
@@ -250,10 +278,9 @@ function HeaderLogged() {
                 <animated.div
                   className="modal"
                   style={animation}
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <div ref={ref} className={`${styles.modalWindow}`}>
-                    <div className={styles.hover}>გამოსვლა</div>
+                    <div onClick={() => handleLogout} className={styles.hover}>გამოსვლა</div>
                     <svg
                       onClick={closeModal}
                       className={styles.closeBtn}
