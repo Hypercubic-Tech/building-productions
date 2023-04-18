@@ -30,6 +30,7 @@ const AddProject = ({ dismiss }) => {
     stepTwo: [],
     stepThree: [],
   };
+
   const validationHandler = () => {
     if (sendData[0].category.propertyType === "") {
       errors.stepOne.push("შეავსეთ ქონების ტიპი");
