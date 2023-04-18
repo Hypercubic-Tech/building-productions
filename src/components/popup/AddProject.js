@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axiosInstance from "@/pages/api/axios";
 
 const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
@@ -24,6 +25,22 @@ const AddProject = ({ dismiss }) => {
       },
     },
   ]);
+
+  useEffect(() => {
+    const getDataHandler = async () => {
+      await axiosInstance
+      .get("/api/admin/get_categories", {
+      })
+      .then((res) => {
+        let data = res.data;
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e, "error");
+      });
+    };
+    getDataHandler();
+  }, []);
 
   let errors = {
     stepOne: [],
@@ -104,15 +121,11 @@ const AddProject = ({ dismiss }) => {
     setSendData((prevState) => {
       const newData = JSON.parse(JSON.stringify(prevState));
       if (checked) {
-        newData[0].works.worksToDo = [
-          ...newData[0].works.worksToDo,
-          value,
-        ];
+        newData[0].works.worksToDo = [...newData[0].works.worksToDo, value];
       } else {
-        newData[0].works.worksToDo =
-          newData[0].works.worksToDo.filter(
-            (val) => val !== value
-          );
+        newData[0].works.worksToDo = newData[0].works.worksToDo.filter(
+          (val) => val !== value
+        );
       }
       return newData;
     });
