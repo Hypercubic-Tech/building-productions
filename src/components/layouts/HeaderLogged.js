@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 
 import HeaderPopup from "../popup/HeaderPopup";
-import axiosInstance from "@/pages/api/axios";
+import axiosInstance from "@/api/axios";
 
 import styles from "../layouts/HeaderLogged.module.css";
 
