@@ -136,7 +136,6 @@ const AddProject = ({ dismiss }) => {
     setClose(true);
   };
 
-  console.log(categories, "catacata");
   return (
     <div
       style={{ display: close ? "none" : "" }}
@@ -842,7 +841,6 @@ const AddProject = ({ dismiss }) => {
                           <div className="col-6">
                             <div className="d-flex flex-column">
                               {categories && categories.map((item, index) => {
-                                console.log(item)
                                 return (
                                   <div key={index} className="form-check form-check-custom form-check-solid mb-2">
                                     <input
@@ -850,7 +848,7 @@ const AddProject = ({ dismiss }) => {
                                       onChange={handleCheckboxChange}
                                       className="form-check-input"
                                       type="checkbox"
-                                      defaultValue="დემონტაჟი"
+                                      defaultValue={item.category}
                                     />
                                     <label
                                       onClick={(e) => e.preventDefault()}
