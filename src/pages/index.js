@@ -1,4 +1,4 @@
-import Main from "./main";
+import Main from '@/components/main/Main';
 import { useSelector } from 'react-redux';
 import { selectAuthState, selectAuthAccessToken } from '../store/slices/authSlice';
 
@@ -7,9 +7,5 @@ export default function Home() {
   const access_token = useSelector(selectAuthAccessToken);
   console.log(access_token);
   
-  return (
-    <>
-      <Main />
-    </>
-  );
+  return <Main />;
 }
