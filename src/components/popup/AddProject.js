@@ -30,15 +30,14 @@ const AddProject = ({ dismiss }) => {
   useEffect(() => {
     const getDataHandler = async () => {
       await axiosInstance
-      .get("/api/admin/get_categories", {
-      })
-      .then((res) => {
-        let data = res.data;
-        setCategories(data)
-      })
-      .catch((e) => {
-        console.log(e, "error");
-      });
+        .get("/api/admin/content/get_categories", {})
+        .then((res) => {
+          let data = res.data;
+          setCategories(data);
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
     };
     getDataHandler();
   }, []);
@@ -137,7 +136,7 @@ const AddProject = ({ dismiss }) => {
     setClose(true);
   };
 
-  console.log(categories, 'catacata')
+  console.log(categories, "catacata");
   return (
     <div
       style={{ display: close ? "none" : "" }}
@@ -842,94 +841,31 @@ const AddProject = ({ dismiss }) => {
                         <div className="row fv-row">
                           <div className="col-6">
                             <div className="d-flex flex-column">
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="დემონტაჟი"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  დემონტაჟი
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="ტიხრები"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  ტიხრები
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="ჭერი"
-                                />
-                                <label className="form-check-label georgian">
-                                  ჭერი
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="ლესვა"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  ლესვა
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="იატაკის მოხვეწა"
-                                />
-                                <label className="form-check-label georgian">
-                                  იატაკის მოხვეწა
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="სანტექნიკა"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  სანტექნიკა
-                                </label>
-                              </div>
+                              {categories && categories.map((item, index) => {
+                                console.log(item)
+                                return (
+                                  <div key={index} className="form-check form-check-custom form-check-solid mb-2">
+                                    <input
+                                      onBlur={validationHandler}
+                                      onChange={handleCheckboxChange}
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      defaultValue="დემონტაჟი"
+                                    />
+                                    <label
+                                      onClick={(e) => e.preventDefault()}
+                                      className="form-check-label georgian"
+                                    >
+                                      {item.category}
+                                    </label>
+                                  </div>
+                                );
+                              })}
                             </div>
+                            {/* $#$#$#$#$ */}
                           </div>
                           <div className="col-6">
-                            <div className="d-flex flex-column">
+                            {/* <div className="d-flex flex-column">
                               <div className="form-check form-check-custom form-check-solid mb-2">
                                 <input
                                   onBlur={validationHandler}
@@ -1035,7 +971,7 @@ const AddProject = ({ dismiss }) => {
                                   დალაგება
                                 </label>
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
