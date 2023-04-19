@@ -172,6 +172,10 @@ const ListItem = () => {
                                                 </div>
                                                 <button
                                                     type="button"
+                                                    onClick={() => {
+                                                        setSelect('export');
+                                                        console.log('export')
+                                                    }}
                                                     className="btn btn-light-primary me-3 georgian"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#kt_modal_export_users"
@@ -210,6 +214,7 @@ const ListItem = () => {
                                                     type="button"
                                                     onClick={() => {
                                                         setSelect('add');
+                                                        console.log('add')
                                                     }}
                                                     className="btn btn-primary georgian"
                                                     data-bs-toggle="modal"
@@ -249,9 +254,11 @@ const ListItem = () => {
                                                 </button>
                                             </div>
                                             {/* ფილტრი */}
-                                            <div
+                                            {select === "export" && <div
+                                                style={{ display: 'block', paddingLeft: '0px' }}
                                                 className="modal fade show"
                                                 id="kt_modal_export_users"
+                                                role="dialig"
                                                 tabIndex={-1}
                                                 aria-hidden="true"
                                             >
@@ -373,14 +380,13 @@ const ListItem = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>}
                                             {/* ეხპორტი */}
                                             {select === "add" && <div
                                                 style={{ display: 'block', paddingLeft: '0px' }}
                                                 className="modal fade show"
                                                 id="kt_modal_export_users"
                                                 role="dialig"
-                                                aria-modal={true}
                                                 tabIndex={-1}
                                                 aria-hidden="true"
                                             >

@@ -3,253 +3,206 @@ import ListItem from "./ListItem";
 const Projects = () => {
   return (
     <>
-      <div className="d-flex flex-column flex-root">
-        <div className="page d-flex flex-row flex-column-fluid">
+      <div
+        className="wrapper d-flex flex-column flex-row-fluid"
+        id="kt_wrapper"
+      >
+        <div
+          id="kt_header"
+          className="header"
+          data-kt-sticky="true"
+          data-kt-sticky-name="header"
+          data-kt-sticky-offset="{default: '200px', lg: '300px'}"
+        >
           <div
-            className="wrapper d-flex flex-column flex-row-fluid"
-            id="kt_wrapper"
+            className="header-menu-container container-xxl d-flex flex-stack h-lg-75px"
+            id="kt_header_nav"
           >
             <div
-              id="kt_header"
-              className="header"
-              data-kt-sticky="true"
-              data-kt-sticky-name="header"
-              data-kt-sticky-offset="{default: '200px', lg: '300px'}"
+              className="header-menu flex-column flex-lg-row"
+              data-kt-drawer="true"
+              data-kt-drawer-name="header-menu"
+              data-kt-drawer-activate="{default: true, lg: false}"
+              data-kt-drawer-overlay="true"
+              data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+              data-kt-drawer-direction="start"
+              data-kt-drawer-toggle="#kt_header_menu_toggle"
+              data-kt-swapper="true"
+              data-kt-swapper-mode="prepend"
+              data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}"
             >
               <div
-                className="header-menu-container container-xxl d-flex flex-stack h-lg-75px"
-                id="kt_header_nav"
+                className="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch flex-grow-1"
+                id="#kt_header_menu"
+                data-kt-menu="true"
               >
                 <div
-                  className="header-menu flex-column flex-lg-row"
-                  data-kt-drawer="true"
-                  data-kt-drawer-name="header-menu"
-                  data-kt-drawer-activate="{default: true, lg: false}"
-                  data-kt-drawer-overlay="true"
-                  data-kt-drawer-width="{default:'200px', '300px': '250px'}"
-                  data-kt-drawer-direction="start"
-                  data-kt-drawer-toggle="#kt_header_menu_toggle"
-                  data-kt-swapper="true"
-                  data-kt-swapper-mode="prepend"
-                  data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}"
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-start"
+                  className="menu-item here show menu-lg-down-accordion me-lg-1"
                 >
-                  <div
-                    className="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch flex-grow-1"
-                    id="#kt_header_menu"
-                    data-kt-menu="true"
-                  >
-                    <div
-                      data-kt-menu-trigger="click"
-                      data-kt-menu-placement="bottom-start"
-                      className="menu-item here show menu-lg-down-accordion me-lg-1"
-                    >
-                      <a
-                        className="menu-link active py-3"
-                        href="../../demo11/dist/index.html"
-                      >
-                        <span className="menu-title georgian">
-                          <i className="bi bi-plug-fill" /> ელექტროობა
-                        </span>
-                      </a>
-                    </div>
-                    <div
-                      data-kt-menu-trigger="click"
-                      data-kt-menu-placement="bottom-start"
-                      className="menu-item menu-lg-down-accordion me-lg-1"
-                    >
-                      <span className="menu-link py-3">
-                        <span className="menu-title georgian">
-                          <i className="bi bi-droplet-half" /> &nbsp;სანტექნიკა
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      data-kt-menu-trigger="click"
-                      data-kt-menu-placement="bottom-start"
-                      className="menu-item menu-lg-down-accordion me-lg-1"
-                    >
-                      <span className="menu-link py-3">
-                        <span className="menu-title georgian">
-                          <i className="bi bi-hammer" />
-                          &nbsp;დემონტაჟი
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      data-kt-menu-trigger="click"
-                      data-kt-menu-placement="bottom-start"
-                      className="menu-item menu-lg-down-accordion me-lg-1"
-                    >
-                      <span className="menu-link py-3">
-                        <span className="menu-title georgian">
-                          <i className="bi bi-palette2" />
-                          &nbsp;სამღებრო
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      data-kt-menu-trigger="click"
-                      data-kt-menu-placement="bottom-start"
-                      className="menu-item menu-lg-down-accordion me-lg-1"
-                    >
-                      <span className="menu-link py-3">
-                        <span className="menu-title georgian">
-                          <i className="bi bi-thermometer-sun" />
-                          &nbsp;გათბობა
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      data-kt-menu-trigger="click"
-                      data-kt-menu-placement="bottom-start"
-                      className="menu-item menu-lg-down-accordion me-lg-1"
-                    >
-                      <span className="menu-link py-3">
-                        <span className="menu-title georgian">
-                          <i className="bi bi-layers-fill" />
-                          &nbsp;კაფელ-მეტლახი
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      data-kt-menu-trigger="click"
-                      data-kt-menu-placement="bottom-start"
-                      className="menu-item menu-lg-down-accordion me-lg-1"
-                    >
-                      <span className="menu-link py-3">
-                        <span className="menu-title georgian">
-                          <i className="bi bi-star-fill" />
-                          &nbsp;<b>ჯამური განფასება</b>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
-              <div
-                id="kt_toolbar_container"
-                className="container-xxl d-flex flex-stack flex-wrap"
-              >
-                <div className="page-title d-flex flex-column me-3">
-                  <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={16}
-                      height={16}
-                      fill="currentColor"
-                      className="bi bi-geo-alt-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                    </svg>
-                    &nbsp;წერეთლის ქუჩა N114{" "}
-                  </h1>
-                  <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
-                    <li className="breadcrumb-item text-gray-600 georgian">
-                      ბინა
-                    </li>
-                    <li className="breadcrumb-item text-gray-600 georgian">
-                      შავი კარკასი
-                    </li>
-                    <li className="breadcrumb-item text-gray-600 georgian">
-                      200 კვ.მ
-                    </li>
-                    <li className="breadcrumb-item text-warning georgian">
-                      29.03.2023 - 29.05.2023
-                    </li>
-                  </ul>
-                </div>
-                <div className="d-flex align-items-center py-2 py-md-1">
-                  <div className="me-3">
-                    <a
-                      href="#"
-                      className="btn btn-light-primary fw-bolder georgian"
-                      data-kt-menu-trigger="click"
-                      data-kt-menu-placement="bottom-end"
-                    >
-                      <i className="bi bi-image-fill" />
-                      სურათები
-                    </a>
-                    <div
-                      className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                      data-kt-menu="true"
-                      id="kt_menu_61484d4eae1ca"
-                    ></div>
-                  </div>
-                  <div className="d-flex align-items-center py-2 py-md-1">
-                    <a
-                      href="#"
-                      className="btn btn-primary fw-bolder georgian"
-                      data-bs-toggle="modal"
-                      data-bs-target="#kt_modal_create_app"
-                      id="kt_toolbar_primary_button"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={16}
-                        height={16}
-                        fill="currentColor"
-                        className="bi bi-rulers"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
-                      </svg>
-                      ნახაზები
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <ListItem />
-            <div className="footer py-4 d-flex flex-lg-column" id="kt_footer">
-              <div className="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between">
-                <div className="text-dark order-2 order-md-1">
-                  <span className="text-muted fw-bold me-1">2021©</span>
                   <a
-                    href="https://keenthemes.com"
-                    target="_blank"
-                    className="text-gray-800 text-hover-primary"
+                    className="menu-link active py-3"
+                    href="../../demo11/dist/index.html"
                   >
-                    Keenthemes
+                    <span className="menu-title georgian">
+                      <i className="bi bi-plug-fill" /> ელექტროობა
+                    </span>
                   </a>
                 </div>
-                <ul className="menu menu-gray-600 menu-hover-primary fw-bold order-1">
-                  <li className="menu-item">
-                    <a
-                      href="https://keenthemes.com"
-                      target="_blank"
-                      className="menu-link px-2"
-                    >
-                      About
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a
-                      href="https://keenthemes.com/support"
-                      target="_blank"
-                      className="menu-link px-2"
-                    >
-                      Support
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a
-                      href="https://1.envato.market/EA4JP"
-                      target="_blank"
-                      className="menu-link px-2"
-                    >
-                      Purchase
-                    </a>
-                  </li>
-                </ul>
+                <div
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-start"
+                  className="menu-item menu-lg-down-accordion me-lg-1"
+                >
+                  <span className="menu-link py-3">
+                    <span className="menu-title georgian">
+                      <i className="bi bi-droplet-half" /> &nbsp;სანტექნიკა
+                    </span>
+                  </span>
+                </div>
+                <div
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-start"
+                  className="menu-item menu-lg-down-accordion me-lg-1"
+                >
+                  <span className="menu-link py-3">
+                    <span className="menu-title georgian">
+                      <i className="bi bi-hammer" />
+                      &nbsp;დემონტაჟი
+                    </span>
+                  </span>
+                </div>
+                <div
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-start"
+                  className="menu-item menu-lg-down-accordion me-lg-1"
+                >
+                  <span className="menu-link py-3">
+                    <span className="menu-title georgian">
+                      <i className="bi bi-palette2" />
+                      &nbsp;სამღებრო
+                    </span>
+                  </span>
+                </div>
+                <div
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-start"
+                  className="menu-item menu-lg-down-accordion me-lg-1"
+                >
+                  <span className="menu-link py-3">
+                    <span className="menu-title georgian">
+                      <i className="bi bi-thermometer-sun" />
+                      &nbsp;გათბობა
+                    </span>
+                  </span>
+                </div>
+                <div
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-start"
+                  className="menu-item menu-lg-down-accordion me-lg-1"
+                >
+                  <span className="menu-link py-3">
+                    <span className="menu-title georgian">
+                      <i className="bi bi-layers-fill" />
+                      &nbsp;კაფელ-მეტლახი
+                    </span>
+                  </span>
+                </div>
+                <div
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-start"
+                  className="menu-item menu-lg-down-accordion me-lg-1"
+                >
+                  <span className="menu-link py-3">
+                    <span className="menu-title georgian">
+                      <i className="bi bi-star-fill" />
+                      &nbsp;<b>ჯამური განფასება</b>
+                    </span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
+          <div
+            id="kt_toolbar_container"
+            className="container-xxl d-flex flex-stack flex-wrap"
+          >
+            <div className="page-title d-flex flex-column me-3">
+              <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={16}
+                  height={16}
+                  fill="currentColor"
+                  className="bi bi-geo-alt-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                </svg>
+                &nbsp;წერეთლის ქუჩა N114{" "}
+              </h1>
+              <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
+                <li className="breadcrumb-item text-gray-600 georgian">
+                  ბინა
+                </li>
+                <li className="breadcrumb-item text-gray-600 georgian">
+                  შავი კარკასი
+                </li>
+                <li className="breadcrumb-item text-gray-600 georgian">
+                  200 კვ.მ
+                </li>
+                <li className="breadcrumb-item text-warning georgian">
+                  29.03.2023 - 29.05.2023
+                </li>
+              </ul>
+            </div>
+            <div className="d-flex align-items-center py-2 py-md-1">
+              <div className="me-3">
+                <a
+                  href="#"
+                  className="btn btn-light-primary fw-bolder georgian"
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-end"
+                >
+                  <i className="bi bi-image-fill" />
+                  სურათები
+                </a>
+                <div
+                  className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
+                  data-kt-menu="true"
+                  id="kt_menu_61484d4eae1ca"
+                ></div>
+              </div>
+              <div className="d-flex align-items-center py-2 py-md-1">
+                <a
+                  href="#"
+                  className="btn btn-primary fw-bolder georgian"
+                  data-bs-toggle="modal"
+                  data-bs-target="#kt_modal_create_app"
+                  id="kt_toolbar_primary_button"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={16}
+                    height={16}
+                    fill="currentColor"
+                    className="bi bi-rulers"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
+                  </svg>
+                  ნახაზები
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ListItem />
       </div>
-      <div
+      {/* <div
         id="kt_drawer_chat"
         className="bg-body"
         data-kt-drawer="true"
@@ -2874,7 +2827,7 @@ const Projects = () => {
             />
           </svg>
         </span>
-      </div>
+      </div> */}
     </>
   );
 };
