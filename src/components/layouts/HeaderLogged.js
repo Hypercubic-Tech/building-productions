@@ -61,6 +61,7 @@ function HeaderLogged() {
     dispatch(setAuthAccessToken(null));
     dispatch(setAuthEmail(null));
     dispatch(setAuthRole(null));
+    window.location.reload();
   };
 
   return (
