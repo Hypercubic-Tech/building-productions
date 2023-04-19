@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axiosInstance from "@/api/axios";
 
 import AddProject from "./AddProject";
 
@@ -52,7 +53,7 @@ const HeaderPopup = () => {
   return (
     <>
     <div
-      style={{display: close ? 'none' : ''}}
+      style={{display: close ? 'none' : '', overflow: 'auto'}}
       className="modal-xxl"
     > 
       <div className="modal-content">
@@ -61,9 +62,10 @@ const HeaderPopup = () => {
           <button
             type="button"
             className="btn-close"
+            onClick={() => setClose(true)}
           />
         </div>
-        <div style={{overflow: 'auto'}} className="modal-body">
+        <div  className="modal-body">
           <div className="row">
             {data.map((item, index) => {
               return (

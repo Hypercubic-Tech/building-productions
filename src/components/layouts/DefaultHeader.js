@@ -3,15 +3,15 @@ import AuthModal from "../popup/AuthModal";
 import { useSpring, animated } from "react-spring";
 
 function DefaultHeader() {
-  // const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  // const handleLogin = () => {
-  //   setLoggedIn(true);
-  // };
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
 
-  // const handleLogout = () => {
-  //   setLoggedIn(false);
-  // };
+  const handleLogout = () => {
+    setLoggedIn(false);
+  };
 
   const [showAuthModal, setShowAuthModal] = useState(false);
   const modalRef = useRef(null);
@@ -57,7 +57,6 @@ function DefaultHeader() {
         <div className="container-xxl">
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
-              {/* flex-equal */}
               {/* <button
               className="btn btn-icon btn-active-color-primary me-3 d-flex d-lg-none"
               id="kt_landing_menu_toggle"
@@ -177,20 +176,12 @@ function DefaultHeader() {
             </div> */}
             </div>
             <div className="ms-1">
-              {/* flex-equal*/}
               <div
                 className={` btn btn-success georgian `}
                 onClick={handleAuthClick}
               >
                 ავტორიზაცია
               </div>
-              {/* {showAuthModal && (
-                <div ref={modalRef}>
-                  <div>
-                    <AuthModal onClose={handleClose} />
-                  </div>
-                </div>
-              )} */}
               {showAuthModal && (
                 <animated.div
                   className="modal"
