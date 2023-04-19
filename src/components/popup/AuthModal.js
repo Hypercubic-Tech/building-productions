@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "../popup/AuthModal.module.css";
 import RegModal from "./RegModal";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { setAuthAccessToken, setAuthEmail, setAuthRole } from "@/store/slices/authSlice";
 
 function AuthModal(props) {
+  const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate();
   const [showRegModal, setShowRegModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +28,19 @@ function AuthModal(props) {
     event.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
+    axiosPrivate.post("/api/login", {
+      email,
+      password
+    })
+    .then(res => {
+      let data = res.data;
+      localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('email', data.email);
+      localStorage.setItem('role', data.role);
+      dispatch(setAuthAccessToken(data.access_token));
+      dispatch(setAuthEmail(data.email));
+      dispatch(setAuthRole(data.role));
+    });
   };
 
   return (

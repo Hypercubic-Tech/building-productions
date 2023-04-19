@@ -11,6 +11,11 @@ const HeaderPopup = () => {
     setClose(true);
   };
 
+  const dismissHandler = () => {
+    setAddProject(false)
+    setClose(false)
+  }
+
   const data = [
     {
       id: 0,
@@ -47,20 +52,18 @@ const HeaderPopup = () => {
   return (
     <>
     <div
-      style={{ display: "block", opacity: close ? "0" : "1" }}
+      style={{display: close ? 'none' : ''}}
       className="modal-xxl"
-    >
+    > 
       <div className="modal-content">
         <div className="modal-header">
           <h5 className="modal-title">Modal title</h5>
           <button
             type="button"
             className="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
           />
         </div>
-        <div className="modal-body">
+        <div style={{overflow: 'auto'}} className="modal-body">
           <div className="row">
             {data.map((item, index) => {
               return (
@@ -107,7 +110,7 @@ const HeaderPopup = () => {
       </div>
     </div>
     {addProject && (
-        <AddProject />
+        <AddProject dismiss={dismissHandler} />
     )}
     </>
 

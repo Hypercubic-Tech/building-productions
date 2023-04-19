@@ -1,4 +1,4 @@
-import ListItem from "./projectComps/ListItem";
+import ListItem from "./components/ListItem";
 
 const Projects = () => {
   return (

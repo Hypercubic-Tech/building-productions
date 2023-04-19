@@ -52,6 +52,27 @@
 .closeBtn:hover path {
   stroke: #0098da;
 }
+
+/* popup element */
+
+.popup {
+  position: fixed;
+  top: 106px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: 95%;
+  /* position: fixed;
+  width: 100;
+  height: auto;
+  z-index: 5;
+  top: 105px;
+  right: 80px; */
+  /* left: calc(10% - 40px);
+  right: calc(10% - 40px); */
+}
+
+/* end of popup element */
 @media (max-width: 768px) {
   .backdrop {
     width: 30px;

@@ -1,9 +1,19 @@
-import styles from "../layouts/HeaderLogged.module.css";
 import { useState, useEffect, useRef } from "react";
+import { useSpring, animated } from "react-spring";
+
+import HeaderPopup from "../popup/HeaderPopup";
+import axiosInstance from "@/api/axios";
+
+import styles from "../layouts/HeaderLogged.module.css";
 
 function HeaderLogged() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [popup, setPopup] = useState(false);
   const ref = useRef(null);
+
+  const animation = useSpring({
+    opacity: isModalOpen ? 1 : 0,
+  });
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -26,6 +36,24 @@ function HeaderLogged() {
   function closeModal() {
     setIsModalOpen(false);
   }
+
+  const popupHandler = () => {
+    if (!popup) {
+      setPopup(true);
+    } else {
+      setPopup(false);
+    }
+  };
+
+  const handleLogout = () => {
+    console.log('hi')
+    axiosInstance.get('/api/logout', {
+      email: localStorage.getItem('email')
+    })
+    .then(res => {
+      console.log(res)
+    });
+  };
 
   return (
     <div
@@ -186,8 +214,8 @@ function HeaderLogged() {
             </div>
             <div className="d-flex align-items-center ms-3 ms-lg-4">
               <div
+                onClick={popupHandler}
                 className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
-                id="kt_activities_toggle"
               >
                 <span className="svg-icon svg-icon-1">
                   <svg
@@ -203,6 +231,11 @@ function HeaderLogged() {
                   </svg>
                 </span>
               </div>
+              {popup && (
+                <div className={styles.popup}>
+                  <HeaderPopup />
+                </div>
+              )}
             </div>
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
@@ -242,39 +275,44 @@ function HeaderLogged() {
                 )}
               </div>
               {isModalOpen && (
-                <div ref={ref} className={`${styles.modalWindow}`}>
-                  <div className={styles.hover}>გამოსვლა</div>
-                  <svg
-                    onClick={closeModal}
-                    className={styles.closeBtn}
-                    width="64px"
-                    height="64px"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                    <g
-                      id="SVGRepo_tracerCarrier"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      stroke="#CCCCCC"
-                      strokeWidth="0.336"
-                    ></g>
-                    <g id="SVGRepo_iconCarrier">
-                      <g id="Menu / Close_MD">
-                        <path
-                          id="Vector"
-                          d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
-                          stroke="#000000"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        ></path>
+                <animated.div
+                  className="modal"
+                  style={animation}
+                >
+                  <div ref={ref} className={`${styles.modalWindow}`}>
+                    <div onClick={() => handleLogout} className={styles.hover}>გამოსვლა</div>
+                    <svg
+                      onClick={closeModal}
+                      className={styles.closeBtn}
+                      width="64px"
+                      height="64px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        stroke="#CCCCCC"
+                        strokeWidth="0.336"
+                      ></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <g id="Menu / Close_MD">
+                          <path
+                            id="Vector"
+                            d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
+                            stroke="#000000"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          ></path>
+                        </g>
                       </g>
-                    </g>
-                  </svg>
-                </div>
+                    </svg>
+                  </div>
+                </animated.div>
               )}
             </div>
           </div>

@@ -1,72 +1,11 @@
 import styles from "../popup/RegModal.module.css";
 import { useState } from "react";
-import axios from "../../pages/api/axios";
+import axios from "../../api/axios";
 
 function RegModal(props) {
-  const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [formError, setFormError] = useState("");
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-
-    // perform client-side validation before submitting form
-    const emailValidationResult = validateEmail(email);
-    const passwordValidationResult = validatePassword(password);
-
-    if (!emailValidationResult.isValid) {
-      setFormError(emailValidationResult.message);
-      return;
-    }
-
-    if (!passwordValidationResult.isValid) {
-      setFormError(passwordValidationResult.message);
-      return;
-    }
-
-    // send form data to server for server-side validation
-    const res = await fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, confirmPassword }),
-    });
-
-    const result = await res.json();
-
-    if (result.success) {
-      // handle successful registration
-    } else {
-      setFormError(result.message);
-    }
-  };
-
-  const validateEmail = (value) => {
-    // validate email format
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(value)) {
-      return { isValid: false, message: "Please enter a valid email address" };
-    }
-
-    return { isValid: true };
-  };
-
-  const validatePassword = (value) => {
-    // validate password length
-    if (value.length < 6) {
-      return {
-        isValid: false,
-        message: "Password must be at least 6 characters long",
-      };
-    }
-
-    return { isValid: true };
-  };
-
-  //
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -79,7 +18,31 @@ function RegModal(props) {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { email, password, fullName } = event.target.elements;
+
+    if (!fullName.value || !email.value || !password.value) {
+    } else {
+      try {
+        const response = await axios.post("/api/register", {
+          email: email.value,
+          password: password.value,
+          fullName: fullName.value,
+        });
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    console.log("Email:", email);
+    console.log("Password:", password);
+    console.log("name", fullName);
+  };
+
   return (
     <div className={`${styles.container}`}>
       <form onSubmit={handleSubmit}>
@@ -122,7 +85,7 @@ function RegModal(props) {
             <input
               autoComplete="username"
               required
-              id="full-name"
+              id="fullName"
               className="form-control"
               placeholder="Your name"
               type="text"
@@ -133,7 +96,7 @@ function RegModal(props) {
           <div className="d-grid gap-2 mt-n1">
             <label className="mt-2">Email:</label>
             <input
-              autoComplete="username"
+              autoComplete="email"
               required
               id="email"
               className="form-control"

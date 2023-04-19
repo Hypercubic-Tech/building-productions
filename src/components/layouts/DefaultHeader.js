@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import AuthModal from "../popup/AuthModal";
+import { useSpring, animated } from "react-spring";
 
 function DefaultHeader() {
   // const [loggedIn, setLoggedIn] = useState(false);
@@ -14,6 +15,10 @@ function DefaultHeader() {
 
   const [showAuthModal, setShowAuthModal] = useState(false);
   const modalRef = useRef(null);
+
+  const animation = useSpring({
+    opacity: showAuthModal ? 1 : 0,
+  });
 
   const handleAuthClick = () => {
     setShowAuthModal(true);
@@ -179,12 +184,25 @@ function DefaultHeader() {
               >
                 ავტორიზაცია
               </div>
-              {showAuthModal && (
+              {/* {showAuthModal && (
                 <div ref={modalRef}>
                   <div>
                     <AuthModal onClose={handleClose} />
                   </div>
                 </div>
+              )} */}
+              {showAuthModal && (
+                <animated.div
+                  className="modal"
+                  style={animation}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div ref={modalRef}>
+                    <div>
+                      <AuthModal onClose={handleClose} />
+                    </div>
+                  </div>
+                </animated.div>
               )}
             </div>
           </div>
