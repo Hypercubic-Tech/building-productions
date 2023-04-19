@@ -9,13 +9,17 @@ function Header() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem('access_token') && localStorage.getItem('access_token') !== '') {
+    if (
+      localStorage.getItem("access_token") &&
+      localStorage.getItem("access_token") !== ""
+    ) {
       dispatch(setAuthState(true));
     }
   }, [loggedIn, dispatch]);
 
-  return <>{loggedIn ? <HeaderLogged /> : <DefaultHeader  />}</>;
-  // return <HeaderLogged />;
+  console.log(loggedIn)
+
+  return <>{loggedIn ? <HeaderLogged /> : <DefaultHeader />}</>;
 }
 
 export default Header;

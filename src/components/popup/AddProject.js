@@ -5,6 +5,7 @@ const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
+  const [categories, setCategories] = useState(null);
 
   const [sendData, setSendData] = useState([
     {
@@ -33,7 +34,7 @@ const AddProject = ({ dismiss }) => {
       })
       .then((res) => {
         let data = res.data;
-        console.log(data);
+        setCategories(data)
       })
       .catch((e) => {
         console.log(e, "error");
@@ -136,6 +137,7 @@ const AddProject = ({ dismiss }) => {
     setClose(true);
   };
 
+  console.log(categories, 'catacata')
   return (
     <div
       style={{ display: close ? "none" : "" }}
