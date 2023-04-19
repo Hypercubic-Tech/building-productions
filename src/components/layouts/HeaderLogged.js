@@ -1,8 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
+import { useDispatch } from "react-redux";
+
+import {
+  setAuthAccessToken,
+  setAuthEmail,
+  setAuthRole,
+} from "@/store/slices/authSlice";
 
 import HeaderPopup from "../popup/HeaderPopup";
-import axiosInstance from "@/api/axios";
+// import axiosInstance from "@/api/axios";
 
 import styles from "../layouts/HeaderLogged.module.css";
 
@@ -10,6 +17,8 @@ function HeaderLogged() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [popup, setPopup] = useState(false);
   const ref = useRef(null);
+
+  const dispatch = useDispatch();
 
   const animation = useSpring({
     opacity: isModalOpen ? 1 : 0,
@@ -46,13 +55,12 @@ function HeaderLogged() {
   };
 
   const handleLogout = () => {
-    console.log('hi')
-    axiosInstance.get('/api/logout', {
-      email: localStorage.getItem('email')
-    })
-    .then(res => {
-      console.log(res)
-    });
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("role");
+    dispatch(setAuthAccessToken(null));
+    dispatch(setAuthEmail(null));
+    dispatch(setAuthRole(null));
   };
 
   return (
@@ -275,12 +283,11 @@ function HeaderLogged() {
                 )}
               </div>
               {isModalOpen && (
-                <animated.div
-                  className="modal"
-                  style={animation}
-                >
+                <animated.div className="modal" style={animation}>
                   <div ref={ref} className={`${styles.modalWindow}`}>
-                    <div onClick={() => handleLogout} className={styles.hover}>გამოსვლა</div>
+                    <div onClick={handleLogout} className={styles.hover}>
+                      გამოსვლა
+                    </div>
                     <svg
                       onClick={closeModal}
                       className={styles.closeBtn}
