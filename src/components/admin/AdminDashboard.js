@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '@/pages/api/axios';
+import axiosInstance from '@/api/axios';
 
 const AdminDashboard = () => {
     const [ categoryName, setCategoryName ] = useState('');

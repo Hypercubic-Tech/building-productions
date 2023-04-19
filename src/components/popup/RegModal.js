@@ -1,6 +1,6 @@
 import styles from "../popup/RegModal.module.css";
 import { useState } from "react";
-import axios from "../../pages/api/axios";
+import axios from "../../api/axios";
 
 function RegModal(props) {
   const [fullName, setFullName] = useState("");
