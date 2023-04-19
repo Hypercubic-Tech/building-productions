@@ -1,10 +1,10 @@
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
 
-function Layout({ children, loggedIn }) {
+function Layout({ children }) {
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <main>{children}</main>
       <Footer />
     </>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "@/pages/api/axios";
+import axiosInstance from "@/api/axios";
 
 const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);

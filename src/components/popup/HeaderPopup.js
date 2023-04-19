@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axiosInstance from "@/pages/api/axios";
+import axiosInstance from "@/api/axios";
 
 import AddProject from "./AddProject";
 
