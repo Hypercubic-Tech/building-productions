@@ -34,6 +34,7 @@ function RegModal(props) {
           fullName: fullName.value,
         });
         console.log(response);
+        window.location.reload();
       } catch (error) {
         console.error(error);
       }

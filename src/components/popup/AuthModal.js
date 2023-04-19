@@ -45,6 +45,7 @@ function AuthModal(props) {
         dispatch(setAuthAccessToken(data.access_token));
         dispatch(setAuthEmail(data.email));
         dispatch(setAuthRole(data.role));
+        window.location.reload();
       });
   };
 
