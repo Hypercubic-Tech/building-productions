@@ -24,16 +24,17 @@ function AuthModal(props) {
     event.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
-    axiosInstance.post("/api/login", {
-      email,
-      password
-    })
-    .then(res => {
-      let data = res.data;
-      localStorage.setItem('access_token', data.access_token);
-      localStorage.setItem('email', data.email);
-      localStorage.setItem('role', data.role);
-    });
+    axiosInstance
+      .post("/api/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        let data = res.data;
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("role", data.role);
+      });
   };
 
   return (
@@ -117,9 +118,7 @@ function AuthModal(props) {
             </div>
           </div>
         </form>
-        {showRegModal && (
-          <RegModal onClose={() => setShowRegModal(false)} />
-        )}
+        {showRegModal && <RegModal onClose={() => setShowRegModal(false)} />}
       </div>
     </>
   );
