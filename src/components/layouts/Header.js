@@ -17,8 +17,6 @@ function Header() {
     }
   }, [loggedIn, dispatch]);
 
-  console.log(loggedIn)
-
   return <>{loggedIn ? <HeaderLogged /> : <DefaultHeader />}</>;
 }
 
