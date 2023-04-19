@@ -3,7 +3,7 @@ import HeaderLogged from "./HeaderLogged";
 
 function Header({ loggedIn }) {
   return <>{loggedIn ? <HeaderLogged /> : <DefaultHeader />}</>;
-  // return <HeaderLogged />;
+  //return <HeaderLogged true />;
 }
 
 export default Header;

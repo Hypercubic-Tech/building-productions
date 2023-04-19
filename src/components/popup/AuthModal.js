@@ -104,11 +104,11 @@ function AuthModal(props) {
                 შესვლა
               </button>
             </div>
-            {showRegModal && (
-              <RegModal onClose={() => setShowRegModal(false)} />
-            )}
           </div>
         </form>
+        {showRegModal && (
+          <RegModal onClose={() => setShowRegModal(false)} />
+        )}
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axiosInstance from "../../api/axios";
 
 const AddProductForm = ({setSelect, pushTempArray}) => {
     const [price, setPrice] = useState(0);
@@ -14,9 +15,13 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
         img: null
     });
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log(formData);
         setSelect(null);
+        await axiosInstance.post('/api/product/create', formData)
+        .then(res => {
+            console.log(res)
+        });
     };
 
     return (
