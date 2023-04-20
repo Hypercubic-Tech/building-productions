@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axiosInstance from "../../api/axios";
 
 const AddProductForm = ({setSelect, pushTempArray}) => {
     const [price, setPrice] = useState(0);
@@ -12,13 +13,19 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
         quantity: '',
         total: '',
         img: null
-    })
+    });
+
+    const handleSubmit = async () => {
+        console.log(formData);
+        setSelect(null);
+        await axiosInstance.post('/api/product/create', formData)
+        .then(res => {
+            console.log(res)
+        });
+    };
 
     return (
         <form
-            onSubmit={(e) => {
-                e.preventDefault();
-            }}
             id="kt_modal_add_user_form"
             className="form"
         >
@@ -218,11 +225,11 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
                 >
                     Discard
                 </button>
-                <button
+                <div
                     onClick={() => { 
-                        setSelect(null)
-                        pushTempArray(formData)
-                     }}
+                        setFormData((formData) => ({ ...formData, total: Number(price * quantity) }));
+                        handleSubmit();
+                    }}
                     type="submit"
                     className="btn btn-primary"
                     data-kt-users-modal-action="submit"
@@ -230,7 +237,7 @@ const AddProductForm = ({setSelect, pushTempArray}) => {
                     <span className="indicator-label">
                         Submit
                     </span>
-                </button>
+                </div>
             </div>
         </form>
     );
