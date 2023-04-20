@@ -1,4 +1,4 @@
-const Products = ({ProductData}) => {
+const Products = ( { products } ) => {
     return ( 
         <table
             className="table align-middle table-row-dashed fs-6 gy-5"
@@ -35,7 +35,7 @@ const Products = ({ProductData}) => {
                     </th>
                 </tr>
             </thead>
-            {ProductData.map((product, index) => {
+            {products.map((product, index) => {
                 return (
                     <tbody className="text-gray-600 fw-bold" key={index}>
                         <tr>
