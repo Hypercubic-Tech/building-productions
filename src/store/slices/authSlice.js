@@ -6,6 +6,7 @@ const initialState = {
   access_token: "",
   role: "",
   email: "",
+  user_id: ""
 };
 
 export const authSlice = createSlice({
@@ -24,6 +25,9 @@ export const authSlice = createSlice({
     setAuthEmail(state, action) {
       state.email = action.payload;
     },
+    setAuthUserId(state, action) {
+      state.user_id = action.payload;
+    },
     extraReducers: {
       [HYDRATE]: (state, action) => {
         return {
@@ -35,9 +39,10 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthState, setAuthAccessToken, setAuthEmail, setAuthRole } =
+export const { setAuthState, setAuthAccessToken, setAuthEmail, setAuthRole, setAuthUserId } =
   authSlice.actions;
 export const selectAuthState = (state) => state.auth.loggedIn;
+export const selectAuthUserId = (state) => state.auth.user_id;
 export const selectAuthAccessToken = (state) => state.auth.access_token;
 export const selectAuthEmail = (state) => state.auth.email;
 export const selectAuthRole = (state) => state.auth.role;

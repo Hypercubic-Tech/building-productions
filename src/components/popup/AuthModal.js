@@ -42,9 +42,11 @@ function AuthModal(props) {
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("email", data.email);
         localStorage.setItem("role", data.role);
+        localStorage.setItem("userId", data._id);
         dispatch(setAuthAccessToken(data.access_token));
         dispatch(setAuthEmail(data.email));
         dispatch(setAuthRole(data.role));
+        dispatch(setAuthUserId(data._id));
         window.location.reload();
       });
   };
