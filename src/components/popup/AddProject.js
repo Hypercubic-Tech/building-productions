@@ -37,7 +37,7 @@ const AddProject = ({ dismiss }) => {
   const sendFormDataHandler = async () => {
     console.log(sendData);
     await axiosInstance
-      .post("/api/admin/content/add_project", {
+      .post("/api/admin/projects/add_project", {
         project: sendData,
       })
       .then((response) => {

@@ -1,10 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axiosInstance from "@/api/axios";
 
 import AddProject from "./AddProject";
 
 const HeaderPopup = () => {
   const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
+  const [projectsData, setProjectsData] = useState(false);
+
+  useEffect(() => {
+    const getDataHandler = async () => {
+      await axiosInstance
+        .get("/api/admin/projects/get_projects", {})
+        .then((res) => {
+          let data = res.data;
+          setProjectsData(data.projects);
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    };
+    getDataHandler();
+  }, []);
+  console.log(projectsData)
 
   const addProjectHandler = () => {
     setAddProject(true);
@@ -49,6 +67,7 @@ const HeaderPopup = () => {
     },
   ];
 
+  console.log(projectsData)
   return (
     <>
     <div
@@ -66,7 +85,7 @@ const HeaderPopup = () => {
         </div>
         <div  className="modal-body">
           <div className="row">
-            {data.map((item, index) => {
+            {/* {projectsData.map((item, index) => {
               return (
                 <div
                   key={index}
@@ -74,10 +93,10 @@ const HeaderPopup = () => {
                   style={{ width: "20rem", overflow: "hidden" }}
                 >
                   <div className="col-11">
-                    <img src={item.img} className="card-img-top" alt="..." />
+                    <img src="" className="card-img-top" alt="..." />
                     <div className="card-body">
-                      <h5 className="card-title">{item.title}</h5>
-                      <p className="card-text">{item.description}</p>
+                      <h5 className="card-title">{item.objectName}</h5>
+                      <p className="card-text">{item.propertyType}</p>
                       <div className="btn-group row">
                         <div href="#" className="btn btn-primary">
                           რედაქტირება
@@ -90,7 +109,7 @@ const HeaderPopup = () => {
                   </div>
                 </div>
               );
-            })}
+            })} */}
           </div>
         </div>
         <div className="modal-footer row">
