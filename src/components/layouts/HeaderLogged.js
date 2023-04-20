@@ -6,6 +6,7 @@ import {
   setAuthAccessToken,
   setAuthEmail,
   setAuthRole,
+  setAuthUserId,
 } from "@/store/slices/authSlice";
 
 import HeaderPopup from "../popup/HeaderPopup";
@@ -58,7 +59,9 @@ function HeaderLogged() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("email");
     localStorage.removeItem("role");
+    localStorage.removeItem("userId");
     dispatch(setAuthAccessToken(null));
+    dispatch(setAuthUserId(null));
     dispatch(setAuthEmail(null));
     dispatch(setAuthRole(null));
     window.location.reload();
