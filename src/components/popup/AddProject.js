@@ -8,25 +8,17 @@ const AddProject = ({ dismiss }) => {
   const [backBtn, setBackBtn] = useState(false);
   const [categories, setCategories] = useState(null);
 
-  const [sendData, setSendData] = useState([
-    {
-      category: {
-        propertyType: "",
-        city: "",
-        district: "",
-        address: "",
-        phone: "",
-      },
-      condition: {
-        condition: [],
-        currentCondition: [],
-      },
-      works: {
-        objectName: "",
-        worksToDo: [],
-      },
-    },
-  ]);
+  const [sendData, setSendData] = useState({
+    propertyType: "",
+    city: "",
+    district: "",
+    address: "",
+    phone: "",
+    condition: [],
+    currentCondition: [],
+    objectName: "",
+    worksToDo: [],
+  });
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -43,6 +35,20 @@ const AddProject = ({ dismiss }) => {
     getDataHandler();
   }, []);
 
+  const sendFormDataHandler = async () => {
+    console.log(sendData);
+    await axiosInstance
+      .post("/api/admin/projects/add_project", {
+        project: sendData,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   let errors = {
     stepOne: [],
     stepTwo: [],
@@ -50,35 +56,35 @@ const AddProject = ({ dismiss }) => {
   };
 
   const validationHandler = () => {
-    if (sendData[0].category.propertyType === "") {
+    if (sendData.propertyType === "") {
       errors.stepOne.push("შეავსეთ ქონების ტიპი");
     }
-    if (sendData[0].category.city === "") {
+    if (sendData.city === "") {
       errors.stepOne.push("მონიშნეთ ქალაქი");
     }
-    if (sendData[0].category.district === "") {
+    if (sendData.district === "") {
       errors.stepOne.push("მონიშნეთ რაიონი");
     }
-    if (sendData[0].category.address === "") {
+    if (sendData.address === "") {
       errors.stepOne.push("შეავსეთ მისამართი");
     }
-    if (sendData[0].category.phone === "") {
+    if (sendData.phone === "") {
       errors.stepOne.push("შეავსეთ ტელეფონის ნომერი");
     }
     // // end of step one
-
-    if (sendData[0].condition.currentCondition.length === 0) {
+    console.log(sendData);
+    if (sendData.currentCondition.length === 0) {
       errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა");
     }
-    if (sendData[0].condition.condition.length === 0) {
+    if (sendData.condition.length === 0) {
       errors.stepTwo.push("მონიშნეთ მდგომეროება");
     }
     // end of step two
 
-    if (sendData[0].works.objectName === "") {
+    if (sendData.objectName === "") {
       errors.stepThree.push("შეავსეთ ობიექტის დასახელება");
     }
-    if (sendData[0].works.worksToDo.length === 0) {
+    if (sendData.worksToDo.length === 0) {
       errors.stepThree.push("მონიშნეთ შესასრულებელი სამუშაოები");
     }
     // end of step three
@@ -122,11 +128,9 @@ const AddProject = ({ dismiss }) => {
     setSendData((prevState) => {
       const newData = JSON.parse(JSON.stringify(prevState));
       if (checked) {
-        newData[0].works.worksToDo = [...newData[0].works.worksToDo, value];
+        newData.worksToDo = [ ...newData.worksToDo, value ];
       } else {
-        newData[0].works.worksToDo = newData[0].works.worksToDo.filter(
-          (val) => val !== value
-        );
+        newData.worksToDo = newData.worksToDo.filter((val) => val !== value);
       }
       return newData;
     });
@@ -135,6 +139,7 @@ const AddProject = ({ dismiss }) => {
   const finishHandler = () => {
     console.log(sendData);
     setClose(true);
+    sendFormDataHandler();
   };
 
   return (
@@ -272,22 +277,10 @@ const AddProject = ({ dismiss }) => {
                       </label>
                       <select
                         onChange={(event) => {
-                          setSendData((prevSendData) => [
-                            {
-                              ...prevSendData[0],
-                              category: {
-                                ...prevSendData[0].category,
-                                propertyType: event.target.value,
-                              },
-                              condition: {
-                                ...prevSendData[0].condition,
-                              },
-                              works: {
-                                ...prevSendData[0].works,
-                              },
-                            },
-                          ]);
-                          // validationHandler;
+                          setSendData((prevSendData) => ({
+                            ...prevSendData,
+                            propertyType: event.target.value,
+                          }));
                         }}
                         onBlur={validationHandler}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
@@ -310,22 +303,10 @@ const AddProject = ({ dismiss }) => {
                           <div className="col-6">
                             <select
                               onChange={(event) => {
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    category: {
-                                      ...prevSendData[0].category,
-                                      city: event.target.value,
-                                    },
-                                    condition: {
-                                      ...prevSendData[0].condition,
-                                    },
-                                    works: {
-                                      ...prevSendData[0].works,
-                                    },
-                                  },
-                                ]);
-                                // validationHandler;
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  city: event.target.value,
+                                }));
                               }}
                               onBlur={validationHandler}
                               name="locale"
@@ -344,22 +325,10 @@ const AddProject = ({ dismiss }) => {
                           <div className="col-6">
                             <select
                               onChange={(event) => {
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    category: {
-                                      ...prevSendData[0].category,
-                                      district: event.target.value,
-                                    },
-                                    condition: {
-                                      ...prevSendData[0].condition,
-                                    },
-                                    works: {
-                                      ...prevSendData[0].works,
-                                    },
-                                  },
-                                ]);
-                                // validationHandler;
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  district: event.target.value,
+                                }));
                               }}
                               onBlur={validationHandler}
                               name="locale"
@@ -403,22 +372,10 @@ const AddProject = ({ dismiss }) => {
                             <input
                               id="input-validation-address"
                               onChange={(event) => {
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    category: {
-                                      ...prevSendData[0].category,
-                                      address: event.target.value,
-                                    },
-                                    condition: {
-                                      ...prevSendData[0].condition,
-                                    },
-                                    works: {
-                                      ...prevSendData[0].works,
-                                    },
-                                  },
-                                ]);
-                                // validationHandler;
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  address: event.target.value,
+                                }));
                               }}
                               onBlur={validationHandler}
                               type="text"
@@ -430,22 +387,10 @@ const AddProject = ({ dismiss }) => {
                             <input
                               id="input-validation-mobile"
                               onChange={(event) => {
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    category: {
-                                      ...prevSendData[0].category,
-                                      phone: event.target.value,
-                                    },
-                                    condition: {
-                                      ...prevSendData[0].condition,
-                                    },
-                                    works: {
-                                      ...prevSendData[0].works,
-                                    },
-                                  },
-                                ]);
-                                // validationHandler;
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  phone: event.target.value,
+                                }));
                               }}
                               onBlur={validationHandler}
                               type="number"
@@ -512,28 +457,10 @@ const AddProject = ({ dismiss }) => {
                             <input
                               id="input-validation-building"
                               onChange={(event) => {
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    category: {
-                                      ...prevSendData[0].category,
-                                    },
-                                    condition: {
-                                      ...prevSendData[0].condition,
-                                      condition: event.target.value,
-                                    },
-                                    works: {
-                                      ...prevSendData[0].works,
-                                    },
-                                  },
-                                ]);
-                                // setValidate((prev) => ({
-                                //   ...prev,
-                                //   stepTwo: {
-                                //     ...prev.stepTwo,
-                                //     buildingInput: true,
-                                //   },
-                                // }));
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  condition: event.target.value,
+                                }));
                               }}
                               onBlur={validationHandler}
                               className="form-check-input"
@@ -614,28 +541,10 @@ const AddProject = ({ dismiss }) => {
                             <input
                               id="input-validation-building"
                               onChange={(event) => {
-                                setSendData((prevSendData) => [
-                                  {
-                                    ...prevSendData[0],
-                                    category: {
-                                      ...prevSendData[0].category,
-                                    },
-                                    condition: {
-                                      ...prevSendData[0].condition,
-                                      condition: event.target.value,
-                                    },
-                                    works: {
-                                      ...prevSendData[0].works,
-                                    },
-                                  },
-                                ]);
-                                // setValidate((prev) => ({
-                                //   ...prev,
-                                //   stepTwo: {
-                                //     ...prev.stepTwo,
-                                //     buildingInput: true,
-                                //   },
-                                // }));
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  condition: event.target.value,
+                                }));
                               }}
                               onBlur={validationHandler}
                               className="form-check-input"
@@ -678,23 +587,12 @@ const AddProject = ({ dismiss }) => {
                         <span className="form-check form-check-custom form-check-solid">
                           <input
                             id="input-validation"
-                            onChange={(event) =>
-                              setSendData((prevSendData) => [
-                                {
-                                  ...prevSendData[0],
-                                  category: {
-                                    ...prevSendData[0].category,
-                                  },
-                                  condition: {
-                                    ...prevSendData[0].condition,
-                                    currentCondition: event.target.value,
-                                  },
-                                  works: {
-                                    ...prevSendData[0].works,
-                                  },
-                                },
-                              ])
-                            }
+                            onChange={(event) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                currentCondition: event.target.value,
+                              }));
+                            }}
                             onBlur={validationHandler}
                             className="form-check-input"
                             type="radio"
@@ -723,23 +621,12 @@ const AddProject = ({ dismiss }) => {
                         <span className="form-check form-check-custom form-check-solid">
                           <input
                             id="input-validation"
-                            onChange={(event) =>
-                              setSendData((prevSendData) => [
-                                {
-                                  ...prevSendData[0],
-                                  category: {
-                                    ...prevSendData[0].category,
-                                  },
-                                  condition: {
-                                    ...prevSendData[0].condition,
-                                    currentCondition: event.target.value,
-                                  },
-                                  works: {
-                                    ...prevSendData[0].works,
-                                  },
-                                },
-                              ])
-                            }
+                            onChange={(event) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                currentCondition: event.target.value,
+                              }));
+                            }}
                             onBlur={validationHandler}
                             className="form-check-input"
                             type="radio"
@@ -767,23 +654,12 @@ const AddProject = ({ dismiss }) => {
                         <span className="form-check form-check-custom form-check-solid">
                           <input
                             id="input-validation"
-                            onChange={(event) =>
-                              setSendData((prevSendData) => [
-                                {
-                                  ...prevSendData[0],
-                                  category: {
-                                    ...prevSendData[0].category,
-                                  },
-                                  condition: {
-                                    ...prevSendData[0].condition,
-                                    currentCondition: event.target.value,
-                                  },
-                                  works: {
-                                    ...prevSendData[0].works,
-                                  },
-                                },
-                              ])
-                            }
+                            onChange={(event) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                currentCondition: event.target.value,
+                              }));
+                            }}
                             onBlur={validationHandler}
                             className="form-check-input"
                             type="radio"
@@ -808,22 +684,10 @@ const AddProject = ({ dismiss }) => {
                       <input
                         id="input-validation-object"
                         onChange={(event) => {
-                          setSendData((prevSendData) => [
-                            {
-                              ...prevSendData[0],
-                              category: {
-                                ...prevSendData[0].category,
-                              },
-                              condition: {
-                                ...prevSendData[0].condition,
-                              },
-                              works: {
-                                ...prevSendData[0].works,
-                                objectName: event.target.value,
-                              },
-                            },
-                          ]);
-                          // validationHandler;
+                          setSendData((prevSendData) => ({
+                            ...prevSendData,
+                            objectName: event.target.value,
+                          }));
                         }}
                         onBlur={validationHandler}
                         type="text"
@@ -841,25 +705,29 @@ const AddProject = ({ dismiss }) => {
                         <div className="row fv-row">
                           <div className="col-6">
                             <div className="d-flex flex-column">
-                              {categories && categories.map((item, index) => {
-                                return (
-                                  <div key={index} className="form-check form-check-custom form-check-solid mb-2">
-                                    <input
-                                      onBlur={validationHandler}
-                                      onChange={handleCheckboxChange}
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      defaultValue={item.category}
-                                    />
-                                    <label
-                                      onClick={(e) => e.preventDefault()}
-                                      className="form-check-label georgian"
+                              {categories &&
+                                categories.map((item, index) => {
+                                  return (
+                                    <div
+                                      key={index}
+                                      className="form-check form-check-custom form-check-solid mb-2"
                                     >
-                                      {item.category}
-                                    </label>
-                                  </div>
-                                );
-                              })}
+                                      <input
+                                        onBlur={validationHandler}
+                                        onChange={handleCheckboxChange}
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        defaultValue={item.category}
+                                      />
+                                      <label
+                                        onClick={(e) => e.preventDefault()}
+                                        className="form-check-label georgian"
+                                      >
+                                        {item.category}
+                                      </label>
+                                    </div>
+                                  );
+                                })}
                             </div>
                             {/* $#$#$#$#$ */}
                           </div>
