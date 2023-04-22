@@ -17,7 +17,7 @@ function HeaderLogged() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [popup, setPopup] = useState(false);
   const ref = useRef(null);
-
+  const [isSticky, setIsSticky] = useState(false);
   const dispatch = useDispatch();
 
   const animation = useSpring({
@@ -64,10 +64,22 @@ function HeaderLogged() {
     window.location.reload();
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.pageYOffset > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div
       id="kt_header"
-      className="header"
+      className={` header ${styles.loggedHeader} ${
+        isSticky ? styles.sticky : ""
+      }`}
       data-kt-sticky="true"
       data-kt-sticky-name="header"
       data-kt-sticky-offset="{default: '200px', lg: '300px'}"

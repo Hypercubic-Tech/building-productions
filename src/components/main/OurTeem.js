@@ -1,12 +1,12 @@
 // import SwiperComp from "../layouts/SwiperComp";
-// import logo1 from '../../../public/swiperImgs/logo1.jpg'; 
-// import logo2 from '../../../public/swiperImgs/logo2.jpg'; 
-// import logo3 from '../../../public/swiperImgs/logo3.jpg'; 
-// import logo4 from '../../../public/swiperImgs/logo4.jpg'; 
+// import logo1 from '../../../public/swiperImgs/logo1.jpg';
+// import logo2 from '../../../public/swiperImgs/logo2.jpg';
+// import logo3 from '../../../public/swiperImgs/logo3.jpg';
+// import logo4 from '../../../public/swiperImgs/logo4.jpg';
 
 const OurTeem = () => {
-  return ( 
-      <div className="py-10 py-lg-20">
+  return (
+    <div className="py-10 py-lg-20">
       <div className="container">
         <div className="text-center mb-12">
           <h3
@@ -20,8 +20,8 @@ const OurTeem = () => {
             It’s no doubt that when a development takes longer to complete,
             additional costs to
             <br />
-            integrate and test each extra feature creeps up and haunts most
-            of us.
+            integrate and test each extra feature creeps up and haunts most of
+            us.
           </div>
         </div>
         <div className="tns tns-default active">
@@ -79,7 +79,7 @@ const OurTeem = () => {
                 </div>
               </div>
             </div>
-            <div className="text-center" >
+            <div className="text-center">
               <div
                 className="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
                 style={{
@@ -131,9 +131,7 @@ const OurTeem = () => {
                 >
                   Ricky Hunt
                 </a>
-                <div className="text-muted fs-6 fw-bold mt-1">
-                  Art Director
-                </div>
+                <div className="text-muted fs-6 fw-bold mt-1">Art Director</div>
               </div>
             </div>
             <div className="text-center">
@@ -169,9 +167,7 @@ const OurTeem = () => {
                 >
                   Carles Puyol
                 </a>
-                <div className="text-muted fs-6 fw-bold mt-1">
-                  QA Managers
-                </div>
+                <div className="text-muted fs-6 fw-bold mt-1">QA Managers</div>
               </div>
             </div>
           </div>
@@ -216,8 +212,10 @@ const OurTeem = () => {
         </div>
       </div>
     </div>
-   );
+  );
+};
+{
+  /* <SwiperComp imgs={[logo1, logo2, logo3, logo4]} type={2} teemMembers={teemMembersData} /> */
 }
-{/* <SwiperComp imgs={[logo1, logo2, logo3, logo4]} type={2} teemMembers={teemMembersData} /> */}
 
 export default OurTeem;
