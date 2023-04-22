@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/axios";
+import styles from "./Modal.module.css";
 
 import AddProject from "./AddProject";
 
@@ -80,7 +81,7 @@ const HeaderPopup = () => {
     <>
     <div
       style={{display: close ? 'none' : '', overflow: 'auto'}}
-      className="modal-xxl"
+      className={`modal-xxl ${styles.modal}`}
     > 
       <div className="modal-content">
         <div className="modal-header">

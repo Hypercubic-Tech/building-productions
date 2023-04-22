@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/axios";
+import styles from "./Modal.module.css";
 
 const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
@@ -143,8 +144,8 @@ const AddProject = ({ dismiss }) => {
 
   return (
     <div
-      style={{ display: close ? "none" : "" }}
-      className="modal-dialog modal-dialog-centered mw-900px"
+      style={{ display: close ? "none" : "", overflow: 'auto'}}
+      className={`modal-xxl ${styles.modal}`}
     >
       <div className="modal-content">
         <div className="modal-header">
