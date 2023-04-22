@@ -23,7 +23,6 @@ const HeaderPopup = () => {
     };
     getDataHandler();
   }, []);
-  console.log(projectsData)
 
   const addProjectHandler = () => {
     setAddProject(true);
@@ -31,117 +30,111 @@ const HeaderPopup = () => {
   };
 
   const dismissHandler = () => {
-    setAddProject(false)
-    setClose(false)
-  }
+    setAddProject(false);
+    setClose(false);
+  };
 
-  const deleteHandler = () => {
-    console.log('delete me')
-  }
-  
-  const editHandler = () => {
-    console.log('edit me')
-  }
+  const deleteHandler = async (item) => {
+    console.log(item, "delete");
+    await axiosInstance
+      .post("/api/admin/projects/delete_project", {
+        item: item._id,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  const data = [
-    {
-      id: 0,
-      title: "texttext",
-      description: "some text here some text here",
-      img: "/assets/media/products/default.png",
-    },
-    {
-      id: 1,
-      title: "text111text",
-      description: "some text here som11e text here",
-      img: "/assets/media/products/default.png",
-    },
-    {
-      id: 2,
-      title: "text222text",
-      description: "some text here som222e text here",
-      img: "/assets/media/products/default.png",
-    },
-    {
-      id: 3,
-      title: "text222text",
-      description: "some text here som222e text here",
-      img: "/assets/media/products/default.png",
-    },
-    {
-      id: 4,
-      title: "text222text",
-      description: "some text here som222e text here",
-      img: "/assets/media/products/default.png",
-    },
-  ];
+  const editHandler = async (item) => {
+    console.log(item, "edit");
+    await axiosInstance
+      .post("/api/admin/projects/edit_project", {
+        item: item._id,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  console.log(projectsData)
   return (
     <>
-    <div
-      style={{display: close ? 'none' : '', overflow: 'auto'}}
-      className={`modal-xxl ${styles.modal}`}
-    > 
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">Modal title</h5>
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => setClose(true)}
-          />
-        </div>
-        <div  className="modal-body">
-          <div className="row">
-            {projectsData && projectsData.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className="card col-2 d-flex "
-                  style={{ width: "20rem", overflow: "hidden" }}
-                >
-                  <div className="col-11">
-                    <div className="card-body">
-                      <h5 className="card-title">{item.objectName}</h5>
-                      <p className="card-text">{item.propertyType}</p>
-                      <div className="btn-group row">
-                        <div onClick={editHandler} className="btn btn-primary">
-                          რედაქტირება
-                        </div>
-                        <div onClick={deleteHandler} className="btn btn-danger">
-                          წაშლა
+      <div
+        style={{ display: close ? "none" : "", overflow: "auto" }}
+        className={`modal-xxl ${styles.modal}`}
+      >
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Modal title</h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => setClose(true)}
+            />
+          </div>
+          <div className="modal-body">
+            <div className="row">
+              {projectsData &&
+                projectsData.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="card col-2 d-flex "
+                      style={{ width: "20rem", overflow: "hidden" }}
+                    >
+                      <div className="col-11">
+                        <div className="card-body">
+                          <h5 className="card-title">{item.objectName}</h5>
+                          <p className="card-text">{item.propertyType}</p>
+                          <div className="btn-group row">
+                            <div
+                              onClick={() => editHandler(item)}
+                              className="btn btn-primary"
+                            >
+                              რედაქტირება
+                            </div>
+                            <div
+                              onClick={() => deleteHandler(item)}
+                              className="btn btn-danger"
+                            >
+                              წაშლა
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
+            </div>
+          </div>
+          <div className="modal-footer row">
+            <button
+              onClick={addProjectHandler}
+              type="button"
+              className="btn btn-primary"
+            >
+              დაამატე ობიექტი
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-plus"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 3a.5.5 0 0 1 .5.5v3.5h3a.5.5 0 0 1 0 1h-3v3.5a.5.5 0 0 1-1 0V8h-3a.5.5 0 0 1 0-1h3V3.5A.5.5 0 0 1 8 3z" />
+              </svg>
+            </button>
           </div>
         </div>
-        <div className="modal-footer row">
-          <button onClick={addProjectHandler} type="button" className="btn btn-primary">
-            დაამატე ობიექტი
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-plus"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 3a.5.5 0 0 1 .5.5v3.5h3a.5.5 0 0 1 0 1h-3v3.5a.5.5 0 0 1-1 0V8h-3a.5.5 0 0 1 0-1h3V3.5A.5.5 0 0 1 8 3z" />
-            </svg>
-          </button>
-        </div>
       </div>
-    </div>
-    {addProject && (
-        <AddProject dismiss={dismissHandler} />
-    )}
+      {addProject && <AddProject dismiss={dismissHandler} />}
     </>
-
   );
 };
 

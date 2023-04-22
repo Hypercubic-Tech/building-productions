@@ -128,7 +128,7 @@ const AddProject = ({ dismiss }) => {
     setSendData((prevState) => {
       const newData = JSON.parse(JSON.stringify(prevState));
       if (checked) {
-        newData.worksToDo = [ ...newData.worksToDo, value ];
+        newData.worksToDo = [...newData.worksToDo, value];
       } else {
         newData.worksToDo = newData.worksToDo.filter((val) => val !== value);
       }
@@ -144,7 +144,7 @@ const AddProject = ({ dismiss }) => {
 
   return (
     <div
-      style={{ display: close ? "none" : "", overflow: 'auto'}}
+      style={{ display: close ? "none" : "", overflow: "auto" }}
       className={`modal-xxl ${styles.modal}`}
     >
       <div className="modal-content">
