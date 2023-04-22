@@ -34,6 +34,14 @@ const HeaderPopup = () => {
     setClose(false)
   }
 
+  const deleteHandler = () => {
+    console.log('delete me')
+  }
+  
+  const editHandler = () => {
+    console.log('edit me')
+  }
+
   const data = [
     {
       id: 0,
@@ -85,7 +93,7 @@ const HeaderPopup = () => {
         </div>
         <div  className="modal-body">
           <div className="row">
-            {/* {projectsData.map((item, index) => {
+            {projectsData && projectsData.map((item, index) => {
               return (
                 <div
                   key={index}
@@ -93,15 +101,14 @@ const HeaderPopup = () => {
                   style={{ width: "20rem", overflow: "hidden" }}
                 >
                   <div className="col-11">
-                    <img src="" className="card-img-top" alt="..." />
                     <div className="card-body">
                       <h5 className="card-title">{item.objectName}</h5>
                       <p className="card-text">{item.propertyType}</p>
                       <div className="btn-group row">
-                        <div href="#" className="btn btn-primary">
+                        <div onClick={editHandler} className="btn btn-primary">
                           რედაქტირება
                         </div>
-                        <div href="#" className="btn btn-danger">
+                        <div onClick={deleteHandler} className="btn btn-danger">
                           წაშლა
                         </div>
                       </div>
@@ -109,7 +116,7 @@ const HeaderPopup = () => {
                   </div>
                 </div>
               );
-            })} */}
+            })}
           </div>
         </div>
         <div className="modal-footer row">
