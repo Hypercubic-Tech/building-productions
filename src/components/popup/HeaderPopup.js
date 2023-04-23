@@ -3,11 +3,14 @@ import axiosInstance from "@/api/axios";
 import styles from "./Modal.module.css";
 
 import AddProject from "./AddProject";
+import EditProject from "./EditProject";
 
 const HeaderPopup = () => {
   const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
+  const [editProject, setEditProject] = useState(false);
   const [projectsData, setProjectsData] = useState(false);
+  const [editProjectData, setEditProjectData] = useState(null);
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -35,7 +38,6 @@ const HeaderPopup = () => {
   };
 
   const deleteHandler = async (item) => {
-    console.log(item, "delete");
     await axiosInstance
       .post("/api/admin/projects/delete_project", {
         item: item._id,
@@ -49,17 +51,9 @@ const HeaderPopup = () => {
   };
 
   const editHandler = async (item) => {
-    console.log(item, "edit");
-    await axiosInstance
-      .post("/api/admin/projects/edit_project", {
-        item: item._id,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setEditProject(true);
+    setEditProjectData(item);
+    console.log(item)
   };
 
   return (
@@ -134,6 +128,7 @@ const HeaderPopup = () => {
         </div>
       </div>
       {addProject && <AddProject dismiss={dismissHandler} />}
+      {editProject && <EditProject data={editProjectData} dismiss={dismissHandler} />}
     </>
   );
 };
