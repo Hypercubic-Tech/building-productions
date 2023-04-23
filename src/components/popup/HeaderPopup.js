@@ -53,7 +53,7 @@ const HeaderPopup = () => {
   const editHandler = async (item) => {
     setEditProject(true);
     setEditProjectData(item);
-    console.log(item)
+    setClose(true)
   };
 
   return (

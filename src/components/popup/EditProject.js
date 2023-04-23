@@ -7,7 +7,8 @@ const EditProject = ({ data, dismiss }) => {
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
   const [categories, setCategories] = useState(null);
-  const [projectData, setProjectData] = useState(data);
+
+  const [sendData, setSendData] = useState(data);
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -24,26 +25,17 @@ const EditProject = ({ data, dismiss }) => {
     getDataHandler();
   }, []);
 
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setProjectData({ ...editedData, [name]: value });
-  };
-
-
-  const handleSubmit = async () => {
-    try {
-      // send editedData to backend to update project
-      await axiosInstance.post('/api/admin/projects/edit_project', {
-        project: editedData,
+  const sendFormDataHandler = async () => {
+    await axiosInstance
+      .post("/api/admin/projects/edit_project", {
+        project: sendData,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      // update original data object with editedData
-      setData(editedData);
-      alert('Project updated successfully!');
-    } catch (error) {
-      console.log(error);
-      alert('Error updating project.');
-    }
   };
 
   let errors = {
@@ -69,7 +61,6 @@ const EditProject = ({ data, dismiss }) => {
       errors.stepOne.push("შეავსეთ ტელეფონის ნომერი");
     }
     // // end of step one
-    console.log(sendData);
     if (sendData.currentCondition.length === 0) {
       errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა");
     }
@@ -134,7 +125,6 @@ const EditProject = ({ data, dismiss }) => {
   };
 
   const finishHandler = () => {
-    console.log(sendData);
     setClose(true);
     sendFormDataHandler();
   };
@@ -146,7 +136,7 @@ const EditProject = ({ data, dismiss }) => {
     >
       <div className="modal-content">
         <div className="modal-header">
-          <h2 className="georgian">ობიექტის დამატება</h2>
+          <h2 className="georgian">ობიექტის რედაქტირება</h2>
 
           <div
             className="btn btn-sm btn-icon btn-active-color-primary"
@@ -307,7 +297,7 @@ const EditProject = ({ data, dismiss }) => {
                                 }));
                               }}
                               defaultValue={data.city}
-                              //   onBlur={validationHandler}
+                              onBlur={validationHandler}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
@@ -330,7 +320,7 @@ const EditProject = ({ data, dismiss }) => {
                                 }));
                               }}
                               defaultValue={data.district}
-                              //   onBlur={validationHandler}
+                              onBlur={validationHandler}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
@@ -378,7 +368,7 @@ const EditProject = ({ data, dismiss }) => {
                                 }));
                               }}
                               defaultValue={data.address}
-                              //   onBlur={validationHandler}
+                              onBlur={validationHandler}
                               type="text"
                               className="form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
@@ -394,7 +384,7 @@ const EditProject = ({ data, dismiss }) => {
                                 }));
                               }}
                               defaultValue={data.phone}
-                              //   onBlur={validationHandler}
+                              onBlur={validationHandler}
                               type="number"
                               className="form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
@@ -464,7 +454,7 @@ const EditProject = ({ data, dismiss }) => {
                                   condition: event.target.value,
                                 }));
                               }}
-                              //   onBlur={validationHandler}
+                              onBlur={validationHandler}
                               className="form-check-input"
                               type="radio"
                               name="category"
@@ -553,7 +543,7 @@ const EditProject = ({ data, dismiss }) => {
                                   condition: event.target.value,
                                 }));
                               }}
-                              //   onBlur={validationHandler}
+                              onBlur={validationHandler}
                               className="form-check-input"
                               type="radio"
                               name="category"
@@ -824,7 +814,7 @@ const EditProject = ({ data, dismiss }) => {
                       className="btn btn-lg btn-primary"
                     >
                       <span className="indicator-label georgian">
-                        დამატება
+                        რედაქტირება
                         <span className="svg-icon svg-icon-3 ms-2 me-0">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
