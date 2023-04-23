@@ -2,23 +2,13 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/api/axios";
 import styles from "./Modal.module.css";
 
-const AddProject = ({ dismiss }) => {
+const EditProject = ({ data, dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
   const [categories, setCategories] = useState(null);
 
-  const [sendData, setSendData] = useState({
-    propertyType: "",
-    city: "",
-    district: "",
-    address: "",
-    phone: "",
-    condition: [],
-    currentCondition: [],
-    objectName: "",
-    worksToDo: [],
-  });
+  const [sendData, setSendData] = useState(data);
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -36,9 +26,8 @@ const AddProject = ({ dismiss }) => {
   }, []);
 
   const sendFormDataHandler = async () => {
-    console.log(sendData);
     await axiosInstance
-      .post("/api/admin/projects/add_project", {
+      .post("/api/admin/projects/edit_project", {
         project: sendData,
       })
       .then((response) => {
@@ -72,7 +61,6 @@ const AddProject = ({ dismiss }) => {
       errors.stepOne.push("შეავსეთ ტელეფონის ნომერი");
     }
     // // end of step one
-    console.log(sendData);
     if (sendData.currentCondition.length === 0) {
       errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა");
     }
@@ -137,7 +125,6 @@ const AddProject = ({ dismiss }) => {
   };
 
   const finishHandler = () => {
-    console.log(sendData);
     setClose(true);
     sendFormDataHandler();
   };
@@ -149,7 +136,7 @@ const AddProject = ({ dismiss }) => {
     >
       <div className="modal-content">
         <div className="modal-header">
-          <h2 className="georgian">ობიექტის დამატება</h2>
+          <h2 className="georgian">ობიექტის რედაქტირება</h2>
 
           <div
             className="btn btn-sm btn-icon btn-active-color-primary"
@@ -283,6 +270,7 @@ const AddProject = ({ dismiss }) => {
                           }));
                         }}
                         onBlur={validationHandler}
+                        defaultValue={data.propertyType}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
                         <option value={"ბინა"}>ბინა</option>
@@ -308,6 +296,7 @@ const AddProject = ({ dismiss }) => {
                                   city: event.target.value,
                                 }));
                               }}
+                              defaultValue={data.city}
                               onBlur={validationHandler}
                               name="locale"
                               className="form-select form-select-solid georgian"
@@ -330,6 +319,7 @@ const AddProject = ({ dismiss }) => {
                                   district: event.target.value,
                                 }));
                               }}
+                              defaultValue={data.district}
                               onBlur={validationHandler}
                               name="locale"
                               className="form-select form-select-solid georgian"
@@ -377,6 +367,7 @@ const AddProject = ({ dismiss }) => {
                                   address: event.target.value,
                                 }));
                               }}
+                              defaultValue={data.address}
                               onBlur={validationHandler}
                               type="text"
                               className="form-control georgian form-control-solid"
@@ -392,6 +383,7 @@ const AddProject = ({ dismiss }) => {
                                   phone: event.target.value,
                                 }));
                               }}
+                              defaultValue={data.phone}
                               onBlur={validationHandler}
                               type="number"
                               className="form-control georgian form-control-solid"
@@ -466,6 +458,11 @@ const AddProject = ({ dismiss }) => {
                               className="form-check-input"
                               type="radio"
                               name="category"
+                              defaultChecked={
+                                data.condition === "ახალი აშენებული"
+                                  ? "checked"
+                                  : ""
+                              }
                               defaultValue={"ახალი აშენებული"}
                             />
                           </span>
@@ -551,12 +548,16 @@ const AddProject = ({ dismiss }) => {
                               type="radio"
                               name="category"
                               defaultValue={"ძველი აშენებული"}
+                              defaultChecked={
+                                data.condition === "ძველი აშენებული"
+                                  ? "checked"
+                                  : ""
+                              }
                             />
                           </span>
                         </label>
                       </div>
                     </div>
-
                     <div className="fv-row">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                         <span className="required georgian">
@@ -596,7 +597,11 @@ const AddProject = ({ dismiss }) => {
                             onBlur={validationHandler}
                             className="form-check-input"
                             type="radio"
-                            defaultChecked="checked"
+                            defaultChecked={
+                              data.currentCondition === "შავი კარკასი"
+                                ? "checked"
+                                : ""
+                            }
                             name="framework"
                             defaultValue={"შავი კარკასი"}
                           />
@@ -631,6 +636,11 @@ const AddProject = ({ dismiss }) => {
                             className="form-check-input"
                             type="radio"
                             name="framework"
+                            defaultChecked={
+                              data.currentCondition === "თეთრი კარკასი"
+                                ? "checked"
+                                : ""
+                            }
                             defaultValue={"თეთრი კარკასი"}
                           />
                         </span>
@@ -665,13 +675,17 @@ const AddProject = ({ dismiss }) => {
                             type="radio"
                             name="framework"
                             defaultValue={"მწვანე კარკასი"}
+                            defaultChecked={
+                              data.currentCondition === "მწვანე კარკასი"
+                                ? "checked"
+                                : ""
+                            }
                           />
                         </span>
                       </label>
                     </div>
                   </div>
                 </div>
-
                 <div
                   className={getStatusClass(3)}
                   data-kt-stepper-element="content"
@@ -689,6 +703,7 @@ const AddProject = ({ dismiss }) => {
                             objectName: event.target.value,
                           }));
                         }}
+                        defaultValue={data.objectName}
                         onBlur={validationHandler}
                         type="text"
                         className="form-control georgian form-control-lg form-control-solid"
@@ -707,6 +722,9 @@ const AddProject = ({ dismiss }) => {
                             <div className="d-flex flex-column">
                               {categories &&
                                 categories.map((item, index) => {
+                                  const isChecked = data.worksToDo.includes(
+                                    item.category
+                                  );
                                   return (
                                     <div
                                       key={index}
@@ -718,6 +736,7 @@ const AddProject = ({ dismiss }) => {
                                         className="form-check-input"
                                         type="checkbox"
                                         defaultValue={item.category}
+                                        defaultChecked={isChecked}
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}
@@ -729,123 +748,12 @@ const AddProject = ({ dismiss }) => {
                                   );
                                 })}
                             </div>
-                            {/* $#$#$#$#$ */}
-                          </div>
-                          <div className="col-6">
-                            {/* <div className="d-flex flex-column">
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="გათბობა, გაგრილება"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  გათბობა, გაგრილება
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="ელექტროობა"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  ელექტროობა
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="ფილის დაგება/გაკვრა"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  ფილის დაგება/გაკვრა
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="სამღებრო სამუშაოები"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  სამღებრო სამუშაოები
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="იატაკის საფარი"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  იატაკის საფარი
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="კარ-ფანჯარა"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  კარ-ფანჯარა
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="დალაგება"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  დალაგება
-                                </label>
-                              </div>
-                            </div> */}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
                 <div
                   className={getStatusClass(4)}
                   data-kt-stepper-element="content"
@@ -864,7 +772,6 @@ const AddProject = ({ dismiss }) => {
                     </div>
                   </div>
                 </div>
-
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
                     <button
@@ -899,7 +806,6 @@ const AddProject = ({ dismiss }) => {
                       უკან
                     </button>
                   </div>
-
                   <div>
                     <button
                       onClick={finishHandler}
@@ -908,7 +814,7 @@ const AddProject = ({ dismiss }) => {
                       className="btn btn-lg btn-primary"
                     >
                       <span className="indicator-label georgian">
-                        დამატება
+                        რედაქტირება
                         <span className="svg-icon svg-icon-3 ms-2 me-0">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -983,4 +889,4 @@ const AddProject = ({ dismiss }) => {
   );
 };
 
-export default AddProject;
+export default EditProject;
