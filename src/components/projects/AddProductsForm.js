@@ -358,6 +358,41 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
               />
               <div className="fv-plugins-message-container invalid-feedback"></div>
             </div>
+            <div className="col-md-4 fv-row fv-plugins-icon-container">
+              <label className="required fs-5 fw-bold mb-2 georgian">
+                სტატუსი
+              </label>
+              <select
+                onClick={(e) => {
+                  setFormData((formData) => ({
+                    ...formData,
+                    unit: e.target.value,
+                  }));
+                }}
+                name="status"
+                className="form-select form-select-solid georgian"
+                data-placeholder="სტატუსი"
+              >
+                <option value="არ დაწყებულა">არ დაწყებულა</option>
+                <option value="პროცესშია">პროცესშია</option>
+                <option value="დასრულდა">დასრულდა</option>
+              </select>
+              <div className="fv-plugins-message-container invalid-feedback"></div>
+            </div>
+            <div className="mt-38 col-md-4 fv-row fv-plugins-icon-container">
+              <div className="form-check form-check-sm form-check-custom form-check-solid">
+                <label className="required fs-5 fw-bold mb-2 georgian">
+                  შეძენილია
+                </label>
+                <input
+                  className="mx-2 form-check-input"
+                  type="checkbox"
+                  data-kt-check="true"
+                  data-kt-check-target="#kt_table_users .form-check-input"
+                  defaultValue={1}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div className="text-center pt-15">
