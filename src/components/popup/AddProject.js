@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "@/api/axios";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import styles from "./Modal.module.css";
 
 const AddProject = ({ dismiss }) => {
@@ -7,6 +7,7 @@ const AddProject = ({ dismiss }) => {
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
   const [categories, setCategories] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
 
   const [sendData, setSendData] = useState({
     propertyType: "",
@@ -18,11 +19,12 @@ const AddProject = ({ dismiss }) => {
     currentCondition: [],
     objectName: "",
     worksToDo: [],
+    userId: ""
   });
 
   useEffect(() => {
     const getDataHandler = async () => {
-      await axiosInstance
+      await axiosPrivate
         .get("/api/admin/content/get_categories", {})
         .then((res) => {
           let data = res.data;
@@ -33,11 +35,13 @@ const AddProject = ({ dismiss }) => {
         });
     };
     getDataHandler();
+
+    setSendData({ ...sendData, userId: localStorage.getItem("userId")});
   }, []);
 
   const sendFormDataHandler = async () => {
     console.log(sendData);
-    await axiosInstance
+    await axiosPrivate
       .post("/api/admin/projects/add_project", {
         project: sendData,
       })

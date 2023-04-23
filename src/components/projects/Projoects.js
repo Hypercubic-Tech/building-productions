@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import ProjectItem from "./ProjectItem";
 
 const res = [
@@ -28,6 +30,16 @@ const res = [
 ];
 
 const Projects = () => {
+  const axiosPrivate = useAxiosPrivate();
+
+  useEffect(() => {
+    const getProjects = async () => {
+      await axiosPrivate.get("/api/admin/projects/get_projects");
+    };
+
+    getProjects();
+  }, []);
+
   return (
     <>
       <div
