@@ -8,9 +8,7 @@ const AdminDashboard = () => {
     craftName: "",
   });
 
-  console.log
-
- 
+  console.log;
 
   const addCategoryHandler = () => {
     axiosInstance
@@ -27,16 +25,12 @@ const AdminDashboard = () => {
     formData.append("image", craftData.image);
     formData.append("craftName", craftData.craftName);
 
-
     axiosInstance
-      .post(
-        "/api/admin/content/add_craft", formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      .post("/api/admin/content/add_craft", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         console.log(response);
       })
