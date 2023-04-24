@@ -2,6 +2,7 @@ import Project from "@/components/projects/Project";
 import axiosInstance from "@/api/axios";
 
 export const getStaticPaths = async () => {
+    //reqvest to get projects data
     const res = await axiosInstance.get("/api/admin/projects/get_projects");
 
     let paths = [];
