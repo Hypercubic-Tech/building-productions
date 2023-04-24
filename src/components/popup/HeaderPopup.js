@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/axios";
 import styles from "./Modal.module.css";
+import Link from "next/link";
 
 import AddProject from "./AddProject";
 import EditProject from "./EditProject";
@@ -14,8 +15,10 @@ const HeaderPopup = () => {
 
   useEffect(() => {
     const getDataHandler = async () => {
+      const userId = localStorage.getItem('userId');
+
       await axiosInstance
-        .get("/api/admin/projects/get_projects", {})
+        .post("/api/admin/projects/get_users_projects", { userId })
         .then((res) => {
           let data = res.data;
           setProjectsData(data.projects);
@@ -87,7 +90,7 @@ const HeaderPopup = () => {
                     >
                       <div className="col-11">
                         <div className="card-body">
-                          <h5 className="card-title">{item.objectName}</h5>
+                          <Link href={`/projects/${item._id}`} className="card-title">{item.objectName}</Link>
                           <p className="card-text">{item.propertyType}</p>
                           <div className="btn-group row">
                             <div
