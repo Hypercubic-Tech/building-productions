@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosInstance from "@/api/axios";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 const AdminDashboard = () => {
   const [categoryName, setCategoryName] = useState("");
+  const [crafts, setCrafts] = useState(null);
   const [craftData, setCraftData] = useState({
     image: null,
     craftName: "",
   });
 
-  console.log;
+  const axiosPrivate = useAxiosPrivate()
 
   const addCategoryHandler = () => {
     axiosInstance
@@ -20,7 +22,7 @@ const AdminDashboard = () => {
       });
   };
 
-  const submitHandler = () => {
+  const addCraftHandler = () => {
     const formData = new FormData();
     formData.append("image", craftData.image);
     formData.append("craftName", craftData.craftName);
@@ -39,6 +41,23 @@ const AdminDashboard = () => {
       });
   };
 
+  useEffect(() => {
+    const getDataHandler = async () => {
+      await axiosPrivate
+        .get("/api/admin/content/get_crafts", {})
+        .then((res) => {
+          let data = res.data;
+          setCrafts(data);
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    };
+    getDataHandler();
+
+  }, []);
+
+  console.log(crafts)
   return (
     <div>
       <div>
@@ -72,7 +91,7 @@ const AdminDashboard = () => {
               }));
             }}
           />
-          <div onClick={submitHandler}>add craft</div>
+          <div onClick={addCraftHandler}>add craft</div>
         </form>
       </div>
     </div>
