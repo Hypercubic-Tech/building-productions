@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../api/axios";
 
-function AddWork() {
+function AddWork(setSelect) {
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ function AddWork() {
 
   const handleSubmit = async () => {
     console.log(formData);
-    setSelect(null);
+    // setSelect(null);
     await axiosInstance.post("/api/product/create", formData).then((res) => {
       console.log(res);
     });
