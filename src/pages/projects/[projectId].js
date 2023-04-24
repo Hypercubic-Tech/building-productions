@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Products from "@/components/projects/Products";
 import AddProductForm from "@/components/projects/AddProductsForm";
+import AddWork from "@/components/projects/AddWork";
 
 const res = [
   {
@@ -72,14 +73,17 @@ export const getStaticProps = async ({ params }) => {
 
 const Project = ({ pr }) => {
   const [select, setSelect] = useState(null);
-  const [active, setActive] = useState(1);
+  const [showFirst, setShowFirst] = useState(true);
+  const [showSecond, setShowSecond] = useState(false);
 
-  let tabHandler = (num) => {
-    if (num === active) {
-      setActive(num);
-    } else {
-      setActive(num);
-    }
+  const handleShowSecond = () => {
+    setShowFirst(false);
+    setShowSecond(true);
+  };
+
+  const handleShowFirst = () => {
+    setShowFirst(true);
+    setShowSecond(false);
   };
 
   const pushTempArray = (newArr) => {
@@ -533,18 +537,18 @@ const Project = ({ pr }) => {
                                     className={` d-flex justify-content-center align-items-center w-100 p-2 `}
                                   >
                                     <div
-                                      onClick={() => {
-                                        tabHandler(1);
-                                      }}
-                                      className={` primary-focus text-hover-primary mx-5 cursor-pointer `}
+                                      onClick={handleShowFirst}
+                                      className={` ${
+                                        showFirst ? "primary-focus" : ""
+                                      } text-hover-primary mx-5 cursor-pointer `}
                                     >
                                       პროდუქციის დამატება
                                     </div>
                                     <div
-                                      onClick={() => {
-                                        tabHandler(2);
-                                      }}
-                                      className={` primary-focus text-hover-primary mx-5 cursor-pointer `}
+                                      onClick={handleShowSecond}
+                                      className={`${
+                                        showSecond ? "primary-focus" : ""
+                                      } text-hover-primary mx-5 cursor-pointer `}
                                     >
                                       ხელობის დამატება
                                     </div>
@@ -590,11 +594,18 @@ const Project = ({ pr }) => {
                                   </div>
                                 </div>
                                 <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                  <AddProductForm
-                                    type={active}
-                                    setSelect={setSelect}
-                                    pushTempArray={pushTempArray}
-                                  />
+                                  {showFirst && (
+                                    <AddProductForm
+                                      setSelect={setSelect}
+                                      pushTempArray={pushTempArray}
+                                    />
+                                  )}
+                                  {showSecond && (
+                                    <AddWork
+                                      setSelect={setSelect}
+                                      pushTempArray={pushTempArray}
+                                    />
+                                  )}
                                 </div>
                               </div>
                             </div>

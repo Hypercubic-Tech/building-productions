@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../api/axios";
 
-const AddProductForm = ({ setSelect, pushTempArray, type }) => {
+function AddWork() {
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [formData, setFormData] = useState({
@@ -35,92 +35,10 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
         data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
         data-kt-scroll-offset="300px"
       >
-        <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
-          <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
-            <div
-              className="image-input image-input-outline"
-              data-kt-image-input="true"
-              style={{
-                backgroundImage: "url(assets/media/avatars/blank.png)",
-              }}
-            >
-              <div
-                className="image-input-wrapper w-125px h-125px"
-                style={{
-                  backgroundImage: "url(assets/media/avatars/150-1.png)",
-                }}
-              />
-              <label
-                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                data-kt-image-input-action="change"
-                data-bs-toggle="tooltip"
-                title="Change avatar"
-              >
-                <i className="bi bi-pencil-fill fs-7" />
-                <input
-                  onChange={(e) => {
-                    setFormData((formData) => ({
-                      ...formData,
-                      img: e.target.value,
-                    }));
-                  }}
-                  type="file"
-                  name="avatar"
-                  accept=".png, .jpg, .jpeg"
-                />
-                <input type="hidden" name="avatar_remove" />
-              </label>
-              <span
-                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                data-kt-image-input-action="cancel"
-                data-bs-toggle="tooltip"
-                title="Cancel avatar"
-              >
-                <i className="bi bi-x fs-2" />
-              </span>
-              <span
-                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                data-kt-image-input-action="remove"
-                data-bs-toggle="tooltip"
-                title="Remove avatar"
-              >
-                <i className="bi bi-x fs-2" />
-              </span>
-            </div>
-          </span>
-          <div className="d-flex flex-stack flex-grow-1">
-            <div className="fw-bold">
-              <h4 className="text-gray-900 fw-bolder georgian">სურათი</h4>
-              <div className="fs-6 text-gray-700 georgian">
-                მიუთითეთ მხოლოდ:
-                <a>png, jpg, jpeg.</a>
-                ფორმატი!
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="row mb-5">
-          <div className="col-md-8 fv-row fv-plugins-icon-container">
-            <label className="required fs-5 fw-bold mb-2 georgian">
-              დასახელება
-            </label>
-            <input
-              onChange={(e) => {
-                setFormData((formData) => ({
-                  ...formData,
-                  title: e.target.value,
-                }));
-              }}
-              type="text"
-              className="form-control form-control-solid georgian"
-              placeholder="პროდუქციის დასახელება"
-              name="title"
-            />
-            <div className="fv-plugins-message-container invalid-feedback"></div>
-          </div>
           <div className="col-md-4 fv-row fv-plugins-icon-container">
             <label className="required fs-5 fw-bold mb-2 georgian">
-              მომწოდებელი
+              დასახელება
             </label>
             <select
               onClick={(e) => {
@@ -129,34 +47,17 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
                   seler: e.target.value,
                 }));
               }}
-              name="saler"
+              name="title"
               className="form-select form-select-solid georgian"
-              data-placeholder="მომწოდებელი"
             >
-              <option value="გორგია">გორგია</option>
-              <option value="ნოვა">ნოვა</option>
-              <option value="დომინო">დომინო</option>
-              <option value="ბრიკორამა">ბრიკორამა</option>
-              <option value="ციტადელი">ციტადელი</option>
-              <option value="მიჰაუსი">მიჰაუსი</option>
-              <option value="სხვა">სხვა</option>
+              <option value="ხელობა">ხელობა</option>
+              <option value="ხელობა">ხელობა</option>
+              <option value="ხელობა">ხელობა</option>
+              <option value="ხელობა">ხელობა</option>
+              <option value="ხელობა">ხელობა</option>
+              <option value="ხელობა">ხელობა</option>
+              <option value="ხელობა">ხელობა</option>
             </select>
-            <div className="fv-plugins-message-container invalid-feedback"></div>
-          </div>
-          <div className="col-md-12 fv-row fv-plugins-icon-container">
-            <label className="required fs-5 fw-bold mb-2 georgian">ლინკი</label>
-            <input
-              onChange={(e) => {
-                setFormData((formData) => ({
-                  ...formData,
-                  address: e.target.value,
-                }));
-              }}
-              type="text"
-              className="form-control form-control-solid georgian"
-              placeholder="http://momwodebeli.ge"
-              name="prodactElAddress"
-            />
             <div className="fv-plugins-message-container invalid-feedback"></div>
           </div>
           <div className="col-md-4 fv-row fv-plugins-icon-container">
@@ -220,6 +121,41 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
             />
             <div className="fv-plugins-message-container invalid-feedback"></div>
           </div>
+          <div className="col-md-4 fv-row fv-plugins-icon-container">
+            <label className="required fs-5 fw-bold mb-2 georgian">
+              სტატუსი
+            </label>
+            <select
+              onClick={(e) => {
+                setFormData((formData) => ({
+                  ...formData,
+                  unit: e.target.value,
+                }));
+              }}
+              name="status"
+              className="form-select form-select-solid georgian"
+              data-placeholder="სტატუსი"
+            >
+              <option value="არ დაწყებულა">არ დაწყებულა</option>
+              <option value="პროცესშია">პროცესშია</option>
+              <option value="დასრულდა">დასრულდა</option>
+            </select>
+            <div className="fv-plugins-message-container invalid-feedback"></div>
+          </div>
+          <div className="mt-38 col-md-4 fv-row fv-plugins-icon-container">
+            <div className="form-check form-check-sm form-check-custom form-check-solid">
+              <label className="required fs-5 fw-bold mb-2 georgian">
+                შეძენილია
+              </label>
+              <input
+                className="mx-2 form-check-input"
+                type="checkbox"
+                data-kt-check="true"
+                data-kt-check-target="#kt_table_users .form-check-input"
+                defaultValue={1}
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div className="text-center pt-15">
@@ -250,6 +186,6 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
       </div>
     </form>
   );
-};
+}
 
-export default AddProductForm;
+export default AddWork;
