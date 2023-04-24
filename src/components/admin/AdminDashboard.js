@@ -10,7 +10,7 @@ const AdminDashboard = () => {
     craftName: "",
   });
 
-  const axiosPrivate = useAxiosPrivate()
+  const axiosPrivate = useAxiosPrivate();
 
   const addCategoryHandler = () => {
     axiosInstance
@@ -54,10 +54,9 @@ const AdminDashboard = () => {
         });
     };
     getDataHandler();
-
   }, []);
 
-  console.log(crafts)
+  console.log(crafts);
   return (
     <div>
       <div>
@@ -94,6 +93,14 @@ const AdminDashboard = () => {
           <div onClick={addCraftHandler}>add craft</div>
         </form>
       </div>
+      {crafts?.map((item, index) => {
+        return (
+          <div key={index}>
+            <img src={item.publicUrl} />
+            <p>{item.craftName}</p>
+          </div>
+        );
+      })}
     </div>
   );
 };
