@@ -148,7 +148,14 @@ const AboutCompany = () => {
                     viewBox="0 0 24 24"
                     fill="none"
                   >
-                    <rect x={2} y={2} width={9} height={9} rx={2} fill="black" />
+                    <rect
+                      x={2}
+                      y={2}
+                      width={9}
+                      height={9}
+                      rx={2}
+                      fill="black"
+                    />
                     <rect
                       opacity="0.3"
                       x={13}

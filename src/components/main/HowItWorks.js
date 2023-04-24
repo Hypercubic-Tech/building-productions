@@ -1,13 +1,13 @@
 // import SwiperComp from "../layouts/SwiperComp";
 
-// import logo1 from '../../../public/swiperImgs/logo1.jpg'; 
-// import logo2 from '../../../public/swiperImgs/logo2.jpg'; 
-// import logo3 from '../../../public/swiperImgs/logo3.jpg'; 
-// import logo4 from '../../../public/swiperImgs/logo4.jpg'; 
+// import logo1 from '../../../public/swiperImgs/logo1.jpg';
+// import logo2 from '../../../public/swiperImgs/logo2.jpg';
+// import logo3 from '../../../public/swiperImgs/logo3.jpg';
+// import logo4 from '../../../public/swiperImgs/logo4.jpg';
 
 const HowItWorks = () => {
-  return ( 
-      <div className="mb-n10 mb-lg-n20 z-index-2">
+  return (
+    <div className="mb-n10 mb-lg-n20 z-index-2">
       <div className="container">
         <div className="text-center mb-17">
           <h3
@@ -180,11 +180,11 @@ const HowItWorks = () => {
               </svg>
             </span>
           </button>
-           {/* <SwiperComp  imgs={[logo1, logo2, logo3, logo4]} type = {1} /> */}
+          {/* <SwiperComp  imgs={[logo1, logo2, logo3, logo4]} type = {1} /> */}
         </div>
       </div>
     </div>
-   );
-}
+  );
+};
 
 export default HowItWorks;

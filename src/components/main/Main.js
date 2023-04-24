@@ -17,8 +17,8 @@ const priceData = {
     startup: 500,
     business: 700,
     enterprise: 1000,
-  }
-}
+  },
+};
 
 const Main = () => {
   return (

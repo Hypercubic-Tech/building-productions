@@ -7,7 +7,7 @@ import {
   setAuthAccessToken,
   setAuthEmail,
   setAuthRole,
-  setAuthUserId
+  setAuthUserId,
 } from "@/store/slices/authSlice";
 
 function AuthModal(props) {

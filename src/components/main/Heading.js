@@ -4,8 +4,7 @@ const Heading = () => {
       <div
         className="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
         style={{
-          backgroundImage:
-            "url(assets/media/svg/illustrations/landing.svg)",
+          backgroundImage: "url(assets/media/svg/illustrations/landing.svg)",
         }}
       >
         <div className="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9">
@@ -15,7 +14,8 @@ const Heading = () => {
               <br />
               <span
                 style={{
-                  background: "linear-gradient(to right, #12CE5D 0%, #FFD80C 100%)",
+                  background:
+                    "linear-gradient(to right, #12CE5D 0%, #FFD80C 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}

@@ -1,10 +1,12 @@
 import { useState } from "react";
-import Products from "./Products";
-import AddProductForm from "./AddProductsForm";
+// import Products from "./Products";
+// import AddProductForm from "./AddProductsForm";
 
 
 const Project = ({ pr }) => {
     const [select, setSelect] = useState(null);
+
+    console.log(pr)
 
     return (
         <>
@@ -25,20 +27,20 @@ const Project = ({ pr }) => {
                             >
                                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                             </svg>
-                            &nbsp;{pr[0].addres}
+                            &nbsp;{pr?.address}
                         </h1>
                         <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
                             <li className="breadcrumb-item text-gray-600 georgian">
-                                {pr[0].type}
+                                {pr?.propertyType}
                             </li>
                             <li className="breadcrumb-item text-gray-600 georgian">
-                                {pr[0].status}
+                                {pr?.condition}
                             </li>
                             <li className="breadcrumb-item text-gray-600 georgian">
-                                {pr[0].m2}
+                                {pr?.area}
                             </li>
                             <li className="breadcrumb-item text-warning georgian">
-                                {pr[0].time}
+                                {pr?.date}
                             </li>
                         </ul>
                     </div>
@@ -494,7 +496,7 @@ const Project = ({ pr }) => {
                                                                 </div>
                                                             </div>
                                                             <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                                                <AddProductForm setSelect={setSelect} pushTempArray={pushTempArray} />
+                                                                {/* <AddProductForm setSelect={setSelect} pushTempArray={pushTempArray} /> */}
                                                             </div>
                                                         </div>
                                                     </div>
