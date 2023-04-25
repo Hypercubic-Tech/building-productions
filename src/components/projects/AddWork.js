@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "../../api/axios";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 function AddWork({ setSelect }) {
+  const [price, setPrice] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const [showInputs, setShowInputs] = useState(false);
   const [quantity, setQuantity] = useState(0);
@@ -17,10 +17,14 @@ function AddWork({ setSelect }) {
   });
 
   useEffect(() => {
-    if (selectedOption !== "") {
-      setShowInputs(true);
-    } else {
+    console.log(selectedOption);
+    if (
+      selectedOption === "64478f2a42be719665d1e247" ||
+      selectedOption === ""
+    ) {
       setShowInputs(false);
+    } else {
+      setShowInputs(true);
     }
   }, [selectedOption]);
 
@@ -45,12 +49,20 @@ function AddWork({ setSelect }) {
 
   const handleSubmit = async () => {
     setSelect(null);
-    await axiosInstance.post("/api/product/create", formData).then((res) => {
-      console.log(res);
-    });
-  };
+    console.log(1, "sended");
+    await axiosPrivate
+      .post("/api/product/create_product", {
+        formData,
+      })
+      .then((res) => {
+        const data = res.data;
 
-  console.log(categories);
+        console.log(data, "data");
+      })
+      .catch((e) => {
+        console.log(e, "error");
+      });
+  };
 
   return (
     <form id="kt_modal_add_user_form" className="form">
@@ -82,7 +94,7 @@ function AddWork({ setSelect }) {
             >
               {categories?.map((item, i) => {
                 return (
-                  <option key={i} value="კატეგორია">
+                  <option key={i} value={item._id}>
                     {item.category}
                   </option>
                 );
