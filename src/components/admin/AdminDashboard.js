@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import axiosInstance from "@/api/axios";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
@@ -42,21 +43,6 @@ const AdminDashboard = () => {
         console.log(error);
       });
   };
-
-  // useEffect(() => {
-  //   const getDataHandler = async () => {
-  //     await axiosPrivate
-  //       .get("/api/admin/content/get_crafts", {})
-  //       .then((res) => {
-  //         let data = res.data;
-  //         setCrafts(data);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e, "error");
-  //       });
-  //   };
-  //   getDataHandler();
-  // }, []);
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -129,14 +115,6 @@ const AdminDashboard = () => {
           <div onClick={addCraftHandler}>add craft</div>
         </form>
       </div>
-      {/* {crafts?.map((item, index) => {
-        return (
-          <div key={index}>
-            <img src={item.publicUrl} />
-            <p>{item.craftName}</p>
-          </div>
-        );
-      })} */}
     </div>
   );
 };

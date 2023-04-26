@@ -733,123 +733,12 @@ const AddProject = ({ dismiss }) => {
                                   );
                                 })}
                             </div>
-                            {/* $#$#$#$#$ */}
-                          </div>
-                          <div className="col-6">
-                            {/* <div className="d-flex flex-column">
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="გათბობა, გაგრილება"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  გათბობა, გაგრილება
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="ელექტროობა"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  ელექტროობა
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="ფილის დაგება/გაკვრა"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  ფილის დაგება/გაკვრა
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="სამღებრო სამუშაოები"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  სამღებრო სამუშაოები
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="იატაკის საფარი"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  იატაკის საფარი
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="კარ-ფანჯარა"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  კარ-ფანჯარა
-                                </label>
-                              </div>
-                              <div className="form-check form-check-custom form-check-solid mb-2">
-                                <input
-                                  onBlur={validationHandler}
-                                  onChange={handleCheckboxChange}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue="დალაგება"
-                                />
-                                <label
-                                  onClick={(e) => e.preventDefault()}
-                                  className="form-check-label georgian"
-                                >
-                                  დალაგება
-                                </label>
-                              </div>
-                            </div> */}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
                 <div
                   className={getStatusClass(4)}
                   data-kt-stepper-element="content"
