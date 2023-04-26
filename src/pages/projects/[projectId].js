@@ -1,28 +1,27 @@
 import Project from "@/components/projects/Project";
-import axiosPrivate from "@/api/axiosPrivate";
+import axiosPrivate from "@/api/axios";
 
 export const getStaticPaths = async () => {
-  const res = await axiosPrivate.get("/api/admin/projects/get_projects");
+    //reqvest to get projects data
+    const res = await axiosPrivate.get("/api/admin/projects/get_projects");
 
-  let paths = [];
-  if (res?.data?.length) {
-    paths = res?.data?.map((item) => {
-      return {
-        params: { projectId: item?._id },
-      };
-    });
-  }
-  return {
-    paths,
-    fallback: true,
-  };
+    let paths = [];
+    if (res?.data?.length) {
+        paths = res?.data?.map((item) => {
+            return {
+                params: { projectId: item?._id },
+            };
+        });
+    }
+    return {
+        paths,
+        fallback: true,
+    };
 };
 
 export const getStaticProps = async ({ params }) => {
-  const projectId = params.projectId || "";
-  const res = await axiosPrivate.post("/api/admin/projects/get_users_project", {
-    projectId,
-  });
+    const projectId = params?.projectId || undefined;
+    const res = await axiosPrivate.post("/api/admin/projects/get_users_project", { projectId });
 
   return {
     props: {
