@@ -29,7 +29,7 @@ const AdminDashboard = () => {
     const formData = new FormData();
     formData.append("image", craftData.image);
     formData.append("craftName", craftData.craftName);
-    formData.append("category", craftData.category)
+    formData.append("category", craftData.category);
     axiosInstance
       .post("/api/admin/content/add_craft", formData, {
         headers: {
@@ -70,9 +70,20 @@ const AdminDashboard = () => {
         />
         <div onClick={addCategoryHandler}>Add</div>
       </div>
-      <div style={{padding: '20px', marginTop: '100px', border: '1px solid black'}}>
+      <div
+        style={{
+          padding: "20px",
+          marginTop: "100px",
+          border: "1px solid black",
+        }}
+      >
         <form
-          style={{ display: "flex", width: "50%", flexDirection: "column", gap: "30px" }}
+          style={{
+            display: "flex",
+            width: "50%",
+            flexDirection: "column",
+            gap: "30px",
+          }}
         >
           <input
             type="file"

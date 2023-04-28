@@ -5,3 +5,10 @@
     height: 400px;
     top: 30px;
 }
+.errorBorder {
+    border: 1px solid red!important;
+}
+.error {
+    border: 1px solid red!important;
+    background-color: red;
+}

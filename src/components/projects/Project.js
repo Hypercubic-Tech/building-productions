@@ -2,6 +2,7 @@ import { useState } from "react";
 // import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
 import AddWork from "./AddWork";
+import Filter from "./Filter";
 
 const Project = ({ pr }) => {
   const [select, setSelect] = useState(null);
@@ -20,6 +21,7 @@ const Project = ({ pr }) => {
 
   return (
     <>
+      <Filter project={pr} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"

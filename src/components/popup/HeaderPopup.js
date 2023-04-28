@@ -90,7 +90,7 @@ const HeaderPopup = () => {
                     >
                       <div className="col-11">
                         <div className="card-body">
-                          <Link href={`/projects/${item._id}`} className="card-title">{item.objectName}</Link>
+                          <Link onClick={()=> setClose(true)} href={`/projects/${item._id}`} className="card-title">{item.objectName}</Link>
                           <p className="card-text">{item.propertyType}</p>
                           <div className="btn-group row">
                             <div

@@ -19,7 +19,7 @@ const AddProject = ({ dismiss }) => {
     currentCondition: [],
     objectName: "",
     worksToDo: [],
-    userId: ""
+    userId: "",
   });
 
   useEffect(() => {
@@ -36,11 +36,10 @@ const AddProject = ({ dismiss }) => {
     };
     getDataHandler();
 
-    setSendData({ ...sendData, userId: localStorage.getItem("userId")});
+    setSendData({ ...sendData, userId: localStorage.getItem("userId") });
   }, []);
 
   const sendFormDataHandler = async () => {
-    console.log(sendData);
     await axiosPrivate
       .post("/api/admin/projects/add_project", {
         project: sendData,
@@ -60,23 +59,43 @@ const AddProject = ({ dismiss }) => {
   };
 
   const validationHandler = () => {
+    let propertyInput = document.getElementById("property");
+    let cityInput = document.getElementById("city");
+    let districtInput = document.getElementById("district");
+    let addressInput = document.getElementById("address");
+    let phoneInput = document.getElementById("phone");
+
     if (sendData.propertyType === "") {
       errors.stepOne.push("შეავსეთ ქონების ტიპი");
+      propertyInput.classList.add(styles.error);
+    } else {
+      propertyInput.classList.remove(styles.error);
     }
     if (sendData.city === "") {
       errors.stepOne.push("მონიშნეთ ქალაქი");
+      cityInput.classList.add(styles.error);
+    } else {
+      cityInput.classList.remove(styles.error);
     }
     if (sendData.district === "") {
       errors.stepOne.push("მონიშნეთ რაიონი");
+      districtInput.classList.add(styles.error);
+    } else {
+      districtInput.classList.remove(styles.error);
     }
     if (sendData.address === "") {
       errors.stepOne.push("შეავსეთ მისამართი");
+      addressInput.classList.add(styles.error);
+    } else {
+      addressInput.classList.remove(styles.error);
     }
     if (sendData.phone === "") {
       errors.stepOne.push("შეავსეთ ტელეფონის ნომერი");
+      phoneInput.classList.add(styles.error);
+    } else {
+      phoneInput.classList.remove(styles.error);
     }
     // // end of step one
-    console.log(sendData);
     if (sendData.currentCondition.length === 0) {
       errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა");
     }
@@ -104,7 +123,7 @@ const AddProject = ({ dismiss }) => {
     } else {
       return "pending";
     }
-  };
+  };  
 
   const stepChangeHandler = () => {
     if (step < 4) {
@@ -141,7 +160,6 @@ const AddProject = ({ dismiss }) => {
   };
 
   const finishHandler = () => {
-    console.log(sendData);
     setClose(true);
     sendFormDataHandler();
   };
@@ -280,6 +298,7 @@ const AddProject = ({ dismiss }) => {
                         />
                       </label>
                       <select
+                        id="property"
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
@@ -289,6 +308,7 @@ const AddProject = ({ dismiss }) => {
                         onBlur={validationHandler}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
+                        <option value={"default"}>აირჩიეთ ტიპი</option>
                         <option value={"ბინა"}>ბინა</option>
                         <option value={"სახლი-აგარაკი"}>სახლი-აგარაკი</option>
                         <option value={"კომერციული ფართი"}>
@@ -306,6 +326,7 @@ const AddProject = ({ dismiss }) => {
                         <div className="row fv-row">
                           <div className="col-6">
                             <select
+                              id="city"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
@@ -317,6 +338,7 @@ const AddProject = ({ dismiss }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
+                              <option value={"default"}>მონიშნეთ ქალაქი</option>
                               <option value={"თბილისი"}>თბილისი</option>
                               <option value={"რუსთავი"}>რუსთავი</option>
                               <option value={"ქუთაისი"}>ქუთაისი</option>
@@ -328,6 +350,7 @@ const AddProject = ({ dismiss }) => {
                           </div>
                           <div className="col-6">
                             <select
+                              id="district"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
@@ -339,6 +362,7 @@ const AddProject = ({ dismiss }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
+                              <option value={"default"}>მონიშნეთ უბანი</option>
                               <option value={"გლდანის რაიონი"}>
                                 გლდანის რაიონი
                               </option>
@@ -374,7 +398,7 @@ const AddProject = ({ dismiss }) => {
                         <div className="row fv-row">
                           <div className="col-6">
                             <input
-                              id="input-validation-address"
+                              id="address"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
@@ -389,7 +413,7 @@ const AddProject = ({ dismiss }) => {
                           </div>
                           <div className="col-6">
                             <input
-                              id="input-validation-mobile"
+                              id="phone"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
@@ -554,6 +578,7 @@ const AddProject = ({ dismiss }) => {
                               className="form-check-input"
                               type="radio"
                               name="category"
+                              defaultChecked="checked"
                               defaultValue={"ძველი აშენებული"}
                             />
                           </span>
