@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import axiosInstance from "@/api/axios";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 const AdminDashboard = () => {
@@ -16,48 +15,54 @@ const AdminDashboard = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const addCategoryHandler = () => {
-    axiosInstance
-      .post("/api/admin/content/add_category", {
-        category: categoryName,
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    axiosPrivate
+    .post("/api/admin/content/add_category", {
+      category: categoryName,
+    })
+    .then((res) => {
+      console.log(res);
+    });
   };
 
   const addCraftHandler = () => {
-    const formData = new FormData();
-    formData.append("image", craftData.image);
-    formData.append("craftName", craftData.craftName);
-    formData.append("category", craftData.category);
-    axiosInstance
-      .post("/api/admin/content/add_craft", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    saveImage(craftData.image);
+  };
+
+  const saveImage = async file => {
+    if (!file?.name) return;
+
+    let blob = file.slice(0, file.size, file.type);
+    const ext = file.type.slice(6);
+
+    const newFile = new File([blob], `${craftData.category}.${ext}`, { type: file.type });
+    let data = new FormData();
+    data.append("image", newFile);
+    data.append("category", craftData.category);
+
+    await axiosPrivate.post("api/admin/content/upload", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => {
+      console.log(res);
+    });
   };
 
   useEffect(() => {
     const getDataHandler = async () => {
       await axiosPrivate
-        .get("/api/admin/content/get_categories", {})
-        .then((res) => {
-          let data = res.data;
-          setCategories(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
+      .get("/api/admin/content/get_categories", {})
+      .then((res) => {
+        let data = res.data;
+        setCategories(data);
+      })
+      .catch((e) => {
+        console.log(e, "error");
+      });
     };
     getDataHandler();
-  }, []);
+  }, [categories]);
 
   return (
     <div>
@@ -92,16 +97,6 @@ const AdminDashboard = () => {
               setCraftData((prevCraftData) => ({
                 ...prevCraftData,
                 image: e.target.files[0],
-              }));
-            }}
-          />
-          <input
-            type="text"
-            placeholder="add craft"
-            onChange={(e) => {
-              setCraftData((prevCraftData) => ({
-                ...prevCraftData,
-                craftName: e.target.value,
               }));
             }}
           />
