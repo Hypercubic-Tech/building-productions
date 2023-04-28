@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import Products from "./Products";
+import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
 import AddWork from "./AddWork";
 import Filter from "./Filter";
@@ -539,7 +539,10 @@ const Project = ({ pr }) => {
                       </div>
                     </div>
                     <div className="card-body pt-0">
-                      {/* <Products products={productsData} /> */}
+                      {/* <Products 
+                      products={productsData}
+                       /> */}
+
                     </div>
                   </div>
                 </div>
