@@ -10,7 +10,6 @@ import {
 } from "@/store/slices/authSlice";
 
 import HeaderPopup from "../popup/HeaderPopup";
-// import axiosInstance from "@/api/axios";
 
 import styles from "../layouts/HeaderLogged.module.css";
 

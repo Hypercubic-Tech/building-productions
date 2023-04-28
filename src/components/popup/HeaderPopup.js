@@ -15,7 +15,7 @@ const HeaderPopup = () => {
 
   useEffect(() => {
     const getDataHandler = async () => {
-      const userId = localStorage.getItem('userId');
+      const userId = localStorage.getItem("userId");
 
       await axiosInstance
         .post("/api/admin/projects/get_users_projects", { userId })
@@ -54,13 +54,13 @@ const HeaderPopup = () => {
   };
 
   const editHandler = async (item) => {
-    if(!editProject) {
+    if (!editProject) {
       setEditProject(true);
     } else {
-      setEditProject(false)
+      setEditProject(false);
     }
     setEditProjectData(item);
-    setClose(true)
+    setClose(true);
   };
 
   return (
@@ -90,7 +90,12 @@ const HeaderPopup = () => {
                     >
                       <div className="col-11">
                         <div className="card-body">
-                          <Link onClick={()=> setClose(true)} href={`/projects/${item._id}`} className="card-title">{item.objectName}</Link>
+                          <Link
+                            href={`/projects/${item._id}`}
+                            className="card-title"
+                          >
+                            {item.objectName}
+                          </Link>
                           <p className="card-text">{item.propertyType}</p>
                           <div className="btn-group row">
                             <div
@@ -135,7 +140,9 @@ const HeaderPopup = () => {
         </div>
       </div>
       {addProject && <AddProject dismiss={dismissHandler} />}
-      {editProject && <EditProject data={editProjectData} dismiss={dismissHandler} />}
+      {editProject && (
+        <EditProject data={editProjectData} dismiss={dismissHandler} />
+      )}
     </>
   );
 };
