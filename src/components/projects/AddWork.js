@@ -4,6 +4,7 @@ import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 function AddWork({ setSelect }) {
   const [price, setPrice] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectedCraft, setSelectedCraft] = useState(null);
   const [showInputs, setShowInputs] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const axiosPrivate = useAxiosPrivate();
@@ -31,7 +32,9 @@ function AddWork({ setSelect }) {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    setSelectedCraft(crafts.find(craft => craft._id === event.target.value));
   };
+  
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -66,21 +69,20 @@ function AddWork({ setSelect }) {
   const handleSubmit = async () => {
     setSelect(null);
     console.log(1, "sended");
-    await axiosPrivate
-      .post("/api/product/create_product", {
-        formData,
-      })
-      .then((res) => {
-        const data = res.data;
-
-        console.log(data, "data");
-      })
-      .catch((e) => {
-        console.log(e, "error");
-      });
+    // await axiosPrivate
+    //   .post("/api/product/create_product", {
+    //     formData,
+    //   })
+    //   .then((res) => {
+    //     const data = res.data;
+    //     console.log(data, "data");
+    //   })
+    //   .catch((e) => {
+    //     console.log(e, "error");
+    //   });
   };
 
-  console.log(crafts)
+  // console.log(crafts)
   return (
     <form id="kt_modal_add_user_form" className="form">
       <div
@@ -109,19 +111,20 @@ function AddWork({ setSelect }) {
               name="category"
               className="form-select form-select-solid georgian"
             >
-              {crafts && crafts.map((item, index) => {
-                return (
-                  <option key={index} value={item._id}> 
-                  <p>{item.category}</p>
-                  <img src={item.image} alt='img' /> 
-                </option>
-                )
-              })}
+              {crafts &&
+                crafts.map((item, index) => {
+                  return (
+                    <option key={index} value={item._id}>
+                      {item.category}
+                    </option>
+                  );
+                })}
             </select>
             <div className="fv-plugins-message-container invalid-feedback"></div>
           </div>
-          {showInputs && (
+          {selectedCraft && (
             <>
+            {console.log(selectedCraft)}
               <div className="col-md-4 fv-row fv-plugins-icon-container">
                 <label className="required fs-5 fw-bold mb-2 georgian">
                   რაოდენობა
