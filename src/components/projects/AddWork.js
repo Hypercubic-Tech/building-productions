@@ -8,6 +8,7 @@ function AddWork({ setSelect }) {
   const [quantity, setQuantity] = useState(0);
   const axiosPrivate = useAxiosPrivate();
   const [categories, setCategories] = useState(null);
+  const [crafts, setCrafts] = useState(null);
   const [formData, setFormData] = useState({
     category: "",
     unit: "",
@@ -47,6 +48,21 @@ function AddWork({ setSelect }) {
     getDataHandler();
   }, []);
 
+  useEffect(() => {
+    const getDataHandler = async () => {
+      await axiosPrivate
+        .get("/api/admin/content/get_crafts", {})
+        .then((res) => {
+          let data = res.data;
+          setCrafts(data);
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    };
+    getDataHandler();
+  }, []);
+
   const handleSubmit = async () => {
     setSelect(null);
     console.log(1, "sended");
@@ -64,6 +80,7 @@ function AddWork({ setSelect }) {
       });
   };
 
+  console.log(crafts)
   return (
     <form id="kt_modal_add_user_form" className="form">
       <div
@@ -92,12 +109,13 @@ function AddWork({ setSelect }) {
               name="category"
               className="form-select form-select-solid georgian"
             >
-              {categories?.map((item, i) => {
+              {crafts && crafts.map((item, index) => {
                 return (
-                  <option key={i} value={item._id}>
-                    {item.category}
-                  </option>
-                );
+                  <option key={index} value={item._id}> 
+                  <p>{item.category}</p>
+                  <img src={item.image} alt='img' /> 
+                </option>
+                )
               })}
             </select>
             <div className="fv-plugins-message-container invalid-feedback"></div>
