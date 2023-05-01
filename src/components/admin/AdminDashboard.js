@@ -98,7 +98,7 @@ const AdminDashboard = () => {
                 ...prevCraftData,
                 image: e.target.files[0],
               }));
-            }}
+            }}  
           />
           <select
             onChange={(event) => {
