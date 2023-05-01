@@ -26,21 +26,6 @@ const Project = ({ pr }) => {
   useEffect(() => {
     const getDataHandler = async () => {
       await axiosPrivate
-        .get("/api/admin/service/get_services", {})
-        .then((res) => {
-          let data = res.data;
-          setServices(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
-
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
         .get("/api/admin/product/get_products", {})
         .then((res) => {
           let data = res.data;
@@ -52,6 +37,8 @@ const Project = ({ pr }) => {
     };
     getDataHandler();
   }, []);
+
+  console.log(products, 'products')
 
   return (
     <>

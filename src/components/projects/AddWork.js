@@ -12,12 +12,16 @@ function AddWork({ setSelect }) {
   const [crafts, setCrafts] = useState(null);
   const [services, setServices] = useState(null);
   const [formData, setFormData] = useState({
-    category: "",
-    unit: "",
+    type: "service",
+    title: "",
+    supplier: "",
+    link: "",
     quantity: "",
+    unit: "",
     price: "",
+    image: "",
+    purchased: "",
     status: "",
-    purchased: "not purchased",
   });
 
   useEffect(() => {
@@ -53,19 +57,20 @@ function AddWork({ setSelect }) {
 
   const handleSubmit = async () => {
     setSelect(null);
+    console.log(formData)
     await axiosPrivate
-      .post("/api/admin/service/create_service", {
+      .post("/api/admin/product/add_product", {
         formData,
       })
       .then((res) => {
-        const data = res.data
+        const data = res.data;
       })
       .catch((e) => {
         console.log(e, "error");
       });
   };
 
-  // console.log(crafts)
+  console.log(crafts, 'crafts')
   return (
     <form id="kt_modal_add_user_form" className="form">
       <div
@@ -81,7 +86,16 @@ function AddWork({ setSelect }) {
         <div className="row mb-5">
           {selectedCraft && (
             <div className={styles.imageBox}>
-              <img src={selectedCraft.image} alt="img" />
+              <img
+                onChange={(e) =>
+                  setFormData((formData) => ({
+                    ...formData,
+                    image: e.target.files[0],
+                  }))
+                }
+                src={selectedCraft.image}
+                alt="img"
+              />
             </div>
           )}
           <div className="col-md-8 fv-row fv-plugins-icon-container">

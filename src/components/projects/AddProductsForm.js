@@ -1,26 +1,32 @@
 import { useState } from "react";
 import axiosInstance from "../../api/axios";
 
-const AddProductForm = ({ setSelect, pushTempArray, type }) => {
-  const [price, setPrice] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+const AddProductForm = ({ setSelect }) => {
   const [formData, setFormData] = useState({
+    type: "product",
     title: "",
-    address: "",
-    seler: "",
-    price: "",
-    unit: "",
+    supplier: "",
+    link: "",
     quantity: "",
-    img: "",
+    unit: "",
+    price: "",
+    image: "",
+    purchased: "",
+    status: "",
   });
 
   const handleSubmit = async () => {
     console.log(formData);
     setSelect(null);
     await axiosInstance
-      .post("/api/admin/product/create_product", formData)
+      .post("/api/admin/product/add_product", {
+        formData,
+      })
       .then((res) => {
-        console.log(res);
+        const data = res.data;
+      })
+      .catch((e) => {
+        console.log(e, "error");
       });
   };
 
@@ -62,7 +68,7 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
                   onChange={(e) => {
                     setFormData((formData) => ({
                       ...formData,
-                      img: e.target.value,
+                      image: e.target.files[0],
                     }));
                   }}
                   type="file"
@@ -127,7 +133,7 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
               onClick={(e) => {
                 setFormData((formData) => ({
                   ...formData,
-                  seler: e.target.value,
+                  supplier: e.target.value,
                 }));
               }}
               name="saler"
@@ -150,7 +156,7 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
               onChange={(e) => {
                 setFormData((formData) => ({
                   ...formData,
-                  address: e.target.value,
+                  link: e.target.value,
                 }));
               }}
               type="text"
@@ -168,9 +174,8 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
               onChange={(e) => {
                 setFormData((formData) => ({
                   ...formData,
-                  quantity: Number(e.target.value),
+                  quantity: e.target.value,
                 }));
-                setQuantity(e.target.value);
               }}
               type="number"
               className="form-control form-control-solid georgian"
@@ -210,9 +215,8 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
               onChange={(e) => {
                 setFormData((formData) => ({
                   ...formData,
-                  price: Number(e.target.value),
+                  price: e.target.value,
                 }));
-                setPrice(e.target.value);
               }}
               type="number"
               className="form-control form-control-solid georgian"
