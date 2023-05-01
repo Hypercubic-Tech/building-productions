@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import axiosPrivate from "@/api/axiosPrivate";
 import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
 import AddWork from "./AddWork";
@@ -8,6 +10,8 @@ const Project = ({ pr }) => {
   const [select, setSelect] = useState(null);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
+  const [services, setServices] = useState(null);
+  const [products, setProducts] = useState(null);
 
   const handleShowSecond = () => {
     setShowFirst(false);
@@ -18,6 +22,36 @@ const Project = ({ pr }) => {
     setShowFirst(true);
     setShowSecond(false);
   };
+
+  useEffect(() => {
+    const getDataHandler = async () => {
+      await axiosPrivate
+        .get("/api/admin/service/get_services", {})
+        .then((res) => {
+          let data = res.data;
+          setServices(data);
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    };
+    getDataHandler();
+  }, []);
+
+  useEffect(() => {
+    const getDataHandler = async () => {
+      await axiosPrivate
+        .get("/api/admin/product/get_products", {})
+        .then((res) => {
+          let data = res.data;
+          setProducts(data);
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    };
+    getDataHandler();
+  }, []);
 
   return (
     <>
@@ -539,9 +573,10 @@ const Project = ({ pr }) => {
                       </div>
                     </div>
                     <div className="card-body pt-0">
-                      {/* <Products 
-                      products={productsData}
-                       /> */}
+                      <Products 
+                      products={products}
+                      services={services}
+                       />
 
                     </div>
                   </div>

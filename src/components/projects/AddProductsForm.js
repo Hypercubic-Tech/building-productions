@@ -11,16 +11,17 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
     price: "",
     unit: "",
     quantity: "",
-    total: "",
-    img: null,
+    img: "",
   });
 
   const handleSubmit = async () => {
     console.log(formData);
     setSelect(null);
-    await axiosInstance.post("/api/product/create", formData).then((res) => {
-      console.log(res);
-    });
+    await axiosInstance
+      .post("/api/admin/product/create_product", formData)
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   return (
@@ -235,10 +236,6 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
         </button>
         <div
           onClick={() => {
-            setFormData((formData) => ({
-              ...formData,
-              total: Number(price * quantity),
-            }));
             handleSubmit();
           }}
           type="submit"

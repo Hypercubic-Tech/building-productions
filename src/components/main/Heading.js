@@ -51,15 +51,16 @@ const Heading = () => {
     };
   }, [showModal]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.pageYOffset > 0);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setIsSticky(window.pageYOffset > 0);
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+  
   return (
     <div className="mb-0" id="home">
       <div

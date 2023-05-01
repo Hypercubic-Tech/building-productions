@@ -1,25 +1,26 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
+import styles from "./AddWork.module.css";
+
 function AddWork({ setSelect }) {
-  const [price, setPrice] = useState(0);
+  const axiosPrivate = useAxiosPrivate();
+
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedCraft, setSelectedCraft] = useState(null);
   const [showInputs, setShowInputs] = useState(false);
-  const [quantity, setQuantity] = useState(0);
-  const axiosPrivate = useAxiosPrivate();
-  const [categories, setCategories] = useState(null);
   const [crafts, setCrafts] = useState(null);
+  const [services, setServices] = useState(null);
   const [formData, setFormData] = useState({
     category: "",
     unit: "",
     quantity: "",
-    total: "",
+    price: "",
     status: "",
+    purchased: "not purchased",
   });
 
   useEffect(() => {
-    console.log(selectedOption);
     if (
       selectedOption === "64478f2a42be719665d1e247" ||
       selectedOption === ""
@@ -32,24 +33,8 @@ function AddWork({ setSelect }) {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    setSelectedCraft(crafts.find(craft => craft._id === event.target.value));
+    setSelectedCraft(crafts.find((craft) => craft._id === event.target.value));
   };
-  
-
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/content/get_categories", {})
-        .then((res) => {
-          let data = res.data;
-          setCategories(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -68,18 +53,16 @@ function AddWork({ setSelect }) {
 
   const handleSubmit = async () => {
     setSelect(null);
-    console.log(1, "sended");
-    // await axiosPrivate
-    //   .post("/api/product/create_product", {
-    //     formData,
-    //   })
-    //   .then((res) => {
-    //     const data = res.data;
-    //     console.log(data, "data");
-    //   })
-    //   .catch((e) => {
-    //     console.log(e, "error");
-    //   });
+    await axiosPrivate
+      .post("/api/admin/service/create_service", {
+        formData,
+      })
+      .then((res) => {
+        const data = res.data
+      })
+      .catch((e) => {
+        console.log(e, "error");
+      });
   };
 
   // console.log(crafts)
@@ -96,13 +79,18 @@ function AddWork({ setSelect }) {
         data-kt-scroll-offset="300px"
       >
         <div className="row mb-5">
+          {selectedCraft && (
+            <div className={styles.imageBox}>
+              <img src={selectedCraft.image} alt="img" />
+            </div>
+          )}
           <div className="col-md-8 fv-row fv-plugins-icon-container">
             <label className="required fs-5 fw-bold mb-2 georgian">
               კატეგორია
             </label>
             <select
-              onChange={handleOptionChange}
-              onClick={(e) => {
+              onChange={(e) => {
+                handleOptionChange(e);
                 setFormData((formData) => ({
                   ...formData,
                   category: e.target.value,
@@ -124,7 +112,6 @@ function AddWork({ setSelect }) {
           </div>
           {selectedCraft && (
             <>
-            {console.log(selectedCraft)}
               <div className="col-md-4 fv-row fv-plugins-icon-container">
                 <label className="required fs-5 fw-bold mb-2 georgian">
                   რაოდენობა
@@ -135,7 +122,6 @@ function AddWork({ setSelect }) {
                       ...formData,
                       quantity: Number(e.target.value),
                     }));
-                    setQuantity(e.target.value);
                   }}
                   type="number"
                   className="form-control form-control-solid georgian"
@@ -149,7 +135,7 @@ function AddWork({ setSelect }) {
                   ერთეული
                 </label>
                 <select
-                  onClick={(e) => {
+                  onChange={(e) => {
                     setFormData((formData) => ({
                       ...formData,
                       unit: e.target.value,
@@ -177,7 +163,6 @@ function AddWork({ setSelect }) {
                       ...formData,
                       price: Number(e.target.value),
                     }));
-                    setPrice(e.target.value);
                   }}
                   type="number"
                   className="form-control form-control-solid georgian"
@@ -191,7 +176,7 @@ function AddWork({ setSelect }) {
                   სტატუსი
                 </label>
                 <select
-                  onClick={(e) => {
+                  onChange={(e) => {
                     setFormData((formData) => ({
                       ...formData,
                       status: e.target.value,
@@ -217,7 +202,13 @@ function AddWork({ setSelect }) {
                     type="checkbox"
                     data-kt-check="true"
                     data-kt-check-target="#kt_table_users .form-check-input"
-                    defaultValue={1}
+                    defaultValue={"not purchased"}
+                    onChange={(e) => {
+                      setFormData((formData) => ({
+                        ...formData,
+                        purchased: "purchased",
+                      }));
+                    }}
                   />
                 </div>
               </div>
@@ -227,7 +218,7 @@ function AddWork({ setSelect }) {
       </div>
       <div className="text-center pt-15">
         <button
-          onClick={() => {
+          onChange={() => {
             setSelect(null);
           }}
           type="reset"
@@ -237,13 +228,7 @@ function AddWork({ setSelect }) {
           Discard
         </button>
         <div
-          onClick={() => {
-            setFormData((formData) => ({
-              ...formData,
-              total: Number(price * quantity),
-            }));
-            handleSubmit();
-          }}
+          onClick={handleSubmit}
           type="submit"
           className="btn btn-primary"
           data-kt-users-modal-action="submit"
