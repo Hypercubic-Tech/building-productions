@@ -22,6 +22,7 @@ const HeaderPopup = () => {
         .then((res) => {
           let data = res.data;
           setProjectsData(data.projects);
+          console.log(data, "data")
         })
         .catch((e) => {
           console.log(e, "error");
@@ -66,12 +67,12 @@ const HeaderPopup = () => {
   return (
     <>
       <div
-        style={{ display: close ? "none" : "", overflow: "auto" }}
+        style={{ display: close ? "none" : "", overflow: "auto", position: 'absolute', zIndex: '20' }}
         className={`modal-xxl ${styles.modal}`}
       >
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Modal title</h5>
+            <h5 className="modal-title">ობიექტების ჩამონათვალი</h5>
             <button
               type="button"
               className="btn-close"

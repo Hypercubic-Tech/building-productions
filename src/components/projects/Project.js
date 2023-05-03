@@ -43,16 +43,16 @@ const Project = ({ pr }) => {
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.propertyType}
+                {pr?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
                 {pr?.condition}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.area}
+                {pr?.propertyType}
               </li>
               <li className="breadcrumb-item text-warning georgian">
-                {pr?.date}
+                {pr?.createdAt}
               </li>
             </ul>
           </div>
@@ -245,7 +245,6 @@ const Project = ({ pr }) => {
                             type="button"
                             onClick={() => {
                               setSelect("export");
-                              console.log("export");
                             }}
                             className="btn btn-light-primary me-3 georgian"
                             data-bs-toggle="modal"
@@ -285,7 +284,6 @@ const Project = ({ pr }) => {
                             type="button"
                             onClick={() => {
                               setSelect("add");
-                              console.log("add");
                             }}
                             className="btn btn-primary georgian"
                             data-bs-toggle="modal"

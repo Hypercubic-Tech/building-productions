@@ -124,7 +124,6 @@ function AddWork({ setSelect }) {
           </div>
           {selectedCraft && (
             <>
-            {console.log(selectedCraft)}
               <div className="col-md-4 fv-row fv-plugins-icon-container">
                 <label className="required fs-5 fw-bold mb-2 georgian">
                   რაოდენობა

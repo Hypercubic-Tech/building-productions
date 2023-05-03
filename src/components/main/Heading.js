@@ -51,15 +51,15 @@ const Heading = () => {
     };
   }, [showModal]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.pageYOffset > 0);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setIsSticky(window.pageYOffset > 0);
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
   return (
     <div className="mb-0" id="home">
       <div
@@ -121,7 +121,7 @@ const Heading = () => {
               <b onClick={handleAuthClick}>გამოთვალე!</b>
             </div>
           </div>
-          <div className="d-flex flex-center flex-wrap position-relative px-5">
+          {/* <div className="d-flex flex-center flex-wrap position-relative px-5">
             <div
               className="d-flex flex-center m-3 m-md-6"
               data-bs-toggle="tooltip"
@@ -210,9 +210,9 @@ const Heading = () => {
                 alt=""
               />
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="landing-curve landing-dark-color mb-10 mb-lg-20">
+        {/* <div className="landing-curve landing-dark-color mb-10 mb-lg-20">
           <svg
             viewBox="15 12 1470 48"
             fill="none"
@@ -223,7 +223,7 @@ const Heading = () => {
               fill="currentColor"
             />
           </svg>
-        </div>
+        </div> */}
       </div>
     </div>
   );

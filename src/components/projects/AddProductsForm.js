@@ -16,7 +16,6 @@ const AddProductForm = ({ setSelect, pushTempArray, type }) => {
   });
 
   const handleSubmit = async () => {
-    console.log(formData);
     setSelect(null);
     await axiosInstance.post("/api/product/create", formData).then((res) => {
       console.log(res);

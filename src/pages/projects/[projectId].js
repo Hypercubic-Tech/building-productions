@@ -25,7 +25,7 @@ export const getStaticProps = async ({ params }) => {
 
   return {
     props: {
-      pr: res?.data,
+      pr: res?.data?.project[0],
     },
   };
 };
