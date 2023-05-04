@@ -32,7 +32,7 @@ const AddProductForm = ({ projectId, setSelect }) => {
         });
     };
     getDataHandler();
-  }, []);
+  }, [categories]);
 
   const saveProduct = async (file) => {
     if (!file?.name) return;
@@ -274,8 +274,6 @@ const AddProductForm = ({ projectId, setSelect }) => {
                 setProductData((formData) => ({
                   ...formData,
                   category: e.target.value,
-                  title: e.target.value,
-
                 }));
               }}
               name="count"

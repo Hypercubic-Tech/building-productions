@@ -5,6 +5,8 @@ import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
 import AddWork from "./AddWork";
 import Filter from "./Filter";
+import EditProductsForm from "./EditProductsForm";
+import EditServiceForm from "./EditServiceForm";
 
 const Project = ({ pr }) => {
   const [select, setSelect] = useState(null);
@@ -13,6 +15,8 @@ const Project = ({ pr }) => {
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
+  const [editProduct, setEditProduct] = useState(false);
+  const [editService, setEditService] = useState(false);
 
   // console.log(pr._id)
   // const project = pr?.project._id;
@@ -46,6 +50,24 @@ const Project = ({ pr }) => {
     };
     getDataHandler();
   }, []);
+
+  const editProductHandler = async (product) => {
+    console.log(product);
+    if (product.type === "product") {
+      if (!editProduct) {
+        setEditProduct(true);
+      } else {
+        setEditProduct(false);
+      }
+    }
+    if (product.type === "service") {
+      if (!editService) {
+        setEditService(true);
+      } else {
+        setEditService(false);
+      }
+    }
+  };
 
   return (
     <>
@@ -564,6 +586,10 @@ const Project = ({ pr }) => {
                                     />
                                   )}
                                 </div>
+                                <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                  {editProduct && <EditProductsForm />}
+                                  {editService && <EditServiceForm />}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -572,7 +598,11 @@ const Project = ({ pr }) => {
                     </div>
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {summary} ლარი</div>
-                      <Products products={products} services={services} />
+                      <Products
+                        editHandler={editProductHandler}
+                        products={products}
+                        services={services}
+                      />
                     </div>
                   </div>
                 </div>
