@@ -78,7 +78,7 @@ function AddWork({ setSelect, projectId }) {
                 setSelectedCraft(cr);
                 setFormData((formData) => ({
                   ...formData,
-                  category: e.target.value,
+                  category: cr.category,
                   image: cr.image,
                 }));
               }}

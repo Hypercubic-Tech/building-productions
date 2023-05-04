@@ -1,4 +1,6 @@
 const Products = ({ products }) => {
+  console.log(products, 'products');
+
   return (
     <table
       className="table align-middle table-row-dashed fs-6 gy-5"
@@ -43,6 +45,7 @@ const Products = ({ products }) => {
                   <a href="https://www.domino.com.ge/products/electrical-goods/cables-and-wires/cable-wire/%E1%83%99%E1%83%90%E1%83%91%E1%83%94%E1%83%9A%E1%83%98-sakcable-%E1%83%9E%E1%83%A3%E1%83%9C%E1%83%9E-3x2.5-h03vvh2-u-h05vvh2-u/">
                     <div className="symbol-label georgian">
                       <img
+                        src={product.image}
                         // src={`./assets/media/avatars/ ${product.img}`}
                         alt=""
                         className="w-100"
@@ -55,16 +58,16 @@ const Products = ({ products }) => {
                     href="https://www.domino.com.ge/products/electrical-goods/cables-and-wires/cable-wire/%E1%83%99%E1%83%90%E1%83%91%E1%83%94%E1%83%9A%E1%83%98-sakcable-%E1%83%9E%E1%83%A3%E1%83%9C%E1%83%9E-3x2.5-h03vvh2-u-h05vvh2-u/"
                     className="text-gray-800 text-hover-primary mb-1 georgian"
                   >
-                    {product.title}
+                    {product.title ? product.title : product.category}
                   </a>
-                  <span>{product.seler}</span>
+                  <span>{product.supplier}</span>
                 </div>
               </td>
               <td className="georgian">{product.unit}</td>
               <td className="georgian">{product.quantity}</td>
               <td className="georgian">{product.price}</td>
               <td className="georgian">
-                <b>{Number(product.total)}</b>
+                {/* <b>{Number(product.total)}</b> */}
               </td>
               <td className="text-end">
                 <div className="menu-item px-3">
