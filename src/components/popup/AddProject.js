@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import cities from "@/api/cities.json";
+import axiosPrivate from "@/api/axiosPrivate";
 import styles from "./Modal.module.css";
 
 const AddProject = ({ dismiss }) => {
@@ -7,12 +8,12 @@ const AddProject = ({ dismiss }) => {
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
   const [categories, setCategories] = useState(null);
-  const axiosPrivate = useAxiosPrivate();
+  // const axiosPrivate = useAxiosPrivate();
 
   const [sendData, setSendData] = useState({
     propertyType: "",
     city: "",
-    district: "",
+    area: "",
     address: "",
     phone: "",
     condition: [],
@@ -20,6 +21,8 @@ const AddProject = ({ dismiss }) => {
     objectName: "",
     worksToDo: [],
     userId: "",
+    images: null,
+    // drawings: null
   });
 
   useEffect(() => {
@@ -40,16 +43,34 @@ const AddProject = ({ dismiss }) => {
   }, []);
 
   const sendFormDataHandler = async () => {
+    let formData = new FormData();
+    formData.append("propertyType", sendData.propertyType);
+    formData.append("city", sendData.city);
+    formData.append("area", sendData.area);
+    formData.append("address", sendData.address);
+    formData.append("phone", sendData.phone);
+    formData.append("condition", sendData.condition);
+    formData.append("currentCondition", sendData.currentCondition);
+    formData.append("objectName", sendData.objectName);
+    formData.append("worksToDo", sendData.worksToDo);
+    formData.append("userId", sendData.userId);
+    formData.append("images", sendData.images);
+
+    console.log(formData, 'rame')
+
+
     await axiosPrivate
-      .post("/api/admin/projects/add_project", {
-        project: sendData,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    .post("/api/admin/projects/add_project", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
 
   let errors = {
@@ -61,7 +82,7 @@ const AddProject = ({ dismiss }) => {
   const validationHandler = () => {
     let propertyInput = document.getElementById("property");
     let cityInput = document.getElementById("city");
-    let districtInput = document.getElementById("district");
+    let areaInput = document.getElementById("area");
     let addressInput = document.getElementById("address");
     let phoneInput = document.getElementById("phone");
 
@@ -78,10 +99,10 @@ const AddProject = ({ dismiss }) => {
       cityInput.classList.remove(styles.error);
     }
     if (sendData.district === "") {
-      errors.stepOne.push("მონიშნეთ რაიონი");
-      districtInput.classList.add(styles.error);
+      errors.stepOne.push("შეავსეთ ფართობი");
+      areaInput.classList.add(styles.error);
     } else {
-      districtInput.classList.remove(styles.error);
+      areaInput.classList.remove(styles.error);
     }
     if (sendData.address === "") {
       errors.stepOne.push("შეავსეთ მისამართი");
@@ -123,7 +144,7 @@ const AddProject = ({ dismiss }) => {
     } else {
       return "pending";
     }
-  };  
+  };
 
   const stepChangeHandler = () => {
     if (step < 4) {
@@ -321,7 +342,7 @@ const AddProject = ({ dismiss }) => {
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მდებარეობა / რაიონი
+                          მდებარეობა / ფართობი
                         </label>
                         <div className="row fv-row">
                           <div className="col-6">
@@ -338,53 +359,28 @@ const AddProject = ({ dismiss }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
-                              <option value={"default"}>მონიშნეთ ქალაქი</option>
-                              <option value={"თბილისი"}>თბილისი</option>
-                              <option value={"რუსთავი"}>რუსთავი</option>
-                              <option value={"ქუთაისი"}>ქუთაისი</option>
-                              <option value={"ბათუმი"}>ბათუმი</option>
-                              <option value={"აბასთუმანი"}>აბასთუმანი</option>
-                              <option value={"აბაშა"}>აბაშა</option>
-                              <option value={"ჩხალა"}>ჩხალთა</option>
+                              {cities.map((sity, i) => {
+                                return <option key={i} value={sity}>{sity}</option>
+                              })}
                             </select>
                           </div>
                           <div className="col-6">
-                            <select
-                              id="district"
+                            <input
+                              id="area"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
-                                  district: event.target.value,
+                                  area: event.target.value,
                                 }));
                               }}
                               onBlur={validationHandler}
-                              name="locale"
-                              className="form-select form-select-solid georgian"
-                              data-placeholder="მდებარეობა"
+                              name="area"
+                              type="number"
+                              className="form-control georgian form-control-solid"
+                              placeholder="ობიექტის ფართობი"
+                              data-placeholder="area"
                             >
-                              <option value={"default"}>მონიშნეთ უბანი</option>
-                              <option value={"გლდანის რაიონი"}>
-                                გლდანის რაიონი
-                              </option>
-                              <option value={"დიდუბის რაიონი"}>
-                                დიდუბის რაიონი
-                              </option>
-                              <option value={"ვაკის რაიონი"}>
-                                ვაკის რაიონი
-                              </option>
-                              <option value={"საურთალოს რაიონი"}>
-                                საურთალოს რაიონი
-                              </option>
-                              <option value={"მთაწმინდის რაიონი"}>
-                                მთაწმინდის რაიონი
-                              </option>
-                              <option value={"ჩუღურეთის რაიონი"}>
-                                ჩუღურეთის რაიონი
-                              </option>
-                              <option value={"თბილისის შემოგარენი"}>
-                                თბილისის შემოგარენი
-                              </option>
-                            </select>
+                            </input>
                           </div>
                         </div>
                       </div>
@@ -432,6 +428,7 @@ const AddProject = ({ dismiss }) => {
                   </div>
                 </div>
                 {/* STEP */}
+
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -440,44 +437,16 @@ const AddProject = ({ dismiss }) => {
                     <div className="fv-row">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                         <span className="required georgian">მდგომარეობა</span>
-                        <i
-                          className="fas fa-exclamation-circle ms-2 fs-7"
-                          data-bs-toggle="tooltip"
-                          title="მიუთითეთ ობიექტის მდგომარეობა"
-                        />
                       </label>
                       <div className="fv-row">
                         <label className="d-flex flex-stack mb-5 cursor-pointer">
                           <span className="d-flex align-items-center me-2">
-                            <span className="symbol symbol-50px me-6">
-                              <span className="symbol-label bg-light-primary">
-                                <span className="svg-icon svg-icon-1 svg-icon-primary">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={24}
-                                    height={24}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                  >
-                                    <path
-                                      opacity="0.3"
-                                      d="M18.4 5.59998C21.9 9.09998 21.9 14.8 18.4 18.3C14.9 21.8 9.2 21.8 5.7 18.3L18.4 5.59998Z"
-                                      fill="black"
-                                    />
-                                    <path
-                                      d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM19.9 11H13V8.8999C14.9 8.6999 16.7 8.00005 18.1 6.80005C19.1 8.00005 19.7 9.4 19.9 11ZM11 19.8999C9.7 19.6999 8.39999 19.2 7.39999 18.5C8.49999 17.7 9.7 17.2001 11 17.1001V19.8999ZM5.89999 6.90002C7.39999 8.10002 9.2 8.8 11 9V11.1001H4.10001C4.30001 9.4001 4.89999 8.00002 5.89999 6.90002ZM7.39999 5.5C8.49999 4.7 9.7 4.19998 11 4.09998V7C9.7 6.8 8.39999 6.3 7.39999 5.5ZM13 17.1001C14.3 17.3001 15.6 17.8 16.6 18.5C15.5 19.3 14.3 19.7999 13 19.8999V17.1001ZM13 4.09998C14.3 4.29998 15.6 4.8 16.6 5.5C15.5 6.3 14.3 6.80002 13 6.90002V4.09998ZM4.10001 13H11V15.1001C9.1 15.3001 7.29999 16 5.89999 17.2C4.89999 16 4.30001 14.6 4.10001 13ZM18.1 17.1001C16.6 15.9001 14.8 15.2 13 15V12.8999H19.9C19.7 14.5999 19.1 16.0001 18.1 17.1001Z"
-                                      fill="black"
-                                    />
-                                  </svg>
-                                </span>
-                              </span>
-                            </span>
                             <span className="d-flex flex-column">
                               <span className="fw-bolder georgian fs-6">
                                 ახალი აშენებული
                               </span>
                               <span className="fs-7 text-muted">
-                                Creating a clear text
+                                აშენებული 2005 წლის შემდეგ
                               </span>
                             </span>
                           </span>
@@ -500,68 +469,12 @@ const AddProject = ({ dismiss }) => {
                         </label>
                         <label className="d-flex flex-stack mb-5 cursor-pointer">
                           <span className="d-flex align-items-center me-2">
-                            <span className="symbol symbol-50px me-6">
-                              <span className="symbol-label bg-light-danger">
-                                <span className="svg-icon svg-icon-1 svg-icon-danger">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24px"
-                                    height="24px"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <g
-                                      stroke="none"
-                                      strokeWidth={1}
-                                      fill="none"
-                                      fillRule="evenodd"
-                                    >
-                                      <rect
-                                        x={5}
-                                        y={5}
-                                        width={5}
-                                        height={5}
-                                        rx={1}
-                                        fill="#000000"
-                                      />
-                                      <rect
-                                        x={14}
-                                        y={5}
-                                        width={5}
-                                        height={5}
-                                        rx={1}
-                                        fill="#000000"
-                                        opacity="0.3"
-                                      />
-                                      <rect
-                                        x={5}
-                                        y={14}
-                                        width={5}
-                                        height={5}
-                                        rx={1}
-                                        fill="#000000"
-                                        opacity="0.3"
-                                      />
-                                      <rect
-                                        x={14}
-                                        y={14}
-                                        width={5}
-                                        height={5}
-                                        rx={1}
-                                        fill="#000000"
-                                        opacity="0.3"
-                                      />
-                                    </g>
-                                  </svg>
-                                </span>
-                              </span>
-                            </span>
                             <span className="d-flex flex-column">
                               <span className="fw-bolder georgian fs-6">
                                 ძველი აშენებული
                               </span>
                               <span className="fs-7 text-muted">
-                                Creating a clear text structure is just one
-                                aspect
+                                აშენებული 2005 წლამდე
                               </span>
                             </span>
                           </span>
@@ -585,25 +498,14 @@ const AddProject = ({ dismiss }) => {
                         </label>
                       </div>
                     </div>
-
                     <div className="fv-row">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                         <span className="required georgian">
                           არსებული მდგომარეობა
                         </span>
-                        <i
-                          className="fas fa-exclamation-circle ms-2 fs-7"
-                          data-bs-toggle="tooltip"
-                          title="ობიექტის არსებული მდგომარეობა"
-                        />
                       </label>
                       <label className="d-flex flex-stack cursor-pointer mb-5">
                         <span className="d-flex align-items-center me-2">
-                          <span className="symbol symbol-50px me-6">
-                            <span className="symbol-label bg-light-warning">
-                              <i className="fab fa-html5 text-warning fs-2x" />
-                            </span>
-                          </span>
                           <span className="d-flex flex-column">
                             <span className="fw-bolder georgian fs-6">
                               შავი კარკასი
@@ -633,11 +535,6 @@ const AddProject = ({ dismiss }) => {
                       </label>
                       <label className="d-flex flex-stack cursor-pointer mb-5">
                         <span className="d-flex align-items-center me-2">
-                          <span className="symbol symbol-50px me-6">
-                            <span className="symbol-label bg-light-success">
-                              <i className="fab fa-react text-success fs-2x" />
-                            </span>
-                          </span>
                           <span className="d-flex flex-column">
                             <span className="fw-bolder georgian fs-6">
                               თეთრი კარკასი
@@ -666,11 +563,6 @@ const AddProject = ({ dismiss }) => {
                       </label>
                       <label className="d-flex flex-stack cursor-pointer mb-5">
                         <span className="d-flex align-items-center me-2">
-                          <span className="symbol symbol-50px me-6">
-                            <span className="symbol-label bg-light-danger">
-                              <i className="fab fa-angular text-danger fs-2x" />
-                            </span>
-                          </span>
                           <span className="d-flex flex-column">
                             <span className="fw-bolder georgian fs-6">
                               მწვანე კარკასი
@@ -697,10 +589,56 @@ const AddProject = ({ dismiss }) => {
                           />
                         </span>
                       </label>
+                      <label className="d-flex flex-stack cursor-pointer mb-5">
+                        <span className="d-flex align-items-center me-2">
+                          <span className="d-flex flex-column">
+                            <span className="fw-bolder georgian fs-6">
+                              პროექტის სურათები
+                            </span>
+                          </span>
+                        </span>
+                        <span className="form-check form-check-custom form-check-solid">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              let blob = e.target.files[0].slice(0, e.target.files[0].size, e.target.files[0].type);
+                              const ext = e.target.files[0].type.slice(6);
+
+                              const newFile = new File([blob], `${sendData.address}.${ext}`, { type: e.target.files[0].type });
+
+                              setSendData((prevCraftData) => ({
+                                ...prevCraftData,
+                                images: newFile,
+                              }));
+                            }}
+                          />
+                        </span>
+                      </label>
+                      {/* <label className="d-flex flex-stack cursor-pointer mb-5">
+                        <span className="d-flex align-items-center me-2">
+                          <span className="d-flex flex-column">
+                            <span className="fw-bolder georgian fs-6">
+                              პროექტის ნახაზები
+                            </span>
+                          </span>
+                        </span>
+                        <span className="form-check form-check-custom form-check-solid">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              setSendData((prevCraftData) => ({
+                                ...prevCraftData,
+                                drawings: e.target.files[0],
+                              }));
+                            }}
+                          />
+                        </span>
+                      </label> */}
                     </div>
                   </div>
                 </div>
-
                 <div
                   className={getStatusClass(3)}
                   data-kt-stepper-element="content"

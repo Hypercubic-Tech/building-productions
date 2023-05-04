@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/axios";
+import cities from "@/api/cities.json";
 import styles from "./Modal.module.css";
 
 const EditProject = ({ data, dismiss }) => {
@@ -51,8 +52,8 @@ const EditProject = ({ data, dismiss }) => {
     if (sendData.city === "") {
       errors.stepOne.push("მონიშნეთ ქალაქი");
     }
-    if (sendData.district === "") {
-      errors.stepOne.push("მონიშნეთ რაიონი");
+    if (sendData.area === "") {
+      errors.stepOne.push("შეიყვანეთ ფართობი");
     }
     if (sendData.address === "") {
       errors.stepOne.push("შეავსეთ მისამართი");
@@ -285,68 +286,45 @@ const EditProject = ({ data, dismiss }) => {
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მდებარეობა / რაიონი
+                          მდებარეობა / ფართობი
                         </label>
                         <div className="row fv-row">
                           <div className="col-6">
                             <select
+                              id="city"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
                                   city: event.target.value,
                                 }));
                               }}
-                              defaultValue={data.city}
                               onBlur={validationHandler}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
-                              <option value={"თბილისი"}>თბილისი</option>
-                              <option value={"რუსთავი"}>რუსთავი</option>
-                              <option value={"ქუთაისი"}>ქუთაისი</option>
-                              <option value={"ბათუმი"}>ბათუმი</option>
-                              <option value={"აბასთუმანი"}>აბასთუმანი</option>
-                              <option value={"აბაშა"}>აბაშა</option>
-                              <option value={"ჩხალა"}>ჩხალთა</option>
+                              {cities.map((sity, i) => {
+                                return <option key={i} value={sity}>{sity}</option>
+                              })}
                             </select>
                           </div>
                           <div className="col-6">
-                            <select
+                            <input
+                              id="area"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
-                                  district: event.target.value,
+                                  area: event.target.value,
                                 }));
                               }}
-                              defaultValue={data.district}
                               onBlur={validationHandler}
-                              name="locale"
-                              className="form-select form-select-solid georgian"
-                              data-placeholder="მდებარეობა"
+                              name="area"
+                              type="number"
+                              className="form-control georgian form-control-solid"
+                              placeholder="ობიექტის ფართობი"
+                              data-placeholder="area"
                             >
-                              <option value={"გლდანის რაიონი"}>
-                                გლდანის რაიონი
-                              </option>
-                              <option value={"დიდუბის რაიონი"}>
-                                დიდუბის რაიონი
-                              </option>
-                              <option value={"ვაკის რაიონი"}>
-                                ვაკის რაიონი
-                              </option>
-                              <option value={"საურთალოს რაიონი"}>
-                                საურთალოს რაიონი
-                              </option>
-                              <option value={"მთაწმინდის რაიონი"}>
-                                მთაწმინდის რაიონი
-                              </option>
-                              <option value={"ჩუღურეთის რაიონი"}>
-                                ჩუღურეთის რაიონი
-                              </option>
-                              <option value={"თბილისის შემოგარენი"}>
-                                თბილისის შემოგარენი
-                              </option>
-                            </select>
+                            </input>
                           </div>
                         </div>
                       </div>
