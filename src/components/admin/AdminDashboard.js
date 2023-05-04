@@ -67,7 +67,7 @@ const AdminDashboard = () => {
         });
     };
     getDataHandler();
-  }, [categories]);
+  }, []);
 
   return (
     <div className={styles.adminDashboard}>

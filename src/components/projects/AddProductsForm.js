@@ -32,7 +32,7 @@ const AddProductForm = ({ projectId, setSelect }) => {
         });
     };
     getDataHandler();
-  }, [categories]);
+  }, []);
 
   const saveProduct = async (file) => {
     if (!file?.name) return;

@@ -17,6 +17,9 @@ const Project = ({ pr }) => {
   const [products, setProducts] = useState(null);
   const [editProduct, setEditProduct] = useState(false);
   const [editService, setEditService] = useState(false);
+  const [editProductData, setEditProductData] = useState(null);
+  const [editServiceData, setEditServiceData] = useState(null);
+
 
   // console.log(pr._id)
   // const project = pr?.project._id;
@@ -54,6 +57,7 @@ const Project = ({ pr }) => {
   const editProductHandler = async (product) => {
     console.log(product);
     if (product.type === "product") {
+      setEditProductData(product)
       if (!editProduct) {
         setEditProduct(true);
       } else {
@@ -61,6 +65,7 @@ const Project = ({ pr }) => {
       }
     }
     if (product.type === "service") {
+      setEditServiceData(product)
       if (!editService) {
         setEditService(true);
       } else {
