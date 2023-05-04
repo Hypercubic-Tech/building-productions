@@ -12,6 +12,8 @@ const Project = ({ pr }) => {
   const [showSecond, setShowSecond] = useState(false);
   const [services, setServices] = useState(null);
   const [products, setProducts] = useState(null);
+  const [summary, setSummary] = useState(0);
+
 
   // console.log(pr._id)
   // const project = pr?.project._id;
@@ -33,6 +35,12 @@ const Project = ({ pr }) => {
         .then((res) => {
           let data = res.data;
           setProducts(data);
+          let sum = 0;
+          for(let i = 0; i < data.length; i++) {
+            sum = sum +  parseInt(data[i].quantity) * parseFloat(data[i].price);
+          }
+
+          setSummary(sum);
         })
         .catch((e) => {
           console.log(e, "error");
@@ -559,6 +567,7 @@ const Project = ({ pr }) => {
                       </div>
                     </div>
                     <div className="card-body pt-0">
+                      <div className="summary">ჯამი: {summary} ლარი</div>
                       <Products products={products} services={services} />
                     </div>
                   </div>
