@@ -45,7 +45,7 @@ const HeaderPopup = () => {
         });
     };
     getDataHandler();
-  }, [projectsData]);
+  }, []);
 
   const addProjectHandler = () => {
     setAddProject(true);
