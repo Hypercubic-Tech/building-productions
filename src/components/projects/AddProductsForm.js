@@ -17,6 +17,7 @@ const AddProductForm = ({ projectId, setSelect }) => {
     purchased: "not purchased",
     status: "",
     category: "",
+    categoryId: ""
   });
 
   useEffect(() => {
@@ -50,6 +51,7 @@ const AddProductForm = ({ projectId, setSelect }) => {
     formData.append("purchased", productData.purchased);
     formData.append("status", productData.status);
     formData.append("category", productData.category);
+    formData.append("categoryId", productData.categoryId);
 
     await axiosPrivate
       .post("api/admin/product/add_product", formData, {
@@ -283,7 +285,7 @@ const AddProductForm = ({ projectId, setSelect }) => {
               {categories &&
                 categories.map((item, index) => {
                   return (
-                    <option key={index} value={item.category}>
+                    <option key={index} value={item._id} >
                       {item.category}
                     </option>
                   );

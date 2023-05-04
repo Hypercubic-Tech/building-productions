@@ -626,7 +626,7 @@ const Project = ({ pr }) => {
                         editHandler={editProductHandler}
                         products={products}
                         services={services}
-                      filteredProducts={filteredProducts}/>
+                        filteredProducts={filteredProducts}/>
                     </div>
                   </div>
                 </div>
