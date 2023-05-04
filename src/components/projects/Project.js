@@ -13,6 +13,8 @@ const Project = ({ pr }) => {
   const [services, setServices] = useState(null);
   const [products, setProducts] = useState(null);
 
+  const project = pr?.project[0]._id;
+
   const handleShowSecond = () => {
     setShowFirst(false);
     setShowSecond(true);
@@ -37,8 +39,6 @@ const Project = ({ pr }) => {
     };
     getDataHandler();
   }, []);
-
-  console.log(products, 'products')
 
   return (
     <>
@@ -547,10 +547,10 @@ const Project = ({ pr }) => {
                                 </div>
                                 <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                   {showFirst && (
-                                    <AddProductForm setSelect={setSelect} />
+                                    <AddProductForm projectId={project}  setSelect={setSelect} />
                                   )}
                                   {showSecond && (
-                                    <AddWork setSelect={setSelect} />
+                                    <AddWork projectId={project} setSelect={setSelect} />
                                   )}
                                 </div>
                               </div>
@@ -560,11 +560,7 @@ const Project = ({ pr }) => {
                       </div>
                     </div>
                     <div className="card-body pt-0">
-                      <Products 
-                      products={products}
-                      services={services}
-                       />
-
+                      <Products products={products} services={services} />
                     </div>
                   </div>
                 </div>

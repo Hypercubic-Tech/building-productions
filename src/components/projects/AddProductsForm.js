@@ -1,9 +1,11 @@
 import { useState } from "react";
-import axiosInstance from "../../api/axios";
+// import axiosInstance from "../../api/axios";
+import axiosPrivate from "@/api/axiosPrivate";
 
-const AddProductForm = ({ setSelect }) => {
-  const [formData, setFormData] = useState({
+const AddProductForm = ({ projectId, setSelect }) => {
+  const [productData, setProductData] = useState({
     type: "product",
+    projectId: projectId,
     title: "",
     supplier: "",
     link: "",
@@ -11,23 +13,42 @@ const AddProductForm = ({ setSelect }) => {
     unit: "",
     price: "",
     image: "",
-    purchased: "",
+    purchased: "not purchased",
     status: "",
   });
 
+  const saveProduct = async (file) => {
+    if (!file?.name) return;
+  
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("type", productData.type);
+    formData.append("projectId", productData.projectId);
+    formData.append("title", productData.title);
+    formData.append("supplier", productData.supplier);
+    formData.append("link", productData.link);
+    formData.append("quantity", productData.quantity);
+    formData.append("unit", productData.unit);
+    formData.append("price", productData.price);
+    formData.append("purchased", productData.purchased);
+    formData.append("status", productData.status);
+  
+    await axiosPrivate.post("api/admin/product/add_product", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => {
+      console.log(res, 'this is res');
+    })
+    .catch((e) => {
+      console.log(e, "error");
+    });
+  };
+
   const handleSubmit = async () => {
-    console.log(formData);
     setSelect(null);
-    await axiosInstance
-      .post("/api/admin/product/add_product", {
-        formData,
-      })
-      .then((res) => {
-        const data = res.data;
-      })
-      .catch((e) => {
-        console.log(e, "error");
-      });
+    saveProduct(productData.image);
   };
 
   return (
@@ -66,7 +87,7 @@ const AddProductForm = ({ setSelect }) => {
                 <i className="bi bi-pencil-fill fs-7" />
                 <input
                   onChange={(e) => {
-                    setFormData((formData) => ({
+                    setProductData((formData) => ({
                       ...formData,
                       image: e.target.files[0],
                     }));
@@ -113,7 +134,7 @@ const AddProductForm = ({ setSelect }) => {
             </label>
             <input
               onChange={(e) => {
-                setFormData((formData) => ({
+                setProductData((formData) => ({
                   ...formData,
                   title: e.target.value,
                 }));
@@ -131,7 +152,7 @@ const AddProductForm = ({ setSelect }) => {
             </label>
             <select
               onClick={(e) => {
-                setFormData((formData) => ({
+                setProductData((formData) => ({
                   ...formData,
                   supplier: e.target.value,
                 }));
@@ -154,7 +175,7 @@ const AddProductForm = ({ setSelect }) => {
             <label className="required fs-5 fw-bold mb-2 georgian">ლინკი</label>
             <input
               onChange={(e) => {
-                setFormData((formData) => ({
+                setProductData((formData) => ({
                   ...formData,
                   link: e.target.value,
                 }));
@@ -172,7 +193,7 @@ const AddProductForm = ({ setSelect }) => {
             </label>
             <input
               onChange={(e) => {
-                setFormData((formData) => ({
+                setProductData((formData) => ({
                   ...formData,
                   quantity: e.target.value,
                 }));
@@ -190,7 +211,7 @@ const AddProductForm = ({ setSelect }) => {
             </label>
             <select
               onClick={(e) => {
-                setFormData((formData) => ({
+                setProductData((formData) => ({
                   ...formData,
                   unit: e.target.value,
                 }));
@@ -213,7 +234,7 @@ const AddProductForm = ({ setSelect }) => {
             </label>
             <input
               onChange={(e) => {
-                setFormData((formData) => ({
+                setProductData((formData) => ({
                   ...formData,
                   price: e.target.value,
                 }));
@@ -224,6 +245,26 @@ const AddProductForm = ({ setSelect }) => {
               name="price"
             />
             <div className="fv-plugins-message-container invalid-feedback"></div>
+          </div>
+          <div className="mt-8 col-md-4 fv-row fv-plugins-icon-container">
+            <div className="form-check form-check-sm form-check-custom form-check-solid">
+              <label className="required fs-5 fw-bold mb-2 georgian">
+                შეძენილია
+              </label>
+              <input
+                className="mx-2 form-check-input"
+                type="checkbox"
+                data-kt-check="true"
+                data-kt-check-target="#kt_table_users .form-check-input"
+                defaultValue={"not purchased"}
+                onChange={(e) => {
+                  setProductData((formData) => ({
+                    ...formData,
+                    purchased: "purchased",
+                  }));
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -3,16 +3,14 @@ import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 import styles from "./AddWork.module.css";
 
-function AddWork({ setSelect }) {
+function AddWork({ setSelect, projectId }) {
   const axiosPrivate = useAxiosPrivate();
 
-  const [selectedOption, setSelectedOption] = useState("");
   const [selectedCraft, setSelectedCraft] = useState(null);
-  const [showInputs, setShowInputs] = useState(false);
   const [crafts, setCrafts] = useState(null);
-  const [services, setServices] = useState(null);
   const [formData, setFormData] = useState({
     type: "service",
+    projectId: projectId,
     title: "",
     supplier: "",
     link: "",
@@ -22,28 +20,13 @@ function AddWork({ setSelect }) {
     image: "",
     purchased: "",
     status: "",
+    category: "",
   });
-
-  useEffect(() => {
-    if (
-      selectedOption === "64478f2a42be719665d1e247" ||
-      selectedOption === ""
-    ) {
-      setShowInputs(false);
-    } else {
-      setShowInputs(true);
-    }
-  }, [selectedOption]);
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-    setSelectedCraft(crafts.find((craft) => craft._id === event.target.value));
-  };
 
   useEffect(() => {
     const getDataHandler = async () => {
       await axiosPrivate
-        .get("/api/admin/content/get_crafts", {})
+        .get("/api/admin/content/get_craft_images", {})
         .then((res) => {
           let data = res.data;
           setCrafts(data);
@@ -57,11 +40,8 @@ function AddWork({ setSelect }) {
 
   const handleSubmit = async () => {
     setSelect(null);
-    console.log(formData)
     await axiosPrivate
-      .post("/api/admin/product/add_product", {
-        formData,
-      })
+      .post("/api/admin/product/add_product", formData)
       .then((res) => {
         const data = res.data;
       })
@@ -70,7 +50,6 @@ function AddWork({ setSelect }) {
       });
   };
 
-  console.log(crafts, 'crafts')
   return (
     <form id="kt_modal_add_user_form" className="form">
       <div
@@ -86,16 +65,7 @@ function AddWork({ setSelect }) {
         <div className="row mb-5">
           {selectedCraft && (
             <div className={styles.imageBox}>
-              <img
-                onChange={(e) =>
-                  setFormData((formData) => ({
-                    ...formData,
-                    image: e.target.files[0],
-                  }))
-                }
-                src={selectedCraft.image}
-                alt="img"
-              />
+              <img src={selectedCraft.image} alt="img" />
             </div>
           )}
           <div className="col-md-8 fv-row fv-plugins-icon-container">
@@ -104,10 +74,12 @@ function AddWork({ setSelect }) {
             </label>
             <select
               onChange={(e) => {
-                handleOptionChange(e);
+                let cr = crafts.find((craft) => craft._id === e.target.value);
+                setSelectedCraft(cr);
                 setFormData((formData) => ({
                   ...formData,
                   category: e.target.value,
+                  image: cr.image,
                 }));
               }}
               name="category"
