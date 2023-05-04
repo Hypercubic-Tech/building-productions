@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/axios";
+import axiosPrivate from "@/api/axiosPrivate";
 import styles from "./Modal.module.css";
 import Link from "next/link";
 
@@ -13,16 +14,31 @@ const HeaderPopup = () => {
   const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
 
+  // useEffect(() => {
+  //   const getDataHandler = async () => {
+  //     const userId = localStorage.getItem("userId");
+
+  //     await axiosInstance
+  //       .post("/api/admin/projects/get_users_projects", { userId })
+  //       .then((res) => {
+  //         let data = res.data;
+  //         setProjectsData(data.projects);
+  //         console.log(data, "data")
+  //       })
+  //       .catch((e) => {
+  //         console.log(e, "error");
+  //       });
+  //   };
+  //   getDataHandler();
+  // }, []);
+
   useEffect(() => {
     const getDataHandler = async () => {
-      const userId = localStorage.getItem("userId");
-
-      await axiosInstance
-        .post("/api/admin/projects/get_users_projects", { userId })
+      await axiosPrivate
+        .get("/api/admin/projects/get_projects", {})
         .then((res) => {
-          let data = res.data;
-          setProjectsData(data.projects);
-          console.log(data, "data")
+          let data = res.data.projects;
+          setProjectsData(data);
         })
         .catch((e) => {
           console.log(e, "error");
@@ -92,6 +108,7 @@ const HeaderPopup = () => {
                       <div className="col-11">
                         <div className="card-body">
                           <Link
+                            onClick={() => setClose(true)}
                             href={`/projects/${item._id}`}
                             className="card-title"
                           >

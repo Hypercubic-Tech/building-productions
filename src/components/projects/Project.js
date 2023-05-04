@@ -5,13 +5,18 @@ import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
 import AddWork from "./AddWork";
 import Filter from "./Filter";
+import EditProductsForm from "./EditProductsForm";
+import EditServiceForm from "./EditServiceForm";
 
 const Project = ({ pr }) => {
   const [select, setSelect] = useState(null);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const [services, setServices] = useState(null);
+  const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
+  const [editProduct, setEditProduct] = useState(false);
+  const [editService, setEditService] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState('');
 
@@ -54,6 +59,11 @@ const Project = ({ pr }) => {
         .then((res) => {
           let data = res.data;
           setProducts(data);
+          let sum = 0;
+          for (let i = 0; i < data.length; i++) {
+            sum = sum + parseInt(data[i].quantity) * parseFloat(data[i].price);
+          }
+          setSummary(sum);
         })
         .catch((e) => {
           console.log(e, "error");
@@ -61,6 +71,24 @@ const Project = ({ pr }) => {
     };
     getDataHandler();
   }, []);
+
+  const editProductHandler = async (product) => {
+    console.log(product);
+    if (product.type === "product") {
+      if (!editProduct) {
+        setEditProduct(true);
+      } else {
+        setEditProduct(false);
+      }
+    }
+    if (product.type === "service") {
+      if (!editService) {
+        setEditService(true);
+      } else {
+        setEditService(false);
+      }
+    }
+  };
 
   return (
     <>
@@ -565,11 +593,21 @@ const Project = ({ pr }) => {
                                 </div>
                                 <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                   {showFirst && (
-                                    <AddProductForm projectId={'project'} setSelect={setSelect} />
+                                    <AddProductForm
+                                      projectId={"project"}
+                                      setSelect={setSelect}
+                                    />
                                   )}
                                   {showSecond && (
-                                    <AddWork projectId={'project'} setSelect={setSelect} />
+                                    <AddWork
+                                      projectId={"project"}
+                                      setSelect={setSelect}
+                                    />
                                   )}
+                                </div>
+                                <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                  {editProduct && <EditProductsForm />}
+                                  {editService && <EditServiceForm />}
                                 </div>
                               </div>
                             </div>
@@ -578,7 +616,12 @@ const Project = ({ pr }) => {
                       </div>
                     </div>
                     <div className="card-body pt-0">
-                      <Products products={products} services={services} filteredProducts={filteredProducts}/>
+                      <div className="summary">ჯამი: {summary} ლარი</div>
+                      <Products
+                        editHandler={editProductHandler}
+                        products={products}
+                        services={services}
+                      filteredProducts={filteredProducts}/>
                     </div>
                   </div>
                 </div>
