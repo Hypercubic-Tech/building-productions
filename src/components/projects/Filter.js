@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import axiosPrivate from "@/api/axiosPrivate";
 
-const Filter = ({ project }) => {
+const Filter = ({ project, giveProductCategory, filterProductCategory }) => {
   const [categories, setCategories] = useState(null);
   const [products, setProducts] = useState(null);
   const [clickedCategory, setClickedCategorty] = useState();
@@ -56,7 +56,10 @@ const Filter = ({ project }) => {
             categories.map((item, index) => {
               return (
                 <div
-                  onClick={() => setClickedCategorty(item.category)}
+                  onClick={() => {
+                    giveProductCategory(item._id),
+                    filterProductCategory()
+                  }}
                   key={index}
                   className="menu-item here show menu-lg-down-accordion me-lg-1"
                 >

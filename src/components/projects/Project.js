@@ -12,7 +12,11 @@ const Project = ({ pr }) => {
   const [showSecond, setShowSecond] = useState(false);
   const [services, setServices] = useState(null);
   const [products, setProducts] = useState(null);
-
+  const [productCategory, setProductCategory] = useState('');
+  console.log(productCategory, 'productCategory')
+  const giveProductCategory = (category) => {
+    setProductCategory(category)
+  };
   // console.log(pr._id)
   // const project = pr?.project._id;
 
@@ -25,6 +29,23 @@ const Project = ({ pr }) => {
     setShowFirst(true);
     setShowSecond(false);
   };
+
+  const filterProductCategory = async () => {
+  try {
+    await axiosPrivate.get(`/api/admin/product/get_filtered_products`, {
+      params: {
+        search: productCategory
+      }
+    })
+    .then((res) => {
+      const data = res.data;
+      console.log(data, 'data blin');
+
+    })
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -43,7 +64,7 @@ const Project = ({ pr }) => {
 
   return (
     <>
-      <Filter project={pr} />
+      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
@@ -489,17 +510,15 @@ const Project = ({ pr }) => {
                                   >
                                     <div
                                       onClick={handleShowFirst}
-                                      className={` ${
-                                        showFirst ? "primary-focus" : ""
-                                      } text-hover-primary mx-5 cursor-pointer `}
+                                      className={` ${showFirst ? "primary-focus" : ""
+                                        } text-hover-primary mx-5 cursor-pointer `}
                                     >
                                       პროდუქციის დამატება
                                     </div>
                                     <div
                                       onClick={handleShowSecond}
-                                      className={`${
-                                        showSecond ? "primary-focus" : ""
-                                      } text-hover-primary mx-5 cursor-pointer `}
+                                      className={`${showSecond ? "primary-focus" : ""
+                                        } text-hover-primary mx-5 cursor-pointer `}
                                     >
                                       ხელობის დამატება
                                     </div>
@@ -546,7 +565,7 @@ const Project = ({ pr }) => {
                                 </div>
                                 <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                   {showFirst && (
-                                    <AddProductForm projectId={'project'}  setSelect={setSelect} />
+                                    <AddProductForm projectId={'project'} setSelect={setSelect} />
                                   )}
                                   {showSecond && (
                                     <AddWork projectId={'project'} setSelect={setSelect} />
