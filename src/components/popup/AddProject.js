@@ -56,9 +56,6 @@ const AddProject = ({ dismiss }) => {
     formData.append("userId", sendData.userId);
     formData.append("images", sendData.images);
 
-    console.log(formData, 'rame')
-
-
     await axiosPrivate
     .post("/api/admin/projects/add_project", formData, {
       headers: {

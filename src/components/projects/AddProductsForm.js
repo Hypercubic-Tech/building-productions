@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import axiosInstance from "../../api/axios";
 import axiosPrivate from "@/api/axiosPrivate";
 
 const AddProductForm = ({ projectId, setSelect }) => {
+  const [categories, setCategories] = useState(null);
   const [productData, setProductData] = useState({
     type: "product",
     projectId: projectId,
@@ -15,11 +16,27 @@ const AddProductForm = ({ projectId, setSelect }) => {
     image: "",
     purchased: "not purchased",
     status: "",
+    category: "",
   });
+
+  useEffect(() => {
+    const getDataHandler = async () => {
+      await axiosPrivate
+        .get("/api/admin/content/get_categories", {})
+        .then((res) => {
+          let data = res.data;
+          setCategories(data);
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    };
+    getDataHandler();
+  }, [categories]);
 
   const saveProduct = async (file) => {
     if (!file?.name) return;
-  
+
     const formData = new FormData();
     formData.append("image", file);
     formData.append("type", productData.type);
@@ -32,18 +49,20 @@ const AddProductForm = ({ projectId, setSelect }) => {
     formData.append("price", productData.price);
     formData.append("purchased", productData.purchased);
     formData.append("status", productData.status);
-  
-    await axiosPrivate.post("api/admin/product/add_product", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((res) => {
-      console.log(res, 'this is res');
-    })
-    .catch((e) => {
-      console.log(e, "error");
-    });
+    formData.append("category", productData.category);
+
+    await axiosPrivate
+      .post("api/admin/product/add_product", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res, "this is res");
+      })
+      .catch((e) => {
+        console.log(e, "error");
+      });
   };
 
   const handleSubmit = async () => {
@@ -68,15 +87,15 @@ const AddProductForm = ({ projectId, setSelect }) => {
             <div
               className="image-input image-input-outline"
               data-kt-image-input="true"
-              style={{
-                backgroundImage: "url(assets/media/avatars/blank.png)",
-              }}
+              // style={{
+              //   backgroundImage: "url(assets/media/avatars/blank.png)",
+              // }}
             >
               <div
                 className="image-input-wrapper w-125px h-125px"
-                style={{
-                  backgroundImage: "url(assets/media/avatars/150-1.png)",
-                }}
+                // style={{
+                //   backgroundImage: productData.image,
+                // }}
               />
               <label
                 className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -244,6 +263,32 @@ const AddProductForm = ({ projectId, setSelect }) => {
               placeholder="პროდ: ღირებულება"
               name="price"
             />
+            <div className="fv-plugins-message-container invalid-feedback"></div>
+          </div>
+          <div className="col-md-4 fv-row fv-plugins-icon-container">
+            <label className="required fs-5 fw-bold mb-2 georgian">
+              კატეგორია
+            </label>
+            <select
+              onClick={(e) => {
+                setProductData((formData) => ({
+                  ...formData,
+                  category: e.target.value,
+                }));
+              }}
+              name="count"
+              className="form-select form-select-solid georgian"
+              data-placeholder="საზომიერთ."
+            >
+              {categories &&
+                categories.map((item, index) => {
+                  return (
+                    <option key={index} value={item.category}>
+                      {item.category}
+                    </option>
+                  );
+                })}
+            </select>
             <div className="fv-plugins-message-container invalid-feedback"></div>
           </div>
           <div className="mt-8 col-md-4 fv-row fv-plugins-icon-container">
