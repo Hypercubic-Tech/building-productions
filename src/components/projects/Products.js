@@ -1,5 +1,21 @@
+import axiosInstance from "@/api/axios";
+
 const Products = ({ products }) => {
   console.log(products, 'products');
+
+  
+  const deleteProductHandler = async (product) => {
+    await axiosInstance
+      .post("/api/admin/product/delete_product", {
+        product: product._id,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <table
@@ -77,7 +93,7 @@ const Products = ({ products }) => {
                     &nbsp;გადაკეთება
                   </a>
                 </div>
-                <div className="menu-item px-3">
+                <div onClick={() => deleteProductHandler(product)} className="menu-item px-3">
                   <a
                     className="menu-link px-3 georgian"
                     data-kt-users-table-filter="delete_row"
