@@ -60,6 +60,7 @@ const Heading = () => {
   //     window.removeEventListener("scroll", handleScroll);
   //   };
   // }, []);
+  
   return (
     <div className="mb-0" id="home">
       <div

@@ -25,7 +25,7 @@ const Products = ({ products }) => {
           <th className="text-end min-w-100px georgian">ცვლილება</th>
         </tr>
       </thead>
-      {products.map((product, index) => {
+      {products && products.map((product, index) => {
         return (
           <tbody className="text-gray-600 fw-bold" key={index}>
             <tr>
@@ -44,7 +44,7 @@ const Products = ({ products }) => {
                     <div className="symbol-label georgian">
                       <img
                         // src={`./assets/media/avatars/ ${product.img}`}
-                        alt="ელექტრო სადენი მრავალწვერიანი 3X2.5"
+                        alt=""
                         className="w-100"
                       />
                     </div>
@@ -69,7 +69,6 @@ const Products = ({ products }) => {
               <td className="text-end">
                 <div className="menu-item px-3">
                   <a
-                    href="../../demo11/dist/apps/user-management/users/view.html"
                     className="menu-link px-3 georgian"
                   >
                     <i className="bi bi-pencil-fill" />
@@ -78,7 +77,6 @@ const Products = ({ products }) => {
                 </div>
                 <div className="menu-item px-3">
                   <a
-                    href="#"
                     className="menu-link px-3 georgian"
                     data-kt-users-table-filter="delete_row"
                   >
