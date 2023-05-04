@@ -21,8 +21,7 @@ const AddProject = ({ dismiss }) => {
     objectName: "",
     worksToDo: [],
     userId: "",
-    images: null,
-    // drawings: null
+    images: "",
   });
 
   useEffect(() => {

@@ -274,6 +274,8 @@ const AddProductForm = ({ projectId, setSelect }) => {
                 setProductData((formData) => ({
                   ...formData,
                   category: e.target.value,
+                  title: e.target.value,
+
                 }));
               }}
               name="count"
