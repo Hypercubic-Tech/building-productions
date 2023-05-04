@@ -12,8 +12,9 @@ const Project = ({ pr }) => {
   const [showSecond, setShowSecond] = useState(false);
   const [services, setServices] = useState(null);
   const [products, setProducts] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState('');
-  console.log(productCategory, 'productCategory')
+
   const giveProductCategory = (category) => {
     setProductCategory(category)
   };
@@ -39,8 +40,7 @@ const Project = ({ pr }) => {
     })
     .then((res) => {
       const data = res.data;
-      console.log(data, 'data blin');
-
+      setFilteredProducts(data);
     })
   } catch (error) {
     console.error(error);
@@ -578,7 +578,7 @@ const Project = ({ pr }) => {
                       </div>
                     </div>
                     <div className="card-body pt-0">
-                      <Products products={products} services={services} />
+                      <Products products={products} services={services} filteredProducts={filteredProducts}/>
                     </div>
                   </div>
                 </div>

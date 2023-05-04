@@ -1,6 +1,6 @@
 import axiosInstance from "@/api/axios";
 
-const Products = ({ products }) => {
+const Products = ({ products, filteredProducts }) => {
   console.log(products, 'products');
 
   
