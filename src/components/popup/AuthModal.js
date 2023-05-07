@@ -51,7 +51,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
               </div>
             </div>
             <svg
-              onClick={onClose.onClose}
+              onClick={onClose}
               className={styles.closeBtn}
               width="64px"
               height="64px"

@@ -5,6 +5,7 @@ import axiosPrivate from "@/api/axiosPrivate";
 import styles from "../popup/RegModal.module.css";
 
 const RegModal = ({ handleRegistration, onClose }) => {
+  console.log(onClose, '1')
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +51,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
           <div className="d-flex justify-content-between align-items-center">
             <div className="text-muted">პროფილის შექმნა</div>
             <svg
-              onClick={onClose.onClose}
+              onClick={onClose}
               className={`${styles.closeBtn}`}
               width="64px"
               height="64px"
