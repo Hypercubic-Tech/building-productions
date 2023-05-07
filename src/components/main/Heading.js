@@ -6,8 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState, setAuthState, selectAuthAccessToken } from "@/store/slices/authSlice";
 
 const Heading = () => {
-  const loggedIn = useSelector(selectAuthAccessToken);
-  console.log(loggedIn, 'loggedIn')
+  const loggedIn = useSelector(setAuthState);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
