@@ -11,18 +11,39 @@ const AddProject = ({ dismiss }) => {
   // const axiosPrivate = useAxiosPrivate();
 
   const [sendData, setSendData] = useState({
-    propertyType: "",
-    city: "",
-    area: "",
-    address: "",
-    phone: "",
-    condition: [],
-    currentCondition: [],
-    objectName: "",
-    worksToDo: [],
-    userId: "",
-    images: "",
+    title: "titi",
+    address: "pata",
+    phoneNumber: "595",
+    area: 52,
+    city:{
+      connect:[
+          {id:1}
+      ]
+  }
   });
+
+  useEffect(() => {
+    const postDataHandler = async () => {
+      try {
+        const res = await fetch("http://localhost:1337/api/projects?populate=city", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer c0245f3c261676b44dc5c68dccafbb33e69a8964bad2f18cc24041962b8022b3f74a33c275953a099d0d82ea08e755c1efaa2453e418daa3cf425c3227a9ad90256f24acb5ece2c8dc1d4d3f5e6fc0f54aafce65ce84cc84fdeec2f2e1a2683e2bb15556eb32afff9dde3020a14b9bb63b51bd29275c1050e2e6381819b1df45",
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify({
+            data: sendData
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    postDataHandler();
+  }, []);
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -30,6 +51,7 @@ const AddProject = ({ dismiss }) => {
         .get("/api/admin/content/get_categories", {})
         .then((res) => {
           let data = res.data;
+          console.log(data, 'get_categories')
           setCategories(data);
         })
         .catch((e) => {
@@ -165,6 +187,7 @@ const AddProject = ({ dismiss }) => {
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
+    console.log(checked, 'check')
     setSendData((prevState) => {
       const newData = JSON.parse(JSON.stringify(prevState));
       if (checked) {
@@ -172,6 +195,7 @@ const AddProject = ({ dismiss }) => {
       } else {
         newData.worksToDo = newData.worksToDo.filter((val) => val !== value);
       }
+      console.log(newData, 1)
       return newData;
     });
   };
@@ -680,7 +704,7 @@ const AddProject = ({ dismiss }) => {
                                         onChange={handleCheckboxChange}
                                         className="form-check-input"
                                         type="checkbox"
-                                        defaultValue={item.category}
+                                        defaultValue={item._id}
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}

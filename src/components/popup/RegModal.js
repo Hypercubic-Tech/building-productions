@@ -1,11 +1,14 @@
-import styles from "../popup/RegModal.module.css";
 import { useState } from "react";
-import axios from "../../api/axios";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import axiosPrivate from "@/api/axiosPrivate";
 
-function RegModal(props) {
+import styles from "../popup/RegModal.module.css";
+
+const RegModal = ({ handleRegistration, onClose }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const axiosPrivate = useAxiosPrivate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -24,25 +27,20 @@ function RegModal(props) {
 
     const { email, password, fullName } = event.target.elements;
 
-    if (!fullName.value || !email.value || !password.value) {
-    } else {
-      try {
-        console.log(email.value, password.value, fullName.value, "test");
-        const response = await axios.post("/api/register", {
+    await fetch('http://localhost:1337/api/auth/local/register', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
           email: email.value,
           password: password.value,
-          fullName: fullName.value,
-        });
-        console.log(response);
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-      }
-    }
+          username: fullName.value,
+      })
+    })
 
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("name", fullName);
+    handleRegistration(true)
   };
 
   return (
@@ -52,7 +50,7 @@ function RegModal(props) {
           <div className="d-flex justify-content-between align-items-center">
             <div className="text-muted">პროფილის შექმნა</div>
             <svg
-              onClick={props.onClose}
+              onClick={onClose.onClose}
               className={`${styles.closeBtn}`}
               width="64px"
               height="64px"

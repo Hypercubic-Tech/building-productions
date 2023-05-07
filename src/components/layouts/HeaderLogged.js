@@ -63,7 +63,7 @@ function HeaderLogged() {
     dispatch(setAuthUserId(null));
     dispatch(setAuthEmail(null));
     dispatch(setAuthRole(null));
-    window.location.reload();
+    // window.location.reload();
   };
 
   useEffect(() => {

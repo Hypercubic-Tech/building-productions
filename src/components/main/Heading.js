@@ -1,4 +1,4 @@
-import AuthModal from "../popup/AuthModal.js";
+import Auth from "../popup/Auth.js";
 import HeaderPopup from "../popup/HeaderPopup";
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
@@ -83,7 +83,7 @@ const Heading = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div ref={modalRef}>
-                <div>{showModal && <AuthModal onClose={handleClose} />}</div>
+                <div>{showModal && <Auth onClose={handleClose} />}</div>
               </div>
             </animated.div>
           )}
