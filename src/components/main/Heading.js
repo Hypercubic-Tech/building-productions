@@ -3,10 +3,10 @@ import HeaderPopup from "../popup/HeaderPopup";
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthState, setAuthState } from "@/store/slices/authSlice";
+import { selectAuthState, setAuthState, selectAuthAccessToken } from "@/store/slices/authSlice";
 
 const Heading = () => {
-  const loggedIn = useSelector(selectAuthState);
+  const loggedIn = useSelector(selectAuthAccessToken);
   console.log(loggedIn, 'loggedIn')
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
