@@ -7,6 +7,7 @@ import { selectAuthState, setAuthState } from "@/store/slices/authSlice";
 
 const Heading = () => {
   const loggedIn = useSelector(selectAuthState);
+  console.log(loggedIn, 'loggedIn')
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);

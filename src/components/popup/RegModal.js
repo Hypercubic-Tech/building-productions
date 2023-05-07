@@ -3,6 +3,7 @@ import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import axiosPrivate from "@/api/axiosPrivate";
 
 import styles from "../popup/RegModal.module.css";
+import axios from "axios";
 
 const RegModal = ({ handleRegistration, onClose }) => {
   console.log(onClose, '1')
@@ -28,17 +29,10 @@ const RegModal = ({ handleRegistration, onClose }) => {
 
     const { email, password, fullName } = event.target.elements;
 
-    await fetch('http://localhost:1337/api/auth/local/register', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-          email: email.value,
-          password: password.value,
-          username: fullName.value,
-      })
+    await axios.post('http://localhost:1337/api/auth/local/register', {
+      email: email.value,
+      password: password.value,
+      username: fullName.value,
     })
 
     handleRegistration(true)

@@ -1,12 +1,21 @@
 import { useState } from "react";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import {
+  setAuthAccessToken,
+  setAuthEmail,
+  setAuthRole,
+  setAuthUserId,
+} from "@/store/slices/authSlice";
 
 import styles from "../popup/AuthModal.module.css";
 
 const AuthModal = ({ handleAuthorization, onClose }) => {
-  const axiosPrivate = useAxiosPrivate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const axiosPrivate = useAxiosPrivate();
+  const dispatch = useDispatch();
 
   const handleRegistrationClick = () => {
     setShowRegModal(true);
@@ -23,16 +32,21 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await fetch('http://localhost:1337/api/auth/local', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        identifier: email,
-        password: password
-      })
+    await axios.post('http://localhost:1337/api/auth/local', {
+      identifier: email,
+      password: password
+    })
+    .then((res) => {
+      let data = res.data;
+      localStorage.setItem("access_token", data.jwt);
+      localStorage.setItem("email", data.user.email);
+      localStorage.setItem("userId", data.user.id);
+
+      dispatch(setAuthAccessToken(data.jwt));
+      dispatch(setAuthEmail(data.user.email));
+      dispatch(setAuthRole(data.user.role));
+      dispatch(setAuthUserId(data.user.id));
+      console.log(data.user.id)
     })
   };
 
