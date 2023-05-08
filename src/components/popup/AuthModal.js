@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import {
@@ -14,7 +13,6 @@ import styles from "../popup/AuthModal.module.css";
 const AuthModal = ({ handleAuthorization, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const axiosPrivate = useAxiosPrivate();
   const dispatch = useDispatch();
 
   const handleRegistrationClick = () => {

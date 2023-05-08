@@ -1,75 +1,50 @@
 import { useState, useEffect } from "react";
-// import axiosInstance from "../../api/axios";
-import axiosPrivate from "@/api/axiosPrivate";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import axios from "axios";
 
-const AddProductForm = ({ projectId, setSelect }) => {
-  const [categories, setCategories] = useState(null);
-  const [productData, setProductData] = useState({
-    type: "product",
-    projectId: projectId,
-    title: "",
-    supplier: "",
-    link: "",
-    quantity: "",
-    unit: "",
-    price: "",
-    image: "",
-    purchased: "not purchased",
-    status: "",
-    category: "",
-    categoryId: ""
-  });
+const AddProductForm = ({ projectId, setSelect, unit, category, suppliers }) => {
+  const axiosPrivate = useAxiosPrivate();
 
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/content/get_categories", {})
-        .then((res) => {
-          let data = res.data;
-          setCategories(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
-
-  const saveProduct = async (file) => {
-    if (!file?.name) return;
-
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("type", productData.type);
-    formData.append("projectId", productData.projectId);
-    formData.append("title", productData.title);
-    formData.append("supplier", productData.supplier);
-    formData.append("link", productData.link);
-    formData.append("quantity", productData.quantity);
-    formData.append("unit", productData.unit);
-    formData.append("price", productData.price);
-    formData.append("purchased", productData.purchased);
-    formData.append("status", productData.status);
-    formData.append("category", productData.category);
-    formData.append("categoryId", productData.categoryId);
-
-    await axiosPrivate
-      .post("api/admin/product/add_product", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+  const [productData, setProductData] = useState(
+    {
+      data: {
+        image: "",
+        title: "",
+        supplier: {
+          connect: [
+            { id: null}
+          ]
         },
-      })
-      .then((res) => {
-        console.log(res, "this is res");
-      })
-      .catch((e) => {
-        console.log(e, "error");
-      });
-  };
+        productLink: "",
+        quantity: 0,
+        unit: {
+          connect: [
+            { id: null }
+          ]
+        },
+        price: 0,
+        category: {
+          connect: [
+            { id: null }
+          ]
+        }
+      }
+    }
+  );
 
   const handleSubmit = async () => {
+    try {
+        await axios.post('http://localhost:1337/api/products', {
+        data: productData
+      })
+      .then((res) => {
+        console.log(res)
+      })
+    } catch (err) {
+      console.log(err)
+    }
+
     setSelect(null);
-    saveProduct(productData.image);
   };
 
   return (
@@ -108,9 +83,9 @@ const AddProductForm = ({ projectId, setSelect }) => {
                 <i className="bi bi-pencil-fill fs-7" />
                 <input
                   onChange={(e) => {
-                    setProductData((formData) => ({
-                      ...formData,
-                      image: e.target.files[0],
+                    setProductData((prevSendData) => ({
+                      ...prevSendData,
+                      image: e.target.files,
                     }));
                   }}
                   type="file"
@@ -141,9 +116,7 @@ const AddProductForm = ({ projectId, setSelect }) => {
             <div className="fw-bold">
               <h4 className="text-gray-900 fw-bolder georgian">სურათი</h4>
               <div className="fs-6 text-gray-700 georgian">
-                მიუთითეთ მხოლოდ:
-                <a>png, jpg, jpeg.</a>
-                ფორმატი!
+                აირჩიეთ მხოლოდ ერთი სურათი
               </div>
             </div>
           </div>
@@ -155,8 +128,8 @@ const AddProductForm = ({ projectId, setSelect }) => {
             </label>
             <input
               onChange={(e) => {
-                setProductData((formData) => ({
-                  ...formData,
+                setProductData((prevSendData) => ({
+                  ...prevSendData,
                   title: e.target.value,
                 }));
               }}
@@ -173,22 +146,25 @@ const AddProductForm = ({ projectId, setSelect }) => {
             </label>
             <select
               onClick={(e) => {
-                setProductData((formData) => ({
-                  ...formData,
-                  supplier: e.target.value,
+                setProductData((prevSendData) => ({
+                  ...prevSendData,
+                  supplier: {
+                    connect: [
+                      { id: e.target.value}
+                    ]
+                  }
                 }));
               }}
               name="saler"
               className="form-select form-select-solid georgian"
               data-placeholder="მომწოდებელი"
             >
-              <option value="გორგია">გორგია</option>
-              <option value="ნოვა">ნოვა</option>
-              <option value="დომინო">დომინო</option>
-              <option value="ბრიკორამა">ბრიკორამა</option>
-              <option value="ციტადელი">ციტადელი</option>
-              <option value="მიჰაუსი">მიჰაუსი</option>
-              <option value="სხვა">სხვა</option>
+              {suppliers && suppliers.map((sup) => {
+                  <option value="none" selected disabled hidden></option>
+                return (
+                  <option key={sup?.id} value={sup?.id}>{sup?.attributes?.title}</option>
+                )
+              })}
             </select>
             <div className="fv-plugins-message-container invalid-feedback"></div>
           </div>
@@ -196,9 +172,9 @@ const AddProductForm = ({ projectId, setSelect }) => {
             <label className="required fs-5 fw-bold mb-2 georgian">ლინკი</label>
             <input
               onChange={(e) => {
-                setProductData((formData) => ({
-                  ...formData,
-                  link: e.target.value,
+                setProductData((prevSendData) => ({
+                  ...prevSendData,
+                  productLink: e.target.value,
                 }));
               }}
               type="text"
@@ -214,8 +190,8 @@ const AddProductForm = ({ projectId, setSelect }) => {
             </label>
             <input
               onChange={(e) => {
-                setProductData((formData) => ({
-                  ...formData,
+                setProductData((prevSendData) => ({
+                  ...prevSendData,
                   quantity: e.target.value,
                 }));
               }}
@@ -232,20 +208,25 @@ const AddProductForm = ({ projectId, setSelect }) => {
             </label>
             <select
               onClick={(e) => {
-                setProductData((formData) => ({
-                  ...formData,
-                  unit: e.target.value,
+                setProductData((prevSendData) => ({
+                  ...prevSendData,
+                  unit: {
+                    connect: [
+                      { id: e.target.value }
+                    ]
+                  }
                 }));
               }}
               name="count"
               className="form-select form-select-solid georgian"
               data-placeholder="საზომიერთ."
             >
-              <option value="კვ.მ">კვ.მ</option>
-              <option value="გრ.მ">გრ.მ</option>
-              <option value="ცალი">ცალი</option>
-              <option value="ლიტრი">ლიტრი</option>
-              <option value="ტომარა">ტომარა</option>
+              {unit && unit.map((u) => {
+                  <option value="none" selected disabled hidden></option>
+                return (
+                  <option key={u?.id} value={u?.id}>{u?.attributes?.title}</option>
+                )
+              })}
             </select>
             <div className="fv-plugins-message-container invalid-feedback"></div>
           </div>
@@ -255,8 +236,8 @@ const AddProductForm = ({ projectId, setSelect }) => {
             </label>
             <input
               onChange={(e) => {
-                setProductData((formData) => ({
-                  ...formData,
+                setProductData((prevSendData) => ({
+                  ...prevSendData,
                   price: e.target.value,
                 }));
               }}
@@ -273,20 +254,25 @@ const AddProductForm = ({ projectId, setSelect }) => {
             </label>
             <select
               onClick={(e) => {
-                setProductData((formData) => ({
-                  ...formData,
-                  category: e.target.value,
+                setProductData((prevSendData) => ({
+                  ...prevSendData,
+                  category: {
+                    connect: [
+                      { id: e.target.value }
+                    ]
+                  }
                 }));
               }}
               name="count"
               className="form-select form-select-solid georgian"
               data-placeholder="საზომიერთ."
             >
-              {categories &&
-                categories.map((item, index) => {
+              {category &&
+                category.map((item) => {
+                  <option value="none" selected disabled hidden></option>
                   return (
-                    <option key={index} value={item._id} >
-                      {item.category}
+                    <option key={item?.id} value={item?.id} >
+                      {item?.attributes?.title}
                     </option>
                   );
                 })}

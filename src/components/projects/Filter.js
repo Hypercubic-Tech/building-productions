@@ -37,9 +37,6 @@ const Filter = ({ project, giveProductCategory, filterProductCategory }) => {
     getDataHandler();
   }, []);
 
-  // console.log(project, "project");
-  console.log(products, "products");
-
   return (
     <div
       style={{ margin: "100px 0px 50px 0px" }}

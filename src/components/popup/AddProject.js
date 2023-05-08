@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import cities from "@/api/cities.json";
 import axiosPrivate from "@/api/axiosPrivate";
-import styles from "./Modal.module.css";
+import axios from "axios";
 
+import styles from "./Modal.module.css";
 const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
@@ -25,17 +26,7 @@ const AddProject = ({ dismiss }) => {
   useEffect(() => {
     const postDataHandler = async () => {
       try {
-        const res = await fetch("http://localhost:1337/api/projects?populate=city", {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer c0245f3c261676b44dc5c68dccafbb33e69a8964bad2f18cc24041962b8022b3f74a33c275953a099d0d82ea08e755c1efaa2453e418daa3cf425c3227a9ad90256f24acb5ece2c8dc1d4d3f5e6fc0f54aafce65ce84cc84fdeec2f2e1a2683e2bb15556eb32afff9dde3020a14b9bb63b51bd29275c1050e2e6381819b1df45",
-            "Content-type": "application/json",
-            "Accept": "application/json",
-          },
-          body: JSON.stringify({
-            data: sendData
-          }),
-        });
+        const res = await axios.get("http://localhost:1337/api/projects?populate=city");
         const data = await res.json();
         console.log(data);
       } catch (error) {
