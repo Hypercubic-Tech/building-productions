@@ -85,13 +85,13 @@ const HeaderPopup = () => {
                           <p className="card-text">{item.attributes.address}</p>
                           <div className={`${styles.gap20} row `}>
                             <div
-                              onClick={() => editHandler(item)}
+                              // onClick={() => editHandler(item)}
                               className="btn btn-primary"
                             >
                               რედაქტირება
                             </div>
                             <div
-                              onClick={() => deleteHandler(item)}
+                              // onClick={() => deleteHandler(item)}
                               className="btn btn-danger"
                             >
                               წაშლა
