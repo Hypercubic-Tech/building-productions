@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/axios";
-import axiosPrivate from "@/api/axiosPrivate";
+import axios from "axios";
 import styles from "./Modal.module.css";
 import Link from "next/link";
 
@@ -34,11 +34,17 @@ const HeaderPopup = () => {
 
   useEffect(() => {
     const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/projects/get_projects", {})
+      await axios
+        .get("http://localhost:1337/api/projects", {})
         .then((res) => {
-          let data = res.data.projects;
+          let data = res.data.data;
           setProjectsData(data);
+          let paths = res?.data?.data?.map((item) => {
+            return {
+              params: { projectId: item.id },
+            };
+          });
+          console.log(paths)
         })
         .catch((e) => {
           console.log(e, "error");
@@ -109,12 +115,12 @@ const HeaderPopup = () => {
                         <div className="card-body">
                           <Link
                             onClick={() => setClose(true)}
-                            href={`/projects/${item._id}`}
+                            href={`/projects/${item.id}`}
                             className="card-title"
                           >
-                            {item.objectName}
+                            {item.attributes.title}
                           </Link>
-                          <p className="card-text">{item.propertyType}</p>
+                          <p className="card-text">{item.attributes.address}</p>
                           <div className="btn-group row">
                             <div
                               onClick={() => editHandler(item)}

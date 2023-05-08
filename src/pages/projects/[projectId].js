@@ -1,31 +1,33 @@
 import Project from "@/components/projects/Project";
-import axiosPrivate from "@/api/axios";
+import axiosPrivate from "@/api/axiosPrivate";
+import axios from "axios";
 
 export const getStaticPaths = async () => {
-    //reqvest to get projects data
-    const res = await axiosPrivate.get("/api/admin/projects/get_projects");
+  //reqvest to get projects data
+  const res = await axios.get("http://localhost:1337/api/projects", {});
 
-    let paths = [];
-    if (res?.data?.length) {
-        paths = res?.data?.map((item) => {
-            return {
-                params: { projectId: item?._id },
-            };
-        });
-    }
-    return {
-        paths,
-        fallback: true,
-    };
+  let paths = [];
+  if (res?.data?.data?.length) {
+    paths = res?.data?.data?.map((item) => {
+        return {
+          params: { projectId: item.id },
+        };
+    });
+  }
+  console.log(paths)
+  return {
+    paths,
+    fallback: true,
+  };
 };
 
 export const getStaticProps = async ({ params }) => {
-    const projectId = params?.projectId || undefined;
-    const res = await axiosPrivate.post("/api/admin/projects/get_users_project", { projectId });
+  const projectId = params?.projectId || undefined;
+  const res = await axiosPrivate.post("/api/admin/projects/get_users_project", { projectId });
 
   return {
     props: {
-      pr: res?.data?.project[0],
+      pr: res?.data?.data
     },
   };
 };
