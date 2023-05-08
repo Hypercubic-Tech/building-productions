@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from "next/router";
 import axios from 'axios';
 import Project from "@/components/projects/Project";
 import { useRouter } from "next/router";
@@ -7,6 +8,7 @@ const index = () => {
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
   const [category, setCategory] = useState(null);
+  const [products, setProducts] = useState(null);
 
   const router = useRouter();
   const { projectId } = router.query;
@@ -15,36 +17,37 @@ const index = () => {
     const getProductHandler = async () => {
       try {
         await axios.get('http://localhost:1337/api/products')
-        .then((res) => {
-          console.log(res)
-        })
+          .then((res) => {
+            const data = res.data
+            setProducts(data.data);
+          })
       } catch (err) {
         console.log(err);
       }
     };
 
-    const getSupplierHandler = async() => {
+    const getSupplierHandler = async () => {
       await axios.get('http://localhost:1337/api/suppliers')
-      .then((res) => {
-        const data = res.data
-        setSuppliers(data.data);
-      })
+        .then((res) => {
+          const data = res.data
+          setSuppliers(data.data);
+        })
     };
 
-    const getUnitHandler = async() => {
+    const getUnitHandler = async () => {
       await axios.get('http://localhost:1337/api/units')
-      .then((res) => {
-        const data = res.data
-        setUnit(data.data);
-      })
+        .then((res) => {
+          const data = res.data
+          setUnit(data.data);
+        })
     };
 
-    const getCategoryHandler = async() => {
+    const getCategoryHandler = async () => {
       await axios.get('http://localhost:1337/api/categories')
-      .then((res) => {
-        const data = res.data
-        setCategory(data.data);
-      })
+        .then((res) => {
+          const data = res.data
+          setCategory(data.data);
+        })
     };
 
     getProductHandler();
@@ -52,7 +55,7 @@ const index = () => {
     getUnitHandler();
     getCategoryHandler();
   }, []);
-  
+
   return <Project pr={projectId} suppliers={suppliers} unit={unit} category={category} />;
 };
 

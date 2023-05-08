@@ -63,32 +63,14 @@ const Project = ({ pr, unit, category, suppliers }) => {
     const getProductsHandler = async() => {
       try {
         await axios.get('http://localhost:1337/api/products?populate=*')
-        .then((res) => {
-          const data = res.data;
-          setAllProduct(data.data);
-        })
+          .then((res) => {
+            const data = res.data;
+            setAllProduct(data.data);
+          })
       } catch (error) {
         console.error(error);
       }
     };
-
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/product/get_products", {})
-        .then((res) => {
-          let data = res.data;
-          setProducts(data);
-          let sum = 0;
-          for (let i = 0; i < data.length; i++) {
-            sum = sum + parseInt(data[i].quantity) * parseFloat(data[i].price);
-          }
-          setSummary(sum);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
     getProductsHandler();
     getCategoriesHandler();
   }, []);
@@ -652,7 +634,7 @@ const Project = ({ pr, unit, category, suppliers }) => {
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
-                        allProduct={allProduct}/>
+                        allProduct={allProduct} />
                     </div>
                   </div>
                 </div>

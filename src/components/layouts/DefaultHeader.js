@@ -81,15 +81,15 @@ function DefaultHeader() {
                 </svg>
               </span>
             </button> */}
-              <a href="../../demo11/dist/landing.html">
+              <a href="/">
                 <img
                   alt="Logo"
-                  src="assets/media/logos/logo-landing.svg"
+                  src="/assets/media/logos/logo-demo11.svg"
                   className="logo-default h-25px h-lg-30px"
                 />
                 <img
                   alt="Logo"
-                  src="assets/media/logos/logo-landing-dark.svg"
+                  src="/assets/media/logos/logo-demo11.svg"
                   className="logo-sticky h-20px h-lg-25px"
                 />
               </a>
