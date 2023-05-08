@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import axiosInstance from "@/api/axios";
 
-const Products = ({ products, editHandler, allProduct }) => {
+const Products = ({ editHandler, allProduct }) => {
 
-  const deleteProductHandler = async (product) => {
-    await axiosInstance
-      .post("/api/admin/product/delete_product", {
-        product: product._id,
-      })
+  const deleteProductHandler = async (productId) => {
+    await axios
+      .delete(`http://localhost:1337/api/products/${productId}`)
       .then((response) => {
         console.log(response);
       })
@@ -93,7 +89,7 @@ const Products = ({ products, editHandler, allProduct }) => {
                       </a>
                     </div>
                     <div
-                      onClick={() => deleteProductHandler(product)}
+                      onClick={(e) => deleteProductHandler(product.id)}
                       className="menu-item px-3"
                     >
                       <a
