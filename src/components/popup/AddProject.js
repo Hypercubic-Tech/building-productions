@@ -2,156 +2,137 @@ import { useEffect, useState } from "react";
 import cities from "@/api/cities.json";
 import axiosPrivate from "@/api/axiosPrivate";
 import styles from "./Modal.module.css";
+import axios from "axios";
 
 const AddProject = ({ dismiss }) => {
+
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
+  const [cities, setCities] = useState(null);
+  const [propertyType, setPropertyType] = useState(null);
+  const [condition, setCondition] = useState(null);
+  const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-  // const axiosPrivate = useAxiosPrivate();
+
+  const token = localStorage.getItem('access_token');
 
   const [sendData, setSendData] = useState({
-    title: "titi",
-    address: "pata",
-    phoneNumber: "595",
-    area: 52,
-    city:{
-      connect:[
-          {id:1}
+    title: "",
+    address: "",
+    phoneNumber: "",
+    area: "",
+    city: {
+      connect: [
+        { id: null }
       ]
-  }
+    },
+    property_type: {
+      connect: [
+        { id: null }
+      ]
+    },
+    categories: {
+      connect: []
+    },
+    current_condition: {
+      connect: [
+        { id: null }
+      ]
+    },
+    condition: {
+      connect: [
+        { id: null }
+      ]
+    },
   });
 
+
   useEffect(() => {
-    const postDataHandler = async () => {
+    const getPropertyTypesHandler = async () => {
       try {
-        const res = await fetch("http://localhost:1337/api/projects?populate=city", {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer c0245f3c261676b44dc5c68dccafbb33e69a8964bad2f18cc24041962b8022b3f74a33c275953a099d0d82ea08e755c1efaa2453e418daa3cf425c3227a9ad90256f24acb5ece2c8dc1d4d3f5e6fc0f54aafce65ce84cc84fdeec2f2e1a2683e2bb15556eb32afff9dde3020a14b9bb63b51bd29275c1050e2e6381819b1df45",
-            "Content-type": "application/json",
-            "Accept": "application/json",
-          },
-          body: JSON.stringify({
-            data: sendData
-          }),
-        });
-        const data = await res.json();
-        console.log(data);
+        const res = await axios.get("http://localhost:1337/api/property-types")
+          .then((res) => {
+            const data = res.data;
+            setPropertyType(data.data)
+          })
+
       } catch (error) {
         console.log(error);
       }
     };
-    postDataHandler();
+    getPropertyTypesHandler();
   }, []);
 
   useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/content/get_categories", {})
-        .then((res) => {
-          let data = res.data;
-          console.log(data, 'get_categories')
-          setCategories(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
+    const getCitiesHandler = async () => {
+      try {
+        const res = await axios.get("http://localhost:1337/api/cities")
+          .then((res) => {
+            const data = res.data;
+            setCities(data.data)
+          })
 
-    setSendData({ ...sendData, userId: localStorage.getItem("userId") });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCitiesHandler();
   }, []);
 
-  const sendFormDataHandler = async () => {
-    let formData = new FormData();
-    formData.append("propertyType", sendData.propertyType);
-    formData.append("city", sendData.city);
-    formData.append("area", sendData.area);
-    formData.append("address", sendData.address);
-    formData.append("phone", sendData.phone);
-    formData.append("condition", sendData.condition);
-    formData.append("currentCondition", sendData.currentCondition);
-    formData.append("objectName", sendData.objectName);
-    formData.append("worksToDo", sendData.worksToDo);
-    formData.append("userId", sendData.userId);
-    formData.append("images", sendData.images);
+  useEffect(() => {
+    const getConditionHandler = async () => {
+      try {
+        const res = await axios.get("http://localhost:1337/api/conditions")
+          .then((res) => {
+            const data = res.data;
+            setCondition(data.data)
+          })
 
-    await axiosPrivate
-    .post("/api/admin/projects/add_project", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
+      } catch (error) {
+        console.log(error);
       }
-    })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  };
+    };
+    getConditionHandler();
+  }, []);
+
+  useEffect(() => {
+    const getCurrentConditionHandler = async () => {
+      try {
+        const res = await axios.get("http://localhost:1337/api/current-conditions")
+          .then((res) => {
+            const data = res.data;
+            setCurrentCondition(data.data)
+          })
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCurrentConditionHandler();
+  }, []);
+
+  useEffect(() => {
+    const getCategoriesHandler = async () => {
+      try {
+        const res = await axios.get("http://localhost:1337/api/categories")
+          .then((res) => {
+            const data = res.data;
+            setCategories(data.data)
+          })
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCategoriesHandler();
+  }, []);
+
 
   let errors = {
     stepOne: [],
     stepTwo: [],
     stepThree: [],
-  };
-
-  const validationHandler = () => {
-    let propertyInput = document.getElementById("property");
-    let cityInput = document.getElementById("city");
-    let areaInput = document.getElementById("area");
-    let addressInput = document.getElementById("address");
-    let phoneInput = document.getElementById("phone");
-
-    if (sendData.propertyType === "") {
-      errors.stepOne.push("შეავსეთ ქონების ტიპი");
-      propertyInput.classList.add(styles.error);
-    } else {
-      propertyInput.classList.remove(styles.error);
-    }
-    if (sendData.city === "") {
-      errors.stepOne.push("მონიშნეთ ქალაქი");
-      cityInput.classList.add(styles.error);
-    } else {
-      cityInput.classList.remove(styles.error);
-    }
-    if (sendData.district === "") {
-      errors.stepOne.push("შეავსეთ ფართობი");
-      areaInput.classList.add(styles.error);
-    } else {
-      areaInput.classList.remove(styles.error);
-    }
-    if (sendData.address === "") {
-      errors.stepOne.push("შეავსეთ მისამართი");
-      addressInput.classList.add(styles.error);
-    } else {
-      addressInput.classList.remove(styles.error);
-    }
-    if (sendData.phone === "") {
-      errors.stepOne.push("შეავსეთ ტელეფონის ნომერი");
-      phoneInput.classList.add(styles.error);
-    } else {
-      phoneInput.classList.remove(styles.error);
-    }
-    // // end of step one
-    if (sendData.currentCondition.length === 0) {
-      errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა");
-    }
-    if (sendData.condition.length === 0) {
-      errors.stepTwo.push("მონიშნეთ მდგომეროება");
-    }
-    // end of step two
-
-    if (sendData.objectName === "") {
-      errors.stepThree.push("შეავსეთ ობიექტის დასახელება");
-    }
-    if (sendData.worksToDo.length === 0) {
-      errors.stepThree.push("მონიშნეთ შესასრულებელი სამუშაოები");
-    }
-    // end of step three
-
-    console.log(errors);
   };
 
   const getStatusClass = (stepIndex) => {
@@ -185,24 +166,32 @@ const AddProject = ({ dismiss }) => {
     }
   };
 
-  const handleCheckboxChange = (event) => {
-    const { value, checked } = event.target;
-    console.log(checked, 'check')
-    setSendData((prevState) => {
-      const newData = JSON.parse(JSON.stringify(prevState));
-      if (checked) {
-        newData.worksToDo = [...newData.worksToDo, value];
-      } else {
-        newData.worksToDo = newData.worksToDo.filter((val) => val !== value);
-      }
-      console.log(newData, 1)
-      return newData;
-    });
+  const handleCategoryChange = (e) => {
+    const categoryId = e.target.value;
+    if (!sendData.categories.connect.some(cat => cat.id === categoryId)) {
+      setSendData(prevState => ({
+        ...prevState,
+        categories: {
+          connect: [...prevState.categories.connect, { id: categoryId }]
+        }
+      }));
+    }
   };
+
+  const saveProjectHandler = async (req, res) => {
+    try {
+      await axios.post('http://localhost:1337/api/projects', {
+        data: sendData
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const finishHandler = () => {
     setClose(true);
-    sendFormDataHandler();
+    saveProjectHandler();
+    console.log(sendData)
   };
 
   return (
@@ -314,11 +303,11 @@ const AddProject = ({ dismiss }) => {
                   <div className="stepper-line w-40px" />
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
-                    <span className="stepper-number">5</span>
+                    <span className="stepper-number">4</span>
                   </div>
                   <div className="stepper-label">
-                    <h3 className="stepper-title">Completed</h3>
-                    <div className="stepper-desc">Review and Submit</div>
+                    <h3 className="stepper-title">დასრულება</h3>
+                    <div className="stepper-desc"></div>
                   </div>
                 </div>
               </div>
@@ -343,19 +332,19 @@ const AddProject = ({ dismiss }) => {
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
-                            propertyType: event.target.value,
+                            property_type: {
+                              connect: [{ id: event.target.value }],
+                            },
                           }));
                         }}
-                        onBlur={validationHandler}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        <option value={"default"}>აირჩიეთ ტიპი</option>
-                        <option value={"ბინა"}>ბინა</option>
-                        <option value={"სახლი-აგარაკი"}>სახლი-აგარაკი</option>
-                        <option value={"კომერციული ფართი"}>
-                          კომერციული ფართი
-                        </option>
-                        <option value={"სასტუმრო"}>სასტუმრო</option>
+                        {propertyType && propertyType.map((item, index) => {
+                          <option value="none" selected disabled hidden></option>
+                          return (
+                            <option key={index} value={item.id}>{item.attributes.Title}</option>
+                          )
+                        })}
                       </select>
                     </div>
 
@@ -371,16 +360,20 @@ const AddProject = ({ dismiss }) => {
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
-                                  city: event.target.value,
+                                  city: {
+                                    connect: [{ id: event.target.value }],
+                                  },
                                 }));
                               }}
-                              onBlur={validationHandler}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
-                              {cities.map((sity, i) => {
-                                return <option key={i} value={sity}>{sity}</option>
+                              {cities && cities.map((item, index) => {
+                                <option value="none" selected disabled hidden></option>
+                                return (
+                                  <option key={index} value={item.id}>{item.attributes.city}</option>
+                                )
                               })}
                             </select>
                           </div>
@@ -393,7 +386,6 @@ const AddProject = ({ dismiss }) => {
                                   area: event.target.value,
                                 }));
                               }}
-                              onBlur={validationHandler}
                               name="area"
                               type="number"
                               className="form-control georgian form-control-solid"
@@ -421,7 +413,6 @@ const AddProject = ({ dismiss }) => {
                                   address: event.target.value,
                                 }));
                               }}
-                              onBlur={validationHandler}
                               type="text"
                               className="form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
@@ -433,10 +424,9 @@ const AddProject = ({ dismiss }) => {
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
-                                  phone: event.target.value,
+                                  phoneNumber: event.target.value,
                                 }));
                               }}
-                              onBlur={validationHandler}
                               type="number"
                               className="form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
@@ -459,63 +449,36 @@ const AddProject = ({ dismiss }) => {
                         <span className="required georgian">მდგომარეობა</span>
                       </label>
                       <div className="fv-row">
-                        <label className="d-flex flex-stack mb-5 cursor-pointer">
-                          <span className="d-flex align-items-center me-2">
-                            <span className="d-flex flex-column">
-                              <span className="fw-bolder georgian fs-6">
-                                ახალი აშენებული
+                        {condition && condition.map((item, index) => {
+                          return (
+                            <label key={index} className="d-flex flex-stack mb-5 cursor-pointer">
+                              <span className="d-flex align-items-center me-2">
+                                <span className="d-flex flex-column">
+                                  <span className="fw-bolder georgian fs-6">
+                                    {item.attributes.title}
+                                  </span>
+                                </span>
                               </span>
-                              <span className="fs-7 text-muted">
-                                აშენებული 2005 წლის შემდეგ
+                              <span className="form-check form-check-custom form-check-solid">
+                                <input
+                                  id="input-validation-building"
+                                  onChange={(event) => {
+                                    setSendData((prevSendData) => ({
+                                      ...prevSendData,
+                                      condition: {
+                                        connect: [{ id: event.target.value }],
+                                      },
+                                    }));
+                                  }}
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="category"
+                                  value={item.id}
+                                />
                               </span>
-                            </span>
-                          </span>
-                          <span className="form-check form-check-custom form-check-solid">
-                            <input
-                              id="input-validation-building"
-                              onChange={(event) => {
-                                setSendData((prevSendData) => ({
-                                  ...prevSendData,
-                                  condition: event.target.value,
-                                }));
-                              }}
-                              onBlur={validationHandler}
-                              className="form-check-input"
-                              type="radio"
-                              name="category"
-                              defaultValue={"ახალი აშენებული"}
-                            />
-                          </span>
-                        </label>
-                        <label className="d-flex flex-stack mb-5 cursor-pointer">
-                          <span className="d-flex align-items-center me-2">
-                            <span className="d-flex flex-column">
-                              <span className="fw-bolder georgian fs-6">
-                                ძველი აშენებული
-                              </span>
-                              <span className="fs-7 text-muted">
-                                აშენებული 2005 წლამდე
-                              </span>
-                            </span>
-                          </span>
-                          <span className="form-check form-check-custom form-check-solid">
-                            <input
-                              id="input-validation-building"
-                              onChange={(event) => {
-                                setSendData((prevSendData) => ({
-                                  ...prevSendData,
-                                  condition: event.target.value,
-                                }));
-                              }}
-                              onBlur={validationHandler}
-                              className="form-check-input"
-                              type="radio"
-                              name="category"
-                              defaultChecked="checked"
-                              defaultValue={"ძველი აშენებული"}
-                            />
-                          </span>
-                        </label>
+                            </label>
+                          )
+                        })}
                       </div>
                     </div>
                     <div className="fv-row">
@@ -524,138 +487,39 @@ const AddProject = ({ dismiss }) => {
                           არსებული მდგომარეობა
                         </span>
                       </label>
-                      <label className="d-flex flex-stack cursor-pointer mb-5">
-                        <span className="d-flex align-items-center me-2">
-                          <span className="d-flex flex-column">
-                            <span className="fw-bolder georgian fs-6">
-                              შავი კარკასი
+                      {currentCondition && currentCondition.map((item, index) => {
+                        return (
+                          <label key={index} className="d-flex flex-stack cursor-pointer mb-5">
+                            <span className="d-flex align-items-center me-2">
+                              <span className="d-flex flex-column">
+                                <span className="fw-bolder georgian fs-6">
+                                  {item.attributes.title}
+                                </span>
+                                <span className="fs-7 georgian text-muted">
+                                  სამუშაოები სრულ რემონტამდე.
+                                </span>
+                              </span>
                             </span>
-                            <span className="fs-7 georgian text-muted">
-                              სამუშაოები სრულ რემონტამდე.
+                            <span className="form-check form-check-custom form-check-solid">
+                              <input
+                                id="input-validation"
+                                onChange={(event) => {
+                                  setSendData((prevSendData) => ({
+                                    ...prevSendData,
+                                    current_condition: {
+                                      connect: [{ id: event.target.value }],
+                                    },
+                                  }));
+                                }}
+                                className="form-check-input"
+                                type="radio"
+                                name="framework"
+                                value={item.id}
+                              />
                             </span>
-                          </span>
-                        </span>
-                        <span className="form-check form-check-custom form-check-solid">
-                          <input
-                            id="input-validation"
-                            onChange={(event) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                currentCondition: event.target.value,
-                              }));
-                            }}
-                            onBlur={validationHandler}
-                            className="form-check-input"
-                            type="radio"
-                            defaultChecked="checked"
-                            name="framework"
-                            defaultValue={"შავი კარკასი"}
-                          />
-                        </span>
-                      </label>
-                      <label className="d-flex flex-stack cursor-pointer mb-5">
-                        <span className="d-flex align-items-center me-2">
-                          <span className="d-flex flex-column">
-                            <span className="fw-bolder georgian fs-6">
-                              თეთრი კარკასი
-                            </span>
-                            <span className="fs-7 georgian text-muted">
-                              სამუშაოები სრულ რემონტამდე.
-                            </span>
-                          </span>
-                        </span>
-                        <span className="form-check form-check-custom form-check-solid">
-                          <input
-                            id="input-validation"
-                            onChange={(event) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                currentCondition: event.target.value,
-                              }));
-                            }}
-                            onBlur={validationHandler}
-                            className="form-check-input"
-                            type="radio"
-                            name="framework"
-                            defaultValue={"თეთრი კარკასი"}
-                          />
-                        </span>
-                      </label>
-                      <label className="d-flex flex-stack cursor-pointer mb-5">
-                        <span className="d-flex align-items-center me-2">
-                          <span className="d-flex flex-column">
-                            <span className="fw-bolder georgian fs-6">
-                              მწვანე კარკასი
-                            </span>
-                            <span className="fs-7 georgian text-muted">
-                              სამუშაოები სრულ რემონტამდე.
-                            </span>
-                          </span>
-                        </span>
-                        <span className="form-check form-check-custom form-check-solid">
-                          <input
-                            id="input-validation"
-                            onChange={(event) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                currentCondition: event.target.value,
-                              }));
-                            }}
-                            onBlur={validationHandler}
-                            className="form-check-input"
-                            type="radio"
-                            name="framework"
-                            defaultValue={"მწვანე კარკასი"}
-                          />
-                        </span>
-                      </label>
-                      <label className="d-flex flex-stack cursor-pointer mb-5">
-                        <span className="d-flex align-items-center me-2">
-                          <span className="d-flex flex-column">
-                            <span className="fw-bolder georgian fs-6">
-                              პროექტის სურათები
-                            </span>
-                          </span>
-                        </span>
-                        <span className="form-check form-check-custom form-check-solid">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              let blob = e.target.files[0].slice(0, e.target.files[0].size, e.target.files[0].type);
-                              const ext = e.target.files[0].type.slice(6);
-
-                              const newFile = new File([blob], `${sendData.address}.${ext}`, { type: e.target.files[0].type });
-
-                              setSendData((prevCraftData) => ({
-                                ...prevCraftData,
-                                images: newFile,
-                              }));
-                            }}
-                          />
-                        </span>
-                      </label>
-                      {/* <label className="d-flex flex-stack cursor-pointer mb-5">
-                        <span className="d-flex align-items-center me-2">
-                          <span className="d-flex flex-column">
-                            <span className="fw-bolder georgian fs-6">
-                              პროექტის ნახაზები
-                            </span>
-                          </span>
-                        </span>
-                        <span className="form-check form-check-custom form-check-solid">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              setSendData((prevCraftData) => ({
-                                ...prevCraftData,
-                                drawings: e.target.files[0],
-                              }));
-                            }}
-                          />
-                        </span>
-                      </label> */}
+                          </label>
+                        )
+                      })}
                     </div>
                   </div>
                 </div>
@@ -673,10 +537,9 @@ const AddProject = ({ dismiss }) => {
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
-                            objectName: event.target.value,
+                            title: event.target.value,
                           }));
                         }}
-                        onBlur={validationHandler}
                         type="text"
                         className="form-control georgian form-control-lg form-control-solid"
                         name="dbname"
@@ -700,17 +563,16 @@ const AddProject = ({ dismiss }) => {
                                       className="form-check form-check-custom form-check-solid mb-2"
                                     >
                                       <input
-                                        onBlur={validationHandler}
-                                        onChange={handleCheckboxChange}
+                                        onChange={handleCategoryChange}
                                         className="form-check-input"
                                         type="checkbox"
-                                        defaultValue={item._id}
+                                        value={item.id}
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}
                                         className="form-check-label georgian"
                                       >
-                                        {item.category}
+                                        {item.attributes.title}
                                       </label>
                                     </div>
                                   );
