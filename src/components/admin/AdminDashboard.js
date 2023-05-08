@@ -112,7 +112,9 @@ const AdminDashboard = () => {
                 );
               })}
           </select>
-          <div className={styles.btn} onClick={addCraftHandler}>დაამატე ხელობა</div>
+          <div className={styles.btn} onClick={addCraftHandler}>
+            დაამატე ხელობა
+          </div>
         </form>
       </div>
     </div>

@@ -304,7 +304,11 @@ const EditProject = ({ data, dismiss }) => {
                               data-placeholder="მდებარეობა"
                             >
                               {cities.map((sity, i) => {
-                                return <option key={i} value={sity}>{sity}</option>
+                                return (
+                                  <option key={i} value={sity}>
+                                    {sity}
+                                  </option>
+                                );
                               })}
                             </select>
                           </div>
@@ -323,8 +327,7 @@ const EditProject = ({ data, dismiss }) => {
                               className="form-control georgian form-control-solid"
                               placeholder="ობიექტის ფართობი"
                               data-placeholder="area"
-                            >
-                            </input>
+                            ></input>
                           </div>
                         </div>
                       </div>

@@ -15,27 +15,29 @@ const AddProject = ({ dismiss }) => {
     address: "pata",
     phoneNumber: "595",
     area: 52,
-    city:{
-      connect:[
-          {id:1}
-      ]
-  }
+    city: {
+      connect: [{ id: 1 }],
+    },
   });
 
   useEffect(() => {
     const postDataHandler = async () => {
       try {
-        const res = await fetch("http://localhost:1337/api/projects?populate=city", {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer c0245f3c261676b44dc5c68dccafbb33e69a8964bad2f18cc24041962b8022b3f74a33c275953a099d0d82ea08e755c1efaa2453e418daa3cf425c3227a9ad90256f24acb5ece2c8dc1d4d3f5e6fc0f54aafce65ce84cc84fdeec2f2e1a2683e2bb15556eb32afff9dde3020a14b9bb63b51bd29275c1050e2e6381819b1df45",
-            "Content-type": "application/json",
-            "Accept": "application/json",
-          },
-          body: JSON.stringify({
-            data: sendData
-          }),
-        });
+        const res = await fetch(
+          "http://localhost:1337/api/projects?populate=city",
+          {
+            method: "POST",
+            headers: {
+              Authorization:
+                "Bearer c0245f3c261676b44dc5c68dccafbb33e69a8964bad2f18cc24041962b8022b3f74a33c275953a099d0d82ea08e755c1efaa2453e418daa3cf425c3227a9ad90256f24acb5ece2c8dc1d4d3f5e6fc0f54aafce65ce84cc84fdeec2f2e1a2683e2bb15556eb32afff9dde3020a14b9bb63b51bd29275c1050e2e6381819b1df45",
+              "Content-type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({
+              data: sendData,
+            }),
+          }
+        );
         const data = await res.json();
         console.log(data);
       } catch (error) {
@@ -51,7 +53,7 @@ const AddProject = ({ dismiss }) => {
         .get("/api/admin/content/get_categories", {})
         .then((res) => {
           let data = res.data;
-          console.log(data, 'get_categories')
+          console.log(data, "get_categories");
           setCategories(data);
         })
         .catch((e) => {
@@ -78,17 +80,17 @@ const AddProject = ({ dismiss }) => {
     formData.append("images", sendData.images);
 
     await axiosPrivate
-    .post("/api/admin/projects/add_project", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .post("/api/admin/projects/add_project", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   let errors = {
@@ -187,7 +189,7 @@ const AddProject = ({ dismiss }) => {
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
-    console.log(checked, 'check')
+    console.log(checked, "check");
     setSendData((prevState) => {
       const newData = JSON.parse(JSON.stringify(prevState));
       if (checked) {
@@ -195,7 +197,7 @@ const AddProject = ({ dismiss }) => {
       } else {
         newData.worksToDo = newData.worksToDo.filter((val) => val !== value);
       }
-      console.log(newData, 1)
+      console.log(newData, 1);
       return newData;
     });
   };
@@ -380,7 +382,11 @@ const AddProject = ({ dismiss }) => {
                               data-placeholder="მდებარეობა"
                             >
                               {cities.map((sity, i) => {
-                                return <option key={i} value={sity}>{sity}</option>
+                                return (
+                                  <option key={i} value={sity}>
+                                    {sity}
+                                  </option>
+                                );
                               })}
                             </select>
                           </div>
@@ -399,8 +405,7 @@ const AddProject = ({ dismiss }) => {
                               className="form-control georgian form-control-solid"
                               placeholder="ობიექტის ფართობი"
                               data-placeholder="area"
-                            >
-                            </input>
+                            ></input>
                           </div>
                         </div>
                       </div>
@@ -622,10 +627,18 @@ const AddProject = ({ dismiss }) => {
                             type="file"
                             accept="image/*"
                             onChange={(e) => {
-                              let blob = e.target.files[0].slice(0, e.target.files[0].size, e.target.files[0].type);
+                              let blob = e.target.files[0].slice(
+                                0,
+                                e.target.files[0].size,
+                                e.target.files[0].type
+                              );
                               const ext = e.target.files[0].type.slice(6);
 
-                              const newFile = new File([blob], `${sendData.address}.${ext}`, { type: e.target.files[0].type });
+                              const newFile = new File(
+                                [blob],
+                                `${sendData.address}.${ext}`,
+                                { type: e.target.files[0].type }
+                              );
 
                               setSendData((prevCraftData) => ({
                                 ...prevCraftData,

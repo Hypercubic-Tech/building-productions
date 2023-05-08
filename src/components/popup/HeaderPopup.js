@@ -83,7 +83,12 @@ const HeaderPopup = () => {
   return (
     <>
       <div
-        style={{ display: close ? "none" : "", overflow: "auto", position: 'absolute', zIndex: '20' }}
+        style={{
+          display: close ? "none" : "",
+          overflow: "auto",
+          position: "absolute",
+          zIndex: "20",
+        }}
         className={`modal-xxl ${styles.modal}`}
       >
         <div className="modal-content">

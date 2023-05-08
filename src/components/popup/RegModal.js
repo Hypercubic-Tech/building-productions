@@ -6,7 +6,7 @@ import styles from "../popup/RegModal.module.css";
 import axios from "axios";
 
 const RegModal = ({ handleRegistration, onClose }) => {
-  console.log(onClose, '1')
+  console.log(onClose, "1");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,13 +29,13 @@ const RegModal = ({ handleRegistration, onClose }) => {
 
     const { email, password, fullName } = event.target.elements;
 
-    await axios.post('http://localhost:1337/api/auth/local/register', {
+    await axios.post("http://localhost:1337/api/auth/local/register", {
       email: email.value,
       password: password.value,
       username: fullName.value,
-    })
+    });
 
-    handleRegistration(true)
+    handleRegistration(true);
   };
 
   return (
@@ -125,6 +125,6 @@ const RegModal = ({ handleRegistration, onClose }) => {
       </form>
     </div>
   );
-}
+};
 
 export default RegModal;
