@@ -3,7 +3,11 @@ import HeaderPopup from "../popup/HeaderPopup";
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthState, setAuthState, selectAuthAccessToken } from "@/store/slices/authSlice";
+import {
+  selectAuthState,
+  setAuthState,
+  selectAuthAccessToken,
+} from "@/store/slices/authSlice";
 
 const Heading = () => {
   const loggedIn = useSelector(setAuthState);
@@ -51,16 +55,6 @@ const Heading = () => {
     };
   }, [showModal]);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     setIsSticky(window.pageYOffset > 0);
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-  
   return (
     <div className="mb-0" id="home">
       <div

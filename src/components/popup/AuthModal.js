@@ -32,22 +32,23 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await axios.post('http://localhost:1337/api/auth/local', {
-      identifier: email,
-      password: password
-    })
-    .then((res) => {
-      let data = res.data;
-      localStorage.setItem("access_token", data.jwt);
-      localStorage.setItem("email", data.user.email);
-      localStorage.setItem("userId", data.user.id);
+    await axios
+      .post("http://localhost:1337/api/auth/local", {
+        identifier: email,
+        password: password,
+      })
+      .then((res) => {
+        let data = res.data;
+        localStorage.setItem("access_token", data.jwt);
+        localStorage.setItem("email", data.user.email);
+        localStorage.setItem("userId", data.user.id);
 
-      dispatch(setAuthAccessToken(data.jwt));
-      dispatch(setAuthEmail(data.user.email));
-      dispatch(setAuthRole(data.user.role));
-      dispatch(setAuthUserId(data.user.id));
-      console.log(data.user.id)
-    })
+        dispatch(setAuthAccessToken(data.jwt));
+        dispatch(setAuthEmail(data.user.email));
+        dispatch(setAuthRole(data.user.role));
+        dispatch(setAuthUserId(data.user.id));
+        console.log(data.user.id);
+      });
   };
 
   return (
@@ -58,7 +59,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
             <div>
               <div className="text-muted">არ ხარ დარეგისტრირებული?</div>
               <div
-              onClick={() => handleAuthorization(false)}
+                onClick={() => handleAuthorization(false)}
                 className={`${styles.registrationBtn} row `}
               >
                 დარეგისტრირდი
@@ -133,6 +134,6 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
       {}
     </div>
   );
-}
+};
 
 export default AuthModal;

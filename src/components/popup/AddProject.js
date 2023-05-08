@@ -391,8 +391,7 @@ const AddProject = ({ dismiss }) => {
                               className="form-control georgian form-control-solid"
                               placeholder="ობიექტის ფართობი"
                               data-placeholder="area"
-                            >
-                            </input>
+                            ></input>
                           </div>
                         </div>
                       </div>

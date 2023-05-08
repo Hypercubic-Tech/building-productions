@@ -6,7 +6,7 @@ const initialState = {
   access_token: "",
   role: "",
   email: "",
-  user_id: ""
+  user_id: "",
 };
 
 export const authSlice = createSlice({
@@ -39,8 +39,13 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthState, setAuthAccessToken, setAuthEmail, setAuthRole, setAuthUserId } =
-  authSlice.actions;
+export const {
+  setAuthState,
+  setAuthAccessToken,
+  setAuthEmail,
+  setAuthRole,
+  setAuthUserId,
+} = authSlice.actions;
 export const selectAuthState = (state) => state.auth.loggedIn;
 export const selectAuthUserId = (state) => state.auth.user_id;
 export const selectAuthAccessToken = (state) => state.auth.access_token;

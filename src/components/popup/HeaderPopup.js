@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "@/api/axios";
 import axiosPrivate from "@/api/axiosPrivate";
 import styles from "./Modal.module.css";
 import Link from "next/link";
 
 import AddProject from "./AddProject";
 import EditProject from "./EditProject";
+import axios from "axios";
 
 const HeaderPopup = () => {
   const [close, setClose] = useState(false);
@@ -13,8 +13,6 @@ const HeaderPopup = () => {
   const [editProject, setEditProject] = useState(false);
   const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
-  const [testData, setTestData] = useState(null);
-
 
   const addProjectHandler = () => {
     setAddProject(true);
@@ -25,6 +23,25 @@ const HeaderPopup = () => {
     setAddProject(false);
     setClose(false);
   };
+
+  useEffect(() => {
+    const getProjectsHandler = async () => {
+      try {
+        await axios.get("http://localhost:1337/api/projects")
+          .then((res) => {
+            const data = res.data
+            console.log(data.data);
+            setProjectsData(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      } 
+    };
+    getProjectsHandler();
+  }, []);
+
+
+  console.log(projectsData);
 
   return (
     <>
@@ -47,9 +64,9 @@ const HeaderPopup = () => {
             />
           </div>
           <div className="modal-body">
-            {/* <div className="row">
+            <div className="row">
               {projectsData &&
-                projectsData?.data.map((item, index) => {
+                projectsData?.map((item, index) => {
                   return (
                     <div
                       key={index}
@@ -60,13 +77,13 @@ const HeaderPopup = () => {
                         <div className="card-body">
                           <Link
                             onClick={() => setClose(true)}
-                            href={`/projects/${item.attributes._id}`}
+                            href={`/projects/${item.id}`}
                             className="card-title"
                           >
                             {item.attributes.title}
                           </Link>
-                          <p className="card-text">{item.propertyType}</p>
-                          <div className="btn-group row">
+                          <p className="card-text">{item.attributes.address}</p>
+                          <div className={`${styles.gap20} row `}>
                             <div
                               onClick={() => editHandler(item)}
                               className="btn btn-primary"
@@ -85,7 +102,7 @@ const HeaderPopup = () => {
                     </div>
                   );
                 })}
-            </div> */}
+            </div>
           </div>
           <div className="modal-footer row">
             <button
