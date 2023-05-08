@@ -96,10 +96,10 @@ function HeaderLogged() {
               </svg>
             </span>
           </div>
-          <a href="../../demo11/dist/index.html">
+          <a href="/">
             <img
               alt="Logo"
-              src="assets/media/logos/logo-demo11.svg"
+              src="/assets/media/logos/logo-demo11.svg"
               className="h-20px h-lg-30px"
             />
           </a>

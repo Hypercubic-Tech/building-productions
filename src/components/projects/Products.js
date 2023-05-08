@@ -5,16 +5,7 @@ import axiosInstance from "@/api/axios";
 const Products = ({ products, editHandler, allProduct }) => {
 
   const deleteProductHandler = async (product) => {
-    await axiosInstance
-      .post("/api/admin/product/delete_product", {
-        product: product._id,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    
   };
 
   return (
