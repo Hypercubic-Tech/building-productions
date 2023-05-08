@@ -41,52 +41,19 @@ const Project = ({ pr, unit, category, suppliers }) => {
     setShowSecond(false);
   };
 
-  const filterProductCategory = async () => {
-  try {
-    await axiosPrivate.get(`/api/admin/product/get_filtered_products`, {
-      params: {
-        search: productCategory
-      }
-    })
-    .then((res) => {
-      const data = res.data;
-      setFilteredProducts(data);
-    })
-  } catch (error) {
-    console.error(error);
-  }
-};
 
   useEffect(() => {
-    const getProductsHandler = async() => {
+    const getProductsHandler = async () => {
       try {
         await axios.get('http://localhost:1337/api/products?populate=*')
-        .then((res) => {
-          const data = res.data;
-          setAllProduct(data.data);
-        })
+          .then((res) => {
+            const data = res.data;
+            setAllProduct(data.data);
+          })
       } catch (error) {
         console.error(error);
       }
     };
-
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/product/get_products", {})
-        .then((res) => {
-          let data = res.data;
-          setProducts(data);
-          let sum = 0;
-          for (let i = 0; i < data.length; i++) {
-            sum = sum + parseInt(data[i].quantity) * parseFloat(data[i].price);
-          }
-          setSummary(sum);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
     getProductsHandler();
   }, []);
 
@@ -112,7 +79,7 @@ const Project = ({ pr, unit, category, suppliers }) => {
 
   return (
     <>
-      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} />
+      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={null} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
@@ -649,7 +616,7 @@ const Project = ({ pr, unit, category, suppliers }) => {
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
-                        allProduct={allProduct}/>
+                        allProduct={allProduct} />
                     </div>
                   </div>
                 </div>

@@ -7,36 +7,6 @@ const Filter = ({ project, giveProductCategory, filterProductCategory }) => {
   const [products, setProducts] = useState(null);
   const [clickedCategory, setClickedCategorty] = useState();
 
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/content/get_categories", {})
-        .then((res) => {
-          let data = res.data;
-          setCategories(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
-
-  // useEffect(() => {
-  //   const getDataHandler = async () => {
-  //     await axiosPrivate
-  //       .get("/api/product/get_products", {})
-  //       .then((res) => {
-  //         let data = res.data;
-  //         setProducts(data);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e, "error");
-  //       });
-  //   };
-  //   getDataHandler();
-  // }, []);
-
   return (
     <div
       style={{ margin: "100px 0px 50px 0px" }}
