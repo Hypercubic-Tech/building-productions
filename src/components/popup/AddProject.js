@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import cities from "@/api/cities.json";
 import axiosPrivate from "@/api/axiosPrivate";
-import styles from "./Modal.module.css";
 import axios from "axios";
 
+import styles from "./Modal.module.css";
 const AddProject = ({ dismiss }) => {
 
   const [step, setStep] = useState(1);
@@ -51,12 +51,9 @@ const AddProject = ({ dismiss }) => {
   useEffect(() => {
     const getPropertyTypesHandler = async () => {
       try {
-        const res = await axios.get("http://localhost:1337/api/property-types")
-          .then((res) => {
-            const data = res.data;
-            setPropertyType(data.data)
-          })
-
+        const res = await axios.get("http://localhost:1337/api/projects?populate=city");
+        const data = await res.json();
+        console.log(data);
       } catch (error) {
         console.log(error);
       }

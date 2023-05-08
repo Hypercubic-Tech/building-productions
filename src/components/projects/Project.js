@@ -10,7 +10,7 @@ import Filter from "./Filter";
 import EditProductsForm from "./EditProductsForm";
 import EditServiceForm from "./EditServiceForm";
 
-const Project = () => {
+const Project = ({ pr, unit, category, suppliers }) => {
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -25,6 +25,7 @@ const Project = () => {
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
+  const [allProduct, setAllProduct] = useState(null);
 
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState('');
@@ -62,6 +63,18 @@ const Project = () => {
   };
 
   useEffect(() => {
+    const getProductsHandler = async() => {
+      try {
+        await axios.get('http://localhost:1337/api/products?populate=*')
+        .then((res) => {
+          const data = res.data;
+          setAllProduct(data.data);
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     const getDataHandler = async () => {
       await axiosPrivate
         .get("/api/admin/product/get_products", {})
@@ -81,7 +94,7 @@ const Project = () => {
 
     const getProjectData = async () => {
       await axios
-        .get(`http://localhost:1337/api/projects?filters[id][$eq]=${projectId}`, {})
+        .get(`http://localhost:1337/api/projects?filters[id][$eq]=${projectId}&populate=*`, {})
         .then((res) => {
           let data = res?.data?.data[0]?.attributes;
           console.log(data)
@@ -93,10 +106,9 @@ const Project = () => {
     };
 
     getDataHandler();
-    
-    if (projectId) {
-      getProjectData();
-    }
+    getProductsHandler();
+
+    if (projectId) getProjectData();
   }, [projectId]);
 
   const editProductHandler = async (product) => {
@@ -143,13 +155,13 @@ const Project = () => {
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.city}
+                {project?.city?.data?.attributes?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.condition}
+                {project?.condition?.data?.attributes?.title}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.propertyType}
+                {project?.property_type?.data?.attributes.Title}
               </li>
               <li className="breadcrumb-item text-warning georgian">
                 {project?.createdAt}
@@ -623,6 +635,9 @@ const Project = () => {
                                 <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                   {showFirst && (
                                     <AddProductForm
+                                      suppliers={suppliers}
+                                      unit={unit}
+                                      category={category}
                                       projectId={"project"}
                                       setSelect={setSelect}
                                     />
@@ -654,7 +669,8 @@ const Project = () => {
                         editHandler={editProductHandler}
                         products={products}
                         services={services}
-                        filteredProducts={filteredProducts} />
+                        filteredProducts={filteredProducts}
+                        allProduct={allProduct}/>
                     </div>
                   </div>
                 </div>
