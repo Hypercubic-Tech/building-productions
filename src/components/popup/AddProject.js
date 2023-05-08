@@ -11,18 +11,41 @@ const AddProject = ({ dismiss }) => {
   // const axiosPrivate = useAxiosPrivate();
 
   const [sendData, setSendData] = useState({
-    propertyType: "",
-    city: "",
-    area: "",
-    address: "",
-    phone: "",
-    condition: [],
-    currentCondition: [],
-    objectName: "",
-    worksToDo: [],
-    userId: "",
-    images: "",
-  });
+    title: "titi",
+    address: "pata",
+    phoneNumber: "595",
+    area: 52,
+
+
+  })
+  const [ cityes, setCityes ] = useState({
+    city: {
+      title: 'fuchu'
+    }
+  })
+
+  useEffect(() => {
+    const postDataHandler = async () => {
+      try {
+        const res = await fetch("http://localhost:1337/api/projects?populate[0]=city", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer 24c1088f9413f6a7cece60b30e81888c264553e9acb33c385f59443fe022fa27071df28eb721ea9abdf62cd42ec95dfdbc026ff582539cf3914c9ef3a8013211841e9469edb744c0df03e18ad7603a5b53b737a91efbfc8f5f527d963ecca1ab37a0b7c6e7c537abb8511f0d012076340d89ee0bcbee7f6ca595c3416f8fa1fb",
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify({
+            data: {...cityes, ...sendData}
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    postDataHandler();
+  }, []);
 
   useEffect(() => {
     const getDataHandler = async () => {

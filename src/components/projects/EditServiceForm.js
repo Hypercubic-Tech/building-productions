@@ -3,7 +3,8 @@ import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 import styles from "./AddWork.module.css";
 
-function AddWork({ setSelect, projectId }) {
+function AddWork({ setSelect, projectId, data }) {
+    console.log(data)
   const axiosPrivate = useAxiosPrivate();
 
   const [selectedCraft, setSelectedCraft] = useState(null);

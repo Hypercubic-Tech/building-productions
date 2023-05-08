@@ -20,7 +20,6 @@ const Project = ({ pr }) => {
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
 
-
   // console.log(pr._id)
   // const project = pr?.project._id;
 
@@ -55,17 +54,17 @@ const Project = ({ pr }) => {
   }, []);
 
   const editProductHandler = async (product) => {
-    console.log(product);
     if (product.type === "product") {
-      setEditProductData(product)
+      setEditProductData(product);
       if (!editProduct) {
         setEditProduct(true);
       } else {
         setEditProduct(false);
       }
     }
+
     if (product.type === "service") {
-      setEditServiceData(product)
+      setEditServiceData(product);
       if (!editService) {
         setEditService(true);
       } else {
@@ -592,8 +591,12 @@ const Project = ({ pr }) => {
                                   )}
                                 </div>
                                 <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                  {editProduct && <EditProductsForm />}
-                                  {editService && <EditServiceForm />}
+                                  {editProduct && (
+                                    <EditProductsForm data={editProductData} />
+                                  )}
+                                  {editService && (
+                                    <EditServiceForm data={editServiceData} />
+                                  )}
                                 </div>
                               </div>
                             </div>

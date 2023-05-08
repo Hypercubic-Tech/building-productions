@@ -13,6 +13,7 @@ const HeaderPopup = () => {
   const [editProject, setEditProject] = useState(false);
   const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
+  const [testData, setTestData] = useState(null);
 
   // useEffect(() => {
   //   const getDataHandler = async () => {
@@ -32,20 +33,28 @@ const HeaderPopup = () => {
   //   getDataHandler();
   // }, []);
 
+  
   useEffect(() => {
     const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/projects/get_projects", {})
-        .then((res) => {
-          let data = res.data.projects;
-          setProjectsData(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
+      try {
+        const res = await fetch("http://localhost:1337/api/projects", {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer 24c1088f9413f6a7cece60b30e81888c264553e9acb33c385f59443fe022fa27071df28eb721ea9abdf62cd42ec95dfdbc026ff582539cf3914c9ef3a8013211841e9469edb744c0df03e18ad7603a5b53b737a91efbfc8f5f527d963ecca1ab37a0b7c6e7c537abb8511f0d012076340d89ee0bcbee7f6ca595c3416f8fa1fb",
+            "Content-type": "application/json",
+            "Accept": "application/json",
+          },
         });
+        const data = await res.json();
+        setProjectsData(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getDataHandler();
   }, []);
+  
+  console.log(projectsData)
 
   const addProjectHandler = () => {
     setAddProject(true);
@@ -83,7 +92,12 @@ const HeaderPopup = () => {
   return (
     <>
       <div
-        style={{ display: close ? "none" : "", overflow: "auto", position: 'absolute', zIndex: '20' }}
+        style={{
+          display: close ? "none" : "",
+          overflow: "auto",
+          position: "absolute",
+          zIndex: "20",
+        }}
         className={`modal-xxl ${styles.modal}`}
       >
         <div className="modal-content">
@@ -98,7 +112,7 @@ const HeaderPopup = () => {
           <div className="modal-body">
             <div className="row">
               {projectsData &&
-                projectsData.map((item, index) => {
+                projectsData?.data.map((item, index) => {
                   return (
                     <div
                       key={index}
@@ -109,12 +123,12 @@ const HeaderPopup = () => {
                         <div className="card-body">
                           <Link
                             onClick={() => setClose(true)}
-                            href={`/projects/${item._id}`}
+                            href={`/projects/${item.attributes._id}`}
                             className="card-title"
                           >
-                            {item.objectName}
+                            {item.attributes.title}
                           </Link>
-                          <p className="card-text">{item.propertyType}</p>
+                          {/* <p className="card-text">{item.propertyType}</p> */}
                           <div className="btn-group row">
                             <div
                               onClick={() => editHandler(item)}
