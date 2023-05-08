@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios';
 import Project from "@/components/projects/Project";
 import axiosPrivate from "@/api/axios";
 import { useRouter } from "next/router";
