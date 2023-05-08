@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const Products = ({ editHandler, allProduct }) => {
+  console.log(allProduct)
 
   const deleteProductHandler = async (productId) => {
     await axios
@@ -58,7 +59,7 @@ const Products = ({ editHandler, allProduct }) => {
                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                       <a href={product.link}>
                         <div className="symbol-label georgian">
-                          <img src={product.image} alt="" className="w-100" />
+                          <img src={product?.attributes?.image?.data?.attributes?.url} alt="" className="w-100" />
                         </div>
                       </a>
                     </div>

@@ -133,20 +133,20 @@ const Project = ({ pr, unit, category, suppliers }) => {
               >
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
               </svg>
-              {/* &nbsp;{pr?.address} */}
+              &nbsp;{pr?.address}
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {/* {pr?.city} */}
+                {pr?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {/* {pr?.condition} */}
+                {pr?.condition}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {/* {pr?.propertyType} */}
+                {pr?.propertyType}
               </li>
               <li className="breadcrumb-item text-warning georgian">
-                {/* {pr?.createdAt} */}
+                {pr?.createdAt}
               </li>
             </ul>
           </div>
