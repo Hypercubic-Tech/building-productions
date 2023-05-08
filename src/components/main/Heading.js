@@ -1,12 +1,12 @@
-import AuthModal from "../popup/AuthModal.js";
+import Auth from "../popup/Auth.js";
 import HeaderPopup from "../popup/HeaderPopup";
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthState, setAuthState } from "@/store/slices/authSlice";
+import { selectAuthState, setAuthState, selectAuthAccessToken } from "@/store/slices/authSlice";
 
 const Heading = () => {
-  const loggedIn = useSelector(selectAuthState);
+  const loggedIn = useSelector(setAuthState);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
@@ -83,7 +83,7 @@ const Heading = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div ref={modalRef}>
-                <div>{showModal && <AuthModal onClose={handleClose} />}</div>
+                <div>{showModal && <Auth onClose={handleClose} />}</div>
               </div>
             </animated.div>
           )}

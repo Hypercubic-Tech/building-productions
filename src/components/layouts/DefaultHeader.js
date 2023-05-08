@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import AuthModal from "../popup/AuthModal";
+import Auth from "../popup/Auth";
 import styles from "./DefaultHeader.module.css";
 import { useSpring, animated } from "react-spring";
 
@@ -204,7 +204,7 @@ function DefaultHeader() {
                 >
                   <div ref={modalRef}>
                     <div>
-                      <AuthModal onClose={handleClose} />
+                      <Auth onClose={handleClose} />
                     </div>
                   </div>
                 </animated.div>

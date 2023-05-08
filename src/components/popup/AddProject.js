@@ -15,27 +15,25 @@ const AddProject = ({ dismiss }) => {
     address: "pata",
     phoneNumber: "595",
     area: 52,
-
-
-  })
-  const [ cityes, setCityes ] = useState({
-    city: {
-      title: 'fuchu'
-    }
-  })
+    city:{
+      connect:[
+          {id:1}
+      ]
+  }
+  });
 
   useEffect(() => {
     const postDataHandler = async () => {
       try {
-        const res = await fetch("http://localhost:1337/api/projects?populate[0]=city", {
+        const res = await fetch("http://localhost:1337/api/projects?populate=city", {
           method: "POST",
           headers: {
-            "Authorization": "Bearer 24c1088f9413f6a7cece60b30e81888c264553e9acb33c385f59443fe022fa27071df28eb721ea9abdf62cd42ec95dfdbc026ff582539cf3914c9ef3a8013211841e9469edb744c0df03e18ad7603a5b53b737a91efbfc8f5f527d963ecca1ab37a0b7c6e7c537abb8511f0d012076340d89ee0bcbee7f6ca595c3416f8fa1fb",
+            "Authorization": "Bearer c0245f3c261676b44dc5c68dccafbb33e69a8964bad2f18cc24041962b8022b3f74a33c275953a099d0d82ea08e755c1efaa2453e418daa3cf425c3227a9ad90256f24acb5ece2c8dc1d4d3f5e6fc0f54aafce65ce84cc84fdeec2f2e1a2683e2bb15556eb32afff9dde3020a14b9bb63b51bd29275c1050e2e6381819b1df45",
             "Content-type": "application/json",
             "Accept": "application/json",
           },
           body: JSON.stringify({
-            data: {...cityes, ...sendData}
+            data: sendData
           }),
         });
         const data = await res.json();
@@ -53,6 +51,7 @@ const AddProject = ({ dismiss }) => {
         .get("/api/admin/content/get_categories", {})
         .then((res) => {
           let data = res.data;
+          console.log(data, 'get_categories')
           setCategories(data);
         })
         .catch((e) => {
@@ -188,6 +187,7 @@ const AddProject = ({ dismiss }) => {
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
+    console.log(checked, 'check')
     setSendData((prevState) => {
       const newData = JSON.parse(JSON.stringify(prevState));
       if (checked) {
@@ -195,6 +195,7 @@ const AddProject = ({ dismiss }) => {
       } else {
         newData.worksToDo = newData.worksToDo.filter((val) => val !== value);
       }
+      console.log(newData, 1)
       return newData;
     });
   };
@@ -703,7 +704,7 @@ const AddProject = ({ dismiss }) => {
                                         onChange={handleCheckboxChange}
                                         className="form-check-input"
                                         type="checkbox"
-                                        defaultValue={item.category}
+                                        defaultValue={item._id}
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import axiosInstance from "@/api/axios";
 
-const Products = ({ products, editHandler }) => {
+const Products = ({ products, editHandler, filteredProducts }) => {
   const deleteProductHandler = async (product) => {
     await axiosInstance
       .post("/api/admin/product/delete_product", {
@@ -43,8 +43,8 @@ const Products = ({ products, editHandler }) => {
             <th className="text-end min-w-100px georgian">ცვლილება</th>
           </tr>
         </thead>
-        {products &&
-          products.map((product, index) => {
+        {filteredProducts &&
+          filteredProducts.map((product, index) => {
             return (
               <tbody className="text-gray-600 fw-bold" key={index}>
                 <tr>

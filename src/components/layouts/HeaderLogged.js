@@ -1,14 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch } from "react-redux";
-
 import {
   setAuthAccessToken,
   setAuthEmail,
   setAuthRole,
   setAuthUserId,
 } from "@/store/slices/authSlice";
-
 import HeaderPopup from "../popup/HeaderPopup";
 
 import styles from "../layouts/HeaderLogged.module.css";
@@ -63,7 +61,6 @@ function HeaderLogged() {
     dispatch(setAuthUserId(null));
     dispatch(setAuthEmail(null));
     dispatch(setAuthRole(null));
-    window.location.reload();
   };
 
   useEffect(() => {
