@@ -7,8 +7,9 @@ import AddWork from "./AddWork";
 import Filter from "./Filter";
 import EditProductsForm from "./EditProductsForm";
 import EditServiceForm from "./EditServiceForm";
+import axios from "axios";
 
-const Project = ({ pr }) => {
+const Project = ({ pr, unit, category, suppliers }) => {
   const [select, setSelect] = useState(null);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
@@ -19,6 +20,7 @@ const Project = ({ pr }) => {
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
+  const [allProduct, setAllProduct] = useState(null);
 
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState('');
@@ -56,6 +58,18 @@ const Project = ({ pr }) => {
 };
 
   useEffect(() => {
+    const getProductsHandler = async() => {
+      try {
+        await axios.get('http://localhost:1337/api/products?populate=*')
+        .then((res) => {
+          const data = res.data;
+          setAllProduct(data.data);
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     const getDataHandler = async () => {
       await axiosPrivate
         .get("/api/admin/product/get_products", {})
@@ -73,6 +87,7 @@ const Project = ({ pr }) => {
         });
     };
     getDataHandler();
+    getProductsHandler();
   }, []);
 
   const editProductHandler = async (product) => {
@@ -599,6 +614,9 @@ const Project = ({ pr }) => {
                                 <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                   {showFirst && (
                                     <AddProductForm
+                                      suppliers={suppliers}
+                                      unit={unit}
+                                      category={category}
                                       projectId={"project"}
                                       setSelect={setSelect}
                                     />
@@ -630,7 +648,8 @@ const Project = ({ pr }) => {
                         editHandler={editProductHandler}
                         products={products}
                         services={services}
-                        filteredProducts={filteredProducts}/>
+                        filteredProducts={filteredProducts}
+                        allProduct={allProduct}/>
                     </div>
                   </div>
                 </div>

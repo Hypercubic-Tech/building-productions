@@ -1,8 +1,10 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 import axiosInstance from "@/api/axios";
 
-const Products = ({ products, editHandler, filteredProducts }) => {
+const Products = ({ products, editHandler, allProduct }) => {
+
+  console.log(allProduct, 'yleo')
   const deleteProductHandler = async (product) => {
     await axiosInstance
       .post("/api/admin/product/delete_product", {
@@ -43,8 +45,8 @@ const Products = ({ products, editHandler, filteredProducts }) => {
             <th className="text-end min-w-100px georgian">ცვლილება</th>
           </tr>
         </thead>
-        {filteredProducts &&
-          filteredProducts.map((product, index) => {
+        {allProduct &&
+          allProduct?.map((product, index) => {console.log(product, 'dsa')
             return (
               <tbody className="text-gray-600 fw-bold" key={index}>
                 <tr>
@@ -75,9 +77,9 @@ const Products = ({ products, editHandler, filteredProducts }) => {
                       <span>{product.supplier}</span>
                     </div>
                   </td>
-                  <td className="georgian">{product.unit}</td>
-                  <td className="georgian">{product.quantity}</td>
-                  <td className="georgian">{product.price}</td>
+                  <td className="georgian">{product?.attributes?.unit?.data?.attributes?.title}</td>
+                  <td className="georgian">{product?.attributes?.quantity}</td>
+                  <td className="georgian">{product?.attributes?.price}</td>
                   <td className="georgian">
                     {parseInt(product.quantity) * parseFloat(product.price)}
                   </td>

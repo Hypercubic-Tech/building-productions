@@ -3,6 +3,7 @@ import axios from "axios";
 
 import styles from "./Modal.module.css";
 
+import styles from "./Modal.module.css";
 const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
