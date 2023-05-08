@@ -21,6 +21,7 @@ const Project = ({ pr, unit, category, suppliers }) => {
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
   const [allProduct, setAllProduct] = useState(null);
+  const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState('');
 
