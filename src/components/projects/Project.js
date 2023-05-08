@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import axiosPrivate from "@/api/axiosPrivate";
+import axios from "axios";
 import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
 import AddWork from "./AddWork";
@@ -8,12 +10,16 @@ import Filter from "./Filter";
 import EditProductsForm from "./EditProductsForm";
 import EditServiceForm from "./EditServiceForm";
 
-const Project = ({ pr }) => {
+const Project = () => {
+  const router = useRouter();
+  const { projectId } = router.query;
+
   const [select, setSelect] = useState(null);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
+  const [project, setProject] = useState(null);
   const [products, setProducts] = useState(null);
   const [editProduct, setEditProduct] = useState(false);
   const [editService, setEditService] = useState(false);
@@ -26,8 +32,8 @@ const Project = ({ pr }) => {
   const giveProductCategory = (category) => {
     setProductCategory(category)
   };
-  // console.log(pr._id)
   // const project = pr?.project._id;
+
 
   const handleShowSecond = () => {
     setShowFirst(false);
@@ -40,20 +46,20 @@ const Project = ({ pr }) => {
   };
 
   const filterProductCategory = async () => {
-  try {
-    await axiosPrivate.get(`/api/admin/product/get_filtered_products`, {
-      params: {
-        search: productCategory
-      }
-    })
-    .then((res) => {
-      const data = res.data;
-      setFilteredProducts(data);
-    })
-  } catch (error) {
-    console.error(error);
-  }
-};
+    try {
+      await axiosPrivate.get(`/api/admin/product/get_filtered_products`, {
+        params: {
+          search: productCategory
+        }
+      })
+        .then((res) => {
+          const data = res.data;
+          setFilteredProducts(data);
+        })
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const getDataHandler = async () => {
@@ -72,21 +78,39 @@ const Project = ({ pr }) => {
           console.log(e, "error");
         });
     };
+
+    const getProjectData = async () => {
+      await axios
+        .get(`http://localhost:1337/api/projects?filters[id][$eq]=${projectId}`, {})
+        .then((res) => {
+          let data = res?.data?.data[0]?.attributes;
+          console.log(data)
+          setProject(data);
+        })
+        .catch((e) => {
+          console.log(e, "error");
+        });
+    };
+
     getDataHandler();
-  }, []);
+    
+    if (projectId) {
+      getProjectData();
+    }
+  }, [projectId]);
 
   const editProductHandler = async (product) => {
-    console.log(product);
     if (product.type === "product") {
-      setEditProductData(product)
+      setEditProductData(product);
       if (!editProduct) {
         setEditProduct(true);
       } else {
         setEditProduct(false);
       }
     }
+
     if (product.type === "service") {
-      setEditServiceData(product)
+      setEditServiceData(product);
       if (!editService) {
         setEditService(true);
       } else {
@@ -97,7 +121,7 @@ const Project = ({ pr }) => {
 
   return (
     <>
-      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} />
+      {/* <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} /> */}
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
@@ -115,20 +139,20 @@ const Project = ({ pr }) => {
               >
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
               </svg>
-              &nbsp;{pr?.address}
+              &nbsp;{project?.address}
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.city}
+                {project?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.condition}
+                {project?.condition}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.propertyType}
+                {project?.propertyType}
               </li>
               <li className="breadcrumb-item text-warning georgian">
-                {pr?.createdAt}
+                {project?.createdAt}
               </li>
             </ul>
           </div>
@@ -611,8 +635,12 @@ const Project = ({ pr }) => {
                                   )}
                                 </div>
                                 <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                  {editProduct && <EditProductsForm />}
-                                  {editService && <EditServiceForm />}
+                                  {editProduct && (
+                                    <EditProductsForm data={editProductData} />
+                                  )}
+                                  {editService && (
+                                    <EditServiceForm data={editServiceData} />
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -626,7 +654,7 @@ const Project = ({ pr }) => {
                         editHandler={editProductHandler}
                         products={products}
                         services={services}
-                        filteredProducts={filteredProducts}/>
+                        filteredProducts={filteredProducts} />
                     </div>
                   </div>
                 </div>

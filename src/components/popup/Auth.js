@@ -4,21 +4,28 @@ import AuthModal from "./AuthModal";
 import RegModal from "./RegModal";
 
 const Auth = ({ onClose }) => {
-    const [ defaultState, setDefaultState ] = useState(true);
-    
-    const handleAuthorization = () => {
-        setDefaultState(false);
-    };
+  const [defaultState, setDefaultState] = useState(true);
 
-    const handleRegistration = () => {
-        setDefaultState(true);
-    };
+  const handleAuthorization = () => {
+    setDefaultState(false);
+  };
 
-    return (
-        <>
-            {defaultState ? <AuthModal handleAuthorization={handleAuthorization} onClose={onClose} /> : <RegModal handleRegistration={handleRegistration} onClose={onClose} />}
-        </>
-    )
+  const handleRegistration = () => {
+    setDefaultState(true);
+  };
+
+  return (
+    <>
+      {defaultState ? (
+        <AuthModal
+          handleAuthorization={handleAuthorization}
+          onClose={onClose}
+        />
+      ) : (
+        <RegModal handleRegistration={handleRegistration} onClose={onClose} />
+      )}
+    </>
+  );
 };
 
-export default Auth
+export default Auth;

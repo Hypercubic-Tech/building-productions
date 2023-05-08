@@ -22,23 +22,22 @@ const Filter = ({ project, giveProductCategory, filterProductCategory }) => {
     getDataHandler();
   }, []);
 
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/product/get_products", {})
-        .then((res) => {
-          let data = res.data;
-          setProducts(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
+  // useEffect(() => {
+  //   const getDataHandler = async () => {
+  //     await axiosPrivate
+  //       .get("/api/product/get_products", {})
+  //       .then((res) => {
+  //         let data = res.data;
+  //         setProducts(data);
+  //       })
+  //       .catch((e) => {
+  //         console.log(e, "error");
+  //       });
+  //   };
+  //   getDataHandler();
+  // }, []);
 
   // console.log(project, "project");
-  console.log(products, "products");
 
   return (
     <div

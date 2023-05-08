@@ -1,14 +1,17 @@
 .modal {
-    position: absolute;
-    width: 60%;
-    left: 20%;
-    height: 400px;
-    top: 30px;
+  position: absolute;
+  width: 60%;
+  left: 20%;
+  height: 400px;
+  top: 30px;
 }
 .errorBorder {
-    border: 1px solid red!important;
+  border: 1px solid red !important;
 }
 .error {
-    border: 1px solid red!important;
-    background-color: red;
+  border: 1px solid red !important;
+  background-color: red;
+}
+.gap20 {
+  gap: 20px;
 }

@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import Auth from "../popup/Auth";
-import styles from "./DefaultHeader.module.css";
 import { useSpring, animated } from "react-spring";
 
 function DefaultHeader() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isSticky, setIsSticky] = useState(false);
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -48,22 +46,10 @@ function DefaultHeader() {
     };
   }, [showAuthModal]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.pageYOffset > 0);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <>
       <div
-        className={` landing-header header-bg ${styles.defHeader} ${
-          isSticky ? styles.sticky : ""
-        }`}
+        className="landing-header header-bg"
         data-kt-sticky="true"
         data-kt-sticky-name="landing-header"
         data-kt-sticky-offset="{default: '200px', lg: '300px'}"

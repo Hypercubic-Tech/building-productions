@@ -2,7 +2,8 @@ import { useState } from "react";
 // import axiosInstance from "../../api/axios";
 import axiosPrivate from "@/api/axiosPrivate";
 
-const EditProductsForm = ({ projectId, setSelect }) => {
+const EditProductsForm = ({ projectId, setSelect, data }) => {
+  console.log(data)
   const [productData, setProductData] = useState({
     type: "product",
     projectId: projectId,
@@ -51,7 +52,7 @@ const EditProductsForm = ({ projectId, setSelect }) => {
     saveProduct(productData.image);
   };
 
-  
+
   return (
     <form id="kt_modal_add_user_form" className="form">
       <div

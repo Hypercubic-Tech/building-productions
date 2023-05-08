@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "@/api/axios";
-import axios from "axios";
+import axiosPrivate from "@/api/axiosPrivate";
 import styles from "./Modal.module.css";
 import Link from "next/link";
 
 import AddProject from "./AddProject";
 import EditProject from "./EditProject";
+import axios from "axios";
 
 const HeaderPopup = () => {
   const [close, setClose] = useState(false);
@@ -13,45 +13,6 @@ const HeaderPopup = () => {
   const [editProject, setEditProject] = useState(false);
   const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
-
-  // useEffect(() => {
-  //   const getDataHandler = async () => {
-  //     const userId = localStorage.getItem("userId");
-
-  //     await axiosInstance
-  //       .post("/api/admin/projects/get_users_projects", { userId })
-  //       .then((res) => {
-  //         let data = res.data;
-  //         setProjectsData(data.projects);
-  //         console.log(data, "data")
-  //       })
-  //       .catch((e) => {
-  //         console.log(e, "error");
-  //       });
-  //   };
-  //   getDataHandler();
-  // }, []);
-
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axios
-        .get("http://localhost:1337/api/projects", {})
-        .then((res) => {
-          let data = res.data.data;
-          setProjectsData(data);
-          let paths = res?.data?.data?.map((item) => {
-            return {
-              params: { projectId: item.id },
-            };
-          });
-          console.log(paths)
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
 
   const addProjectHandler = () => {
     setAddProject(true);
@@ -63,33 +24,30 @@ const HeaderPopup = () => {
     setClose(false);
   };
 
-  const deleteHandler = async (item) => {
-    await axiosInstance
-      .post("/api/admin/projects/delete_project", {
-        item: item._id,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
+  useEffect(() => {
+    const getProjectsHandler = async () => {
+      try {
+        await axios.get("http://localhost:1337/api/projects")
+          .then((res) => {
+            const data = res.data;
+            setProjectsData(data.data);
+          })
+      } catch (error) {
         console.log(error);
-      });
-  };
-
-  const editHandler = async (item) => {
-    if (!editProject) {
-      setEditProject(true);
-    } else {
-      setEditProject(false);
-    }
-    setEditProjectData(item);
-    setClose(true);
-  };
+      } 
+    };
+    getProjectsHandler();
+  }, []);
 
   return (
     <>
       <div
-        style={{ display: close ? "none" : "", overflow: "auto", position: 'absolute', zIndex: '20' }}
+        style={{
+          display: close ? "none" : "",
+          overflow: "auto",
+          position: "absolute",
+          zIndex: "20",
+        }}
         className={`modal-xxl ${styles.modal}`}
       >
         <div className="modal-content">
@@ -104,7 +62,7 @@ const HeaderPopup = () => {
           <div className="modal-body">
             <div className="row">
               {projectsData &&
-                projectsData.map((item, index) => {
+                projectsData?.map((item, index) => {
                   return (
                     <div
                       key={index}
@@ -121,15 +79,15 @@ const HeaderPopup = () => {
                             {item.attributes.title}
                           </Link>
                           <p className="card-text">{item.attributes.address}</p>
-                          <div className="btn-group row">
+                          <div className={`${styles.gap20} row `}>
                             <div
-                              onClick={() => editHandler(item)}
+                              // onClick={() => editHandler(item)}
                               className="btn btn-primary"
                             >
                               რედაქტირება
                             </div>
                             <div
-                              onClick={() => deleteHandler(item)}
+                              // onClick={() => deleteHandler(item)}
                               className="btn btn-danger"
                             >
                               წაშლა
