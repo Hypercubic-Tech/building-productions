@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "@/api/axios";
 import axiosPrivate from "@/api/axiosPrivate";
 import styles from "./Modal.module.css";
 import Link from "next/link";
@@ -14,39 +13,6 @@ const HeaderPopup = () => {
   const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
 
-  // useEffect(() => {
-  //   const getDataHandler = async () => {
-  //     const userId = localStorage.getItem("userId");
-
-  //     await axiosInstance
-  //       .post("/api/admin/projects/get_users_projects", { userId })
-  //       .then((res) => {
-  //         let data = res.data;
-  //         setProjectsData(data.projects);
-  //         console.log(data, "data")
-  //       })
-  //       .catch((e) => {
-  //         console.log(e, "error");
-  //       });
-  //   };
-  //   getDataHandler();
-  // }, []);
-
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/projects/get_projects", {})
-        .then((res) => {
-          let data = res.data.projects;
-          setProjectsData(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
-
   const addProjectHandler = () => {
     setAddProject(true);
     setClose(true);
@@ -56,6 +22,28 @@ const HeaderPopup = () => {
     setAddProject(false);
     setClose(false);
   };
+
+  useEffect(() => {
+    const getDataHandler = async () => {
+      try {
+        const res = await fetch("http://localhost:1337/api/projects", {
+          method: "GET",
+          headers: {
+            Authorization:
+              "Bearer 76b22d48bb5bd06ae7ade505324ea4fb4006dbd939a538de147a5259f127917cd3414265d78ab84bb629600605d1126fde27bcb8c736fd9185ad3953aeb4e8c92b64280c4d85ee9fcce37330eb25e695c9715481e3bd5dc9468fd1fbaeebaf38ea9a59eb566f835e8f7544f05136cd8d0a30062bd3098485624a3acd759aa7bc",
+            "Content-type": "application/json",
+            Accept: "application/json",
+          },
+        });
+        const data = await res.json();
+        console.log(data.data);
+        setProjectsData(data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDataHandler();
+  }, []);
 
   const deleteHandler = async (item) => {
     await axiosInstance
@@ -79,6 +67,8 @@ const HeaderPopup = () => {
     setEditProjectData(item);
     setClose(true);
   };
+
+  console.log(projectsData);
 
   return (
     <>
@@ -117,10 +107,10 @@ const HeaderPopup = () => {
                             href={`/projects/${item._id}`}
                             className="card-title"
                           >
-                            {item.objectName}
+                            {item.attributes.title}
                           </Link>
-                          <p className="card-text">{item.propertyType}</p>
-                          <div className="btn-group row">
+                          <p className="card-text">{item.attributes.address}</p>
+                          <div className={`${styles.gap20} row `}>
                             <div
                               onClick={() => editHandler(item)}
                               className="btn btn-primary"
