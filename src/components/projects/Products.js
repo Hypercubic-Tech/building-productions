@@ -4,7 +4,6 @@ import axiosInstance from "@/api/axios";
 
 const Products = ({ products, editHandler, allProduct }) => {
 
-  console.log(allProduct, 'yleo')
   const deleteProductHandler = async (product) => {
     await axiosInstance
       .post("/api/admin/product/delete_product", {
@@ -46,7 +45,7 @@ const Products = ({ products, editHandler, allProduct }) => {
           </tr>
         </thead>
         {allProduct &&
-          allProduct?.map((product, index) => {console.log(product, 'dsa')
+          allProduct?.map((product, index) => {
             return (
               <tbody className="text-gray-600 fw-bold" key={index}>
                 <tr>
