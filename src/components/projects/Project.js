@@ -21,7 +21,6 @@ const Project = ({ pr, unit, category, suppliers }) => {
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
   const [allProduct, setAllProduct] = useState(null);
-
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState('');
 
@@ -41,16 +40,16 @@ const Project = ({ pr, unit, category, suppliers }) => {
     setShowSecond(false);
   };
 
-  const filterProductCategory = async () => {
+  const filterProductCategory = async (id) => {
   try {
-    await axiosPrivate.get(`/api/admin/product/get_filtered_products`, {
+    await axios.get(`http://localhost:1337/api/products?populate=categories&filters[categories][id][$in]=${id}`, {
       params: {
         search: productCategory
       }
     })
     .then((res) => {
       const data = res.data;
-      setFilteredProducts(data);
+      setAllProduct(data.data);
     })
   } catch (error) {
     console.error(error);
@@ -58,6 +57,14 @@ const Project = ({ pr, unit, category, suppliers }) => {
 };
 
   useEffect(() => {
+    const getCategoriesHandler = async() => {
+      await axios.get('http://localhost:1337/api/categories')
+      .then((res) => {
+        const data = res.data;
+        setAllCategories(data.data);
+      })
+    };
+
     const getProductsHandler = async() => {
       try {
         await axios.get('http://localhost:1337/api/products?populate=*')
@@ -88,6 +95,7 @@ const Project = ({ pr, unit, category, suppliers }) => {
     };
     getDataHandler();
     getProductsHandler();
+    getCategoriesHandler();
   }, []);
 
   const editProductHandler = async (product) => {
@@ -112,7 +120,7 @@ const Project = ({ pr, unit, category, suppliers }) => {
 
   return (
     <>
-      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} />
+      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
