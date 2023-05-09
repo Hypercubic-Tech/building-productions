@@ -49004,3 +49004,27 @@ body {
 .relative {
   position: relative;
 }
+.padding{
+  padding: 0 2.25rem !important;
+}
+.m20{
+  margin-top: 12px;
+}
+.padding0{
+  padding: 0 !important;
+  display: inline !important;
+}
+.gap {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.padding10{
+  padding: 10px 0;
+}
+.borderBottom tbody {
+  border-bottom: 1px dashed #eff2f5;
+}
+.borderBottom tbody:last-of-type{
+  border-bottom: none !important;
+}
