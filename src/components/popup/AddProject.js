@@ -590,7 +590,7 @@ const AddProject = ({ dismiss }) => {
                       <img
                         src="assets/media/illustrations/sketchy-1/9.png"
                         alt=""
-                        className="w-100 mh-300px"
+                        className="mh-300px"
                       />
                     </div>
                   </div>
