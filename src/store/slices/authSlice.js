@@ -26,6 +26,7 @@ export const authSlice = createSlice({
       state.email = action.payload;
     },
     setAuthUserId(state, action) {
+      console.log(action, 'userid')
       state.user_id = action.payload;
     },
     extraReducers: {

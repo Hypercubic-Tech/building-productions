@@ -45,7 +45,6 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
         dispatch(setAuthEmail(data.user.email));
         dispatch(setAuthRole(data.user.role));
         dispatch(setAuthUserId(data.user.id));
-        console.log(data.user.id);
       });
   };
 
