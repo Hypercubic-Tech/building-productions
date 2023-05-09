@@ -9,6 +9,7 @@ const index = () => {
   const [category, setCategory] = useState(null);
   const [crafts, setCrafts] = useState(null);
   const [products, setProducts] = useState(null);
+  const [craftStatus, setCraftStatus] = useState(null);
 
   const router = useRouter();
   const { projectId } = router.query;
@@ -55,18 +56,26 @@ const index = () => {
         .then((res) => {
           const data = res.data
           setCrafts(data.data)
-
         })
     }
 
-    getCraftsHandler()
+    const getCraftsStatusHandler = async () => {
+      await axios.get("http://localhost:1337/api/craft-statuses")
+        .then((res) => {
+          const data = res.data
+          setCraftStatus(data.data)
+        })
+    }
+
+    getCraftsStatusHandler();
+    getCraftsHandler();
     getProductHandler();
     getSupplierHandler();
     getUnitHandler();
     getCategoryHandler();
   }, []);
 
-  return <Project pr={projectId} crafts={crafts} suppliers={suppliers} unit={unit} category={category} />;
+  return <Project pr={projectId} craftStatus={craftStatus} crafts={crafts} suppliers={suppliers} unit={unit} category={category} />;
 };
 
 export default index;

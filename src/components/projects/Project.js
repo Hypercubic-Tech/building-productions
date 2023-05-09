@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
-
-import axiosPrivate from "@/api/axiosPrivate";
-import Products from "./Products";
-import AddProductForm from "./AddProductsForm";
-import AddWork from "./AddWork";
-import Filter from "./Filter";
-import EditProductsForm from "./EditProductsForm";
-import EditServiceForm from "./EditServiceForm";
+import { useRouter } from 'next/router';
 import axios from "axios";
+
+import Products from "./Products";
+import Filter from "./Filter";
 import AddProduct from "./AddProduct";
 
-const Project = ({ pr, crafts, unit, category, suppliers }) => {
+const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
@@ -24,6 +20,10 @@ const Project = ({ pr, crafts, unit, category, suppliers }) => {
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
 
+  const router = useRouter();
+  const projectId = router.query.projectId;
+  console.log(projectId, 'id');
+
   const giveProductCategory = (category) => {
     setProductCategory(category);
   };
@@ -31,22 +31,22 @@ const Project = ({ pr, crafts, unit, category, suppliers }) => {
   const filterProductCategory = async (id) => {
     try {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
-      .then((res) => {
-        const data = res.data;
-        setAllProduct(data.data);
-      })
+        .then((res) => {
+          const data = res.data;
+          setAllProduct(data.data);
+        })
     } catch (error) {
       console.error(error);
     }
-};
+  };
 
   useEffect(() => {
-    const getCategoriesHandler = async() => {
+    const getCategoriesHandler = async () => {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-      .then((res) => {
-        const data = res.data;
-        setAllCategories(data.data);
-      });
+        .then((res) => {
+          const data = res.data;
+          setAllCategories(data.data);
+        })
     };
 
     const getProductsHandler = async () => {
@@ -498,14 +498,9 @@ const Project = ({ pr, crafts, unit, category, suppliers }) => {
                         )}
                         {/* ეხპორტი */}
                         {select === "add" && (
-                          <AddProduct
-                            setSelect={setSelect}
-                            crafts={crafts}
-                            unit={unit}
-                            category={category}
-                            suppliers={suppliers}
-                          />
+                          <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />
                         )}
+                        {console.log(select)}
                       </div>
                     </div>
                     <div className="card-body padding pt-0">
