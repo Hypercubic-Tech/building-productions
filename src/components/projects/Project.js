@@ -498,7 +498,7 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
                         )}
                         {/* ეხპორტი */}
                         {select === "add" && (
-                          <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />
+                        <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />
                         )}
                         {console.log(select)}
                       </div>
