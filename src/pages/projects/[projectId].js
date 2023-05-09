@@ -15,7 +15,7 @@ const index = () => {
   useEffect(() => {
     const getProductHandler = async () => {
       try {
-        await axios.get('http://localhost:1337/api/products')
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`)
           .then((res) => {
             const data = res.data
             setProducts(data.data);
@@ -26,7 +26,7 @@ const index = () => {
     };
 
     const getSupplierHandler = async () => {
-      await axios.get('http://localhost:1337/api/suppliers')
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/suppliers`)
         .then((res) => {
           const data = res.data
           setSuppliers(data.data);
@@ -34,7 +34,7 @@ const index = () => {
     };
 
     const getUnitHandler = async () => {
-      await axios.get('http://localhost:1337/api/units')
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/units`)
         .then((res) => {
           const data = res.data
           setUnit(data.data);
@@ -42,7 +42,7 @@ const index = () => {
     };
 
     const getCategoryHandler = async () => {
-      await axios.get('http://localhost:1337/api/categories')
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
         .then((res) => {
           const data = res.data
           setCategory(data.data);

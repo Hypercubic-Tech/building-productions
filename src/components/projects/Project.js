@@ -40,20 +40,20 @@ const Project = ({ pr, unit, category, suppliers }) => {
   };
 
   const filterProductCategory = async (id) => {
-  try {
-    await axios.get(`http://localhost:1337/api/products?populate=categories&filters[categories][id][$in]=${id}`)
-    .then((res) => {
-      const data = res.data;
-      setAllProduct(data.data);
-    })
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
+      .then((res) => {
+        const data = res.data;
+        setAllProduct(data.data);
+      })
+    } catch (error) {
+      console.error(error);
+    }
 };
 
   useEffect(() => {
     const getCategoriesHandler = async() => {
-      await axios.get('http://localhost:1337/api/categories')
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
       .then((res) => {
         const data = res.data;
         setAllCategories(data.data);
@@ -62,7 +62,7 @@ const Project = ({ pr, unit, category, suppliers }) => {
 
     const getProductsHandler = async() => {
       try {
-        await axios.get('http://localhost:1337/api/products?populate=*')
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*`)
           .then((res) => {
             const data = res.data;
             setAllProduct(data.data);

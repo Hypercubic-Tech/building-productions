@@ -5,7 +5,7 @@ const Products = ({ editHandler, allProduct }) => {
 
   const deleteProductHandler = async (productId) => {
     await axios
-      .delete(`http://localhost:1337/api/products/${productId}`)
+      .delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`)
       .then((response) => {
         console.log(response);
       })
@@ -59,7 +59,7 @@ const Products = ({ editHandler, allProduct }) => {
                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                       <a href={product.link}>
                         <div className="symbol-label georgian">
-                          <img src={product?.attributes?.image?.data?.attributes?.url} alt="" className="w-100" />
+                          <img src={`http://localhost:1337`+product?.attributes?.image?.data?.attributes?.url} alt="" className="w-100" />
                         </div>
                       </a>
                     </div>
