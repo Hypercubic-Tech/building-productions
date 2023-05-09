@@ -22,33 +22,31 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [allProduct, setAllProduct] = useState(null);
   const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
-  const [productCategory, setProductCategory] = useState('');
+  const [productCategory, setProductCategory] = useState("");
 
   const giveProductCategory = (category) => {
-    setProductCategory(category)
+    setProductCategory(category);
   };
-
-
 
   const filterProductCategory = async (id) => {
     try {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
-      .then((res) => {
-        const data = res.data;
-        setAllProduct(data.data);
-      })
+        .then((res) => {
+          const data = res.data;
+          setAllProduct(data.data);
+        })
     } catch (error) {
       console.error(error);
     }
-};
+  };
 
   useEffect(() => {
-    const getCategoriesHandler = async() => {
+    const getCategoriesHandler = async () => {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-      .then((res) => {
-        const data = res.data;
-        setAllCategories(data.data);
-      })
+        .then((res) => {
+          const data = res.data;
+          setAllCategories(data.data);
+        })
     };
 
     const getProductsHandler = async () => {
@@ -57,7 +55,7 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
           .then((res) => {
             const data = res.data;
             setAllProduct(data.data);
-          })
+          });
       } catch (error) {
         console.error(error);
       }
@@ -68,7 +66,12 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
 
   return (
     <>
-      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
+      <Filter
+        project={pr}
+        giveProductCategory={giveProductCategory}
+        filterProductCategory={filterProductCategory}
+        allCategories={allCategories}
+      />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
@@ -494,18 +497,21 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
                           </div>
                         )}
                         {/* ეხპორტი */}
-                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />}
-                      {console.log(select)}
+                        {select === "add" && (
+                          <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />
+                        )}
+                        {console.log(select)}
                       </div>
                     </div>
-                    <div className="card-body pt-0">
-                      <div className="summary">ჯამი: {summary} ლარი</div>
+                    <div className="card-body padding pt-0">
+                      <div className="summary padding10">ჯამი: {summary} ლარი</div>
                       <Products
                         // editHandler={editProductHandler}
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
-                        allProduct={allProduct} />
+                        allProduct={allProduct}
+                      />
                     </div>
                   </div>
                 </div>
