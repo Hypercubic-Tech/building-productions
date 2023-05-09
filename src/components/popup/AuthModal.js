@@ -31,7 +31,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
     event.preventDefault();
 
     await axios
-      .post("http://localhost:1337/api/auth/local", {
+      .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local`, {
         identifier: email,
         password: password,
       })
@@ -45,7 +45,6 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
         dispatch(setAuthEmail(data.user.email));
         dispatch(setAuthRole(data.user.role));
         dispatch(setAuthUserId(data.user.id));
-        console.log(data.user.id);
       });
   };
 

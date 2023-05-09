@@ -3,16 +3,6 @@ import Auth from "../popup/Auth";
 import { useSpring, animated } from "react-spring";
 
 function DefaultHeader() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setLoggedIn(false);
-  };
-
   const [showAuthModal, setShowAuthModal] = useState(false);
   const modalRef = useRef(null);
 

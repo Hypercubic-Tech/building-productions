@@ -34,7 +34,7 @@ const AddProductForm = ({ projectId, setSelect, unit, category, suppliers }) => 
 
   const handleSubmit = async () => {
     try {
-        await axios.post('http://localhost:1337/api/products', {
+        await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
         data: productData
       })
       .then((res) => {
