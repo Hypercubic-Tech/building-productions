@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios';
 
 import styles from "./AddWork.module.css"
 
-const AddProduct = ({ setSelect, crafts, unit, category, suppliers }) => {
+const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus }) => {
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
-    console.log(crafts)
     const [productData, setProductData] = useState(
         {
             data: {
@@ -30,6 +29,16 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers }) => {
                     connect: [
                         { id: null }
                     ]
+                },
+                craft_status: {
+                    connect: [
+                        { id: null }
+                    ]
+                },
+                craft_image: {
+                    connect: [
+                        { id: null }
+                    ]
                 }
             }
         }
@@ -49,6 +58,29 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers }) => {
 
         setSelect(null);
     };
+
+    const button = (
+        <div className="text-center pt-15">
+            <button
+                onClick={() => {
+                    setSelect(null);
+                }}
+                type="reset"
+                className="btn btn-light me-3"
+                data-kt-users-modal-action="cancel"
+            >
+                გაუქმება
+            </button>
+            <div
+                onClick={handleSubmit}
+                type="submit"
+                className="btn btn-primary"
+                data-kt-users-modal-action="submit"
+            >
+                <span className="indicator-label">დაამატე</span>
+            </div>
+        </div>
+    );
 
     return (
         <div
@@ -124,7 +156,6 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers }) => {
                         </div>
                     </div>
                     <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-
                         {toggle ? (
                             <form id="kt_modal_add_user_form" className="form">
                                 <div
@@ -379,275 +410,192 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="text-center pt-15">
-                                    <button
-                                        onClick={() => {
-                                            setSelect(null);
-                                        }}
-                                        type="reset"
-                                        className="btn btn-light me-3"
-                                        data-kt-users-modal-action="cancel"
-                                    >
-                                        Discard
-                                    </button>
-                                    <div
-                                        onClick={() => {
-                                            handleSubmit();
-                                        }}
-                                        type="submit"
-                                        className="btn btn-primary"
-                                        data-kt-users-modal-action="submit"
-                                    >
-                                        <span className="indicator-label">Submit</span>
-                                    </div>
-                                </div>
+                                {button}
                             </form>
-                        ) : <form id="kt_modal_add_user_form" className="form">
-                            <div
-                                className="d-flex flex-column scroll-y me-n7 pe-7"
-                                id="kt_modal_add_user_scroll"
-                                data-kt-scroll="true"
-                                data-kt-scroll-activate="{default: false, lg: true}"
-                                data-kt-scroll-max-height="auto"
-                                data-kt-scroll-dependencies="#kt_modal_add_user_header"
-                                data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
-                                data-kt-scroll-offset="300px"
-                            >
-                                <div className="row mb-5">
-                                    {isTouched && (
-                                        <div className={styles.imageBox}>
-                                            {console.log(craftImage, 'cr')}
-                                            <img src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`} alt="img" />
-                                        </div>
-                                    )}
-                                    {crafts && (
-                                        <div className="col-md-8 fv-row fv-plugins-icon-container">
-                                            <label className="required fs-5 fw-bold mb-2 georgian">
-                                                კატეგორია
-                                            </label>
-                                            <select
-                                                onChange={(e) => {
-                                                    const selectedCraft = crafts.find(craft => craft.id === Number(e.target.value));
-                                                    console.log(selectedCraft)
-                                                    setCraftImage(selectedCraft?.attributes?.image?.data?.attributes?.url);
-                                                    setIsTouched(true);
-                                                }}
-                                                name="category"
-                                                className="form-select form-select-solid georgian"
-                                            >
-                                                {crafts.map((item, index) => {
-                                                    return (
-                                                        <option key={index} value={item.id}>
-                                                            {item.attributes.title}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </select>
-                                            {isTouched && craftImage && (
-                                                <div className={styles.imageBox}>
-                                                    <img src={`http://localhost:1337/public/${craftImage.url}`} alt="img" />
-                                                </div>
-                                            )}
-                                            <div className="fv-plugins-message-container invalid-feedback"></div>
-                                        </div>
-                                    )}
-                                    {/* <div className="col-md-8 fv-row fv-plugins-icon-container">
-                                        <label className="required fs-5 fw-bold mb-2 georgian">
-                                            კატეგორია
-                                        </label>
-                                        <select
-                                            onChange={(e) => {
-                                                let cr = crafts.find((craft) => craft._id === e.target.value);
-                                                setSelectedCraft(cr);
-                                                setFormData((formData) => ({
-                                                    ...formData,
-                                                    category: cr.category,
-                                                    image: cr.image,
-                                                }));
-                                            }}
-                                            name="category"
-                                            className="form-select form-select-solid georgian"
-                                        >
-                                            {crafts &&
-                                                crafts.map((item, index) => {
-                                                    return (
-                                                        <option key={index} value={item._id}>
-                                                            {item.category}
-                                                        </option>
-                                                    );
-                                                })}
-                                        </select>
-                                        <div className="fv-plugins-message-container invalid-feedback"></div>
-                                    </div> */}
-                                    {/* {selectedCraft && (
-                                        <>
-                                            <div className="col-md-4 fv-row fv-plugins-icon-container">
-                                                <label className="required fs-5 fw-bold mb-2 georgian">
-                                                    რაოდენობა
-                                                </label>
-                                                <input
-                                                    onChange={(e) => {
-                                                        setFormData((formData) => ({
-                                                            ...formData,
-                                                            quantity: Number(e.target.value),
-                                                        }));
-                                                    }}
-                                                    type="number"
-                                                    className="form-control form-control-solid georgian"
-                                                    placeholder="პრო: რაოდენობა"
-                                                    name="quantity"
-                                                />
-                                                <div className="fv-plugins-message-container invalid-feedback"></div>
+                        ) : (
+                            <form id="kt_modal_add_user_form" className="form">
+                                <div
+                                    className="d-flex flex-column scroll-y me-n7 pe-7"
+                                    id="kt_modal_add_user_scroll"
+                                    data-kt-scroll="true"
+                                    data-kt-scroll-activate="{default: false, lg: true}"
+                                    data-kt-scroll-max-height="auto"
+                                    data-kt-scroll-dependencies="#kt_modal_add_user_header"
+                                    data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
+                                    data-kt-scroll-offset="300px"
+                                >
+                                    <div className="row mb-5">
+                                        {isTouched && (
+                                            <div className={styles.imageBox}>
+                                                <img onChange={(e) => {
+                                                    setProductData((prevSendData) => ({
+                                                        ...prevSendData,
+                                                        craft_imgae: {
+                                                            connect: [
+                                                                { id: e.target.src }
+                                                            ]
+                                                        }
+                                                    }));
+                                                }} src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`} alt="img" />
                                             </div>
-                                            <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                        )}
+                                        {crafts && (
+                                            <div className="col-md-8 fv-row fv-plugins-icon-container">
                                                 <label className="required fs-5 fw-bold mb-2 georgian">
-                                                    ერთეული
+                                                    კატეგორია
                                                 </label>
                                                 <select
                                                     onChange={(e) => {
-                                                        setFormData((formData) => ({
-                                                            ...formData,
-                                                            unit: e.target.value,
+                                                        const selectedCraft = crafts.find(craft => craft.id === Number(e.target.value));
+                                                        console.log(selectedCraft)
+                                                        setCraftImage(selectedCraft?.attributes?.image?.data?.attributes?.url);
+                                                        setIsTouched(true);
+                                                        setProductData((prevSendData) => ({
+                                                            ...prevSendData,
+                                                            category: {
+                                                                connect: [
+                                                                    { id: e.target.value }
+                                                                ]
+                                                            },
+                                                            productLink: "/"
+
                                                         }));
                                                     }}
-                                                    name="unit"
+                                                    name="category"
                                                     className="form-select form-select-solid georgian"
-                                                    data-placeholder="საზომიერთ."
                                                 >
-                                                    <option value="კვ.მ">კვ.მ</option>
-                                                    <option value="გრ.მ">გრ.მ</option>
-                                                    <option value="ცალი">ცალი</option>
-                                                    <option value="ლიტრი">ლიტრი</option>
-                                                    <option value="ტომარა">ტომარა</option>
+                                                    {crafts.map((item, index) => {
+                                                        return (
+                                                            <option key={index} value={item.id}>
+                                                                {item.attributes.title}
+                                                            </option>
+                                                        );
+                                                    })}
                                                 </select>
                                                 <div className="fv-plugins-message-container invalid-feedback"></div>
                                             </div>
-                                            <div className="col-md-4 fv-row fv-plugins-icon-container">
-                                                <label className="required fs-5 fw-bold mb-2 georgian">
-                                                    დასახელება
-                                                </label>
-                                                <input
-                                                    onChange={(e) => {
-                                                        setFormData((formData) => ({
-                                                            ...formData,
-                                                            title: e.target.value,
-                                                        }));
-                                                    }}
-                                                    type="text"
-                                                    className="form-control form-control-solid georgian"
-                                                    placeholder="დასახელება"
-                                                    name="price"
-                                                />
-                                                <div className="fv-plugins-message-container invalid-feedback"></div>
-                                            </div>
-                                            <div className="col-md-4 fv-row fv-plugins-icon-container">
-                                                <label className="required fs-5 fw-bold mb-2 georgian">
-                                                    ღირეულება
-                                                </label>
-                                                <input
-                                                    onChange={(e) => {
-                                                        setFormData((formData) => ({
-                                                            ...formData,
-                                                            price: Number(e.target.value),
-                                                        }));
-                                                    }}
-                                                    type="number"
-                                                    className="form-control form-control-solid georgian"
-                                                    placeholder="პროდ: ღირებულება"
-                                                    name="price"
-                                                />
-                                                <div className="fv-plugins-message-container invalid-feedback"></div>
-                                            </div>
-                                            <div className="col-md-4 fv-row fv-plugins-icon-container">
-                                                <label className="required fs-5 fw-bold mb-2 georgian">
-                                                    სტატუსი
-                                                </label>
-                                                <select
-                                                    onChange={(e) => {
-                                                        setFormData((formData) => ({
-                                                            ...formData,
-                                                            status: e.target.value,
-                                                        }));
-                                                    }}
-                                                    name="status"
-                                                    className="form-select form-select-solid georgian"
-                                                    data-placeholder="სტატუსი"
-                                                >
-                                                    <option value="არ დაწყებულა">არ დაწყებულა</option>
-                                                    <option value="პროცესშია">პროცესშია</option>
-                                                    <option value="დასრულდა">დასრულდა</option>
-                                                </select>
-                                                <div className="fv-plugins-message-container invalid-feedback"></div>
-                                            </div>
-                                            <div className="mt-8 col-md-4 fv-row fv-plugins-icon-container">
-                                                <div className="form-check form-check-sm form-check-custom form-check-solid">
+                                        )}
+                                        {isTouched && (
+                                            <>
+                                                <div className="col-md-4 fv-row fv-plugins-icon-container">
                                                     <label className="required fs-5 fw-bold mb-2 georgian">
-                                                        შეძენილია
+                                                        რაოდენობა
                                                     </label>
                                                     <input
-                                                        className="mx-2 form-check-input"
-                                                        type="checkbox"
-                                                        data-kt-check="true"
-                                                        data-kt-check-target="#kt_table_users .form-check-input"
-                                                        defaultValue={"not purchased"}
                                                         onChange={(e) => {
-                                                            setFormData((formData) => ({
-                                                                ...formData,
-                                                                purchased: "purchased",
+                                                            setProductData((prevSendData) => ({
+                                                                ...prevSendData,
+                                                                quantity: e.target.value,
                                                             }));
                                                         }}
+                                                        type="number"
+                                                        className="form-control form-control-solid georgian"
+                                                        placeholder="პრო: რაოდენობა"
+                                                        name="quantity"
                                                     />
+                                                    <div className="fv-plugins-message-container invalid-feedback"></div>
                                                 </div>
-                                            </div>
-                                        </>
-                                    )} */}
+                                                <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                                    <label className="required fs-5 fw-bold mb-2 georgian">
+                                                        ერთეული
+                                                    </label>
+                                                    <select
+                                                        onClick={(e) => {
+                                                            setProductData((prevSendData) => ({
+                                                                ...prevSendData,
+                                                                unit: {
+                                                                    connect: [
+                                                                        { id: e.target.value }
+                                                                    ]
+                                                                }
+                                                            }));
+                                                        }}
+                                                        name="unit"
+                                                        className="form-select form-select-solid georgian"
+                                                        data-placeholder="საზომიერთ."
+                                                    >
+                                                        {unit && unit.map((unit, index) => {
+                                                            <option value="none" selected disabled hidden></option>
+                                                            return (
+                                                                <option key={index} value={unit.id}>{unit.attributes.title}</option>
+                                                            )
+                                                        })}
+                                                    </select>
+                                                    <div className="fv-plugins-message-container invalid-feedback"></div>
+                                                </div>
+                                                <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                                    <label className="required fs-5 fw-bold mb-2 georgian">
+                                                        დასახელება
+                                                    </label>
+                                                    <input
+                                                        onChange={(e) => {
+                                                            setProductData((prevSendData) => ({
+                                                                ...prevSendData,
+                                                                title: e.target.value,
+                                                            }));
+                                                        }}
+                                                        type="text"
+                                                        className="form-control form-control-solid georgian"
+                                                        placeholder="დასახელება"
+                                                        name="price"
+                                                    />
+                                                    <div className="fv-plugins-message-container invalid-feedback"></div>
+                                                </div>
+                                                <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                                    <label className="required fs-5 fw-bold mb-2 georgian">
+                                                        ღირეულება
+                                                    </label>
+                                                    <input
+                                                        onChange={(e) => {
+                                                            setProductData((prevSendData) => ({
+                                                                ...prevSendData,
+                                                                price: e.target.value,
+                                                            }));
+                                                        }}
+                                                        type="number"
+                                                        className="form-control form-control-solid georgian"
+                                                        placeholder="პროდ: ღირებულება"
+                                                        name="price"
+                                                    />
+                                                    <div className="fv-plugins-message-container invalid-feedback"></div>
+                                                </div>
+                                                <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                                    <label className="required fs-5 fw-bold mb-2 georgian">
+                                                        სტატუსი
+                                                    </label>
+                                                    {/* hihihi */}
+
+                                                    <select
+                                                        onChange={(e) => {
+                                                            setProductData((prevSendData) => ({
+                                                                ...prevSendData,
+                                                                craft_status: {
+                                                                    connect: [
+                                                                        { id: e.target.value }
+                                                                    ]
+                                                                }
+                                                            }));
+                                                        }}
+                                                        name="status"
+                                                        className="form-select form-select-solid georgian"
+                                                        data-placeholder="სტატუსი"
+                                                    >
+                                                        {craftStatus && craftStatus.map((item, index) => {
+                                                            return (
+                                                                <option key={index} value={item.id}>{item.attributes.title}</option>
+                                                            )
+                                                        })}
+                                                    </select>
+                                                    <div className="fv-plugins-message-container invalid-feedback"></div>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="text-center pt-15">
-                                <button
-                                    onChange={() => {
-                                        setSelect(null);
-                                    }}
-                                    type="reset"
-                                    className="btn btn-light me-3"
-                                    data-kt-users-modal-action="cancel"
-                                >
-                                    Discard
-                                </button>
-                                <div
-                                    onClick={handleSubmit}
-                                    type="submit"
-                                    className="btn btn-primary"
-                                    data-kt-users-modal-action="submit"
-                                >
-                                    <span className="indicator-label">Submit</span>
-                                </div>
-                            </div>
-                        </form>}
-                        {/* {showFirst && (
-                            <AddProductForm
-                                suppliers={suppliers}
-                                unit={unit}
-                                category={category}
-                                projectId={"project"}
-                                setSelect={setSelect}
-                            />
+                                {button}
+                            </form>
                         )}
-                        {showSecond && (
-                            <AddWork
-                                projectId={"project"}
-                                setSelect={setSelect}
-                            />
-                        )} */}
                     </div>
-                    {/* <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-              {editProduct && (
-                <EditProductsForm data={editProductData} />
-              )}
-              {editService && (
-                <EditServiceForm data={editServiceData} />
-              )}
-            </div> */}
                 </div>
             </div>
         </div>

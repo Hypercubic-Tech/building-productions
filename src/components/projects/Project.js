@@ -10,7 +10,7 @@ import EditServiceForm from "./EditServiceForm";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({ pr, crafts, unit, category, suppliers }) => {
+const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
@@ -494,7 +494,8 @@ const Project = ({ pr, crafts, unit, category, suppliers }) => {
                           </div>
                         )}
                         {/* ეხპორტი */}
-                        {select === "add" && <AddProduct setSelect={setSelect} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />}
+                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />}
+                      {console.log(select)}
                       </div>
                     </div>
                     <div className="card-body pt-0">
