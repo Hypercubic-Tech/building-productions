@@ -7,7 +7,7 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers }) => {
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
-
+    console.log(crafts)
     const [productData, setProductData] = useState(
         {
             data: {
@@ -417,7 +417,7 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers }) => {
                                     {isTouched && (
                                         <div className={styles.imageBox}>
                                             {console.log(craftImage, 'cr')}
-                                            <img src={`http://localhost:1337 + ${craftImage}`} alt="img" />
+                                            <img src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`} alt="img" />
                                         </div>
                                     )}
                                     {crafts && (
@@ -429,7 +429,7 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers }) => {
                                                 onChange={(e) => {
                                                     const selectedCraft = crafts.find(craft => craft.id === Number(e.target.value));
                                                     console.log(selectedCraft)
-                                                    setCraftImage(selectedCraft.attributes.image.data.attributes.url);
+                                                    setCraftImage(selectedCraft?.attributes?.image?.data?.attributes?.url);
                                                     setIsTouched(true);
                                                 }}
                                                 name="category"
