@@ -1,40 +1,35 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 
 import axiosPrivate from "@/api/axiosPrivate";
-import axios from "axios";
 import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
 import AddWork from "./AddWork";
 import Filter from "./Filter";
 import EditProductsForm from "./EditProductsForm";
 import EditServiceForm from "./EditServiceForm";
+import axios from "axios";
 
 const Project = ({ pr, unit, category, suppliers }) => {
-  const router = useRouter();
-  const { projectId } = router.query;
-
   const [select, setSelect] = useState(null);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
-  const [project, setProject] = useState(null);
   const [products, setProducts] = useState(null);
   const [editProduct, setEditProduct] = useState(false);
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
   const [allProduct, setAllProduct] = useState(null);
-
+  const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState('');
 
   const giveProductCategory = (category) => {
     setProductCategory(category)
   };
+  // console.log(pr._id)
   // const project = pr?.project._id;
-
 
   const handleShowSecond = () => {
     setShowFirst(false);
@@ -46,23 +41,31 @@ const Project = ({ pr, unit, category, suppliers }) => {
     setShowSecond(false);
   };
 
-  const filterProductCategory = async () => {
-    try {
-      await axiosPrivate.get(`/api/admin/product/get_filtered_products`, {
-        params: {
-          search: productCategory
-        }
-      })
-        .then((res) => {
-          const data = res.data;
-          setFilteredProducts(data);
-        })
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const filterProductCategory = async (id) => {
+  try {
+    await axios.get(`http://localhost:1337/api/products?populate=categories&filters[categories][id][$in]=${id}`, {
+      params: {
+        search: productCategory
+      }
+    })
+    .then((res) => {
+      const data = res.data;
+      setAllProduct(data.data);
+    })
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   useEffect(() => {
+    const getCategoriesHandler = async() => {
+      await axios.get('http://localhost:1337/api/categories')
+      .then((res) => {
+        const data = res.data;
+        setAllCategories(data.data);
+      })
+    };
+
     const getProductsHandler = async() => {
       try {
         await axios.get('http://localhost:1337/api/products?populate=*')
@@ -91,25 +94,10 @@ const Project = ({ pr, unit, category, suppliers }) => {
           console.log(e, "error");
         });
     };
-
-    const getProjectData = async () => {
-      await axios
-        .get(`http://localhost:1337/api/projects?filters[id][$eq]=${projectId}&populate=*`, {})
-        .then((res) => {
-          let data = res?.data?.data[0]?.attributes;
-          console.log(data)
-          setProject(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-
     getDataHandler();
     getProductsHandler();
-
-    if (projectId) getProjectData();
-  }, [projectId]);
+    getCategoriesHandler();
+  }, []);
 
   const editProductHandler = async (product) => {
     if (product.type === "product") {
@@ -133,7 +121,7 @@ const Project = ({ pr, unit, category, suppliers }) => {
 
   return (
     <>
-      {/* <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} /> */}
+      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
@@ -151,20 +139,20 @@ const Project = ({ pr, unit, category, suppliers }) => {
               >
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
               </svg>
-              &nbsp;{project?.address}
+              &nbsp;{pr?.address}
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.city?.data?.attributes?.city}
+                {pr?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.condition?.data?.attributes?.title}
+                {pr?.condition}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.property_type?.data?.attributes.Title}
+                {pr?.propertyType}
               </li>
               <li className="breadcrumb-item text-warning georgian">
-                {project?.createdAt}
+                {pr?.createdAt}
               </li>
             </ul>
           </div>

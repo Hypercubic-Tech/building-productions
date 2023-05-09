@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
-import cities from "@/api/cities.json";
-import axiosPrivate from "@/api/axiosPrivate";
 import axios from "axios";
 
 import styles from "./Modal.module.css";
-const AddProject = ({ dismiss }) => {
 
+const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
+
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-
-  const token = localStorage.getItem('access_token');
-
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -47,13 +43,15 @@ const AddProject = ({ dismiss }) => {
     },
   });
 
-
   useEffect(() => {
     const getPropertyTypesHandler = async () => {
       try {
-        const res = await axios.get("http://localhost:1337/api/projects?populate=city");
-        const data = await res.json();
-        console.log(data);
+        const res = await axios.get("http://localhost:1337/api/property-types")
+          .then((res) => {
+            const data = res.data;
+            setPropertyType(data.data)
+          })
+
       } catch (error) {
         console.log(error);
       }
@@ -124,7 +122,6 @@ const AddProject = ({ dismiss }) => {
     };
     getCategoriesHandler();
   }, []);
-
 
   let errors = {
     stepOne: [],

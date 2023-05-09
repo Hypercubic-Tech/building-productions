@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import axiosPrivate from "@/api/axiosPrivate";
-import styles from "./Modal.module.css";
+import axios from "axios";
 import Link from "next/link";
 
 import AddProject from "./AddProject";
 import EditProject from "./EditProject";
-import axios from "axios";
+
+import styles from "./Modal.module.css";
 
 const HeaderPopup = () => {
   const [close, setClose] = useState(false);
@@ -29,15 +29,25 @@ const HeaderPopup = () => {
       try {
         await axios.get("http://localhost:1337/api/projects")
           .then((res) => {
-            const data = res.data;
-            setProjectsData(data.data);
+            const data = res.data
+            setProjectsData(data.data)
           })
       } catch (error) {
         console.log(error);
-      } 
+      }
     };
     getProjectsHandler();
   }, []);
+
+  const deleteProjectHandler = async (item) => {
+    console.log(item, 'id')
+    const projectId = item.id;
+    try {
+      await axios.delete(`http://localhost:1337/api/projects/${projectId}`);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -87,7 +97,7 @@ const HeaderPopup = () => {
                               რედაქტირება
                             </div>
                             <div
-                              // onClick={() => deleteHandler(item)}
+                              onClick={() => deleteProjectHandler(item)}
                               className="btn btn-danger"
                             >
                               წაშლა
