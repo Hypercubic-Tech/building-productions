@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const Products = ({ editHandler, allProduct }) => {
-  console.log(allProduct)
 
   const deleteProductHandler = async (productId) => {
     await axios
