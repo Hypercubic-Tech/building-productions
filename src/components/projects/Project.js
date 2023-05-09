@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
-
-import axiosPrivate from "@/api/axiosPrivate";
-import Products from "./Products";
-import AddProductForm from "./AddProductsForm";
-import AddWork from "./AddWork";
-import Filter from "./Filter";
-import EditProductsForm from "./EditProductsForm";
-import EditServiceForm from "./EditServiceForm";
+import { useRouter } from 'next/router';
 import axios from "axios";
+
+import Products from "./Products";
+import Filter from "./Filter";
 import AddProduct from "./AddProduct";
 
 const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
@@ -23,6 +19,10 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
+
+  const router = useRouter();
+  const projectId = router.query.projectId;
+  console.log(projectId, 'id');
 
   const giveProductCategory = (category) => {
     setProductCategory(category);
@@ -498,7 +498,7 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
                         )}
                         {/* ეხპორტი */}
                         {select === "add" && (
-                        <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />
+                          <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />
                         )}
                         {console.log(select)}
                       </div>

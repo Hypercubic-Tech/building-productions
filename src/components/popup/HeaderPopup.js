@@ -81,7 +81,11 @@ const HeaderPopup = () => {
                         <div className="card-body">
                           <Link
                             onClick={() => setClose(true)}
-                            href={`/projects/${item.id}`}
+                            href={{
+                              pathname: `/projects/${item.id}`,
+                              query: { projectId: item.id },
+                            }}
+                            passHref
                             className="card-title"
                           >
                             {item.attributes.title}
@@ -129,7 +133,7 @@ const HeaderPopup = () => {
           </div>
         </div>
       </div>
-      {addProject && <AddProject dismiss={dismissHandler} />}
+          {addProject && <AddProject dismiss={dismissHandler} />}
       {editProject && (
         <EditProject data={editProjectData} dismiss={dismissHandler} />
       )}
