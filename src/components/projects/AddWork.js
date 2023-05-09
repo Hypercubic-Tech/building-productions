@@ -23,32 +23,9 @@ function AddWork({ setSelect, projectId }) {
     category: "",
   });
 
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/content/get_craft_images", {})
-        .then((res) => {
-          let data = res.data;
-          setCrafts(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
-
-  const handleSubmit = async () => {
-    setSelect(null);
-    await axiosPrivate
-      .post("/api/admin/product/add_product", formData)
-      .then((res) => {
-        const data = res.data;
-      })
-      .catch((e) => {
-        console.log(e, "error");
-      });
-  };
+  const handleSubmit = () => {
+    console.log('submit')
+  }
 
   return (
     <form id="kt_modal_add_user_form" className="form">

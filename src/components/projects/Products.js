@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import axiosInstance from "@/api/axios";
 
-const Products = ({ products, editHandler, allProduct }) => {
+const Products = ({ editHandler, allProduct }) => {
 
-  const deleteProductHandler = async (product) => {
-    await axiosInstance
-      .post("/api/admin/product/delete_product", {
-        product: product._id,
-      })
+  const deleteProductHandler = async (productId) => {
+    await axios
+      .delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`)
       .then((response) => {
         console.log(response);
       })
@@ -62,7 +58,7 @@ const Products = ({ products, editHandler, allProduct }) => {
                     <div className="symbol symbol-circle symbol-50px overflow-hidden me-3">
                       <a href={product.link}>
                         <div className="symbol-label georgian">
-                          <img src={product.image} alt="" className="w-100" />
+                          <img src={`${process.env.NEXT_PUBLIC_BUILDING_URL}`+product?.attributes?.image?.data?.attributes?.url} alt="" className="w-100" />
                         </div>
                       </a>
                     </div>
@@ -93,7 +89,7 @@ const Products = ({ products, editHandler, allProduct }) => {
                       </a>
                     </div>
                     <div
-                      onClick={() => deleteProductHandler(product)}
+                      onClick={(e) => deleteProductHandler(product.id)}
                       className="menu-item px-3"
                     >
                       <a

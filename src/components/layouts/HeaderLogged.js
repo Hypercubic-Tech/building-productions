@@ -6,6 +6,7 @@ import {
   setAuthEmail,
   setAuthRole,
   setAuthUserId,
+  setAuthState
 } from "@/store/slices/authSlice";
 import HeaderPopup from "../popup/HeaderPopup";
 
@@ -56,6 +57,8 @@ function HeaderLogged() {
     localStorage.removeItem("email");
     localStorage.removeItem("role");
     localStorage.removeItem("userId");
+
+    dispatch(setAuthState(false));
     dispatch(setAuthAccessToken(null));
     dispatch(setAuthUserId(null));
     dispatch(setAuthEmail(null));
@@ -96,10 +99,10 @@ function HeaderLogged() {
               </svg>
             </span>
           </div>
-          <a href="../../demo11/dist/index.html">
+          <a href="/">
             <img
               alt="Logo"
-              src="assets/media/logos/logo-demo11.svg"
+              src="/assets/media/logos/logo-demo11.svg"
               className="h-20px h-lg-30px"
             />
           </a>

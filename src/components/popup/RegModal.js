@@ -29,7 +29,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
 
     const { email, password, fullName } = event.target.elements;
 
-    await axios.post("http://localhost:1337/api/auth/local/register", {
+    await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
       email: email.value,
       password: password.value,
       username: fullName.value,

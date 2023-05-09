@@ -8,11 +8,10 @@ import Filter from "./Filter";
 import EditProductsForm from "./EditProductsForm";
 import EditServiceForm from "./EditServiceForm";
 import axios from "axios";
+import AddProduct from "./AddProduct";
 
-const Project = ({ pr, unit, category, suppliers }) => {
+const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [select, setSelect] = useState(null);
-  const [showFirst, setShowFirst] = useState(true);
-  const [showSecond, setShowSecond] = useState(false);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
@@ -28,96 +27,44 @@ const Project = ({ pr, unit, category, suppliers }) => {
   const giveProductCategory = (category) => {
     setProductCategory(category)
   };
-  // console.log(pr._id)
-  // const project = pr?.project._id;
 
-  const handleShowSecond = () => {
-    setShowFirst(false);
-    setShowSecond(true);
-  };
 
-  const handleShowFirst = () => {
-    setShowFirst(true);
-    setShowSecond(false);
-  };
 
   const filterProductCategory = async (id) => {
-  try {
-    await axios.get(`http://localhost:1337/api/products?populate=categories&filters[categories][id][$in]=${id}`, {
-      params: {
-        search: productCategory
-      }
-    })
-    .then((res) => {
-      const data = res.data;
-      setAllProduct(data.data);
-    })
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
+      .then((res) => {
+        const data = res.data;
+        setAllProduct(data.data);
+      })
+    } catch (error) {
+      console.error(error);
+    }
 };
 
   useEffect(() => {
     const getCategoriesHandler = async() => {
-      await axios.get('http://localhost:1337/api/categories')
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
       .then((res) => {
         const data = res.data;
         setAllCategories(data.data);
       })
     };
 
-    const getProductsHandler = async() => {
+    const getProductsHandler = async () => {
       try {
-        await axios.get('http://localhost:1337/api/products?populate=*')
-        .then((res) => {
-          const data = res.data;
-          setAllProduct(data.data);
-        })
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*`)
+          .then((res) => {
+            const data = res.data;
+            setAllProduct(data.data);
+          })
       } catch (error) {
         console.error(error);
       }
     };
-
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/product/get_products", {})
-        .then((res) => {
-          let data = res.data;
-          setProducts(data);
-          let sum = 0;
-          for (let i = 0; i < data.length; i++) {
-            sum = sum + parseInt(data[i].quantity) * parseFloat(data[i].price);
-          }
-          setSummary(sum);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
     getProductsHandler();
     getCategoriesHandler();
   }, []);
-
-  const editProductHandler = async (product) => {
-    if (product.type === "product") {
-      setEditProductData(product);
-      if (!editProduct) {
-        setEditProduct(true);
-      } else {
-        setEditProduct(false);
-      }
-    }
-
-    if (product.type === "service") {
-      setEditServiceData(product);
-      if (!editService) {
-        setEditService(true);
-      } else {
-        setEditService(false);
-      }
-    }
-  };
 
   return (
     <>
@@ -547,118 +494,18 @@ const Project = ({ pr, unit, category, suppliers }) => {
                           </div>
                         )}
                         {/* ეხპორტი */}
-                        {select === "add" && (
-                          <div
-                            style={{ display: "block", paddingLeft: "0px" }}
-                            className="modal fade show"
-                            id="kt_modal_export_users"
-                            role="dialig"
-                            tabIndex={-1}
-                            aria-hidden="true"
-                          >
-                            <div className="modal-dialog modal-dialog-centered mw-650px">
-                              <div className="modal-content">
-                                <div
-                                  className="modal-header"
-                                  id="kt_modal_add_user_header"
-                                >
-                                  <div
-                                    className={` d-flex justify-content-center align-items-center w-100 p-2 `}
-                                  >
-                                    <div
-                                      onClick={handleShowFirst}
-                                      className={` ${showFirst ? "primary-focus" : ""
-                                        } text-hover-primary mx-5 cursor-pointer `}
-                                    >
-                                      პროდუქციის დამატება
-                                    </div>
-                                    <div
-                                      onClick={handleShowSecond}
-                                      className={`${showSecond ? "primary-focus" : ""
-                                        } text-hover-primary mx-5 cursor-pointer `}
-                                    >
-                                      ხელობის დამატება
-                                    </div>
-                                  </div>
-                                  <div
-                                    className="btn btn-icon btn-sm btn-active-icon-primary"
-                                    data-kt-users-modal-action="close"
-                                  >
-                                    <span
-                                      className="svg-icon svg-icon-1"
-                                      onClick={() => {
-                                        setSelect(null);
-                                      }}
-                                    >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width={24}
-                                        height={24}
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                      >
-                                        <rect
-                                          opacity="0.5"
-                                          x={6}
-                                          y="17.3137"
-                                          width={16}
-                                          height={2}
-                                          rx={1}
-                                          transform="rotate(-45 6 17.3137)"
-                                          fill="black"
-                                        />
-                                        <rect
-                                          x="7.41422"
-                                          y={6}
-                                          width={16}
-                                          height={2}
-                                          rx={1}
-                                          transform="rotate(45 7.41422 6)"
-                                          fill="black"
-                                        />
-                                      </svg>
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                  {showFirst && (
-                                    <AddProductForm
-                                      suppliers={suppliers}
-                                      unit={unit}
-                                      category={category}
-                                      projectId={"project"}
-                                      setSelect={setSelect}
-                                    />
-                                  )}
-                                  {showSecond && (
-                                    <AddWork
-                                      projectId={"project"}
-                                      setSelect={setSelect}
-                                    />
-                                  )}
-                                </div>
-                                <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                  {editProduct && (
-                                    <EditProductsForm data={editProductData} />
-                                  )}
-                                  {editService && (
-                                    <EditServiceForm data={editServiceData} />
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />}
+                      {console.log(select)}
                       </div>
                     </div>
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {summary} ლარი</div>
                       <Products
-                        editHandler={editProductHandler}
+                        // editHandler={editProductHandler}
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
-                        allProduct={allProduct}/>
+                        allProduct={allProduct} />
                     </div>
                   </div>
                 </div>

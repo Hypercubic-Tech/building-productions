@@ -3,16 +3,6 @@ import Auth from "../popup/Auth";
 import { useSpring, animated } from "react-spring";
 
 function DefaultHeader() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setLoggedIn(false);
-  };
-
   const [showAuthModal, setShowAuthModal] = useState(false);
   const modalRef = useRef(null);
 
@@ -81,15 +71,15 @@ function DefaultHeader() {
                 </svg>
               </span>
             </button> */}
-              <a href="../../demo11/dist/landing.html">
+              <a href="/">
                 <img
                   alt="Logo"
-                  src="assets/media/logos/logo-landing.svg"
+                  src="/assets/media/logos/logo-demo11.svg"
                   className="logo-default h-25px h-lg-30px"
                 />
                 <img
                   alt="Logo"
-                  src="assets/media/logos/logo-landing-dark.svg"
+                  src="/assets/media/logos/logo-demo11.svg"
                   className="logo-sticky h-20px h-lg-25px"
                 />
               </a>

@@ -46,7 +46,7 @@ const AddProject = ({ dismiss }) => {
   useEffect(() => {
     const getPropertyTypesHandler = async () => {
       try {
-        const res = await axios.get("http://localhost:1337/api/property-types")
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
           .then((res) => {
             const data = res.data;
             setPropertyType(data.data)
@@ -62,7 +62,7 @@ const AddProject = ({ dismiss }) => {
   useEffect(() => {
     const getCitiesHandler = async () => {
       try {
-        const res = await axios.get("http://localhost:1337/api/cities")
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
           .then((res) => {
             const data = res.data;
             setCities(data.data)
@@ -78,7 +78,7 @@ const AddProject = ({ dismiss }) => {
   useEffect(() => {
     const getConditionHandler = async () => {
       try {
-        const res = await axios.get("http://localhost:1337/api/conditions")
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
           .then((res) => {
             const data = res.data;
             setCondition(data.data)
@@ -94,7 +94,7 @@ const AddProject = ({ dismiss }) => {
   useEffect(() => {
     const getCurrentConditionHandler = async () => {
       try {
-        const res = await axios.get("http://localhost:1337/api/current-conditions")
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
           .then((res) => {
             const data = res.data;
             setCurrentCondition(data.data)
@@ -110,7 +110,7 @@ const AddProject = ({ dismiss }) => {
   useEffect(() => {
     const getCategoriesHandler = async () => {
       try {
-        const res = await axios.get("http://localhost:1337/api/categories")
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
           .then((res) => {
             const data = res.data;
             setCategories(data.data)

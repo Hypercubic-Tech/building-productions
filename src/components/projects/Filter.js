@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
-
-import axiosPrivate from "@/api/axiosPrivate";
-
-const Filter = ({ project, giveProductCategory, filterProductCategory, allCategories }) => {
+const Filter = ({ giveProductCategory, filterProductCategory, allCategories }) => {
 
   return (
     <div
