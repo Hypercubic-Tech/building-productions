@@ -1,5 +1,6 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState } from 'react'
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 import styles from "./AddWork.module.css";
 
@@ -50,6 +51,10 @@ const AddProduct = ({
         // }
     })
 
+    const router = useRouter();
+    const projectId = router.query.projectId;
+    console.log(projectId, 'id')
+    
     const handleSubmit = async () => {
         try {
             await axios

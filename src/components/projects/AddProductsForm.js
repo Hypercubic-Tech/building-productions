@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { useState } from "react";
+import { useRouter } from 'next/router';
 import axios from "axios";
 
-const AddProductForm = ({ projectId, setSelect, unit, category, suppliers }) => {
-  const axiosPrivate = useAxiosPrivate();
+const AddProductForm = ({ setSelect, unit, category, suppliers }) => {
+  const router = useRouter();
+  const projectId = router.query.projectId;
+  console.log(projectId, 'id');
 
   const [productData, setProductData] = useState(
     {
@@ -26,6 +28,11 @@ const AddProductForm = ({ projectId, setSelect, unit, category, suppliers }) => 
         category: {
           connect: [
             { id: null }
+          ]
+        },
+        project: {
+          connect: [
+            { id: projectId }
           ]
         }
       }
