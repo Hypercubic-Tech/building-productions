@@ -21,7 +21,7 @@ const index = () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=*`)
           .then((res) => {
             const data = res.data;
-            setProject(data.data[0]);
+            setProject(data.data);
           })
       };
       getProject();

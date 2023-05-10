@@ -14,7 +14,7 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
-  const [project, setProject] = useState(proj);
+  const [project, setProject] = useState(null);
   const [editProduct, setEditProduct] = useState(false);
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
@@ -65,7 +65,7 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
     getCategoriesHandler();
   }, []);
   useEffect(() => {
-    setProject(proj);
+    proj.map(item => setProject(item))
   }, [proj]);
 console.log(project, 'project')
   return (
@@ -88,20 +88,20 @@ console.log(project, 'project')
               >
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
               </svg>
-              &nbsp;{proj?.attributes?.address}
+              &nbsp;{project?.attributes?.address}
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {proj?.attributes?.city?.data?.attributes?.city}
+                {project?.attributes?.city?.data?.attributes?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {proj?.attributes?.condition?.data?.attributes?.condition}
+                {project?.attributes?.condition?.data?.attributes?.title}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {proj?.attributes?.property_type?.data?.attributes?.property_type}
+                {project?.attributes?.property_type?.data?.attributes?.Title}
               </li>
               <li className="breadcrumb-item text-warning georgian">
-                {proj?.attributes?.createdAt}
+                {project?.attributes?.createdAt}
               </li>
             </ul>
           </div>
@@ -497,7 +497,6 @@ console.log(project, 'project')
                         )}
                         {/* ეხპორტი */}
                         {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />}
-                      {console.log(select)}
                       </div>
                     </div>
                     <div className="card-body pt-0">
