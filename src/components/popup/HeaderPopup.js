@@ -27,11 +27,10 @@ const HeaderPopup = () => {
   useEffect(() => {
     const getProjectsHandler = async () => {
       try {
-        await axios.get("http://localhost:1337/api/projects")
-          .then((res) => {
-            const data = res.data
-            setProjectsData(data.data)
-          })
+        await axios.get("http://localhost:1337/api/projects").then((res) => {
+          const data = res.data;
+          setProjectsData(data.data);
+        });
       } catch (error) {
         console.log(error);
       }
@@ -40,21 +39,20 @@ const HeaderPopup = () => {
   }, []);
 
   const deleteProjectHandler = async (item) => {
-    console.log(item, 'id')
+    console.log(item, "id");
     const projectId = item.id;
     try {
       await axios.delete(`http://localhost:1337/api/projects/${projectId}`);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
       <div
         style={{
           display: close ? "none" : "",
-          overflow: "auto",
           position: "absolute",
           zIndex: "20",
         }}
@@ -69,8 +67,8 @@ const HeaderPopup = () => {
               onClick={() => setClose(true)}
             />
           </div>
-          <div className="modal-body">
-            <div className="row">
+          <div className={` modal-body `}>
+            <div className={`${styles.gap20} ${styles.noWrap} row `}>
               {projectsData &&
                 projectsData?.map((item, index) => {
                   return (
@@ -79,11 +77,15 @@ const HeaderPopup = () => {
                       className="card col-2 d-flex "
                       style={{ width: "20rem", overflow: "hidden" }}
                     >
-                      <div className="col-11">
+                      <div>
                         <div className="card-body">
                           <Link
                             onClick={() => setClose(true)}
-                            href={`/projects/${item.id}`}
+                            href={{
+                              pathname: `/projects/${item.id}`,
+                              query: { projectId: item.id },
+                            }}
+                            passHref
                             className="card-title"
                           >
                             {item.attributes.title}
@@ -92,7 +94,7 @@ const HeaderPopup = () => {
                           <div className={`${styles.gap20} row `}>
                             <div
                               // onClick={() => editHandler(item)}
-                              className="btn btn-primary"
+                              className={` btn btn-primary `}
                             >
                               რედაქტირება
                             </div>
@@ -110,7 +112,7 @@ const HeaderPopup = () => {
                 })}
             </div>
           </div>
-          <div className="modal-footer row">
+          <div className={`${styles.gutter0} modal-footer row `}>
             <button
               onClick={addProjectHandler}
               type="button"
@@ -131,7 +133,7 @@ const HeaderPopup = () => {
           </div>
         </div>
       </div>
-      {addProject && <AddProject dismiss={dismissHandler} />}
+          {addProject && <AddProject dismiss={dismissHandler} />}
       {editProject && (
         <EditProject data={editProjectData} dismiss={dismissHandler} />
       )}

@@ -1,8 +1,11 @@
-const Filter = ({ giveProductCategory, filterProductCategory, allCategories }) => {
-
+const Filter = ({
+  giveProductCategory,
+  filterProductCategory,
+  allCategories,
+}) => {
   return (
     <div
-      style={{ margin: "100px 0px 50px 0px" }}
+      style={{ margin: "20" }}
       className="header-menu-container container-xxl d-flex flex-stack h-lg-75px"
     >
       {/*begin::Menu wrapper*/}
@@ -17,15 +20,15 @@ const Filter = ({ giveProductCategory, filterProductCategory, allCategories }) =
               return (
                 <div
                   onClick={() => {
-                    giveProductCategory(),
-                    filterProductCategory(item?.id)
+                    giveProductCategory(), filterProductCategory(item?.id);
                   }}
                   key={index}
                   className="menu-item here show menu-lg-down-accordion me-lg-1"
                 >
                   <a className="menu-link active py-3">
                     <span className="menu-title georgian">
-                      <i className="bi bi-plug-fill" /> {item?.attributes?.title}
+                      <i className="bi bi-plug-fill" />{" "}
+                      {item?.attributes?.title}
                     </span>
                   </a>
                 </div>
