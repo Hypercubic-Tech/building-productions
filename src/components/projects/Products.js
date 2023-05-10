@@ -16,7 +16,7 @@ const Products = ({ editHandler, allProduct }) => {
 
   return (
     <>
-      <div class="table-responsive">
+      <div className="table-responsive">
         <table
           className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
           id="kt_table_users"
