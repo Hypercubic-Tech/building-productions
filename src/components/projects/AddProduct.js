@@ -168,7 +168,8 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                     data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                                     data-kt-scroll-offset="300px"
                                 >
-                                    <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                                    <div style={{width: "95%"}}
+                                        className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                         <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
                                             <div
                                                 className="image-input image-input-outline"
