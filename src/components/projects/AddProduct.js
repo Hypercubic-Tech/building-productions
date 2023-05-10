@@ -12,6 +12,8 @@ const AddProduct = ({
     suppliers,
     craftStatus,
 }) => {
+    const router = useRouter();
+    const projectId = router.query.projectId;
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
@@ -31,6 +33,9 @@ const AddProduct = ({
         category: {
             connect: [],
         },
+        project: {
+            connect: [{ id: projectId }]
+        }
     });
     
     const [craftData, setCraftData] = useState({
@@ -49,11 +54,12 @@ const AddProduct = ({
         },
         craft_status: {
             connect: [{ id: null }]
+        },
+        project: {
+            connect: [{ id: projectId }]
         }
     })
 
-    const router = useRouter();
-    const projectId = router.query.projectId;
     console.log(projectId, 'id')
 
     const handleSubmit = async () => {
@@ -75,7 +81,7 @@ const AddProduct = ({
         try {
             await axios
                 .post("http://localhost:1337/api/products", {
-                    data: productData,
+                    data: craftData,
                 })
                 .then((res) => {
                     console.log(res);
@@ -511,7 +517,7 @@ const AddProduct = ({
                                                         return (
                                                             <option key={index} value={item.id}>
                                                                 {console.log(item)}
-                                                                {item.attributes.category.data.attributes.title}
+                                                                {item?.attributes?.category?.data?.attributes?.title}
                                                             </option>
                                                         );
                                                     })}
