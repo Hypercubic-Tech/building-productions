@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
@@ -18,10 +19,12 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
-  const [allProduct, setAllProduct] = useState(null);
+  const [allProduct, setAllProduct] = useState([]);
   const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
+  const router = useRouter();
+  const { projectId } = router.query;
 
   const giveProductCategory = (category) => {
     setProductCategory(category)
@@ -56,19 +59,19 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
       try {
         await axios
           .get(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*`
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
           )
           .then((res) => {
             const data = res.data;
             setAllProduct(data.data);
           })
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getProductsHandler();
-    getCategoriesHandler();
-  }, []);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      getProductsHandler();
+      getCategoriesHandler();
+    }, []);
  
   return (
     <>

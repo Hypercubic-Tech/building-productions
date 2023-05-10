@@ -60,8 +60,6 @@ const AddProduct = ({
         }
     })
 
-    console.log(projectId, 'id')
-
     const handleSubmit = async () => {
         try {
             await axios
