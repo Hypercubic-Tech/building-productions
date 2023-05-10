@@ -32,6 +32,7 @@ const AddProduct = ({
             connect: [],
         },
     });
+    
     const [craftData, setCraftData] = useState({
         image: "",
         title: "",
@@ -46,15 +47,15 @@ const AddProduct = ({
         category: {
             connect: [],
         },
-        // craft_status: {
-        //     connect: [{ id: null }]
-        // }
+        craft_status: {
+            connect: [{ id: null }]
+        }
     })
 
     const router = useRouter();
     const projectId = router.query.projectId;
     console.log(projectId, 'id')
-    
+
     const handleSubmit = async () => {
         try {
             await axios
@@ -170,7 +171,7 @@ const AddProduct = ({
                                     data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                                     data-kt-scroll-offset="300px"
                                 >
-                                    <div style={{width: "95%"}}
+                                    <div style={{ width: "95%" }}
                                         className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                         <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
                                             <div
@@ -497,11 +498,11 @@ const AddProduct = ({
                                                         );
                                                         setIsTouched(true);
                                                         setCraftData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        category: {
-                                                            connect: [{ id: e.target.value }],
-                                                        },
-                                                    }));
+                                                            ...prevSendData,
+                                                            category: {
+                                                                connect: [{ id: e.target.value }],
+                                                            },
+                                                        }));
                                                     }}
                                                     name="category"
                                                     className="form-select form-select-solid georgian"
@@ -509,7 +510,8 @@ const AddProduct = ({
                                                     {crafts.map((item, index) => {
                                                         return (
                                                             <option key={index} value={item.id}>
-                                                                {item.attributes.title}
+                                                                {console.log(item)}
+                                                                {item.attributes.category.data.attributes.title}
                                                             </option>
                                                         );
                                                     })}
@@ -542,7 +544,7 @@ const AddProduct = ({
                                                         ერთეული
                                                     </label>
                                                     <select
-                                                        onClick={(e) => {
+                                                        onChange={(e) => {
                                                             setCraftData((prevSendData) => ({
                                                                 ...prevSendData,
                                                                 unit: {
@@ -607,7 +609,7 @@ const AddProduct = ({
                                                     />
                                                     <div className="fv-plugins-message-container invalid-feedback"></div>
                                                 </div>
-                                                {/* <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                                <div className="col-md-4 fv-row fv-plugins-icon-container">
                                                     <label className="required fs-5 fw-bold mb-2 georgian">
                                                         სტატუსი
                                                     </label>
@@ -635,7 +637,7 @@ const AddProduct = ({
                                                             })}
                                                     </select>
                                                     <div className="fv-plugins-message-container invalid-feedback"></div>
-                                                </div> */}
+                                                </div>
                                             </>
                                         )}
                                     </div>

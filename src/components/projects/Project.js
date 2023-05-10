@@ -97,7 +97,6 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
                 {proj?.attributes?.city?.data?.attributes?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {console.log(proj, 'proj')}
                 {proj?.attributes?.condition?.data?.attributes?.title}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
