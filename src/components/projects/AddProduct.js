@@ -7,42 +7,35 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
-    const [productData, setProductData] = useState(
-        {
-            data: {
-                image: "",
-                title: "",
-                supplier: {
-                    connect: [
-                        { id: null }
-                    ]
-                },
-                productLink: "",
-                quantity: 0,
-                unit: {
-                    connect: [
-                        { id: null }
-                    ]
-                },
-                price: 0,
-                category: {
-                    connect: [
-                        { id: null }
-                    ]
-                },
-                craft_status: {
-                    connect: [
-                        { id: null }
-                    ]
-                },
-                craft_image: {
-                    connect: [
-                        { id: null }
-                    ]
+    const [productData, setProductData] = useState({
+        data: {
+            title: "",
+            purchased: false,
+            supplier: {
+                connect: {
+                    id: null
+                }
+            },
+            productLink: "",
+            quantity: 0,
+            unit: {
+                connect: {
+                    id: null
+                }
+            },
+            price: 0,
+            category: {
+                connect: {
+                    id: null
+                }
+            },
+            image: {
+                connect: {
+                    id: null
                 }
             }
         }
-    );
+    });
 
     const handleSubmit = async () => {
         try {
@@ -173,15 +166,9 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                             <div
                                                 className="image-input image-input-outline"
                                                 data-kt-image-input="true"
-                                            // style={{
-                                            //   backgroundImage: "url(assets/media/avatars/blank.png)",
-                                            // }}
                                             >
                                                 <div
                                                     className="image-input-wrapper w-125px h-125px"
-                                                // style={{
-                                                //   backgroundImage: productData.image,
-                                                // }}
                                                 />
                                                 <label
                                                     className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -192,9 +179,16 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            setProductData((prevSendData) => ({
-                                                                ...prevSendData,
-                                                                image: e.target.files,
+                                                            setProductData((prevData) => ({
+                                                                ...prevData,
+                                                                data: {
+                                                                    ...prevData.data,
+                                                                    image: {
+                                                                        connect: {
+                                                                            id: e.target.file
+                                                                        }
+                                                                    }
+                                                                }
                                                             }));
                                                         }}
                                                         type="file"
@@ -237,9 +231,12 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                             </label>
                                             <input
                                                 onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        title: e.target.value,
+                                                    setProductData((prevData) => ({
+                                                        ...prevData,
+                                                        data: {
+                                                            ...prevData.data,
+                                                            title: e.target.value
+                                                        }
                                                     }));
                                                 }}
                                                 type="text"
@@ -255,12 +252,13 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                             </label>
                                             <select
                                                 onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        supplier: {
-                                                            connect: [
-                                                                { id: e.target.value }
-                                                            ]
+                                                    setProductData((prevData) => ({
+                                                        ...prevData,
+                                                        data: {
+                                                            ...prevData.data,
+                                                            supplier: {
+                                                                connect: { id: e.target.value }
+                                                            }
                                                         }
                                                     }));
                                                 }}
@@ -281,10 +279,13 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                             <label className="required fs-5 fw-bold mb-2 georgian">ლინკი</label>
                                             <input
                                                 onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        productLink: e.target.value,
-                                                    }));
+                                                    setProductData((prevData) => ({
+                                                        ...prevData,
+                                                        data: {
+                                                          ...prevData.data,
+                                                          productLink: e.target.value
+                                                        }
+                                                      }));
                                                 }}
                                                 type="text"
                                                 className="form-control form-control-solid georgian"
@@ -299,10 +300,13 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                             </label>
                                             <input
                                                 onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        quantity: e.target.value,
-                                                    }));
+                                                    setProductData((prevData) => ({
+                                                        ...prevData,
+                                                        data: {
+                                                          ...prevData.data,
+                                                          quantity: e.target.value
+                                                        }
+                                                      }));
                                                 }}
                                                 type="number"
                                                 className="form-control form-control-solid georgian"
@@ -317,12 +321,13 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                             </label>
                                             <select
                                                 onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        unit: {
-                                                            connect: [
-                                                                { id: e.target.value }
-                                                            ]
+                                                    setProductData((prevData) => ({
+                                                        ...prevData,
+                                                        data: {
+                                                            ...prevData.data,
+                                                            unit: {
+                                                                connect: { id: e.target.value }
+                                                            }
                                                         }
                                                     }));
                                                 }}
@@ -345,10 +350,13 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                             </label>
                                             <input
                                                 onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        price: e.target.value,
-                                                    }));
+                                                    setProductData((prevData) => ({
+                                                        ...prevData,
+                                                        data: {
+                                                          ...prevData.data,
+                                                          quantity: e.target.value
+                                                        }
+                                                      }));
                                                 }}
                                                 type="number"
                                                 className="form-control form-control-solid georgian"
@@ -363,12 +371,13 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                             </label>
                                             <select
                                                 onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        category: {
-                                                            connect: [
-                                                                { id: e.target.value }
-                                                            ]
+                                                    setProductData((prevData) => ({
+                                                        ...prevData,
+                                                        data: {
+                                                            ...prevData.data,
+                                                            category: {
+                                                                connect: { id: e.target.value }
+                                                            }
                                                         }
                                                     }));
                                                 }}
@@ -400,10 +409,13 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                                     data-kt-check-target="#kt_table_users .form-check-input"
                                                     defaultValue={"not purchased"}
                                                     onChange={(e) => {
-                                                        setProductData((formData) => ({
-                                                            ...formData,
-                                                            purchased: "purchased",
-                                                        }));
+                                                        setProductData((prevData) => ({
+                                                            ...prevData,
+                                                            data: {
+                                                              ...prevData.data,
+                                                              purchased: true
+                                                            }
+                                                          }));
                                                     }}
                                                 />
                                             </div>
@@ -465,6 +477,7 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                                     className="form-select form-select-solid georgian"
                                                 >
                                                     {crafts.map((item, index) => {
+                                                        <option value="none" selected disabled hidden></option>
                                                         return (
                                                             <option key={index} value={item.id}>
                                                                 {item.attributes.title}
@@ -592,7 +605,7 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                         )}
                                     </div>
                                 </div>
-                                {button}
+                                {/* {button} */}
                             </form>
                         )}
                     </div>

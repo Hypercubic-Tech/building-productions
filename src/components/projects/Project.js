@@ -22,7 +22,6 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
 
   const router = useRouter();
   const projectId = router.query.projectId;
-  console.log(projectId, 'id');
 
   const giveProductCategory = (category) => {
     setProductCategory(category);
@@ -500,7 +499,6 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
                         {select === "add" && (
                           <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />
                         )}
-                        {console.log(select)}
                       </div>
                     </div>
                     <div className="card-body padding pt-0">
