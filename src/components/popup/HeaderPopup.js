@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setProjectState } from "@/store/slices/projectSlice";
 
 import { selectProject } from "@/store/slices/projectSlice";
 import AddProject from "./AddProject";
@@ -15,8 +16,11 @@ const HeaderPopup = () => {
   const [editProject, setEditProject] = useState(false);
   const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
+
   const project = useSelector(selectProject);
+  const dispatch = useDispatch();
   console.log(project)
+
   const addProjectHandler = () => {
     setAddProject(true);
     setClose(true);
@@ -30,10 +34,7 @@ const HeaderPopup = () => {
   useEffect(() => {
     const getProjectsHandler = async () => {
       try {
-        await axios.get("http://localhost:1337/api/projects").then((res) => {
-          const data = res.data;
-          setProjectsData(data.data);
-        });
+        await axios.get("http://localhost:1337/api/projects");
       } catch (error) {
         console.log(error);
       }
@@ -73,7 +74,7 @@ const HeaderPopup = () => {
           <div className={` modal-body `}>
             <div className={`${styles.gap20} ${styles.noWrap} row `}>
               {project &&
-                project?.map((item, index) => {console.log(item, 'dsa')
+                project?.map((item, index) => {
                   return (
                     <div
                       key={index}
