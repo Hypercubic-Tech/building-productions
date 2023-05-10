@@ -185,7 +185,7 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                                                                     ...prevData.data,
                                                                     image: {
                                                                         connect: {
-                                                                            id: e.target.file
+                                                                            id: e.target.files
                                                                         }
                                                                     }
                                                                 }
