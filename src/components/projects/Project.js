@@ -9,7 +9,7 @@ import EditServiceForm from "./EditServiceForm";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) => {
+const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
@@ -31,23 +31,23 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
   const filterProductCategory = async (id) => {
     try {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
-      .then((res) => {
-        const data = res.data;
-        setAllProduct(data.data);
-      })
+        .then((res) => {
+          const data = res.data;
+          setAllProduct(data.data);
+        })
     } catch (error) {
       console.error(error);
     }
-};
+  };
 
   useEffect(() => {
 
-    const getCategoriesHandler = async() => {
+    const getCategoriesHandler = async () => {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-      .then((res) => {
-        const data = res.data;
-        setAllCategories(data.data);
-      })
+        .then((res) => {
+          const data = res.data;
+          setAllCategories(data.data);
+        })
     };
 
     const getProductsHandler = async () => {
@@ -64,10 +64,11 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
     getProductsHandler();
     getCategoriesHandler();
   }, []);
+
   useEffect(() => {
-    proj.map(item => setProject(item))
+    proj?.map(item => setProject(item))
   }, [proj]);
-console.log(project, 'project')
+
   return (
     <>
       <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
