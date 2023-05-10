@@ -30,11 +30,14 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
 
   const filterProductCategory = async (id) => {
     try {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
+      await axios
+        .get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`
+        )
         .then((res) => {
           const data = res.data;
           setAllProduct(data.data);
-        })
+        });
     } catch (error) {
       console.error(error);
     }
@@ -42,16 +45,20 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
 
   useEffect(() => {
     const getCategoriesHandler = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
         .then((res) => {
           const data = res.data;
           setAllCategories(data.data);
-        })
+        });
     };
 
     const getProductsHandler = async () => {
       try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*`)
+        await axios
+          .get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*`
+          )
           .then((res) => {
             const data = res.data;
             setAllProduct(data.data);
@@ -157,7 +164,7 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
               <div className="mb-10">
                 <div className="content flex-row-fluid" id="kt_content">
                   <div className="card">
-                    <div className="card-header border-0 pt-6">
+                    <div className="card-header border-0 pt-6 padding-rem">
                       <div className="card-title">
                         <div className="d-flex align-items-center position-relative my-1">
                           <span className="svg-icon svg-icon-1 position-absolute ms-6">
@@ -498,13 +505,22 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
                         )}
                         {/* ეხპორტი */}
                         {select === "add" && (
-                        <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />
+                          <AddProduct
+                            setSelect={setSelect}
+                            craftStatus={craftStatus}
+                            crafts={crafts}
+                            unit={unit}
+                            category={category}
+                            suppliers={suppliers}
+                          />
                         )}
                         {console.log(select)}
                       </div>
                     </div>
                     <div className="card-body padding pt-0">
-                      <div className="summary padding10">ჯამი: {summary} ლარი</div>
+                      <div className="summary padding10">
+                        ჯამი: {summary} ლარი
+                      </div>
                       <Products
                         // editHandler={editProductHandler}
                         products={products}
