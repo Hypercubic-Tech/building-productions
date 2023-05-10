@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import axios from 'axios';
+import axios from "axios";
 import Project from "@/components/projects/Project";
 
 const index = () => {
@@ -32,55 +32,62 @@ const index = () => {
   useEffect(() => {
     const getProductHandler = async () => {
       try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`)
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`)
           .then((res) => {
-            const data = res.data
+            const data = res.data;
             setProducts(data.data);
-          })
+          });
       } catch (err) {
         console.log(err);
       }
     };
 
     const getSupplierHandler = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/suppliers`)
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/suppliers`)
         .then((res) => {
-          const data = res.data
+          const data = res.data;
           setSuppliers(data.data);
-        })
+        });
     };
 
     const getUnitHandler = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/units`)
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/units`)
         .then((res) => {
-          const data = res.data
+          const data = res.data;
           setUnit(data.data);
-        })
+        });
     };
 
     const getCategoryHandler = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
         .then((res) => {
-          const data = res.data
+          const data = res.data;
           setCategory(data.data);
-        })
+        });
     };
 
     const getCraftsHandler = async () => {
-      await axios.get("http://localhost:1337/api/crafts?populate=*")
+      await axios
+        .get("http://localhost:1337/api/crafts?populate=*")
         .then((res) => {
-          const data = res.data
-          setCrafts(data.data)
-        })
-    }
+          const data = res.data;
+          setCrafts(data.data);
+          console.log(res);
+        });
+    };
 
     const getCraftsStatusHandler = async () => {
-      await axios.get("http://localhost:1337/api/craft-statuses")
+      await axios
+        .get("http://localhost:1337/api/craft-statuses")
         .then((res) => {
-          const data = res.data
-          setCraftStatus(data.data)
-        })
-    }
+          const data = res.data;
+          setCraftStatus(data.data);
+        });
+    };
 
     getCraftsStatusHandler();
     getCraftsHandler();

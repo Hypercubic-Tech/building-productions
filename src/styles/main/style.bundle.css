@@ -49022,6 +49022,9 @@ body {
 .padding10{
   padding: 10px 0;
 }
+.padding-rem{
+  padding: 1.5rem !important;
+}
 .borderBottom tbody {
   border-bottom: 1px dashed #eff2f5;
 }
