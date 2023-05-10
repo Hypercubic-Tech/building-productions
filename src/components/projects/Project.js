@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-import axiosPrivate from "@/api/axiosPrivate";
 import Products from "./Products";
 import AddProductForm from "./AddProductsForm";
 import AddWork from "./AddWork";
@@ -10,12 +9,12 @@ import EditServiceForm from "./EditServiceForm";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
+const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
-  const [project, setProject] = useState(null);
+  const [project, setProject] = useState(proj);
   const [editProduct, setEditProduct] = useState(false);
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
@@ -28,8 +27,6 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
   const giveProductCategory = (category) => {
     setProductCategory(category)
   };
-
-
 
   const filterProductCategory = async (id) => {
     try {
@@ -44,13 +41,7 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
 };
 
   useEffect(() => {
-    // const getProject = async () => {
-    //   await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=*`)
-    //     .then((res) => {
-    //       const data = res.data;
-    //       setProject(data.data);
-    //     })
-    // };
+
     const getCategoriesHandler = async() => {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
       .then((res) => {
@@ -72,9 +63,11 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
     };
     getProductsHandler();
     getCategoriesHandler();
-    // getProject();
   }, []);
-
+  useEffect(() => {
+    setProject(proj);
+  }, [proj]);
+console.log(project, 'project')
   return (
     <>
       <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
@@ -95,20 +88,20 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
               >
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
               </svg>
-              &nbsp;{pr?.address}
+              &nbsp;{proj?.attributes?.address}
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.city}
+                {proj?.attributes?.city?.data?.attributes?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.condition}
+                {proj?.attributes?.condition?.data?.attributes?.condition}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.propertyType}
+                {proj?.attributes?.property_type?.data?.attributes?.property_type}
               </li>
               <li className="breadcrumb-item text-warning georgian">
-                {pr?.createdAt}
+                {proj?.attributes?.createdAt}
               </li>
             </ul>
           </div>

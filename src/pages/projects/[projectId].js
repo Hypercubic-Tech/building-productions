@@ -9,10 +9,25 @@ const index = () => {
   const [category, setCategory] = useState(null);
   const [crafts, setCrafts] = useState(null);
   const [products, setProducts] = useState(null);
+  const [project, setProject] = useState(null);
   const [craftStatus, setCraftStatus] = useState(null);
 
   const router = useRouter();
   const { projectId } = router.query;
+
+  useEffect(() => {
+    if (projectId) {
+      const getProject = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=*`)
+          .then((res) => {
+            const data = res.data;
+            setProject(data.data[0]);
+          })
+      };
+      getProject();
+    }
+
+  }, [projectId])
 
   useEffect(() => {
     const getProductHandler = async () => {
@@ -73,9 +88,10 @@ const index = () => {
     getSupplierHandler();
     getUnitHandler();
     getCategoryHandler();
+
   }, []);
 
-  return <Project pr={projectId} craftStatus={craftStatus} crafts={crafts} suppliers={suppliers} unit={unit} category={category} />;
+  return <Project pr={projectId} proj={project} craftStatus={craftStatus} crafts={crafts} suppliers={suppliers} unit={unit} category={category} />;
 };
 
 export default index;
