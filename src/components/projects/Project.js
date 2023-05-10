@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
-import axios from "axios";
 
 import Products from "./Products";
+import AddProductForm from "./AddProductsForm";
+import AddWork from "./AddWork";
 import Filter from "./Filter";
+import EditProductsForm from "./EditProductsForm";
+import EditServiceForm from "./EditServiceForm";
+import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
+const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
@@ -20,11 +23,8 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
 
-  const router = useRouter();
-  const projectId = router.query.projectId;
-
   const giveProductCategory = (category) => {
-    setProductCategory(category);
+    setProductCategory(category)
   };
 
   const filterProductCategory = async (id) => {
@@ -40,7 +40,7 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
     } catch (error) {
       console.error(error);
     }
-  };
+};
 
   useEffect(() => {
     const getCategoriesHandler = async () => {
@@ -61,7 +61,7 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
           .then((res) => {
             const data = res.data;
             setAllProduct(data.data);
-          });
+          })
       } catch (error) {
         console.error(error);
       }
@@ -69,15 +69,10 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
     getProductsHandler();
     getCategoriesHandler();
   }, []);
-
+ 
   return (
     <>
-      <Filter
-        project={pr}
-        giveProductCategory={giveProductCategory}
-        filterProductCategory={filterProductCategory}
-        allCategories={allCategories}
-      />
+      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
@@ -95,20 +90,21 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
               >
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
               </svg>
-              &nbsp;{pr?.address}
+              &nbsp;{proj?.attributes?.address}
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.city}
+                {proj?.attributes?.city?.data?.attributes?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.condition}
+                {console.log(proj, 'proj')}
+                {proj?.attributes?.condition?.data?.attributes?.title}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {pr?.propertyType}
+                {proj?.attributes?.property_type?.data?.attributes?.Title}
               </li>
               <li className="breadcrumb-item text-warning georgian">
-                {pr?.createdAt}
+                {proj?.attributes?.createdAt}
               </li>
             </ul>
           </div>
@@ -524,8 +520,7 @@ const Project = ({ pr, crafts, unit, category, suppliers, craftStatus }) => {
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
-                        allProduct={allProduct}
-                      />
+                        allProduct={allProduct} />
                     </div>
                   </div>
                 </div>
