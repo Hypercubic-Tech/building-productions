@@ -1,9 +1,13 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import styles from "./AddWork.module.css"
 
 const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus }) => {
+    const router = useRouter();
+    const projectId = router.query.projectId;
+    console.log(projectId, 'id')
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
@@ -24,29 +28,34 @@ const AddProduct = ({ setSelect, crafts, unit, category, suppliers, craftStatus 
                         { id: null }
                     ]
                 },
+                project: {
+                    connect: [
+                        { id: projectId }
+                    ]
+                },
                 price: 0,
                 category: {
                     connect: [
                         { id: null }
                     ]
                 },
-                craft_status: {
-                    connect: [
-                        { id: null }
-                    ]
-                },
-                craft_image: {
-                    connect: [
-                        { id: null }
-                    ]
-                }
+                // craft_status: {
+                //     connect: [
+                //         { id: null }
+                //     ]
+                // },
+                // craft_image: {
+                //     connect: [
+                //         { id: null }
+                //     ]
+                // }
             }
         }
     );
 
     const handleSubmit = async () => {
         try {
-            await axios.post('http://localhost:1337/api/products', {
+            await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
                 data: productData
             })
                 .then((res) => {

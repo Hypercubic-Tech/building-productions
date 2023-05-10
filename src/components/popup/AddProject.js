@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
+import { setProjectState } from "@/store/slices/projectSlice";
 import styles from "./Modal.module.css";
 
 const AddProject = ({ dismiss }) => {
@@ -42,6 +43,7 @@ const AddProject = ({ dismiss }) => {
       ]
     },
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getPropertyTypesHandler = async () => {
@@ -172,11 +174,16 @@ const AddProject = ({ dismiss }) => {
     }
   };
 
-  const saveProjectHandler = async (req, res) => {
+  const saveProjectHandler = async () => {
     try {
       await axios.post('http://localhost:1337/api/projects', {
         data: sendData
-      });
+      })
+      .then((res) => {
+        const data = res.data;
+        console.log(data.data, 'fasshion killa')
+        dispatch(setProjectState(data.data))
+      })
     } catch (error) {
       console.error(error);
     }

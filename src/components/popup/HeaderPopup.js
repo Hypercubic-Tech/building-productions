@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
+import { selectProject } from "@/store/slices/projectSlice";
 import AddProject from "./AddProject";
 import EditProject from "./EditProject";
 
@@ -13,7 +15,8 @@ const HeaderPopup = () => {
   const [editProject, setEditProject] = useState(false);
   const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
-
+  const project = useSelector(selectProject);
+  console.log(project)
   const addProjectHandler = () => {
     setAddProject(true);
     setClose(true);
@@ -69,8 +72,8 @@ const HeaderPopup = () => {
           </div>
           <div className={` modal-body `}>
             <div className={`${styles.gap20} ${styles.noWrap} row `}>
-              {projectsData &&
-                projectsData?.map((item, index) => {
+              {project &&
+                project?.map((item, index) => {console.log(item, 'dsa')
                   return (
                     <div
                       key={index}
@@ -88,9 +91,9 @@ const HeaderPopup = () => {
                             passHref
                             className="card-title"
                           >
-                            {item.attributes.title}
+                            {item?.attributes?.title}
                           </Link>
-                          <p className="card-text">{item.attributes.address}</p>
+                          <p className="card-text">{item?.attributes?.address}</p>
                           <div className={`${styles.gap20} row `}>
                             <div
                               // onClick={() => editHandler(item)}
