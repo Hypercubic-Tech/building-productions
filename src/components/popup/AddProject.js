@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
+import axios from "axios";
+
 import { setProjectState } from "@/store/slices/projectSlice";
+
 import styles from "./Modal.module.css";
 
 const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
-
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
@@ -44,86 +45,6 @@ const AddProject = ({ dismiss }) => {
     },
   });
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getPropertyTypesHandler = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
-          .then((res) => {
-            const data = res.data;
-            setPropertyType(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getPropertyTypesHandler();
-  }, []);
-
-  useEffect(() => {
-    const getCitiesHandler = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
-          .then((res) => {
-            const data = res.data;
-            setCities(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCitiesHandler();
-  }, []);
-
-  useEffect(() => {
-    const getConditionHandler = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCondition(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getConditionHandler();
-  }, []);
-
-  useEffect(() => {
-    const getCurrentConditionHandler = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCurrentCondition(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCurrentConditionHandler();
-  }, []);
-
-  useEffect(() => {
-    const getCategoriesHandler = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-          .then((res) => {
-            const data = res.data;
-            setCategories(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCategoriesHandler();
-  }, []);
 
   let errors = {
     stepOne: [],
@@ -174,15 +95,93 @@ const AddProject = ({ dismiss }) => {
     }
   };
 
-  const saveProjectHandler = async () => {
+  useEffect(() => {
+    const getPropertyTypesHandler = async () => {
+      try {
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
+          .then((res) => {
+            const data = res.data;
+            setPropertyType(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPropertyTypesHandler();
+  }, []);
+
+  useEffect(() => {
+    const getCitiesHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
+          .then((res) => {
+            const data = res.data;
+            setCities(data.data)
+          })
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCitiesHandler();
+  }, []);
+
+  useEffect(() => {
+    const getConditionHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCondition(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getConditionHandler();
+  }, []);
+
+  useEffect(() => {
+    const getCurrentConditionHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCurrentCondition(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCurrentConditionHandler();
+  }, []);
+
+  useEffect(() => {
+    const getCategoriesHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
+          .then((res) => {
+            const data = res.data;
+            setCategories(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCategoriesHandler();
+  }, []);
+
+
+
+  const createProjectHandler = async () => {
     try {
-      await axios.post('http://localhost:1337/api/projects', {
+      await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects`, {
         data: sendData
       })
-      .then((res) => {
-        const data = res.data;
-        dispatch(setProjectState(data.data))
-      })
+        .then((res) => {
+          const data = res.data;
+          dispatch(setProjectState(data.data))
+        })
     } catch (error) {
       console.error(error);
     }
@@ -190,7 +189,7 @@ const AddProject = ({ dismiss }) => {
 
   const finishHandler = () => {
     setClose(true);
-    saveProjectHandler();
+    createProjectHandler();
     console.log(sendData)
   };
 
@@ -676,7 +675,7 @@ const AddProject = ({ dismiss }) => {
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
                     </button>
-                    {/* <div>{notificationElement && notificationElement} ჰი</div> */}
+
                     <button
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}
