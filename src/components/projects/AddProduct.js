@@ -42,19 +42,18 @@ const AddProduct = ({
     });
 
     const [craftData, setCraftData] = useState({
-        image: "",
         title: "",
         type: "service",
-        supplier: {
-            connect: [{ id: "none" }],
-        },
         quantity: 0,
         unit: {
             connect: [{ id: null }],
         },
+        // image: {
+        //     connect: [{ id: null }],
+        // },
         price: 0,
         categories: {
-            connect: [{ id: null }],
+            connect: [{}],
         },
         craft_status: {
             connect: [{ id: null }]
@@ -80,7 +79,6 @@ const AddProduct = ({
     };
 
     const handleCraftSubmit = async () => {
-        console.log(craftData)
         try {
             await axios
                 .post("http://localhost:1337/api/products", {
@@ -94,8 +92,6 @@ const AddProduct = ({
         }
         setSelect(null);
     };
-
-    console.log(category, 'car');
 
     return (
         <div
@@ -167,7 +163,7 @@ const AddProduct = ({
                             </span>
                         </div>
                     </div>
-                    <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <div style={{ width: "90%" }} className="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         {toggle ? (
                             <form id="kt_modal_add_user_form" className="form">
                                 <div
@@ -180,7 +176,7 @@ const AddProduct = ({
                                     data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                                     data-kt-scroll-offset="300px"
                                 >
-                                    <div style={{ width: "95%" }}
+                                    <div
                                         className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                         <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
                                             <div
@@ -473,10 +469,12 @@ const AddProduct = ({
                                             <div className={styles.imageBox}>
                                                 <img
                                                     onChange={(e) => {
-                                                        setCraftData((prevSendData) => ({
-                                                            ...prevSendData,
-                                                            image: e.target.files,
-                                                        }));
+                                                        // setCraftData((prevSendData) => ({
+                                                        //     ...prevSendData,
+                                                        //     image: {
+                                                        //         connect: [{ id: e.target.files }],
+                                                        //     },
+                                                        // }));
                                                     }}
                                                     src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`}
                                                     alt="img"
@@ -493,7 +491,6 @@ const AddProduct = ({
                                                         const selectedCraft = crafts.find(
                                                             (craft) => craft.id === Number(e.target.value)
                                                         );
-                                                        console.log(selectedCraft);
                                                         setCraftImage(
                                                             selectedCraft?.attributes?.image?.data?.attributes
                                                                 ?.url
