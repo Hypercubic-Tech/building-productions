@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { setProjectState } from "@/store/slices/projectSlice";
 
-import { selectProject } from "@/store/slices/projectSlice";
 import AddProject from "./AddProject";
 import EditProject from "./EditProject";
 
@@ -14,12 +11,8 @@ const HeaderPopup = () => {
   const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
-  const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
-
-  const project = useSelector(selectProject);
-  const dispatch = useDispatch();
-  console.log(project)
+  const [projectData, setProjectData] = useState(null);
 
   const addProjectHandler = () => {
     setAddProject(true);
@@ -31,22 +24,26 @@ const HeaderPopup = () => {
     setClose(false);
   };
 
+  const getProjectsData = async () => {
+    await axios.get('http://localhost:1337/api/projects')
+    .then((res) => {
+      const data = res.data;
+      setProjectData(data.data)
+    });
+  };
+
   useEffect(() => {
-    const getProjectsHandler = async () => {
-      try {
-        await axios.get("http://localhost:1337/api/projects");
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProjectsHandler();
+    getProjectsData();
   }, []);
 
   const deleteProjectHandler = async (item) => {
     console.log(item, "id");
     const projectId = item.id;
     try {
-      await axios.delete(`http://localhost:1337/api/projects/${projectId}`);
+      await axios.delete(`http://localhost:1337/api/projects/${projectId}`)
+      .then(() => {
+        getProjectsData();
+      })
     } catch (error) {
       console.log(error);
     }
@@ -73,8 +70,8 @@ const HeaderPopup = () => {
           </div>
           <div className={` modal-body `}>
             <div className={`${styles.gap20} ${styles.noWrap} row `}>
-              {project &&
-                project?.map((item, index) => {
+              {projectData &&
+                projectData?.map((item, index) => {
                   return (
                     <div
                       key={index}

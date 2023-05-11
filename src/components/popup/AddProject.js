@@ -181,7 +181,6 @@ const AddProject = ({ dismiss }) => {
       })
       .then((res) => {
         const data = res.data;
-        console.log(data.data, 'fasshion killa')
         dispatch(setProjectState(data.data))
       })
     } catch (error) {
