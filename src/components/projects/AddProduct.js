@@ -8,7 +8,7 @@ const AddProduct = ({
     setSelect,
     crafts,
     unit,
-    category,
+    allCategories,
     suppliers,
     craftStatus,
 }) => {
@@ -44,7 +44,7 @@ const AddProduct = ({
     const [craftData, setCraftData] = useState({
         title: "",
         type: "service",
-        quantity: 0,
+        quantity: 0,    
         unit: {
             connect: [{ id: null }],
         },
@@ -392,8 +392,8 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >
-                                                {category &&
-                                                    category.map((item) => {
+                                                {allCategories &&
+                                                    allCategories.map((item) => {
                                                         <option
                                                             value="none"
                                                             selected
@@ -503,10 +503,10 @@ const AddProduct = ({
                                                             },
                                                         }));
                                                     }}
-                                                    name="category"
+                                                    name="allCategories"
                                                     className="form-select form-select-solid georgian"
                                                 >
-                                                    {category.map((item, index) => {
+                                                    {allCategories.map((item, index) => {
                                                         return (
                                                             <option key={index} value={item.id}>
                                                                 {item?.attributes?.title}
