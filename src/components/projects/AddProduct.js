@@ -18,7 +18,9 @@ const AddProduct = ({
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
     const [productData, setProductData] = useState({
-        image: "",
+        image: {
+            connect: [{ image: null }]
+        },
         title: "",
         purchased: false,
         supplier: {
@@ -39,7 +41,9 @@ const AddProduct = ({
     });
     
     const [craftData, setCraftData] = useState({
-        image: "",
+        image: {
+            connect: [{ image: null }]
+        },
         title: "",
         supplier: {
             connect: [{ id: null }],
@@ -200,14 +204,16 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            setProductData((prevSendData) => ({
+                                                            setFiles((prevSendData) => ({
                                                                 ...prevSendData,
-                                                                image: e.target.files,
+                                                                image: {
+                                                                    connect: [{ image: e.target.files[0] }]
+                                                                },
                                                             }));
+                                                            console.log(e.target.files, 'image?')
                                                         }}
                                                         type="file"
-                                                        name="avatar"
-                                                        accept=".png, .jpg, .jpeg"
+                                                        name="image"
                                                     />
                                                     <input type="hidden" name="avatar_remove" />
                                                 </label>
