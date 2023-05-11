@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+
 import {
   setAuthAccessToken,
   setAuthEmail,
@@ -14,10 +15,6 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-
-  const handleRegistrationClick = () => {
-    setShowRegModal(true);
-  };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -128,7 +125,6 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
           </div>
         </div>
       </form>
-      {}
     </div>
   );
 };
