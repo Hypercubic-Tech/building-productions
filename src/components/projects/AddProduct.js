@@ -196,13 +196,10 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            setFiles((prevSendData) => ({
+                                                            setProductData((prevSendData) => ({
                                                                 ...prevSendData,
-                                                                image: {
-                                                                    connect: [{ image: e.target.files[0] }]
-                                                                },
+                                                                image: "",
                                                             }));
-                                                            console.log(e.target.files, 'image?')
                                                         }}
                                                         type="file"
                                                         name="image"
