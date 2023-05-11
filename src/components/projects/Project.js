@@ -464,7 +464,7 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
                           </div>
                         )}
                         {/* ეხპორტი */}
-                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />}
+                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={allCategories} suppliers={suppliers} />}
                       </div>
                     </div>
                     <div className="card-body pt-0">
