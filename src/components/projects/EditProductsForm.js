@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import axiosInstance from "../../api/axios";
 import axiosPrivate from "@/api/axiosPrivate";
 
 const EditProductsForm = ({ projectId, setSelect, data }) => {
@@ -20,7 +19,7 @@ const EditProductsForm = ({ projectId, setSelect, data }) => {
 
   const saveProduct = async (file) => {
     if (!file?.name) return;
-  
+
     const formData = new FormData();
     formData.append("image", file);
     formData.append("type", productData.type);
@@ -33,18 +32,18 @@ const EditProductsForm = ({ projectId, setSelect, data }) => {
     formData.append("price", productData.price);
     formData.append("purchased", productData.purchased);
     formData.append("status", productData.status);
-  
+
     await axiosPrivate.post("api/admin/product/add_product", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     })
-    .then((res) => {
-      console.log(res, 'this is res');
-    })
-    .catch((e) => {
-      console.log(e, "error");
-    });
+      .then((res) => {
+        console.log(res, 'this is res');
+      })
+      .catch((e) => {
+        console.log(e, "error");
+      });
   };
 
   const handleSubmit = async () => {

@@ -25,11 +25,11 @@ const HeaderPopup = () => {
   };
 
   const getProjectsData = async () => {
-    await axios.get('http://localhost:1337/api/projects')
-    .then((res) => {
-      const data = res.data;
-      setProjectData(data.data)
-    });
+    await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects`)
+      .then((res) => {
+        const data = res.data;
+        setProjectData(data.data)
+      });
   };
 
   useEffect(() => {
@@ -40,10 +40,10 @@ const HeaderPopup = () => {
     console.log(item, "id");
     const projectId = item.id;
     try {
-      await axios.delete(`http://localhost:1337/api/projects/${projectId}`)
-      .then(() => {
-        getProjectsData();
-      })
+      await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`)
+        .then(() => {
+          getProjectsData();
+        })
     } catch (error) {
       console.log(error);
     }
@@ -134,7 +134,7 @@ const HeaderPopup = () => {
           </div>
         </div>
       </div>
-          {addProject && <AddProject dismiss={dismissHandler} />}
+      {addProject && <AddProject dismiss={dismissHandler} />}
       {editProject && (
         <EditProject data={editProjectData} dismiss={dismissHandler} />
       )}

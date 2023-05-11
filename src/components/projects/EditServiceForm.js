@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 import styles from "./AddWork.module.css";
 
-function AddWork({ setSelect, projectId, data }) {
-    console.log(data)
+function AddWork({ setSelect, projectId }) {
   const axiosPrivate = useAxiosPrivate();
 
   const [selectedCraft, setSelectedCraft] = useState(null);
@@ -23,33 +22,6 @@ function AddWork({ setSelect, projectId, data }) {
     status: "",
     category: "",
   });
-
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosPrivate
-        .get("/api/admin/content/get_craft_images", {})
-        .then((res) => {
-          let data = res.data;
-          setCrafts(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
-
-  const handleSubmit = async () => {
-    setSelect(null);
-    await axiosPrivate
-      .post("/api/admin/product/add_product", formData)
-      .then((res) => {
-        const data = res.data;
-      })
-      .catch((e) => {
-        console.log(e, "error");
-      });
-  };
 
   return (
     <form id="kt_modal_add_user_form" className="form">
@@ -215,7 +187,6 @@ function AddWork({ setSelect, projectId, data }) {
           Discard
         </button>
         <div
-          onClick={handleSubmit}
           type="submit"
           className="btn btn-primary"
           data-kt-users-modal-action="submit"

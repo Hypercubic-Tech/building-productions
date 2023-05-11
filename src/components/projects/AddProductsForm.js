@@ -5,7 +5,6 @@ import axios from "axios";
 const AddProductForm = ({ setSelect, unit, category, suppliers }) => {
   const router = useRouter();
   const projectId = router.query.projectId;
-  console.log(projectId, 'id');
 
   const [productData, setProductData] = useState(
     {
@@ -14,7 +13,7 @@ const AddProductForm = ({ setSelect, unit, category, suppliers }) => {
         title: "",
         supplier: {
           connect: [
-            { id: null}
+            { id: null }
           ]
         },
         productLink: "",
@@ -41,12 +40,12 @@ const AddProductForm = ({ setSelect, unit, category, suppliers }) => {
 
   const handleSubmit = async () => {
     try {
-        await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
         data: productData
       })
-      .then((res) => {
-        console.log(res)
-      })
+        .then((res) => {
+          console.log(res)
+        })
     } catch (err) {
       console.log(err)
     }
@@ -71,15 +70,15 @@ const AddProductForm = ({ setSelect, unit, category, suppliers }) => {
             <div
               className="image-input image-input-outline"
               data-kt-image-input="true"
-              // style={{
-              //   backgroundImage: "url(assets/media/avatars/blank.png)",
-              // }}
+            // style={{
+            //   backgroundImage: "url(assets/media/avatars/blank.png)",
+            // }}
             >
               <div
                 className="image-input-wrapper w-125px h-125px"
-                // style={{
-                //   backgroundImage: productData.image,
-                // }}
+              // style={{
+              //   backgroundImage: productData.image,
+              // }}
               />
               <label
                 className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -157,7 +156,7 @@ const AddProductForm = ({ setSelect, unit, category, suppliers }) => {
                   ...prevSendData,
                   supplier: {
                     connect: [
-                      { id: e.target.value}
+                      { id: e.target.value }
                     ]
                   }
                 }));
@@ -167,7 +166,7 @@ const AddProductForm = ({ setSelect, unit, category, suppliers }) => {
               data-placeholder="მომწოდებელი"
             >
               {suppliers && suppliers.map((sup) => {
-                  <option value="none" selected disabled hidden></option>
+                <option value="none" selected disabled hidden></option>
                 return (
                   <option key={sup?.id} value={sup?.id}>{sup?.attributes?.title}</option>
                 )
@@ -229,7 +228,7 @@ const AddProductForm = ({ setSelect, unit, category, suppliers }) => {
               data-placeholder="საზომიერთ."
             >
               {unit && unit.map((u) => {
-                  <option value="none" selected disabled hidden></option>
+                <option value="none" selected disabled hidden></option>
                 return (
                   <option key={u?.id} value={u?.id}>{u?.attributes?.title}</option>
                 )

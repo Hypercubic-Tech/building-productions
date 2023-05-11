@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "@/api/axios";
+import { useState } from "react";
+
 import cities from "@/api/cities.json";
 import styles from "./Modal.module.css";
 
@@ -8,36 +8,7 @@ const EditProject = ({ data, dismiss }) => {
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
   const [categories, setCategories] = useState(null);
-
   const [sendData, setSendData] = useState(data);
-
-  useEffect(() => {
-    const getDataHandler = async () => {
-      await axiosInstance
-        .get("/api/admin/content/get_categories", {})
-        .then((res) => {
-          let data = res.data;
-          setCategories(data);
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
-
-  const sendFormDataHandler = async () => {
-    await axiosInstance
-      .post("/api/admin/projects/edit_project", {
-        project: sendData,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   let errors = {
     stepOne: [],
@@ -76,7 +47,6 @@ const EditProject = ({ data, dismiss }) => {
     if (sendData.worksToDo.length === 0) {
       errors.stepThree.push("მონიშნეთ შესასრულებელი სამუშაოები");
     }
-    // end of step three
 
     console.log(errors);
   };
@@ -127,7 +97,6 @@ const EditProject = ({ data, dismiss }) => {
 
   const finishHandler = () => {
     setClose(true);
-    sendFormDataHandler();
   };
 
   return (

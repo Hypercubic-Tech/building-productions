@@ -18,11 +18,8 @@ const AddProduct = ({
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
-
     const [productData, setProductData] = useState({
-        image: {
-            connect: [{ image: null }]
-        },
+        // image: "",
         title: "",
         type: "product",
         purchased: false,
@@ -42,11 +39,10 @@ const AddProduct = ({
             connect: [{ id: projectId }]
         }
     });
-
     const [craftData, setCraftData] = useState({
         title: "",
         type: "service",
-        quantity: 0,    
+        quantity: 0,
         unit: {
             connect: [{ id: null }],
         },
@@ -68,12 +64,9 @@ const AddProduct = ({
     const handleSubmit = async () => {
         try {
             await axios
-                .post("http://localhost:1337/api/products", {
+                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
                     data: productData,
                 })
-                .then((res) => {
-                    console.log(res);
-                });
         } catch (err) {
             console.log(err);
         }
@@ -83,12 +76,9 @@ const AddProduct = ({
     const handleCraftSubmit = async () => {
         try {
             await axios
-                .post("http://localhost:1337/api/products", {
+                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
                     data: craftData,
                 })
-                .then((res) => {
-                    console.log(res);
-                });
         } catch (err) {
             console.log(err);
         }
@@ -196,10 +186,10 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            setProductData((prevSendData) => ({
-                                                                ...prevSendData,
-                                                                image: "",
-                                                            }));
+                                                            // setProductData((prevSendData) => ({
+                                                            //     ...prevSendData,
+                                                            //     image: "",
+                                                            // }));
                                                         }}
                                                         type="file"
                                                         name="image"

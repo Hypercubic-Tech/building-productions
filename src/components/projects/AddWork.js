@@ -1,11 +1,8 @@
-import { useState, useEffect } from "react";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { useState } from "react";
 
 import styles from "./AddWork.module.css";
 
 function AddWork({ setSelect, projectId }) {
-  const axiosPrivate = useAxiosPrivate();
-
   const [selectedCraft, setSelectedCraft] = useState(null);
   const [crafts, setCrafts] = useState(null);
   const [formData, setFormData] = useState({
@@ -22,10 +19,6 @@ function AddWork({ setSelect, projectId }) {
     status: "",
     category: "",
   });
-
-  const handleSubmit = () => {
-    console.log('submit')
-  }
 
   return (
     <form id="kt_modal_add_user_form" className="form">
@@ -209,7 +202,6 @@ function AddWork({ setSelect, projectId }) {
           Discard
         </button>
         <div
-          onClick={handleSubmit}
           type="submit"
           className="btn btn-primary"
           data-kt-users-modal-action="submit"

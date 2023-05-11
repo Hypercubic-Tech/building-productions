@@ -1,16 +1,12 @@
 import { useState } from "react";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import axiosPrivate from "@/api/axiosPrivate";
-
-import styles from "../popup/RegModal.module.css";
 import axios from "axios";
 
+import styles from "../popup/RegModal.module.css";
+
 const RegModal = ({ handleRegistration, onClose }) => {
-  console.log(onClose, "1");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const axiosPrivate = useAxiosPrivate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -28,13 +24,15 @@ const RegModal = ({ handleRegistration, onClose }) => {
     event.preventDefault();
 
     const { email, password, fullName } = event.target.elements;
-
-    await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
-      email: email.value,
-      password: password.value,
-      username: fullName.value,
-    });
-
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
+        email: email.value,
+        password: password.value,
+        username: fullName.value,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     handleRegistration(true);
   };
 

@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const Products = ({ editHandler, allProduct, filteredProducts }) => {
-  console.log(allProduct, 'all');
-  console.log(filteredProducts, 'filtered')
+
   const deleteProductHandler = async (productId) => {
     await axios
       .delete(
@@ -93,7 +92,7 @@ const Products = ({ editHandler, allProduct, filteredProducts }) => {
                     </td>
                     <td className="georgian">{product?.attributes?.price}</td>
                     <td className="georgian">
-                      {parseInt(product.quantity) * parseFloat(product.price)}
+                      {parseInt(product?.quantity) * parseFloat(product?.price)}
                     </td>
                     <td className="text-end gap">
                       <div
@@ -106,7 +105,7 @@ const Products = ({ editHandler, allProduct, filteredProducts }) => {
                         </a>
                       </div>
                       <div
-                        onClick={(e) => deleteProductHandler(product.id)}
+                        onClick={(e) => deleteProductHandler(product?.id)}
                         className="menu-item px-3 padding8"
                       >
                         <a

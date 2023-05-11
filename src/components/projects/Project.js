@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 import Products from "./Products";
@@ -11,10 +11,6 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
-  const [editProduct, setEditProduct] = useState(false);
-  const [editService, setEditService] = useState(false);
-  const [editProductData, setEditProductData] = useState(null);
-  const [editServiceData, setEditServiceData] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
   const router = useRouter();
