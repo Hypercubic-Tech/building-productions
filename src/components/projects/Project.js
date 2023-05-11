@@ -2,15 +2,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Products from "./Products";
-import AddProductForm from "./AddProductsForm";
-import AddWork from "./AddWork";
 import Filter from "./Filter";
-import EditProductsForm from "./EditProductsForm";
-import EditServiceForm from "./EditServiceForm";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) => {
+const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus, allProduct }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
@@ -19,8 +15,6 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
-  const [allProduct, setAllProduct] = useState([]);
-  const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
   const router = useRouter();
@@ -32,47 +26,16 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
 
   const filterProductCategory = async (id) => {
     try {
-      await axios
-        .get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`
-        )
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
         .then((res) => {
           const data = res.data;
-          setAllProduct(data.data);
-        });
+          setFilteredProducts(data.data);
+        })
     } catch (error) {
       console.error(error);
     }
-};
+  };
 
-  useEffect(() => {
-    const getCategoriesHandler = async () => {
-      await axios
-        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-        .then((res) => {
-          const data = res.data;
-          setAllCategories(data.data);
-        });
-    };
-
-    const getProductsHandler = async () => {
-      try {
-        await axios
-          .get(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-          )
-          .then((res) => {
-            const data = res.data;
-            setAllProduct(data.data);
-          })
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      getProductsHandler();
-      getCategoriesHandler();
-    }, []);
- 
   return (
     <>
       <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
@@ -161,7 +124,7 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
               <div className="mb-10">
                 <div className="content flex-row-fluid" id="kt_content">
                   <div className="card">
-                    <div className="card-header border-0 pt-6 padding-rem">
+                    <div className="card-header border-0 pt-6">
                       <div className="card-title">
                         <div className="d-flex align-items-center position-relative my-1">
                           <span className="svg-icon svg-icon-1 position-absolute ms-6">
@@ -501,28 +464,17 @@ const Project = ({proj, pr, crafts, unit, category, suppliers, craftStatus }) =>
                           </div>
                         )}
                         {/* ეხპორტი */}
-                        {select === "add" && (
-                          <AddProduct
-                            setSelect={setSelect}
-                            craftStatus={craftStatus}
-                            crafts={crafts}
-                            unit={unit}
-                            category={category}
-                            suppliers={suppliers}
-                          />
-                        )}
+                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />}
                       </div>
                     </div>
-                    <div className="card-body padding pt-0">
-                      <div className="summary padding10">
-                        ჯამი: {summary} ლარი
-                      </div>
+                    <div className="card-body pt-0">
+                      <div className="summary">ჯამი: {summary} ლარი</div>
                       <Products
-                        // editHandler={editProductHandler}
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
-                        allProduct={allProduct} />
+                        allProduct={allProduct}
+                      />
                     </div>
                   </div>
                 </div>

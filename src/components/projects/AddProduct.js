@@ -14,14 +14,17 @@ const AddProduct = ({
 }) => {
     const router = useRouter();
     const projectId = router.query.projectId;
+
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
+
     const [productData, setProductData] = useState({
         image: {
             connect: [{ image: null }]
         },
         title: "",
+        type: "product",
         purchased: false,
         supplier: {
             connect: [{ id: null }],
@@ -32,29 +35,27 @@ const AddProduct = ({
             connect: [{ id: null }],
         },
         price: 0,
-        category: {
-            connect: [],
+        categories: {
+            connect: [{ id: null }],
         },
         project: {
             connect: [{ id: projectId }]
         }
     });
-    
+
     const [craftData, setCraftData] = useState({
-        image: {
-            connect: [{ image: null }]
-        },
         title: "",
-        supplier: {
-            connect: [{ id: null }],
-        },
+        type: "service",
         quantity: 0,
         unit: {
             connect: [{ id: null }],
         },
+        // image: {
+        //     connect: [{ id: null }],
+        // },
         price: 0,
-        category: {
-            connect: [],
+        categories: {
+            connect: [{}],
         },
         craft_status: {
             connect: [{ id: null }]
@@ -62,7 +63,7 @@ const AddProduct = ({
         project: {
             connect: [{ id: projectId }]
         }
-    })
+    });
 
     const handleSubmit = async () => {
         try {
@@ -93,8 +94,6 @@ const AddProduct = ({
         }
         setSelect(null);
     };
-
-
 
     return (
         <div
@@ -166,7 +165,7 @@ const AddProduct = ({
                             </span>
                         </div>
                     </div>
-                    <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <div style={{ width: "90%" }} className="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         {toggle ? (
                             <form id="kt_modal_add_user_form" className="form">
                                 <div
@@ -179,21 +178,14 @@ const AddProduct = ({
                                     data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                                     data-kt-scroll-offset="300px"
                                 >
-                                    <div style={{ width: "95%" }}
+                                    <div
                                         className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                         <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
                                             <div
                                                 className="image-input image-input-outline"
                                                 data-kt-image-input="true"
-                                            // style={{
-                                            //   backgroundImage: "url(assets/media/avatars/blank.png)",
-                                            // }}
                                             >
                                                 <div
-                                                    className="image-input-wrapper w-125px h-125px"
-                                                // style={{
-                                                //   backgroundImage: productData.image,
-                                                // }}
                                                 />
                                                 <label
                                                     className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -395,7 +387,7 @@ const AddProduct = ({
                                                 onClick={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        category: {
+                                                        categories: {
                                                             connect: [{ id: e.target.value }],
                                                         },
                                                     }));
@@ -481,10 +473,12 @@ const AddProduct = ({
                                             <div className={styles.imageBox}>
                                                 <img
                                                     onChange={(e) => {
-                                                        setCraftData((prevSendData) => ({
-                                                            ...prevSendData,
-                                                            image: e.target.files,
-                                                        }));
+                                                        // setCraftData((prevSendData) => ({
+                                                        //     ...prevSendData,
+                                                        //     image: {
+                                                        //         connect: [{ id: e.target.files }],
+                                                        //     },
+                                                        // }));
                                                     }}
                                                     src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`}
                                                     alt="img"
@@ -501,7 +495,6 @@ const AddProduct = ({
                                                         const selectedCraft = crafts.find(
                                                             (craft) => craft.id === Number(e.target.value)
                                                         );
-                                                        console.log(selectedCraft);
                                                         setCraftImage(
                                                             selectedCraft?.attributes?.image?.data?.attributes
                                                                 ?.url
@@ -509,7 +502,7 @@ const AddProduct = ({
                                                         setIsTouched(true);
                                                         setCraftData((prevSendData) => ({
                                                             ...prevSendData,
-                                                            category: {
+                                                            categories: {
                                                                 connect: [{ id: e.target.value }],
                                                             },
                                                         }));
@@ -517,11 +510,10 @@ const AddProduct = ({
                                                     name="category"
                                                     className="form-select form-select-solid georgian"
                                                 >
-                                                    {crafts.map((item, index) => {
+                                                    {category.map((item, index) => {
                                                         return (
                                                             <option key={index} value={item.id}>
-                                                                {console.log(item)}
-                                                                {item?.attributes?.category?.data?.attributes?.title}
+                                                                {item?.attributes?.title}
                                                             </option>
                                                         );
                                                     })}
