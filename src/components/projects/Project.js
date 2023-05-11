@@ -6,7 +6,7 @@ import Filter from "./Filter";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) => {
+const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus, allProduct }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
@@ -15,8 +15,6 @@ const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) =
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
-  const [allProduct, setAllProduct] = useState([]);
-  const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
   const router = useRouter();
@@ -31,41 +29,13 @@ const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) =
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
         .then((res) => {
           const data = res.data;
-          setAllProduct(data.data);
+          setFilteredProducts(data.data);
         })
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {
-
-    const getCategoriesHandler = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-        .then((res) => {
-          const data = res.data;
-          setAllCategories(data.data);
-        })
-    };
-
-    const getProductsHandler = async () => {
-      try {
-        await axios
-          .get(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-          )
-          .then((res) => {
-            const data = res.data;
-            setAllProduct(data.data);
-          })
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      getProductsHandler();
-      getCategoriesHandler();
-    }, []);
- 
   return (
     <>
       <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
@@ -93,10 +63,10 @@ const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) =
                 {proj?.attributes?.city?.data?.attributes?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.attributes?.condition?.data?.attributes?.title}
+                {proj?.attributes?.condition?.data?.attributes?.title}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.attributes?.property_type?.data?.attributes?.Title}
+                {proj?.attributes?.property_type?.data?.attributes?.Title}
               </li>
               <li className="breadcrumb-item text-warning georgian">
                 {proj?.attributes?.createdAt}
@@ -503,7 +473,8 @@ const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) =
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
-                        allProduct={allProduct} />
+                        allProduct={allProduct}
+                      />
                     </div>
                   </div>
                 </div>
