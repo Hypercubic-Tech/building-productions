@@ -11,10 +11,6 @@ const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) =
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
   const [project, setProject] = useState(null);
-  const [editProduct, setEditProduct] = useState(false);
-  const [editService, setEditService] = useState(false);
-  const [editProductData, setEditProductData] = useState(null);
-  const [editServiceData, setEditServiceData] = useState(null);
   const [allProduct, setAllProduct] = useState(null);
   const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);

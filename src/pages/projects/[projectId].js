@@ -76,7 +76,6 @@ const index = () => {
         .then((res) => {
           const data = res.data;
           setCrafts(data.data);
-          console.log(res);
         });
     };
 

@@ -14,12 +14,15 @@ const AddProduct = ({
 }) => {
     const router = useRouter();
     const projectId = router.query.projectId;
+
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
+
     const [productData, setProductData] = useState({
         image: "",
         title: "",
+        type: "product",
         purchased: false,
         supplier: {
             connect: [{ id: null }],
@@ -30,27 +33,28 @@ const AddProduct = ({
             connect: [{ id: null }],
         },
         price: 0,
-        category: {
-            connect: [],
+        categories: {
+            connect: [{ id: null }],
         },
         project: {
             connect: [{ id: projectId }]
         }
     });
-    
+
     const [craftData, setCraftData] = useState({
         image: "",
         title: "",
+        type: "service",
         supplier: {
-            connect: [{ id: null }],
+            connect: [{ id: "none" }],
         },
         quantity: 0,
         unit: {
             connect: [{ id: null }],
         },
         price: 0,
-        category: {
-            connect: [],
+        categories: {
+            connect: [{ id: null }],
         },
         craft_status: {
             connect: [{ id: null }]
@@ -58,9 +62,7 @@ const AddProduct = ({
         project: {
             connect: [{ id: projectId }]
         }
-    })
-
-    console.log(projectId, 'id')
+    });
 
     const handleSubmit = async () => {
         try {
@@ -78,6 +80,7 @@ const AddProduct = ({
     };
 
     const handleCraftSubmit = async () => {
+        console.log(craftData)
         try {
             await axios
                 .post("http://localhost:1337/api/products", {
@@ -92,7 +95,7 @@ const AddProduct = ({
         setSelect(null);
     };
 
-
+    console.log(category, 'car');
 
     return (
         <div
@@ -183,15 +186,8 @@ const AddProduct = ({
                                             <div
                                                 className="image-input image-input-outline"
                                                 data-kt-image-input="true"
-                                            // style={{
-                                            //   backgroundImage: "url(assets/media/avatars/blank.png)",
-                                            // }}
                                             >
                                                 <div
-                                                    className="image-input-wrapper w-125px h-125px"
-                                                // style={{
-                                                //   backgroundImage: productData.image,
-                                                // }}
                                                 />
                                                 <label
                                                     className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -391,7 +387,7 @@ const AddProduct = ({
                                                 onClick={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        category: {
+                                                        categories: {
                                                             connect: [{ id: e.target.value }],
                                                         },
                                                     }));
@@ -505,7 +501,7 @@ const AddProduct = ({
                                                         setIsTouched(true);
                                                         setCraftData((prevSendData) => ({
                                                             ...prevSendData,
-                                                            category: {
+                                                            categories: {
                                                                 connect: [{ id: e.target.value }],
                                                             },
                                                         }));
@@ -513,11 +509,10 @@ const AddProduct = ({
                                                     name="category"
                                                     className="form-select form-select-solid georgian"
                                                 >
-                                                    {crafts.map((item, index) => {
+                                                    {category.map((item, index) => {
                                                         return (
                                                             <option key={index} value={item.id}>
-                                                                {console.log(item)}
-                                                                {item?.attributes?.category?.data?.attributes?.title}
+                                                                {item?.attributes?.title}
                                                             </option>
                                                         );
                                                     })}
