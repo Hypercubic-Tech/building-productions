@@ -1,28 +1,24 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import Products from "./Products";
-import AddProductForm from "./AddProductsForm";
-import AddWork from "./AddWork";
 import Filter from "./Filter";
-import EditProductsForm from "./EditProductsForm";
-import EditServiceForm from "./EditServiceForm";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) => {
+const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus, allProduct }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
-  const [project, setProject] = useState(null);
   const [editProduct, setEditProduct] = useState(false);
   const [editService, setEditService] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
   const [editServiceData, setEditServiceData] = useState(null);
-  const [allProduct, setAllProduct] = useState(null);
-  const [allCategories, setAllCategories] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
-  const [productCategory, setProductCategory] = useState('');
+  const [productCategory, setProductCategory] = useState("");
+  const router = useRouter();
+  const { projectId } = router.query;
 
   const giveProductCategory = (category) => {
     setProductCategory(category)
@@ -33,41 +29,12 @@ const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) =
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
         .then((res) => {
           const data = res.data;
-          setAllProduct(data.data);
+          setFilteredProducts(data.data);
         })
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-
-    const getCategoriesHandler = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-        .then((res) => {
-          const data = res.data;
-          setAllCategories(data.data);
-        })
-    };
-
-    const getProductsHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*`)
-          .then((res) => {
-            const data = res.data;
-            setAllProduct(data.data);
-          })
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getProductsHandler();
-    getCategoriesHandler();
-  }, []);
-
-  useEffect(() => {
-    proj?.map(item => setProject(item))
-  }, [proj]);
 
   return (
     <>
@@ -89,20 +56,20 @@ const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) =
               >
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
               </svg>
-              &nbsp;{project?.attributes?.address}
+              &nbsp;{proj?.attributes?.address}
             </h1>
             <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.attributes?.city?.data?.attributes?.city}
+                {proj?.attributes?.city?.data?.attributes?.city}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.attributes?.condition?.data?.attributes?.title}
+                {proj?.attributes?.condition?.data?.attributes?.title}
               </li>
               <li className="breadcrumb-item text-gray-600 georgian">
-                {project?.attributes?.property_type?.data?.attributes?.Title}
+                {proj?.attributes?.property_type?.data?.attributes?.Title}
               </li>
               <li className="breadcrumb-item text-warning georgian">
-                {project?.attributes?.createdAt}
+                {proj?.attributes?.createdAt}
               </li>
             </ul>
           </div>
@@ -497,17 +464,17 @@ const Project = ({ proj, pr, crafts, unit, category, suppliers, craftStatus }) =
                           </div>
                         )}
                         {/* ეხპორტი */}
-                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} category={category} suppliers={suppliers} />}
+                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={allCategories} suppliers={suppliers} />}
                       </div>
                     </div>
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {summary} ლარი</div>
                       <Products
-                        // editHandler={editProductHandler}
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
-                        allProduct={allProduct} />
+                        allProduct={allProduct}
+                      />
                     </div>
                   </div>
                 </div>

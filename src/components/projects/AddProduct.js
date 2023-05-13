@@ -8,16 +8,21 @@ const AddProduct = ({
     setSelect,
     crafts,
     unit,
-    category,
+    allCategories,
     suppliers,
     craftStatus,
 }) => {
+    const router = useRouter();
+    const projectId = router.query.projectId;
+
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
+
     const [productData, setProductData] = useState({
         image: "",
         title: "",
+        type: "product",
         purchased: false,
         supplier: {
             connect: [{ id: null }],
@@ -28,33 +33,35 @@ const AddProduct = ({
             connect: [{ id: null }],
         },
         price: 0,
-        category: {
-            connect: [],
-        },
-    });
-    
-    const [craftData, setCraftData] = useState({
-        image: "",
-        title: "",
-        supplier: {
+        categories: {
             connect: [{ id: null }],
         },
-        quantity: 0,
+        project: {
+            connect: [{ id: projectId }]
+        }
+    });
+
+    const [craftData, setCraftData] = useState({
+        title: "",
+        type: "service",
+        quantity: 0,    
         unit: {
             connect: [{ id: null }],
         },
+        // image: {
+        //     connect: [{ id: null }],
+        // },
         price: 0,
-        category: {
-            connect: [],
+        categories: {
+            connect: [{}],
         },
         craft_status: {
             connect: [{ id: null }]
+        },
+        project: {
+            connect: [{ id: projectId }]
         }
-    })
-
-    const router = useRouter();
-    const projectId = router.query.projectId;
-    console.log(projectId, 'id')
+    });
 
     const handleSubmit = async () => {
         try {
@@ -75,7 +82,7 @@ const AddProduct = ({
         try {
             await axios
                 .post("http://localhost:1337/api/products", {
-                    data: productData,
+                    data: craftData,
                 })
                 .then((res) => {
                     console.log(res);
@@ -85,8 +92,6 @@ const AddProduct = ({
         }
         setSelect(null);
     };
-
-
 
     return (
         <div
@@ -158,7 +163,7 @@ const AddProduct = ({
                             </span>
                         </div>
                     </div>
-                    <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <div style={{ width: "90%" }} className="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         {toggle ? (
                             <form id="kt_modal_add_user_form" className="form">
                                 <div
@@ -171,21 +176,14 @@ const AddProduct = ({
                                     data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                                     data-kt-scroll-offset="300px"
                                 >
-                                    <div style={{ width: "95%" }}
+                                    <div
                                         className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                         <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
                                             <div
                                                 className="image-input image-input-outline"
                                                 data-kt-image-input="true"
-                                            // style={{
-                                            //   backgroundImage: "url(assets/media/avatars/blank.png)",
-                                            // }}
                                             >
                                                 <div
-                                                    className="image-input-wrapper w-125px h-125px"
-                                                // style={{
-                                                //   backgroundImage: productData.image,
-                                                // }}
                                                 />
                                                 <label
                                                     className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -385,7 +383,7 @@ const AddProduct = ({
                                                 onClick={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        category: {
+                                                        categories: {
                                                             connect: [{ id: e.target.value }],
                                                         },
                                                     }));
@@ -394,8 +392,8 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >
-                                                {category &&
-                                                    category.map((item) => {
+                                                {allCategories &&
+                                                    allCategories.map((item) => {
                                                         <option
                                                             value="none"
                                                             selected
@@ -471,10 +469,12 @@ const AddProduct = ({
                                             <div className={styles.imageBox}>
                                                 <img
                                                     onChange={(e) => {
-                                                        setCraftData((prevSendData) => ({
-                                                            ...prevSendData,
-                                                            image: e.target.files,
-                                                        }));
+                                                        // setCraftData((prevSendData) => ({
+                                                        //     ...prevSendData,
+                                                        //     image: {
+                                                        //         connect: [{ id: e.target.files }],
+                                                        //     },
+                                                        // }));
                                                     }}
                                                     src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`}
                                                     alt="img"
@@ -491,7 +491,6 @@ const AddProduct = ({
                                                         const selectedCraft = crafts.find(
                                                             (craft) => craft.id === Number(e.target.value)
                                                         );
-                                                        console.log(selectedCraft);
                                                         setCraftImage(
                                                             selectedCraft?.attributes?.image?.data?.attributes
                                                                 ?.url
@@ -499,19 +498,18 @@ const AddProduct = ({
                                                         setIsTouched(true);
                                                         setCraftData((prevSendData) => ({
                                                             ...prevSendData,
-                                                            category: {
+                                                            categories: {
                                                                 connect: [{ id: e.target.value }],
                                                             },
                                                         }));
                                                     }}
-                                                    name="category"
+                                                    name="allCategories"
                                                     className="form-select form-select-solid georgian"
                                                 >
-                                                    {crafts.map((item, index) => {
+                                                    {allCategories.map((item, index) => {
                                                         return (
                                                             <option key={index} value={item.id}>
-                                                                {console.log(item)}
-                                                                {item.attributes.category.data.attributes.title}
+                                                                {item?.attributes?.title}
                                                             </option>
                                                         );
                                                     })}
