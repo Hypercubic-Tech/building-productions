@@ -40,9 +40,9 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
-          {proj && proj.map((p) => {
+          {proj && proj.map((p, index) => {
             return (
-              <div className="page-title d-flex flex-column me-3">
+              <div className="page-title d-flex flex-column me-3" key={index}>
                 <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
