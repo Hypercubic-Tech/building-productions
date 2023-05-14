@@ -15,7 +15,7 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
   const [productCategory, setProductCategory] = useState("");
   const router = useRouter();
   const { projectId } = router.query;
-
+  console.log(proj, 'bla bla')
   const giveProductCategory = (category) => {
     setProductCategory(category)
   };
@@ -40,35 +40,39 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
-          <div className="page-title d-flex flex-column me-3">
-            <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={16}
-                height={16}
-                fill="currentColor"
-                className="bi bi-geo-alt-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-              </svg>
-              &nbsp;{proj?.attributes?.address}
-            </h1>
-            <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
-              <li className="breadcrumb-item text-gray-600 georgian">
-                {proj?.attributes?.city?.data?.attributes?.city}
-              </li>
-              <li className="breadcrumb-item text-gray-600 georgian">
-                {proj?.attributes?.condition?.data?.attributes?.title}
-              </li>
-              <li className="breadcrumb-item text-gray-600 georgian">
-                {proj?.attributes?.property_type?.data?.attributes?.Title}
-              </li>
-              <li className="breadcrumb-item text-warning georgian">
-                {proj?.attributes?.createdAt}
-              </li>
-            </ul>
-          </div>
+          {proj && proj.map((p) => {
+            return (
+              <div className="page-title d-flex flex-column me-3">
+                <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={16}
+                    height={16}
+                    fill="currentColor"
+                    className="bi bi-geo-alt-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                  </svg>
+                  &nbsp;{p?.attributes?.address}
+                </h1>
+                <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
+                  <li className="breadcrumb-item text-gray-600 georgian">
+                    {p?.attributes?.city?.data?.attributes?.city}
+                  </li>
+                  <li className="breadcrumb-item text-gray-600 georgian">
+                    {p?.attributes?.condition?.data?.attributes?.title}
+                  </li>
+                  <li className="breadcrumb-item text-gray-600 georgian">
+                    {p?.attributes?.property_type?.data?.attributes?.title}
+                  </li>
+                  <li className="breadcrumb-item text-warning georgian">
+                    {p?.attributes?.createdAt}
+                  </li>
+                </ul>
+              </div>
+            )
+          })}
           <div className="d-flex align-items-center py-2 py-md-1">
             <div className="me-3">
               <a
