@@ -1,14 +1,38 @@
 import axios from "axios";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
-const Products = ({ editHandler, allProduct, filteredProducts }) => {
+const Products = ({ editHandler, filteredProducts }) => {
+  const [allProduct, setAllProduct] = useState(null);
+  const router = useRouter();
+  const { projectId } = router.query;
+
+  const getProductsHandler = async () => {
+    await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
+      )
+      .then((res) => {
+        const data = res.data;
+        setAllProduct(data.data);
+      })
+  }
+
+  useEffect(() => {
+    if (projectId) {
+
+      getProductsHandler();
+    };
+  }, [projectId])
 
   const deleteProductHandler = async (productId) => {
     await axios
       .delete(
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
       )
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        getProductsHandler();
       })
       .catch((error) => {
         console.log(error);

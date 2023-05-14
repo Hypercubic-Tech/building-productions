@@ -6,7 +6,7 @@ import Filter from "./Filter";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus, allProduct }) => {
+const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
@@ -15,7 +15,7 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
   const [productCategory, setProductCategory] = useState("");
   const router = useRouter();
   const { projectId } = router.query;
-  console.log(proj, 'bla bla')
+
   const giveProductCategory = (category) => {
     setProductCategory(category)
   };
@@ -34,7 +34,7 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
 
   return (
     <>
-      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} />
+      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} productCategory={allProduct} projectCategory={projectCategory} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"

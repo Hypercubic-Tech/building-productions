@@ -19,7 +19,9 @@ const AddProduct = ({
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
     const [productData, setProductData] = useState({
-        // image: "",
+        image: {
+            connect: [{ image: null}]
+        },
         title: "",
         type: "product",
         purchased: false,
@@ -186,13 +188,14 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            // setProductData((prevSendData) => ({
-                                                            //     ...prevSendData,
-                                                            //     image: "",
-                                                            // }));
+                                                            console.log(e.target.files)
+                                                            setProductData((prevSendData) => ({
+                                                                ...prevSendData,
+                                                                image: e.target.files,
+                                                            }));
                                                         }}
                                                         type="file"
-                                                        name="image"
+                                                        name="files"
                                                     />
                                                     <input type="hidden" name="avatar_remove" />
                                                 </label>
@@ -399,26 +402,6 @@ const AddProduct = ({
                                                     })}
                                             </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-                                        </div>
-                                        <div className="mt-8 col-md-4 fv-row fv-plugins-icon-container">
-                                            <div className="form-check form-check-sm form-check-custom form-check-solid">
-                                                <label className="required fs-5 fw-bold mb-2 georgian">
-                                                    შეძენილია
-                                                </label>
-                                                <input
-                                                    className="mx-2 form-check-input"
-                                                    type="checkbox"
-                                                    data-kt-check="true"
-                                                    data-kt-check-target="#kt_table_users .form-check-input"
-                                                    defaultValue={"not purchased"}
-                                                    onChange={(e) => {
-                                                        setProductData((formData) => ({
-                                                            ...formData,
-                                                            purchased: true,
-                                                        }));
-                                                    }}
-                                                />
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

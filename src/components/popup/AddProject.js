@@ -20,6 +20,7 @@ const AddProject = ({ dismiss }) => {
     address: "",
     phoneNumber: "",
     area: "",
+    vat: false,
     city: {
       connect: [
         { id: null }
@@ -170,8 +171,6 @@ const AddProject = ({ dismiss }) => {
     };
     getCategoriesHandler();
   }, []);
-
-
 
   const createProjectHandler = async () => {
     try {
@@ -345,6 +344,28 @@ const AddProject = ({ dismiss }) => {
                           )
                         })}
                       </select>
+                    </div>
+
+                    <div className="w-100">
+                      <div className="fv-row mb-10">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input"
+                          type="checkbox"
+                          role="switch"
+                          id="flexSwitchCheckDefault"
+                          onChange={(e) => {
+                            const isChecked = e.target.checked;
+                            setSendData((prevSendData) => ({
+                              ...prevSendData,
+                              vat: isChecked,
+                            }));
+                          }}
+                          />
+                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                            <span className="required georgian">დღგ-ს გადამხდელი</span>
+                          </label>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="row mb-10">
