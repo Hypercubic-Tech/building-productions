@@ -21,11 +21,29 @@ const index = () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=*`)
           .then((res) => {
             const data = res.data;
-            setProject(data.data);
+            setProject(data?.data);
           })
       };
       getProject();
     }
+  }, [projectId])
+
+  useEffect(() => {
+    if (projectId) {
+      const getProductsHandler = async () => {
+        await axios
+          .get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
+          )
+          .then((res) => {
+            const data = res.data;
+            console.log(data);
+            setAllProduct(data.data);
+          })
+      }
+      getProductsHandler();
+
+    };
   }, [projectId])
 
   useEffect(() => {
@@ -74,36 +92,11 @@ const index = () => {
         })
     };
 
-    const getAllProductsHandler = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`)
-        .then((res) => {
-          const data = res.data;
-          setAllProduct(data.data)
-        })
-    };
-
-    const getProductsHandler = async () => {
-      try {
-        await axios
-          .get(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-          )
-          .then((res) => {
-            const data = res.data;
-            setAllProduct(data.data);
-          })
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getProductsHandler();
     getCategoriesHandler()
     getCraftsStatusHandler();
     getCraftsHandler();
     getSupplierHandler();
     getUnitHandler();
-    getAllProductsHandler();
   }, []);
 
   return <Project allProduct={allProduct} pr={projectId} proj={project} craftStatus={craftStatus} crafts={crafts} suppliers={suppliers} unit={unit} allCategories={allCategories} />;
