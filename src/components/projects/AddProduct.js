@@ -198,6 +198,7 @@ const AddProduct = ({
                                                 />
                                                 <label
                                                     className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                    style={{marginTop: "90px"}}
                                                     data-kt-image-input-action="change"
                                                     data-bs-toggle="tooltip"
                                                     title="Change avatar"
@@ -252,7 +253,7 @@ const AddProduct = ({
                                                         alt="Picture of the author"
                                                     />
                                                      :
-                                                    <svg id="camera_2_" data-name="camera (2)" xmlns="http://www.w3.org/2000/svg" width="151.175" height="118.986" viewBox="0 0 151.175 118.986">
+                                                    <svg id="camera_2_" data-name="camera (2)" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 151.175 118.986">
                                                         <g id="Group_1530" data-name="Group 1530" transform="translate(0 0)">
                                                             <g id="Group_1529" data-name="Group 1529" transform="translate(0 0)">
                                                             <path id="Path_1200" data-name="Path 1200" d="M146.145,63.338a16.253,16.253,0,0,0-11.927-5.03H110.364v-.287a12.9,12.9,0,0,0-3.88-9.341,13.148,13.148,0,0,0-9.341-3.88H54.032A13.248,13.248,0,0,0,40.668,58.021v.287H16.957A16.253,16.253,0,0,0,5.03,63.338,17.085,17.085,0,0,0,0,75.265v71.564a16.253,16.253,0,0,0,5.03,11.927,17.085,17.085,0,0,0,11.927,5.03H134.218a16.253,16.253,0,0,0,11.927-5.03,17.085,17.085,0,0,0,5.03-11.927V75.265A16.254,16.254,0,0,0,146.145,63.338ZM143.7,146.829h-.144a9.322,9.322,0,0,1-9.341,9.341H16.957a9.322,9.322,0,0,1-9.341-9.341V75.265a9.322,9.322,0,0,1,9.341-9.341H44.691a3.864,3.864,0,0,0,3.88-3.88V57.877a5.409,5.409,0,0,1,5.6-5.6H97.143a5.409,5.409,0,0,1,5.6,5.6v4.167a3.864,3.864,0,0,0,3.88,3.88h27.735a9.322,9.322,0,0,1,9.341,9.341Z" transform="translate(0 -44.8)"/>
