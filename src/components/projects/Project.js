@@ -34,7 +34,7 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
 
   return (
     <>
-      <Filter project={pr} giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} allCategories={allCategories} productCategory={allProduct} projectCategory={projectCategory} />
+      <Filter giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
