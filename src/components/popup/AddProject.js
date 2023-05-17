@@ -15,12 +15,15 @@ const AddProject = ({ dismiss }) => {
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
+  const [hiddenInput, setHiddenInput] = useState(false);
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
     phoneNumber: "",
     area: "",
     vat: false,
+    vatPercent: "",
+    unforeseenExpenses: "",
     city: {
       connect: [
         { id: null }
@@ -52,6 +55,14 @@ const AddProject = ({ dismiss }) => {
     stepTwo: [],
     stepThree: [],
   };
+
+  const hiddenInputHandler = () => {
+    if (!hiddenInput) {
+      setHiddenInput(true)
+    } else {
+      setHiddenInput(false)
+    }
+  }
 
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
@@ -200,7 +211,6 @@ const AddProject = ({ dismiss }) => {
       <div className="modal-content">
         <div className="modal-header">
           <h2 className="georgian">ობიექტის დამატება</h2>
-
           <div
             className="btn btn-sm btn-icon btn-active-color-primary"
             data-bs-dismiss="modal"
@@ -237,7 +247,6 @@ const AddProject = ({ dismiss }) => {
             </span>
           </div>
         </div>
-
         <div className="modal-body py-lg-10 px-lg-10">
           <div
             className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
@@ -348,26 +357,60 @@ const AddProject = ({ dismiss }) => {
 
                     <div className="w-100">
                       <div className="fv-row mb-10">
-                        <div class="form-check form-switch">
-                          <input class="form-check-input"
-                          type="checkbox"
-                          role="switch"
-                          id="flexSwitchCheckDefault"
-                          onChange={(e) => {
-                            const isChecked = e.target.checked;
-                            setSendData((prevSendData) => ({
-                              ...prevSendData,
-                              vat: isChecked,
-                            }));
-                          }}
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            onChange={(e) => {
+                              const isChecked = e.target.checked;
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                vat: isChecked,
+                              }));
+                              hiddenInputHandler();
+                            }}
                           />
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                             <span className="required georgian">დღგ-ს გადამხდელი</span>
                           </label>
+
                         </div>
+                        {hiddenInput ? (
+                          <div className="col-6">
+                            <input
+                              className="form-control georgian form-control-solid"
+                              placeholder="%"
+                              type="text"
+                              onChange={(e) => {
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  vatPercent: e.target.value,
+                                }));
+                              }}
+                            />
+                          </div>
+                        ) : ""}
                       </div>
                     </div>
+                    <div style={{marginBottom: '30px'}} className="w-100">
+                      <label className="required fs-6 fw-bold form-label georgian mb-2">
+                        გაუთვალისწინებელი ხარჯები
+                      </label>
+                      <input
+                        onChange={(event) => {
+                          setSendData((prevSendData) => ({
+                            ...prevSendData,
+                            unforeseenExpenses: event.target.value,
+                          }));
+                        }}
+                        type="text"
+                        className="form-control georgian form-control-solid"
+                        placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
+                      />
 
+                    </div>
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
