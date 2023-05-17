@@ -91,14 +91,18 @@ const AddProduct = ({
     const handleMediaUpload = async () => {
         const formData = new FormData();
         formData.append("image", productImage);
-
+    
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`, { formData });
+            await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
         } catch (err) {
             console.log(err);
         }
     };
-
+    
     return (
         <div
             style={{ display: "block", paddingLeft: "0px" }}
