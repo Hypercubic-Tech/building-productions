@@ -27,7 +27,7 @@ const index = () => {
       };
 
       const getProjectCategory = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
             const data = res.data;
             setProjectCategory(data.data);

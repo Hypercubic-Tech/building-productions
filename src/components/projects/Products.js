@@ -8,21 +8,21 @@ const Products = ({ editHandler, filteredProducts }) => {
   const router = useRouter();
   const { projectId } = router.query;
 
-  const getProductsHandler = async () => {
-    await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-      )
-      .then((res) => {
-        const data = res.data;
-        setAllProduct(data.data);
-      })
-  }
+  // const getProductsHandler = async () => {
+  //   await axios
+  //     .get(
+  //       `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
+  //     )
+  //     .then((res) => {
+  //       const data = res.data;
+  //       setAllProduct(data.data);
+  //     })
+  // }
 
   useEffect(() => {
     if (projectId) {
 
-      getProductsHandler();
+      // getProductsHandler();
     };
   }, [projectId])
 
