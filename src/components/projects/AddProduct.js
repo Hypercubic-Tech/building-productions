@@ -213,7 +213,7 @@ const AddProduct = ({
                                                             };
 
                                                             reader.readAsDataURL(file);
-                                                            handleMediaUpload()
+                                                            handleMediaUpload();
                                                         }}
                                                         type="file"
                                                         name="image"
