@@ -1,8 +1,6 @@
 const Filter = ({
   giveProductCategory,
   filterProductCategory,
-  allCategories,
-  productCategory,
   projectCategory
 }) => {
   return (
@@ -18,7 +16,7 @@ const Filter = ({
           className="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch flex-grow-1"
         >
           {projectCategory &&
-            projectCategory.map((item, index) => {console.log(item, 'sheen?')
+            projectCategory.map((item, index) => {
               return (
                 <div
                   onClick={() => {
