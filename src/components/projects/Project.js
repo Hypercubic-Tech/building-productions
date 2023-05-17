@@ -1,20 +1,17 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 import Products from "./Products";
 import Filter from "./Filter";
 import axios from "axios";
 import AddProduct from "./AddProduct";
 
-const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory }) => {
+const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
-  const router = useRouter();
-  const { projectId } = router.query;
 
   const giveProductCategory = (category) => {
     setProductCategory(category)
@@ -22,7 +19,7 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
 
   const filterProductCategory = async (id) => {
     try {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories&filters[categories][id][$in]=${id}`)
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products,categories&filters[categories][id][$eq]=${id}`)
         .then((res) => {
           const data = res.data;
           setFilteredProducts(data.data);
