@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import axios from 'axios';
 
 import styles from "./AddWork.module.css";
@@ -17,8 +18,7 @@ const AddProduct = ({
 
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
-    const [craftImage, setCraftImage] = useState(null);
-    const [productImage, setProductImage] = useState(null);
+    const [imgSrc, setImgSrc] = useState(null);
     const [productData, setProductData] = useState({
         // image: {
         //     connect: [{ image: null}]
@@ -204,12 +204,15 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            console.log(productImage)
-                                                            // setProductImage((prevSendData) => ({
-                                                            //     ...prevSendData,
-                                                            //     image: e.target.files[0],
-                                                            // }));
-                                                            setProductImage(e.target.files[0])
+                                                            console.log(e.target.files[0])
+                                                            const file = e.target.files[0];
+                                                            const reader = new FileReader();
+
+                                                            reader.onload = (event) => {
+                                                                setImgSrc(event.target.result);
+                                                            };
+
+                                                            reader.readAsDataURL(file);
                                                             handleMediaUpload()
                                                         }}
                                                         type="file"
@@ -240,6 +243,12 @@ const AddProduct = ({
                                                 <h4 className="text-gray-900 fw-bolder georgian">
                                                     სურათი
                                                 </h4>
+                                               {imgSrc && <Image
+                                                    src={imgSrc}
+                                                    width={70}
+                                                    height={70}
+                                                    alt="Picture of the author"
+                                                />}
                                                 <div className="fs-6 text-gray-700 georgian">
                                                     აირჩიეთ მხოლოდ ერთი სურათი
                                                 </div>
@@ -473,7 +482,7 @@ const AddProduct = ({
                                                 />
                                             </div>
                                         )}
-                                        {crafts && (
+                                        {/* {crafts && (
                                             <div className="col-md-8 fv-row fv-plugins-icon-container">
                                                 <label className="required fs-5 fw-bold mb-2 georgian">
                                                     კატეგორია
@@ -508,7 +517,7 @@ const AddProduct = ({
                                                 </select>
                                                 <div className="fv-plugins-message-container invalid-feedback"></div>
                                             </div>
-                                        )}
+                                        )} */}
                                         {isTouched && (
                                             <>
                                                 <div className="col-md-4 fv-row fv-plugins-icon-container">
