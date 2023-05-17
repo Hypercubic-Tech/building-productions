@@ -1,8 +1,6 @@
 const Filter = ({
   giveProductCategory,
   filterProductCategory,
-  allCategories,
-  productCategory,
   projectCategory
 }) => {
   return (

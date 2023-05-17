@@ -18,10 +18,11 @@ const AddProduct = ({
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
     const [craftImage, setCraftImage] = useState(null);
+    const [productImage, setProductImage] = useState(null);
     const [productData, setProductData] = useState({
-        image: {
-            connect: [{ image: null}]
-        },
+        // image: {
+        //     connect: [{ image: null}]
+        // },
         title: "",
         type: "product",
         purchased: false,
@@ -85,6 +86,17 @@ const AddProduct = ({
             console.log(err);
         }
         setSelect(null);
+    };
+
+    const handleMediaUpload = async () => {
+        const formData = new FormData();
+        formData.append("image", productImage);
+
+        try {
+            await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`, { formData });
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -188,14 +200,16 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            console.log(e.target.files)
-                                                            setProductData((prevSendData) => ({
-                                                                ...prevSendData,
-                                                                image: e.target.files,
-                                                            }));
+                                                            console.log(productImage)
+                                                            // setProductImage((prevSendData) => ({
+                                                            //     ...prevSendData,
+                                                            //     image: e.target.files[0],
+                                                            // }));
+                                                            setProductImage(e.target.files[0])
+                                                            handleMediaUpload()
                                                         }}
                                                         type="file"
-                                                        name="files"
+                                                        name="image"
                                                     />
                                                     <input type="hidden" name="avatar_remove" />
                                                 </label>
