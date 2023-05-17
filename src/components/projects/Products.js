@@ -9,14 +9,14 @@ const Products = ({ editHandler, filteredProducts }) => {
   const { projectId } = router.query;
 
   const getProductsHandler = async () => {
-    await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-      )
-      .then((res) => {
-        const data = res.data;
-        setAllProduct(data.data);
-      })
+    // await axios
+    //   .get(
+    //     `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
+    //   )
+    //   .then((res) => {
+    //     const data = res.data;
+    //     setAllProduct(data.data);
+    //   })
   }
 
   useEffect(() => {

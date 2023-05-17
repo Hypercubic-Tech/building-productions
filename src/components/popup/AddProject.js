@@ -44,6 +44,8 @@ const AddProject = ({ dismiss }) => {
         { id: null }
       ]
     },
+    vat: false,
+    
   });
   const dispatch = useDispatch();
 
@@ -350,16 +352,16 @@ const AddProject = ({ dismiss }) => {
                       <div className="fv-row mb-10">
                         <div class="form-check form-switch">
                           <input class="form-check-input"
-                          type="checkbox"
-                          role="switch"
-                          id="flexSwitchCheckDefault"
-                          onChange={(e) => {
-                            const isChecked = e.target.checked;
-                            setSendData((prevSendData) => ({
-                              ...prevSendData,
-                              vat: isChecked,
-                            }));
-                          }}
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            onChange={(e) => {
+                              const isChecked = e.target.checked;
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                vat: isChecked,
+                              }));
+                            }}
                           />
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                             <span className="required georgian">დღგ-ს გადამხდელი</span>
