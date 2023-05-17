@@ -64,7 +64,7 @@ const Project = ({ proj, pr, crafts, unit, allCategories, suppliers, craftStatus
                     {p?.attributes?.condition?.data?.attributes?.title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.title}
+                    {p?.attributes?.property_type?.data?.attributes?.Title}
                   </li>
                   <li className="breadcrumb-item text-warning georgian">
                     {p?.attributes?.createdAt}

@@ -455,7 +455,7 @@ const AddProduct = ({
                                                 />
                                             </div>
                                         )}
-                                        {crafts && (
+                                        {/* {crafts && (
                                             <div className="col-md-8 fv-row fv-plugins-icon-container">
                                                 <label className="required fs-5 fw-bold mb-2 georgian">
                                                     კატეგორია
@@ -490,7 +490,7 @@ const AddProduct = ({
                                                 </select>
                                                 <div className="fv-plugins-message-container invalid-feedback"></div>
                                             </div>
-                                        )}
+                                        )} */}
                                         {isTouched && (
                                             <>
                                                 <div className="col-md-4 fv-row fv-plugins-icon-container">
