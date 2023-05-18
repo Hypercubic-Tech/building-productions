@@ -4,8 +4,10 @@ import Products from "./Products";
 import Filter from "./Filter";
 import axios from "axios";
 import AddProduct from "./AddProduct";
+import EditProduct from "./EditProduct"
+import EditService from "./EditService";
 
-const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory }) => {
+const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
@@ -462,15 +464,41 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         )}
                         {/* ეხპორტი */}
                         {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={allCategories} suppliers={suppliers} />}
+                        {select === "edit-product" &&
+                          <EditProduct product={editProductItem}
+                            setSelect={setSelect}
+                            craftStatus={craftStatus}
+                            crafts={crafts}
+                            unit={unit}
+                            allCategories={allCategories}
+                            suppliers={suppliers} />
+                        }
+                        {select === "edit-service" &&
+                          <EditService product={editProductItem}
+                            setSelect={setSelect}
+                            craftStatus={craftStatus}
+                            crafts={crafts}
+                            unit={unit}
+                            allCategories={allCategories}
+                            suppliers={suppliers} />
+                        }
                       </div>
                     </div>
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {summary} ლარი</div>
                       <Products
+                        editProductItem={editProductItem}
+                        editHandler={editHandler}
                         products={products}
                         services={services}
                         filteredProducts={filteredProducts}
                         allProduct={allProduct}
+                        setSelect={setSelect}
+                        craftStatus={craftStatus}
+                        crafts={crafts}
+                        unit={unit}
+                        allCategories={allCategories}
+                        suppliers={suppliers}
                       />
                     </div>
                   </div>

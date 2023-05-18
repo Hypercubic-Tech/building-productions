@@ -13,6 +13,7 @@ const index = () => {
   const [project, setProject] = useState(null);
   const [craftStatus, setCraftStatus] = useState(null);
   const [projectCategory, setProjectCategory] = useState(null);
+  const [editProductItem, setEditProductItem] = useState(null);
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -26,15 +27,15 @@ const index = () => {
           })
       };
 
-      const getProjectCategory = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
-          .then((res) => {
-            const data = res.data;
-            setProjectCategory(data.data);
-          })
-      };
+      // const getProjectCategory = async () => {
+      //   await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
+      //     .then((res) => {
+      //       const data = res.data;
+      //       setProjectCategory(data.data);
+      //     })
+      // };
       getProject();
-      getProjectCategory();
+      // getProjectCategory();
     }
   }, [projectId])
 
@@ -91,7 +92,12 @@ const index = () => {
     getUnitHandler();
   }, []);
 
-  return <Project allProduct={allProduct} pr={projectId} proj={project} craftStatus={craftStatus} crafts={crafts} suppliers={suppliers} unit={unit} allCategories={allCategories} projectCategory={projectCategory} />;
+  const editHandler = (item) => {
+    setEditProductItem(item)
+    console.log(item, 'edit')
+  }
+
+  return <Project allProduct={allProduct} pr={projectId} proj={project} craftStatus={craftStatus} crafts={crafts} suppliers={suppliers} unit={unit} allCategories={allCategories} projectCategory={projectCategory} editHandler={editHandler} editProductItem={editProductItem} />;
 };
 
 export default index;
