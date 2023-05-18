@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import Products from "./Products";
 import Filter from "./Filter";
@@ -14,6 +15,8 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [productCategory, setProductCategory] = useState("");
+  const router = useRouter();
+  const { projectId } = router.query;
 
   const giveProductCategory = (category) => {
     setProductCategory(category)
@@ -21,7 +24,8 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
 
   const filterProductCategory = async (id) => {
     try {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products,categories&filters[categories][id][$eq]=${id}`)
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
+
         .then((res) => {
           const data = res.data;
           setFilteredProducts(data.data);
@@ -63,7 +67,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                     {p?.attributes?.condition?.data?.attributes?.title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.title}
+                    {p?.attributes?.property_type?.data?.attributes?.Title}
                   </li>
                   <li className="breadcrumb-item text-warning georgian">
                     {p?.attributes?.createdAt}
@@ -462,7 +466,6 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                             </div>
                           </div>
                         )}
-                        {/* ეხპორტი */}
                         {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={allCategories} suppliers={suppliers} />}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
@@ -473,7 +476,6 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                             allCategories={allCategories}
                             suppliers={suppliers} />
                         }
-                        {console.log(select, 'select')}
                         {select === "edit-service" &&
                           <EditService product={editProductItem}
                             setSelect={setSelect}
