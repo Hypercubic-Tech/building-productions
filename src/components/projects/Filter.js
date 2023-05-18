@@ -17,6 +17,7 @@ const Filter = ({
         >
           {projectCategory &&
             projectCategory.map((item, index) => {
+
               return (
                 <div
                   onClick={() => {

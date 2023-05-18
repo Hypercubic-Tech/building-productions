@@ -27,15 +27,15 @@ const index = () => {
           })
       };
 
-      // const getProjectCategory = async () => {
-      //   await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
-      //     .then((res) => {
-      //       const data = res.data;
-      //       setProjectCategory(data.data);
-      //     })
-      // };
+      const getProjectCategory = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
+          .then((res) => {
+            const data = res.data;
+            setProjectCategory(data.data);
+          })
+      };
       getProject();
-      // getProjectCategory();
+      getProjectCategory();
     }
   }, [projectId])
 
@@ -92,12 +92,23 @@ const index = () => {
     getUnitHandler();
   }, []);
 
-  const editHandler = (item) => {
-    setEditProductItem(item)
-    console.log(item, 'edit')
-  }
+  const editHandler = (product) => {
+    setEditProductItem(product);
+  };
 
-  return <Project allProduct={allProduct} pr={projectId} proj={project} craftStatus={craftStatus} crafts={crafts} suppliers={suppliers} unit={unit} allCategories={allCategories} projectCategory={projectCategory} editHandler={editHandler} editProductItem={editProductItem} />;
+  return <Project
+    allProduct={allProduct}
+    pr={projectId}
+    proj={project}
+    craftStatus={craftStatus}
+    crafts={crafts}
+    suppliers={suppliers}
+    unit={unit}
+    allCategories={allCategories}
+    projectCategory={projectCategory}
+    editHandler={editHandler}
+    editProductItem={editProductItem}
+  />;
 };
 
 export default index;
