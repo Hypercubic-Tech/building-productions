@@ -91,8 +91,8 @@ const AddProduct = ({
 
     const handleMediaUpload = async () => {
         const formData = new FormData();
-        formData.append("image", imgSrc);
-    
+        formData.append("files", imgSrc);
+        console.log(imgSrc)
         try {
             await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`, formData, {
                 headers: {
@@ -210,13 +210,12 @@ const AddProduct = ({
                                                             const file = e.target.files[0];
                                                             const reader = new FileReader();
 
-                                                            reader.onload = (event) => {
-                                                                setImgSrc(event.target.result);
-                                                            };
-
-                                                            reader.readAsDataURL(file);
+                                                            // reader.onload = (event) => {
+                                                            //     setImgSrc(event.target.result);
+                                                            // };
+                                                            setImgSrc(e.target.files[0])
+                                                            // reader.readAsDataURL(file);
                                                             handleMediaUpload();
-                                                            // handleMediaUpload()
                                                         }}
                                                         type="file"
                                                         name="image"
