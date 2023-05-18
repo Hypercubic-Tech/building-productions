@@ -40,16 +40,25 @@ const EditProduct = ({
 
     console.log(product.id)
     const handleSubmit = async () => {
+        if (!product || !product.id) {
+            console.log("Invalid product data");
+            return;
+        }
+
         try {
-            await axios
-                .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${product.id}`, {
+            await axios.put(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${product.id}`,
+                {
                     data: productData,
-                })
+                }
+            );
         } catch (err) {
             console.log(err);
         }
+
         setSelect(null);
     };
+
 
     const handleMediaUpload = async () => {
         const formData = new FormData();
@@ -190,7 +199,7 @@ const EditProduct = ({
                                     </div>
                                 </div>
                                 <div className='row mb-5'>
-                                    <span> ძველი ფოტო სურათი </span> 
+                                    <span> ძველი ფოტო სურათი </span>
                                     <img src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.image?.data?.attributes?.url}`} alt='product image' />
                                 </div>
                                 <div className="row mb-5">
