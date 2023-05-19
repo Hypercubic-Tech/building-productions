@@ -64,17 +64,17 @@ const AddProduct = ({
         }
     });
 
-    // const handleSubmit = async () => {
-    //     try {
-    //         await axios
-    //             .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
-    //                 data: productData,
-    //             })
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    //     setSelect(null);
-    // };
+    const handleSubmit = async () => {
+        try {
+            await axios
+                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+                    data: productData,
+                })
+        } catch (err) {
+            console.log(err);
+        }
+        setSelect(null);
+    };
 
     const handleCraftSubmit = async () => {
         try {
@@ -88,33 +88,33 @@ const AddProduct = ({
         setSelect(null);
     };
 
-    // const handleMediaUpload = async () => {
-    //     if (!imgSrc) {
-    //         console.log("No image selected");
-    //         return;
-    //     }
+    const handleMediaUpload = async () => {
+        if (!imgSrc) {
+            console.log("No image selected");
+            return;
+        }
 
-    //     const formData = new FormData();
-    //     formData.append("files", imgSrc);
+        const formData = new FormData();
+        formData.append("files", imgSrc);
 
-    //     try {
-    //         await axios.post(
-    //             `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
-    //             formData,
-    //             {
-    //                 headers: {
-    //                     "Content-Type": "multipart/form-data",
-    //                 },
-    //             }
-    //         );
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
+        try {
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    // useEffect(() => {
-    //     handleMediaUpload();
-    // }, [imgSrc]);
+    useEffect(() => {
+        handleMediaUpload();
+    }, [imgSrc]);
 
 
     return (
@@ -202,75 +202,75 @@ const AddProduct = ({
                                     data-kt-scroll-offset="300px"
                                 >
                                     <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
-                                    <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                        <div
-                                        className="image-input image-input-outline"
-                                        data-kt-image-input="true"
-                                        >
-                                        {
-                                            imgSrc ? <img
-                                                src={imgSrc}
-                                                width={125}
-                                                height={125}
-                                                style={{borderRadius: "8px"}}
-                                                alt="Picture of the product"
-                                            />
-                                            :
-                                            <div className="image-input-wrapper w-125px h-125px" >
-                                            </div>
-                                        }
-                                        <label
-                                            className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                            data-kt-image-input-action="change"
-                                            data-bs-toggle="tooltip"
-                                            title="Change avatar"
-                                        >
-                                            <i className="bi bi-pencil-fill fs-7" />
-                                            <input
-                                             onChange={(e) => {
-                                                console.log(e.target.files[0])
-                                                setImgSrc(e.target.files[0])
-                                                const file = e.target.files[0];
-                                                const reader = new FileReader();
-
-                                                reader.onload = (event) => {
-                                                    setImgSrc(event.target.result);
-                                                };
-
-                                                reader.readAsDataURL(file);
-                                                // handleMediaUpload()
-                                            }}
-                                            type="file"
-                                            name="avatar"
-                                            accept=".png, .jpg, .jpeg"
-                                            />
-                                        </label>
-                                        <span
-                                            className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                            data-kt-image-input-action="remove"
-                                            data-bs-toggle="tooltip"
-                                            title="Remove avatar"
-                                            onClick={() => {
-                                                setImgSrc(null)
-                                            }}
+                                        <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                            <div
+                                                className="image-input image-input-outline"
+                                                data-kt-image-input="true"
                                             >
-                                            <input
-                                             type="hidden" name="avatar_remove" />
-                                            <i className="bi bi-x fs-2" />
-                                        </span>
+                                                {
+                                                    imgSrc ? <img
+                                                        src={imgSrc}
+                                                        width={125}
+                                                        height={125}
+                                                        style={{ borderRadius: "8px" }}
+                                                        alt="Picture of the product"
+                                                    />
+                                                        :
+                                                        <div className="image-input-wrapper w-125px h-125px" >
+                                                        </div>
+                                                }
+                                                <label
+                                                    className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                    data-kt-image-input-action="change"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Change avatar"
+                                                >
+                                                    <i className="bi bi-pencil-fill fs-7" />
+                                                    <input
+                                                        onChange={(e) => {
+                                                            console.log(e.target.files[0])
+                                                            setImgSrc(e.target.files[0])
+                                                            const file = e.target.files[0];
+                                                            const reader = new FileReader();
 
+                                                            reader.onload = (event) => {
+                                                                setImgSrc(event.target.result);
+                                                            };
+
+                                                            reader.readAsDataURL(file);
+                                                            // handleMediaUpload()
+                                                        }}
+                                                        type="file"
+                                                        name="avatar"
+                                                        accept=".png, .jpg, .jpeg"
+                                                    />
+                                                </label>
+                                                <span
+                                                    className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                    data-kt-image-input-action="remove"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Remove avatar"
+                                                    onClick={() => {
+                                                        setImgSrc(null)
+                                                    }}
+                                                >
+                                                    <input
+                                                        type="hidden" name="avatar_remove" />
+                                                    <i className="bi bi-x fs-2" />
+                                                </span>
+
+                                            </div>
+                                        </span>
+                                        <div className="d-flex flex-stack flex-grow-1">
+                                            <div className="fw-bold">
+                                                <h4 className="text-gray-900 fw-bolder georgian">სურათი</h4>
+                                                <div className="fs-6 text-gray-700 georgian">
+                                                    მიუთითეთ მხოლოდ:
+                                                    <a>png, jpg, jpeg.</a>
+                                                    ფორმატი!
+                                                </div>
+                                            </div>
                                         </div>
-                                    </span>
-                                    <div className="d-flex flex-stack flex-grow-1">
-                                        <div className="fw-bold">
-                                        <h4 className="text-gray-900 fw-bolder georgian">სურათი</h4>
-                                        <div className="fs-6 text-gray-700 georgian">
-                                            მიუთითეთ მხოლოდ:
-                                            <a>png, jpg, jpeg.</a>
-                                            ფორმატი!
-                                        </div>
-                                        </div>
-                                    </div>
                                     </div>
                                     <div className="row mb-5">
                                         <div className="col-md-8 fv-row fv-plugins-icon-container">
@@ -453,6 +453,7 @@ const AddProduct = ({
                                     <button
                                         onClick={() => {
                                             setSelect(null);
+                                            console.log('hi')
                                         }}
                                         type="reset"
                                         className="btn btn-light me-3"
@@ -461,7 +462,7 @@ const AddProduct = ({
                                         გაუქმება
                                     </button>
                                     <div
-                                        // onClick={handleSubmit}
+                                        onClick={handleSubmit}
                                         type="submit"
                                         className="btn btn-primary"
                                         data-kt-users-modal-action="submit"
@@ -498,7 +499,7 @@ const AddProduct = ({
                                                     alt="img"
                                                 />
                                             </div>
-                                        )}                                     
+                                        )}
                                         {isTouched && (
                                             <>
                                                 <div className="col-md-4 fv-row fv-plugins-icon-container">
@@ -624,9 +625,7 @@ const AddProduct = ({
                                 </div>
                                 <div className="text-center pt-15">
                                     <button
-                                        onClick={() => {
-                                            setSelect(null);
-                                        }}
+                                        onClick={() => { setSelect(null) }}
                                         type="reset"
                                         className="btn btn-light me-3"
                                         data-kt-users-modal-action="cancel"
@@ -634,6 +633,7 @@ const AddProduct = ({
                                         გაუქმება
                                     </button>
                                     <div
+                                        // onClick={() => setSelect(null)}
                                         onClick={handleCraftSubmit}
                                         type="submit"
                                         className="btn btn-primary"
@@ -644,7 +644,7 @@ const AddProduct = ({
                                 </div>
                             </form>
                         )}
-                    </div>                
+                    </div>
                 </div>
             </div>
         </div>
