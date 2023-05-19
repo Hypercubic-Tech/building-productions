@@ -1,0 +1,33 @@
+.container {
+  z-index: 10;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  width: 100%;
+  border-radius: 8px;
+  max-width: 360px;
+}
+.btn {
+  margin-top: 10px;
+}
+.closeBtn {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  margin: 8.8px 0;
+}
+.closeBtn path {
+  stroke: #00b1fe;
+  transition: all 0.3s ease;
+}
+
+.closeBtn:hover path {
+  stroke: #0098da;
+}
+
+.none {
+  display: none;
+}
