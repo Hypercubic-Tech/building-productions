@@ -105,49 +105,58 @@ const Gallery = ({ setSelect }) => {
                                         </div>
                                     );
                                 })}
-                                <div className="image-input image-input-outline m-4" data-kt-image-input="true" >
-                                            <div className="image-input-wrapper w-300px h-300px">
-                                                <img src=''/>
-                                            </div>
-                                            <label
-                                                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                data-kt-image-input-action="change"
-                                                data-bs-toggle="tooltip"
-                                                title="Change avatar"
-                                            >
-                                                <i className="bi bi-pencil-fill fs-7" />
-                                                <input
-                                                    onChange={(e) => {
-                                                    console.log(e.target.files[0])
-                                                    setImgSrc(e.target.files[0])
-                                                    const file = e.target.files[0];
-                                                    const reader = new FileReader();
+                                <div className="image-input image-input-outline m-4">
+                                    {imgSrc ? <img 
+                                        src={`${imgSrc}`}
+                                        width={300}
+                                        height={300}
+                                        style={{borderRadius: "8px"}}
+                                        alt="Picture of the product"
+                                    /> 
+                                    : 
+                                    <div className=" w-300px h-300px" >
+                                        add new poto
+                                    </div>
+                                    }
+                                    <label
+                                        className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="change"
+                                        data-bs-toggle="tooltip"
+                                        title="Change avatar"
+                                    >
+                                        <i className="bi bi-pencil-fill fs-7" />
+                                        <input
+                                            onChange={(e) => {
+                                            console.log(e.target.files[0])
+                                            setImgSrc(e.target.files[0])
+                                            const file = e.target.files[0];
+                                            const reader = new FileReader();
 
-                                                    reader.onload = (event) => {
-                                                        setImgSrc(event.target.result);
-                                                    };
+                                            reader.onload = (event) => {
+                                                setImgSrc(event.target.result);
+                                            };
 
-                                                    reader.readAsDataURL(file);
-                                                }}
-                                                type="file"
-                                                name="product"
-                                                accept=".png, .jpg, .jpeg"
-                                                />
-                                            </label>
-                                            <span
-                                                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                data-kt-image-input-action="remove"
-                                                data-bs-toggle="tooltip"
-                                                title="Remove avatar"
-                                                onClick={() => {
-                                                    setImgSrc(null)
-                                                }}
-                                                >
-                                                <input
-                                                    type="hidden" name="avatar_remove" />
-                                                <i className="bi bi-x fs-2" />
-                                            </span>
-                                        </div>
+                                            reader.readAsDataURL(file);
+                                        }}
+                                        type="file"
+                                        name="product"
+                                        accept=".png, .jpg, .jpeg"
+                                        />
+                                    </label>
+                                    <span
+                                        className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="remove"
+                                        data-bs-toggle="tooltip"
+                                        title="Remove avatar"
+                                        onClick={() => {
+                                            setImgSrc(null)
+                                        }}
+                                        >
+                                        <input
+                                            type="hidden" name="avatar_remove" />
+                                        <i className="bi bi-x fs-2" />
+                                    </span>
+                                </div>
                             </span>
                         </form>
                     </div>              
