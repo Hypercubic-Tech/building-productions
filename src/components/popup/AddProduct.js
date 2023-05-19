@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
-
+import notify from '../../utils/notify';
 import styles from "./AddProduct.module.css";
 
 const AddProduct = ({
@@ -66,7 +66,11 @@ const AddProduct = ({
                 .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
                     data: productData,
                 })
+                .then(() => {
+                    notify(false, "Product added succesfuly");
+                })
         } catch (err) {
+            notify(true, "Can't create product, Please fill all field");
             console.log(err);
         }
         setSelect(null);
@@ -78,7 +82,11 @@ const AddProduct = ({
                 .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
                     data: craftData,
                 })
+                .then(() => {
+                    notify(false, "Craft added succesfuly");
+                })
         } catch (err) {
+            notify(true, "Can't create craft, Please fill all field");
             console.log(err);
         }
         setSelect(null);
@@ -86,7 +94,6 @@ const AddProduct = ({
 
     const handleMediaUpload = async () => {
         if (!imgSrc) {
-            console.log("No image selected");
             return;
         }
 
@@ -102,8 +109,12 @@ const AddProduct = ({
                         "Content-Type": "multipart/form-data",
                     },
                 }
-            );
+            )
+            .then(() => {
+                notify(false, "Image upload succesfuly");
+            });
         } catch (err) {
+            notify(true, "Can't upload image");
             console.log(err);
         }
     };

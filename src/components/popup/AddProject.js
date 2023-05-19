@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { setProjectState } from "@/store/slices/projectSlice";
 
+import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
 const AddProject = ({ dismiss }) => {
@@ -190,9 +191,11 @@ const AddProject = ({ dismiss }) => {
       })
         .then((res) => {
           const data = res.data;
-          dispatch(setProjectState(data.data))
+          dispatch(setProjectState(data.data));
+          notify(false, "Project added succesfuly");
         })
     } catch (error) {
+      notify(true, "Something went wrong, Project don't created");
       console.error(error);
     }
   }

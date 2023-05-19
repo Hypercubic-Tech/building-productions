@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
+import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
 
 const RegModal = ({ handleRegistration, onClose }) => {
@@ -29,8 +30,12 @@ const RegModal = ({ handleRegistration, onClose }) => {
         email: email.value,
         password: password.value,
         username: fullName.value,
+      })
+      .then(() => {
+        notify(false, "Registration successfuly");
       });
     } catch (err) {
+      notify(true, "Please fill all field");
       console.log(err);
     }
     handleRegistration(true);

@@ -9,6 +9,7 @@ import {
   setAuthUserId,
 } from "@/store/slices/authSlice";
 
+import notify from "../../utils/notify";
 import styles from "../popup/AuthModal.module.css";
 
 const AuthModal = ({ handleAuthorization, onClose }) => {
@@ -42,6 +43,11 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
         dispatch(setAuthEmail(data.user.email));
         dispatch(setAuthRole(data.user.role));
         dispatch(setAuthUserId(data.user.id));
+
+        notify(false, "Logged in, Welcome");
+      })
+      .catch(() => {
+        notify(true, "Email or Password is incorrect");
       });
   };
 
