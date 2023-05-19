@@ -64,17 +64,17 @@ const AddProduct = ({
         }
     });
 
-    // const handleSubmit = async () => {
-    //     try {
-    //         await axios
-    //             .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
-    //                 data: productData,
-    //             })
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    //     setSelect(null);
-    // };
+    const handleSubmit = async () => {
+        try {
+            await axios
+                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+                    data: productData,
+                })
+        } catch (err) {
+            console.log(err);
+        }
+        setSelect(null);
+    };
 
     const handleCraftSubmit = async () => {
         try {
@@ -88,33 +88,33 @@ const AddProduct = ({
         setSelect(null);
     };
 
-    // const handleMediaUpload = async () => {
-    //     if (!imgSrc) {
-    //         console.log("No image selected");
-    //         return;
-    //     }
+    const handleMediaUpload = async () => {
+        if (!imgSrc) {
+            console.log("No image selected");
+            return;
+        }
 
-    //     const formData = new FormData();
-    //     formData.append("files", imgSrc);
+        const formData = new FormData();
+        formData.append("files", imgSrc);
 
-    //     try {
-    //         await axios.post(
-    //             `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
-    //             formData,
-    //             {
-    //                 headers: {
-    //                     "Content-Type": "multipart/form-data",
-    //                 },
-    //             }
-    //         );
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
+        try {
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    // useEffect(() => {
-    //     handleMediaUpload();
-    // }, [imgSrc]);
+    useEffect(() => {
+        handleMediaUpload();
+    }, [imgSrc]);
 
 
     return (
