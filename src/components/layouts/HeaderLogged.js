@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
+
 import {
   setAuthAccessToken,
   setAuthEmail,
@@ -223,9 +225,12 @@ function HeaderLogged() {
               </form>
             </div>
             <div className="d-flex align-items-center ms-3 ms-lg-4">
-              <div
-                onClick={popupHandler}
+              <Link
+                // onClick={popupHandler}
                 className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
+                href={{
+                  pathname: `/projects`,
+                }}
               >
                 <span className="svg-icon svg-icon-1">
                   <svg
@@ -240,7 +245,7 @@ function HeaderLogged() {
                     <path d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z" />
                   </svg>
                 </span>
-              </div>
+              </Link>
               {popup && (
                 <div className={styles.popup}>
                   <HeaderPopup />
@@ -250,9 +255,8 @@ function HeaderLogged() {
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
                 onClick={openModal}
-                className={` ${
-                  isModalOpen ? styles.activeBg : ""
-                } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
+                className={` ${isModalOpen ? styles.activeBg : ""
+                  } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
                 data-kt-menu-trigger="click"
                 data-kt-menu-attach="parent"
                 data-kt-menu-placement="bottom-end"

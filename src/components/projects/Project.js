@@ -46,9 +46,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
 
           .then((res) => {
             const data = res.data;
-            console.log(data, 'data')
             setDefaultP(data.data);
-            console.log(defaultP, 'df')
           })
       } catch (error) {
         console.error(error);
