@@ -27,7 +27,6 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   };
 
   const filterProductCategory = async (id) => {
-    console.log(id);
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`);
       const data = response.data;
@@ -40,7 +39,6 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
 
   const defaultProductsHandler = async (id) => {
     if (id) {
-      console.log(id, 'idd');
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`);
         const data = response.data;
