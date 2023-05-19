@@ -97,6 +97,7 @@ const Heading = () => {
               </span>
             </h1>
             <div
+              onClick={handleAuthClick}
               href="/projects"
               className="btn btn-primary georgian"
               data-bs-toggle="modal"
@@ -113,112 +114,10 @@ const Heading = () => {
               >
                 <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z" />
               </svg>
-              <b onClick={handleAuthClick}>გამოთვალე!</b>
+              <b>გამოთვალე!</b>
             </div>
           </div>
-          {/* <div className="d-flex flex-center flex-wrap position-relative px-5">
-            <div
-              className="d-flex flex-center m-3 m-md-6"
-              data-bs-toggle="tooltip"
-              title="Fujifilm"
-            >
-              <img
-                src="assets/media/svg/brand-logos/fujifilm.svg"
-                className="mh-30px mh-lg-40px"
-                alt=""
-              />
-            </div>
-            <div
-              className="d-flex flex-center m-3 m-md-6"
-              data-bs-toggle="tooltip"
-              title="Vodafone"
-            >
-              <img
-                src="assets/media/svg/brand-logos/vodafone.svg"
-                className="mh-30px mh-lg-40px"
-                alt=""
-              />
-            </div>
-            <div
-              className="d-flex flex-center m-3 m-md-6"
-              data-bs-toggle="tooltip"
-              title="KPMG International"
-            >
-              <img
-                src="assets/media/svg/brand-logos/kpmg.svg"
-                className="mh-30px mh-lg-40px"
-                alt=""
-              />
-            </div>
-            <div
-              className="d-flex flex-center m-3 m-md-6"
-              data-bs-toggle="tooltip"
-              title="Nasa"
-            >
-              <img
-                src="assets/media/svg/brand-logos/nasa.svg"
-                className="mh-30px mh-lg-40px"
-                alt=""
-              />
-            </div>
-            <div
-              className="d-flex flex-center m-3 m-md-6"
-              data-bs-toggle="tooltip"
-              title="Aspnetzero"
-            >
-              <img
-                src="assets/media/svg/brand-logos/aspnetzero.svg"
-                className="mh-30px mh-lg-40px"
-                alt=""
-              />
-            </div>
-            <div
-              className="d-flex flex-center m-3 m-md-6"
-              data-bs-toggle="tooltip"
-              title="AON - Empower Results"
-            >
-              <img
-                src="assets/media/svg/brand-logos/aon.svg"
-                className="mh-30px mh-lg-40px"
-                alt=""
-              />
-            </div>
-            <div
-              className="d-flex flex-center m-3 m-md-6"
-              data-bs-toggle="tooltip"
-              title="Hewlett-Packard"
-            >
-              <img
-                src="assets/media/svg/brand-logos/hp-3.svg"
-                className="mh-30px mh-lg-40px"
-                alt=""
-              />
-            </div>
-            <div
-              className="d-flex flex-center m-3 m-md-6"
-              data-bs-toggle="tooltip"
-              title="Truman"
-            >
-              <img
-                src="assets/media/svg/brand-logos/truman.svg"
-                className="mh-30px mh-lg-40px"
-                alt=""
-              />
-            </div>
-          </div> */}
         </div>
-        {/* <div className="landing-curve landing-dark-color mb-10 mb-lg-20">
-          <svg
-            viewBox="15 12 1470 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z"
-              fill="currentColor"
-            />
-          </svg>
-        </div> */}
       </div>
     </div>
   );
