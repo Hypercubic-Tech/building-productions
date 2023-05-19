@@ -23,7 +23,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         const filteredProducts = data.data?.attributes?.categories?.attributes?.title.filter((product) => product.title === category);
         setAllProduct(filteredProducts);
         // console.log(data.data?.attributes?.categories?.attributes?.title)
-        console.log(allProduct, 'prod')
+        // console.log(allProduct, 'prod')
       })
   };
 
