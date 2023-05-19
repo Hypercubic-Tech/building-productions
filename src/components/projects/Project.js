@@ -44,16 +44,14 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
     try {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
 
-        .then((res) => {
-          const data = res.data;
-          console.log(data, 'data')
-          setDefaultP(data.data);
-          console.log(defaultP, 'df')
-        })
-    } catch (error) {
-      console.error(error);
-    }
-  };
+          .then((res) => {
+            const data = res.data;
+            setDefaultP(data.data);
+          })
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   return (
     <>
