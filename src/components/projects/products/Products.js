@@ -76,16 +76,13 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         )
         .then((res) => {
           const data = res.data.data;
-          console.log(data, 'default all data')
-          console.log(data.map((item) => {
-            item?.attributes
-          }))
+
           const defaultProducts = data.filter((product) =>
             product.attributes?.categories?.data.some(
               (category) => category.id === product.attributes?.data?.category?.id
             )
           );
-          console.log(defaultProducts, 'pf')
+
         });
     }
 

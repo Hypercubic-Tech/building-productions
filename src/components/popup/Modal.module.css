@@ -6,6 +6,7 @@
   right: 0;
   margin-left: auto;
   margin-right: auto;
+  position: absolute;
 }
 .errorBorder {
   border: 1px solid red !important;
