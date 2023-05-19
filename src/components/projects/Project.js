@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Products from "./Products";
@@ -14,6 +14,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
+  const [defaultP, setDefaultP] = useState(null);
   const [productCategory, setProductCategory] = useState("");
   const router = useRouter();
   const { projectId } = router.query;
@@ -23,6 +24,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   };
 
   const filterProductCategory = async (id) => {
+    console.log(id)
     try {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
 
@@ -34,6 +36,21 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
       console.error(error);
     }
   };
+
+    const defaultProductsHandler = async (id) => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
+
+          .then((res) => {
+            const data = res.data;
+            console.log(data, 'data')
+            setDefaultP(data.data);
+            console.log(defaultP, 'df')
+          })
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   return (
     <>
@@ -490,6 +507,8 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {summary} ლარი</div>
                       <Products
+                        defaultProductsHandler={defaultProductsHandler}
+                        defaultP={defaultP}
                         editProductItem={editProductItem}
                         editHandler={editHandler}
                         products={products}

@@ -4,10 +4,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import EditProduct from "./EditProduct";
 import EditService from "./EditService";
+import { applyMiddleware } from "@reduxjs/toolkit";
 
-const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, firstProducts }) => {
+const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, firstProducts, defaultProductsHandler, defaultP }) => {
   const [allProduct, setAllProduct] = useState(null);
   const [editPopup, setEditPopup] = useState(false);
+  const [idD, setId] = useState("")
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -18,14 +20,77 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       )
       .then((res) => {
         const data = res.data;
-        const defaultFiltered = "ელექტროობა"
-        console.log(data, 'dt')
-        const filteredProducts = data.data?.attributes?.categories?.attributes?.title.filter((product) => product.title === category);
-        setAllProduct(filteredProducts);
-        // console.log(data.data?.attributes?.categories?.attributes?.title)
-        console.log(allProduct, 'prod')
-      })
+        const defaultFiltered = "ელექტროობა";
+        setAllProduct(data)
+        // console.log(data, 'data'); // Check the structure of data
+
+        // Check the structure of the first item in the categories array
+        console.log(data[0]?.attributes?.categories?.data[0]?.attributes?.title);
+
+        const filteredProducts = data?.attributes?.categories?.data?.attributes.filter((product) => {
+          return product.title === defaultFiltered;
+        });
+        console.log(filteredProducts, 'filteredProducts');
+
+        // ...
+      });
   };
+
+  // allProduct: {
+  //   data: [
+  //     {
+  //       attributes: {
+  //         categories:
+  //       }
+  //     }
+  //   ]
+  // }
+
+  // useEffect(() => {
+  //   const getProductId = async () => {
+  //     try {
+  //       const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
+  //       console.log(id, 'id');
+
+  //       if (!id) {
+  //         // If ID is not available, re-call the useEffect after a short delay
+  //         setTimeout(getProductId, 1000);
+  //       } else {
+  //         // ID is available, proceed with defaultProductsHandler
+  //         defaultProductsHandler(id);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   // Call getProductId initially
+  //   getProductId();
+  // }, []);
+
+  useEffect(() => {
+    const getDefaultProducts = async () => {
+      await axios
+        .get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
+        )
+        .then((res) => {
+          const data = res.data.data;
+          console.log(data, 'default all data')
+          console.log(data.map((item) => {
+            item?.attributes
+          }))
+          const defaultProducts = data.filter((product) =>
+            product.attributes?.categories?.data.some(
+              (category) => category.id === product.attributes?.data?.category?.id
+            )
+          );
+          console.log(defaultProducts, 'pf')
+        });
+    }
+
+    getDefaultProducts();
+  }, [])
 
   useEffect(() => {
     if (projectId) {
@@ -86,9 +151,8 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               <th className="text-end min-w-100px georgian">ცვლილება</th>
             </tr>
           </thead>
-          {console.log(allProduct)}
           {/* {allProduct && !filteredProducts?.length} */}
-          {allProduct?.length > 0 && !filteredProducts?.length && allProduct.map((product) => {
+          {/* {defaultP?.length > 0 && !filteredProducts?.length && defaultP.map((product) => {
             return (
               <tbody key={product.id}>
                 <tr>
@@ -164,10 +228,9 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                 </tr>
               </tbody>
             )
-          })}
-          {filteredProducts?.length > 0 &&
+          })} */}
+          {/* {filteredProducts?.length > 0 &&
             filteredProducts.map((product) => {
-              { console.log(product, 'product') }
               product = product.attributes
               return (
                 <tbody key={product.id}>
@@ -244,7 +307,23 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                 </tbody>
               )
             })
-          }
+          } */}
+          {defaultP ? (
+            defaultP.map((product) => (
+              // Render your components for each default product
+              <tbody key={product.id}>
+                {/* Your product rendering logic */}
+              </tbody>
+            ))
+          ) : (
+            <tbody>
+              <tr>
+                <td>
+                  daelodet
+                </td>
+              </tr>
+            </tbody>
+          )}
         </table>
       </div>
       {editPopup && editProductItem.type ? "product"(
