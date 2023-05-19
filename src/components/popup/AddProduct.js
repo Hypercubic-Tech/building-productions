@@ -14,11 +14,10 @@ const AddProduct = ({
 }) => {
     const router = useRouter();
     const projectId = router.query.projectId;
-
+    console.log(projectId, 'projectId')
     const [toggle, setToggle] = useState(true);
-    const [isTouched, setIsTouched] = useState(false);
+    const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
-    // const [productImage, setProductImage] = useState(null);
     const [productData, setProductData] = useState({
         // image: {
         //     connect: [{ image: null}]
@@ -44,7 +43,7 @@ const AddProduct = ({
     });
     const [craftData, setCraftData] = useState({
         title: "",
-        type: "service",
+        type: "craft",
         quantity: 0,
         unit: {
             connect: [{ id: null }],
@@ -53,15 +52,12 @@ const AddProduct = ({
         //     connect: [{ id: null }],
         // },
         price: 0,
-        categories: {
-            connect: [{}],
+        project: {
+            connect: [{ id: projectId }]
         },
         craft_status: {
             connect: [{ id: null }]
         },
-        project: {
-            connect: [{ id: projectId }]
-        }
     });
 
     const handleSubmit = async () => {
@@ -484,22 +480,6 @@ const AddProduct = ({
                                     data-kt-scroll-offset="300px"
                                 >
                                     <div className="row mb-5">
-                                        {isTouched && (
-                                            <div className={styles.imageBox}>
-                                                <img
-                                                    onChange={(e) => {
-                                                        // setCraftData((prevSendData) => ({
-                                                        //     ...prevSendData,
-                                                        //     image: {
-                                                        //         connect: [{ id: e.target.files }],
-                                                        //     },
-                                                        // }));
-                                                    }}
-                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`}
-                                                    alt="img"
-                                                />
-                                            </div>
-                                        )}
                                         {isTouched && (
                                             <>
                                                 <div className="col-md-4 fv-row fv-plugins-icon-container">
