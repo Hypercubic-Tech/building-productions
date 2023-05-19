@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import Products from "./Products";
+import Products from "./products/Products";
 import Filter from "./Filter";
 import axios from "axios";
-import AddProduct from "./AddProduct";
-import Gallery from "./Gallery";
-import EditProduct from "./EditProduct"
-import EditService from "./EditService";
-import Export from "./Export";
-import Drawings from "./Drawings";
+import AddProduct from "../popup/AddProduct";
+import Gallery from "../popup/Gallery";
+import EditProduct from "../popup/EditProduct";
+import EditService from "../popup/EditService";
+import Export from "../popup/Export";
+import Drawings from "../popup/Drawings";
 
 const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem }) => {
   const [select, setSelect] = useState(null);
@@ -40,20 +40,20 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
     }
   };
 
-    const defaultProductsHandler = async (id) => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
+  const defaultProductsHandler = async (id) => {
+    try {
+      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
 
-          .then((res) => {
-            const data = res.data;
-            console.log(data, 'data')
-            setDefaultP(data.data);
-            console.log(defaultP, 'df')
-          })
-      } catch (error) {
-        console.error(error);
-      }
-    };
+        .then((res) => {
+          const data = res.data;
+          console.log(data, 'data')
+          setDefaultP(data.data);
+          console.log(defaultP, 'df')
+        })
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -98,7 +98,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
           })}
           <div className="d-flex align-items-center py-2 py-md-1">
             <div
-              className="me-3" 
+              className="me-3"
               onClick={() => {
                 setSelect("gallery")
               }}
@@ -118,7 +118,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                 id="kt_menu_61484d4eae1ca"
               ></div>
             </div>
-            <div 
+            <div
               className="d-flex align-items-center py-2 py-md-1"
               onClick={() => {
                 setSelect("dranings")

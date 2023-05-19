@@ -2,8 +2,8 @@ import axios, { all } from "axios";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import EditProduct from "./EditProduct";
-import EditService from "./EditService";
+import EditProduct from "../../popup/EditProduct";
+import EditService from "../../popup/EditService";
 import { applyMiddleware } from "@reduxjs/toolkit";
 
 const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, firstProducts, defaultProductsHandler, defaultP }) => {

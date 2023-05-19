@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import styles from "./AddWork.module.css";
+import styles from "./AddProduct.module.css";
 
 const EditService = ({
     setSelect,
