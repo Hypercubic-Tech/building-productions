@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import Products from "./Products";
+import Products from "./products/Products";
 import Filter from "./Filter";
 import axios from "axios";
-import AddProduct from "./AddProduct";
-import Gallery from "./Gallery";
-import EditProduct from "./EditProduct"
-import EditService from "./EditService";
-import Export from "./Export";
-import Drawings from "./Drawings";
+import AddProduct from "../popup/AddProduct";
+import Gallery from "../popup/Gallery";
+import EditProduct from "../popup/EditProduct";
+import EditService from "../popup/EditService";
+import Export from "../popup/Export";
+import Drawings from "../popup/Drawings";
 
 const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem }) => {
   const [select, setSelect] = useState(null);
@@ -27,33 +27,35 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   };
 
   const filterProductCategory = async (id) => {
-    console.log(id)
     try {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
-
-        .then((res) => {
-          const data = res.data;
-          setFilteredProducts(data.data);
-        })
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`);
+      const data = response.data;
+      setFilteredProducts(data.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-    const defaultProductsHandler = async (id) => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
 
-          .then((res) => {
-            const data = res.data;
-            console.log(data, 'data')
-            setDefaultP(data.data);
-            console.log(defaultP, 'df')
-          })
+  const defaultProductsHandler = async (id) => {
+    if (id) {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`);
+        const data = response.data;
+        setDefaultP(data.data);
       } catch (error) {
         console.error(error);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
+    console.log(filteredProducts, 'filteredProducts');
+  }, [filteredProducts]);
+
+  useEffect(() => {
+    console.log(defaultP, 'defaultP');
+  }, [defaultP]);
 
   return (
     <>
@@ -98,7 +100,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
           })}
           <div className="d-flex align-items-center py-2 py-md-1">
             <div
-              className="me-3" 
+              className="me-3"
               onClick={() => {
                 setSelect("gallery")
               }}
@@ -118,7 +120,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                 id="kt_menu_61484d4eae1ca"
               ></div>
             </div>
-            <div 
+            <div
               className="d-flex align-items-center py-2 py-md-1"
               onClick={() => {
                 setSelect("dranings")
@@ -197,28 +199,6 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                           className="d-flex justify-content-end"
                           data-kt-user-table-toolbar="base"
                         >
-                          <button
-                            type="button"
-                            className="btn btn-light-primary me-3"
-                            data-kt-menu-trigger="click"
-                            data-kt-menu-placement="bottom-end"
-                          >
-                            <span className="svg-icon svg-icon-2 ">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width={24}
-                                height={24}
-                                viewBox="0 0 24 24"
-                                fill="none"
-                              >
-                                <path
-                                  d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
-                                  fill="black"
-                                />
-                              </svg>
-                            </span>
-                            <b className="georgian">ფილტრი</b>
-                          </button>
                           <button
                             type="button"
                             onClick={() => {
