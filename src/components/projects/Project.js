@@ -27,31 +27,35 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   };
 
   const filterProductCategory = async (id) => {
-    console.log(id)
     try {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
-
-        .then((res) => {
-          const data = res.data;
-          setFilteredProducts(data.data);
-        })
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`);
+      const data = response.data;
+      setFilteredProducts(data.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const defaultProductsHandler = async (id) => {
-    try {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`)
 
-          .then((res) => {
-            const data = res.data;
-            setDefaultP(data.data);
-          })
+  const defaultProductsHandler = async (id) => {
+    if (id) {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`);
+        const data = response.data;
+        setDefaultP(data.data);
       } catch (error) {
         console.error(error);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
+    console.log(filteredProducts, 'filteredProducts');
+  }, [filteredProducts]);
+
+  useEffect(() => {
+    console.log(defaultP, 'defaultP');
+  }, [defaultP]);
 
   return (
     <>
