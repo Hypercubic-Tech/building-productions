@@ -102,7 +102,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               <th className="text-end min-w-100px georgian">ცვლილება</th>
             </tr>
           </thead>
-          {console.log(filteredProducts)}
           {!filteredProducts ? defaultP && defaultP.map((product) => {
             return (
               <tbody key={product.id}>
