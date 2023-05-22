@@ -16,7 +16,7 @@ const Gallery = ({ setSelect }) => {
             // http://localhost:1337/api/projects?filters[id][$eq]=2&populate[image][populate]=id
           )
           .then((res) => {
-            const data = res.data
+            const data = res.data;
             let imgs =data.data[0].attributes.image.data;
             setProjectImgs(imgs)
             console.log(data, 'primgdata')

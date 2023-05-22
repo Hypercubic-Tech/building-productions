@@ -7,7 +7,7 @@
 
 const HowItWorks = () => {
   return (
-    <div className="mb-n10 mb-lg-n20 z-index-2">
+    <div style={{marginTop: "30px"}} className="mb-n10 mb-lg-n20 z-index-2">
       <div className="container">
         <div className="text-center mb-17">
           <h3
