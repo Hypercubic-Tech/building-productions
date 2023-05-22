@@ -91,7 +91,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
             </svg>
           </div>
           <div className="d-grid gap-2">
-            <label className="mt-2">Email:</label>
+            <label className="mt-2 fx">Email:</label>
             <input
               autoComplete="username"
               required
@@ -104,7 +104,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
             />
           </div>
           <div className="d-grid gap-2">
-            <label className="mt-2">Password:</label>
+            <label className="mt-2 fx">Password:</label>
             <input
               autoComplete="current-password"
               required
