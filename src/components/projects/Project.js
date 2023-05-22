@@ -28,7 +28,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       setFilteredProducts(data.data);
     } catch (error) {
@@ -40,7 +40,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const defaultProductsHandler = async (id) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate[categories][populate]=products&filters[categories][id][$eq]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data;
         setDefaultP(data.data);
       } catch (error) {
