@@ -8,6 +8,7 @@ import styles from "./Modal.module.css";
 
 const AddProject = ({ dismiss }) => {
   const [step, setStep] = useState(1);
+  const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
   const [cities, setCities] = useState(null);
@@ -75,16 +76,21 @@ const AddProject = ({ dismiss }) => {
   };
 
   const stepChangeHandler = () => {
-    if (step < 4) {
-      if (errors.stepOne.length === 0) {
+
+    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
+      setStep(step + 1);
+      setLoss(false);
+    } else {
+      setLoss(true);
+    }
+    if (step === 2  && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
+      console.log('rame2')
+      setStep(step + 1);
+      setLoss(false);
+    } 
+    if (step === 3 && errors.stepThree.length === 0 && sendData.title  && sendData.categories.connect.length > 0 ){
         setStep(step + 1);
-        if (errors.stepTwo.length === 0) {
-          setStep(step + 1);
-          if (errors.stepThree.length === 0) {
-            setStep(step + 1);
-          }
-        }
-      }
+        setLoss(false);
     }
   };
 
@@ -651,9 +657,9 @@ const AddProject = ({ dismiss }) => {
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100 text-center">
-                    <h1 className="fw-bolder text-dark mb-3">Release!</h1>
+                    <h1 className="fw-bolder text-dark mb-3">მონაცემები შეყვანილია!</h1>
                     <div className="text-muted fw-bold fs-3">
-                      Submit your app to kickstart your project.
+                      დამატების ღილაკზე დაჭერით მონაცემები ბაზაში აიტვირთება.
                     </div>
                     <div className="text-center px-4 py-15">
                       <img
@@ -664,6 +670,7 @@ const AddProject = ({ dismiss }) => {
                     </div>
                   </div>
                 </div>
+               {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
 
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
@@ -701,6 +708,8 @@ const AddProject = ({ dismiss }) => {
                   </div>
 
                   <div>
+               {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
+
                     <button
                       onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}

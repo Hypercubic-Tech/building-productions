@@ -246,20 +246,20 @@ function HeaderLogged() {
                   </svg>
                 </span>
               </Link>
+            </div>
               {popup && (
                 <div className={styles.popup}>
                   <HeaderPopup />
                 </div>
               )}
-            </div>
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
                 onClick={openModal}
                 className={` ${isModalOpen ? styles.activeBg : ""
-                  } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
-                data-kt-menu-trigger="click"
-                data-kt-menu-attach="parent"
-                data-kt-menu-placement="bottom-end"
+              } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
+              data-kt-menu-trigger="click"
+              data-kt-menu-attach="parent"
+              data-kt-menu-placement="bottom-end"
               >
                 <span className="svg-icon svg-icon-1">
                   <svg

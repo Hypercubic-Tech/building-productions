@@ -14,7 +14,8 @@ const AddProduct = ({
 }) => {
     const router = useRouter();
     const projectId = router.query.projectId;
-    console.log(projectId, 'projectId')
+    const [lossProduct, setLossProduct] = useState(false);
+    const [lossCraft, setLossCraft] = useState(false);
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
@@ -61,27 +62,48 @@ const AddProduct = ({
     });
 
     const handleSubmit = async () => {
-        try {
-            await axios
-                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
-                    data: productData,
-                })
-        } catch (err) {
-            console.log(err);
-        }
-        setSelect(null);
+        if (productData.title 
+            && imgSrc 
+            && productData.supplier.connect[0].id 
+            && productData.productLink 
+            && productData.quantity 
+            && productData.price 
+            && productData.unit.connect[0].id 
+            && productData.categories.connect[0].id) {
+                setLossProduct(false);
+                setSelect(null);
+                try {
+                    await axios
+                        .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+                            data: productData,
+                        })
+                } catch (err) {
+                    console.log(err);
+                }
+        } else {
+            setLossProduct(true);
+        }        
     };
 
     const handleCraftSubmit = async () => {
-        try {
-            await axios
-                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
-                    data: craftData,
-                })
-        } catch (err) {
-            console.log(err);
+        if (craftData.title 
+            && craftData.quantity 
+            && craftData.price 
+            && craftData.unit.connect[0].id 
+            && craftData.craft_status.connect[0].id){
+                try {
+                    await axios
+                        .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+                            data: craftData,
+                        })
+                } catch (err) {
+                    console.log(err);
+                }
+                setLossProduct(false);
+                setSelect(null);
+        } else {
+            setLossProduct(true);
         }
-        setSelect(null);
     };
 
     const handleMediaUpload = async () => {
@@ -445,6 +467,8 @@ const AddProduct = ({
                                         </div>
                                     </div>
                                 </div>
+                                {lossProduct && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
+
                                 <div className="text-center pt-15">
                                     <button
                                         onClick={() => {
@@ -603,6 +627,7 @@ const AddProduct = ({
                                         )}
                                     </div>
                                 </div>
+                                {lossProduct && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
                                 <div className="text-center pt-15">
                                     <button
                                         onClick={() => { setSelect(null) }}

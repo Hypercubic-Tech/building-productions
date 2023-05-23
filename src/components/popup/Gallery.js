@@ -10,9 +10,7 @@ const Gallery = ({ setSelect }) => {
     const [projectImgs, setProjectImgs] = useState(null);
 
     const getProductsHandler = async () => {
-        await axios
-          .get(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
             // http://localhost:1337/api/projects?filters[id][$eq]=2&populate[image][populate]=id
           )
           .then((res) => {
