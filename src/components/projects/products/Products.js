@@ -49,29 +49,29 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     };
   }, [projectId]);
 
-  // const deleteProductHandler = async (productId) => {
-  //   await axios
-  //     .delete(
-  //       `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
-  //     )
-  //     .then(() => {
-  //       getProductsHandler();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  const deleteProductHandler = async (productId) => {
+    await axios
+      .delete(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
+      )
+      .then(() => {
+        getProductsHandler();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
 
-  // const editHandlerPopup = () => {
-  //   console.log(editProductItem, 'item')
-  //   if (editPopup === false) {
-  //     console.log('im here')
-  //     setEditPopup(true)
-  //   } else {
-  //     setEditPopup(false)
-  //   }
-  // };
+  const editHandlerPopup = () => {
+    console.log(editProductItem, 'item')
+    if (editPopup === false) {
+      console.log('im here')
+      setEditPopup(true)
+    } else {
+      setEditPopup(false)
+    }
+  };
 
   return (
     <>
