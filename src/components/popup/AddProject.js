@@ -323,7 +323,7 @@ const AddProject = ({ dismiss }) => {
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              <form className="form needs-validation" noValidate="novalidate" id="">
+              <form className="form needs-validation" noValidate="novalidate" novalidate>
                 <div
                   className={getStatusClass(1)}
                   data-kt-stepper-element="content"
