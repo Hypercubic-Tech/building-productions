@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-import { setProjectState } from "@/store/slices/projectSlice";
+import { setProjectState } from "../../store/slices/projectSlice";
 
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthState, setAuthState } from "@/store/slices/authSlice";
+import { selectAuthState, setAuthState } from "../../store/slices/authSlice";
 
 import HeaderLogged from "./HeaderLogged";
 import DefaultHeader from "./DefaultHeader";

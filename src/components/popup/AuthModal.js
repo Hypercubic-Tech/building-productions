@@ -7,7 +7,7 @@ import {
   setAuthEmail,
   setAuthRole,
   setAuthUserId,
-} from "@/store/slices/authSlice";
+} from "../../store/slices/authSlice";
 
 import notify from "../../utils/notify";
 import styles from "../popup/AuthModal.module.css";

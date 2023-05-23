@@ -9,7 +9,7 @@ import {
   setAuthRole,
   setAuthUserId,
   setAuthState
-} from "@/store/slices/authSlice";
+} from "../../store/slices/authSlice";
 import HeaderPopup from "../popup/HeaderPopup";
 
 import styles from "../layouts/HeaderLogged.module.css";

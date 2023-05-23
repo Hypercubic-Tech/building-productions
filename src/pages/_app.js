@@ -1,4 +1,4 @@
-import "@/styles/main/style.bundle.css";
+import "../styles/main/style.bundle.css"
 import { Provider } from "react-redux";
 import "../../public/assets/plugins/global/plugins.bundle.css";
 import Layout from "../components/layout/Layout";
