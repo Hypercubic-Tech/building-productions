@@ -19,9 +19,6 @@ const AddProduct = ({
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [productData, setProductData] = useState({
-        // image: {
-        //     connect: [{ image: null}]
-        // },
         title: "",
         type: "product",
         purchased: false,
@@ -48,9 +45,6 @@ const AddProduct = ({
         unit: {
             connect: [{ id: null }],
         },
-        // image: {
-        //     connect: [{ id: null }],
-        // },
         price: 0,
         project: {
             connect: [{ id: projectId }]
@@ -94,34 +88,34 @@ const AddProduct = ({
 
     const handleMediaUpload = async () => {
         if (!imgSrc) {
-            return;
+          return;
         }
-
-        const formData = new FormData();
-        formData.append("files", imgSrc);
-
+      
         try {
-            await axios.post(
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            )
-            .then(() => {
-                notify(false, "Image upload succesfuly");
-            });
+          const formData = new FormData();
+          formData.append("files", imgSrc);
+      
+          await axios.post(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+      
+          notify(false, "Image uploaded successfully");
         } catch (err) {
-            notify(true, "Can't upload image");
-            console.log(err);
+          notify(true, "Can't upload image");
+          console.log(err);
         }
-    };
-
-    useEffect(() => {
+      };
+      
+      useEffect(() => {
+        console.log(imgSrc);
         handleMediaUpload();
-    }, [imgSrc]);
+      }, [imgSrc]);
 
 
     return (
@@ -259,6 +253,7 @@ const AddProduct = ({
                                                     title="Remove avatar"
                                                     onClick={() => {
                                                         setImgSrc(null)
+                                                        notify(false, "Image remove succesfuly")
                                                     }}
                                                 >
                                                     <input
@@ -272,9 +267,7 @@ const AddProduct = ({
                                             <div className="fw-bold">
                                                 <h4 className="text-gray-900 fw-bolder georgian">სურათი</h4>
                                                 <div className="fs-6 text-gray-700 georgian">
-                                                    მიუთითეთ მხოლოდ:
-                                                    <a>png, jpg, jpeg.</a>
-                                                    ფორმატი!
+                                                    აირჩიეთ სასურველი ფორმატი
                                                 </div>
                                             </div>
                                         </div>
