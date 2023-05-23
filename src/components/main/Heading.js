@@ -7,7 +7,7 @@ import {
   selectAuthState,
   setAuthState,
   selectAuthAccessToken,
-} from "@/store/slices/authSlice";
+} from "../../store/slices/authSlice";
 
 const Heading = () => {
   const loggedIn = useSelector(setAuthState);

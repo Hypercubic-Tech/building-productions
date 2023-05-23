@@ -49,14 +49,6 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
     }
   };
 
-  useEffect(() => {
-    console.log(filteredProducts, 'filteredProducts');
-  }, [filteredProducts]);
-
-  useEffect(() => {
-    console.log(defaultP, 'defaultP');
-  }, [defaultP]);
-
   return (
     <>
       <Filter giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />

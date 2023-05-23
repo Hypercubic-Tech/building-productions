@@ -14,12 +14,14 @@ const AddProduct = ({
 }) => {
     const router = useRouter();
     const projectId = router.query.projectId;
-    console.log(projectId, 'projectId')
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [imageId, setImageId] = useState(null);
     const [productData, setProductData] = useState({
+        image: {
+            connect: [{ id: imageId}]
+        },
         title: "",
         type: "product",
         purchased: false,
@@ -107,7 +109,10 @@ const AddProduct = ({
             )
                 .then((res) => {
                     const data = res.data;
-                    setImageId(data[0].id)
+                    console.log(data[0].id)
+                    setImageId(data[0]?.id)
+                    console.log(imageId)
+
                 });
 
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
