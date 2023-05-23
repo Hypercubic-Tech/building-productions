@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import notify from '../../utils/notify';
@@ -18,9 +18,11 @@ const AddProduct = ({
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [imageId, setImageId] = useState(null);
+    console.log(imageId, 'asapa tesli kacia')
+
     const [productData, setProductData] = useState({
-        image: {
-            connect: [{ id: imageId}]
+        files: {
+            connect: [{ id: imageId }]
         },
         title: "",
         type: "product",
@@ -89,7 +91,7 @@ const AddProduct = ({
         setSelect(null);
     };
 
-    const handleMediaUpload = async () => {
+    const handleMediaUpload = useCallback(async () => {
         if (!imgSrc) {
             return;
         }
@@ -98,7 +100,7 @@ const AddProduct = ({
             const formData = new FormData();
             formData.append("files", imgSrc);
 
-            await axios.post(
+            const res = await axios.post(
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
                 formData,
                 {
@@ -106,27 +108,34 @@ const AddProduct = ({
                         "Content-Type": "multipart/form-data",
                     },
                 }
-            )
-                .then((res) => {
-                    const data = res.data;
-                    console.log(data[0].id)
-                    setImageId(data[0]?.id)
-                    console.log(imageId)
+            );
 
-                });
+            const data = res.data;
+            console.log(data[0].id);
+            console.log(data[0]);
+            setImageId(data[0]?.id);
 
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             notify(true, "სურათის ატვირთვა უარყოფილია");
             console.log(err);
         }
-    };
+    }, [imgSrc]);
 
     useEffect(() => {
         if (imgSrc) {
             handleMediaUpload();
         }
-    }, [imgSrc]);
+    }, [imgSrc, handleMediaUpload]);
+
+    useEffect(() => {
+        setProductData((prevProductData) => ({
+            ...prevProductData,
+            files: {
+                connect: [{ id: imageId }]
+            }
+        }));
+    }, [imageId]);
 
     const handleImageRemove = async () => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
@@ -246,7 +255,6 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            console.log(e.target.files[0])
                                                             setImgSrc(e.target.files[0])
                                                             const file = e.target.files[0];
                                                             const reader = new FileReader();
@@ -256,7 +264,6 @@ const AddProduct = ({
                                                             };
 
                                                             reader.readAsDataURL(file);
-                                                            // handleMediaUpload()
                                                         }}
                                                         type="file"
                                                         name="avatar"
