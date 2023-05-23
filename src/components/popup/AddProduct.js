@@ -18,6 +18,7 @@ const AddProduct = ({
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
+    const [imageId, setImageId] = useState(null);
     const [productData, setProductData] = useState({
         title: "",
         type: "product",
@@ -88,34 +89,45 @@ const AddProduct = ({
 
     const handleMediaUpload = async () => {
         if (!imgSrc) {
-          return;
+            return;
         }
-      
+
         try {
-          const formData = new FormData();
-          formData.append("files", imgSrc);
-      
-          await axios.post(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-      
-          notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+            const formData = new FormData();
+            formData.append("files", imgSrc);
+
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            )
+                .then((res) => {
+                    const data = res.data;
+                    setImageId(data[0].id)
+                });
+
+            notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
-          notify(true, "სურათის ატვირთვა უარყოფილია");
-          console.log(err);
+            notify(true, "სურათის ატვირთვა უარყოფილია");
+            console.log(err);
         }
-      };
-      
-      useEffect(() => {
-        console.log(imgSrc);
-        handleMediaUpload();
-      }, [imgSrc]);
+    };
+
+    useEffect(() => {
+        if (imgSrc) {
+            handleMediaUpload();
+        }
+    }, [imgSrc]);
+
+    const handleImageRemove = async () => {
+        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
+        setImgSrc(null);
+        notify(false, "სურათი წარმატებით წაიშალა");
+    };
 
 
     return (
@@ -252,8 +264,7 @@ const AddProduct = ({
                                                     data-bs-toggle="tooltip"
                                                     title="Remove avatar"
                                                     onClick={() => {
-                                                        setImgSrc(null)
-                                                        notify(false, "სურათი წარმატებით წაიშალა")
+                                                        handleImageRemove()
                                                     }}
                                                 >
                                                     <input
