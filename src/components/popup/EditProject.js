@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import cities from "@/api/cities.json";
+// import cities from "@/api/cities.json";
 import styles from "./Modal.module.css";
 
 const EditProject = ({ data, dismiss }) => {

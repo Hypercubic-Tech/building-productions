@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import AddProject from "./AddProject";
 import EditProject from "./EditProject";
+import notify from "../../utils/notify";
 
 import styles from "./Modal.module.css";
 
@@ -43,8 +44,10 @@ const HeaderPopup = () => {
       await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`)
         .then(() => {
           getProjectsData();
+          notify(false, "Project deleted successfuly");
         })
     } catch (error) {
+      notify(true, "Please fill all field");
       console.log(error);
     }
   };

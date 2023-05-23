@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
-import EditProject from "@/components/popup/EditProject";
+// import EditProject from "@/components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import styles from "../../components/popup/Modal.module.css";
 
@@ -35,6 +36,34 @@ const index = () => {
     useEffect(() => {
         getProjectsData();
     }, []);
+
+    const confirmHandler = (item) => {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons
+            .fire({
+                title: 'Confirm you want to delete project',
+                text: 'If you confirm that, project will be deleted',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    deleteProjectHandler(item);
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire('Cancelled', 'error');
+                }
+            });
+    };
 
     const deleteProjectHandler = async (item) => {
         console.log(item, "id");
@@ -92,13 +121,14 @@ const index = () => {
                                         <p className="card-text">{item?.attributes?.address}</p>
                                         <div className={`${styles.gap20} row `}>
                                             <div
+                                                onClick={confirmHandler}
                                                 // onClick={() => editHandler(item)}
                                                 className={` btn btn-primary `}
                                             >
                                                 რედაქტირება
                                             </div>
                                             <div
-                                                onClick={() => deleteProjectHandler(item)}
+                                                onClick={() => confirmHandler(item)}
                                                 className="btn btn-danger"
                                             >
                                                 წაშლა

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-import { setProjectState } from "@/store/slices/projectSlice";
+import { setProjectState } from "../../store/slices/projectSlice";
 
+import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
 const AddProject = ({ dismiss }) => {
@@ -190,9 +191,11 @@ const AddProject = ({ dismiss }) => {
       })
         .then((res) => {
           const data = res.data;
-          dispatch(setProjectState(data.data))
+          dispatch(setProjectState(data.data));
+          notify(false, "Project added succesfuly");
         })
     } catch (error) {
+      notify(true, "Something went wrong, Project don't created");
       console.error(error);
     }
   }
@@ -205,7 +208,7 @@ const AddProject = ({ dismiss }) => {
 
   return (
     <div
-      style={{ display: close ? "none" : "", overflow: "auto" }}
+      style={{ display: close ? "none" : "", "marginTop": "80px" }}
       className={`modal-xxl ${styles.modal}`}
     >
       <div className="modal-content">
@@ -320,14 +323,14 @@ const AddProject = ({ dismiss }) => {
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              <form className="form" noValidate="novalidate" id="">
+              <form className="form needs-validation" noValidate="novalidate" novalidate>
                 <div
                   className={getStatusClass(1)}
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
                     <div className="fv-row mb-10">
-                      <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                      <label className="d-flex align-items-center fs-5 fw-bold mb-2 form-label" for="validationCustom04">
                         <span className="required georgian">ქონების ტიპი</span>
                         <i
                           className="fas fa-exclamation-circle ms-2 fs-7"
@@ -335,6 +338,7 @@ const AddProject = ({ dismiss }) => {
                         />
                       </label>
                       <select
+                        required
                         id="property"
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
