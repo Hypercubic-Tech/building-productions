@@ -44,10 +44,10 @@ const HeaderPopup = () => {
       await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`)
         .then(() => {
           getProjectsData();
-          notify(false, "Project deleted successfuly");
+          notify(false, "პროექტი წარმატებით წაიშალა");
         })
     } catch (error) {
-      notify(true, "Please fill all field");
+      notify(true, "პროექტის წაშლა უარყოფილია");
       console.log(error);
     }
   };

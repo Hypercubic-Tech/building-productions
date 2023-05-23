@@ -12,12 +12,14 @@ const Gallery = ({ setSelect }) => {
     const getProductsHandler = async () => {
         await axios
             .get(
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
+                // `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files`
             )
             .then((res) => {
                 const data = res.data
-                let imgs = data.data[0].attributes.image.data;
-                setProjectImgs(imgs)
+                console.log(data)
+                // let imgs = data.data[0].attributes.image.data;
+                setProjectImgs(data)
             })
     };
 
@@ -81,7 +83,7 @@ const Gallery = ({ setSelect }) => {
                                     return (
                                         <div className="image-input image-input-outline m-4" data-kt-image-input="true" key={index} >
                                             <img
-                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg.attributes.url}`}
+                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg.url}`}
                                                 width={300}
                                                 height={300}
                                                 style={{ borderRadius: "8px" }}

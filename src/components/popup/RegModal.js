@@ -32,10 +32,10 @@ const RegModal = ({ handleRegistration, onClose }) => {
         username: fullName.value,
       })
       .then(() => {
-        notify(false, "Registration successfuly");
+        notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
       });
     } catch (err) {
-      notify(true, "Please fill all field");
+      notify(true, "რეგისტრაცია უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
       console.log(err);
     }
     handleRegistration(true);

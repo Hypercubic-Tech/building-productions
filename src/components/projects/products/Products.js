@@ -5,6 +5,8 @@ import { useState } from "react";
 import EditProduct from "../../popup/EditProduct";
 import EditService from "../../popup/EditService";
 import { applyMiddleware } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
+import notify from "../../../utils/notify";
 
 const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, firstProducts, defaultProductsHandler, defaultP }) => {
   const [allProduct, setAllProduct] = useState(null);
@@ -49,6 +51,45 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     };
   }, [projectId]);
 
+  const editHandlerPopup = () => {
+    console.log(editProductItem, 'item')
+    if (editPopup === false) {
+      console.log('im here')
+      setEditPopup(true)
+    } else {
+      setEditPopup(false)
+    }
+  };
+
+  const confirmHandler = (productId) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'დაადასტურეთ, რომ გსურთ პროდუქტის წაშლა',
+        text: 'დადასტურების შემთხვევაში, პროდუქტი წაიშლება ავტომატურად',
+        icon: 'გაფრთხილება',
+        showCancelButton: true,
+        confirmButtonText: 'წაშლა',
+        cancelButtonText: 'უარყოფა',
+        reverseButtons: true
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          deleteProductHandler(productId);
+          notify(false, "პროდუქტი წაიშალა")
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია', 'Error');
+        }
+      });
+  };
+
   const deleteProductHandler = async (productId) => {
     await axios
       .delete(
@@ -60,17 +101,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       .catch((error) => {
         console.log(error);
       });
-  };
-
-
-  const editHandlerPopup = () => {
-    console.log(editProductItem, 'item')
-    if (editPopup === false) {
-      console.log('im here')
-      setEditPopup(true)
-    } else {
-      setEditPopup(false)
-    }
   };
 
   return (
@@ -162,7 +192,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                       </a>
                     </div>
                     <div
-                      onClick={(e) => deleteProductHandler(product.id)}
+                      onClick={(e) => confirmHandler(product.id)}
                       className="menu-item px-3 padding8"
                     >
                       <a

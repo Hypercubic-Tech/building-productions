@@ -61,10 +61,10 @@ const AddProduct = ({
                     data: productData,
                 })
                 .then(() => {
-                    notify(false, "Product added succesfuly");
+                    notify(false, "პროდუქტი დაემატა");
                 })
         } catch (err) {
-            notify(true, "Can't create product, Please fill all field");
+            notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
         setSelect(null);
@@ -77,10 +77,10 @@ const AddProduct = ({
                     data: craftData,
                 })
                 .then(() => {
-                    notify(false, "Craft added succesfuly");
+                    notify(false, "ხელობა დაემატა");
                 })
         } catch (err) {
-            notify(true, "Can't create craft, Please fill all field");
+            notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
         setSelect(null);
@@ -105,9 +105,9 @@ const AddProduct = ({
             }
           );
       
-          notify(false, "Image uploaded successfully");
+          notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
-          notify(true, "Can't upload image");
+          notify(true, "სურათის ატვირთვა უარყოფილია");
           console.log(err);
         }
       };
@@ -253,7 +253,7 @@ const AddProduct = ({
                                                     title="Remove avatar"
                                                     onClick={() => {
                                                         setImgSrc(null)
-                                                        notify(false, "Image remove succesfuly")
+                                                        notify(false, "სურათი წარმატებით წაიშალა")
                                                     }}
                                                 >
                                                     <input

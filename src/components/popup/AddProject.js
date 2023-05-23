@@ -192,10 +192,10 @@ const AddProject = ({ dismiss }) => {
         .then((res) => {
           const data = res.data;
           dispatch(setProjectState(data.data));
-          notify(false, "Project added succesfuly");
+          notify(false, "პროექტი დაემატა");
         })
     } catch (error) {
-      notify(true, "Something went wrong, Project don't created");
+      notify(true, "პროექტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
       console.error(error);
     }
   }

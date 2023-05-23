@@ -44,10 +44,10 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
         dispatch(setAuthRole(data.user.role));
         dispatch(setAuthUserId(data.user.id));
 
-        notify(false, "Logged in, Welcome");
+        notify(false, "თქვენ გაიარეთ ავტორიზაცია");
       })
       .catch(() => {
-        notify(true, "Email or Password is incorrect");
+        notify(true, "იმეილი ან პაროლი არასწორია, გთხოვთ ცადოთ თავიდან");
       });
   };
 
