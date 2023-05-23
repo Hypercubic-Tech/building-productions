@@ -11,33 +11,32 @@ const Gallery = ({ setSelect }) => {
 
     const getProductsHandler = async () => {
         await axios
-          .get(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
-            // http://localhost:1337/api/projects?filters[id][$eq]=2&populate[image][populate]=id
-          )
-          .then((res) => {
-            const data = res.data
-            let imgs =data.data[0].attributes.image.data;
-            setProjectImgs(imgs)
-            console.log(data, 'primgdata')
-          })
-      };
-    
-      useEffect(() => {
+            .get(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
+            )
+            .then((res) => {
+                const data = res.data
+                let imgs = data.data[0].attributes.image.data;
+                setProjectImgs(imgs)
+            })
+    };
+
+    useEffect(() => {
         if (projectId) {
-          getProductsHandler();
+            getProductsHandler();
         };
-      }, [projectId]);
+    }, [projectId]);
 
     return (
         <div className="modal fade show">
             <div className="modal modal-dialog-centered custom-width">
-            <div className="modal-content custom-width" style={{ width: "90% ", height: "90%", margin: "5%" }}>
+                <div className="modal-content custom-width" style={{ width: "90% ", height: "90%", margin: "5%" }}>
                     <div className="modal-header" id="kt_modal_add_user_header">
+                        <h3>სურათები</h3>
                         <div
                             className="btn btn-icon btn-sm btn-active-icon-primary"
                             data-kt-users-modal-action="close"
-                            style={{marginLeft: "95%" }}
+                            style={{ marginLeft: "90%" }}
                         >
                             <span
                                 className="svg-icon svg-icon-1"
@@ -75,17 +74,17 @@ const Gallery = ({ setSelect }) => {
                             </span>
                         </div>
                     </div>
-                    <div  className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
+                    <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
                             <span className="svg-icon svg-icon-2tx svg-icon-warning me-4 ">
                                 {projectImgs && projectImgs.map((projectImg, index) => {
                                     return (
                                         <div className="image-input image-input-outline m-4" data-kt-image-input="true" key={index} >
-                                             <img
+                                            <img
                                                 src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg.attributes.url}`}
                                                 width={300}
                                                 height={300}
-                                                style={{borderRadius: "8px"}}
+                                                style={{ borderRadius: "8px" }}
                                                 alt="Picture of the product"
                                             />
                                             <span
@@ -94,10 +93,10 @@ const Gallery = ({ setSelect }) => {
                                                 data-bs-toggle="tooltip"
                                                 title="Remove avatar"
                                                 onClick={() => {
-                                                    let result = projectImgs.splice(index + 1 );
+                                                    let result = projectImgs.splice(index + 1);
                                                     setProjectImgs(result)
                                                 }}
-                                                >
+                                            >
                                                 <input
                                                     type="hidden" name="avatar_remove" />
                                                 <i className="bi bi-x fs-2" />
@@ -105,7 +104,7 @@ const Gallery = ({ setSelect }) => {
                                         </div>
                                     );
                                 })}
-                                <div className="image-input image-input-outline m-4">
+                                {/* <div className="image-input image-input-outline m-4">
                                     {imgSrc ? <img 
                                         src={`${imgSrc}`}
                                         width={300}
@@ -156,10 +155,10 @@ const Gallery = ({ setSelect }) => {
                                             type="hidden" name="avatar_remove" />
                                         <i className="bi bi-x fs-2" />
                                     </span>
-                                </div>
+                                </div> */}
                             </span>
                         </form>
-                    </div>              
+                    </div>
                 </div>
             </div>
         </div>
