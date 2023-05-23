@@ -195,11 +195,11 @@ const AddProduct = ({
                         </div>
                     </div>
 
-                    <div style={{ width: "90%" }} className="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <div style={{ width: "90%" }} className="modal-body mx-5 mx-xl-15 my-7">
                         {toggle ? (
                             <form id="kt_modal_add_user_form" className="form">
                                 <div
-                                    className="d-flex flex-column scroll-y me-n7 pe-7"
+                                    className="d-flex flex-column pe-7"
                                     id="kt_modal_add_user_scroll"
                                     data-kt-scroll="true"
                                     data-kt-scroll-activate="{default: false, lg: true}"
@@ -481,7 +481,7 @@ const AddProduct = ({
                         ) : (
                             <form id="kt_modal_add_user_form" className="form">
                                 <div
-                                    className="d-flex flex-column scroll-y me-n7 pe-7"
+                                    className="d-flex flex-column scroll-y pe-7"
                                     id="kt_modal_add_user_scroll"
                                     data-kt-scroll="true"
                                     data-kt-scroll-activate="{default: false, lg: true}"
