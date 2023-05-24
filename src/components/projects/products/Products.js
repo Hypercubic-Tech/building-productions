@@ -119,7 +119,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               <th className="text-end min-w-100px georgian">ცვლილება</th>
             </tr>
           </thead>
-          {!filteredProducts ? defaultP && defaultP.map((product) => {
+          {!filteredProducts ? defaultP && defaultP.map((product) => {console.log(product, 'a dzma')
             return (
               <tbody key={product?.id}>
                 <tr>
