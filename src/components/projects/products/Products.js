@@ -74,7 +74,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       .fire({
         title: 'დაადასტურეთ, რომ გსურთ პროდუქტის წაშლა',
         text: 'დადასტურების შემთხვევაში, პროდუქტი წაიშლება ავტომატურად',
-        icon: 'გაფრთხილება',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'წაშლა',
         cancelButtonText: 'უარყოფა',
@@ -292,7 +292,11 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
             <tbody>
               <tr>
                 <td>
-                  Loading
+                  <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
                 </td>
               </tr>
             </tbody>
