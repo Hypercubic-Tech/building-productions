@@ -25,7 +25,7 @@ const Gallery = ({ setSelect }) => {
                 const data = res.data
                 let imgs = data.data[0].attributes.image.data;
                 console.log(imgs)
-                setProjectImgs(imgs) 
+                setProjectImgs(imgs)
             })
     };
 
@@ -48,33 +48,33 @@ const Gallery = ({ setSelect }) => {
         }
     }, [projectId, projectData]);
 
-    const handleMediaUpload = useCallback(async () => {
-        if (!imgSrc || image) {
-            return;
-        }
-
+    const handleMediaUpload = useCallback(async (fileList) => {
         try {
-            const formData = new FormData();
-            formData.append("files", imgSrc);
+            const uploadPromises = fileList.map((file) => {
+                const formData = new FormData();
+                formData.append("files", file);
 
-            const uploadResponse = await axios.post(
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
+                return axios.post(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+            });
 
-            const uploadedImage = uploadResponse.data[0];
-            setImage(uploadedImage);
-            notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+            const uploadResponses = await Promise.all(uploadPromises);
+
+            const uploadedImages = uploadResponses.map((response) => response.data[0]);
+            setImage(uploadedImages); // Store the uploaded images in a state variable or use them as needed
+            notify(false, "ყველა არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
-            notify(true, "სურათის ატვირთვა უარყოფილია");
+            notify(true, "სურათების ატვირთვა უარყოფილია");
             console.error(err);
         }
-    }, [imgSrc]);
+    }, []);
 
     useEffect(() => {
         if (imgSrc && !image) {
@@ -94,6 +94,14 @@ const Gallery = ({ setSelect }) => {
             handleUpdateProjectImage();
         }
     }, [image, handleUpdateProjectImage]);
+
+    const handleFileUpload = (fileList) => {
+        if (!fileList || fileList.length === 0) {
+            return;
+        }
+
+        handleMediaUpload(fileList);
+    };
 
 
     return (
@@ -146,18 +154,15 @@ const Gallery = ({ setSelect }) => {
                     <input
                         className="btn btn-primary"
                         onChange={(e) => {
-                            setImgSrc(e.target.files[0])
-                            const file = e.target.files[0];
-                            const reader = new FileReader();
+                            const files = e.target.files;
 
-                            reader.onload = (event) => {
-                                setImgSrc(event.target.result);
-                            };
+                            const fileList = Array.from(files);
 
-                            reader.readAsDataURL(file);
+                            handleFileUpload(fileList);
                         }}
                         type="file"
                         name="avatar"
+                        multiple // Add the 'multiple' attribute to allow multiple file selection
                     />
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
