@@ -216,8 +216,6 @@ const AddProject = ({ dismiss, project }) => {
     console.log(sendData)
   };
 
-  console.log(project)
-  console.log(project.data[0].attributes.property_type.data.id,'hi')
   return (
     <div
       style={{ display: close ? "none" : "", "marginTop": "80px" }}
