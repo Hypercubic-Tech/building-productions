@@ -20,10 +20,8 @@ const AddProduct = ({
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [imageId, setImageId] = useState(null);
-    console.log(imageId, 'asapa tesli kacia')
-
     const [productData, setProductData] = useState({
-        files: {
+        image: {
             connect: [{ id: imageId }]
         },
         title: "",
@@ -132,7 +130,7 @@ const AddProduct = ({
     useEffect(() => {
         setProductData((prevProductData) => ({
             ...prevProductData,
-            files: {
+            image: {
                 connect: [{ id: imageId }]
             }
         }));

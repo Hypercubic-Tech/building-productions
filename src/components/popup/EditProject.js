@@ -359,7 +359,7 @@ const AddProject = ({ dismiss, project }) => {
                             },
                           }));
                         }}
-                        defaultValue={project.data[0].attributes.property_type.data.id || ""}
+                        defaultValue={project?.data[0]?.attributes?.property_type?.data?.id || ""}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
                         {propertyType && propertyType.map((item, index) => {
@@ -404,7 +404,7 @@ const AddProject = ({ dismiss, project }) => {
                                   vatPercent: e.target.value,
                                 }));
                               }}
-                              defaultValue={project.data[0].attributes.vatPercent}
+                              defaultValue={project?.data[0]?.attributes?.vatPercent}
                             />
                           </div>
                         ) : ""}
@@ -421,7 +421,7 @@ const AddProject = ({ dismiss, project }) => {
                             unforeseenExpenses: event.target.value,
                           }));
                         }}
-                        defaultValue={project.data[0].attributes.unforeseenExpenses}
+                        defaultValue={project?.data[0]?.attributes?.unforeseenExpenses}
                         type="text"
                         className="form-control georgian form-control-solid"
                         placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
@@ -445,7 +445,7 @@ const AddProject = ({ dismiss, project }) => {
                                   },
                                 }));
                               }}
-                              defaultValue={project.data[0].attributes.city.data.id || ""}
+                              defaultValue={project?.data[0]?.attributes?.city?.data?.id || ""}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
@@ -467,7 +467,7 @@ const AddProject = ({ dismiss, project }) => {
                                   area: event.target.value,
                                 }));
                               }}
-                              defaultValue={project.data[0].attributes.area}
+                              defaultValue={project?.data[0]?.attributes?.area}
                               name="area"
                               type="number"
                               className="form-control georgian form-control-solid"
@@ -493,7 +493,7 @@ const AddProject = ({ dismiss, project }) => {
                                   address: event.target.value,
                                 }));
                               }}
-                              defaultValue={project.data[0].attributes.address}
+                              defaultValue={project?.data[0]?.attributes?.address}
                               type="text"
                               className="form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
@@ -508,7 +508,7 @@ const AddProject = ({ dismiss, project }) => {
                                   phoneNumber: event.target.value,
                                 }));
                               }}
-                              defaultValue={project.data[0].attributes.phoneNumber}
+                              defaultValue={project?.data[0]?.attributes?.phoneNumber}
                               type="number"
                               className="form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
@@ -626,7 +626,7 @@ const AddProject = ({ dismiss, project }) => {
                             title: event.target.value,
                           }));
                         }}
-                        defaultValue={project.data[0].attributes.title}
+                        defaultValue={project?.data[0]?.attributes?.title}
                         type="text"
                         className="form-control georgian form-control-lg form-control-solid"
                         name="dbname"
