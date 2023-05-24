@@ -163,7 +163,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                     </div>
                     <div className="d-flex flex-column georgian">
                       <a
-                        href={item.link}
+                        href={product?.link}
                         className="text-gray-800 text-hover-primary mb-1 georgian"
                       >
                         {product.title ? product?.title : product?.category}

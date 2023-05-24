@@ -80,12 +80,13 @@ const index = () => {
 
     return (
         <>
-            <div className="row g-4 m-3">
+            <div className="row g-4 m-3" style={{height: '90vh'}}>
                 <div className="d-flex justify-content-end mr-2">
                     <button
                         onClick={addProjectHandler}
                         type="button"
                         className="btn btn-primary mr-2"
+                        style={{height: '90px'}}
                     >
                         დაამატე ობიექტი
                         <svg

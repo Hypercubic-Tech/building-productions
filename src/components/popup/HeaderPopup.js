@@ -60,7 +60,7 @@ const HeaderPopup = () => {
           position: "absolute",
           zIndex: "20",
         }}
-        className={`modal-xxl ${styles.modal}`}
+        className={`modal ${styles.modal}`}
       >
         <div className="modal-content">
           <div className="modal-header">

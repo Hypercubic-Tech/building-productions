@@ -14,6 +14,8 @@ const AddProduct = ({
 }) => {
     const router = useRouter();
     const projectId = router.query.projectId;
+    const [lossProduct, setLossProduct] = useState(false);
+    const [lossCraft, setLossCraft] = useState(false);
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
@@ -88,7 +90,6 @@ const AddProduct = ({
             notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
-        setSelect(null);
     };
 
     const handleMediaUpload = useCallback(async () => {
@@ -472,6 +473,8 @@ const AddProduct = ({
                                         </div>
                                     </div>
                                 </div>
+                                {lossProduct && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
+
                                 <div className="text-center pt-15">
                                     <button
                                         onClick={() => {
@@ -630,6 +633,7 @@ const AddProduct = ({
                                         )}
                                     </div>
                                 </div>
+                                {lossProduct && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
                                 <div className="text-center pt-15">
                                     <button
                                         onClick={() => { setSelect(null) }}
