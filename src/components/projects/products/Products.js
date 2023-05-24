@@ -8,7 +8,7 @@ import { applyMiddleware } from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
 import notify from "../../../utils/notify";
 
-const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, firstProducts, defaultProductsHandler, defaultP }) => {
+const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP }) => {
   const [allProduct, setAllProduct] = useState(null);
   const [editPopup, setEditPopup] = useState(false);
   const [idD, setId] = useState("")
@@ -163,7 +163,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                     </div>
                     <div className="d-flex flex-column georgian">
                       <a
-                        href="https://www.domino.com.ge/products/electrical-goods/cables-and-wires/cable-wire/%E1%83%99%E1%83%90%E1%83%91%E1%83%94%E1%83%9A%E1%83%98-sakcable-%E1%83%9E%E1%83%A3%E1%83%9C%E1%83%9E-3x2.5-h03vvh2-u-h05vvh2-u/"
+                        href={item.link}
                         className="text-gray-800 text-hover-primary mb-1 georgian"
                       >
                         {product.title ? product?.title : product?.category}
