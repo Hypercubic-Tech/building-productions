@@ -359,7 +359,7 @@ const AddProject = ({ dismiss, project }) => {
                             },
                           }));
                         }}
-                        defaultValue={project.data[0].attributes.property_type.data.id}
+                        defaultValue={project.data[0].attributes.property_type.data.id || ""}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
                         {propertyType && propertyType.map((item, index) => {
@@ -445,7 +445,7 @@ const AddProject = ({ dismiss, project }) => {
                                   },
                                 }));
                               }}
-                              defaultValue={project.data[0].attributes.city.data.id}
+                              defaultValue={project.data[0].attributes.city.data.id || ""}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
