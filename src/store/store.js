@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import { authSlice } from "./slices/authSlice";
 import { projectSlice } from "./slices/projectSlice";
+import { productSlice } from "./slices/productSlice";
 import modalReducer from "./slices/modalSlice";
 import headerPopUpReducer from "./slices/headerModalSlice";
 import { persistReducer, persistStore } from 'redux-persist';
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   headerPopUp: headerPopUpReducer,
   [projectSlice.name]: projectSlice.reducer,
+  [productSlice.name]: productSlice.reducer
 });
 
 const persistConfig = {

@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
+
+import notify from '../../utils/notify';
 
 const Gallery = ({ setSelect }) => {
     const router = useRouter();
@@ -8,18 +10,22 @@ const Gallery = ({ setSelect }) => {
 
     const [imgSrc, setImgSrc] = useState(null);
     const [projectImgs, setProjectImgs] = useState(null);
+    const [image, setImage] = useState(null);
+    const [projectData, setProjectData] = useState({
+        image: image
+    });
 
     const getProductsHandler = async () => {
         await axios
             .get(
                 // `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files`
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image`
             )
             .then((res) => {
                 const data = res.data
-                console.log(data)
-                // let imgs = data.data[0].attributes.image.data;
-                setProjectImgs(data)
+                let imgs = data.data[0].attributes.image.data;
+                console.log(imgs)
+                setProjectImgs(imgs)
             })
     };
 
@@ -28,6 +34,75 @@ const Gallery = ({ setSelect }) => {
             getProductsHandler();
         };
     }, [projectId]);
+
+    const handleUpdateProjectImage = useCallback(async () => {
+        try {
+            await axios.put(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+                {
+                    data: projectData,
+                }
+            );
+        } catch (err) {
+            console.error(err);
+        }
+    }, [projectId, projectData]);
+
+    const handleMediaUpload = useCallback(async (fileList) => {
+        try {
+            const uploadPromises = fileList.map((file) => {
+                const formData = new FormData();
+                formData.append("files", file);
+
+                return axios.post(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+            });
+
+            const uploadResponses = await Promise.all(uploadPromises);
+
+            const uploadedImages = uploadResponses.map((response) => response.data[0]);
+            setImage(uploadedImages); // Store the uploaded images in a state variable or use them as needed
+            notify(false, "ყველა არჩეული სურათი წარმატებით აიტვირთა");
+        } catch (err) {
+            notify(true, "სურათების ატვირთვა უარყოფილია");
+            console.error(err);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (imgSrc && !image) {
+            handleMediaUpload();
+        }
+    }, [imgSrc, image, handleMediaUpload]);
+
+    useEffect(() => {
+        setProjectData((prevProductData) => ({
+            ...prevProductData,
+            image: image,
+        }));
+    }, [image]);
+
+    useEffect(() => {
+        if (image) {
+            handleUpdateProjectImage();
+        }
+    }, [image, handleUpdateProjectImage]);
+
+    const handleFileUpload = (fileList) => {
+        if (!fileList || fileList.length === 0) {
+            return;
+        }
+
+        handleMediaUpload(fileList);
+    };
+
 
     return (
         <div className="modal fade show">
@@ -76,6 +151,19 @@ const Gallery = ({ setSelect }) => {
                             </span>
                         </div>
                     </div>
+                    <input
+                        className="btn btn-primary"
+                        onChange={(e) => {
+                            const files = e.target.files;
+
+                            const fileList = Array.from(files);
+
+                            handleFileUpload(fileList);
+                        }}
+                        type="file"
+                        name="avatar"
+                        multiple // Add the 'multiple' attribute to allow multiple file selection
+                    />
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
                             <span className="svg-icon svg-icon-2tx svg-icon-warning me-4 ">
@@ -83,7 +171,7 @@ const Gallery = ({ setSelect }) => {
                                     return (
                                         <div className="image-input image-input-outline m-4" data-kt-image-input="true" key={index} >
                                             <img
-                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg.url}`}
+                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
                                                 width={300}
                                                 height={300}
                                                 style={{ borderRadius: "8px" }}

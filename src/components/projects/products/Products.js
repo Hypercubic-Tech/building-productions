@@ -1,17 +1,15 @@
-import axios, { all } from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 import EditProduct from "../../popup/EditProduct";
 import EditService from "../../popup/EditService";
-import { applyMiddleware } from "@reduxjs/toolkit";
-import Swal from "sweetalert2";
 import notify from "../../../utils/notify";
 
 const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP }) => {
   const [allProduct, setAllProduct] = useState(null);
   const [editPopup, setEditPopup] = useState(false);
-  const [idD, setId] = useState("")
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -24,7 +22,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         const data = res.data;
         setAllProduct(data)
       })
-  }
+  };
 
   useEffect(() => {
     const getProductId = async () => {
@@ -34,7 +32,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         if (!id) {
           setTimeout(getProductId, 1000);
         } else {
-          // ID is available, proceed with 
           defaultProductsHandler(id);
         }
       } catch (error) {
@@ -50,16 +47,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       getProductsHandler();
     };
   }, [projectId]);
-
-  const editHandlerPopup = () => {
-    console.log(editProductItem, 'item')
-    if (editPopup === false) {
-      console.log('im here')
-      setEditPopup(true)
-    } else {
-      setEditPopup(false)
-    }
-  };
 
   const confirmHandler = (productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -134,7 +121,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
           </thead>
           {!filteredProducts ? defaultP && defaultP.map((product) => {
             return (
-              <tbody key={product.id}>
+              <tbody key={product?.id}>
                 <tr>
                   <td>
                     <div className="form-check form-check-sm form-check-custom form-check-solid">
