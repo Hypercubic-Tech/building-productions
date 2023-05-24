@@ -1,10 +1,10 @@
-import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 import EditProduct from "../../popup/EditProduct";
 import EditService from "../../popup/EditService";
-import Swal from "sweetalert2";
 import notify from "../../../utils/notify";
 
 const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP }) => {
@@ -22,7 +22,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         const data = res.data;
         setAllProduct(data)
       })
-  }
+  };
 
   useEffect(() => {
     const getProductId = async () => {
