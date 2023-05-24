@@ -3,7 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
 
-// import EditProject from "@/components/popup/EditProject";
+import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import styles from "../../components/popup/Modal.module.css";
 
@@ -12,8 +12,8 @@ const index = () => {
     const [close, setClose] = useState(false);
     const [addProject, setAddProject] = useState(false);
     const [editProject, setEditProject] = useState(false);
-    const [editProjectData, setEditProjectData] = useState(null);
     const [projectData, setProjectData] = useState(null);
+
 
     const addProjectHandler = () => {
         setAddProject(true);
@@ -36,6 +36,19 @@ const index = () => {
     useEffect(() => {
         getProjectsData();
     }, []);
+
+    const editHandler = async (item) => {
+        let id = item.id
+
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${id}&populate=*`);
+            const data = response.data;
+            setEditProject(data);
+
+        } catch (error) {
+            console.log(error)
+        }
+    };
 
     const confirmHandler = (item) => {
         const swalWithBootstrapButtons = Swal.mixin({
@@ -80,13 +93,13 @@ const index = () => {
 
     return (
         <>
-            <div className="row g-4 m-3" style={{height: '90vh'}}>
+            <div className="row g-4 m-3" style={{ height: '90vh' }}>
                 <div className="d-flex justify-content-end mr-2">
                     <button
                         onClick={addProjectHandler}
                         type="button"
                         className="btn btn-primary mr-2"
-                        style={{height: '90px'}}
+                        style={{ height: '90px' }}
                     >
                         დაამატე ობიექტი
                         <svg
@@ -122,8 +135,7 @@ const index = () => {
                                         <p className="card-text">{item?.attributes?.address}</p>
                                         <div className={`${styles.gap20} row `}>
                                             <div
-                                                onClick={confirmHandler}
-                                                // onClick={() => editHandler(item)}
+                                                onClick={() => editHandler(item)}
                                                 className={` btn btn-primary `}
                                             >
                                                 რედაქტირება
@@ -143,11 +155,9 @@ const index = () => {
 
             </div>
             {addProject && <AddProject dismiss={dismissHandler} />}
-
-
-            {/* {editProject && (
-                <EditProject data={editProjectData} dismiss={dismissHandler} />
-            )} */}
+            {editProject && (
+                <EditProject project={editProject} dismiss={dismissHandler} />
+            )}
         </>
     );
 };

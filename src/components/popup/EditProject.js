@@ -1,14 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
-// import cities from "@/api/cities.json";
+import { setProjectState } from "../../store/slices/projectSlice";
+
+import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({ data, dismiss }) => {
+const AddProject = ({ dismiss, project }) => {
   const [step, setStep] = useState(1);
+  const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
+  const [cities, setCities] = useState(null);
+  const [propertyType, setPropertyType] = useState(null);
+  const [condition, setCondition] = useState(null);
+  const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [sendData, setSendData] = useState(data);
+  const [hiddenInput, setHiddenInput] = useState(false);
+  const [sendData, setSendData] = useState({
+    title: "",
+    address: "",
+    phoneNumber: "",
+    area: "",
+    vat: false,
+    vatPercent: "",
+    unforeseenExpenses: "",
+    city: {
+      connect: [
+        { id: null }
+      ]
+    },
+    property_type: {
+      connect: [
+        { id: null }
+      ]
+    },
+    categories: {
+      connect: []
+    },
+    current_condition: {
+      connect: [
+        { id: null }
+      ]
+    },
+    condition: {
+      connect: [
+        { id: null }
+      ]
+    },
+  });
+
+  const dispatch = useDispatch();
 
   let errors = {
     stepOne: [],
@@ -16,40 +59,13 @@ const EditProject = ({ data, dismiss }) => {
     stepThree: [],
   };
 
-  const validationHandler = () => {
-    if (sendData.propertyType === "") {
-      errors.stepOne.push("შეავსეთ ქონების ტიპი");
+  const hiddenInputHandler = () => {
+    if (!hiddenInput) {
+      setHiddenInput(true)
+    } else {
+      setHiddenInput(false)
     }
-    if (sendData.city === "") {
-      errors.stepOne.push("მონიშნეთ ქალაქი");
-    }
-    if (sendData.area === "") {
-      errors.stepOne.push("შეიყვანეთ ფართობი");
-    }
-    if (sendData.address === "") {
-      errors.stepOne.push("შეავსეთ მისამართი");
-    }
-    if (sendData.phone === "") {
-      errors.stepOne.push("შეავსეთ ტელეფონის ნომერი");
-    }
-    // // end of step one
-    if (sendData.currentCondition.length === 0) {
-      errors.stepTwo.push("მონიშნეთ არესბული მდგომერეობა");
-    }
-    if (sendData.condition.length === 0) {
-      errors.stepTwo.push("მონიშნეთ მდგომეროება");
-    }
-    // end of step two
-
-    if (sendData.objectName === "") {
-      errors.stepThree.push("შეავსეთ ობიექტის დასახელება");
-    }
-    if (sendData.worksToDo.length === 0) {
-      errors.stepThree.push("მონიშნეთ შესასრულებელი სამუშაოები");
-    }
-
-    console.log(errors);
-  };
+  }
 
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
@@ -62,16 +78,21 @@ const EditProject = ({ data, dismiss }) => {
   };
 
   const stepChangeHandler = () => {
-    if (step < 4) {
-      if (errors.stepOne.length === 0) {
+
+    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
+      setStep(step + 1);
+      setLoss(false);
+    } else {
+      setLoss(true);
+    }
+    if (step === 2  && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
+      console.log('rame2')
+      setStep(step + 1);
+      setLoss(false);
+    } 
+    if (step === 3 && errors.stepThree.length === 0 && sendData.title  && sendData.categories.connect.length > 0 ){
         setStep(step + 1);
-        if (errors.stepTwo.length === 0) {
-          setStep(step + 1);
-          if (errors.stepThree.length === 0) {
-            setStep(step + 1);
-          }
-        }
-      }
+        setLoss(false);
     }
   };
 
@@ -82,32 +103,129 @@ const EditProject = ({ data, dismiss }) => {
     }
   };
 
-  const handleCheckboxChange = (event) => {
-    const { value, checked } = event.target;
-    setSendData((prevState) => {
-      const newData = JSON.parse(JSON.stringify(prevState));
-      if (checked) {
-        newData.worksToDo = [...newData.worksToDo, value];
-      } else {
-        newData.worksToDo = newData.worksToDo.filter((val) => val !== value);
-      }
-      return newData;
-    });
+  const handleCategoryChange = (e) => {
+    const categoryId = e.target.value;
+    if (!sendData.categories.connect.some(cat => cat.id === categoryId)) {
+      setSendData(prevState => ({
+        ...prevState,
+        categories: {
+          connect: [...prevState.categories.connect, { id: categoryId }]
+        }
+      }));
+    }
   };
 
+  useEffect(() => {
+    const getPropertyTypesHandler = async () => {
+      try {
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
+          .then((res) => {
+            const data = res.data;
+            setPropertyType(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPropertyTypesHandler();
+  }, []);
+
+  useEffect(() => {
+    const getCitiesHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
+          .then((res) => {
+            const data = res.data;
+            setCities(data.data)
+          })
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCitiesHandler();
+  }, []);
+
+  useEffect(() => {
+    const getConditionHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCondition(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getConditionHandler();
+  }, []);
+
+  useEffect(() => {
+    const getCurrentConditionHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCurrentCondition(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCurrentConditionHandler();
+  }, []);
+
+  useEffect(() => {
+    const getCategoriesHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
+          .then((res) => {
+            const data = res.data;
+            setCategories(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCategoriesHandler();
+  }, []);
+
+  const createProjectHandler = async () => {
+    const projectId = project.data[0]?.id;
+  
+    try {
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+        {
+          data: sendData
+        }
+      );
+  
+      const updatedProject = response.data.data;
+      dispatch(setProjectState(updatedProject));
+      notify(false, "პროექტი რედაქტირდა");
+    } catch (error) {
+      notify(true, "პროექტის რედაქტირება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+      console.error(error);
+    }
+  };
   const finishHandler = () => {
     setClose(true);
+    createProjectHandler();
+    console.log(sendData)
   };
 
+  console.log(project)
+  console.log(project.data[0].attributes.property_type.data.id,'hi')
   return (
     <div
-      style={{ display: close ? "none" : "", overflow: "auto" }}
+      style={{ display: close ? "none" : "", "marginTop": "80px" }}
       className={`modal-xxl ${styles.modal}`}
     >
       <div className="modal-content">
         <div className="modal-header">
           <h2 className="georgian">ობიექტის რედაქტირება</h2>
-
           <div
             className="btn btn-sm btn-icon btn-active-color-primary"
             data-bs-dismiss="modal"
@@ -144,7 +262,6 @@ const EditProject = ({ data, dismiss }) => {
             </span>
           </div>
         </div>
-
         <div className="modal-body py-lg-10 px-lg-10">
           <div
             className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
@@ -208,24 +325,25 @@ const EditProject = ({ data, dismiss }) => {
                   <div className="stepper-line w-40px" />
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
-                    <span className="stepper-number">5</span>
+                    <span className="stepper-number">4</span>
                   </div>
                   <div className="stepper-label">
-                    <h3 className="stepper-title">Completed</h3>
-                    <div className="stepper-desc">Review and Submit</div>
+                    <h3 className="stepper-title">დასრულება</h3>
+                    <div className="stepper-desc"></div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              <form className="form" noValidate="novalidate" id="">
+              <form className="form needs-validation" noValidate="noValidate" noValidate> 
+              {/* noValidate thing errors it in vscode but it errors in broswer if it not on camelCase  */}
                 <div
                   className={getStatusClass(1)}
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
                     <div className="fv-row mb-10">
-                      <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                      <label className="d-flex align-items-center fs-5 fw-bold mb-2 form-label" htmlFor="validationCustom04">
                         <span className="required georgian">ქონების ტიპი</span>
                         <i
                           className="fas fa-exclamation-circle ms-2 fs-7"
@@ -233,25 +351,85 @@ const EditProject = ({ data, dismiss }) => {
                         />
                       </label>
                       <select
+                        required
+                        id="property"
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
-                            propertyType: event.target.value,
+                            property_type: {
+                              connect: [{ id: event.target.value }],
+                            },
                           }));
                         }}
-                        onBlur={validationHandler}
-                        defaultValue={data.propertyType}
+                        defaultValue={project.data[0].attributes.property_type.data.id}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        <option value={"ბინა"}>ბინა</option>
-                        <option value={"სახლი-აგარაკი"}>სახლი-აგარაკი</option>
-                        <option value={"კომერციული ფართი"}>
-                          კომერციული ფართი
-                        </option>
-                        <option value={"სასტუმრო"}>სასტუმრო</option>
+                        {propertyType && propertyType.map((item, index) => {
+                          <option value="none" selected disabled hidden></option>
+                          return (
+                            <option key={index} value={item.id}>{item.attributes.Title}</option>
+                          )
+                        })}
                       </select>
                     </div>
+                    <div className="w-100">
+                      <div className="fv-row mb-10">
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            onChange={(e) => {
+                              const isChecked = e.target.checked;
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                vat: isChecked,
+                              }));
+                              hiddenInputHandler();
+                            }}
+                            defaultChecked={project.data[0].attributes.vat ? "checked" : ""}
+                          />
+                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                            <span className="required georgian">დღგ-ს გადამხდელი</span>
+                          </label>
+                        </div>
+                        {project.data[0].attributes.vat ? (
+                          <div className="col-6">
+                            <input
+                              className="form-control georgian form-control-solid"
+                              placeholder="%"
+                              type="text"
+                              onChange={(e) => {
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  vatPercent: e.target.value,
+                                }));
+                              }}
+                              defaultValue={project.data[0].attributes.vatPercent}
+                            />
+                          </div>
+                        ) : ""}
+                      </div>
+                    </div>
+                    <div style={{marginBottom: '30px'}} className="w-100">
+                      <label className="required fs-6 fw-bold form-label georgian mb-2">
+                        გაუთვალისწინებელი ხარჯები
+                      </label>
+                      <input
+                        onChange={(event) => {
+                          setSendData((prevSendData) => ({
+                            ...prevSendData,
+                            unforeseenExpenses: event.target.value,
+                          }));
+                        }}
+                        defaultValue={project.data[0].attributes.unforeseenExpenses}
+                        type="text"
+                        className="form-control georgian form-control-solid"
+                        placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
+                      />
 
+                    </div>
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
@@ -264,20 +442,21 @@ const EditProject = ({ data, dismiss }) => {
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
-                                  city: event.target.value,
+                                  city: {
+                                    connect: [{ id: event.target.value }],
+                                  },
                                 }));
                               }}
-                              onBlur={validationHandler}
+                              defaultValue={project.data[0].attributes.city.data.id}
                               name="locale"
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
-                              {cities.map((sity, i) => {
+                              {cities && cities.map((item, index) => {
+                                <option value="none" selected disabled hidden></option>
                                 return (
-                                  <option key={i} value={sity}>
-                                    {sity}
-                                  </option>
-                                );
+                                  <option key={index} value={item.id}>{item.attributes.city}</option>
+                                )
                               })}
                             </select>
                           </div>
@@ -290,7 +469,7 @@ const EditProject = ({ data, dismiss }) => {
                                   area: event.target.value,
                                 }));
                               }}
-                              onBlur={validationHandler}
+                              defaultValue={project.data[0].attributes.area}
                               name="area"
                               type="number"
                               className="form-control georgian form-control-solid"
@@ -301,7 +480,6 @@ const EditProject = ({ data, dismiss }) => {
                         </div>
                       </div>
                     </div>
-
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
@@ -310,15 +488,14 @@ const EditProject = ({ data, dismiss }) => {
                         <div className="row fv-row">
                           <div className="col-6">
                             <input
-                              id="input-validation-address"
+                              id="address"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
                                   address: event.target.value,
                                 }));
                               }}
-                              defaultValue={data.address}
-                              onBlur={validationHandler}
+                              defaultValue={project.data[0].attributes.address}
                               type="text"
                               className="form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
@@ -326,15 +503,14 @@ const EditProject = ({ data, dismiss }) => {
                           </div>
                           <div className="col-6">
                             <input
-                              id="input-validation-mobile"
+                              id="phone"
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
-                                  phone: event.target.value,
+                                  phoneNumber: event.target.value,
                                 }));
                               }}
-                              defaultValue={data.phone}
-                              onBlur={validationHandler}
+                              defaultValue={project.data[0].attributes.phoneNumber}
                               type="number"
                               className="form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
@@ -346,6 +522,7 @@ const EditProject = ({ data, dismiss }) => {
                   </div>
                 </div>
                 {/* STEP */}
+
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -354,158 +531,41 @@ const EditProject = ({ data, dismiss }) => {
                     <div className="fv-row">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
                         <span className="required georgian">მდგომარეობა</span>
-                        <i
-                          className="fas fa-exclamation-circle ms-2 fs-7"
-                          data-bs-toggle="tooltip"
-                          title="მიუთითეთ ობიექტის მდგომარეობა"
-                        />
                       </label>
                       <div className="fv-row">
-                        <label className="d-flex flex-stack mb-5 cursor-pointer">
-                          <span className="d-flex align-items-center me-2">
-                            <span className="symbol symbol-50px me-6">
-                              <span className="symbol-label bg-light-primary">
-                                <span className="svg-icon svg-icon-1 svg-icon-primary">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={24}
-                                    height={24}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                  >
-                                    <path
-                                      opacity="0.3"
-                                      d="M18.4 5.59998C21.9 9.09998 21.9 14.8 18.4 18.3C14.9 21.8 9.2 21.8 5.7 18.3L18.4 5.59998Z"
-                                      fill="black"
-                                    />
-                                    <path
-                                      d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM19.9 11H13V8.8999C14.9 8.6999 16.7 8.00005 18.1 6.80005C19.1 8.00005 19.7 9.4 19.9 11ZM11 19.8999C9.7 19.6999 8.39999 19.2 7.39999 18.5C8.49999 17.7 9.7 17.2001 11 17.1001V19.8999ZM5.89999 6.90002C7.39999 8.10002 9.2 8.8 11 9V11.1001H4.10001C4.30001 9.4001 4.89999 8.00002 5.89999 6.90002ZM7.39999 5.5C8.49999 4.7 9.7 4.19998 11 4.09998V7C9.7 6.8 8.39999 6.3 7.39999 5.5ZM13 17.1001C14.3 17.3001 15.6 17.8 16.6 18.5C15.5 19.3 14.3 19.7999 13 19.8999V17.1001ZM13 4.09998C14.3 4.29998 15.6 4.8 16.6 5.5C15.5 6.3 14.3 6.80002 13 6.90002V4.09998ZM4.10001 13H11V15.1001C9.1 15.3001 7.29999 16 5.89999 17.2C4.89999 16 4.30001 14.6 4.10001 13ZM18.1 17.1001C16.6 15.9001 14.8 15.2 13 15V12.8999H19.9C19.7 14.5999 19.1 16.0001 18.1 17.1001Z"
-                                      fill="black"
-                                    />
-                                  </svg>
+                        {condition && condition.map((item, index) => {
+                                {console.log(item.id, 'item id')}
+
+                          return (
+                            <label key={index} className="d-flex flex-stack mb-5 cursor-pointer">
+                              <span className="d-flex align-items-center me-2">
+                                <span className="d-flex flex-column">
+                                  <span className="fw-bolder georgian fs-6">
+                                    {item.attributes.title}
+                                  </span>
                                 </span>
                               </span>
-                            </span>
-                            <span className="d-flex flex-column">
-                              <span className="fw-bolder georgian fs-6">
-                                ახალი აშენებული
+                              <span className="form-check form-check-custom form-check-solid">
+                                <input
+                                  id="input-validation-building"
+                                  onChange={(event) => {
+                                    setSendData((prevSendData) => ({
+                                      ...prevSendData,
+                                      condition: {
+                                        connect: [{ id: event.target.value }],
+                                      },
+                                    }));
+                                  }}
+                                  defaultChecked={project.data[0].attributes.condition.data.id === item.id ? 'checked' : ''}
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="category"
+                                  value={item.id}
+                                />
                               </span>
-                              <span className="fs-7 text-muted">
-                                Creating a clear text
-                              </span>
-                            </span>
-                          </span>
-                          <span className="form-check form-check-custom form-check-solid">
-                            <input
-                              id="input-validation-building"
-                              onChange={(event) => {
-                                setSendData((prevSendData) => ({
-                                  ...prevSendData,
-                                  condition: event.target.value,
-                                }));
-                              }}
-                              onBlur={validationHandler}
-                              className="form-check-input"
-                              type="radio"
-                              name="category"
-                              defaultChecked={
-                                data.condition === "ახალი აშენებული"
-                                  ? "checked"
-                                  : ""
-                              }
-                              defaultValue={"ახალი აშენებული"}
-                            />
-                          </span>
-                        </label>
-                        <label className="d-flex flex-stack mb-5 cursor-pointer">
-                          <span className="d-flex align-items-center me-2">
-                            <span className="symbol symbol-50px me-6">
-                              <span className="symbol-label bg-light-danger">
-                                <span className="svg-icon svg-icon-1 svg-icon-danger">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24px"
-                                    height="24px"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <g
-                                      stroke="none"
-                                      strokeWidth={1}
-                                      fill="none"
-                                      fillRule="evenodd"
-                                    >
-                                      <rect
-                                        x={5}
-                                        y={5}
-                                        width={5}
-                                        height={5}
-                                        rx={1}
-                                        fill="#000000"
-                                      />
-                                      <rect
-                                        x={14}
-                                        y={5}
-                                        width={5}
-                                        height={5}
-                                        rx={1}
-                                        fill="#000000"
-                                        opacity="0.3"
-                                      />
-                                      <rect
-                                        x={5}
-                                        y={14}
-                                        width={5}
-                                        height={5}
-                                        rx={1}
-                                        fill="#000000"
-                                        opacity="0.3"
-                                      />
-                                      <rect
-                                        x={14}
-                                        y={14}
-                                        width={5}
-                                        height={5}
-                                        rx={1}
-                                        fill="#000000"
-                                        opacity="0.3"
-                                      />
-                                    </g>
-                                  </svg>
-                                </span>
-                              </span>
-                            </span>
-                            <span className="d-flex flex-column">
-                              <span className="fw-bolder georgian fs-6">
-                                ძველი აშენებული
-                              </span>
-                              <span className="fs-7 text-muted">
-                                Creating a clear text structure is just one
-                                aspect
-                              </span>
-                            </span>
-                          </span>
-                          <span className="form-check form-check-custom form-check-solid">
-                            <input
-                              id="input-validation-building"
-                              onChange={(event) => {
-                                setSendData((prevSendData) => ({
-                                  ...prevSendData,
-                                  condition: event.target.value,
-                                }));
-                              }}
-                              onBlur={validationHandler}
-                              className="form-check-input"
-                              type="radio"
-                              name="category"
-                              defaultValue={"ძველი აშენებული"}
-                              defaultChecked={
-                                data.condition === "ძველი აშენებული"
-                                  ? "checked"
-                                  : ""
-                              }
-                            />
-                          </span>
-                        </label>
+                            </label>
+                          )
+                        })}
                       </div>
                     </div>
                     <div className="fv-row">
@@ -513,126 +573,41 @@ const EditProject = ({ data, dismiss }) => {
                         <span className="required georgian">
                           არსებული მდგომარეობა
                         </span>
-                        <i
-                          className="fas fa-exclamation-circle ms-2 fs-7"
-                          data-bs-toggle="tooltip"
-                          title="ობიექტის არსებული მდგომარეობა"
-                        />
                       </label>
-                      <label className="d-flex flex-stack cursor-pointer mb-5">
-                        <span className="d-flex align-items-center me-2">
-                          <span className="symbol symbol-50px me-6">
-                            <span className="symbol-label bg-light-warning">
-                              <i className="fab fa-html5 text-warning fs-2x" />
+                      {currentCondition && currentCondition.map((item, index) => {
+                        return (
+                          <label key={index} className="d-flex flex-stack cursor-pointer mb-5">
+                            <span className="d-flex align-items-center me-2">
+                              <span className="d-flex flex-column">
+                                <span className="fw-bolder georgian fs-6">
+                                  {item.attributes.title}
+                                </span>
+                                <span className="fs-7 georgian text-muted">
+                                  სამუშაოები სრულ რემონტამდე.
+                                </span>
+                              </span>
                             </span>
-                          </span>
-                          <span className="d-flex flex-column">
-                            <span className="fw-bolder georgian fs-6">
-                              შავი კარკასი
+                            <span className="form-check form-check-custom form-check-solid">
+                              <input
+                                id="input-validation"
+                                onChange={(event) => {
+                                  setSendData((prevSendData) => ({
+                                    ...prevSendData,
+                                    current_condition: {
+                                      connect: [{ id: event.target.value }],
+                                    },
+                                  }));
+                                }}
+                                defaultChecked={project.data[0].attributes.current_condition.data.id === item.id ? 'checked' : ''}
+                                className="form-check-input"
+                                type="radio"
+                                name="framework"
+                                value={item.id}
+                              />
                             </span>
-                            <span className="fs-7 georgian text-muted">
-                              სამუშაოები სრულ რემონტამდე.
-                            </span>
-                          </span>
-                        </span>
-                        <span className="form-check form-check-custom form-check-solid">
-                          <input
-                            id="input-validation"
-                            onChange={(event) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                currentCondition: event.target.value,
-                              }));
-                            }}
-                            onBlur={validationHandler}
-                            className="form-check-input"
-                            type="radio"
-                            defaultChecked={
-                              data.currentCondition === "შავი კარკასი"
-                                ? "checked"
-                                : ""
-                            }
-                            name="framework"
-                            defaultValue={"შავი კარკასი"}
-                          />
-                        </span>
-                      </label>
-                      <label className="d-flex flex-stack cursor-pointer mb-5">
-                        <span className="d-flex align-items-center me-2">
-                          <span className="symbol symbol-50px me-6">
-                            <span className="symbol-label bg-light-success">
-                              <i className="fab fa-react text-success fs-2x" />
-                            </span>
-                          </span>
-                          <span className="d-flex flex-column">
-                            <span className="fw-bolder georgian fs-6">
-                              თეთრი კარკასი
-                            </span>
-                            <span className="fs-7 georgian text-muted">
-                              სამუშაოები სრულ რემონტამდე.
-                            </span>
-                          </span>
-                        </span>
-                        <span className="form-check form-check-custom form-check-solid">
-                          <input
-                            id="input-validation"
-                            onChange={(event) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                currentCondition: event.target.value,
-                              }));
-                            }}
-                            onBlur={validationHandler}
-                            className="form-check-input"
-                            type="radio"
-                            name="framework"
-                            defaultChecked={
-                              data.currentCondition === "თეთრი კარკასი"
-                                ? "checked"
-                                : ""
-                            }
-                            defaultValue={"თეთრი კარკასი"}
-                          />
-                        </span>
-                      </label>
-                      <label className="d-flex flex-stack cursor-pointer mb-5">
-                        <span className="d-flex align-items-center me-2">
-                          <span className="symbol symbol-50px me-6">
-                            <span className="symbol-label bg-light-danger">
-                              <i className="fab fa-angular text-danger fs-2x" />
-                            </span>
-                          </span>
-                          <span className="d-flex flex-column">
-                            <span className="fw-bolder georgian fs-6">
-                              მწვანე კარკასი
-                            </span>
-                            <span className="fs-7 georgian text-muted">
-                              სამუშაოები სრულ რემონტამდე.
-                            </span>
-                          </span>
-                        </span>
-                        <span className="form-check form-check-custom form-check-solid">
-                          <input
-                            id="input-validation"
-                            onChange={(event) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                currentCondition: event.target.value,
-                              }));
-                            }}
-                            onBlur={validationHandler}
-                            className="form-check-input"
-                            type="radio"
-                            name="framework"
-                            defaultValue={"მწვანე კარკასი"}
-                            defaultChecked={
-                              data.currentCondition === "მწვანე კარკასი"
-                                ? "checked"
-                                : ""
-                            }
-                          />
-                        </span>
-                      </label>
+                          </label>
+                        )
+                      })}
                     </div>
                   </div>
                 </div>
@@ -650,11 +625,10 @@ const EditProject = ({ data, dismiss }) => {
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
-                            objectName: event.target.value,
+                            title: event.target.value,
                           }));
                         }}
-                        defaultValue={data.objectName}
-                        onBlur={validationHandler}
+                        defaultValue={project.data[0].attributes.title}
                         type="text"
                         className="form-control georgian form-control-lg form-control-solid"
                         name="dbname"
@@ -672,8 +646,8 @@ const EditProject = ({ data, dismiss }) => {
                             <div className="d-flex flex-column">
                               {categories &&
                                 categories.map((item, index) => {
-                                  const isChecked = data.worksToDo.includes(
-                                    item.category
+                                  const isChecked = project.data[0]?.attributes?.categories?.data.some(
+                                    (category) => category.id === item.id
                                   );
                                   return (
                                     <div
@@ -681,18 +655,17 @@ const EditProject = ({ data, dismiss }) => {
                                       className="form-check form-check-custom form-check-solid mb-2"
                                     >
                                       <input
-                                        onBlur={validationHandler}
-                                        onChange={handleCheckboxChange}
+                                        onChange={handleCategoryChange}
                                         className="form-check-input"
                                         type="checkbox"
-                                        defaultValue={item.category}
+                                        value={item.id}
                                         defaultChecked={isChecked}
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}
                                         className="form-check-label georgian"
                                       >
-                                        {item.category}
+                                        {item.attributes.title}
                                       </label>
                                     </div>
                                   );
@@ -709,9 +682,9 @@ const EditProject = ({ data, dismiss }) => {
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100 text-center">
-                    <h1 className="fw-bolder text-dark mb-3">Release!</h1>
+                    <h1 className="fw-bolder text-dark mb-3">მონაცემები შეყვანილია!</h1>
                     <div className="text-muted fw-bold fs-3">
-                      Submit your app to kickstart your project.
+                      დამატების ღილაკზე დაჭერით მონაცემები ბაზაში აიტვირთება.
                     </div>
                     <div className="text-center px-4 py-15">
                       <img
@@ -722,6 +695,8 @@ const EditProject = ({ data, dismiss }) => {
                     </div>
                   </div>
                 </div>
+               {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
+
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
                     <button
@@ -756,7 +731,10 @@ const EditProject = ({ data, dismiss }) => {
                       უკან
                     </button>
                   </div>
+
                   <div>
+               {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
+
                     <button
                       onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}
@@ -795,7 +773,7 @@ const EditProject = ({ data, dismiss }) => {
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
                     </button>
-                    {/* <div>{notificationElement && notificationElement} ჰი</div> */}
+
                     <button
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}
@@ -839,4 +817,4 @@ const EditProject = ({ data, dismiss }) => {
   );
 };
 
-export default EditProject;
+export default AddProject;
