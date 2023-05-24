@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
+
+import notify from '../../utils/notify';
 
 const Gallery = ({ setSelect }) => {
     const router = useRouter();
@@ -8,18 +10,22 @@ const Gallery = ({ setSelect }) => {
 
     const [imgSrc, setImgSrc] = useState(null);
     const [projectImgs, setProjectImgs] = useState(null);
+    const [image, setImage] = useState(null);
+    const [projectData, setProjectData] = useState({
+        image: image
+    });
 
     const getProductsHandler = async () => {
         await axios
             .get(
                 // `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files`
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image`
             )
             .then((res) => {
                 const data = res.data
-                console.log(data)
-                // let imgs = data.data[0].attributes.image.data;
-                setProjectImgs(data)
+                let imgs = data.data[0].attributes.image.data;
+                console.log(imgs)
+                setProjectImgs(imgs) 
             })
     };
 
@@ -28,6 +34,67 @@ const Gallery = ({ setSelect }) => {
             getProductsHandler();
         };
     }, [projectId]);
+
+    const handleUpdateProjectImage = useCallback(async () => {
+        try {
+            await axios.put(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+                {
+                    data: projectData,
+                }
+            );
+        } catch (err) {
+            console.error(err);
+        }
+    }, [projectId, projectData]);
+
+    const handleMediaUpload = useCallback(async () => {
+        if (!imgSrc || image) {
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append("files", imgSrc);
+
+            const uploadResponse = await axios.post(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            const uploadedImage = uploadResponse.data[0];
+            setImage(uploadedImage);
+            notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+        } catch (err) {
+            notify(true, "სურათის ატვირთვა უარყოფილია");
+            console.error(err);
+        }
+    }, [imgSrc]);
+
+    useEffect(() => {
+        if (imgSrc && !image) {
+            handleMediaUpload();
+        }
+    }, [imgSrc, image, handleMediaUpload]);
+
+    useEffect(() => {
+        setProjectData((prevProductData) => ({
+            ...prevProductData,
+            image: image,
+        }));
+    }, [image]);
+
+    useEffect(() => {
+        if (image) {
+            handleUpdateProjectImage();
+        }
+    }, [image, handleUpdateProjectImage]);
+
 
     return (
         <div className="modal fade show">
@@ -76,6 +143,22 @@ const Gallery = ({ setSelect }) => {
                             </span>
                         </div>
                     </div>
+                    <input
+                        className="btn btn-primary"
+                        onChange={(e) => {
+                            setImgSrc(e.target.files[0])
+                            const file = e.target.files[0];
+                            const reader = new FileReader();
+
+                            reader.onload = (event) => {
+                                setImgSrc(event.target.result);
+                            };
+
+                            reader.readAsDataURL(file);
+                        }}
+                        type="file"
+                        name="avatar"
+                    />
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
                             <span className="svg-icon svg-icon-2tx svg-icon-warning me-4 ">
@@ -83,7 +166,7 @@ const Gallery = ({ setSelect }) => {
                                     return (
                                         <div className="image-input image-input-outline m-4" data-kt-image-input="true" key={index} >
                                             <img
-                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg.url}`}
+                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
                                                 width={300}
                                                 height={300}
                                                 style={{ borderRadius: "8px" }}
