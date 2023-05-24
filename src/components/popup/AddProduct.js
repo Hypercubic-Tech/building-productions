@@ -137,11 +137,10 @@ const AddProduct = ({
     }, [image]);
 
     const handleImageRemove = async () => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
+        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
         setImgSrc(null);
         notify(false, "სურათი წარმატებით წაიშალა");
     };
-
 
     return (
         <div
