@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import AboutCompany from "../../components/main/AboutCompany";
 import Heading from "./Heading";
 import HowItWorks from "../../components/main/HowItWorks";
@@ -22,7 +21,6 @@ const priceData = {
 };
 
 const Main = () => {
- 
 
   return (
     <div
