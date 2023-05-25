@@ -356,8 +356,8 @@ const AddProject = ({ dismiss }) => {
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
+                        <option value="none" selected disabled hidden>აირჩიერ ქონების ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
-                          <option value="none" selected disabled hidden></option>
                           return (
                             <option key={index} value={item.id}>{item.attributes.Title}</option>
                           )
@@ -442,8 +442,8 @@ const AddProject = ({ dismiss }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
+                              <option value="none" selected disabled hidden>აირჩიეთ ქალაქი</option>
                               {cities && cities.map((item, index) => {
-                                <option value="none" selected disabled hidden></option>
                                 return (
                                   <option key={index} value={item.id}>{item.attributes.city}</option>
                                 )

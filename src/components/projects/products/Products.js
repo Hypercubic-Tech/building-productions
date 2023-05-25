@@ -48,6 +48,11 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     };
   }, [projectId]);
 
+  const editHandlerPopup = (product) => {
+    console.log(product)
+    
+  };
+
   const confirmHandler = (productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -275,7 +280,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               )
             })
           )}
-          {!filteredProducts && !defaultP && (
+          {!projectId &&  (
             <tbody>
               <tr>
                 <td>
@@ -288,6 +293,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               </tr>
             </tbody>
           )}
+          {projectId && filteredProducts === undefined && defaultP === undefined && <p>პროდუქტები არ არის</p>}
         </table>
       </div>
       {editPopup && editProductItem.type ? "product"(

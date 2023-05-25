@@ -11,7 +11,6 @@ const EditProduct = ({
     suppliers,
     product
 }) => {
-    console.log(product)
     const router = useRouter();
     const projectId = router.query.projectId;
     const [lossProduct, setLossProduct] = useState(false);
@@ -287,12 +286,7 @@ const EditProduct = ({
                                         >
                                             {suppliers &&
                                                 suppliers.map((sup) => {
-                                                    <option
-                                                        value="none"
-                                                        selected
-                                                        disabled
-                                                        hidden
-                                                    ></option>;
+                                                    <option value="none" selected disabled hidden >აირჩიეთ მომწოდებელი</option>;
                                                     return (
                                                         <option key={sup?.id} value={sup?.id}>
                                                             {sup?.attributes?.title}
@@ -355,14 +349,9 @@ const EditProduct = ({
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="საზომიერთ."
                                         >
+                                            <option value="none" selected disabled hidden > აირჩიეთ ერთეული</option>;
                                             {unit &&
                                                 unit.map((u) => {
-                                                    <option
-                                                        value="none"
-                                                        selected
-                                                        disabled
-                                                        hidden
-                                                    ></option>;
                                                     return (
                                                         <option key={u?.id} value={u?.id}>
                                                             {u?.attributes?.title}
@@ -405,16 +394,12 @@ const EditProduct = ({
                                             }}
                                             name="count"
                                             className="form-select form-select-solid georgian"
-                                            data-placeholder="საზომიერთ."
+                                            data-placeholder="კატეგოია"
+                                            defaultValue={product?.attributes?.categories?.data?.attributes?.title}
                                         >
+                                            <option value="none" selected disabled hidden > აირჩიეთ კატეგორია</option>;
                                             {allCategories &&
                                                 allCategories.map((item) => {
-                                                    <option
-                                                        value="none"
-                                                        selected
-                                                        disabled
-                                                        hidden
-                                                    ></option>;
                                                     return (
                                                         <option key={item?.id} value={item?.id}>
                                                             {item?.attributes?.title}
