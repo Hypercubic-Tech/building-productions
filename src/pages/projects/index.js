@@ -99,7 +99,6 @@ const index = () => {
 
     return (
         <>
-        {/* style={{ height: '90vh' }} */}
             <div className="container-xxl">
                 <div className={` d-flex justify-content-between m-3 ${styles.mt20}`}>
                     <button
@@ -129,7 +128,6 @@ const index = () => {
                         projectData?.map((item, index) => {
 
                             return (
-                                // style={{ minWidth: "20%"}}
                                 <div key={index} className={` card-body ${styles.wrapChild} card m-3 `}>
                                         <div className="card" style={{ paddingBottom: '20px' }}>
                                             <img
