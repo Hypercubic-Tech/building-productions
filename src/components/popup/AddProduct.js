@@ -328,9 +328,10 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="მომწოდებელი"
                                             >
-                                                <option value="none" selected disabled hidden>აირჩიეთ მომწოდებელი</option>                  
+                                                <option value="none" disabled hidden>აირჩიეთ მომწოდებელი</option>                  
                                                 {suppliers &&
                                                     suppliers.map((sup) => {
+                                                        
                                                         return (
                                                             <option key={sup?.id} value={sup?.id}>
                                                                 {sup?.attributes?.title}
@@ -393,7 +394,7 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >
-                                                <option value="none" selected disabled hidden>აირჩიეთ ერთეული</option>
+                                                <option value="none" disabled hidden>აირჩიეთ ერთეული</option>
                                                 {unit &&
                                                     unit.map((u) => {
                                                         return (
@@ -440,7 +441,7 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >
-                                                <option value="none" selected disabled hidden > აირჩიეთ კატეგორია</option>;
+                                                <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
                                                 {allCategories &&
                                                     allCategories.map((item) => {
                                                         return (
@@ -527,7 +528,7 @@ const AddProduct = ({
                                                         className="form-select form-select-solid georgian"
                                                         data-placeholder="საზომიერთ."
                                                     >
-                                                        <option value="none" selected disabled hidden > აირჩიეთ ერთეული</option>;
+                                                        <option value="none" disabled hidden > აირჩიეთ ერთეული</option>;
                                                         {unit &&
                                                             unit.map((unit, index) => {
                                                                 return (
@@ -593,7 +594,7 @@ const AddProduct = ({
                                                         className="form-select form-select-solid georgian"
                                                         data-placeholder="სტატუსი"
                                                     >
-                                                        <option value="none" selected disabled hidden > აირჩიეთ სტატუსი</option>;
+                                                        <option value="none" disabled hidden > აირჩიეთ სტატუსი</option>;
                                                         {craftStatus &&
                                                             craftStatus.map((item, index) => {
                                                                 return (

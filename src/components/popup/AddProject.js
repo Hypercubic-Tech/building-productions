@@ -329,14 +329,14 @@ const AddProject = ({ dismiss }) => {
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              <form className="form needs-validation" noValidate="novalidate" novalidate>
+              <form className="form needs-validation" noValidate="novalidate" noValidate>
                 <div
                   className={getStatusClass(1)}
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
                     <div className="fv-row mb-10">
-                      <label className="d-flex align-items-center fs-5 fw-bold mb-2 form-label" for="validationCustom04">
+                      <label className="d-flex align-items-center fs-5 fw-bold mb-2 form-label" htmlFor="validationCustom04">
                         <span className="required georgian">ქონების ტიპი</span>
                         <i
                           className="fas fa-exclamation-circle ms-2 fs-7"
@@ -356,7 +356,7 @@ const AddProject = ({ dismiss }) => {
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        <option value="none" selected disabled hidden>აირჩიერ ქონების ტიპი</option>
+                        <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
                           return (
                             <option key={index} value={item.id}>{item.attributes.Title}</option>
@@ -442,7 +442,7 @@ const AddProject = ({ dismiss }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
-                              <option value="none" selected disabled hidden>აირჩიეთ ქალაქი</option>
+                              <option value="none" disabled hidden>აირჩიეთ ქალაქი</option>
                               {cities && cities.map((item, index) => {
                                 return (
                                   <option key={index} value={item.id}>{item.attributes.city}</option>
