@@ -107,8 +107,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     )
   }
   
-  console.log(totalSum)
-  
   return (
     <>
       <div className="table-responsive">
