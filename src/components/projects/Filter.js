@@ -38,7 +38,6 @@ const Filter = ({
               );
             })}
           <div
-            // onClick={}
                className="menu-item here show menu-lg-down-accordion me-lg-1">
             <a className="menu-link active py-3">
               <span className="menu-title georgian">
