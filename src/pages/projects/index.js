@@ -122,11 +122,7 @@ const index = () => {
                                     <div className="card-body">
                                         <div className="card">
                                             <img
-                                                src={
-                                                    `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                                    item?.attributes?.image?.data[0]?.attributes
-                                                        ?.url
-                                                }
+                   
                                                 className="card-img-top" />
                                             <div className="card-body">
                                                 <Link

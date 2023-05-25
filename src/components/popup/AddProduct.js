@@ -8,7 +8,6 @@ import notify from '../../utils/notify';
 
 const AddProduct = ({
     setSelect,
-    crafts,
     unit,
     allCategories,
     suppliers,
@@ -461,7 +460,6 @@ const AddProduct = ({
                                     <button
                                         onClick={() => {
                                             setSelect(null);
-                                            console.log('hi')
                                         }}
                                         type="reset"
                                         className="btn btn-light me-3"

@@ -185,7 +185,7 @@ const EditProject = ({ dismiss, project }) => {
 
   const createProjectHandler = async () => {
     const projectId = project.data[0]?.id;
-  
+
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
@@ -193,7 +193,7 @@ const EditProject = ({ dismiss, project }) => {
           data: sendData
         }
       );
-  
+
       const updatedProject = response.data.data;
       dispatch(setProjectState(updatedProject));
       notify(false, "პროექტი რედაქტირდა");
@@ -381,7 +381,7 @@ const EditProject = ({ dismiss, project }) => {
                             defaultChecked={project.data[0].attributes.vat ? "checked" : ""}
                           />
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className="required georgian">დღგ-ს გადამხდელი</span>
+                            <span className=" georgian">დღგ-ს გადამხდელი</span>
                           </label>
                         </div>
                         {project.data[0].attributes.vat ? (
@@ -402,7 +402,7 @@ const EditProject = ({ dismiss, project }) => {
                         ) : ""}
                       </div>
                     </div>
-                    <div style={{marginBottom: '30px'}} className="w-100">
+                    <div style={{ marginBottom: '30px' }} className="w-100">
                       <label className="required fs-6 fw-bold form-label georgian mb-2">
                         გაუთვალისწინებელი ხარჯები
                       </label>
@@ -511,8 +511,6 @@ const EditProject = ({ dismiss, project }) => {
                     </div>
                   </div>
                 </div>
-                {/* STEP */}
-
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -524,7 +522,7 @@ const EditProject = ({ dismiss, project }) => {
                       </label>
                       <div className="fv-row">
                         {condition && condition.map((item, index) => {
-                                {console.log(item.id, 'item id')}
+                          { console.log(item.id, 'item id') }
 
                           return (
                             <label key={index} className="d-flex flex-stack mb-5 cursor-pointer">
