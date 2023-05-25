@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
-import Link from "next/link";
 
 import styles from "./Products.module.css";
 
@@ -15,9 +14,10 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
   const [changeElement, setChangeElement] = useState();
+
   const router = useRouter();
   const { projectId } = router.query;
-  console.log(totalSum, 'totalSum')
+
   const getProductsHandler = async () => {
     await axios
       .get(
@@ -32,6 +32,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
   useEffect(() => {
     const getProductId = async () => {
       try {
+        console.log(allCategories)
         const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
 
         if (!id) {
@@ -98,7 +99,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         console.log(error);
       });
   };
-  let element;
+
   const changeModalHandler = () => {
     if (!changeElement) {
       setChangeElement(true)
@@ -106,8 +107,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       setChangeElement(false)
     )
   }
-
-  console.log(totalSum)
 
   return (
     <>
