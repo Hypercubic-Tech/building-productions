@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 import notify from '../../utils/notify';
 
@@ -103,6 +104,43 @@ const Gallery = ({ setSelect }) => {
         handleMediaUpload(fileList);
     };
 
+    const confirmHandler = (imageId) => {
+        console.log(imageId, 'image id')
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons
+            .fire({
+                title: 'დაადასტურეთ, რომ გსურთ სურათის წაშლა',
+                text: 'დადასტურის შემთხვევაში, სურათი წაიშლება',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'წაშლა',
+                cancelButtonText: 'უარყოფა',
+                reverseButtons: true
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    handleDeleteImage(imageId);
+                    notify(false, "სურათი წაიშალა")
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია', 'Error');
+                }
+            });
+    };
+
+    const handleDeleteImage = async (imageId) => {
+        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
+        .then(() => {
+            getProductsHandler()
+        })
+        setImgSrc(null);
+    };
 
     return (
         <div className="modal fade show">
@@ -182,7 +220,7 @@ const Gallery = ({ setSelect }) => {
                                                 data-kt-image-input-action="remove"
                                                 data-bs-toggle="tooltip"
                                                 title="Remove avatar"
-                                                // onClick={handleImageRemove}
+                                                onClick={() => confirmHandler(projectImg?.id)}
                                             >
                                                 <input
                                                     type="hidden" name="avatar_remove" />
