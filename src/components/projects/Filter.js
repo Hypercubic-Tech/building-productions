@@ -6,11 +6,10 @@ import { useSelector } from 'react-redux';
 const Filter = ({
   filterProductCategory,
   projectCategory,
-  defaultCategory
+  totalSumOnClick
 }) => {
 
   const activeCategoryId = useSelector(state => state.categoryId);
-  console.log(activeCategoryId)
 
   return (
     <div className="header-menu-container container-xxl d-flex flex-stack h-lg-75px">
@@ -44,7 +43,9 @@ const Filter = ({
               );
             })}
           <div
-            className="menu-item here show menu-lg-down-accordion me-lg-1">
+            className="menu-item here show menu-lg-down-accordion me-lg-1"
+            onClick={totalSumOnClick}
+            >
             <a className="menu-link active py-3">
               <span className="menu-title georgian">
                 <i className="bi bi-plug-fill" /> ჯამური განფასება

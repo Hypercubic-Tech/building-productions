@@ -1,9 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+
 import axios from 'axios';
 import Swal from "sweetalert2";
 import LightGallery from 'lightgallery/react';
 
+import { selectProjectImage, setProjectImage } from '../../store/slices/projectSlice';
 import lgZoom from 'lightgallery/plugins/zoom';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import notify from '../../utils/notify';
@@ -14,7 +17,9 @@ import 'lightgallery/css/lg-thumbnail.css';
 
 const Gallery = ({ setSelect }) => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const projectId = router.query.projectId;
+    const projectImages = useSelector(selectProjectImage)
     const [imgSrc, setImgSrc] = useState(null);
     const [projectImgs, setProjectImgs] = useState(null);
     const [image, setImage] = useState(null);
@@ -22,6 +27,7 @@ const Gallery = ({ setSelect }) => {
     const [projectData, setProjectData] = useState({
         image: image
     });
+
     const getProductsHandler = async () => {
         await axios
             .get(
@@ -30,22 +36,23 @@ const Gallery = ({ setSelect }) => {
             .then((res) => {
                 const data = res.data
                 let imgs = data.data[0].attributes.image.data;
-                console.log(imgs)
                 setProjectImgs(imgs)
             })
     };
+
     useEffect(() => {
         if (projectId) {
             getProductsHandler();
         }
     }, [projectId]);
+
     const handleUpdateProjectImage = useCallback(async () => {
         try {
             await axios.put(
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
                 {
                     data: projectData,
-                    image: image
+                    image: image,
                 }
             ).then(() => {
                 getProductsHandler();
@@ -54,6 +61,7 @@ const Gallery = ({ setSelect }) => {
             console.error(err);
         }
     }, [projectId, projectData, image]);
+
     const handleMediaUpload = useCallback(async (fileList) => {
         try {
             const uploadPromises = fileList.map((file) => {
@@ -72,8 +80,8 @@ const Gallery = ({ setSelect }) => {
             });
 
             const uploadResponses = await Promise.all(uploadPromises);
-
             const uploadedImages = uploadResponses.map((response) => response.data[0]);
+            dispatch(setProjectImage(uploadedImages));
 
             setImage((prevImages) => {
                 if (!Array.isArray(prevImages) || prevImages === undefined) {
@@ -81,31 +89,34 @@ const Gallery = ({ setSelect }) => {
                 }
                 return [...prevImages, ...uploadedImages];
             });
-
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+
+            localStorage.setItem('projectImage', JSON.stringify(image));
         } catch (err) {
             notify(true, "სურათების ატვირთვა უარყოფილია");
             console.error(err);
         }
     }, [setImage]);
 
-
     useEffect(() => {
         if (imgSrc && !image) {
             handleMediaUpload();
         }
     }, [imgSrc, image, handleMediaUpload]);
+
     useEffect(() => {
         setProjectData((prevProductData) => ({
             ...prevProductData,
             image: image,
         }));
     }, [image]);
+
     useEffect(() => {
         if (image) {
             handleUpdateProjectImage();
         }
     }, [image, handleUpdateProjectImage]);
+
     const handleFileUpload = (fileList) => {
         if (!fileList || fileList.length === 0) {
             return;
@@ -114,7 +125,6 @@ const Gallery = ({ setSelect }) => {
     };
 
     const confirmHandler = (imageId) => {
-        console.log(imageId, 'image id')
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-primary',
@@ -252,12 +262,12 @@ const Gallery = ({ setSelect }) => {
                                     <div className="image-input-wrapper w-125px h-125px"></div>
                                 </div>
 
-                                {projectImgs && (
+                                {projectImages && (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">
-                                        {projectImgs.map((projectImg, index) => (
+                                        {projectImages.map((projectImg, index) => (
                                             <a
                                                 key={projectImg?.id}
-                                                href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.url}`}
                                                 className="gallery-item"
                                                 onClick={toggleHandler}
                                             >
@@ -270,7 +280,7 @@ const Gallery = ({ setSelect }) => {
                                                     />
                                                 </div>
                                                 <img
-                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.url}`}
                                                     className="img-responsive col-sm"
                                                     style={{
                                                         width: "30%",

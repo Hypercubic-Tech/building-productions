@@ -22,11 +22,22 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const [filteredProducts, setFilteredProducts] = useState(undefined);
   const [defaultP, setDefaultP] = useState(undefined);
   // const [defaultCategory, setDefaultCategory] = useState();
+  const [totalSum, setTotalSum] = useState(false);
+
   const router = useRouter();
   const { projectId } = router.query;
 
   const dispatch = useDispatch();
 
+  const totalSumTable = () => {
+    setTotalSum(true)
+    // if(!totalSum) {
+    //   setTotalSum(false);
+    // } else (
+    //   setTotalSum(true)
+    // )
+  };
+  
   const defaultProductsHandler = async (id) => {
     if (id) {
       try {
@@ -45,17 +56,16 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       setFilteredProducts(data.data);
-      // setDefaultCategory(id)
       dispatch(setCategory(id));
+      setTotalSum(false)
     } catch (error) {
       console.error(error);
     }
   };
 
-
   return (
     <>
-      <Filter  filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
+      <Filter totalSumOnClick={totalSumTable} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
@@ -320,6 +330,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         unit={unit}
                         allCategories={allCategories}
                         suppliers={suppliers}
+                        totalSum={totalSum}
                       />
                     </div>
                   </div>
