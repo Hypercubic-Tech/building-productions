@@ -329,7 +329,7 @@ const AddProject = ({ dismiss }) => {
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              <form className="form needs-validation" noValidate="novalidate" >
+              <form className="form needs-validation" noValidate="novalidate">
                 <div
                   className={getStatusClass(1)}
                   data-kt-stepper-element="content"
@@ -364,7 +364,6 @@ const AddProject = ({ dismiss }) => {
                         })}
                       </select>
                     </div>
-
                     <div className="w-100">
                       <div className="fv-row mb-10">
                         <div className="form-check form-switch">
@@ -712,7 +711,7 @@ const AddProject = ({ dismiss }) => {
                   </div>
 
                   <div>
-               {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
+               {loss && <p style={{color: 'red'}}>შეავსეთ ყველა (*) ველი</p>}
 
                     <button
                       onClick={finishHandler}

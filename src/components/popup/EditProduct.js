@@ -411,7 +411,7 @@ const EditProduct = ({
                                     </div>
                                 </div>
                             </div>
-                            {lossProduct && <p style={{ color: 'red' }}>რაღაცა აკლია!!!</p>}
+                            {lossProduct && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი</p>}
 
                             <div className="text-center pt-15">
                                 <button

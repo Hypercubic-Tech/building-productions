@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
@@ -19,6 +20,7 @@ const index = () => {
     };
 
     const dismissHandler = () => {
+        setEditProject(false);
         setAddProject(false);
         setClose(false);
     };
@@ -27,7 +29,6 @@ const index = () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image`)
             .then((res) => {
                 const data = res.data;
-                console.log(data)
                 setProjectData(data.data)
             });
     };
@@ -78,7 +79,6 @@ const index = () => {
     };
 
     const deleteProjectHandler = async (item) => {
-        console.log(item, "id");
         const projectId = item.id;
         try {
             await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`)
@@ -90,15 +90,24 @@ const index = () => {
         }
     };
 
+    const router = useRouter();
+
+    const handleGoBack = () => {
+        router.back(); 
+    };
+
     return (
         <>
-            <div className="row g-4 m-3" style={{ height: '90vh' }}>
-                <div className="d-flex justify-content-end mr-2">
+            <div className="container-xxl">
+                <div className={` d-flex justify-content-between m-3 ${styles.mt20}`}>
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={handleGoBack}>უკან დაბრუნება</button>
                     <button
                         onClick={addProjectHandler}
                         type="button"
-                        className="btn btn-primary mr-2"
-                        style={{ height: '90px' }}
+                        className="btn btn-primary"
                     >
                         დაამატე ობიექტი
                         <svg
@@ -113,16 +122,21 @@ const index = () => {
                         </svg>
                     </button>
                 </div>
-                <div className="d-flex justify-content-center">
+                <div className={`${styles.flexWrap} d-flex justify-content-center `}>
                     {projectData &&
                         projectData?.map((item, index) => {
 
                             return (
-                                <div key={index} className="card m-3 w-50">
-                                    <div className="card-body">
-                                        <div className="card">
+                                <div key={index} className={` card-body ${styles.wrapChild} card m-3 `}>
+                                        <div className="card" style={{ paddingBottom: '20px' }}>
                                             <img
-                   
+                                                // src="/images/test-img.png"
+                                                alt="img"
+                                                src={
+                                                    `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                                    item?.attributes?.image?.data?.attributes
+                                                        ?.url
+                                                }
                                                 className="card-img-top" />
                                             <div className="card-body">
                                                 <Link
@@ -152,7 +166,6 @@ const index = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                             );
                         })}

@@ -13,8 +13,6 @@ export const productSlice = createSlice({
             state.product = [...state.product, action.payload];
         },
         deleteProductState(state, action) {
-            console.log(state, 'state')
-            console.log(action, 'action')
             state.product = state.product.filter(
                 (product) => product.id !== action.payload
             );

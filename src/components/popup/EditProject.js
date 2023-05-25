@@ -544,7 +544,7 @@ const EditProject = ({ dismiss, project }) => {
                                       },
                                     }));
                                   }}
-                                  defaultChecked={project.data[0].attributes.condition.data.id === item.id ? 'checked' : ''}
+                                  defaultChecked={project?.data[0]?.attributes?.condition?.data?.id === item.id ? 'checked' : ''}
                                   className="form-check-input"
                                   type="radio"
                                   name="category"
@@ -586,7 +586,7 @@ const EditProject = ({ dismiss, project }) => {
                                     },
                                   }));
                                 }}
-                                defaultChecked={project.data[0].attributes.current_condition.data.id === item.id ? 'checked' : ''}
+                                defaultChecked={project?.data[0]?.attributes?.current_condition?.data?.id === item.id ? 'checked' : ''}
                                 className="form-check-input"
                                 type="radio"
                                 name="framework"
