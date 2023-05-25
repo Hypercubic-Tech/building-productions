@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import {
   setAuthAccessToken,
@@ -16,9 +17,15 @@ import styles from "../layouts/HeaderLogged.module.css";
 
 function HeaderLogged() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [popup, setPopup] = useState(false);
   const ref = useRef(null);
   const dispatch = useDispatch();
+
+  const router = useRouter();
+  const { asPath } = router;
+
+  console.log('Route on page load:', asPath);
 
   const animation = useSpring({
     opacity: isModalOpen ? 1 : 0,
@@ -66,6 +73,14 @@ function HeaderLogged() {
     dispatch(setAuthEmail(null));
     dispatch(setAuthRole(null));
   };
+
+  useEffect(() => {
+    if(asPath === "/projects") {
+      setIsFilterOpen(true);
+    } else {
+      setIsFilterOpen(false);
+    }
+  }, [asPath]);
 
   return (
     <div
@@ -149,7 +164,7 @@ function HeaderLogged() {
                   </span>
                 </div>
               </div>
-              <form
+              {isFilterOpen && <form
                 data-kt-search-element="form"
                 className="d-none d-lg-block w-100 mb-5 mb-lg-0 position-relative"
                 autoComplete="off"
@@ -222,11 +237,10 @@ function HeaderLogged() {
                     </svg>
                   </span>
                 </span>
-              </form>
+              </form>}
             </div>
             <div className="d-flex align-items-center ms-3 ms-lg-4">
               <Link
-                // onClick={popupHandler}
                 className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
                 href={{
                   pathname: `/projects`,
