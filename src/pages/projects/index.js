@@ -123,52 +123,53 @@ const index = () => {
                     </button>
                 </div>
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
-                    {projectData &&
-                        projectData?.map((item, index) => {
-
-                            return (
-                                <div key={index} className={` card-body ${styles.wrapChild} card m-3 `}>
-                                        <div className="card" style={{ paddingBottom: '20px' }}>
-                                            <img
-                                                // src="/images/test-img.png"
-                                                alt="img"
-                                                src={
-                                                    `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                                    item?.attributes?.image?.data?.attributes
-                                                        ?.url
-                                                }
-                                                className="card-img-top" />
-                                            <div className="card-body">
-                                                <Link
-                                                    href={{
-                                                        pathname: `/projects/${item?.id}`,
-                                                        query: { projectId: item?.id },
-                                                    }}
-                                                    passHref
-                                                    className="card-title"
-                                                >
-                                                    {item?.attributes?.title}
-                                                </Link>
-                                                <p className="card-text">{item?.attributes?.address}</p>
+                    {projectData ?  projectData?.map((item, index) => {
+                        return (
+                            <div key={index} className={` card-body ${styles.wrapChild} card m-3 `}>
+                                    <div className="card" style={{ paddingBottom: '20px' }}>
+                                        <img
+                                            // src="/images/test-img.png"
+                                            alt="img"
+                                            src={
+                                                `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                                item?.attributes?.image?.data?.attributes
+                                                    ?.url
+                                            }
+                                            className="card-img-top" />
+                                        <div className="card-body">
+                                            <Link
+                                                href={{
+                                                    pathname: `/projects/${item?.id}`,
+                                                    query: { projectId: item?.id },
+                                                }}
+                                                passHref
+                                                className="card-title"
+                                            >
+                                                {item?.attributes?.title}
+                                            </Link>
+                                            <p className="card-text">{item?.attributes?.address}</p>
+                                        </div>
+                                        <div className={`${styles.gap20} row `}>
+                                            <div
+                                                onClick={() => editHandler(item)}
+                                                className={` btn btn-primary `}
+                                            >
+                                                რედაქტირება
                                             </div>
-                                            <div className={`${styles.gap20} row `}>
-                                                <div
-                                                    onClick={() => editHandler(item)}
-                                                    className={` btn btn-primary `}
-                                                >
-                                                    რედაქტირება
-                                                </div>
-                                                <div
-                                                    onClick={() => confirmHandler(item)}
-                                                    className="btn btn-danger"
-                                                >
-                                                    წაშლა
-                                                </div>
+                                            <div
+                                                onClick={() => confirmHandler(item)}
+                                                className="btn btn-danger"
+                                            >
+                                                წაშლა
                                             </div>
                                         </div>
-                                </div>
-                            );
-                        })}
+                                    </div>
+                            </div>
+                        );
+                    })
+                    :
+                        <h2 className={styles.notFoundPr}>პროექტი არ მოიძებნა</h2>
+                    }
                 </div>
             </div>
             {addProject && <AddProject dismiss={dismissHandler} />}

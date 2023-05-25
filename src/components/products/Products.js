@@ -162,7 +162,8 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                   </tr>
                 </tbody>
               )}
-              {filteredProducts.length < 1 && <h4 style={{width: '300px'}}>პროდუქტი ვერ მოიძებნა!</h4> }
+              {filteredProducts?.length === 0 && <td style={{width: '100%', textAlign: "center"}}>პროდუქტი ვერ მოიძებნა!</td> }
+              {console.log(filteredProducts, 'fill')}
               {!filteredProducts ? defaultP && defaultP.map((product) => {
                 return (
                   <tbody key={product?.id}>
