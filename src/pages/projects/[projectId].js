@@ -59,7 +59,7 @@ const index = () => {
 
     const getCraftsHandler = async () => {
       await axios
-        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=*`)
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=image,categories`)
         .then((res) => {
           const data = res.data;
           setCrafts(data.data);

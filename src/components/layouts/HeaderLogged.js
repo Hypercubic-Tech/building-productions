@@ -25,8 +25,6 @@ function HeaderLogged() {
   const router = useRouter();
   const { asPath } = router;
 
-  console.log('Route on page load:', asPath);
-
   const animation = useSpring({
     opacity: isModalOpen ? 1 : 0,
   });

@@ -329,14 +329,14 @@ const AddProject = ({ dismiss }) => {
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              <form className="form needs-validation" noValidate="novalidate" novalidate>
+              <form className="form needs-validation" noValidate="novalidate">
                 <div
                   className={getStatusClass(1)}
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
                     <div className="fv-row mb-10">
-                      <label className="d-flex align-items-center fs-5 fw-bold mb-2 form-label" for="validationCustom04">
+                      <label className="d-flex align-items-center fs-5 fw-bold mb-2 form-label" htmlFor="validationCustom04">
                         <span className="required georgian">ქონების ტიპი</span>
                         <i
                           className="fas fa-exclamation-circle ms-2 fs-7"
@@ -364,7 +364,6 @@ const AddProject = ({ dismiss }) => {
                         })}
                       </select>
                     </div>
-
                     <div className="w-100">
                       <div className="fv-row mb-10">
                         <div className="form-check form-switch">
