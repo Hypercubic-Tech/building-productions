@@ -10,14 +10,14 @@ import Link from "next/link";
 
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP }) => {
+const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum }) => {
   const [allProduct, setAllProduct] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
   const [changeElement, setChangeElement] = useState();
   const router = useRouter();
   const { projectId } = router.query;
-
+  console.log(totalSum, 'totalSum')
   const getProductsHandler = async () => {
     await axios
       .get(

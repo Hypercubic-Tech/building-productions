@@ -3,7 +3,8 @@ import { useState } from "react";
 const Filter = ({
   giveProductCategory,
   filterProductCategory,
-  projectCategory
+  projectCategory,
+  totalSumOnClick
 }) => {
   const [color, setColor] = useState('')
   return (
@@ -39,7 +40,9 @@ const Filter = ({
               );
             })}
           <div
-               className="menu-item here show menu-lg-down-accordion me-lg-1">
+            className="menu-item here show menu-lg-down-accordion me-lg-1"
+            onClick={totalSumOnClick}
+            >
             <a className="menu-link active py-3">
               <span className="menu-title georgian">
                 <i className="bi bi-plug-fill" /> ჯამური განფასება

@@ -19,8 +19,13 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const [filteredProducts, setFilteredProducts] = useState(undefined);
   const [defaultP, setDefaultP] = useState(undefined);
   const [productCategory, setProductCategory] = useState("");
+  const [totalSum, setTotalSum] = useState(false);
   const router = useRouter();
   const { projectId } = router.query;
+
+  const totalSumTable = () => {
+    setTotalSum(true);
+  };
 
   const giveProductCategory = (category) => {
     setProductCategory(category)
@@ -51,7 +56,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
 
   return (
     <>
-      <Filter giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
+      <Filter giveProductCategory={giveProductCategory} filterProductCategory={filterProductCategory} projectCategory={projectCategory} totalSumOnClick={totalSumTable} />
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
@@ -316,6 +321,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         unit={unit}
                         allCategories={allCategories}
                         suppliers={suppliers}
+                        totalSum={totalSum}
                       />
                     </div>
                   </div>
