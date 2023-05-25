@@ -150,10 +150,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               </tr>
             </tbody>
           )}
-<<<<<<< HEAD:src/components/projects/products/Products.js
-        </table>
-          {projectId && filteredProducts === undefined && defaultP === undefined && <p>პროდუქტები არ არის</p>}
-=======
           {!filteredProducts ? defaultP && defaultP.map((product) => {
             return (
               <tbody key={product?.id}>
@@ -348,7 +344,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               </li>
             </ul>
           </nav>
->>>>>>> origin/whatever:src/components/products/Products.js
       </div>
       {editPopup && editProductItem.type ? "product"(
         <EditProduct product={editProductItem}
