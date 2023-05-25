@@ -38,6 +38,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
 
 
   const defaultProductsHandler = async (id) => {
+    console.log(id);
     if (id) {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
@@ -277,7 +278,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
-                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={allCategories} suppliers={suppliers} />}
+                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers} />}
                           {console.log(select)}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
@@ -285,7 +286,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                             craftStatus={craftStatus}
                             crafts={crafts}
                             unit={unit}
-                            allCategories={allCategories}
+                            allCategories={projectCategory}
                             suppliers={suppliers} />
                         }
                         {select === "edit-service" &&
@@ -294,7 +295,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                             craftStatus={craftStatus}
                             crafts={crafts}
                             unit={unit}
-                            allCategories={allCategories}
+                            allCategories={projectCategory}
                             suppliers={suppliers} />
                         }
                       </div>

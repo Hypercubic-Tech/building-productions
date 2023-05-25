@@ -7,7 +7,6 @@ import Project from "../../components/projects/Project";
 const index = () => {
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
-  const [allCategories, setAllCategories] = useState(null);
   const [crafts, setCrafts] = useState(null);
   const [allProduct, setAllProduct] = useState(null);
   const [project, setProject] = useState(null);
@@ -77,15 +76,6 @@ const index = () => {
 
     };
 
-    const getCategoriesHandler = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-        .then((res) => {
-          const data = res.data;
-          setAllCategories(data.data);
-        })
-    };
-
-    getCategoriesHandler()
     getCraftsStatusHandler();
     getCraftsHandler();
     getSupplierHandler();
@@ -97,14 +87,12 @@ const index = () => {
   };
 
   return <Project
-    allProduct={allProduct}
     pr={projectId}
     proj={project}
     craftStatus={craftStatus}
     crafts={crafts}
     suppliers={suppliers}
     unit={unit}
-    allCategories={allCategories}
     projectCategory={projectCategory}
     editHandler={editHandler}
     editProductItem={editProductItem}

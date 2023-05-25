@@ -13,7 +13,6 @@ const AddProduct = ({
     suppliers,
     craftStatus,
 }) => {
-    const dispatch = useDispatch();
     const router = useRouter();
     const projectId = router.query.projectId;
     const [lossProduct, setLossProduct] = useState(false);
@@ -41,7 +40,8 @@ const AddProduct = ({
         },
         project: {
             connect: [{ id: projectId }]
-        }
+        },
+        status: false
     });
     const [craftData, setCraftData] = useState({
         title: "",
@@ -97,10 +97,10 @@ const AddProduct = ({
             return;
         }
 
-        try {
-            const formData = new FormData();
-            formData.append("files", imgSrc);
+        const formData = new FormData();
+        formData.append("files", imgSrc);
 
+        try {
             const res = await axios.post(
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
                 formData,
@@ -112,21 +112,22 @@ const AddProduct = ({
             );
 
             const data = res.data;
-            console.log(data[0], 'age dzma')
+            console.log(data[0], 'age dzma');
             setImage(data[0]);
 
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
+            console.error(err);
             notify(true, "სურათის ატვირთვა უარყოფილია");
-            console.log(err);
         }
-    }, [imgSrc]);
+    }, [imgSrc, notify]);
 
     useEffect(() => {
         if (imgSrc) {
             handleMediaUpload();
         }
-    }, [imgSrc, handleMediaUpload]);
+    }, [imgSrc, handleMediaUpload, notify]);
+
 
     useEffect(() => {
         setProductData((prevProductData) => ({
@@ -328,7 +329,7 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="მომწოდებელი"
                                             >
-                                                <option value="none" selected disabled hidden>აირჩიეთ მომწოდებელი</option>                  
+                                                <option value="none" selected disabled hidden>აირჩიეთ მომწოდებელი</option>
                                                 {suppliers &&
                                                     suppliers.map((sup) => {
                                                         return (
@@ -423,7 +424,7 @@ const AddProduct = ({
                                             />
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
-                                        <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                        <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 კატეგორია
                                             </label>
@@ -450,12 +451,22 @@ const AddProduct = ({
                                                         );
                                                     })}
                                             </select>
+                                            <div style={{ marginTop: '30px' }} className="form-check">
+                                                <label className="form-check-label" htmlFor="exampleCheckbox">
+                                                    შეძენილია
+                                                </label>
+                                                <input onChange={(e) => setProductData((prevSendData) => ({
+                                                    ...prevSendData,
+                                                    status: true,
+                                                }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
+
+                                            </div>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
+
                                         </div>
                                     </div>
                                 </div>
-                                {lossProduct && <p style={{color: 'red'}}>შეავსეთ ყველა (*) ველი!!!</p>}
-
+                                {lossProduct && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი!!!</p>}
                                 <div className="text-center pt-15">
                                     <button
                                         onClick={() => {
@@ -616,7 +627,7 @@ const AddProduct = ({
                                         )}
                                     </div>
                                 </div>
-                                {lossProduct && <p style={{color: 'red'}}>შეავსეთ ყველა (*) ველი</p>}
+                                {lossProduct && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი</p>}
                                 <div className="text-center pt-15">
                                     <button
                                         onClick={() => { setSelect(null) }}
