@@ -8,12 +8,10 @@ import AddProject from "../../components/popup/AddProject";
 import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
-
     const [close, setClose] = useState(false);
     const [addProject, setAddProject] = useState(false);
     const [editProject, setEditProject] = useState(false);
     const [projectData, setProjectData] = useState(null);
-
 
     const addProjectHandler = () => {
         setAddProject(true);
@@ -26,9 +24,10 @@ const index = () => {
     };
 
     const getProjectsData = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image`)
             .then((res) => {
                 const data = res.data;
+                console.log(data)
                 setProjectData(data.data)
             });
     };
@@ -115,36 +114,46 @@ const index = () => {
                     </button>
                 </div>
                 <div className="d-flex justify-content-center">
-
                     {projectData &&
                         projectData?.map((item, index) => {
 
                             return (
                                 <div key={index} className="card m-3 w-50">
                                     <div className="card-body">
-                                        <Link
-                                            href={{
-                                                pathname: `/projects/${item.id}`,
-                                                query: { projectId: item.id },
-                                            }}
-                                            passHref
-                                            className="card-title"
-                                        >
-                                            {item?.attributes?.title}
-                                        </Link>
-                                        <p className="card-text">{item?.attributes?.address}</p>
-                                        <div className={`${styles.gap20} row `}>
-                                            <div
-                                                onClick={() => editHandler(item)}
-                                                className={` btn btn-primary `}
-                                            >
-                                                რედაქტირება
+                                        <div className="card">
+                                            <img
+                                                src={
+                                                    `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                                    item?.attributes?.image?.data[0]?.attributes
+                                                        ?.url
+                                                }
+                                                className="card-img-top" />
+                                            <div className="card-body">
+                                                <Link
+                                                    href={{
+                                                        pathname: `/projects/${item?.id}`,
+                                                        query: { projectId: item?.id },
+                                                    }}
+                                                    passHref
+                                                    className="card-title"
+                                                >
+                                                    {item?.attributes?.title}
+                                                </Link>
+                                                <p className="card-text">{item?.attributes?.address}</p>
                                             </div>
-                                            <div
-                                                onClick={() => confirmHandler(item)}
-                                                className="btn btn-danger"
-                                            >
-                                                წაშლა
+                                            <div className={`${styles.gap20} row `}>
+                                                <div
+                                                    onClick={() => editHandler(item)}
+                                                    className={` btn btn-primary `}
+                                                >
+                                                    რედაქტირება
+                                                </div>
+                                                <div
+                                                    onClick={() => confirmHandler(item)}
+                                                    className="btn btn-danger"
+                                                >
+                                                    წაშლა
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
