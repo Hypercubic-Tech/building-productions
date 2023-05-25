@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 import notify from '../../utils/notify';
 
@@ -18,7 +19,6 @@ const Gallery = ({ setSelect }) => {
     const getProductsHandler = async () => {
         await axios
             .get(
-                // `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate[1]=image&filters[id][$in][2]=${projectId}`
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image`
             )
             .then((res) => {
@@ -32,7 +32,7 @@ const Gallery = ({ setSelect }) => {
     useEffect(() => {
         if (projectId) {
             getProductsHandler();
-        };
+        }
     }, [projectId]);
 
     const handleUpdateProjectImage = useCallback(async () => {
@@ -42,7 +42,9 @@ const Gallery = ({ setSelect }) => {
                 {
                     data: projectData,
                 }
-            );
+            ).then(() => {
+                getProductsHandler()
+            });
         } catch (err) {
             console.error(err);
         }
@@ -68,8 +70,8 @@ const Gallery = ({ setSelect }) => {
             const uploadResponses = await Promise.all(uploadPromises);
 
             const uploadedImages = uploadResponses.map((response) => response.data[0]);
-            setImage(uploadedImages); // Store the uploaded images in a state variable or use them as needed
-            notify(false, "ყველა არჩეული სურათი წარმატებით აიტვირთა");
+            setImage(uploadedImages);
+            notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             notify(true, "სურათების ატვირთვა უარყოფილია");
             console.error(err);
@@ -99,10 +101,46 @@ const Gallery = ({ setSelect }) => {
         if (!fileList || fileList.length === 0) {
             return;
         }
-
         handleMediaUpload(fileList);
     };
 
+    const confirmHandler = (imageId) => {
+        console.log(imageId, 'image id')
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons
+            .fire({
+                title: 'დაადასტურეთ, რომ გსურთ სურათის წაშლა',
+                text: 'დადასტურის შემთხვევაში, სურათი წაიშლება',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'წაშლა',
+                cancelButtonText: 'უარყოფა',
+                reverseButtons: true
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    handleDeleteImage(imageId);
+                    notify(false, "სურათი წაიშალა")
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია', 'Error');
+                }
+            });
+    };
+
+    const handleDeleteImage = async (imageId) => {
+        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
+        .then(() => {
+            getProductsHandler()
+        })
+        setImgSrc(null);
+    };
 
     return (
         <div className="modal fade show">
@@ -162,14 +200,14 @@ const Gallery = ({ setSelect }) => {
                         }}
                         type="file"
                         name="avatar"
-                        multiple // Add the 'multiple' attribute to allow multiple file selection
+                        multiple
                     />
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
                             <span className="svg-icon svg-icon-2tx svg-icon-warning me-4 ">
                                 {projectImgs && projectImgs.map((projectImg, index) => {
                                     return (
-                                        <div className="image-input image-input-outline m-4" data-kt-image-input="true" key={index} >
+                                        <div className="image-input image-input-outline m-4" data-kt-image-input="true" key={projectImg?.id} >
                                             <img
                                                 src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
                                                 width={300}
@@ -182,10 +220,7 @@ const Gallery = ({ setSelect }) => {
                                                 data-kt-image-input-action="remove"
                                                 data-bs-toggle="tooltip"
                                                 title="Remove avatar"
-                                                onClick={() => {
-                                                    let result = projectImgs.splice(index + 1);
-                                                    setProjectImgs(result)
-                                                }}
+                                                onClick={() => confirmHandler(projectImg?.id)}
                                             >
                                                 <input
                                                     type="hidden" name="avatar_remove" />
@@ -194,58 +229,6 @@ const Gallery = ({ setSelect }) => {
                                         </div>
                                     );
                                 })}
-                                {/* <div className="image-input image-input-outline m-4">
-                                    {imgSrc ? <img 
-                                        src={`${imgSrc}`}
-                                        width={300}
-                                        height={300}
-                                        style={{borderRadius: "8px"}}
-                                        alt="Picture of the product"
-                                    /> 
-                                    : 
-                                    <div className=" w-300px h-300px" >
-                                        add new poto
-                                    </div>
-                                    }
-                                    <label
-                                        className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                        data-kt-image-input-action="change"
-                                        data-bs-toggle="tooltip"
-                                        title="Change avatar"
-                                    >
-                                        <i className="bi bi-pencil-fill fs-7" />
-                                        <input
-                                            onChange={(e) => {
-                                            console.log(e.target.files[0])
-                                            setImgSrc(e.target.files[0])
-                                            const file = e.target.files[0];
-                                            const reader = new FileReader();
-
-                                            reader.onload = (event) => {
-                                                setImgSrc(event.target.result);
-                                            };
-
-                                            reader.readAsDataURL(file);
-                                        }}
-                                        type="file"
-                                        name="product"
-                                        accept=".png, .jpg, .jpeg"
-                                        />
-                                    </label>
-                                    <span
-                                        className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                        data-kt-image-input-action="remove"
-                                        data-bs-toggle="tooltip"
-                                        title="Remove avatar"
-                                        onClick={() => {
-                                            setImgSrc(null)
-                                        }}
-                                        >
-                                        <input
-                                            type="hidden" name="avatar_remove" />
-                                        <i className="bi bi-x fs-2" />
-                                    </span>
-                                </div> */}
                             </span>
                         </form>
                     </div>
