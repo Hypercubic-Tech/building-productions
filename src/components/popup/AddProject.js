@@ -398,7 +398,7 @@ const AddProject = ({ dismiss }) => {
                                 }));
                               }}
                             />
-                          <i class={`${styles.percent} bi bi-percent `}></i>
+                          <i className={`${styles.percent} bi bi-percent `}></i>
                           </div>
                         ) : ""}
                           <div className={`${styles.inputWrap} col-6 `}>
@@ -413,7 +413,7 @@ const AddProject = ({ dismiss }) => {
                               className="form-control georgian form-control-solid"
                               placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
                           />
-                          <i class={`${styles.percent} bi bi-percent `}></i>
+                          <i className={`${styles.percent} bi bi-percent `}></i>
                         </div>
                       </div>
                     </div>

@@ -14,7 +14,6 @@ const AddProduct = ({
     craftStatus,
     crafts
 }) => {
-    console.log(crafts, 'crafts');
     const router = useRouter();
     const projectId = router.query.projectId;
     const [lossProduct, setLossProduct] = useState(false);
@@ -47,7 +46,7 @@ const AddProduct = ({
     });
     const [craftData, setCraftData] = useState({
         title: "",
-        type: "craft",
+        type: "service",
         quantity: 0,
         unit: {
             connect: [{ id: null }],
@@ -331,10 +330,10 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="მომწოდებელი"
                                             >
-                                                <option value="none" disabled hidden>აირჩიეთ მომწოდებელი</option>                  
+                                                <option value="none" disabled hidden>აირჩიეთ მომწოდებელი</option>
                                                 {suppliers &&
                                                     suppliers.map((sup) => {
-                                                        
+
                                                         return (
                                                             <option key={sup?.id} value={sup?.id}>
                                                                 {sup?.attributes?.title}
@@ -569,6 +568,7 @@ const AddProduct = ({
                                                 </div>
                                             </div>
                                         </div> */}
+
                                         <div className='d-flex flex-stack flex-grow-1'>
                                             <img src={""} alt='craft image' />
                                         </div>
@@ -576,23 +576,32 @@ const AddProduct = ({
                                     <div className="row mb-5">
                                         <div className="col-md-8 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
-                                                დასახელება
+                                                ხელობის დასახელება
                                             </label>
-                                            <input
-                                                onChange={(e) => {
+                                            <select
+                                                onClick={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        title: e.target.value,
+                                                        title: e.target.value
                                                     }));
                                                 }}
-                                                type="text"
-                                                className="form-control form-control-solid georgian"
-                                                placeholder="პროდუქციის დასახელება"
-                                                name="title"
-                                            />
+                                                name="saler"
+                                                className="form-select form-select-solid georgian"
+                                                data-placeholder="მომწოდებელი"
+                                            >
+                                                <option value="none" disabled hidden>აირჩიეთ ხელობა</option>
+                                                {crafts &&
+                                                    crafts.map((craft) => {
+                                                        return (
+                                                            <option key={craft?.id} value={craft?.id}>
+                                                                {craft?.attributes?.title}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
-                                        <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                        {/* <div className="col-md-4 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 მომწოდებელი
                                             </label>
@@ -620,8 +629,8 @@ const AddProduct = ({
                                                     })}
                                             </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-                                        </div>
-                                        <div className="col-md-12 fv-row fv-plugins-icon-container">
+                                        </div> */}
+                                        {/* <div className="col-md-12 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 ლინკი
                                             </label>
@@ -638,7 +647,7 @@ const AddProduct = ({
                                                 name="prodactElAddress"
                                             />
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-                                        </div>
+                                        </div> */}
                                         <div className="col-md-4 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 რაოდენობა
@@ -731,18 +740,33 @@ const AddProduct = ({
                                                         );
                                                     })}
                                             </select>
-                                            <div style={{ marginTop: '30px' }} className="form-check">
-                                                <label className="form-check-label" htmlFor="exampleCheckbox">
-                                                    შეძენილია
-                                                </label>
-                                                <input onChange={(e) => setProductData((prevSendData) => ({
-                                                    ...prevSendData,
-                                                    status: true,
-                                                }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
-
-                                            </div>
+                                            <label className="required fs-5 fw-bold mb-2 georgian">
+                                                სტატუსი
+                                            </label>
+                                            <select
+                                                onChange={(e) => {
+                                                    setProductData((prevSendData) => ({
+                                                        ...prevSendData,
+                                                        craft_status: {
+                                                            connect: [{ id: e.target.value }],
+                                                        },
+                                                    }));
+                                                }}
+                                                name="saler"
+                                                className="form-select form-select-solid georgian"
+                                                data-placeholder="სტატუსი"
+                                            >
+                                                <option value="none" disabled hidden>აირჩიეთ სტატუსი</option>
+                                                {craftStatus &&
+                                                    craftStatus.map((craft) => {
+                                                        return (
+                                                            <option key={craft?.id} value={craft?.id}>
+                                                                {craft?.attributes?.title}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-
                                         </div>
                                     </div>
                                 </div>

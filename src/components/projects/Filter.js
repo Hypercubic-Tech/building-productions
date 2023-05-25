@@ -6,6 +6,7 @@ const Filter = ({
   projectCategory
 }) => {
   const [color, setColor] = useState('')
+  
   return (
     <div className="header-menu-container container-xxl d-flex flex-stack h-lg-75px">
       <div className="header-menu flex-column flex-lg-row">
