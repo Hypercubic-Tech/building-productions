@@ -22,7 +22,6 @@ const Gallery = ({ setSelect }) => {
     const [projectData, setProjectData] = useState({
         image: image
     });
-
     const getProductsHandler = async () => {
         await axios
             .get(
@@ -35,13 +34,11 @@ const Gallery = ({ setSelect }) => {
                 setProjectImgs(imgs)
             })
     };
-
     useEffect(() => {
         if (projectId) {
             getProductsHandler();
         }
     }, [projectId]);
-
     const handleUpdateProjectImage = useCallback(async () => {
         try {
             await axios.put(
@@ -57,7 +54,6 @@ const Gallery = ({ setSelect }) => {
             console.error(err);
         }
     }, [projectId, projectData, image]);
-
     const handleMediaUpload = useCallback(async (fileList) => {
         try {
             const uploadPromises = fileList.map((file) => {
@@ -79,12 +75,14 @@ const Gallery = ({ setSelect }) => {
 
             const uploadedImages = uploadResponses.map((response) => response.data[0]);
 
-            setProjectData((prevProjectData) => ({
-                ...prevProjectData,
-                images: uploadedImages,
-            }));
+            setImage((prevImages) => {
+                if (!Array.isArray(prevImages) || prevImages === undefined) {
+                    return [...uploadedImages];
+                }
+                return [...prevImages, ...uploadedImages];
+            });
 
-            notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
+            notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             notify(true, "სურათების ატვირთვა უარყოფილია");
             console.error(err);
@@ -97,20 +95,17 @@ const Gallery = ({ setSelect }) => {
             handleMediaUpload();
         }
     }, [imgSrc, image, handleMediaUpload]);
-
     useEffect(() => {
         setProjectData((prevProductData) => ({
             ...prevProductData,
             image: image,
         }));
     }, [image]);
-
     useEffect(() => {
         if (image) {
             handleUpdateProjectImage();
         }
     }, [image, handleUpdateProjectImage]);
-
     const handleFileUpload = (fileList) => {
         if (!fileList || fileList.length === 0) {
             return;
