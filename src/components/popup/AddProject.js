@@ -712,7 +712,7 @@ const AddProject = ({ dismiss }) => {
                   </div>
 
                   <div>
-               {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
+               {loss && <p style={{color: 'red'}}>შეავსეთ ყველა (*) ველი</p>}
 
                     <button
                       onClick={finishHandler}

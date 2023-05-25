@@ -177,9 +177,9 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                     </div>
                   </td>
                   <td className="georgian">
-                    <Link href={product?.attributes?.productLink}>
+                    <a href={product?.attributes?.productLink}>
                       {product?.attributes?.supplier?.data?.attributes?.title}
-                    </Link>
+                    </a>
                   </td>
                   <td className="georgian">
                     {product?.attributes?.quantity}
@@ -198,7 +198,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                     <div
                       className="menu-item px-3 padding8"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16"> <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" /> </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16"> <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" /> </svg>
                     </div>
                     {changeElement ? (
                       <div className={styles.modal}>

@@ -1,8 +1,11 @@
+import { useState } from "react";
 const Filter = ({
   giveProductCategory,
   filterProductCategory,
   projectCategory
 }) => {
+  const [color, setColor] = useState('')
+
   return (
     <div className="header-menu-container container-xxl d-flex flex-stack h-lg-75px">
       <div className="header-menu flex-column flex-lg-row">
@@ -21,12 +24,12 @@ const Filter = ({
               return (
                 <div
                   onClick={() => {
-                    giveProductCategory(), filterProductCategory(item?.id);
+                    giveProductCategory(), filterProductCategory(item?.id), setColor(index);
                   }}
                   key={index}
-                  className="menu-item here show menu-lg-down-accordion me-lg-1"
+                  className={`menu-item here show menu-lg-down-accordion me-lg-1 `}
                 >
-                  <a className="menu-link active py-3">
+                  <a className={`menu-link active py-3 colored-element ${color === index ? 'bg-primary' : ""} `}>
                     <span className="menu-title georgian">
                       <i className="bi bi-plug-fill" />{" "}
                       {item?.attributes?.title}
@@ -35,7 +38,11 @@ const Filter = ({
                 </div>
               );
             })}
-          <div className="menu-item here show menu-lg-down-accordion me-lg-1">
+          <div
+               onClick={() => {
+                    handleColorChange;
+                  }}
+               className="menu-item here show menu-lg-down-accordion me-lg-1">
             <a className="menu-link active py-3">
               <span className="menu-title georgian">
                 <i className="bi bi-plug-fill" /> ჯამური განფასება

@@ -9,7 +9,6 @@ import styles from "./Modal.module.css";
 
 const EditProject = ({ dismiss, project }) => {
   const [step, setStep] = useState(1);
-  const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
   const [cities, setCities] = useState(null);
@@ -78,21 +77,14 @@ const EditProject = ({ dismiss, project }) => {
   };
 
   const stepChangeHandler = () => {
-
-    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
+    if (step === 1 && errors.stepOne.length === 0) {
       setStep(step + 1);
-      setLoss(false);
-    } else {
-      setLoss(true);
     }
-    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
-      console.log('rame2')
+    if (step === 2  && errors.stepTwo.length === 0) {
       setStep(step + 1);
-      setLoss(false);
-    }
-    if (step === 3 && errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0) {
-      setStep(step + 1);
-      setLoss(false);
+    } 
+    if (step === 3 && errors.stepThree.length === 0){
+        setStep(step + 1);
     }
   };
 
@@ -691,8 +683,6 @@ const EditProject = ({ dismiss, project }) => {
                     </div>
                   </div>
                 </div>
-                {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
-
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
                     <button
@@ -727,9 +717,7 @@ const EditProject = ({ dismiss, project }) => {
                       უკან
                     </button>
                   </div>
-
                   <div>
-                    {loss && <p style={{ color: 'red' }}>რაღაცა აკლია!!!</p>}
                     <button
                       onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}

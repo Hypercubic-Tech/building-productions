@@ -4,7 +4,8 @@
 }
 .modal {
     position: absolute;
-    bottom: 1;
     width: 150px;
     transition: .6s;
+    padding: 5px;
+    border: 1px solid #2c2c2c2c;
 }
