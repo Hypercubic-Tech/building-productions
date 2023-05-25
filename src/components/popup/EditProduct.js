@@ -286,7 +286,7 @@ const EditProduct = ({
                                         >
                                             {suppliers &&
                                                 suppliers.map((sup) => {
-                                                    <option value="none" selected disabled hidden >აირჩიეთ მომწოდებელი</option>;
+                                                    <option value="none" disabled hidden >აირჩიეთ მომწოდებელი</option>;
                                                     return (
                                                         <option key={sup?.id} value={sup?.id}>
                                                             {sup?.attributes?.title}
@@ -349,7 +349,7 @@ const EditProduct = ({
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="საზომიერთ."
                                         >
-                                            <option value="none" selected disabled hidden > აირჩიეთ ერთეული</option>;
+                                            <option value="none" disabled hidden > აირჩიეთ ერთეული</option>;
                                             {unit &&
                                                 unit.map((u) => {
                                                     return (
@@ -397,7 +397,7 @@ const EditProduct = ({
                                             data-placeholder="კატეგოია"
                                             defaultValue={product?.attributes?.categories?.data?.attributes?.title}
                                         >
-                                            <option value="none" selected disabled hidden > აირჩიეთ კატეგორია</option>;
+                                            <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
                                             {allCategories &&
                                                 allCategories.map((item) => {
                                                     return (

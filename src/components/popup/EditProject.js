@@ -354,7 +354,7 @@ const EditProject = ({ dismiss, project }) => {
                         defaultValue={project?.data[0]?.attributes?.property_type?.data?.id || ""}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        <option value="none" selected disabled hidden>მიუთითეთ სამუშაო ობიექტის ტიპი</option>
+                        <option value="none" disabled hidden>მიუთითეთ სამუშაო ობიექტის ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
                           return (
                             <option key={index} value={item.id}>{item.attributes.Title}</option>
@@ -442,7 +442,7 @@ const EditProject = ({ dismiss, project }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
-                              <option value="none" selected disabled hidden>მდებარეობა</option>
+                              <option value="none" disabled hidden>მდებარეობა</option>
                               {cities && cities.map((item, index) => {
                                 return (
                                   <option key={index} value={item.id}>{item.attributes.city}</option>
