@@ -294,7 +294,7 @@ const AddProduct = ({
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row mb-5">
+                                    <div className="row mb-5 w-100">
                                         <div className="col-md-8 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 დასახელება
@@ -313,7 +313,36 @@ const AddProduct = ({
                                             />
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
-                                        <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                        <div style={{marginTop: '30px'}}  className='w-100'>
+                                            <label className="required fs-5 fw-bold mb-2 georgian">
+                                                კატეგორია
+                                            </label>
+                                            <select
+                                                onClick={(e) => {
+                                                    setProductData((prevSendData) => ({
+                                                        ...prevSendData,
+                                                        categories: {
+                                                            connect: [{ id: e.target.value }],
+                                                        },
+                                                    }));
+                                                }}
+                                                name="count"
+                                                defaultValue='none'
+                                                className="form-select form-select-solid georgian"
+                                                data-placeholder="საზომიერთ."
+                                            >
+                                                <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
+                                                {allCategories &&
+                                                    allCategories.map((item) => {
+                                                        return (
+                                                            <option key={item?.id} value={item?.id}>
+                                                                {item?.attributes?.title}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
+                                        </div>
+                                        <div style={{marginTop: '30px'}}  className="col-md-4 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 მომწოდებელი
                                             </label>
@@ -429,33 +458,7 @@ const AddProduct = ({
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
                                         <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-                                            <label className="required fs-5 fw-bold mb-2 georgian">
-                                                კატეგორია
-                                            </label>
-                                            <select
-                                                onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        categories: {
-                                                            connect: [{ id: e.target.value }],
-                                                        },
-                                                    }));
-                                                }}
-                                                name="count"
-                                                defaultValue='none'
-                                                className="form-select form-select-solid georgian"
-                                                data-placeholder="საზომიერთ."
-                                            >
-                                                <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
-                                                {allCategories &&
-                                                    allCategories.map((item) => {
-                                                        return (
-                                                            <option key={item?.id} value={item?.id}>
-                                                                {item?.attributes?.title}
-                                                            </option>
-                                                        );
-                                                    })}
-                                            </select>
+
                                             <div style={{ marginTop: '30px' }} className="form-check">
                                                 <label className="form-check-label" htmlFor="exampleCheckbox">
                                                     შეძენილია

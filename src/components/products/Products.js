@@ -32,7 +32,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
   useEffect(() => {
     const getProductId = async () => {
       try {
-        console.log(allCategories)
         const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
 
         if (!id) {
