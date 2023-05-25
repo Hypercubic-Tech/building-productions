@@ -278,7 +278,6 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
                         {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={allCategories} suppliers={suppliers} />}
-                          {console.log(select)}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
                             setSelect={setSelect}
