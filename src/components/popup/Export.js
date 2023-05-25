@@ -52,33 +52,12 @@ const Export = ({ setSelect }) => {
                 </span>
               </div>
             </div>
-            <div className="modal-body scroll-y mx-5 mx-xl-15 my-7">
+            <div className="modal-body w-100">
               <form
                 id="kt_modal_export_users_form"
                 className="form"
                 action="#"
               >
-                <div className="fv-row mb-10">
-                  <label className="fs-6 fw-bold form-label mb-2 georgian">
-                    კატეგორია:
-                  </label>
-                  <select
-                    name="role"
-                    data-control="select2"
-                    data-placeholder="მონიშნეთ სამუშაოები"
-                    data-hide-search="true"
-                    className="form-select form-select-solid georgian"
-                  >
-                    <option />
-                    <option value={1}>ელექტროობა</option>
-                    <option value={2}>სანტექნიკა</option>
-                    <option value={3}>დემონტაჟი</option>
-                    <option value={4}>სამღებრო</option>
-                    <option value={5}>გათბობა</option>
-                    <option value={6}>კაფელ-მეტლახი</option>
-                    <option value={6}>ყველა</option>
-                  </select>
-                </div>
                 <div className="fv-row mb-10">
                   <label className="required fs-6 fw-bold form-label mb-2 georgian">
                     აირჩიეთ ფორმატი:

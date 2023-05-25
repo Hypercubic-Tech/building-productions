@@ -8,7 +8,6 @@ const index = () => {
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
   const [crafts, setCrafts] = useState(null);
-  const [allProduct, setAllProduct] = useState(null);
   const [project, setProject] = useState(null);
   const [craftStatus, setCraftStatus] = useState(null);
   const [projectCategory, setProjectCategory] = useState(null);

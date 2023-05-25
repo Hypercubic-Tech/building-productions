@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useSelector } from 'react-redux';
+
 
 const Filter = ({
-  giveProductCategory,
   filterProductCategory,
-  projectCategory
+  projectCategory,
+  totalSumOnClick
 }) => {
-  const [color, setColor] = useState('')
+
+  const activeCategoryId = useSelector(state => state.categoryId);
+
   return (
     <div className="header-menu-container container-xxl d-flex flex-stack h-lg-75px">
       <div className="header-menu flex-column flex-lg-row">
@@ -21,14 +24,14 @@ const Filter = ({
           {projectCategory &&
             projectCategory.map((item, index) => {
               return (
-                <div
+                <div  
                   onClick={() => {
-                    giveProductCategory(), filterProductCategory(item?.id), setColor(index);
+                    filterProductCategory(item?.id);
                   }}
                   key={index}
                   className={`menu-item here show menu-lg-down-accordion me-lg-1 `}
                 >
-                  <a className={`menu-link active py-3 colored-element ${color === index ? 'bg-primary' : ""} `}>
+                  <a className={`menu-link active py-3 colored-element ${activeCategoryId  === item?.id ? 'bg-primary' : ""} `}>
                     <span className="menu-title georgian">
                       <i className="bi bi-plug-fill" />{" "}
                       {item?.attributes?.title}
@@ -38,7 +41,9 @@ const Filter = ({
               );
             })}
           <div
-               className="menu-item here show menu-lg-down-accordion me-lg-1">
+            className="menu-item here show menu-lg-down-accordion me-lg-1"
+            onClick={totalSumOnClick}
+            >
             <a className="menu-link active py-3">
               <span className="menu-title georgian">
                 <i className="bi bi-plug-fill" /> ჯამური განფასება

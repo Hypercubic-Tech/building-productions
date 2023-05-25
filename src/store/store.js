@@ -6,12 +6,15 @@ import { productSlice } from "./slices/productSlice";
 import modalReducer from "./slices/modalSlice";
 import headerPopUpReducer from "./slices/headerModalSlice";
 import { persistReducer, persistStore } from 'redux-persist';
+import categoryReducer from './slices/categorySlice';
+
 import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
   modal: modalReducer,
   headerPopUp: headerPopUpReducer,
+  categoryId: categoryReducer,
   [projectSlice.name]: projectSlice.reducer,
   [productSlice.name]: productSlice.reducer
 });

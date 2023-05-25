@@ -366,8 +366,8 @@ const AddProject = ({ dismiss }) => {
                       </select>
                     </div>
                     <div className="w-100">
-                      <div className="fv-row mb-10">
-                        <div className="form-check form-switch">
+                      <div className="row mb-10">
+                        <div className="form-check form-switch d-flex align-items-center">
                           <input
                             className="form-check-input"
                             type="checkbox"
@@ -383,15 +383,14 @@ const AddProject = ({ dismiss }) => {
                             }}
                           />
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className="georgian">დღგ-ს გადამხდელი</span>
+                            <span className={`${styles.ml2} georgian `}>დღგ-ს გადამხდელი / გაუთვალისწინებელი ხარჯები</span>
                           </label>
-
                         </div>
                         {hiddenInput ? (
-                          <div className="col-6">
+                          <div className={`${styles.inputWrap} col-6 `}>
                             <input
                               className="form-control georgian form-control-solid"
-                              placeholder="%"
+                              placeholder="დღგ-ს გადამხდელი"
                               type="text"
                               onChange={(e) => {
                                 setSendData((prevSendData) => ({
@@ -400,26 +399,24 @@ const AddProject = ({ dismiss }) => {
                                 }));
                               }}
                             />
+                          <i className={`${styles.percent} bi bi-percent `}></i>
                           </div>
                         ) : ""}
+                          <div className={`${styles.inputWrap} col-6 `}>
+                            <input
+                              onChange={(event) => {
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  unforeseenExpenses: event.target.value,
+                                }));
+                              }}
+                              type="text"
+                              className="form-control georgian form-control-solid"
+                              placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
+                          />
+                          <i className={`${styles.percent} bi bi-percent `}></i>
+                        </div>
                       </div>
-                    </div>
-                    <div style={{marginBottom: '30px'}} className="w-100">
-                      <label className="required fs-6 fw-bold form-label georgian mb-2">
-                        გაუთვალისწინებელი ხარჯები
-                      </label>
-                      <input
-                        onChange={(event) => {
-                          setSendData((prevSendData) => ({
-                            ...prevSendData,
-                            unforeseenExpenses: event.target.value,
-                          }));
-                        }}
-                        type="text"
-                        className="form-control georgian form-control-solid"
-                        placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
-                      />
-
                     </div>
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
