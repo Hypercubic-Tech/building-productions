@@ -51,13 +51,11 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     };
   }, [projectId]);
 
-  const editHandlerPopup = () => {
-    console.log(editProductItem, 'item')
-    if (editPopup === false) {
-      console.log('im here')
-      setEditPopup(true)
+  const editHandlerPopup = (product) => {
+    if(product.attributes.type === 'product') {
+      setSelect("edit-product");
     } else {
-      setEditPopup(false)
+      setSelect("edit-service");
     }
   };
 
@@ -183,7 +181,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                   </td>
                   <td className="text-end gap">
                     <div
-                      onClick={() => { editHandler(product); setEditPopup(true); }}
+                      onClick={() => { editHandler(product); editHandlerPopup(product) }}
                       className="menu-item px-3"
                     >
                       <a className="menu-link px-3 georgian padding0">
@@ -242,7 +240,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                       </div>
                       <div className="d-flex flex-column georgian">
                         <a
-                          href="https://www.domino.com.ge/products/electrical-goods/cables-and-wires/cable-wire/%E1%83%99%E1%83%90%E1%83%91%E1%83%94%E1%83%9A%E1%83%98-sakcable-%E1%83%9E%E1%83%A3%E1%83%9C%E1%83%9E-3x2.5-h03vvh2-u-h05vvh2-u/"
+                          // href="https://www.domino.com.ge/products/electrical-goods/cables-and-wires/cable-wire/%E1%83%99%E1%83%90%E1%83%91%E1%83%94%E1%83%9A%E1%83%98-sakcable-%E1%83%9E%E1%83%A3%E1%83%9C%E1%83%9E-3x2.5-h03vvh2-u-h05vvh2-u/"
                           className="text-gray-800 text-hover-primary mb-1 georgian"
                         >
                           {product.title ? product?.title : product?.category}
@@ -262,7 +260,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                     </td>
                     <td className="text-end gap">
                       <div
-                        onClick={() => { editHandler(product); setEditPopup(true); }}
+                        onClick={() => { editHandler(product); editHandlerPopup(product) }}
                         className="menu-item px-3"
                       >
                         <a className="menu-link px-3 georgian padding0">

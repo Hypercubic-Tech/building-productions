@@ -383,7 +383,7 @@ const AddProject = ({ dismiss }) => {
                             }}
                           />
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className="required georgian">დღგ-ს გადამხდელი</span>
+                            <span className="georgian">დღგ-ს გადამხდელი</span>
                           </label>
 
                         </div>

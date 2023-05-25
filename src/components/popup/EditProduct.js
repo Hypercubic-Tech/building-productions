@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
-// 
+import notify from '../../utils/notify';
 import styles from "./AddProduct.module.css";
 
 const EditProduct = ({
@@ -11,13 +11,17 @@ const EditProduct = ({
     suppliers,
     product
 }) => {
+    console.log(product)
     const router = useRouter();
     const projectId = router.query.projectId;
-    const [productImage, setProductImage] = useState(null);
+    const [lossProduct, setLossProduct] = useState(false);
+    const [imgSrc, setImgSrc] = useState(null);
+    const [imageId, setImageId] = useState(null);
+
     const [productData, setProductData] = useState({
-        // image: {
-        //     connect: [{ image: null}]
-        // },
+        files: {
+            connect: [{ id: imageId }]
+        },
         title: "",
         type: "product",
         purchased: false,
@@ -38,38 +42,72 @@ const EditProduct = ({
         }
     });
 
-    console.log(product.id)
     const handleSubmit = async () => {
-        if (!product || !product.id) {
-            console.log("Invalid product data");
+        try {
+            await axios
+                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+                    data: productData,
+                })
+                .then(() => {
+                    notify(false, "პროდუქტი დაემატა");
+                })
+        } catch (err) {
+            notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+            console.log(err);
+        }
+        setSelect(null);
+    };
+
+    const handleMediaUpload = useCallback(async () => {
+        if (!imgSrc) {
             return;
         }
 
         try {
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${product.id}`,
+            const formData = new FormData();
+            formData.append("files", imgSrc);
+
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+                formData,
                 {
-                    data: productData,
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
                 }
             );
+
+            const data = res.data;
+            setImageId(data[0]?.id);
+
+            notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
+            notify(true, "სურათის ატვირთვა უარყოფილია");
             console.log(err);
         }
+    }, [imgSrc]);
 
-        setSelect(null);
-    };
-
-
-    const handleMediaUpload = async () => {
-        const formData = new FormData();
-        formData.append("image", productImage);
-
-        try {
-            await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`, { formData });
-        } catch (err) {
-            console.log(err);
+    useEffect(() => {
+        if (imgSrc) {
+            handleMediaUpload();
         }
+    }, [imgSrc, handleMediaUpload]);
+
+    useEffect(() => {
+        setProductData((prevProductData) => ({
+            ...prevProductData,
+            files: {
+                connect: [{ id: imageId }]
+            }
+        }));
+    }, [imageId]);
+
+    const handleImageRemove = async () => {
+        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
+        setImgSrc(null);
+        notify(false, "სურათი წარმატებით წაიშალა");
     };
+
 
     return (
         <div
@@ -86,6 +124,7 @@ const EditProduct = ({
                         <div
                             className={` d-flex justify-content-center align-items-center w-100 p-2 `}
                         >
+                            <h3>პროდუქციის რედაქტირება</h3>
                         </div>
                         <div
                             className="btn btn-icon btn-sm btn-active-icon-primary"
@@ -127,10 +166,11 @@ const EditProduct = ({
                             </span>
                         </div>
                     </div>
-                    <div style={{ width: "90%" }} className="modal-body scroll-y mx-5 mx-xl-15 my-7">
+
+                    <div style={{ width: "90%" }} className="modal-body mx-5 mx-xl-15 my-7">
                         <form id="kt_modal_add_user_form" className="form">
                             <div
-                                className="d-flex flex-column scroll-y me-n7 pe-7"
+                                className="d-flex flex-column pe-7"
                                 id="kt_modal_add_user_scroll"
                                 data-kt-scroll="true"
                                 data-kt-scroll-activate="{default: false, lg: true}"
@@ -139,15 +179,25 @@ const EditProduct = ({
                                 data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                                 data-kt-scroll-offset="300px"
                             >
-                                <div
-                                    className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                                <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                     <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
                                         <div
                                             className="image-input image-input-outline"
                                             data-kt-image-input="true"
                                         >
-                                            <div
-                                            />
+                                            {
+                                                imgSrc ? <img
+                                                    src={imgSrc}
+                                                    // i dont have img in obj :C
+                                                    width={125}
+                                                    height={125}
+                                                    style={{ borderRadius: "8px" }}
+                                                    alt="Picture of the product"
+                                                />
+                                                    :
+                                                    <div className="image-input-wrapper w-125px h-125px" >
+                                                    </div>
+                                            }
                                             <label
                                                 className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                 data-kt-image-input-action="change"
@@ -157,50 +207,45 @@ const EditProduct = ({
                                                 <i className="bi bi-pencil-fill fs-7" />
                                                 <input
                                                     onChange={(e) => {
-                                                        // setProductImage((prevSendData) => ({
-                                                        //     ...prevSendData,
-                                                        //     image: e.target.files[0],
-                                                        // }));
-                                                        setProductImage(e.target.files[0])
-                                                        handleMediaUpload()
+                                                        setImgSrc(e.target.files[0])
+                                                        const file = e.target.files[0];
+                                                        const reader = new FileReader();
+
+                                                        reader.onload = (event) => {
+                                                            setImgSrc(event.target.result);
+                                                        };
+
+                                                        reader.readAsDataURL(file);
                                                     }}
                                                     type="file"
-                                                    name="image"
+                                                    name="avatar"
+                                                    accept=".png, .jpg, .jpeg"
                                                 />
-                                                <input type="hidden" name="avatar_remove" />
                                             </label>
-                                            <span
-                                                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                data-kt-image-input-action="cancel"
-                                                data-bs-toggle="tooltip"
-                                                title="Cancel avatar"
-                                            >
-                                                <i className="bi bi-x fs-2" />
-                                            </span>
                                             <span
                                                 className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                 data-kt-image-input-action="remove"
                                                 data-bs-toggle="tooltip"
                                                 title="Remove avatar"
+                                                onClick={() => {
+                                                    handleImageRemove()
+                                                }}
                                             >
+                                                <input
+                                                    type="hidden" name="avatar_remove" />
                                                 <i className="bi bi-x fs-2" />
                                             </span>
+
                                         </div>
                                     </span>
                                     <div className="d-flex flex-stack flex-grow-1">
                                         <div className="fw-bold">
-                                            <h4 className="text-gray-900 fw-bolder georgian">
-                                                სურათი
-                                            </h4>
+                                            <h4 className="text-gray-900 fw-bolder georgian">სურათი</h4>
                                             <div className="fs-6 text-gray-700 georgian">
-                                                აირჩიეთ მხოლოდ ერთი სურათი
+                                                აირჩიეთ სასურველი ფორმატი
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='row mb-5'>
-                                    <span> ძველი ფოტო სურათი </span>
-                                    <img src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.image?.data?.attributes?.url}`} alt='product image' />
                                 </div>
                                 <div className="row mb-5">
                                     <div className="col-md-8 fv-row fv-plugins-icon-container">
@@ -218,7 +263,7 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="პროდუქციის დასახელება"
                                             name="title"
-                                            defaultValue={product?.attributes?.title}
+                                            defaultValue={product.attributes}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -238,7 +283,6 @@ const EditProduct = ({
                                             name="saler"
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="მომწოდებელი"
-                                            defaultValue={product?.attributes?.supplier?.data?.attributes?.title}
                                         >
                                             {suppliers &&
                                                 suppliers.map((sup) => {
@@ -272,7 +316,6 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="http://momwodebeli.ge"
                                             name="prodactElAddress"
-                                            defaultValue={product?.attributes?.productLink}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -291,7 +334,6 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="პრო: რაოდენობა"
                                             name="quantity"
-                                            defaultValue={product?.attributes?.quantity}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -311,7 +353,6 @@ const EditProduct = ({
                                             name="count"
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="საზომიერთ."
-                                            defaultValue={product.attributes.unit.data.attributes.title}
                                         >
                                             {unit &&
                                                 unit.map((u) => {
@@ -345,7 +386,6 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="პროდ: ღირებულება"
                                             name="price"
-                                            defaultValue={product.attributes.price}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -365,7 +405,6 @@ const EditProduct = ({
                                             name="count"
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="საზომიერთ."
-                                            defaultValue={product?.attributes?.categories?.data?.attributes?.title}
                                         >
                                             {allCategories &&
                                                 allCategories.map((item) => {
@@ -386,6 +425,8 @@ const EditProduct = ({
                                     </div>
                                 </div>
                             </div>
+                            {lossProduct && <p style={{ color: 'red' }}>რაღაცა აკლია!!!</p>}
+
                             <div className="text-center pt-15">
                                 <button
                                     onClick={() => {
@@ -403,7 +444,7 @@ const EditProduct = ({
                                     className="btn btn-primary"
                                     data-kt-users-modal-action="submit"
                                 >
-                                    <span className="indicator-label">დაამატე</span>
+                                    <span className="indicator-label">რედაქტირება</span>
                                 </div>
                             </div>
                         </form>
@@ -415,7 +456,3 @@ const EditProduct = ({
 };
 
 export default EditProduct;
-
-
-// bakcup
-

@@ -6,7 +6,6 @@ import styles from "./AddProduct.module.css";
 
 const AddProduct = ({
     setSelect,
-    crafts,
     unit,
     allCategories,
     suppliers,
@@ -20,7 +19,6 @@ const AddProduct = ({
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [imageId, setImageId] = useState(null);
-    console.log(imageId, 'asapa tesli kacia')
 
     const [productData, setProductData] = useState({
         files: {
@@ -112,8 +110,6 @@ const AddProduct = ({
             );
 
             const data = res.data;
-            console.log(data[0].id);
-            console.log(data[0]);
             setImageId(data[0]?.id);
 
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
@@ -479,7 +475,6 @@ const AddProduct = ({
                                     <button
                                         onClick={() => {
                                             setSelect(null);
-                                            console.log('hi')
                                         }}
                                         type="reset"
                                         className="btn btn-light me-3"
