@@ -104,9 +104,9 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       setChangeElement(false)
     )
   }
-
+  
   console.log(totalSum)
-
+  
   return (
     <>
       <div className="table-responsive">
@@ -162,7 +162,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                   </tr>
                 </tbody>
               )}
-              {filteredProducts?.length === 0 && <td style={{width: '100%', textAlign: "center"}}>პროდუქტი ვერ მოიძებნა!</td> }
               {console.log(filteredProducts, 'fill')}
               {!filteredProducts ? defaultP && defaultP.map((product) => {
                 return (
@@ -343,6 +342,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
             </>
           )}
         </table>
+        {filteredProducts?.length === 0 && <td style={{width: '100vw', textAlign: 'center'}}>პროდუქტი ვერ მოიძებნა!</td> }
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">
