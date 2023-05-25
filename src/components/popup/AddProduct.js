@@ -328,6 +328,7 @@ const AddProduct = ({
                                                     }));
                                                 }}
                                                 name="saler"
+                                                defaultValue='none'
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="მომწოდებელი"
                                             >
@@ -394,6 +395,7 @@ const AddProduct = ({
                                                     }));
                                                 }}
                                                 name="count"
+                                                defaultValue='none'
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >
@@ -441,6 +443,7 @@ const AddProduct = ({
                                                     }));
                                                 }}
                                                 name="count"
+                                                defaultValue='none'
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >
@@ -606,6 +609,7 @@ const AddProduct = ({
                                                     }));
                                                 }}
                                                 name="saler"
+                                                defaultValue='none'
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="მომწოდებელი"
                                             >
@@ -671,6 +675,7 @@ const AddProduct = ({
                                                     }));
                                                 }}
                                                 name="count"
+                                                defaultValue='none'
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >
@@ -718,6 +723,7 @@ const AddProduct = ({
                                                     }));
                                                 }}
                                                 name="count"
+                                                defaultValue='none'
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >

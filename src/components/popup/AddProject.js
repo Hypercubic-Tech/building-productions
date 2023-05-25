@@ -346,6 +346,7 @@ const AddProject = ({ dismiss }) => {
                       <select
                         required
                         id="property"
+                        defaultValue='none'
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
@@ -429,6 +430,7 @@ const AddProject = ({ dismiss }) => {
                           <div className="col-6">
                             <select
                               id="city"
+                              defaultValue='none'
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,

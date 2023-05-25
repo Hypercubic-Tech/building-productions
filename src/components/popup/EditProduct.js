@@ -346,6 +346,7 @@ const EditProduct = ({
                                                 }));
                                             }}
                                             name="count"
+                                            defaultValue='none'
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="საზომიერთ."
                                         >
@@ -395,7 +396,7 @@ const EditProduct = ({
                                             name="count"
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="კატეგოია"
-                                            defaultValue={product?.attributes?.categories?.data?.attributes?.title}
+                                            defaultValue='none'
                                         >
                                             <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
                                             {allCategories &&
