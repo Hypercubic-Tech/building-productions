@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import Products from "./products/Products";
+import Products from "../products/Products";
 import Filter from "./Filter";
 import axios from "axios";
 import AddProduct from "../popup/AddProduct";
