@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+
+import { setProductState } from '../../store/slices/productSlice';
 import notify from '../../utils/notify';
-import styles from "./AddProduct.module.css";
 
 const AddProduct = ({
     setSelect,
@@ -11,6 +13,7 @@ const AddProduct = ({
     suppliers,
     craftStatus,
 }) => {
+    const dispatch = useDispatch();
     const router = useRouter();
     const projectId = router.query.projectId;
     const [lossProduct, setLossProduct] = useState(false);
@@ -18,12 +21,9 @@ const AddProduct = ({
     const [toggle, setToggle] = useState(true);
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
-    const [imageId, setImageId] = useState(null);
-
+    const [image, setImage] = useState(null);
     const [productData, setProductData] = useState({
-        files: {
-            connect: [{ id: imageId }]
-        },
+        image: image,
         title: "",
         type: "product",
         purchased: false,
@@ -65,7 +65,9 @@ const AddProduct = ({
                 .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
                     data: productData,
                 })
-                .then(() => {
+                .then((res) => {
+                    const data = res.data;
+                    console.log(data)
                     notify(false, "პროდუქტი დაემატა");
                 })
         } catch (err) {
@@ -110,7 +112,8 @@ const AddProduct = ({
             );
 
             const data = res.data;
-            setImageId(data[0]?.id);
+            console.log(data[0], 'age dzma')
+            setImage(data[0]);
 
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
@@ -128,18 +131,15 @@ const AddProduct = ({
     useEffect(() => {
         setProductData((prevProductData) => ({
             ...prevProductData,
-            files: {
-                connect: [{ id: imageId }]
-            }
+            image: image
         }));
-    }, [imageId]);
+    }, [image]);
 
     const handleImageRemove = async () => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
+        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
         setImgSrc(null);
         notify(false, "სურათი წარმატებით წაიშალა");
     };
-
 
     return (
         <div

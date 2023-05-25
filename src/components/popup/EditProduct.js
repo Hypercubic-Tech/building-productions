@@ -263,7 +263,7 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="პროდუქციის დასახელება"
                                             name="title"
-                                            defaultValue={product.attributes}
+                                            defaultValue={product.attributes.title}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -283,6 +283,7 @@ const EditProduct = ({
                                             name="saler"
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="მომწოდებელი"
+                                            defaultValue={product.attributes.title}
                                         >
                                             {suppliers &&
                                                 suppliers.map((sup) => {

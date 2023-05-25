@@ -40,7 +40,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const defaultProductsHandler = async (id) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data;
         setDefaultP(data.data);
       } catch (error) {
