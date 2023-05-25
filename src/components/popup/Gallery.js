@@ -1,17 +1,25 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Swal from "sweetalert2";
+import LightGallery from 'lightgallery/react';
 
+import lgZoom from 'lightgallery/plugins/zoom';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import notify from '../../utils/notify';
+
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-zoom.css';
+import 'lightgallery/css/lg-thumbnail.css';
 
 const Gallery = ({ setSelect }) => {
     const router = useRouter();
     const projectId = router.query.projectId;
-
+    const lightGallery = useRef(null);
     const [imgSrc, setImgSrc] = useState(null);
     const [projectImgs, setProjectImgs] = useState(null);
     const [image, setImage] = useState(null);
+    const [imageState, setImageState] = useState(false);
     const [projectData, setProjectData] = useState({
         image: image
     });
@@ -41,21 +49,22 @@ const Gallery = ({ setSelect }) => {
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
                 {
                     data: projectData,
+                    image: image
                 }
             ).then(() => {
-                getProductsHandler()
+                getProductsHandler();
             });
         } catch (err) {
             console.error(err);
         }
-    }, [projectId, projectData]);
+    }, [projectId, projectData, image]);
 
     const handleMediaUpload = useCallback(async (fileList) => {
         try {
             const uploadPromises = fileList.map((file) => {
                 const formData = new FormData();
                 formData.append("files", file);
-
+    
                 return axios.post(
                     `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
                     formData,
@@ -66,17 +75,25 @@ const Gallery = ({ setSelect }) => {
                     }
                 );
             });
-
+    
             const uploadResponses = await Promise.all(uploadPromises);
-
+    
             const uploadedImages = uploadResponses.map((response) => response.data[0]);
-            setImage(uploadedImages);
+    
+            setImage((prevImages) => {
+                if (!Array.isArray(prevImages) || prevImages === undefined) {
+                    return [...uploadedImages];
+                }
+                return [...prevImages, ...uploadedImages];
+            });
+    
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             notify(true, "სურათების ატვირთვა უარყოფილია");
             console.error(err);
         }
-    }, []);
+    }, [setImage]);
+    
 
     useEffect(() => {
         if (imgSrc && !image) {
@@ -136,14 +153,22 @@ const Gallery = ({ setSelect }) => {
 
     const handleDeleteImage = async (imageId) => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
-        .then(() => {
-            getProductsHandler()
-        })
+            .then(() => {
+                getProductsHandler()
+            })
         setImgSrc(null);
     };
 
+    const toggleHandler = () => {
+        if (!imageState) {
+            setImageState(false)
+        } else {
+            setImageState(true)
+        }
+    }
+
     return (
-        <div className="modal fade show">
+        <div className="modal fade show" style={{ zIndex: imageState ? "0" : "100" }}>
             <div className="modal modal-dialog-centered custom-width">
                 <div className="modal-content custom-width" style={{ width: "90% ", height: "90%", margin: "5%" }}>
                     <div className="modal-header" id="kt_modal_add_user_header">
@@ -205,30 +230,20 @@ const Gallery = ({ setSelect }) => {
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
                             <span className="svg-icon svg-icon-2tx svg-icon-warning me-4 ">
-                                {projectImgs && projectImgs.map((projectImg, index) => {
-                                    return (
-                                        <div className="image-input image-input-outline m-4" data-kt-image-input="true" key={projectImg?.id} >
-                                            <img
-                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
-                                                width={300}
-                                                height={300}
-                                                style={{ borderRadius: "8px" }}
-                                                alt="Picture of the product"
-                                            />
-                                            <span
-                                                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                data-kt-image-input-action="remove"
-                                                data-bs-toggle="tooltip"
-                                                title="Remove avatar"
-                                                onClick={() => confirmHandler(projectImg?.id)}
+                                {projectImgs && (
+                                    <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">
+                                        {projectImgs.map((projectImg, index) => (
+                                            <a
+                                                key={projectImg?.id}
+                                                href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                className="gallery-item"
+                                                onClick={toggleHandler}
                                             >
-                                                <input
-                                                    type="hidden" name="avatar_remove" />
-                                                <i className="bi bi-x fs-2" />
-                                            </span>
-                                        </div>
-                                    );
-                                })}
+                                                <img src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`} className="img-responsive" />
+                                            </a>
+                                        ))}
+                                    </LightGallery>
+                                )}
                             </span>
                         </form>
                     </div>
