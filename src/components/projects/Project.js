@@ -14,14 +14,13 @@ import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
 
-const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem }) => {
+const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(undefined);
   const [defaultP, setDefaultP] = useState(undefined);
-  // const [defaultCategory, setDefaultCategory] = useState();
   const [totalSum, setTotalSum] = useState(false);
 
   const router = useRouter();
@@ -37,7 +36,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
     //   setTotalSum(true)
     // )
   };
-  
+
   const defaultProductsHandler = async (id) => {
     if (id) {
       try {
@@ -71,8 +70,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
-          {/* make naming correct proj to project details */}
-          {proj && proj.map((p, index) => {
+          {project && project.map((p, index) => {
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
                 <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
@@ -291,7 +289,8 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
-                        {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers} />}
+                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers} 
+                        />}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
                             setSelect={setSelect}
@@ -331,7 +330,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         allCategories={allCategories}
                         suppliers={suppliers}
                         totalSum={totalSum}
-                        />
+                      />
                     </div>
                   </div>
                 </div>

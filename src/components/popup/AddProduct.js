@@ -1,12 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
+
 import axios from 'axios';
+
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 
 import { setProductState } from '../../store/slices/productSlice';
 import notify from '../../utils/notify';
 
 const AddProduct = ({
+    project,
     setSelect,
     unit,
     allCategories,
@@ -14,6 +19,22 @@ const AddProduct = ({
     craftStatus,
     crafts
 }) => {
+    // console.log(project, 'project')
+    // console.log(project.data[0]?.attributes?.products.data.find((category) => {
+    //     console.log(category.attributes.categories.data[0].id, 'realy one')
+    //     return (
+    //         <div>hi</div>
+    //     )
+    // }), 'filn')
+    // console.log(project.data[0]?.attributes?.products.data.map((item, index) => {
+    //     item.attributes.categories.data.find((id) => {
+    //         console.log(id)
+    //         // return item
+    //     })
+    // }))
+    console.log(project, 'project')
+    const dispatch = useDispatch();
+
     const router = useRouter();
     const projectId = router.query.projectId;
     const [lossProduct, setLossProduct] = useState(false);
@@ -22,6 +43,13 @@ const AddProduct = ({
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
+
+    const activeCategoryId = useSelector(state => state.categoryId);
+    const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
+
+    console.log(activeCategoryId, 'actived id')
+    
+
     const [productData, setProductData] = useState({
         image: image,
         title: "",
@@ -37,13 +65,14 @@ const AddProduct = ({
         },
         price: 0,
         categories: {
-            connect: [{ id: null }],
+            connect: [{ id: activeCategory }],
         },
         project: {
             connect: [{ id: projectId }]
         },
         status: false
     });
+
     const [craftData, setCraftData] = useState({
         title: "",
         type: "service",
@@ -53,7 +82,7 @@ const AddProduct = ({
         },
         price: 0,
         project: {
-            connect: [{ id: projectId }]
+            connect: [{ id: activeCategory }]
         },
         craft_status: {
             connect: [{ id: null }]
@@ -112,7 +141,7 @@ const AddProduct = ({
                 }
             );
 
-            const data = res.data;
+            const data = res.data;  
             console.log(data[0], 'age dzma');
             setImage(data[0]);
 
@@ -294,7 +323,7 @@ const AddProduct = ({
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row mb-5 w-100">
+                                    <div className="row mb-5">
                                         <div className="col-md-8 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 დასახელება
@@ -313,7 +342,7 @@ const AddProduct = ({
                                             />
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
-                                        <div style={{marginTop: '30px'}}  className='w-100'>
+                                        <div className='w-100'>
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 კატეგორია
                                             </label>
@@ -327,7 +356,7 @@ const AddProduct = ({
                                                     }));
                                                 }}
                                                 name="count"
-                                                defaultValue='none'
+                                                defaultValue={activeCategoryId}
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="საზომიერთ."
                                             >
@@ -342,7 +371,7 @@ const AddProduct = ({
                                                     })}
                                             </select>
                                         </div>
-                                        <div style={{marginTop: '30px'}}  className="col-md-4 fv-row fv-plugins-icon-container">
+                                        <div style={{ marginTop: '30px' }} className="col-md-4 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 მომწოდებელი
                                             </label>
@@ -509,105 +538,66 @@ const AddProduct = ({
                                     data-kt-scroll-offset="300px"
                                 >
                                     <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
-                                        {/* <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                            <div
-                                                className="image-input image-input-outline"
-                                                data-kt-image-input="true"
-                                            >
-                                                {
-                                                    imgSrc ? <img
-                                                        src={imgSrc}
-                                                        width={125}
-                                                        height={125}
-                                                        style={{ borderRadius: "8px" }}
-                                                        alt="Picture of the product"
-                                                    />
-                                                        :
-                                                        <div className="image-input-wrapper w-125px h-125px" >
-                                                        </div>
-                                                }
-                                                <label
-                                                    className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                    data-kt-image-input-action="change"
-                                                    data-bs-toggle="tooltip"
-                                                    title="Change avatar"
-                                                >
-                                                    <i className="bi bi-pencil-fill fs-7" />
-                                                    <input
-                                                        onChange={(e) => {
-                                                            setImgSrc(e.target.files[0])
-                                                            const file = e.target.files[0];
-                                                            const reader = new FileReader();
-
-                                                            reader.onload = (event) => {
-                                                                setImgSrc(event.target.result);
-                                                            };
-
-                                                            reader.readAsDataURL(file);
-                                                        }}
-                                                        type="file"
-                                                        name="avatar"
-                                                        accept=".png, .jpg, .jpeg"
-                                                    />
-                                                </label>
-                                                <span
-                                                    className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                    data-kt-image-input-action="remove"
-                                                    data-bs-toggle="tooltip"
-                                                    title="Remove avatar"
-                                                    onClick={() => {
-                                                        handleImageRemove()
-                                                    }}
-                                                >
-                                                    <input
-                                                        type="hidden" name="avatar_remove" />
-                                                    <i className="bi bi-x fs-2" />
-                                                </span>
-
-                                            </div>
-                                        </span> */}
-                                        {/* <div className="d-flex flex-stack flex-grow-1">
-                                            <div className="fw-bold">
-                                                <h4 className="text-gray-900 fw-bolder georgian">სურათი</h4>
-                                                <div className="fs-6 text-gray-700 georgian">
-                                                    აირჩიეთ სასურველი ფორმატი
-                                                </div>
-                                            </div>
-                                        </div> */}
-
                                         <div className='d-flex flex-stack flex-grow-1'>
-                                            <img src={""} alt='craft image' />
+                                            <img
+                                                src={imgSrc}
+                                                width={125}
+                                                height={125}
+                                                style={{ borderRadius: "8px" }}
+                                                alt="Picture of the product"
+                                            />
                                         </div>
                                     </div>
                                     <div className="row mb-5">
+                                        {console.log()}
                                         <div className="col-md-8 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
-                                                ხელობის დასახელება
+                                                დასახელება
+                                            </label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setProductData((prevSendData) => ({
+                                                        ...prevSendData,
+                                                        title: e.target.value,
+                                                    }));
+                                                }}
+                                                type="text"
+                                                className="form-control form-control-solid georgian"
+                                                placeholder="პროდუქციის დასახელება"
+                                                name="title"
+                                            />
+                                            <div className="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+                                        <div className='w-100'>
+                                            <label className="required fs-5 fw-bold mb-2 georgian">
+                                                კატეგორია
                                             </label>
                                             <select
                                                 onClick={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        title: e.target.value
+                                                        categories: {
+                                                            connect: [{ id: e.target.value }],
+                                                        },
                                                     }));
                                                 }}
-                                                name="saler"
+                                                name="count"
+                                                defaultValue={activeCategoryId}
                                                 className="form-select form-select-solid georgian"
-                                                data-placeholder="მომწოდებელი"
+                                                data-placeholder="საზომიერთ."
                                             >
-                                                <option value="none" disabled hidden>აირჩიეთ ხელობა</option>
-                                                {crafts &&
-                                                    crafts.map((craft) => {
+                                                <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
+                                                {allCategories &&
+                                                    allCategories.map((item) => {
                                                         return (
-                                                            <option key={craft?.id} value={craft?.id}>
-                                                                {craft?.attributes?.title}
+                                                            <option key={item?.id} value={item?.id}>
+                                                                {item?.attributes?.title}
                                                             </option>
                                                         );
                                                     })}
                                             </select>
-                                            <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
-                                        {/* <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                        <div style={{ marginTop: '30px' }} className="col-md-4 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 მომწოდებელი
                                             </label>
@@ -628,6 +618,7 @@ const AddProduct = ({
                                                 <option value="none" disabled hidden>აირჩიეთ მომწოდებელი</option>
                                                 {suppliers &&
                                                     suppliers.map((sup) => {
+
                                                         return (
                                                             <option key={sup?.id} value={sup?.id}>
                                                                 {sup?.attributes?.title}
@@ -636,8 +627,8 @@ const AddProduct = ({
                                                     })}
                                             </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-                                        </div> */}
-                                        {/* <div className="col-md-12 fv-row fv-plugins-icon-container">
+                                        </div>
+                                        <div className="col-md-12 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 ლინკი
                                             </label>
@@ -654,7 +645,7 @@ const AddProduct = ({
                                                 name="prodactElAddress"
                                             />
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-                                        </div> */}
+                                        </div>
                                         <div className="col-md-4 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 რაოდენობა
@@ -722,60 +713,19 @@ const AddProduct = ({
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
                                         <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-                                            <label className="required fs-5 fw-bold mb-2 georgian">
-                                                კატეგორია
-                                            </label>
-                                            <select
-                                                onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        categories: {
-                                                            connect: [{ id: e.target.value }],
-                                                        },
-                                                    }));
-                                                }}
-                                                name="count"
-                                                defaultValue='none'
-                                                className="form-select form-select-solid georgian"
-                                                data-placeholder="საზომიერთ."
-                                            >
-                                                <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
-                                                {allCategories &&
-                                                    allCategories.map((item) => {
-                                                        return (
-                                                            <option key={item?.id} value={item?.id}>
-                                                                {item?.attributes?.title}
-                                                            </option>
-                                                        );
-                                                    })}
-                                            </select>
-                                            <label className="required fs-5 fw-bold mb-2 georgian">
-                                                სტატუსი
-                                            </label>
-                                            <select
-                                                onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        craft_status: {
-                                                            connect: [{ id: e.target.value }],
-                                                        },
-                                                    }));
-                                                }}
-                                                name="saler"
-                                                className="form-select form-select-solid georgian"
-                                                data-placeholder="სტატუსი"
-                                            >
-                                                <option value="none" disabled hidden>აირჩიეთ სტატუსი</option>
-                                                {craftStatus &&
-                                                    craftStatus.map((craft) => {
-                                                        return (
-                                                            <option key={craft?.id} value={craft?.id}>
-                                                                {craft?.attributes?.title}
-                                                            </option>
-                                                        );
-                                                    })}
-                                            </select>
+
+                                            <div style={{ marginTop: '30px' }} className="form-check">
+                                                <label className="form-check-label" htmlFor="exampleCheckbox">
+                                                    შეძენილია
+                                                </label>
+                                                <input onChange={(e) => setProductData((prevSendData) => ({
+                                                    ...prevSendData,
+                                                    status: true,
+                                                }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
+
+                                            </div>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
+
                                         </div>
                                     </div>
                                 </div>
