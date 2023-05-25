@@ -64,7 +64,7 @@ const Gallery = ({ setSelect }) => {
             const uploadPromises = fileList.map((file) => {
                 const formData = new FormData();
                 formData.append("files", file);
-    
+
                 return axios.post(
                     `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
                     formData,
@@ -75,25 +75,25 @@ const Gallery = ({ setSelect }) => {
                     }
                 );
             });
-    
+
             const uploadResponses = await Promise.all(uploadPromises);
-    
+
             const uploadedImages = uploadResponses.map((response) => response.data[0]);
-    
+
             setImage((prevImages) => {
                 if (!Array.isArray(prevImages) || prevImages === undefined) {
                     return [...uploadedImages];
                 }
                 return [...prevImages, ...uploadedImages];
             });
-    
+
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             notify(true, "სურათების ატვირთვა უარყოფილია");
             console.error(err);
         }
     }, [setImage]);
-    
+
 
     useEffect(() => {
         if (imgSrc && !image) {
@@ -214,22 +214,52 @@ const Gallery = ({ setSelect }) => {
                             </span>
                         </div>
                     </div>
-                    <input
-                        className="btn btn-primary"
-                        onChange={(e) => {
-                            const files = e.target.files;
-
-                            const fileList = Array.from(files);
-
-                            handleFileUpload(fileList);
-                        }}
-                        type="file"
-                        name="avatar"
-                        multiple
-                    />
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
-                            <span className="svg-icon svg-icon-2tx svg-icon-warning me-4 ">
+                            <div className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
+                                <div className="image-input border border-dark"
+                                    data-kt-image-input="true">
+                                    <div style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        position: "absolute",
+                                        width: "100%",
+                                        height: "100%",
+                                        flexDirection: "column-reverse",
+                                        cursor: "pointer"
+                                    }}
+                                    >
+                                        <input
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                overflow: "hidden",
+                                                zIndex: "0",
+                                                opacity: "0",
+                                                top: "0px",
+                                                position: "absolute",
+                                                cursor: "pointer"
+                                            }}
+                                            onChange={(e) => {
+                                                const files = e.target.files;
+
+                                                const fileList = Array.from(files);
+
+                                                handleFileUpload(fileList);
+                                            }}
+                                            type="file"
+                                            name="avatar"
+                                            multiple />
+                                        <span>ფოტოს დამატება</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+                                            <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
+                                            <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                        </svg>
+                                    </div>
+                                    <div className="image-input-wrapper w-125px h-125px"></div>
+                                </div>
+
                                 {projectImgs && (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">
                                         {projectImgs.map((projectImg, index) => (
@@ -239,12 +269,18 @@ const Gallery = ({ setSelect }) => {
                                                 className="gallery-item"
                                                 onClick={toggleHandler}
                                             >
-                                                <img src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`} className="img-responsive" />
+                                                <img
+                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                    className="img-responsive col-sm"
+                                                    style={{
+                                                        width: "30%",
+                                                    }}
+                                                />
                                             </a>
                                         ))}
                                     </LightGallery>
                                 )}
-                            </span>
+                            </div>
                         </form>
                     </div>
                 </div>
