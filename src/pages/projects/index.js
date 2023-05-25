@@ -170,7 +170,6 @@ const index = () => {
                             );
                         })}
                 </div>
-
             </div>
             {addProject && <AddProject dismiss={dismissHandler} />}
             {editProject && (
