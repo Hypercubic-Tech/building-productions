@@ -8,6 +8,16 @@
   margin-right: auto;
   position: absolute;
 }
+.mt20 {
+  margin-top: 20px !important;
+}
+.flexWrap {
+  flex-wrap: wrap;
+  justify-content: flex-start !important;
+}
+.wrapChild {
+  flex: 0 0 23.2%;
+}
 .errorBorder {
   border: 1px solid red !important;
 }
@@ -17,11 +27,22 @@
 }
 .gap20 {
   gap: 20px;
-  --bs-gutter-x: 0;
+  --bs-gutter-x: -56px;
 }
 .gutter0 {
   --bs-gutter-x: 0;
 }
 .noWrap {
   flex-wrap: nowrap !important;
+}
+@media (max-width: 991px) {
+  .wrapChild {
+    flex: 0 0 30.8%;
+  }
+}
+
+@media (max-width: 767px) {
+  .wrapChild {
+    flex: 0 0 100%;
+  }
 }
