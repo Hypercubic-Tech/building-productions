@@ -4,11 +4,11 @@ function Footer() {
       <div className="container">
         <div className="d-flex flex-column flex-md-row flex-stack py-7 py-lg-10">
           <div className="d-flex align-items-center order-2 order-md-1">
-            <a href="../../demo11/dist/landing.html">
+            <a href="/">
               <img
                 alt="Logo"
-                src="assets/media/logos/logo-landing.svg"
-                className="h-15px h-md-20px"
+                src="/assets/media/logos/logo-demo11.svg"
+                className="h-20px h-lg-30px"
               />
             </a>
             <span
