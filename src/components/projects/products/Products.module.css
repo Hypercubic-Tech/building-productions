@@ -1,0 +1,10 @@
+.changeModal {
+    cursor: pointer;
+    position: relative;
+}
+.modal {
+    position: absolute;
+    bottom: 1;
+    width: 150px;
+    transition: .6s;
+}

@@ -19,6 +19,7 @@ const index = () => {
     };
 
     const dismissHandler = () => {
+        setEditProject(false);
         setAddProject(false);
         setClose(false);
     };
@@ -125,7 +126,7 @@ const index = () => {
                                                 src={
                                                     `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
                                                     item?.attributes?.image?.data[0]?.attributes
-                                                        ?.url
+                                                        ?.url   
                                                 }
                                                 className="card-img-top" />
                                             <div className="card-body">

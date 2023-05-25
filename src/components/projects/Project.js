@@ -28,7 +28,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       setFilteredProducts(data.data);
     } catch (error) {
@@ -40,7 +40,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const defaultProductsHandler = async (id) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data;
         setDefaultP(data.data);
       } catch (error) {
@@ -57,6 +57,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
+          {/* make naming correct proj to project details */}
           {proj && proj.map((p, index) => {
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>

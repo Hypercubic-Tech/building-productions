@@ -6,10 +6,15 @@ import Swal from "sweetalert2";
 import EditProduct from "../../popup/EditProduct";
 import EditService from "../../popup/EditService";
 import notify from "../../../utils/notify";
+import Link from "next/link";
+
+import styles from "./Products.module.css";
 
 const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP }) => {
   const [allProduct, setAllProduct] = useState(null);
+  const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
+  const [changeElement, setChangeElement] = useState();
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -50,7 +55,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
 
   const editHandlerPopup = (product) => {
     console.log(product)
-    
+
   };
 
   const confirmHandler = (productId) => {
@@ -94,6 +99,14 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         console.log(error);
       });
   };
+  let element;
+  const changeModalHandler = () => {
+    if (!changeElement) {
+      setChangeElement(true)
+    } else (
+      setChangeElement(false)
+    )
+  }
 
   return (
     <>
@@ -116,11 +129,11 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                 </div>
               </th>
               {/* min-w-125px */}
-              <th className="georgian">სამუშაო</th>
-              <th className="georgian">ერთეული</th>
+              <th className="georgian">დასახელება</th>
+              <th className="georgian">მომწოდებელი</th>
               <th className="georgian">რაოდენობა</th>
+              <th className="georgian">ერთეული</th>
               <th className="georgian">ღირებულება</th>
-              <th className="georgian">ჯამი</th>
               <th className="text-end min-w-100px georgian">ცვლილება</th>
             </tr>
           </thead>
@@ -164,37 +177,54 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                     </div>
                   </td>
                   <td className="georgian">
-                    {product?.attributes?.unit?.data?.attributes?.title}
+                    <Link href={product?.attributes?.productLink}>
+                      {product?.attributes?.supplier?.data?.attributes?.title}
+                    </Link>
                   </td>
                   <td className="georgian">
                     {product?.attributes?.quantity}
                   </td>
-                  <td className="georgian">{product?.attributes?.price}</td>
                   <td className="georgian">
-                    {parseInt(product?.attributes?.quantity) * parseFloat(product.attributes?.price)}
+                    {product?.attributes?.unit?.data?.attributes?.title}
                   </td>
-                  <td className="text-end gap">
+
+                  <td className="georgian">{product?.attributes?.price}</td>
+                  {/* <td className="georgian">
+                    {parseInt(product?.attributes?.quantity) * parseFloat(product.attributes?.price)} 
+                  </td> */}
+                  <td
+                    onClick={() => changeModalHandler()}
+                    className={`${'text-end'} ${styles.changeModal}`}>
                     <div
-                      onClick={() => { editHandler(product); editHandlerPopup(product) }}
-                      className="menu-item px-3"
-                    >
-                      <a className="menu-link px-3 georgian padding0">
-                        <i className="bi bi-pencil-fill" />
-                        &nbsp;გადაკეთება
-                      </a>
-                    </div>
-                    <div
-                      onClick={(e) => confirmHandler(product.id)}
                       className="menu-item px-3 padding8"
                     >
-                      <a
-                        className="menu-link px-3 georgian padding0"
-                        data-kt-users-table-filter="delete_row"
-                      >
-                        <i className="bi bi-eraser-fill" />
-                        &nbsp;წაშლა
-                      </a>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16"> <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" /> </svg>
                     </div>
+                    {changeElement ? (
+                      <div className={styles.modal}>
+                        <div
+                          onClick={() => { editHandler(product); editHandlerPopup(product); setChangeElement(true) }}
+                          className="menu-item px-3"
+                        >
+                          <a className="menu-link px-3 georgian padding0">
+                            <i className="bi bi-pencil-fill" />
+                            &nbsp;გადაკეთება
+                          </a>
+                        </div>
+                        <div
+                          onClick={() => { confirmHandler(product.id); setChangeElement(true) }}
+                          className="menu-item px-3 padding8"
+                        >
+                          <a
+                            className="menu-link px-3 georgian padding0"
+                            data-kt-users-table-filter="delete_row"
+                          >
+                            <i className="bi bi-eraser-fill" />
+                            &nbsp;წაშლა
+                          </a>
+                        </div>
+                      </div>
+                    ) : ""}
                   </td>
                 </tr>
               </tbody>
@@ -280,7 +310,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               )
             })
           )}
-          {!projectId &&  (
+          {!projectId && (
             <tbody>
               <tr>
                 <td>
@@ -293,9 +323,10 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               </tr>
             </tbody>
           )}
-          {projectId && filteredProducts === undefined && defaultP === undefined && <p>პროდუქტები არ არის</p>}
         </table>
       </div>
+      {console.log(filteredProducts, 'filtered',)}
+      {console.log(defaultP, 'defalt')}
       {editPopup && editProductItem.type ? "product"(
         <EditProduct product={editProductItem}
           setSelect={setSelect}
