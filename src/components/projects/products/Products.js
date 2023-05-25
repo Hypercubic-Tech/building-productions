@@ -275,7 +275,8 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               )
             })
           )}
-          {!filteredProducts && !defaultP && (
+          {console.log(filteredProducts, defaultP)}
+          {!projectId &&  (
             <tbody>
               <tr>
                 <td>
@@ -288,6 +289,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               </tr>
             </tbody>
           )}
+          {projectId && filteredProducts === undefined && defaultP === undefined && <p>პროდუქტები არ არის</p>}
         </table>
       </div>
       {editPopup && editProductItem.type ? "product"(

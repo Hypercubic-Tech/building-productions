@@ -99,9 +99,6 @@ const EditService = ({
         }
     };
 
-
-    console.log(setSelect)
-
     return (
         <div
             style={{ display: "block", paddingLeft: "0px" }}
@@ -226,6 +223,7 @@ const EditService = ({
                                                 name="allCategories"
                                                 className="form-select form-select-solid georgian"
                                             >
+                                                <option value="none" selected disabled hidden>კატეგორია</option>
                                                 {allCategories.map((item, index) => {
                                                     return (
                                                         <option key={index} value={item.id}>
@@ -274,14 +272,9 @@ const EditService = ({
                                                     className="form-select form-select-solid georgian"
                                                     data-placeholder="საზომიერთ."
                                                 >
+                                                    <option value="none" selected disabled hidden>ერთეული</option>
                                                     {unit &&
                                                         unit.map((unit, index) => {
-                                                            <option
-                                                                value="none"
-                                                                selected
-                                                                disabled
-                                                                hidden
-                                                            ></option>;
                                                             return (
                                                                 <option key={index} value={unit.id}>
                                                                     {unit.attributes.title}
@@ -345,6 +338,7 @@ const EditService = ({
                                                     className="form-select form-select-solid georgian"
                                                     data-placeholder="სტატუსი"
                                                 >
+                                                    <option value="none" selected disabled hidden>სტატუსი</option>
                                                     {craftStatus &&
                                                         craftStatus.map((item, index) => {
                                                             return (

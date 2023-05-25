@@ -7,7 +7,7 @@ import { setProjectState } from "../../store/slices/projectSlice";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const AddProject = ({ dismiss, project }) => {
+const EditProject = ({ dismiss, project }) => {
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -333,7 +333,7 @@ const AddProject = ({ dismiss, project }) => {
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              <form className="form needs-validation" noValidate="noValidate" noValidate> 
+              <form className="form needs-validation" noValidate="noValidate" > 
               {/* noValidate thing errors it in vscode but it errors in broswer if it not on camelCase  */}
                 <div
                   className={getStatusClass(1)}
@@ -362,8 +362,8 @@ const AddProject = ({ dismiss, project }) => {
                         defaultValue={project?.data[0]?.attributes?.property_type?.data?.id || ""}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
+                        <option value="none" selected disabled hidden>მიუთითეთ სამუშაო ობიექტის ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
-                          <option value="none" selected disabled hidden></option>
                           return (
                             <option key={index} value={item.id}>{item.attributes.Title}</option>
                           )
@@ -450,8 +450,8 @@ const AddProject = ({ dismiss, project }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
+                              <option value="none" selected disabled hidden>მდებარეობა</option>
                               {cities && cities.map((item, index) => {
-                                <option value="none" selected disabled hidden></option>
                                 return (
                                   <option key={index} value={item.id}>{item.attributes.city}</option>
                                 )
@@ -815,6 +815,9 @@ const AddProject = ({ dismiss, project }) => {
   );
 };
 
-export default AddProject;
+export default EditProject;
 
-// ra yle unda? 
+// ra yle unda?   
+
+
+// ar vici
