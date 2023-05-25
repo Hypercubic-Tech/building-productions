@@ -1,17 +1,25 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Swal from "sweetalert2";
+import LightGallery from 'lightgallery/react';
 
+import lgZoom from 'lightgallery/plugins/zoom';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import notify from '../../utils/notify';
+
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-zoom.css';
+import 'lightgallery/css/lg-thumbnail.css';
 
 const Gallery = ({ setSelect }) => {
     const router = useRouter();
     const projectId = router.query.projectId;
-
+    const lightGallery = useRef(null);
     const [imgSrc, setImgSrc] = useState(null);
     const [projectImgs, setProjectImgs] = useState(null);
     const [image, setImage] = useState(null);
+    const [imageState, setImageState] = useState(false);
     const [projectData, setProjectData] = useState({
         image: image
     });
@@ -41,14 +49,15 @@ const Gallery = ({ setSelect }) => {
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
                 {
                     data: projectData,
+                    image: image
                 }
             ).then(() => {
-                getProductsHandler()
+                getProductsHandler();
             });
         } catch (err) {
             console.error(err);
         }
-    }, [projectId, projectData]);
+    }, [projectId, projectData, image]);
 
     const handleMediaUpload = useCallback(async (fileList) => {
         try {
@@ -70,13 +79,21 @@ const Gallery = ({ setSelect }) => {
             const uploadResponses = await Promise.all(uploadPromises);
 
             const uploadedImages = uploadResponses.map((response) => response.data[0]);
-            setImage(uploadedImages);
+
+            setImage((prevImages) => {
+                if (!Array.isArray(prevImages) || prevImages === undefined) {
+                    return [...uploadedImages];
+                }
+                return [...prevImages, ...uploadedImages];
+            });
+
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             notify(true, "სურათების ატვირთვა უარყოფილია");
             console.error(err);
         }
-    }, []);
+    }, [setImage]);
+
 
     useEffect(() => {
         if (imgSrc && !image) {
@@ -136,14 +153,22 @@ const Gallery = ({ setSelect }) => {
 
     const handleDeleteImage = async (imageId) => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
-        .then(() => {
-            getProductsHandler()
-        })
+            .then(() => {
+                getProductsHandler()
+            })
         setImgSrc(null);
     };
 
+    const toggleHandler = () => {
+        if (!imageState) {
+            setImageState(false)
+        } else {
+            setImageState(true)
+        }
+    }
+
     return (
-        <div className="modal fade show">
+        <div className="modal fade show" style={{ zIndex: imageState ? "0" : "100" }}>
             <div className="modal modal-dialog-centered custom-width">
                 <div className="modal-content custom-width" style={{ width: "90% ", height: "90%", margin: "5%" }}>
                     <div className="modal-header" id="kt_modal_add_user_header">
@@ -189,47 +214,73 @@ const Gallery = ({ setSelect }) => {
                             </span>
                         </div>
                     </div>
-                    <input
-                        className="btn btn-primary"
-                        onChange={(e) => {
-                            const files = e.target.files;
-
-                            const fileList = Array.from(files);
-
-                            handleFileUpload(fileList);
-                        }}
-                        type="file"
-                        name="avatar"
-                        multiple
-                    />
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
-                            <span className="svg-icon svg-icon-2tx svg-icon-warning me-4 ">
-                                {projectImgs && projectImgs.map((projectImg, index) => {
-                                    return (
-                                        <div className="image-input image-input-outline m-4" data-kt-image-input="true" key={projectImg?.id} >
-                                            <img
-                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
-                                                width={300}
-                                                height={300}
-                                                style={{ borderRadius: "8px" }}
-                                                alt="Picture of the product"
-                                            />
-                                            <span
-                                                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                data-kt-image-input-action="remove"
-                                                data-bs-toggle="tooltip"
-                                                title="Remove avatar"
-                                                onClick={() => confirmHandler(projectImg?.id)}
+                            <div className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
+                                <div className="image-input border border-dark"
+                                    data-kt-image-input="true">
+                                    <div style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        position: "absolute",
+                                        width: "100%",
+                                        height: "100%",
+                                        flexDirection: "column-reverse",
+                                        cursor: "pointer"
+                                    }}
+                                    >
+                                        <input
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                overflow: "hidden",
+                                                zIndex: "0",
+                                                opacity: "0",
+                                                top: "0px",
+                                                position: "absolute",
+                                                cursor: "pointer"
+                                            }}
+                                            onChange={(e) => {
+                                                const files = e.target.files;
+
+                                                const fileList = Array.from(files);
+
+                                                handleFileUpload(fileList);
+                                            }}
+                                            type="file"
+                                            name="avatar"
+                                            multiple />
+                                        <span>ფოტოს დამატება</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+                                            <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
+                                            <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                        </svg>
+                                    </div>
+                                    <div className="image-input-wrapper w-125px h-125px"></div>
+                                </div>
+
+                                {projectImgs && (
+                                    <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">
+                                        {projectImgs.map((projectImg, index) => (
+                                            <a
+                                                key={projectImg?.id}
+                                                href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                className="gallery-item"
+                                                onClick={toggleHandler}
                                             >
-                                                <input
-                                                    type="hidden" name="avatar_remove" />
-                                                <i className="bi bi-x fs-2" />
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </span>
+                                                <img
+                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                    className="img-responsive col-sm"
+                                                    style={{
+                                                        width: "30%",
+                                                    }}
+                                                />
+                                            </a>
+                                        ))}
+                                    </LightGallery>
+                                )}
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -493,6 +493,13 @@ const AddProduct = ({
                                         {isTouched && (
                                             <>
                                                 <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                                    {/* <img
+                                                    src={
+                                                        `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                                        product?.attributes?.image?.data?.attributes
+                                                          ?.url
+                                                      }
+                                                    class="card-img-top" /> */}
                                                     <label className="required fs-5 fw-bold mb-2 georgian">
                                                         დასახელება
                                                     </label>
