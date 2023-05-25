@@ -331,7 +331,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         allCategories={allCategories}
                         suppliers={suppliers}
                         totalSum={totalSum}
-                      />
+                        />
                     </div>
                   </div>
                 </div>

@@ -162,6 +162,15 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                   </tr>
                 </tbody>
               )}
+              {filteredProducts?.length < 1 && <tbody style={{ width: '300px' }}>
+                <tr>
+                  <td>
+                    <div className="d-flex justify-content-center">
+                      <span>No Products To Show</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>}
               {!filteredProducts ? defaultP && defaultP.map((product) => {
                 return (
                   <tbody key={product?.id}>
@@ -209,7 +218,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
                       {/* <td className="georgian">
                     {parseInt(product?.attributes?.quantity) * parseFloat(product.attributes?.price)} 
-                  </td> */}
+                      </td> */}
                       <td
                         onClick={() => changeModalHandler()}
                         className={`${'text-end'} ${styles.changeModal}`}>
