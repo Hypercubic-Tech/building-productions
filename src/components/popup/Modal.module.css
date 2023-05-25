@@ -40,6 +40,11 @@
     flex: 0 0 30.8%;
   }
 }
+@media (min-width: 768px) {
+  .wrapChild {
+    flex: 0 0 30.6%;
+  }
+}
 
 @media (max-width: 767px) {
   .wrapChild {
