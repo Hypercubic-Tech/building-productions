@@ -342,7 +342,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
             </>
           )}
         </table>
-        {filteredProducts?.length === 0 && <td style={{width: '100vw', textAlign: 'center'}}>პროდუქტი ვერ მოიძებნა!</td> }
+        {filteredProducts?.length === 0 && <div style={{width: '100vw', textAlign: 'center'}}>პროდუქტი ვერ მოიძებნა!</div> }
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">
