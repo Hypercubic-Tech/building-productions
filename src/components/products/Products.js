@@ -14,8 +14,10 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
   const [changeElement, setChangeElement] = useState();
+
   const router = useRouter();
   const { projectId } = router.query;
+
   const getProductsHandler = async () => {
     await axios
       .get(
@@ -96,7 +98,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         console.log(error);
       });
   };
-  let element;
+
   const changeModalHandler = () => {
     if (!changeElement) {
       setChangeElement(true)
@@ -104,8 +106,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       setChangeElement(false)
     )
   }
-  
-  console.log(totalSum)
   
   return (
     <>
@@ -162,7 +162,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                   </tr>
                 </tbody>
               )}
-              {console.log(filteredProducts, 'fill')}
               {!filteredProducts ? defaultP && defaultP.map((product) => {
                 return (
                   <tbody key={product?.id}>

@@ -11,6 +11,7 @@ const index = () => {
   const [project, setProject] = useState(null);
   const [craftStatus, setCraftStatus] = useState(null);
   const [projectCategory, setProjectCategory] = useState(null);
+  const [productOptions, setProductOptions] = useState(null);
   const [editProductItem, setEditProductItem] = useState(null);
   const router = useRouter();
   const { projectId } = router.query;
@@ -18,12 +19,21 @@ const index = () => {
   useEffect(() => {
     if (projectId) {
       const getProject = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=*`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`)
+        
           .then((res) => {
             const data = res.data;
             setProject(data?.data);
           })
       };
+
+      const getProductCategory = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`)
+        .then((res) => {
+          const data = res.data
+          setProductOptions(data);
+        })
+      }
 
       const getProjectCategory = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
@@ -32,6 +42,8 @@ const index = () => {
             setProjectCategory(data.data);
           })
       };
+
+      getProductCategory()
       getProject();
       getProjectCategory();
     }
@@ -87,7 +99,8 @@ const index = () => {
 
   return <Project
     pr={projectId}
-    proj={project}
+    productOptions={productOptions}
+    project={project}
     craftStatus={craftStatus}
     crafts={crafts}
     suppliers={suppliers}

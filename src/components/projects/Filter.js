@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
+
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
+import { setCategory } from "../../store/slices/categorySlice";
 
 const Filter = ({
   filterProductCategory,
   projectCategory,
   totalSumOnClick
 }) => {
+  const dispatch = useDispatch();
 
   const activeCategoryId = useSelector(state => state.categoryId);
 
@@ -42,9 +47,12 @@ const Filter = ({
             })}
           <div
             className="menu-item here show menu-lg-down-accordion me-lg-1"
-            onClick={totalSumOnClick}
+            onClick={() => {
+              totalSumOnClick();
+              dispatch(setCategory(null));
+            }}
             >
-            <a className="menu-link active py-3">
+            <a className={`${"menu-link"} ${"active"} ${"py-3"} ${activeCategoryId === null ? 'bg-primary' : ""}`}>
               <span className="menu-title georgian">
                 <i className="bi bi-plug-fill" /> ჯამური განფასება
               </span>
