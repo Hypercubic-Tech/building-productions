@@ -1,11 +1,11 @@
 import { useState } from "react";
+
 const Filter = ({
   giveProductCategory,
   filterProductCategory,
   projectCategory
 }) => {
   const [color, setColor] = useState('')
-
   return (
     <div className="header-menu-container container-xxl d-flex flex-stack h-lg-75px">
       <div className="header-menu flex-column flex-lg-row">
@@ -20,7 +20,7 @@ const Filter = ({
         >
           {projectCategory &&
             projectCategory.map((item, index) => {
-
+              console.log(item, "item", index)
               return (
                 <div
                   onClick={() => {
@@ -39,9 +39,6 @@ const Filter = ({
               );
             })}
           <div
-               onClick={() => {
-                    handleColorChange;
-                  }}
                className="menu-item here show menu-lg-down-accordion me-lg-1">
             <a className="menu-link active py-3">
               <span className="menu-title georgian">

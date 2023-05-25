@@ -55,7 +55,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
 
   const editHandlerPopup = (product) => {
     console.log(product)
-
   };
 
   const confirmHandler = (productId) => {
