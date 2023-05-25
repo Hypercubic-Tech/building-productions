@@ -356,8 +356,8 @@ const AddProject = ({ dismiss }) => {
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
+                        <option value="none" selected disabled hidden>აირჩიერ ქონების ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
-                          <option value="none" selected disabled hidden></option>
                           return (
                             <option key={index} value={item.id}>{item.attributes.Title}</option>
                           )
@@ -383,7 +383,7 @@ const AddProject = ({ dismiss }) => {
                             }}
                           />
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className="required georgian">დღგ-ს გადამხდელი</span>
+                            <span className="georgian">დღგ-ს გადამხდელი</span>
                           </label>
 
                         </div>
@@ -442,8 +442,8 @@ const AddProject = ({ dismiss }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
+                              <option value="none" selected disabled hidden>აირჩიეთ ქალაქი</option>
                               {cities && cities.map((item, index) => {
-                                <option value="none" selected disabled hidden></option>
                                 return (
                                   <option key={index} value={item.id}>{item.attributes.city}</option>
                                 )
@@ -712,7 +712,7 @@ const AddProject = ({ dismiss }) => {
                   </div>
 
                   <div>
-               {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
+               {loss && <p style={{color: 'red'}}>შეავსეთ ყველა (*) ველი</p>}
 
                     <button
                       onClick={finishHandler}

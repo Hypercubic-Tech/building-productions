@@ -7,9 +7,8 @@ import { setProjectState } from "../../store/slices/projectSlice";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const AddProject = ({ dismiss, project }) => {
+const EditProject = ({ dismiss, project }) => {
   const [step, setStep] = useState(1);
-  const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
   const [cities, setCities] = useState(null);
@@ -78,21 +77,14 @@ const AddProject = ({ dismiss, project }) => {
   };
 
   const stepChangeHandler = () => {
-
-    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
+    if (step === 1 && errors.stepOne.length === 0) {
       setStep(step + 1);
-      setLoss(false);
-    } else {
-      setLoss(true);
     }
-    if (step === 2  && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
-      console.log('rame2')
+    if (step === 2  && errors.stepTwo.length === 0) {
       setStep(step + 1);
-      setLoss(false);
     } 
-    if (step === 3 && errors.stepThree.length === 0 && sendData.title  && sendData.categories.connect.length > 0 ){
+    if (step === 3 && errors.stepThree.length === 0){
         setStep(step + 1);
-        setLoss(false);
     }
   };
 
@@ -193,7 +185,7 @@ const AddProject = ({ dismiss, project }) => {
 
   const createProjectHandler = async () => {
     const projectId = project.data[0]?.id;
-  
+
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
@@ -201,7 +193,7 @@ const AddProject = ({ dismiss, project }) => {
           data: sendData
         }
       );
-  
+
       const updatedProject = response.data.data;
       dispatch(setProjectState(updatedProject));
       notify(false, "პროექტი რედაქტირდა");
@@ -333,7 +325,7 @@ const AddProject = ({ dismiss, project }) => {
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5 px-lg-15">
-              <form className="form needs-validation" noValidate="noValidate" noValidate> 
+              <form className="form needs-validation" noValidate="noValidate" > 
               {/* noValidate thing errors it in vscode but it errors in broswer if it not on camelCase  */}
                 <div
                   className={getStatusClass(1)}
@@ -362,8 +354,8 @@ const AddProject = ({ dismiss, project }) => {
                         defaultValue={project?.data[0]?.attributes?.property_type?.data?.id || ""}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
+                        <option value="none" selected disabled hidden>მიუთითეთ სამუშაო ობიექტის ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
-                          <option value="none" selected disabled hidden></option>
                           return (
                             <option key={index} value={item.id}>{item.attributes.Title}</option>
                           )
@@ -389,7 +381,7 @@ const AddProject = ({ dismiss, project }) => {
                             defaultChecked={project.data[0].attributes.vat ? "checked" : ""}
                           />
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className="required georgian">დღგ-ს გადამხდელი</span>
+                            <span className=" georgian">დღგ-ს გადამხდელი</span>
                           </label>
                         </div>
                         {project.data[0].attributes.vat ? (
@@ -410,7 +402,7 @@ const AddProject = ({ dismiss, project }) => {
                         ) : ""}
                       </div>
                     </div>
-                    <div style={{marginBottom: '30px'}} className="w-100">
+                    <div style={{ marginBottom: '30px' }} className="w-100">
                       <label className="required fs-6 fw-bold form-label georgian mb-2">
                         გაუთვალისწინებელი ხარჯები
                       </label>
@@ -450,8 +442,8 @@ const AddProject = ({ dismiss, project }) => {
                               className="form-select form-select-solid georgian"
                               data-placeholder="მდებარეობა"
                             >
+                              <option value="none" selected disabled hidden>მდებარეობა</option>
                               {cities && cities.map((item, index) => {
-                                <option value="none" selected disabled hidden></option>
                                 return (
                                   <option key={index} value={item.id}>{item.attributes.city}</option>
                                 )
@@ -519,8 +511,6 @@ const AddProject = ({ dismiss, project }) => {
                     </div>
                   </div>
                 </div>
-                {/* STEP */}
-
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -532,7 +522,7 @@ const AddProject = ({ dismiss, project }) => {
                       </label>
                       <div className="fv-row">
                         {condition && condition.map((item, index) => {
-                                {console.log(item.id, 'item id')}
+                          { console.log(item.id, 'item id') }
 
                           return (
                             <label key={index} className="d-flex flex-stack mb-5 cursor-pointer">
@@ -554,7 +544,7 @@ const AddProject = ({ dismiss, project }) => {
                                       },
                                     }));
                                   }}
-                                  defaultChecked={project.data[0].attributes.condition.data.id === item.id ? 'checked' : ''}
+                                  defaultChecked={project?.data[0]?.attributes?.condition?.data?.id === item.id ? 'checked' : ''}
                                   className="form-check-input"
                                   type="radio"
                                   name="category"
@@ -596,7 +586,7 @@ const AddProject = ({ dismiss, project }) => {
                                     },
                                   }));
                                 }}
-                                defaultChecked={project.data[0].attributes.current_condition.data.id === item.id ? 'checked' : ''}
+                                defaultChecked={project?.data[0]?.attributes?.current_condition?.data?.id === item.id ? 'checked' : ''}
                                 className="form-check-input"
                                 type="radio"
                                 name="framework"
@@ -693,8 +683,6 @@ const AddProject = ({ dismiss, project }) => {
                     </div>
                   </div>
                 </div>
-               {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
-
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
                     <button
@@ -729,10 +717,7 @@ const AddProject = ({ dismiss, project }) => {
                       უკან
                     </button>
                   </div>
-
                   <div>
-               {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>}
-
                     <button
                       onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}
@@ -815,6 +800,9 @@ const AddProject = ({ dismiss, project }) => {
   );
 };
 
-export default AddProject;
+export default EditProject;
 
-// ra yle unda? 
+// ra yle unda?   
+
+
+// ar vici

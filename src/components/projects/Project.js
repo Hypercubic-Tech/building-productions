@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import Products from "./products/Products";
+import Products from "../products/Products";
 import Filter from "./Filter";
 import axios from "axios";
 import AddProduct from "../popup/AddProduct";
@@ -16,8 +16,8 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
   const [products, setProducts] = useState(null);
-  const [filteredProducts, setFilteredProducts] = useState(null);
-  const [defaultP, setDefaultP] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState(undefined);
+  const [defaultP, setDefaultP] = useState(undefined);
   const [productCategory, setProductCategory] = useState("");
   const router = useRouter();
   const { projectId } = router.query;
@@ -28,7 +28,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       setFilteredProducts(data.data);
     } catch (error) {
@@ -40,7 +40,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
   const defaultProductsHandler = async (id) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data;
         setDefaultP(data.data);
       } catch (error) {
@@ -57,6 +57,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
+          {/* make naming correct proj to project details */}
           {proj && proj.map((p, index) => {
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
@@ -277,6 +278,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
                         {select === "add" && <AddProduct setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={allCategories} suppliers={suppliers} />}
+                          {console.log(select)}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
                             setSelect={setSelect}
@@ -300,6 +302,7 @@ const Project = ({ proj, crafts, unit, allCategories, suppliers, craftStatus, al
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {summary} ლარი</div>
                       <Products
+                        projectId={projectId}
                         defaultProductsHandler={defaultProductsHandler}
                         defaultP={defaultP}
                         editProductItem={editProductItem}
