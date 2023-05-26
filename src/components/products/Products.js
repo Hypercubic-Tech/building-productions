@@ -14,7 +14,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
   const [changeElement, setChangeElement] = useState();
-
+  const [totalSumProduct, setTotalSumProduct] = useState(null);
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -106,7 +106,30 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       setChangeElement(false)
     )
   }
+
+  useEffect(() => {
+    if (projectId) {
+      const totalSumHandler = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
+          .then((res) => {
+            const data = res.data;
+            setTotalSumProduct(data.data);
+          })
+      };
+
+      totalSumHandler();
+    }
+  }, [projectId]);
+
+  let productsTotal = totalSumProduct?.reduce(
+    (sum, product) => sum + (parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)),
+    0
+  );
   
+  let expensesTotal = totalSumProduct?.reduce(
+    (product) => (product?.attributes?.project?.data?.attributes?.unforseenExpenses)
+  );
+
   return (
     <>
       <div className="table-responsive">
@@ -116,8 +139,50 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         >
           {totalSum ? (
             <thead>
+              <div>
+                <h3>განფასება</h3>
+              </div>
+              <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                <th>სამუშაო</th>
+                <th>ერთეული</th>
+                <th>რაოდენობა</th>
+                <th>ჯამი</th>
+              </tr>
+              {totalSumProduct?.map((product, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{product?.attributes?.categories?.data[0]?.attributes?.title}</td>
+                    <td>{product?.attributes?.unit?.data?.attributes?.title}</td>
+                    <td>{product?.attributes?.quantity}</td>
+                    <td>{`${parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)} ლარი`}</td>
+                  </tr>
+                )
+              })}
               <tr>
-                <th></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  {`სულ: ${totalSumProduct?.reduce(
+                    (sum, product) => sum + (parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)),
+                    0
+                  )} ლარი`}
+                </td>
+
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{`სულ: ${totalSumProduct?.reduce(
+                  (product) => (product?.attributes?.project?.data?.attributes?.unforseenExpenses)
+                )} ლარი`}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{`სულ ჯამი: ${parseFloat(productsTotal) + parseFloat(expensesTotal)} ლარი`}</td>
               </tr>
             </thead>
           ) : (
