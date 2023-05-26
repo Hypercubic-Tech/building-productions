@@ -542,14 +542,13 @@ const AddProduct = ({
                                                     }));
                                                 }}
                                                 name="count"
-                                                defaultValue=''
+                                                defaultValue='none'
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="დასახელება"
                                             >
-                                                <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;
+                                                <option value="none" disabled selected hidden > აირჩიეთ დასახელება</option>;
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
-                                                        console.log(item?.attributes?.image.data.attributes.url, 'url')
                                                         
                                                         return (
                                                             <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
