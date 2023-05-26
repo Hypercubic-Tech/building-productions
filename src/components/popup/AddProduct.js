@@ -30,6 +30,7 @@ const AddProduct = ({
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
     const [filteredCrafts, setFilteredCrafts] = useState();
+    const [title, setTitle] = useState();
 
     const activeCategoryId = useSelector(state => state.categoryId);
     const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
@@ -78,7 +79,7 @@ const AddProduct = ({
 
     useEffect(() => {
         const getCraftsByCategory = async () => {
-            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories&filters[categories][id][$eq]=${activeCategoryId}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
                 .then((res) => {
                     const data = res.data;
                     setFilteredCrafts(data)
@@ -510,8 +511,10 @@ const AddProduct = ({
                                 >
                                     <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                         <div className='d-flex flex-stack flex-grow-1'>
+                                            {console.log(filteredCrafts.data[0].attributes.image.data.attributes.url, 'image')}
+
                                             <img
-                                                src={imgSrc}
+                                                src={''}
                                                 width={125}
                                                 height={125}
                                                 style={{ borderRadius: "8px" }}
@@ -526,6 +529,7 @@ const AddProduct = ({
                                             </label>
                                             <select
                                                 onChange={(e) => {
+                                                    console.log(e)
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
                                                         title: e.target.value
@@ -540,7 +544,7 @@ const AddProduct = ({
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
                                                         return (
-                                                            <option key={item?.id + index} value={item?.id}>
+                                                            <option key={item?.id + index} image={item?.attributes?.image?.data.attributes.url} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}
                                                             </option>
                                                         );
@@ -614,7 +618,6 @@ const AddProduct = ({
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
                                         <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-                                            {console.log(craftStatus, 'craftStat')}
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 სტატუსი
                                             </label>
@@ -633,7 +636,6 @@ const AddProduct = ({
                                                 <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;
                                                 {craftStatus &&
                                                     craftStatus?.map((item, index) => {
-                                                        console.log(item)
                                                         return (
                                                             <option key={item?.id + index} value={item?.id}>
                                                                 {item?.attributes?.title}
