@@ -86,7 +86,6 @@ const AddProject = ({ dismiss }) => {
       setLoss(true);
     }
     if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
-      console.log('rame2')
       setStep(step + 1);
       setLoss(false);
     }
