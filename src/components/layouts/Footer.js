@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <div className="landing-dark-separator landing-dark-bg" style={{marginTop: '444px'}}>
+    <div className="landing-dark-separator landing-dark-bg">
       <div className="container">
         <div className="d-flex flex-column flex-md-row flex-stack py-7 py-lg-10">
           <div className="d-flex align-items-center order-2 order-md-1">

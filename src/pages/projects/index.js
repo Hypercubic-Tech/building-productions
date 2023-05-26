@@ -98,7 +98,7 @@ const index = () => {
 
     return (
         <>
-            <div className="container-xxl">
+            <div className="container-xxl" style={{ height: "85vh" }}>
                 <div className={` d-flex justify-content-between m-3 ${styles.mt20}`}>
                     <button
                         type="button"
@@ -123,53 +123,44 @@ const index = () => {
                     </button>
                 </div>
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
-                    {projectData ?  projectData?.map((item, index) => {
-                        return (
-                            <div key={index} className={` card-body ${styles.wrapChild} card m-3 `}>
-                                    <div className="card" style={{ paddingBottom: '20px' }}>
-                                        <img
-                                            // src="/images/test-img.png"
-                                            alt="img"
-                                            src={
-                                                `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                                item?.attributes?.image?.data?.attributes
-                                                    ?.url
-                                            }
-                                            className="card-img-top" />
-                                        <div className="card-body">
-                                            <Link
-                                                href={{
-                                                    pathname: `/projects/${item?.id}`,
-                                                    query: { projectId: item?.id },
-                                                }}
-                                                passHref
-                                                className="card-title"
-                                            >
-                                                {item?.attributes?.title}
-                                            </Link>
-                                            <p className="card-text">{item?.attributes?.address}</p>
-                                        </div>
-                                        <div className={`${styles.gap20} row `}>
-                                            <div
-                                                onClick={() => editHandler(item)}
-                                                className={` btn btn-primary `}
-                                            >
-                                                რედაქტირება
-                                            </div>
-                                            <div
-                                                onClick={() => confirmHandler(item)}
-                                                className="btn btn-danger"
-                                            >
-                                                წაშლა
-                                            </div>
-                                        </div>
-                                    </div>
+                {projectData?.length > 0 ? (
+                    projectData.map((item, index) => (
+                        <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
+                        <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
+                            <img
+                            src="/images/test-img.png"
+                            // src="/images/hei.png"
+                            // alt="img"
+                            // src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.attributes?.url}`}
+                            className="card-img-top"
+                            />
+                            <div className="card-body">
+                            <Link
+                                href={{
+                                pathname: `/projects/${item?.id}`,
+                                query: { projectId: item?.id },
+                                }}
+                                passHref
+                                className="card-title"
+                            >
+                                {item?.attributes?.title}
+                            </Link>
+                            <p className="card-text">{item?.attributes?.address}</p>
                             </div>
-                        );
-                    })
-                    :
-                        <h2 className={styles.notFoundPr}>პროექტი არ მოიძებნა</h2>
-                    }
+                            <div className={`${styles.gap20} row`}>
+                            <div onClick={() => editHandler(item)} className={`btn btn-primary`}>
+                                რედაქტირება
+                            </div>
+                            <div onClick={() => confirmHandler(item)} className="btn btn-danger">
+                                წაშლა
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    ))
+                    ) : (
+                    <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
+                    )}
                 </div>
             </div>
             {addProject && <AddProject dismiss={dismissHandler} />}
