@@ -7,7 +7,7 @@ import { setProjectState } from "../../store/slices/projectSlice";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const AddProject = ({ dismiss }) => {
+const AddProject = ({ dismiss, setShowProject }) => {
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -198,6 +198,7 @@ const AddProject = ({ dismiss }) => {
         .then((res) => {
           const data = res.data;
           dispatch(setProjectState(data.data));
+          setShowProject(true);
           notify(false, "პროექტი დაემატა");
         })
     } catch (error) {
@@ -209,7 +210,6 @@ const AddProject = ({ dismiss }) => {
   const finishHandler = () => {
     setClose(true);
     createProjectHandler();
-    console.log(sendData)
   };
 
   return (

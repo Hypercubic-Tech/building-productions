@@ -12,7 +12,10 @@ const index = () => {
     const [close, setClose] = useState(false);
     const [addProject, setAddProject] = useState(false);
     const [editProject, setEditProject] = useState(false);
+    const [showProject, setShowProject] = useState(false);
     const [projectData, setProjectData] = useState(null);
+    console.log(showProject, 'show proj')
+
 
     const addProjectHandler = () => {
         setAddProject(true);
@@ -35,7 +38,7 @@ const index = () => {
 
     useEffect(() => {
         getProjectsData();
-    }, []);
+    }, [showProject]);
 
     const editHandler = async (item) => {
         let id = item.id
@@ -93,7 +96,7 @@ const index = () => {
     const router = useRouter();
 
     const handleGoBack = () => {
-        router.back(); 
+        router.back();
     };
 
     return (
@@ -123,47 +126,47 @@ const index = () => {
                     </button>
                 </div>
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
-                {projectData?.length > 0 ? (
-                    projectData.map((item, index) => (
-                        <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
-                        <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
-                            <img
-                            onError={(e) => {
-                                e.target.src = "/images/test-img.png";
-                            }}
-                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.attributes?.url}`}
-                            className="card-img-top"
-                            />
-                            <div className="card-body">
-                            <Link
-                                href={{
-                                pathname: `/projects/${item?.id}`,
-                                query: { projectId: item?.id },
-                                }}
-                                passHref
-                                className="card-title"
-                            >
-                                {item?.attributes?.title}
-                            </Link>
-                            <p className="card-text">{item?.attributes?.address}</p>
+                    {projectData?.length > 0 ? (
+                        projectData.map((item, index) => (
+                            <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
+                                <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
+                                    <img
+                                        onError={(e) => {
+                                            e.target.src = "/images/test-img.png";
+                                        }}
+                                        src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.attributes?.url}`}
+                                        className="card-img-top"
+                                    />
+                                    <div className="card-body">
+                                        <Link
+                                            href={{
+                                                pathname: `/projects/${item?.id}`,
+                                                query: { projectId: item?.id },
+                                            }}
+                                            passHref
+                                            className="card-title"
+                                        >
+                                            {item?.attributes?.title}
+                                        </Link>
+                                        <p className="card-text">{item?.attributes?.address}</p>
+                                    </div>
+                                    <div className={`${styles.gap20} row`}>
+                                        <div onClick={() => editHandler(item)} className={`btn btn-primary`}>
+                                            რედაქტირება
+                                        </div>
+                                        <div onClick={() => confirmHandler(item)} className="btn btn-danger">
+                                            წაშლა
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className={`${styles.gap20} row`}>
-                            <div onClick={() => editHandler(item)} className={`btn btn-primary`}>
-                                რედაქტირება
-                            </div>
-                            <div onClick={() => confirmHandler(item)} className="btn btn-danger">
-                                წაშლა
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    ))
+                        ))
                     ) : (
-                    <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
+                        <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
                     )}
                 </div>
             </div>
-            {addProject && <AddProject dismiss={dismissHandler} />}
+            {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
             {editProject && (
                 <EditProject project={editProject} dismiss={dismissHandler} />
             )}
