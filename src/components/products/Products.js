@@ -151,6 +151,29 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     );
   }
 
+
+  let unforseenExpenses = 0;
+  if (totalSumProduct && totalSumProduct.length > 0) {
+    unforseenExpenses = totalSumProduct.reduce(
+      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0),
+      0
+    );
+  }
+
+  let service_percentage = 0;
+  if (totalSumProduct && totalSumProduct.length > 0) {
+    service_percentage = totalSumProduct.reduce(
+      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
+      0
+    );
+  }
+
+  const totalProductPrice = parseFloat(productsTotal)
+  const vatTotalPrice = parseFloat(productsTotal) * parseFloat(vatTotal) / 100 + parseFloat(vatTotal);
+  const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
+  const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
+  const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
+
   return (
     <>
       <div className="table-responsive">
@@ -199,14 +222,23 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${totalSumProduct?.reduce((sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0), 0)}: ${totalSumProduct?.reduce((sum, product) => sum + parseFloat(productsTotal) * parseFloat((product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0)) / 100, 0)} ლარი`}</td>
+                <td>{`გაუთ.ხარჯი ${totalSumProduct?.reduce((product) => (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0))}: ${parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`სულ ჯამი: ${parseFloat(productsTotal) + parseFloat(vatTotal) || 0} ლარი`}</td>
+                <td>
+                  {`მომსახურეობა ${totalSumProduct?.reduce((product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0))}: ${parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage) || 0} ლარი`}
+                </td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{`სულ ჯამი: ${parseFloat(totalSumPrice) || 0} ლარი`}</td>
               </tr>
             </thead>
           ) : (
