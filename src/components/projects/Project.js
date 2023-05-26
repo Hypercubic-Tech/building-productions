@@ -21,12 +21,22 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(undefined);
   const [defaultP, setDefaultP] = useState(undefined);
+  const [pageIndex, setPageIndex] = useState(1);
+  // const [defaultCategory, setDefaultCategory] = useState();
   const [totalSum, setTotalSum] = useState(false);
 
   const router = useRouter();
   const { projectId } = router.query;
 
   const dispatch = useDispatch();
+
+  const incrementPageIndex = () => {
+    setPageIndex(pageIndex + 1);
+  };
+
+  const decrementPageIndex = () => {
+    setPageIndex(pageIndex - 1);
+  };
 
   const totalSumTable = () => {
     setTotalSum(true)
@@ -37,10 +47,10 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
     // )
   };
 
-  const defaultProductsHandler = async (id) => {
+  const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=1`);
         const data = response.data;
         setDefaultP(data.data);
         dispatch(setCategory(id));
@@ -330,6 +340,9 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         allCategories={allCategories}
                         suppliers={suppliers}
                         totalSum={totalSum}
+                        incrementPageIndex={incrementPageIndex}
+                        pageIndex={pageIndex}
+                        decrementPageIndex={decrementPageIndex}
                       />
                     </div>
                   </div>
