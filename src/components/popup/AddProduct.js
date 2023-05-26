@@ -19,19 +19,6 @@ const AddProduct = ({
     craftStatus,
     crafts
 }) => {
-    // console.log(project, 'project')
-    // console.log(project.data[0]?.attributes?.products.data.find((category) => {
-    //     console.log(category.attributes.categories.data[0].id, 'realy one')
-    //     return (
-    //         <div>hi</div>
-    //     )
-    // }), 'filn')
-    // console.log(project.data[0]?.attributes?.products.data.map((item, index) => {
-    //     item.attributes.categories.data.find((id) => {
-    //         console.log(id)
-    //         // return item
-    //     })
-    // }))
     const dispatch = useDispatch();
 
     const router = useRouter();
@@ -42,16 +29,10 @@ const AddProduct = ({
     const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
+    const [filteredCrafts, setFilteredCrafts] = useState();
 
     const activeCategoryId = useSelector(state => state.categoryId);
     const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
-
-  
-    console.log(selectedCrafts)
-    // console.log(activeCategoryId)
-    // console.log(crafts)
-    // const selectedCraft = crafts.find((craft) => craft?.id === activeCategory);
-    // console.log(selectedCraft, 'hihihi')
 
 
     const [productData, setProductData] = useState({
@@ -85,13 +66,27 @@ const AddProduct = ({
             connect: [{ id: null }],
         },
         price: 0,
+        categories: {
+            connect: [{ id: activeCategory }],
+        },
         project: {
-            connect: [{ id: activeCategory }]
+            connect: [{ id: projectId }]
         },
         craft_status: {
             connect: [{ id: null }]
         },
     });
+
+    useEffect(() => {
+        const getCraftsByCategory = async () => {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories&filters[categories][id][$eq]=${activeCategoryId}`)
+                .then((res) => {
+                    const data = res.data;
+                    setFilteredCrafts(data)                    
+                })
+        }
+        getCraftsByCategory()
+    }, [])
 
     const handleSubmit = async () => {
         try {
@@ -161,6 +156,8 @@ const AddProduct = ({
             handleMediaUpload();
         }
     }, [imgSrc, handleMediaUpload, notify]);
+
+   
 
 
     useEffect(() => {
@@ -524,107 +521,32 @@ const AddProduct = ({
                                         </div>
                                     </div>
                                     <div className="row mb-5">
-                                        {console.log(crafts, 'crafts')}
-                                        {console.log(project, 'project')}
-                                        {
-                                            console.log(activeCategory, 'active cat')
-                                        }
-
-                                        <div className="col-md-8 fv-row fv-plugins-icon-container">
-                                            <label className="required fs-5 fw-bold mb-2 georgian">
-                                                დასახელება
-                                            </label>
-                                            <input
-                                                onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        title: e.target.value,
-                                                    }));
-                                                }}
-                                                type="text"
-                                                className="form-control form-control-solid georgian"
-                                                placeholder="პროდუქციის დასახელება"
-                                                name="title"
-                                            />
-                                            <div className="fv-plugins-message-container invalid-feedback"></div>
-                                        </div>
                                         <div className='w-100'>
                                             <label className="required fs-5 fw-bold mb-2 georgian">
-                                                კატეგორია
+                                            დასახელება
                                             </label>
                                             <select
                                                 onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
+                                                    setCraftData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        categories: {
-                                                            connect: [{ id: e.target.value }],
-                                                        },
+                                                        title: e.target.value
                                                     }));
                                                 }}
                                                 name="count"
-                                                defaultValue={activeCategoryId}
+                                                defaultValue={''}
                                                 className="form-select form-select-solid georgian"
-                                                data-placeholder="საზომიერთ."
+                                                data-placeholder="დასახელება"
                                             >
-                                                <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
-                                                {allCategories &&
-                                                    allCategories.map((item) => {
+                                                <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;
+                                                {filteredCrafts &&
+                                                    filteredCrafts?.data.map((item, index) => {
                                                         return (
-                                                            <option key={item?.id} value={item?.id}>
+                                                            <option key={item?.id + index} value={item?.id}>
                                                                 {item?.attributes?.title}
                                                             </option>
                                                         );
                                                     })}
                                             </select>
-                                        </div>
-                                        <div style={{ marginTop: '30px' }} className="col-md-4 fv-row fv-plugins-icon-container">
-                                            <label className="required fs-5 fw-bold mb-2 georgian">
-                                                მომწოდებელი
-                                            </label>
-                                            <select
-                                                onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        supplier: {
-                                                            connect: [{ id: e.target.value }],
-                                                        },
-                                                    }));
-                                                }}
-                                                name="saler"
-                                                defaultValue='none'
-                                                className="form-select form-select-solid georgian"
-                                                data-placeholder="მომწოდებელი"
-                                            >
-                                                <option value="none" disabled hidden>აირჩიეთ მომწოდებელი</option>
-                                                {suppliers &&
-                                                    suppliers.map((sup) => {
-
-                                                        return (
-                                                            <option key={sup?.id} value={sup?.id}>
-                                                                {sup?.attributes?.title}
-                                                            </option>
-                                                        );
-                                                    })}
-                                            </select>
-                                            <div className="fv-plugins-message-container invalid-feedback"></div>
-                                        </div>
-                                        <div className="col-md-12 fv-row fv-plugins-icon-container">
-                                            <label className="required fs-5 fw-bold mb-2 georgian">
-                                                ლინკი
-                                            </label>
-                                            <input
-                                                onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        productLink: e.target.value,
-                                                    }));
-                                                }}
-                                                type="text"
-                                                className="form-control form-control-solid georgian"
-                                                placeholder="http://momwodebeli.ge"
-                                                name="prodactElAddress"
-                                            />
-                                            <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
                                         <div className="col-md-4 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
@@ -650,7 +572,7 @@ const AddProduct = ({
                                             </label>
                                             <select
                                                 onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
+                                                    setCraftData((prevSendData) => ({
                                                         ...prevSendData,
                                                         unit: {
                                                             connect: [{ id: e.target.value }],
@@ -680,7 +602,7 @@ const AddProduct = ({
                                             </label>
                                             <input
                                                 onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
+                                                    setCraftData((prevSendData) => ({
                                                         ...prevSendData,
                                                         price: e.target.value,
                                                     }));
@@ -693,17 +615,33 @@ const AddProduct = ({
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
                                         <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-
-                                            <div style={{ marginTop: '30px' }} className="form-check">
-                                                <label className="form-check-label" htmlFor="exampleCheckbox">
-                                                    შეძენილია
-                                                </label>
-                                                <input onChange={(e) => setProductData((prevSendData) => ({
-                                                    ...prevSendData,
-                                                    status: true,
-                                                }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
-
-                                            </div>
+                                                {console.log(craftStatus, 'craftStat')}
+                                                <label className="required fs-5 fw-bold mb-2 georgian">
+                                                სტატუსი
+                                            </label>
+                                            <select
+                                                onClick={(e) => {
+                                                    setCraftData((prevSendData) => ({
+                                                        ...prevSendData,
+                                                        craft_status: e.target.value
+                                                    }));
+                                                }}
+                                                name="count"
+                                                defaultValue={''}
+                                                className="form-select form-select-solid georgian"
+                                                data-placeholder="დასახელება"
+                                            >
+                                                <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;
+                                                {craftStatus &&
+                                                    craftStatus?.map((item, index) => {
+                                                        console.log(item)
+                                                        return (
+                                                            <option key={item?.id + index} value={item?.id}>
+                                                                {item?.attributes?.title}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
 
                                         </div>
