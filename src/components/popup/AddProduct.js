@@ -30,11 +30,13 @@ const AddProduct = ({
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
     const [filteredCrafts, setFilteredCrafts] = useState();
+    console.log(filteredCrafts)
     const [title, setTitle] = useState();
+    const [craftImage, setCraftImage] = useState();
 
     const activeCategoryId = useSelector(state => state.categoryId);
     const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
-
+    console.log(activeCategory)
 
     const [productData, setProductData] = useState({
         image: image,
@@ -83,6 +85,7 @@ const AddProduct = ({
                 .then((res) => {
                     const data = res.data;
                     setFilteredCrafts(data)
+                    console.log(filteredCrafts, 'fld')
                 })
         }
         getCraftsByCategory()
@@ -108,18 +111,19 @@ const AddProduct = ({
 
     const handleCraftSubmit = async () => {
         console.log(craftData)
-        // try {
-        //     await axios
-        //         .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
-        //             data: craftData,
-        //         })
-        //         .then(() => {
-        //             notify(false, "ხელობა დაემატა");
-        //         })
-        // } catch (err) {
-        //     notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
-        //     console.log(err);
-        // }
+        try {
+            await axios
+                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+                    data: craftData,
+                })
+                .then(() => {
+                    notify(false, "ხელობა დაემატა");
+                })
+        } catch (err) {
+            notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+            console.log(err);
+        }
+        setSelect(null);
     };
 
     const handleMediaUpload = useCallback(async () => {
@@ -244,7 +248,10 @@ const AddProduct = ({
                             </span>
                         </div>
                     </div>
+                    {
+                        console.log(craftImage, 'hihihihi')
 
+                    }
                     <div style={{ width: "90%" }} className="modal-body mx-5 mx-xl-15 my-7">
                         {toggle ? (
                             <form id="kt_modal_add_user_form" className="form">
@@ -511,10 +518,12 @@ const AddProduct = ({
                                 >
                                     <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                                         <div className='d-flex flex-stack flex-grow-1'>
-                                            {console.log(filteredCrafts.data[0].attributes.image.data.attributes.url, 'image')}
 
                                             <img
-                                                src={''}
+                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`}
+                                                onError={(e) => {
+                                                    e.target.src = "/images/test-img.png";
+                                                }}
                                                 width={125}
                                                 height={125}
                                                 style={{ borderRadius: "8px" }}
@@ -529,26 +538,31 @@ const AddProduct = ({
                                             </label>
                                             <select
                                                 onChange={(e) => {
-                                                    console.log(e)
+                                                    const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.title === e.target.value);
+                                                    // console.log(filteredArray[0], 'filtered arr')
+                                                    setCraftImage(filteredArray[0].attributes.image.data.attributes.url)
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
                                                         title: e.target.value
                                                     }));
                                                 }}
                                                 name="count"
-                                                defaultValue={null}
+                                                defaultValue=''
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="დასახელება"
                                             >
                                                 <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
+                                                        console.log(item?.attributes?.image.data.attributes.url, 'url')
+                                                        
                                                         return (
-                                                            <option key={item?.id + index} image={item?.attributes?.image?.data.attributes.url} value={item?.attributes?.title}>
+                                                            <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}
                                                             </option>
                                                         );
-                                                    })}
+                                                    })
+                                                }
                                             </select>
                                         </div>
                                         <div className="col-md-4 fv-row fv-plugins-icon-container">
@@ -633,7 +647,7 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="დასახელება"
                                             >
-                                                <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;
+                                                <option value="none" disabled hidden > აირჩიეთ სტატუსი</option>;
                                                 {craftStatus &&
                                                     craftStatus?.map((item, index) => {
                                                         return (
