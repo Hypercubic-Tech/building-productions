@@ -143,12 +143,10 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     );
   }
 
-  // Calculate expensesTotal
   let expensesTotal = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     expensesTotal = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0),
-      0
+      (product) => (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0),
     );
   }
 
