@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-
 import { setProductState } from '../../store/slices/productSlice';
 import notify from '../../utils/notify';
 
@@ -248,10 +247,6 @@ const AddProduct = ({
                             </span>
                         </div>
                     </div>
-                    {
-                        console.log(craftImage, 'hihihihi')
-
-                    }
                     <div style={{ width: "90%" }} className="modal-body mx-5 mx-xl-15 my-7">
                         {toggle ? (
                             <form id="kt_modal_add_user_form" className="form">
@@ -356,7 +351,7 @@ const AddProduct = ({
                                                 მომწოდებელი
                                             </label>
                                             <select
-                                                onClick={(e) => {
+                                                onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
                                                         supplier: {

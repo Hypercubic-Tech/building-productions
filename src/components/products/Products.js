@@ -18,7 +18,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
   const [allProduct, setAllProduct] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
-  const [changeElement, setChangeElement] = useState();
+  const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const router = useRouter();
   const { projectId } = router.query;
@@ -116,13 +116,13 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       });
   };
 
-  const changeModalHandler = () => {
-    if (!changeElement) {
-      setChangeElement(true)
-    } else (
-      setChangeElement(false)
-    )
-  }
+  const changeModalHandler = (product) => {
+    if (activeItem === product.id) {
+      setActiveItem(null);
+    } else {
+      setActiveItem(product.id);
+    }
+  };
 
   useEffect(() => {
     if (projectId) {
@@ -247,13 +247,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                 <th className="w-10px pe-2">
                   <div className="form-check form-check-sm form-check-custom form-check-solid me-3">
-                    {/* <input
-                      className="form-check-input"
-                      type="checkbox"
-                      data-kt-check="true"
-                      data-kt-check-target="#kt_table_users .form-check-input"
-                      defaultValue={1}
-                    /> */}
                   </div>
                 </th>
                 {/* min-w-125px */}
@@ -301,12 +294,13 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                           <a>
                             <div className="symbol-label georgian">
+                              {console.log(product.attributes.type, 'product')}
                               <img
-                                src={
-                                  `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.image?.data?.attributes
-                                    ?.url
-                                }
+                                onError={(e) => {
+                                  e.target.src = "/images/test-img.png";
+                                }}
+                                src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                  product?.attributes?.image?.data?.attributes?.url : "/images/test-img.png"}
                                 alt=""
                                 className="w-100"
                               />
@@ -329,21 +323,18 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                       </td>
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
-                      {/* <td className="georgian">
-                    {parseInt(product?.attributes?.quantity) * parseFloat(product.attributes?.price)} 
-                      </td> */}
                       <td
-                        onClick={() => changeModalHandler()}
+                        onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
                         <div
                           className="menu-item px-3 padding8"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16"> <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" /> </svg>
                         </div>
-                        {changeElement ? (
+                        {activeItem === product.id ? (
                           <div className={styles.modal}>
                             <div
-                              onClick={() => { editHandler(product); editHandlerPopup(product); setChangeElement(true) }}
+                              onClick={() => { editHandler(product); editHandlerPopup(product) }}
                               className="menu-item px-3"
                             >
                               <a className="menu-link px-3 georgian padding0">
@@ -352,7 +343,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                               </a>
                             </div>
                             <div
-                              onClick={() => { confirmHandler(product.id); setChangeElement(true) }}
+                              onClick={() => { confirmHandler(product.id) }}
                               className="menu-item px-3 padding8"
                             >
                               <a
@@ -390,12 +381,14 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                           <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                             <a>
                               <div className="symbol-label georgian">
+                                {console.log(product, 'product')}
+
                                 <img
-                                  src={
-                                    `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                    product?.attributes?.image?.data?.attributes
-                                      ?.url
-                                  }
+                                  onError={(e) => {
+                                    e.target.src = "/images/test-img.png";
+                                  }}
+                                  src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                    product?.attributes?.image?.data?.attributes?.url : "/images/test-img.png"}
                                   alt=""
                                   className="w-100"
                                 />
@@ -406,9 +399,14 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                           <span>{product?.attributes?.title}</span>
                         </td>
                         <td className="georgian">
-                          <a href={`https://www.${product?.attributes?.productLink}`} target="_blank">
-                            {product?.attributes?.supplier?.data?.attributes?.title}
-                          </a>
+                          {product?.attributes?.type === "product" ? (
+                            <a href={`https://www.${product?.attributes?.productLink}`} target="_blank">
+                              {product?.attributes?.supplier?.data?.attributes?.title}
+                            </a>
+                          ) : (
+                            " --- "
+                          )}
+
                         </td>
                         <td className="georgian">
                           {product?.attributes?.quantity}
@@ -422,17 +420,17 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                     {parseInt(product?.attributes?.quantity) * parseFloat(product.attributes?.price)} 
                   </td> */}
                         <td
-                          onClick={() => changeModalHandler()}
+                          onClick={() => changeModalHandler(product)}
                           className={`${'text-end'} ${styles.changeModal}`}>
                           <div
                             className="menu-item px-3 padding8"
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16"> <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" /> </svg>
                           </div>
-                          {changeElement ? (
+                          {activeItem === product.id ? (
                             <div className={styles.modal}>
                               <div
-                                onClick={() => { editHandler(product); editHandlerPopup(product); setChangeElement(true) }}
+                                onClick={() => { editHandler(product); editHandlerPopup(product) }}
                                 className="menu-item px-3"
                               >
                                 <a className="menu-link px-3 georgian padding0">
@@ -441,7 +439,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                                 </a>
                               </div>
                               <div
-                                onClick={() => { confirmHandler(product.id); setChangeElement(true) }}
+                                onClick={() => { confirmHandler(product.id) }}
                                 className="menu-item px-3 padding8"
                               >
                                 <a
