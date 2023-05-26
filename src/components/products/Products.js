@@ -10,7 +10,7 @@ import Link from "next/link";
 
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum }) => {
+const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
   const [allProduct, setAllProduct] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
@@ -18,6 +18,18 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const router = useRouter();
   const { projectId } = router.query;
+
+  const handleIncrementPageIndex = () => {
+    const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
+    incrementPageIndex();
+    defaultProductsHandler(id, pageIndex + 1);
+  };
+
+  const handleDecrementPageIndex = () => {
+    const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
+    decrementPageIndex();
+    defaultProductsHandler(id, pageIndex - 1);
+  };
 
   const getProductsHandler = async () => {
     await axios
@@ -122,14 +134,23 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     }
   }, [projectId]);
 
-  let productsTotal = totalSumProduct?.reduce(
-    (sum, product) => sum + (parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)),
-    0
-  );
-  
-  let expensesTotal = totalSumProduct?.reduce(
-    (product) => (product?.attributes?.project?.data?.attributes?.unforseenExpenses)
-  );
+  let productsTotal = 0;
+  if (totalSumProduct && totalSumProduct.length > 0) {
+    productsTotal = totalSumProduct.reduce(
+      (sum, product) =>
+        sum + parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price),
+      0
+    );
+  }
+
+  // Calculate expensesTotal
+  let expensesTotal = 0;
+  if (totalSumProduct && totalSumProduct.length > 0) {
+    expensesTotal = totalSumProduct.reduce(
+      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0),
+      0
+    );
+  }
 
   return (
     <>
@@ -164,20 +185,14 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                 <td></td>
                 <td></td>
                 <td>
-                  {`სულ: ${totalSumProduct?.reduce(
-                    (sum, product) => sum + (parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)),
-                    0
-                  )} ლარი`}
+                  {`სულ: ${productsTotal} ლარი`}
                 </td>
-
               </tr>
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`სულ: ${totalSumProduct?.reduce(
-                  (product) => (product?.attributes?.project?.data?.attributes?.unforseenExpenses)
-                )} ლარი`}</td>
+                <td>{`დღგ: ${expensesTotal} ლარი`}</td>
               </tr>
               <tr>
                 <td></td>
@@ -409,7 +424,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         </table>
         <nav aria-label="Page navigation example">
           <ul className="pagination">
-            <li className="page-item">
+            <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
               </a>
@@ -417,7 +432,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
             <li className="page-item"><a className="page-link" href="#">1</a></li>
             <li className="page-item"><a className="page-link" href="#">2</a></li>
             <li className="page-item"><a className="page-link" href="#">3</a></li>
-            <li className="page-item">
+            <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
               </a>
