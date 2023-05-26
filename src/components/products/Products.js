@@ -3,6 +3,11 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
@@ -206,39 +211,35 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>
-                  {`სულ: ${productsTotal || 0} ლარი`}
-                </td>
+                <td>{`სულ: ${productsTotal.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`დღგ: ${parseFloat(productsTotal) * parseFloat(vatTotal) / 100 + parseFloat(vatTotal) || 0} ლარი`}</td>
+                <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${totalSumProduct?.reduce((product) => (product?.attributes?.project?.data[0]?.attributes?.unforseenExpenses || 0))}: ${parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses) || 0} ლარი`}</td>
+                <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>
-                  {`მომსახურეობა ${totalSumProduct?.reduce((product) => (product?.attributes?.project?.data[0]?.attributes?.service_percentage || 0))}: ${parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage) || 0} ლარი`}
-                </td>
+                <td>{`მომსახურეობა ${parseFloat(service_percentage)}: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`სულ ჯამი: ${parseFloat(totalSumPrice) || 0} ლარი`}</td>
+                <td>{`სულ ჯამი: ${totalSumPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
             </thead>
           ) : (
