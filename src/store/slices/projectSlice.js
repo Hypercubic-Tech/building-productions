@@ -14,6 +14,7 @@ export const projectSlice = createSlice({
       state.project = [...state.project, action.payload];
     },
     setProjectImage(state, action) {
+      console.log(action, 'hi')
       state.image = [...state.image, ...action.payload];
     },
   },

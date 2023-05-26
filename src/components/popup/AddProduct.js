@@ -32,7 +32,6 @@ const AddProduct = ({
     //         // return item
     //     })
     // }))
-    console.log(project, 'project')
     const dispatch = useDispatch();
 
     const router = useRouter();
@@ -47,8 +46,13 @@ const AddProduct = ({
     const activeCategoryId = useSelector(state => state.categoryId);
     const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
 
-    console.log(activeCategoryId, 'actived id')
-    
+  
+    console.log(selectedCrafts)
+    // console.log(activeCategoryId)
+    // console.log(crafts)
+    // const selectedCraft = crafts.find((craft) => craft?.id === activeCategory);
+    // console.log(selectedCraft, 'hihihi')
+
 
     const [productData, setProductData] = useState({
         image: image,
@@ -141,7 +145,7 @@ const AddProduct = ({
                 }
             );
 
-            const data = res.data;  
+            const data = res.data;
             console.log(data[0], 'age dzma');
             setImage(data[0]);
 
@@ -342,36 +346,7 @@ const AddProduct = ({
                                             />
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
-                                        <div className='w-100'>
-                                            <label className="required fs-5 fw-bold mb-2 georgian">
-                                                კატეგორია
-                                            </label>
-                                            <select
-                                                onClick={(e) => {
-                                                    setProductData((prevSendData) => ({
-                                                        ...prevSendData,
-                                                        categories: {
-                                                            connect: [{ id: e.target.value }],
-                                                        },
-                                                    }));
-                                                }}
-                                                name="count"
-                                                defaultValue={activeCategoryId}
-                                                className="form-select form-select-solid georgian"
-                                                data-placeholder="საზომიერთ."
-                                            >
-                                                <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
-                                                {allCategories &&
-                                                    allCategories.map((item) => {
-                                                        return (
-                                                            <option key={item?.id} value={item?.id}>
-                                                                {item?.attributes?.title}
-                                                            </option>
-                                                        );
-                                                    })}
-                                            </select>
-                                        </div>
-                                        <div style={{ marginTop: '30px' }} className="col-md-4 fv-row fv-plugins-icon-container">
+                                        <div className="col-md-12 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 მომწოდებელი
                                             </label>
@@ -549,7 +524,12 @@ const AddProduct = ({
                                         </div>
                                     </div>
                                     <div className="row mb-5">
-                                        {console.log()}
+                                        {console.log(crafts, 'crafts')}
+                                        {console.log(project, 'project')}
+                                        {
+                                            console.log(activeCategory, 'active cat')
+                                        }
+
                                         <div className="col-md-8 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 დასახელება

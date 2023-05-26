@@ -49,6 +49,7 @@ const AddProject = ({ dismiss }) => {
         { id: null }
       ]
     },
+    service_percentage: ""
   });
   const dispatch = useDispatch();
 
@@ -84,14 +85,14 @@ const AddProject = ({ dismiss }) => {
     } else {
       setLoss(true);
     }
-    if (step === 2  && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
+    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
       console.log('rame2')
       setStep(step + 1);
       setLoss(false);
-    } 
-    if (step === 3 && errors.stepThree.length === 0 && sendData.title  && sendData.categories.connect.length > 0 ){
-        setStep(step + 1);
-        setLoss(false);
+    }
+    if (step === 3 && errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0) {
+      setStep(step + 1);
+      setLoss(false);
     }
   };
 
@@ -399,24 +400,25 @@ const AddProject = ({ dismiss }) => {
                                 }));
                               }}
                             />
-                          <i className={`${styles.percent} bi bi-percent `}></i>
+                            <i className={`${styles.percent} bi bi-percent `}></i>
                           </div>
                         ) : ""}
-                          <div className={`${styles.inputWrap} col-6 `}>
-                            <input
-                              onChange={(event) => {
-                                setSendData((prevSendData) => ({
-                                  ...prevSendData,
-                                  unforeseenExpenses: event.target.value,
-                                }));
-                              }}
-                              type="text"
-                              className="form-control georgian form-control-solid"
-                              placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
+                        <div className={`${styles.inputWrap} col-6 `}>
+                          <input
+                            onChange={(event) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                unforeseenExpenses: event.target.value,
+                              }));
+                            }}
+                            type="text"
+                            className="form-control georgian form-control-solid"
+                            placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
                           />
                           <i className={`${styles.percent} bi bi-percent `}></i>
                         </div>
                       </div>
+
                     </div>
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
@@ -467,7 +469,26 @@ const AddProject = ({ dismiss }) => {
                         </div>
                       </div>
                     </div>
+                    <div className="row mb-10">
+                      <div style={{flexDirection: "column"}} className="d-flex align-items-center">
+                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                          <span className={`${styles.ml2} georgian `}>მომსახურეობის ხარჯები </span>
+                        </label>
+                        <input
+                          className="form-control georgian form-control-solid"
+                          type="text"
+                          id="flexSwitchCheckDefault"
+                          onChange={(e) => {
+                            setSendData((prevSendData) => ({
+                              ...prevSendData,
+                              service_percentage: e.target.value,
+                            }));
+                            // hiddenInputHandler();
+                          }}
+                        />
 
+                      </div>
+                    </div>
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
@@ -672,7 +693,7 @@ const AddProject = ({ dismiss }) => {
                     </div>
                   </div>
                 </div>
-               {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
+                {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
 
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
@@ -710,7 +731,7 @@ const AddProject = ({ dismiss }) => {
                   </div>
 
                   <div>
-               {loss && <p style={{color: 'red'}}>შეავსეთ ყველა (*) ველი</p>}
+                    {loss && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი</p>}
 
                     <button
                       onClick={finishHandler}
