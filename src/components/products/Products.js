@@ -121,15 +121,19 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     }
   }, [projectId]);
 
-  let productsTotal = totalSumProduct?.reduce(
-    (sum, product) => sum + (parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)),
-    0
-  );
-  
-  let expensesTotal = totalSumProduct?.reduce(
-    (product) => (product?.attributes?.project?.data?.attributes?.unforseenExpenses)
-  );
+  let productsTotal;
+  let expensesTotal;
+  useEffect(() => {
+    productsTotal = totalSumProduct?.reduce(
+      (sum, product) => sum + (parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)),
+      0
+    );
 
+    expensesTotal = totalSumProduct?.reduce(
+      (product) => (product?.attributes?.project?.data?.attributes?.unforseenExpenses)
+    );
+
+  }, [])
   return (
     <>
       <div className="table-responsive">
@@ -406,7 +410,7 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
             </>
           )}
         </table>
-        {filteredProducts?.length === 0 && <div style={{width: '100vw', textAlign: 'center'}}>პროდუქტი ვერ მოიძებნა!</div> }
+        {filteredProducts?.length === 0 && <div style={{ width: '100vw', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">

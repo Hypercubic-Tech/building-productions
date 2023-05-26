@@ -124,6 +124,7 @@ const index = () => {
                 </div>
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
                     {projectData ?  projectData?.map((item, index) => {
+                        console.log(item, 'ititit')
                         return (
                             <div key={index} className={` card-body ${styles.wrapChild} card m-3 `}>
                                     <div className="card" style={{ paddingBottom: '20px' }}>
@@ -132,8 +133,7 @@ const index = () => {
                                             alt="img"
                                             src={
                                                 `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                                item?.attributes?.image?.data?.attributes
-                                                    ?.url
+                                                item?.attributes?.image?.data[0]?.attributes?.url
                                             }
                                             className="card-img-top" />
                                         <div className="card-body">
