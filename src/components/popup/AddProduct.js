@@ -39,7 +39,6 @@ const AddProduct = ({
         image: image,
         title: "",
         type: "product",
-        purchased: false,
         supplier: {
             connect: [{ id: null }],
         },
@@ -50,7 +49,7 @@ const AddProduct = ({
         },
         price: 0,
         categories: {
-            connect: [{ id: activeCategory }],
+            connect: [{ id: activeCategoryId }],
         },
         project: {
             connect: [{ id: projectId }]
@@ -67,7 +66,7 @@ const AddProduct = ({
         },
         price: 0,
         categories: {
-            connect: [{ id: activeCategory }],
+            connect: [{ id: activeCategoryId }],
         },
         project: {
             connect: [{ id: projectId }]
@@ -82,7 +81,7 @@ const AddProduct = ({
             await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories&filters[categories][id][$eq]=${activeCategoryId}`)
                 .then((res) => {
                     const data = res.data;
-                    setFilteredCrafts(data)                    
+                    setFilteredCrafts(data)
                 })
         }
         getCraftsByCategory()
@@ -107,18 +106,19 @@ const AddProduct = ({
     };
 
     const handleCraftSubmit = async () => {
-        try {
-            await axios
-                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
-                    data: craftData,
-                })
-                .then(() => {
-                    notify(false, "ხელობა დაემატა");
-                })
-        } catch (err) {
-            notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
-            console.log(err);
-        }
+        console.log(craftData)
+        // try {
+        //     await axios
+        //         .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+        //             data: craftData,
+        //         })
+        //         .then(() => {
+        //             notify(false, "ხელობა დაემატა");
+        //         })
+        // } catch (err) {
+        //     notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+        //     console.log(err);
+        // }
     };
 
     const handleMediaUpload = useCallback(async () => {
@@ -157,7 +157,7 @@ const AddProduct = ({
         }
     }, [imgSrc, handleMediaUpload, notify]);
 
-   
+
 
 
     useEffect(() => {
@@ -468,7 +468,6 @@ const AddProduct = ({
                                                     ...prevSendData,
                                                     status: true,
                                                 }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
-
                                             </div>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
 
@@ -523,17 +522,17 @@ const AddProduct = ({
                                     <div className="row mb-5">
                                         <div className='w-100'>
                                             <label className="required fs-5 fw-bold mb-2 georgian">
-                                            დასახელება
+                                                დასახელება
                                             </label>
                                             <select
-                                                onClick={(e) => {
+                                                onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
                                                         title: e.target.value
                                                     }));
                                                 }}
                                                 name="count"
-                                                defaultValue={''}
+                                                defaultValue={null}
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="დასახელება"
                                             >
@@ -615,8 +614,8 @@ const AddProduct = ({
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
                                         <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-                                                {console.log(craftStatus, 'craftStat')}
-                                                <label className="required fs-5 fw-bold mb-2 georgian">
+                                            {console.log(craftStatus, 'craftStat')}
+                                            <label className="required fs-5 fw-bold mb-2 georgian">
                                                 სტატუსი
                                             </label>
                                             <select
@@ -643,7 +642,6 @@ const AddProduct = ({
                                                     })}
                                             </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -660,7 +658,7 @@ const AddProduct = ({
                                         გაუქმება
                                     </button>
                                     <div
-                                        onClick={handleSubmit}
+                                        onClick={handleCraftSubmit}
                                         type="submit"
                                         className="btn btn-primary"
                                         data-kt-users-modal-action="submit"
