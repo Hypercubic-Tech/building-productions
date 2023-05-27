@@ -25,17 +25,26 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   // const [defaultCategory, setDefaultCategory] = useState();
   const [totalSum, setTotalSum] = useState(false);
 
+  console.log(pageIndex)
+
   const router = useRouter();
   const { projectId } = router.query;
 
   const dispatch = useDispatch();
 
   const incrementPageIndex = () => {
-    setPageIndex(pageIndex + 1);
+    if (pageIndex < 3) {
+      setPageIndex(pageIndex + 1);
+    }
   };
 
   const decrementPageIndex = () => {
-    setPageIndex(pageIndex - 1);
+    if (pageIndex > 1) {
+      setPageIndex(pageIndex - 1);
+    }
+  };
+  const changePageIndex = (num) => {
+    setPageIndex(num);
   };
 
   const totalSumTable = () => {
@@ -342,6 +351,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         totalSum={totalSum}
                         incrementPageIndex={incrementPageIndex}
                         pageIndex={pageIndex}
+                        changePageIndex={changePageIndex}
                         decrementPageIndex={decrementPageIndex}
                       />
                     </div>
