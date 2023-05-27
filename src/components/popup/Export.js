@@ -30,7 +30,9 @@ export const Export = ({ setSelect }) => {
     XLSX.writeFile(workbook, 'table.xlsx');
   };
 
-  const handleExport = () => {
+  const handleExport = (event) => {
+    event.preventDefault(); // Prevents page refresh
+
     if (format === 'pdf') {
       exportToPDF();
     } else if (format === 'excel') {
@@ -126,10 +128,9 @@ export const Export = ({ setSelect }) => {
                   გამორთვა
                 </button>
                 <button
-                  // type="submit"
                   className="btn btn-primary"
                   data-kt-users-modal-action="submit"
-                  onClick={handleExport}
+                  onClick={(event) => handleExport(event)}
                 >
                   <span className="indicator-label georgian">
                     გადმოწერა
