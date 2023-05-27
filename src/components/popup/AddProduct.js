@@ -100,6 +100,7 @@ const AddProduct = ({
                     console.log(data)
                     setShowProduct(true)
                     notify(false, "პროდუქტი დაემატა");
+                    dispatch(setProductState(data.data))
                 })
         } catch (err) {
             notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");

@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
+
+import { selectProduct, deleteProductState } from "../../store/slices/productSlice";
 
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
@@ -14,8 +17,10 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const [editPopup, setEditPopup] = useState(false);
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
+  const productData = useSelector(selectProduct)
   const router = useRouter();
   const { projectId } = router.query;
+  const dispatch = useDispatch();
 
   const handleIncrementPageIndex = () => {
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
@@ -111,6 +116,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       )
       .then(() => {
         getProductsHandler();
+        dispatch(deleteProductState(productId));
       })
       .catch((error) => {
         console.log(error);
@@ -364,8 +370,8 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
               }) : (
                 ""
               )}
-              {filteredProducts && (
-                filteredProducts.map((product) => {
+              {productData && (
+                productData.map((product) => {
                   return (
                     <tbody key={product?.id}>
                       <tr>

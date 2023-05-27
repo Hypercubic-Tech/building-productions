@@ -51,7 +51,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
 
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
-      console.log(id, 'def id')
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=1`);
         const data = response.data;
