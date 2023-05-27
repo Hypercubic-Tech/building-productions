@@ -7,7 +7,7 @@ import { setProjectState } from "../../store/slices/projectSlice";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const AddProject = ({ dismiss, setShowProject }) => {
+const AddProject = ({ dismiss, setShowProject}) => {
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);

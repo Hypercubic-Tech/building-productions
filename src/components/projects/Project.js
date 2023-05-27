@@ -13,7 +13,6 @@ import EditService from "../popup/EditService";
 import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
-
 const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
@@ -22,6 +21,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [filteredProducts, setFilteredProducts] = useState(undefined);
   const [defaultP, setDefaultP] = useState(undefined);
   const [pageIndex, setPageIndex] = useState(1);
+  const [showProduct, setShowProduct] = useState(false);
   // const [defaultCategory, setDefaultCategory] = useState();
   const [totalSum, setTotalSum] = useState(false);
 
@@ -40,11 +40,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
 
   const totalSumTable = () => {
     setTotalSum(true)
-    // if(!totalSum) {
-    //   setTotalSum(false);
-    // } else (
-    //   setTotalSum(true)
-    // )
   };
 
   const defaultProductsHandler = async (id, pageIndex) => {
@@ -71,6 +66,11 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    filterProductCategory();
+    // defaultProductsHandler()
+  }, [showProduct])
 
   return (
     <>
@@ -299,7 +299,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
-                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers} 
+                        {select === "add" && <AddProduct setShowProduct={setShowProduct} project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers} 
                         />}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
