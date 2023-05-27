@@ -462,7 +462,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
             </>
           )}
         </table>
-        {filteredProducts?.length === 0 && <div style={{ width: '100vw', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
+        {/* {filteredProducts?.length === 0 && <div style={{ width: '100vw', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>} */}
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>

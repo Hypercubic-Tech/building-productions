@@ -30,13 +30,11 @@ const AddProduct = ({
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
     const [filteredCrafts, setFilteredCrafts] = useState();
-    console.log(filteredCrafts)
     const [title, setTitle] = useState();
     const [craftImage, setCraftImage] = useState();
 
     const activeCategoryId = useSelector(state => state.categoryId);
     const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
-    console.log(activeCategory)
 
     const [productData, setProductData] = useState({
         image: image,
@@ -550,10 +548,10 @@ const AddProduct = ({
                                                 data-placeholder="დასახელება"
                                             >
                                                 <option value="none" disabled selected hidden > აირჩიეთ დასახელება</option>;+
-                                                
+
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
-                                                        
+
                                                         return (
                                                             <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}
