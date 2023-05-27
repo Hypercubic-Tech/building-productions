@@ -10,7 +10,7 @@ import AddProduct from "../popup/AddProduct";
 import Gallery from "../popup/Gallery";
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
-import Export from "../popup/Export";
+import { Export } from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
 const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {

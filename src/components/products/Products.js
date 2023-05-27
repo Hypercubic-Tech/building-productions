@@ -3,18 +3,28 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
-
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
+const Products = ({
+  editHandler,
+  filteredProducts,
+  editProductItem,
+  setSelect,
+  craftStatus,
+  crafts,
+  unit,
+  allCategories,
+  suppliers,
+  defaultProductsHandler,
+  defaultP,
+  totalSum,
+  incrementPageIndex,
+  pageIndex,
+  decrementPageIndex,
+}) => {
   const [allProduct, setAllProduct] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
@@ -184,13 +194,13 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
       <div className="table-responsive">
         <table
           className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
-          id="kt_table_users"
+          id="tableId"
         >
           {totalSum ? (
             <thead>
-              <div>
+              {/* <div>
                 <h3>განფასება</h3>
-              </div>
+              </div> */}
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                 <th>სამუშაო</th>
                 <th>ერთეული</th>
