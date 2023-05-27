@@ -367,8 +367,9 @@ const AddProject = ({ dismiss, setShowProject}) => {
                     </div>
                     <div className="w-100">
                       <div className="row mb-10">
-                        <div className="form-check form-switch d-flex align-items-center">
-                          <input
+                        <div className=" d-flex align-items-center">
+                          {/* <input
+                            form-check form-switch
                             className="form-check-input"
                             type="checkbox"
                             role="switch"
@@ -381,12 +382,12 @@ const AddProject = ({ dismiss, setShowProject}) => {
                               }));
                               hiddenInputHandler();
                             }}
-                          />
+                          /> */}
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className={`${styles.ml2} georgian `}>დღგ-ს გადამხდელი / გაუთვალისწინებელი ხარჯები</span>
+                            <span className={` georgian `}>დღგ-ს გადამხდელი / გაუთვალისწინებელი ხარჯები</span>
                           </label>
                         </div>
-                        {hiddenInput ? (
+                        {/* {hiddenInput ? ( */}
                           <div className={`${styles.inputWrap} col-6 `}>
                             <input
                               className="form-control georgian form-control-solid"
@@ -401,7 +402,7 @@ const AddProject = ({ dismiss, setShowProject}) => {
                             />
                             <i className={`${styles.percent} bi bi-percent `}></i>
                           </div>
-                        ) : ""}
+                        {/* ) : ""} */}
                         <div className={`${styles.inputWrap} col-6 `}>
                           <input
                             onChange={(event) => {

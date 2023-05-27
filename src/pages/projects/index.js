@@ -18,7 +18,7 @@ const index = () => {
 
 
     const addProjectHandler = () => {
-        setAddProject(true);
+        setAddProject(!addProject);
         setClose(true);
     };
 
@@ -101,7 +101,7 @@ const index = () => {
 
     return (
         <>
-            <div className="container-xxl" style={{ height: "85vh" }}>
+            <div className="container-xxl">
                 <div className={` d-flex justify-content-between m-3 ${styles.mt20}`}>
                     <button
                         type="button"
@@ -162,7 +162,10 @@ const index = () => {
                             </div>
                         ))
                     ) : (
-                        <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
+                            <div>
+                                {/* style={{height: "85vh"}} */}
+                                <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
+                            </div>
                     )}
                 </div>
             </div>

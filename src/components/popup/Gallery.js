@@ -218,8 +218,21 @@ const Gallery = ({ setSelect }) => {
                     </div>
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
-                            <div className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
-                                <div className="image-input border border-dark"
+                            <div style={{
+                                    flexDirection: "column"
+                                }}
+                                className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
+                                <button className="btn btn-primary georgian image-input"
+                                    style={{
+                                        position: "absolute",
+                                        right: "50px",
+                                        top: "0",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        width: "100px",
+                                        height: "100px"
+                                    }}
                                     data-kt-image-input="true">
                                     <div style={{
                                         display: "flex",
@@ -259,8 +272,8 @@ const Gallery = ({ setSelect }) => {
                                             <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
                                         </svg>
                                     </div>
-                                    <div className="image-input-wrapper w-125px h-125px"></div>
-                                </div>
+                                    {/* <div className="image-input-wrapper w-125px h-125px"></div> */}
+                                </button>
 
                                 {projectImages && (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">
@@ -272,20 +285,32 @@ const Gallery = ({ setSelect }) => {
                                                 onClick={toggleHandler}
                                             >
                                                 <div>
-                                                    <input
+                                                    {/* <input
                                                         className="form-check-input"
                                                         type="checkbox"
                                                         value=""
                                                         id="flexCheckDefault"
-                                                    />
+                                                    /> */}
                                                 </div>
+                                                <div style={{
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    maxWidth: "100%",
+                                                    height: "auto",
+                                                    margin: "20px"
+                                                }}>
                                                 <img
                                                     src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.url}`}
                                                     className="img-responsive col-sm"
                                                     style={{
-                                                        width: "30%",
+                                                        width: "50%",
+                                                        height: "auto",
+                                                        marginLeft: "auto",
+                                                        marginRight: "auto",
+                                                        objectFit: "contain"
                                                     }}
                                                 />
+                                                    </div>
                                             </a>
                                         ))}
                                     </LightGallery>
@@ -301,6 +326,4 @@ const Gallery = ({ setSelect }) => {
 
 export default Gallery;
 
-
-// bakcup
 
