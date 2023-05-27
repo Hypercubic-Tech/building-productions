@@ -14,7 +14,7 @@ import notify from "../../utils/notify";
 
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
+const Products = ({ changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
   const [allProduct, setAllProduct] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
@@ -33,6 +33,13 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
     decrementPageIndex();
     defaultProductsHandler(id, pageIndex - 1);
+  };
+
+  const handleChangePageIndex = (event) => {
+    const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
+    changePageIndex();
+    defaultProductsHandler(id, event.target.id);
+    console.log(event.target.id)
   };
 
   const getProductsHandler = async () => {
@@ -471,9 +478,9 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li className="page-item"><a className="page-link" href="#">1</a></li>
-            <li className="page-item"><a className="page-link" href="#">2</a></li>
-            <li className="page-item"><a className="page-link" href="#">3</a></li>
+            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={1} href="#">1</a></li>
+            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={2} href="#">2</a></li>
+            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={3} href="#">3</a></li>
             <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
