@@ -213,6 +213,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <th>სამუშაო</th>
                 <th>ერთეული</th>
                 <th>რაოდენობა</th>
+                <th>სტატუსი</th>
                 <th>ჯამი</th>
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
@@ -271,6 +272,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <th className="georgian">რაოდენობა</th>
                 <th className="georgian">ერთეული</th>
                 <th className="georgian">ღირებულება</th>
+                <th className="georgian">სტატუსი</th>
                 <th className="georgian">ტიპი</th>
                 <th className="text-end min-w-100px georgian">ცვლილება</th>
               </tr>
@@ -339,6 +341,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                       </td>
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
+                      <td className="georgian">{product?.attributes?.type === "product" ? product.attributes.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>

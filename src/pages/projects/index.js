@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
@@ -7,6 +8,7 @@ import { useRouter } from "next/router";
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import styles from "../../components/popup/Modal.module.css";
+import { setUpdateProject } from "../../store/slices/editProjectSlice";
 
 const index = () => {
     const [close, setClose] = useState(false);
@@ -14,8 +16,7 @@ const index = () => {
     const [editProject, setEditProject] = useState(false);
     const [showProject, setShowProject] = useState(false);
     const [projectData, setProjectData] = useState(null);
-    console.log(showProject, 'show proj')
-
+    const updateList = useSelector(state => state.update)
 
     const addProjectHandler = () => {
         setAddProject(!addProject);
@@ -76,7 +77,7 @@ const index = () => {
                 if (result.isConfirmed) {
                     deleteProjectHandler(item);
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire('Cancelled', 'error');
+                    swalWithBootstrapButtons.fire('Cancelled', '');
                 }
             });
     };
@@ -135,7 +136,8 @@ const index = () => {
                                             onError={(e) => {
                                                 e.target.src = "/images/test-img.png";
                                             }}
-                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data[0]?.attributes?.url}`}
+                                            src='/images/test-img.png'
+                                            // src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data[0]?.attributes?.url ? item?.attributes?.image?.data[0]?.attributes?.url : "/images/test-img.png"}`}
                                             className="card-img-top"
                                         />
                                         <div className="card-body">
@@ -173,7 +175,7 @@ const index = () => {
             </div>
             {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
             {editProject && (
-                <EditProject project={editProject} dismiss={dismissHandler} />
+                <EditProject setShowProject={setShowProject} project={editProject} dismiss={dismissHandler} />
             )}
         </>
     );

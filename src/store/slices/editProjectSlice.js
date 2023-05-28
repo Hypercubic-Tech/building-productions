@@ -2,15 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
-  category: null,
+  updateProject: null,
 };
 
-const categorySlice = createSlice({
-  name: 'category',
+const editProjectSlice = createSlice({
+  name: 'updateProject',
   initialState,
-  reducers: {
-    setCategory(state, action) {
-      state.category = action.payload;
+  reducers: {   
+    setUpdateProject(state, action) {
+      state.updateProject = action.payload;
     },
     extraReducers: {
       [HYDRATE]: (state, action) => {
@@ -23,5 +23,5 @@ const categorySlice = createSlice({
   },
 });
 
-export const { setCategory } = categorySlice.actions;
-export default categorySlice.reducer;
+export const { setUpdateProject } = editProjectSlice.actions;
+export default editProjectSlice.reducer;
