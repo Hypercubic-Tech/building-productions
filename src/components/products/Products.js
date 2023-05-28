@@ -22,7 +22,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const dispatch = useDispatch();
   const products = useSelector(state => state.prod.products);
   const categoryId = useSelector(state => state.cats.category);
-  console.log(products)
+
   let productsToMap = products;
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
