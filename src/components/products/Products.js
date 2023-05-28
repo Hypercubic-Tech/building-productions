@@ -31,7 +31,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       productsToMap = filteredProduct;
     }
   }
-  
+
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
     defaultProductsHandler(categoryId, pageIndex + 1);
@@ -153,7 +153,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   }
 
   const totalProductPrice = parseFloat(productsTotal)
-  const vatTotalPrice = parseFloat(productsTotal) * parseFloat(vatTotal) / 100 + parseFloat(vatTotal);
+  const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
   const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
@@ -173,6 +173,30 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
     };
   }, [projectId]);
 
+  const aggregatedProducts = {};
+
+  totalSumProduct?.forEach((product) => {
+    if (product.attributes.type === 'service') {
+      const title = product.attributes.title;
+      const unit = product.attributes.unit.data.attributes.title;
+      const quantity = product.attributes.quantity;
+      const price = product.attributes.price;
+      const key = `${unit}`;
+
+      if (aggregatedProducts[key]) {
+        aggregatedProducts[key].titles.push(title);
+        aggregatedProducts[key].quantity += quantity;
+      } else {
+        aggregatedProducts[key] = {
+          titles: [title],
+          unit,
+          quantity,
+          price,
+        };
+      }
+    }
+  });
+
   return (
     <>
       <div className="table-responsive">
@@ -191,16 +215,14 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <th>რაოდენობა</th>
                 <th>ჯამი</th>
               </tr>
-              {totalSumProduct?.map((product, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{product?.attributes?.categories?.data[0]?.attributes?.title}</td>
-                    <td>{product?.attributes?.unit?.data?.attributes?.title}</td>
-                    <td>{product?.attributes?.quantity}</td>
-                    <td>{`${parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)} ლარი`}</td>
-                  </tr>
-                )
-              })}
+              {Object.values(aggregatedProducts).map((product, index) => (
+                <tr key={index}>
+                  <td>{product.titles.join(', ')}</td>
+                  <td>{product.unit}</td>
+                  <td>{product.quantity}</td>
+                  <td>{productsTotal} ლარი</td>
+                </tr>
+              ))}
               <tr>
                 <td></td>
                 <td></td>
@@ -354,7 +376,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                     </tr>
                   </tbody>
                 )
-            })}
+              })}
             </>
           )}
         </table>
