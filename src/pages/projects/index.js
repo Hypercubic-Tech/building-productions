@@ -127,45 +127,47 @@ const index = () => {
                 </div>
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
                     {projectData?.length > 0 ? (
-                        projectData.map((item, index) => (
-                            <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
-                                <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
-                                    <img
-                                        onError={(e) => {
-                                            e.target.src = "/images/test-img.png";
-                                        }}
-                                        src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.attributes?.url}`}
-                                        className="card-img-top"
-                                    />
-                                    <div className="card-body">
-                                        <Link
-                                            href={{
-                                                pathname: `/projects/${item?.id}`,
-                                                query: { projectId: item?.id },
+                        projectData.map((item, index) => {
+                            return (
+                                <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
+                                    <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
+                                        <img
+                                            onError={(e) => {
+                                                e.target.src = "/images/test-img.png";
                                             }}
-                                            passHref
-                                            className="card-title"
-                                        >
-                                            {item?.attributes?.title}
-                                        </Link>
-                                        <p className="card-text">{item?.attributes?.address}</p>
-                                    </div>
-                                    <div className={`${styles.gap20} row`}>
-                                        <div onClick={() => editHandler(item)} className={`btn btn-primary`}>
-                                            რედაქტირება
+                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data[0]?.attributes?.url}`}
+                                            className="card-img-top"
+                                        />
+                                        <div className="card-body">
+                                            <Link
+                                                href={{
+                                                    pathname: `/projects/${item?.id}`,
+                                                    query: { projectId: item?.id },
+                                                }}
+                                                passHref
+                                                className="card-title"
+                                            >
+                                                {item?.attributes?.title}
+                                            </Link>
+                                            <p className="card-text">{item?.attributes?.address}</p>
                                         </div>
-                                        <div onClick={() => confirmHandler(item)} className="btn btn-danger">
-                                            წაშლა
+                                        <div className={`${styles.gap20} row`}>
+                                            <div onClick={() => editHandler(item)} className={`btn btn-primary`}>
+                                                რედაქტირება
+                                            </div>
+                                            <div onClick={() => confirmHandler(item)} className="btn btn-danger">
+                                                წაშლა
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            )
+                        })
                     ) : (
-                            <div>
-                                {/* style={{height: "85vh"}} */}
-                                <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
-                            </div>
+                        <div>
+                            {/* style={{height: "85vh"}} */}
+                            <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
+                        </div>
                     )}
                 </div>
             </div>
