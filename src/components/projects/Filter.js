@@ -12,7 +12,7 @@ const Filter = ({
 }) => {
   const dispatch = useDispatch();
 
-  const activeCategoryId = useSelector(state => state.categoryId);
+  const activeCategoryId = useSelector(state => state.cats.category);
 
   return (
     <div className="header-menu-container container-xxl d-flex flex-stack h-lg-75px">

@@ -1,11 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { HYDRATE } from "next-redux-wrapper";
+
+const initialState = {
+  category: 2,
+};
 
 const categorySlice = createSlice({
   name: 'category',
-  initialState: null,
+  initialState,
   reducers: {
     setCategory(state, action) {
-      return action.payload;
+      state.category = action.payload;
+    },
+    extraReducers: {
+      [HYDRATE]: (state, action) => {
+        return {
+          ...state,
+          ...action.payload.authModal,
+        };
+      },
     },
   },
 });

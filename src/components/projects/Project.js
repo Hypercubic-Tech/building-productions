@@ -25,7 +25,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
-
+  const categoryId = useSelector(state => state.cats.category);
 
   const router = useRouter();
   const { projectId } = router.query;
@@ -78,6 +78,12 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (categoryId) {
+      defaultProductsHandler(categoryId, pageIndex);
+    }
+  }, [categoryId]);
 
   return (
     <>

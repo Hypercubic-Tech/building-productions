@@ -21,6 +21,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const { projectId } = router.query;
   const dispatch = useDispatch();
   const products = useSelector(state => state.prod.products);
+  const categoryId = useSelector(state => state.cats.category);
 
   let productsToMap = products;
   if (searchType) {
@@ -33,34 +34,34 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
-    defaultProductsHandler(defId, pageIndex + 1);
+    defaultProductsHandler(categoryId, pageIndex + 1);
     console.log(event.target.id)
   };
 
   const handleDecrementPageIndex = () => {
     decrementPageIndex();
-    defaultProductsHandler(defId, pageIndex - 1);
+    defaultProductsHandler(defcategoryIdId, pageIndex - 1);
     console.log(event.target.id)
   };
 
   const handleChangePageIndex = (event) => {
     changePageIndex(parseInt(event.target.id));
-    defaultProductsHandler(defId, event.target.id);
+    defaultProductsHandler(categoryId, event.target.id);
     console.log(event.target.id)
   };
 
-  const getProductsHandler = async () => {
-    await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-      )
-      .then((res) => {
-        const data = res.data;
-        const id = data?.data[0]?.attributes?.categories?.data[0]?.id;
-        setDefId(id);
-        defaultProductsHandler(id);
-      })
-  };
+  // const getProductsHandler = async () => {
+  //   await axios
+  //     .get(
+  //       `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
+  //     )
+  //     .then((res) => {
+  //       const data = res.data;
+  //       const id = data?.data[0]?.attributes?.categories?.data[0]?.id;
+  //       setDefId(id);
+  //       defaultProductsHandler(id);
+  //     })
+  // };
 
   const editHandlerPopup = (product) => {
     console.log(product)
@@ -101,7 +102,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
       )
       .then(() => {
-        getProductsHandler();
+        // getProductsHandler();
         dispatch(deleteProductState(productId));
       })
       .catch((error) => {
@@ -159,7 +160,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
 
   useEffect(() => {
     if (projectId) {
-      getProductsHandler();
+      // getProductsHandler();
       const totalSumHandler = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
           .then((res) => {
@@ -171,7 +172,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       totalSumHandler();
     };
   }, [projectId]);
-  
+
   return (
     <>
       <div className="table-responsive">
