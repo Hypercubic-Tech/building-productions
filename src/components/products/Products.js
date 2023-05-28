@@ -25,12 +25,12 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
 
   let productsToMap = products;
   if (searchType) {
-
-    const filteredProduct = products.filter(product => product.attributes.title === searchType);
+    const lowercaseSearchType = searchType.toLowerCase();
+    const filteredProduct = products.filter(product => product.attributes.title.toLowerCase() === lowercaseSearchType);
     if (filteredProduct.length > 0) {
       productsToMap = filteredProduct;
     }
-  } 
+  }
   
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
