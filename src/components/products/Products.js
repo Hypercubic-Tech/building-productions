@@ -24,17 +24,12 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
 
   let productsToMap = products;
   if (searchType) {
-    const filteredProducts = [];
-    for (let i = 0; i < products.length; i++) {
-      const product = products[i];
-      if (product.attributes.title === searchType) {
-        filteredProducts.push(product);
-      }
+
+    const filteredProduct = products.filter(product => product.attributes.title === searchType);
+    if (filteredProduct.length > 0) {
+      productsToMap = filteredProduct;
     }
-    if (filteredProducts.length > 0) {
-      productsToMap = filteredProducts;
-    }
-  }
+  } 
   
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
