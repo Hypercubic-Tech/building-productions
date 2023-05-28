@@ -23,13 +23,17 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [pageIndex, setPageIndex] = useState(1);
   const [showProduct, setShowProduct] = useState(false);
   const [totalSum, setTotalSum] = useState(false);
+  const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
   const categoryId = useSelector(state => state.cats.category);
 
   const router = useRouter();
   const { projectId } = router.query;
-
   const dispatch = useDispatch();
+
+  const handleSearchChange = (e) => {
+    setSearchType(e.target.value);
+  };
 
   const incrementPageIndex = () => {
     if (pageIndex < 3) {
@@ -116,7 +120,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                     {p?.attributes?.property_types?.data[0]?.attributes?.Title}
                   </li>
                   <li className="breadcrumb-item text-warning georgian">
-                    {p?.attributes?.createdAt}
+                    {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
                   </li>
                 </ul>
               </div>
@@ -212,6 +216,8 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                           </span>
                           <input
                             type="text"
+                            value={searchType}
+                            onChange={(e) => handleSearchChange(e)}
                             data-kt-user-table-filter="search"
                             className="form-control form-control-solid w-250px ps-14 georgian"
                             placeholder="ძებნა"
@@ -352,6 +358,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         pageIndex={pageIndex}
                         changePageIndex={changePageIndex}
                         decrementPageIndex={decrementPageIndex}
+                        searchType={searchType}
                       />
                     </div>
                   </div>

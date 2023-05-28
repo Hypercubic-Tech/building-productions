@@ -11,7 +11,7 @@ import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
+const Products = ({ changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex, searchType }) => {
   const [defId, setDefId] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
@@ -23,6 +23,15 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const products = useSelector(state => state.prod.products);
   const categoryId = useSelector(state => state.cats.category);
 
+  let productsToMap = products;
+  if (searchType) {
+
+    const filteredProduct = products.filter(product => product.attributes.title === searchType);
+    if (filteredProduct.length > 0) {
+      productsToMap = filteredProduct;
+    }
+  } 
+  
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
     defaultProductsHandler(categoryId, pageIndex + 1);
@@ -262,7 +271,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                   </tr>
                 </tbody>
               )}
-              {products && products.map((product) => {
+              {productsToMap && productsToMap.map((product) => {
                 return (
                   <tbody key={product?.id}>
                     <tr>
