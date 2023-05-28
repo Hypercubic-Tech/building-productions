@@ -83,7 +83,6 @@ const AddProduct = ({
                 .then((res) => {
                     const data = res.data;
                     setFilteredCrafts(data)
-                    console.log(filteredCrafts, 'fld')
                 })
         }
         getCraftsByCategory()
@@ -119,6 +118,7 @@ const AddProduct = ({
                 .then(() => {
                     notify(false, "ხელობა დაემატა");
                     setShowProduct(true)
+                    dispatch(setProductState(data.data));
                 })
         } catch (err) {
             notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
@@ -153,7 +153,7 @@ const AddProduct = ({
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             console.error(err);
-            notify(true, "სურათის ატვირთვა უარყოფილია");
+            //   notify(true, "სურათის ატვირთვა უარყოფილია");
         }
     }, [imgSrc, notify]);
 
@@ -162,9 +162,6 @@ const AddProduct = ({
             handleMediaUpload();
         }
     }, [imgSrc, handleMediaUpload, notify]);
-
-
-
 
     useEffect(() => {
         setProductData((prevProductData) => ({
