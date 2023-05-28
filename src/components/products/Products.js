@@ -49,6 +49,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       .then((res) => {
         const data = res.data;
         setAllProduct(data)
+        console.log(allProduct)
       })
   };
 

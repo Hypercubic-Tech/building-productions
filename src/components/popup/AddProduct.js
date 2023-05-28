@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 
 import axios from 'axios';
@@ -127,13 +127,13 @@ const AddProduct = ({
         setSelect(null);
     };
 
-    const handleMediaUpload = useCallback(async () => {
-        if (!imgSrc) {
+    const handleMediaUpload = async (img) => {
+        if (!img) {
             return;
         }
 
         const formData = new FormData();
-        formData.append("files", imgSrc);
+        formData.append("files", img);
 
         try {
             const res = await axios.post(
@@ -155,6 +155,7 @@ const AddProduct = ({
             console.error(err);
             //   notify(true, "სურათის ატვირთვა უარყოფილია");
         }
+<<<<<<< HEAD
     }, [imgSrc, notify]);
 
     useEffect(() => {
@@ -162,6 +163,9 @@ const AddProduct = ({
             handleMediaUpload();
         }
     }, [imgSrc, handleMediaUpload, notify]);
+=======
+    };
+>>>>>>> 43fdcb55d9ec1da867b9739698257fba3f243617
 
     useEffect(() => {
         setProductData((prevProductData) => ({
@@ -286,15 +290,7 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            setImgSrc(e.target.files[0])
-                                                            const file = e.target.files[0];
-                                                            const reader = new FileReader();
-
-                                                            reader.onload = (event) => {
-                                                                setImgSrc(event.target.result);
-                                                            };
-
-                                                            reader.readAsDataURL(file);
+                                                            handleMediaUpload(e.target.files[0]);
                                                         }}
                                                         type="file"
                                                         name="avatar"
