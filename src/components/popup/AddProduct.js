@@ -17,7 +17,6 @@ const AddProduct = ({
     suppliers,
     craftStatus,
     crafts,
-    setShowProduct
 }) => {
     const dispatch = useDispatch();
 
@@ -96,10 +95,8 @@ const AddProduct = ({
                 })
                 .then((res) => {
                     const data = res.data;
-                    console.log(data)
-                    setShowProduct(true)
                     notify(false, "პროდუქტი დაემატა");
-                    dispatch(setProductState(data.data))
+                    dispatch(setProductState(data.data));
                 })
         } catch (err) {
             notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");

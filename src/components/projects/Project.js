@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from "../../store/slices/categorySlice";
-import { setProductState } from "../../store/slices/productSlice";
+import { setProducts } from "../../store/slices/productSlice";
 
 import Products from "../products/Products";
 import Filter from "./Filter";
@@ -23,7 +23,9 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [pageIndex, setPageIndex] = useState(1);
   const [showProduct, setShowProduct] = useState(false);
   const [totalSum, setTotalSum] = useState(false);
-  const products = useSelector(state => state.prod.product);
+
+  const products = useSelector(state => state.prod.products);
+
 
   const router = useRouter();
   const { projectId } = router.query;
@@ -54,9 +56,8 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data;
-        dispatch(setProductState(data.data));
+        dispatch(setProducts(data.data));
         dispatch(setCategory(id));
-
       } catch (error) {
         console.error(error);
       }
@@ -67,18 +68,13 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
-      dispatch(setProductState(data.data));
+      dispatch(setProducts(data.data));
       dispatch(setCategory(id));
-      setTotalSum(false)
+      setTotalSum(false);
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    filterProductCategory();
-    // defaultProductsHandler()
-  }, [showProduct])
 
   return (
     <>
@@ -307,7 +303,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
-                        {select === "add" && <AddProduct setShowProduct={setShowProduct} project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
+                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
                         />}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
@@ -337,7 +333,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         defaultP={defaultP}
                         editProductItem={editProductItem}
                         editHandler={editHandler}
-                        products={products}
                         services={services}
                         filteredProducts={filteredProducts}
                         allProduct={allProduct}

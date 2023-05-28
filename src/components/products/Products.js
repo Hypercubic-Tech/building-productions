@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -11,8 +11,8 @@ import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ products, changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
-  const [allProduct, setAllProduct] = useState(null);
+const Products = ({ changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
+  const [defId, setDefId] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
   const [activeItem, setActiveItem] = useState();
@@ -20,23 +20,23 @@ const Products = ({ products, changePageIndex, editHandler, filteredProducts, ed
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
+  const products = useSelector(state => state.prod.products);
 
   const handleIncrementPageIndex = () => {
-    const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
     incrementPageIndex();
-    defaultProductsHandler(id, pageIndex + 1);
+    defaultProductsHandler(defId, pageIndex + 1);
+    console.log(event.target.id)
   };
 
   const handleDecrementPageIndex = () => {
-    const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
     decrementPageIndex();
-    defaultProductsHandler(id, pageIndex - 1);
+    defaultProductsHandler(defId, pageIndex - 1);
+    console.log(event.target.id)
   };
 
   const handleChangePageIndex = (event) => {
-    const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
-    changePageIndex();
-    defaultProductsHandler(id, event.target.id);
+    changePageIndex(parseInt(event.target.id));
+    defaultProductsHandler(defId, event.target.id);
     console.log(event.target.id)
   };
 
@@ -48,16 +48,10 @@ const Products = ({ products, changePageIndex, editHandler, filteredProducts, ed
       .then((res) => {
         const data = res.data;
         const id = data?.data[0]?.attributes?.categories?.data[0]?.id;
+        setDefId(id);
         defaultProductsHandler(id);
       })
   };
-
-
-  useEffect(() => {
-    if (projectId) {
-      getProductsHandler();
-    };
-  }, [projectId]);
 
   const editHandlerPopup = (product) => {
     console.log(product)
@@ -114,21 +108,6 @@ const Products = ({ products, changePageIndex, editHandler, filteredProducts, ed
     }
   };
 
-  useEffect(() => {
-    if (projectId) {
-      const totalSumHandler = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
-          .then((res) => {
-            const data = res.data;
-            setTotalSumProduct(data.data);
-          })
-      };
-
-      totalSumHandler();
-    }
-  }, [projectId]);
-
-
   let productsTotal = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     productsTotal = totalSumProduct.reduce(
@@ -169,6 +148,21 @@ const Products = ({ products, changePageIndex, editHandler, filteredProducts, ed
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
 
+  useEffect(() => {
+    if (projectId) {
+      getProductsHandler();
+      const totalSumHandler = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
+          .then((res) => {
+            const data = res.data;
+            setTotalSumProduct(data.data);
+          })
+      };
+
+      totalSumHandler();
+    };
+  }, [projectId]);
+  
   return (
     <>
       <div className="table-responsive">
@@ -350,7 +344,7 @@ const Products = ({ products, changePageIndex, editHandler, filteredProducts, ed
                     </tr>
                   </tbody>
                 )
-              })}
+            })}
             </>
           )}
         </table>
