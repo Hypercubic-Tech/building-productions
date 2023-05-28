@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from "../../store/slices/categorySlice";
+import { setProducts } from "../../store/slices/productSlice";
 
 import Products from "../products/Products";
 import Filter from "./Filter";
@@ -17,14 +18,15 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [summary, setSummary] = useState(0);
-  const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(undefined);
   const [defaultP, setDefaultP] = useState(undefined);
   const [pageIndex, setPageIndex] = useState(1);
   const [showProduct, setShowProduct] = useState(false);
-  // const [defaultCategory, setDefaultCategory] = useState();
   const [totalSum, setTotalSum] = useState(false);
-  const [searchType, setSearchType] = useState('');
+
+  const products = useSelector(state => state.prod.products);
+
+
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
@@ -71,9 +73,9 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=1`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data;
-        setDefaultP(data.data);
+        dispatch(setProducts(data.data));
         dispatch(setCategory(id));
       } catch (error) {
         console.error(error);
@@ -85,18 +87,13 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
-      setFilteredProducts(data.data);
+      dispatch(setProducts(data.data));
       dispatch(setCategory(id));
-      setTotalSum(false)
+      setTotalSum(false);
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    filterProductCategory();
-    // defaultProductsHandler()
-  }, [showProduct])
 
   return (
     <>
@@ -327,7 +324,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
-                        {select === "add" && <AddProduct setShowProduct={setShowProduct} project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers} 
+                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
                         />}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
@@ -357,7 +354,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         defaultP={defaultP}
                         editProductItem={editProductItem}
                         editHandler={editHandler}
-                        products={products}
                         services={services}
                         filteredProducts={filteredProducts}
                         allProduct={allProduct}
