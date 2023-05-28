@@ -32,7 +32,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const dispatch = useDispatch();
 
   const handleSearchChange = (e) => {
-    console.log(e.target.value)
     setSearchType(e.target.value);
   };
 
@@ -54,22 +53,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const totalSumTable = () => {
     setTotalSum(true)
   };
-
-  useEffect(() => {
-    const searchProduct = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=85&filters[title][$contains]=${searchType}`)
-        .then((res) => {
-          const data = res.data;
-          setFilteredProducts(data.data)
-        });
-      } catch (error) {
-        console.log(error)
-      }
-    };
-
-    searchProduct();
-  }, [searchType])
 
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
@@ -369,6 +352,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         pageIndex={pageIndex}
                         changePageIndex={changePageIndex}
                         decrementPageIndex={decrementPageIndex}
+                        searchType={searchType}
                       />
                     </div>
                   </div>
