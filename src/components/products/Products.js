@@ -20,7 +20,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const productData = useSelector(selectProduct)
   const router = useRouter();
   const { projectId } = router.query;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); console.log(filteredProducts, 'filteredProducts')
 
   const handleIncrementPageIndex = () => {
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
@@ -38,7 +38,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
     changePageIndex();
     defaultProductsHandler(id, event.target.id);
-    console.log(event.target.id)
   };
 
   const getProductsHandler = async () => {
@@ -49,7 +48,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       .then((res) => {
         const data = res.data;
         setAllProduct(data)
-        console.log(allProduct)
       })
   };
 
@@ -302,7 +300,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                           <a>
                             <div className="symbol-label georgian">
-                              {console.log(product.attributes.type, 'product')}
                               <img
                                 onError={(e) => {
                                   e.target.src = "/images/test-img.png";
@@ -389,7 +386,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                           <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                             <a>
                               <div className="symbol-label georgian">
-                                {console.log(product, 'product')}
 
                                 <img
                                   onError={(e) => {

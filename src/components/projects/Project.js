@@ -24,11 +24,14 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [showProduct, setShowProduct] = useState(false);
   // const [defaultCategory, setDefaultCategory] = useState();
   const [totalSum, setTotalSum] = useState(false);
-
+  const [searchType, setSearchType] = useState('');
   const router = useRouter();
   const { projectId } = router.query;
-
   const dispatch = useDispatch();
+
+  const handleSearchChange = (e) => {
+    setSearchType(e.target.value);
+  };
 
   const incrementPageIndex = () => {
     if (pageIndex < 3) {
@@ -48,6 +51,22 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const totalSumTable = () => {
     setTotalSum(true)
   };
+
+  useEffect(() => {
+    const searchProduct = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=85&filters[title][$contains]=${searchType}`)
+        .then((res) => {
+          const data = res.data;
+          setFilteredProducts(data.data)
+        });
+      } catch (error) {
+        console.log(error)
+      }
+    };
+
+    searchProduct();
+  }, [searchType])
 
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
@@ -210,6 +229,8 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                           </span>
                           <input
                             type="text"
+                            value={searchType}
+                            onChange={(e) => handleSearchChange(e)}
                             data-kt-user-table-filter="search"
                             className="form-control form-control-solid w-250px ps-14 georgian"
                             placeholder="ძებნა"
