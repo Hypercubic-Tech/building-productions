@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 
 import axios from 'axios';
 
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setProductState } from '../../store/slices/productSlice';
+import { setProductState, setProducts } from '../../store/slices/productSlice';
+
 import notify from '../../utils/notify';
 
 const AddProduct = ({
@@ -32,8 +32,9 @@ const AddProduct = ({
     const [title, setTitle] = useState();
     const [craftImage, setCraftImage] = useState();
 
-    const activeCategoryId = useSelector(state => state.categoryId);
-    const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
+    const activeCategoryId = useSelector(state => state.cats.category);
+    // const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
+    console.log(activeCategoryId, 'ac')
 
     const [productData, setProductData] = useState({
         image: image,
@@ -84,8 +85,22 @@ const AddProduct = ({
                     setFilteredCrafts(data)
                 })
         }
-        getCraftsByCategory()
-    }, [])
+        getCraftsByCategory();
+    }, []);
+
+    const defaultProductsHandler = async (id, pageIndex) => {
+        console.log(id, 'id')
+        if (id) {
+            try {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+                const data = response.data;
+                dispatch(setProducts(data.data));
+                dispatch(setCategory(id));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
     const handleSubmit = async () => {
         try {
@@ -103,6 +118,7 @@ const AddProduct = ({
             console.log(err);
         }
         setSelect(null);
+        defaultProductsHandler(activeCategoryId);
     };
 
     const handleCraftSubmit = async () => {

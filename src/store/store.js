@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
   modal: modalReducer,
   headerPopUp: headerPopUpReducer,
-  categoryId: categoryReducer,
+  cats: categoryReducer,
   [projectSlice.name]: projectSlice.reducer,
   [productSlice.name]: productSlice.reducer
 });
