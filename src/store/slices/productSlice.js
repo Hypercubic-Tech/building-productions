@@ -10,7 +10,7 @@ export const productSlice = createSlice({
     initialState,
     reducers: {
         setProductState(state, action) {
-            state.product = [...state.product, action.payload];
+            state.product = action.payload;
         },
         deleteProductState(state, action) {
             state.product = state.product.filter(
@@ -29,5 +29,4 @@ export const productSlice = createSlice({
 });
 
 export const { setProductState, deleteProductState } = productSlice.actions;
-export const selectProduct = (state) => state.prod.product;
 export default productSlice.reducer;

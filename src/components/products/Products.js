@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -11,13 +11,12 @@ import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
+const Products = ({ products, changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex }) => {
   const [allProduct, setAllProduct] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
-  const productData = useSelector(selectProduct)
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
@@ -48,28 +47,11 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       )
       .then((res) => {
         const data = res.data;
-        setAllProduct(data)
-        console.log(allProduct)
+        const id = data?.data[0]?.attributes?.categories?.data[0]?.id;
+        defaultProductsHandler(id);
       })
   };
 
-  useEffect(() => {
-    const getProductId = async () => {
-      try {
-        const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
-
-        if (!id) {
-          setTimeout(getProductId, 1000);
-        } else {
-          defaultProductsHandler(id);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getProductId();
-  }, [allProduct]);
 
   useEffect(() => {
     if (projectId) {
@@ -285,24 +267,24 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                   </tr>
                 </tbody>
               )}
-              {!filteredProducts ? defaultP && defaultP.map((product) => {
+              {products && products.map((product) => {
                 return (
                   <tbody key={product?.id}>
                     <tr>
                       <td>
                         <div className="form-check form-check-sm form-check-custom form-check-solid">
                           {/* <input
-                        className="form-check-input"
-                        type="checkbox"
-                        defaultValue={1}
-                      /> */}
+                            className="form-check-input"
+                            type="checkbox"
+                            defaultValue={1}
+                          /> */}
                         </div>
                       </td>
                       <td style={{ gap: '3px', alignItems: 'center' }} className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                           <a>
                             <div className="symbol-label georgian">
-                              {console.log(product.attributes.type, 'product')}
+                              {/* {console.log(product.attributes.type, 'product')} */}
                               <img
                                 onError={(e) => {
                                   e.target.src = "/images/test-img.png";
@@ -368,104 +350,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                     </tr>
                   </tbody>
                 )
-              }) : (
-                ""
-              )}
-              {productData && (
-                productData.map((product) => {
-                  return (
-                    <tbody key={product?.id}>
-                      <tr>
-                        <td>
-                          <div className="form-check form-check-sm form-check-custom form-check-solid">
-                            {/* <input
-                        className="form-check-input"
-                        type="checkbox"
-                        defaultValue={1}
-                      /> */}
-                          </div>
-                        </td>
-                        <td style={{ gap: '3px', alignItems: 'center' }} className="d-flex align-items-center">
-                          <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
-                            <a>
-                              <div className="symbol-label georgian">
-                                {console.log(product, 'product')}
-
-                                <img
-                                  onError={(e) => {
-                                    e.target.src = "/images/test-img.png";
-                                  }}
-                                  src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                    product?.attributes?.image?.data?.attributes?.url : "/images/test-img.png"}
-                                  alt=""
-                                  className="w-100"
-                                />
-                              </div>
-                            </a>
-
-                          </div>
-                          <span>{product?.attributes?.title}</span>
-                        </td>
-                        <td className="georgian">
-                          {product?.attributes?.type === "product" ? (
-                            <a href={`https://www.${product?.attributes?.productLink}`} target="_blank">
-                              {product?.attributes?.supplier?.data?.attributes?.title}
-                            </a>
-                          ) : (
-                            " --- "
-                          )}
-
-                        </td>
-                        <td className="georgian">
-                          {product?.attributes?.quantity}
-                        </td>
-                        <td className="georgian">
-                          {product?.attributes?.unit?.data?.attributes?.title}
-                        </td>
-                        <td className="georgian">{product?.attributes?.price}</td>
-                        <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
-                        {/* <td className="georgian">
-                    {parseInt(product?.attributes?.quantity) * parseFloat(product.attributes?.price)} 
-                  </td> */}
-                        <td
-                          onClick={() => changeModalHandler(product)}
-                          className={`${'text-end'} ${styles.changeModal}`}>
-                          <div
-                            className="menu-item px-3 padding8"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16"> <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" /> </svg>
-                          </div>
-                          {activeItem === product.id ? (
-                            <div className={styles.modal}>
-                              <div
-                                onClick={() => { editHandler(product); editHandlerPopup(product) }}
-                                className="menu-item px-3"
-                              >
-                                <a className="menu-link px-3 georgian padding0">
-                                  <i className="bi bi-pencil-fill" />
-                                  &nbsp;გადაკეთება
-                                </a>
-                              </div>
-                              <div
-                                onClick={() => { confirmHandler(product.id) }}
-                                className="menu-item px-3 padding8"
-                              >
-                                <a
-                                  className="menu-link px-3 georgian padding0"
-                                  data-kt-users-table-filter="delete_row"
-                                >
-                                  <i className="bi bi-eraser-fill" />
-                                  &nbsp;წაშლა
-                                </a>
-                              </div>
-                            </div>
-                          ) : ""}
-                        </td>
-                      </tr>
-                    </tbody>
-                  )
-                })
-              )}
+              })}
             </>
           )}
         </table>
