@@ -22,15 +22,22 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const dispatch = useDispatch();
   const products = useSelector(state => state.prod.products);
   const categoryId = useSelector(state => state.cats.category);
-
+  console.log(products)
   let productsToMap = products;
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
-    const filteredProduct = products.filter(product => product.attributes.title.toLowerCase() === lowercaseSearchType);
-    if (filteredProduct.length > 0) {
-      productsToMap = filteredProduct;
+    const filteredProducts = products.filter((product) =>
+      product?.attributes?.title?.toLowerCase() === lowercaseSearchType ||
+      product?.attributes?.unit?.data?.attributes?.title?.toLowerCase() === lowercaseSearchType ||
+      product?.attributes?.supplier?.data?.attributes?.title?.toLowerCase() === lowercaseSearchType ||
+      product?.attributes?.quantity?.toString()?.toLowerCase() === lowercaseSearchType ||
+      product?.attributes?.price?.toString()?.toLowerCase() === lowercaseSearchType
+    );
+    if (filteredProducts.length > 0) {
+      productsToMap = filteredProducts;
     }
   }
+  
 
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
