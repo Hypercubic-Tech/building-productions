@@ -23,7 +23,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [pageIndex, setPageIndex] = useState(1);
   const [showProduct, setShowProduct] = useState(false);
   const [totalSum, setTotalSum] = useState(false);
-
+  const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
 
 
@@ -32,6 +32,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const dispatch = useDispatch();
 
   const handleSearchChange = (e) => {
+    console.log(e.target.value)
     setSearchType(e.target.value);
   };
 
