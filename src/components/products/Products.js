@@ -17,14 +17,16 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const router = useRouter();
   const { projectId } = router.query;
 
-  const handleIncrementPageIndex = () => {
+  console.log(allProduct)
+
+  const handleIncrementPageIndex = (event) => {
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
     incrementPageIndex();
     defaultProductsHandler(id, pageIndex + 1);
     console.log(event.target.id)
   };
 
-  const handleDecrementPageIndex = () => {
+  const handleDecrementPageIndex = (event) => {
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
     decrementPageIndex();
     defaultProductsHandler(id, pageIndex - 1);
@@ -145,7 +147,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   let productsTotal = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     productsTotal = totalSumProduct.reduce(
-      (sum, product) =>
+      (sum, product) => 
         sum + parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price),
       0
     );
