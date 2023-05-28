@@ -27,11 +27,11 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
-      product?.attributes?.title?.toLowerCase() === lowercaseSearchType ||
-      product?.attributes?.unit?.data?.attributes?.title?.toLowerCase() === lowercaseSearchType ||
-      product?.attributes?.supplier?.data?.attributes?.title?.toLowerCase() === lowercaseSearchType ||
-      product?.attributes?.quantity?.toString()?.toLowerCase() === lowercaseSearchType ||
-      product?.attributes?.price?.toString()?.toLowerCase() === lowercaseSearchType
+      product?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.unit?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.supplier?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.quantity?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType)
     );
     if (filteredProducts.length > 0) {
       productsToMap = filteredProducts;
