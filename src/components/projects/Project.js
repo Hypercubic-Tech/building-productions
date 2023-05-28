@@ -114,7 +114,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                     {p?.attributes?.property_types?.data[0]?.attributes?.Title}
                   </li>
                   <li className="breadcrumb-item text-warning georgian">
-                    {p?.attributes?.createdAt}
+                    {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
                   </li>
                 </ul>
               </div>

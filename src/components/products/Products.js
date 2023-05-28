@@ -371,8 +371,8 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
               }) : (
                 ""
               )}
-              {productData && (
-                productData.map((product) => {
+              {filteredProducts && (
+                filteredProducts.map((product) => {
                   return (
                     <tbody key={product?.id}>
                       <tr>
