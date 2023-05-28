@@ -34,7 +34,6 @@ const AddProduct = ({
 
     const activeCategoryId = useSelector(state => state.cats.category);
     // const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
-    console.log(activeCategoryId, 'ac')
 
     const [productData, setProductData] = useState({
         image: image,
@@ -89,7 +88,6 @@ const AddProduct = ({
     }, []);
 
     const defaultProductsHandler = async (id, pageIndex) => {
-        console.log(id, 'id')
         if (id) {
             try {
                 const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
@@ -122,7 +120,6 @@ const AddProduct = ({
     };
 
     const handleCraftSubmit = async () => {
-        console.log(craftData)
         try {
             await axios
                 .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
@@ -532,7 +529,6 @@ const AddProduct = ({
                                             <select
                                                 onChange={(e) => {
                                                     const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.title === e.target.value);
-                                                    // console.log(filteredArray[0], 'filtered arr')
                                                     setCraftImage(filteredArray[0].attributes.image.data.attributes.url)
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
