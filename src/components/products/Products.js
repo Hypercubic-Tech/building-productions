@@ -21,17 +21,19 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
     incrementPageIndex();
     defaultProductsHandler(id, pageIndex + 1);
+    console.log(event.target.id)
   };
 
   const handleDecrementPageIndex = () => {
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
     decrementPageIndex();
     defaultProductsHandler(id, pageIndex - 1);
+    console.log(event.target.id)
   };
 
   const handleChangePageIndex = (event) => {
     const id = allProduct?.data[0]?.attributes?.categories?.data[0]?.id;
-    changePageIndex();
+    changePageIndex(parseInt(event.target.id));
     defaultProductsHandler(id, event.target.id);
     console.log(event.target.id)
   };
@@ -382,8 +384,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                           <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                             <a>
                               <div className="symbol-label georgian">
-                                {console.log(product, 'product')}
-
                                 <img
                                   onError={(e) => {
                                     e.target.src = "/images/test-img.png";

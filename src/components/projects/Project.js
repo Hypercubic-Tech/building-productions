@@ -25,7 +25,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   // const [defaultCategory, setDefaultCategory] = useState();
   const [totalSum, setTotalSum] = useState(false);
 
-  console.log(pageIndex)
+  console.log(pageIndex, 'proj')
 
   const router = useRouter();
   const { projectId } = router.query;
