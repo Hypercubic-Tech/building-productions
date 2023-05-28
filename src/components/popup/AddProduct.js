@@ -153,19 +153,9 @@ const AddProduct = ({
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             console.error(err);
-            //   notify(true, "სურათის ატვირთვა უარყოფილია");
+            notify(true, "სურათის ატვირთვა უარყოფილია");
         }
-<<<<<<< HEAD
-    }, [imgSrc, notify]);
-
-    useEffect(() => {
-        if (imgSrc) {
-            handleMediaUpload();
-        }
-    }, [imgSrc, handleMediaUpload, notify]);
-=======
     };
->>>>>>> 43fdcb55d9ec1da867b9739698257fba3f243617
 
     useEffect(() => {
         setProductData((prevProductData) => ({
