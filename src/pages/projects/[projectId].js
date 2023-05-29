@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 import Project from "../../components/projects/Project";
+import { setCategory } from "../../store/slices/categorySlice";
 
 const index = () => {
+  const dispatch = useDispatch();
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
   const [crafts, setCrafts] = useState(null);
@@ -20,11 +23,10 @@ const index = () => {
     if (projectId) {
       const getProject = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`)
-        
-          .then((res) => {
-            const data = res.data;
-            setProject(data?.data);
-          })
+        .then((res) => {
+          const data = res.data;
+          setProject(data?.data);
+        });
       };
 
       const getProductCategory = async () => {
@@ -32,18 +34,19 @@ const index = () => {
         .then((res) => {
           const data = res.data
           setProductOptions(data);
-        })
-      }
+        });
+      };
 
       const getProjectCategory = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
           .then((res) => {
             const data = res.data;
             setProjectCategory(data.data);
-          })
+            dispatch(setCategory(data.data[0].id));
+          });
       };
 
-      getProductCategory()
+      getProductCategory();
       getProject();
       getProjectCategory();
     }

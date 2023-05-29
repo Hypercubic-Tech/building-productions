@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 
 import axios from 'axios';
 
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setProductState } from '../../store/slices/productSlice';
+import { setProductState, setProducts } from '../../store/slices/productSlice';
+
 import notify from '../../utils/notify';
 
 const AddProduct = ({
@@ -17,7 +17,6 @@ const AddProduct = ({
     suppliers,
     craftStatus,
     crafts,
-    setShowProduct
 }) => {
     const dispatch = useDispatch();
 
@@ -30,13 +29,12 @@ const AddProduct = ({
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
     const [filteredCrafts, setFilteredCrafts] = useState();
-    console.log(filteredCrafts)
     const [title, setTitle] = useState();
     const [craftImage, setCraftImage] = useState();
 
-    const activeCategoryId = useSelector(state => state.categoryId);
-    const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
-    console.log(activeCategory)
+    const activeCategoryId = useSelector(state => state.cats.category);
+    // const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
+    console.log(activeCategoryId, 'ac')
 
     const [productData, setProductData] = useState({
         image: image,
@@ -85,11 +83,24 @@ const AddProduct = ({
                 .then((res) => {
                     const data = res.data;
                     setFilteredCrafts(data)
-                    console.log(filteredCrafts, 'fld')
                 })
         }
-        getCraftsByCategory()
-    }, [])
+        getCraftsByCategory();
+    }, []);
+
+    const defaultProductsHandler = async (id, pageIndex) => {
+        console.log(id, 'id')
+        if (id) {
+            try {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+                const data = response.data;
+                dispatch(setProducts(data.data));
+                dispatch(setCategory(id));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
     const handleSubmit = async () => {
         try {
@@ -99,15 +110,15 @@ const AddProduct = ({
                 })
                 .then((res) => {
                     const data = res.data;
-                    console.log(data)
-                    setShowProduct(true)
                     notify(false, "პროდუქტი დაემატა");
+                    dispatch(setProductState(data.data));
                 })
         } catch (err) {
             notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
         setSelect(null);
+        defaultProductsHandler(activeCategoryId);
     };
 
     const handleCraftSubmit = async () => {
@@ -120,6 +131,7 @@ const AddProduct = ({
                 .then(() => {
                     notify(false, "ხელობა დაემატა");
                     setShowProduct(true)
+                    dispatch(setProductState(data.data));
                 })
         } catch (err) {
             notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
@@ -128,13 +140,13 @@ const AddProduct = ({
         setSelect(null);
     };
 
-    const handleMediaUpload = useCallback(async () => {
-        if (!imgSrc) {
+    const handleMediaUpload = async (img) => {
+        if (!img) {
             return;
         }
 
         const formData = new FormData();
-        formData.append("files", imgSrc);
+        formData.append("files", img);
 
         try {
             const res = await axios.post(
@@ -156,16 +168,7 @@ const AddProduct = ({
             console.error(err);
             notify(true, "სურათის ატვირთვა უარყოფილია");
         }
-    }, [imgSrc, notify]);
-
-    useEffect(() => {
-        if (imgSrc) {
-            handleMediaUpload();
-        }
-    }, [imgSrc, handleMediaUpload, notify]);
-
-
-
+    };
 
     useEffect(() => {
         setProductData((prevProductData) => ({
@@ -290,15 +293,7 @@ const AddProduct = ({
                                                     <i className="bi bi-pencil-fill fs-7" />
                                                     <input
                                                         onChange={(e) => {
-                                                            setImgSrc(e.target.files[0])
-                                                            const file = e.target.files[0];
-                                                            const reader = new FileReader();
-
-                                                            reader.onload = (event) => {
-                                                                setImgSrc(event.target.result);
-                                                            };
-
-                                                            reader.readAsDataURL(file);
+                                                            handleMediaUpload(e.target.files[0]);
                                                         }}
                                                         type="file"
                                                         name="avatar"
@@ -550,10 +545,10 @@ const AddProduct = ({
                                                 data-placeholder="დასახელება"
                                             >
                                                 <option value="none" disabled selected hidden > აირჩიეთ დასახელება</option>;+
-                                                
+
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
-                                                        
+
                                                         return (
                                                             <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}

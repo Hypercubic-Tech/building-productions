@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
-    product: [],
+    product: {},
+    products: []
 };
 
 export const productSlice = createSlice({
@@ -10,7 +11,10 @@ export const productSlice = createSlice({
     initialState,
     reducers: {
         setProductState(state, action) {
-            state.product = [...state.product, action.payload];
+            state.product = action.payload;
+        },
+        setProducts(state, action) {
+            state.products = action.payload;
         },
         deleteProductState(state, action) {
             state.product = state.product.filter(
@@ -28,6 +32,5 @@ export const productSlice = createSlice({
     },
 });
 
-export const { setProductState, deleteProductState } = productSlice.actions;
-export const selectProduct = (state) => state.prod.product;
+export const { setProductState, deleteProductState, setProducts } = productSlice.actions;
 export default productSlice.reducer;
