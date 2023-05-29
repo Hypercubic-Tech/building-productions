@@ -6,8 +6,9 @@ import { setProjectState } from "../../store/slices/projectSlice";
 
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
+import { setUpdateProject } from "../../store/slices/editProjectSlice";
 
-const EditProject = ({ dismiss, project }) => {
+const EditProject = ({ dismiss, project, setShowProject }) => {
   console.log(project)
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
@@ -53,7 +54,7 @@ const EditProject = ({ dismiss, project }) => {
     },
     service_percentage: project.data[0].attributes.service_percentage
   });
-console.log(sendData)
+  console.log(sendData)
   const dispatch = useDispatch();
 
   let errors = {
@@ -203,9 +204,9 @@ console.log(sendData)
           data: sendData
         }
       );
-
-      const updatedProject = response.data.data;
-      dispatch(setProjectState(updatedProject));
+      // dispatch(setUpdateProject(true));
+      // dispatch(setUpdateProject(data.data))
+      setShowProject(true)
       notify(false, "პროექტი რედაქტირდა");
     } catch (error) {
       notify(true, "პროექტის რედაქტირება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
@@ -226,7 +227,7 @@ console.log(sendData)
     >
       <div className="modal-content">
         <div className="modal-header">
-          <h2 className="georgian">ობიექტის დამატება</h2>
+          <h2 className="georgian">ობიექტის რედაქტირება</h2>
           <div
             className="btn btn-sm btn-icon btn-active-color-primary"
             data-bs-dismiss="modal"
@@ -755,7 +756,7 @@ console.log(sendData)
                       className="btn btn-lg btn-primary"
                     >
                       <span className="indicator-label georgian">
-                        დამატება
+                        რედაქტირდა
                         <span className="svg-icon svg-icon-3 ms-2 me-0">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

@@ -42,7 +42,7 @@ const index = () => {
           .then((res) => {
             const data = res.data;
             setProjectCategory(data.data);
-            dispatch(setCategory(data.data[0].id));
+            dispatch(setCategory(data?.data[0]?.id));
           });
       };
 
