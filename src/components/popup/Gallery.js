@@ -6,7 +6,7 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 import LightGallery from 'lightgallery/react';
 
-import { selectProjectImage, setProjectImage } from '../../store/slices/projectSlice';
+import { selectProjectImage, setProjectGalleryImages } from '../../store/slices/projectSlice';
 import lgZoom from 'lightgallery/plugins/zoom';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import notify from '../../utils/notify';
@@ -19,7 +19,7 @@ const Gallery = ({ setSelect }) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const projectId = router.query.projectId;
-    const projectImages = useSelector(state => state.proj.image);
+    const projectImages = useSelector(state => state.proj.galleryImages);
     const [imgSrc, setImgSrc] = useState(null);
     const [projectImgs, setProjectImgs] = useState(null);
     const [image, setImage] = useState(null);
@@ -81,7 +81,7 @@ const Gallery = ({ setSelect }) => {
 
             const uploadResponses = await Promise.all(uploadPromises);
             const uploadedImages = uploadResponses.map((response) => response.data[0]);
-            dispatch(setProjectImage(uploadedImages));
+            dispatch(setProjectGalleryImages(uploadedImages));
 
             setImage((prevImages) => {
                 if (!Array.isArray(prevImages) || prevImages === undefined) {
