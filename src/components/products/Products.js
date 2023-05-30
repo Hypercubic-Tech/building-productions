@@ -20,8 +20,8 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
-  const products = useSelector(state => state.prod.products);
   const categoryId = useSelector(state => state.cats.category);
+  const products = useSelector(state => state.prod.products);
 
   let productsToMap = products;
   if (searchType) {
@@ -110,6 +110,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       )
       .then(() => {
         // getProductsHandler();
+        console.log(productId)
         dispatch(deleteProductState(productId));
       })
       .catch((error) => {

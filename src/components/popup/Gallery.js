@@ -19,7 +19,7 @@ const Gallery = ({ setSelect }) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const projectId = router.query.projectId;
-    const projectImages = useSelector(selectProjectImage)
+    const projectImages = useSelector(state => state.proj.image);
     const [imgSrc, setImgSrc] = useState(null);
     const [projectImgs, setProjectImgs] = useState(null);
     const [image, setImage] = useState(null);
