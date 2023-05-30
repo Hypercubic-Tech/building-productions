@@ -33,11 +33,11 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       product?.attributes?.quantity?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType)
     );
+
     if (filteredProducts.length > 0) {
       productsToMap = filteredProducts;
     }
   }
-  
 
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
@@ -279,8 +279,8 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <th className="georgian">რაოდენობა</th>
                 <th className="georgian">ერთეული</th>
                 <th className="georgian">ღირებულება</th>
-                <th className="georgian">სტატუსი</th>
                 <th className="georgian">ტიპი</th>
+                <th className="georgian">სტატუსი</th>
                 <th className="text-end min-w-100px georgian">ცვლილება</th>
               </tr>
             </thead>
