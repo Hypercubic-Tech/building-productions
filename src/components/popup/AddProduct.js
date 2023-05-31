@@ -540,10 +540,8 @@ const AddProduct = ({
                                                 data-placeholder="დასახელება"
                                             >
                                                 <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;+
-
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
-
                                                         return (
                                                             <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}

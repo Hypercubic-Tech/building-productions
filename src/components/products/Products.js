@@ -55,19 +55,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
     defaultProductsHandler(categoryId, event.target.id);
   };
 
-  // const getProductsHandler = async () => {
-  //   await axios
-  //     .get(
-  //       `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-  //     )
-  //     .then((res) => {
-  //       const data = res.data;
-  //       const id = data?.data[0]?.attributes?.categories?.data[0]?.id;
-  //       setDefId(id);
-  //       defaultProductsHandler(id);
-  //     })
-  // };
-
   const editHandlerPopup = (product) => {
     console.log(product)
   };
@@ -107,8 +94,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
       )
       .then(() => {
-        // getProductsHandler();
-        console.log(productId)
         dispatch(deleteProductState(productId));
       })
       .catch((error) => {
@@ -166,7 +151,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
 
   useEffect(() => {
     if (projectId) {
-      // getProductsHandler();
       const totalSumHandler = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
           .then((res) => {
