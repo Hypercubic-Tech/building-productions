@@ -17,11 +17,6 @@ import Drawings from "../popup/Drawings";
 const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
-  const [summary, setSummary] = useState(0);
-  const [filteredProducts, setFilteredProducts] = useState(undefined);
-  const [defaultP, setDefaultP] = useState(undefined);
-  const [pageIndex, setPageIndex] = useState(1);
-  const [showProduct, setShowProduct] = useState(false);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
@@ -34,22 +29,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
     setSearchType(e.target.value);
   };
 
-  const incrementPageIndex = () => {
-  let productLimit = 10
-    if (pageIndex < productLimit) {
-      setPageIndex(pageIndex + 1);
-    }
-  };
-
-  const decrementPageIndex = () => {
-    if (pageIndex > 1) {
-      setPageIndex(pageIndex - 1);
-    }
-  };
-  const changePageIndex = (num) => {
-    setPageIndex(num);
-  };
-
   const totalSumTable = () => {
     setTotalSum(true)
   };
@@ -57,7 +36,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=3`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data;
         dispatch(setProducts(data.data));
         dispatch(setCategory(id));
@@ -69,7 +48,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=3`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
@@ -78,12 +57,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    if (categoryId) {
-      defaultProductsHandler(categoryId, pageIndex);
-    }
-  }, [categoryId]);
 
   const total = products.reduce((acc, product) => {
     const productTotal = product?.attributes?.price * product?.attributes?.quantity;
@@ -345,12 +318,9 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
                         projectId={projectId}
-                        defaultProductsHandler={defaultProductsHandler}
-                        defaultP={defaultP}
                         editProductItem={editProductItem}
                         editHandler={editHandler}
                         services={services}
-                        filteredProducts={filteredProducts}
                         allProduct={allProduct}
                         setSelect={setSelect}
                         craftStatus={craftStatus}
@@ -359,10 +329,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                         allCategories={allCategories}
                         suppliers={suppliers}
                         totalSum={totalSum}
-                        incrementPageIndex={incrementPageIndex}
-                        pageIndex={pageIndex}
-                        changePageIndex={changePageIndex}
-                        decrementPageIndex={decrementPageIndex}
                         searchType={searchType}
                       />
                     </div>
