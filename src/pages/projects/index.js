@@ -155,6 +155,7 @@ const index = () => {
                                             }}
                                             src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.[0]?.attributes?.url}` || "/images/test-img.png"}
                                             className="card-img-top"
+                                            alt="project-img"
                                         />
                                         <div className="card-body">
                                             <Link
