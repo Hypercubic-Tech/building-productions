@@ -31,7 +31,8 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       product?.attributes?.unit?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.supplier?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.quantity?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
-      product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType)
+      product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.type?.toLowerCase().includes(lowercaseSearchType)
     );
 
     if (filteredProducts.length > 0) {
@@ -42,19 +43,16 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
     defaultProductsHandler(categoryId, pageIndex + 1);
-    console.log(event.target.id)
   };
 
   const handleDecrementPageIndex = () => {
     decrementPageIndex();
-    defaultProductsHandler(defcategoryIdId, pageIndex - 1);
-    console.log(event.target.id)
+    defaultProductsHandler(categoryId, pageIndex - 1);
   };
 
   const handleChangePageIndex = (event) => {
     changePageIndex(parseInt(event.target.id));
     defaultProductsHandler(categoryId, event.target.id);
-    console.log(event.target.id)
   };
 
   // const getProductsHandler = async () => {
@@ -250,14 +248,14 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`მომსახურეობა ${parseFloat(service_percentage)}: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
