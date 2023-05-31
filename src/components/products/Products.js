@@ -11,9 +11,7 @@ import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, searchType }) => {
-  const [defId, setDefId] = useState(null);
-  const [isTouched, setIsTouched] = useState(false);
+const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, totalSum, searchType }) => {
   const [editPopup, setEditPopup] = useState(false);
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
@@ -63,19 +61,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
     }
   };
 
-  // const getProductsHandler = async () => {
-  //   await axios
-  //     .get(
-  //       `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-  //     )
-  //     .then((res) => {
-  //       const data = res.data;
-  //       const id = data?.data[0]?.attributes?.categories?.data[0]?.id;
-  //       setDefId(id);
-  //       defaultProductsHandler(id);
-  //     })
-  // };
-
   const editHandlerPopup = (product) => {
     console.log(product)
   };
@@ -115,7 +100,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
       )
       .then(() => {
-        // getProductsHandler();
         console.log(productId)
         dispatch(deleteProductState(productId));
       })
@@ -174,7 +158,6 @@ const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, c
 
   useEffect(() => {
     if (projectId) {
-      // getProductsHandler();
       const totalSumHandler = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
           .then((res) => {

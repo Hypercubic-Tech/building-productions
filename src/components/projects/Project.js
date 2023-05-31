@@ -339,12 +339,9 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
                         projectId={projectId}
-                        defaultProductsHandler={defaultProductsHandler}
-                        defaultP={defaultP}
                         editProductItem={editProductItem}
                         editHandler={editHandler}
                         services={services}
-                        filteredProducts={filteredProducts}
                         allProduct={allProduct}
                         setSelect={setSelect}
                         craftStatus={craftStatus}
