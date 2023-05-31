@@ -11,17 +11,19 @@ import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex, searchType }) => {
+const Products = ({ editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, searchType }) => {
   const [defId, setDefId] = useState(null);
   const [isTouched, setIsTouched] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
+  const [pageIndex, setPageIndex] = useState(1);
+  const categoryId = useSelector(state => state.cats.category);
+  const products = useSelector(state => state.prod.products);
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
-  const categoryId = useSelector(state => state.cats.category);
-  const products = useSelector(state => state.prod.products);
+  let itemsPerPage = 2;
 
   let productsToMap = products;
   if (searchType) {
@@ -40,19 +42,25 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
     }
   }
 
-  const handleIncrementPageIndex = () => {
-    incrementPageIndex();
-    defaultProductsHandler(categoryId, pageIndex + 1);
-  };
+  const totalPages = Math.ceil(productsToMap.length / itemsPerPage);
+  const startIndex = (pageIndex - 1) * itemsPerPage;
+  const endIndex = pageIndex * itemsPerPage;
 
   const handleDecrementPageIndex = () => {
-    decrementPageIndex();
-    defaultProductsHandler(categoryId, pageIndex - 1);
+    if (pageIndex > 1) {
+      setPageIndex(pageIndex - 1);
+    }
   };
 
   const handleChangePageIndex = (event) => {
-    changePageIndex(parseInt(event.target.id));
-    defaultProductsHandler(categoryId, event.target.id);
+    const newPageIndex = parseInt(event.target.id);
+    setPageIndex(newPageIndex);
+  };
+
+  const handleIncrementPageIndex = () => {
+    if (pageIndex < totalPages) {
+      setPageIndex(pageIndex + 1);
+    }
   };
 
   // const getProductsHandler = async () => {
@@ -301,7 +309,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                   </tr>
                 </tbody>
               )}
-              {productsToMap && productsToMap.map((product) => {
+              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
                 return (
                   <tbody key={product?.id}>
                     <tr>
@@ -397,9 +405,13 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={1} href="#">1</a></li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={2} href="#">2</a></li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={3} href="#">3</a></li>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li className="page-item" onClick={handleChangePageIndex} key={index + 1}>
+                <a className="page-link" id={index + 1} href="#">
+                  {index + 1}
+                </a>
+              </li>
+            ))}
             <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -407,6 +419,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
             </li>
           </ul>
         </nav>
+
       </div>
       {editPopup && editProductItem.type ? "product"(
         <EditProduct product={editProductItem}
