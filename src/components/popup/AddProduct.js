@@ -1,35 +1,26 @@
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-
 import axios from 'axios';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import { setProductState, setProducts } from '../../store/slices/productSlice';
-
 import notify from '../../utils/notify';
 
 const AddProduct = ({
-    project,
     setSelect,
     unit,
-    allCategories,
     suppliers,
     craftStatus,
-    crafts,
 }) => {
     const dispatch = useDispatch();
 
     const router = useRouter();
     const projectId = router.query.projectId;
     const [lossProduct, setLossProduct] = useState(false);
-    const [lossCraft, setLossCraft] = useState(false);
     const [toggle, setToggle] = useState(true);
-    const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
     const [filteredCrafts, setFilteredCrafts] = useState();
-    const [title, setTitle] = useState();
     const [craftImage, setCraftImage] = useState();
 
     const activeCategoryId = useSelector(state => state.cats.category);
@@ -125,15 +116,16 @@ const AddProduct = ({
                 .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
                     data: craftData,
                 })
-                .then(() => {
+                .then((res) => {
+                    const data = res.data;
                     notify(false, "ხელობა დაემატა");
-                    setShowProduct(true)
                     dispatch(setProductState(data.data));
                 })
         } catch (err) {
             // notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
+        defaultProductsHandler(activeCategoryId);
         setSelect(null);
     };
 

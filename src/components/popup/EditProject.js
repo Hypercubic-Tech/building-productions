@@ -31,12 +31,12 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
     unforeseenExpenses: project.data[0].attributes.unforeseenExpenses,
     city: {
       connect: [
-        { id: project.data[0].attributes.city.data.id }
+        { id: project?.data[0]?.attributes?.city?.data?.id }
       ]
     },
     property_type: {
       connect: [
-        { id: project.data[0].attributes.property_type.data.id }
+        { id: project?.data[0]?.attributes?.property_type?.data?.id }
       ]
     },
     categories: {
@@ -44,15 +44,15 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
     },
     current_condition: {
       connect: [
-        { id: project.data[0].attributes.current_condition.data.id }
+        { id: project?.data[0]?.attributes?.current_condition?.data?.id }
       ]
     },
     condition: {
       connect: [
-        { id: project.data[0].attributes.condition.data.id }
+        { id: project?.data[0]?.attributes.condition?.data?.id }
       ]
     },
-    service_percentage: project.data[0].attributes.service_percentage
+    service_percentage: project?.data[0]?.attributes?.service_percentage
   });
   console.log(sendData)
   const dispatch = useDispatch();

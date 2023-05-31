@@ -21,7 +21,7 @@ const index = () => {
     const searchValue = useSelector(state => state.proj.searchType)
 
     let projectsToMap = projectData;
-
+    console.log(projectsToMap, 'data')
     if (searchValue) {
         const lowercaseSearchType = searchValue.toLowerCase();
         projectsToMap = projectData.reduce((filteredProjects, project) => {
@@ -82,19 +82,19 @@ const index = () => {
 
         swalWithBootstrapButtons
             .fire({
-                title: 'Confirm you want to delete project',
-                text: 'If you confirm that, project will be deleted',
-                icon: 'warning',
+                title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
+                text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
+                icon: 'გაფრთხილება',
                 showCancelButton: true,
-                confirmButtonText: 'Delete',
-                cancelButtonText: 'Cancel',
+                confirmButtonText: 'წაშლა',
+                cancelButtonText: 'უარყოფა',
                 reverseButtons: true
             })
             .then((result) => {
                 if (result.isConfirmed) {
                     deleteProjectHandler(item);
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire('Cancelled', '');
+                    swalWithBootstrapButtons.fire('უარყოფილია', '');
                 }
             });
     };
@@ -153,8 +153,7 @@ const index = () => {
                                             onError={(e) => {
                                                 e.target.src = "/images/test-img.png";
                                             }}
-                                            // src='/images/test-img.png'
-                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL} ${item?.attributes?.image?.data?.lenght > 0 ? item?.attributes?.image?.data.attributes.url :  "/images/test-img.png"}`}
+                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.[0]?.attributes?.url}` || "/images/test-img.png"}
                                             className="card-img-top"
                                         />
                                         <div className="card-body">

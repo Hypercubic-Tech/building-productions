@@ -35,7 +35,8 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   };
 
   const incrementPageIndex = () => {
-    if (pageIndex < 3) {
+  let productLimit = 10
+    if (pageIndex < productLimit) {
       setPageIndex(pageIndex + 1);
     }
   };
@@ -56,7 +57,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=3`);
         const data = response.data;
         dispatch(setProducts(data.data));
         dispatch(setCategory(id));
@@ -68,7 +69,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=3`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
