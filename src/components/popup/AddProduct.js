@@ -157,8 +157,8 @@ const AddProduct = ({
             );
 
             const data = res.data;
-            console.log(data[0], 'age dzma');
             setImage(data[0]);
+            setImgSrc(data[0].url)
 
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
@@ -175,9 +175,14 @@ const AddProduct = ({
     }, [image]);
 
     const handleImageRemove = async () => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
-        setImgSrc(null);
-        notify(false, "სურათი წარმატებით წაიშალა");
+        if (image) {
+            await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
+            setImgSrc(null);
+            notify(false, "სურათი წარმატებით წაიშალა");
+        } else {
+            notify(true, "სურათი არ არის ატვირთული");
+        }
+
     };
 
     return (
@@ -269,9 +274,11 @@ const AddProduct = ({
                                                 className="image-input image-input-outline"
                                                 data-kt-image-input="true"
                                             >
+                                                {console.log(imgSrc, 'src')}
+                                                {console.log(image, 'src')}
                                                 {
                                                     imgSrc ? <img
-                                                        src={imgSrc}
+                                                        src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`}
                                                         width={125}
                                                         height={125}
                                                         style={{ borderRadius: "8px" }}
