@@ -82,19 +82,19 @@ const index = () => {
 
         swalWithBootstrapButtons
             .fire({
-                title: 'Confirm you want to delete project',
-                text: 'If you confirm that, project will be deleted',
-                icon: 'warning',
+                title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
+                text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
+                icon: 'გაფრთხილება',
                 showCancelButton: true,
-                confirmButtonText: 'Delete',
-                cancelButtonText: 'Cancel',
+                confirmButtonText: 'წაშლა',
+                cancelButtonText: 'უარყოფა',
                 reverseButtons: true
             })
             .then((result) => {
                 if (result.isConfirmed) {
                     deleteProjectHandler(item);
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire('Cancelled', '');
+                    swalWithBootstrapButtons.fire('უარყოფილია', '');
                 }
             });
     };
