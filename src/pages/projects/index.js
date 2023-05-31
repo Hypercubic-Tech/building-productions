@@ -129,6 +129,7 @@ const index = () => {
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
                     {projectData?.length > 0 ? (
                         projectData.map((item, index) => {
+                            console.log(item?.attributes?.image?.data?.lenght > 0 ? item?.attributes?.image?.data.attributes.url :  "hi", '')
                             return (
                                 <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
                                     <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
@@ -136,8 +137,8 @@ const index = () => {
                                             onError={(e) => {
                                                 e.target.src = "/images/test-img.png";
                                             }}
-                                            src='/images/test-img.png'
-                                            // src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data[0]?.attributes?.url ? item?.attributes?.image?.data[0]?.attributes?.url : "/images/test-img.png"}`}
+                                            // src='/images/test-img.png'
+                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL} ${item?.attributes?.image?.data?.lenght > 0 ? item?.attributes?.image?.data.attributes.url :  "/images/test-img.png"}`}
                                             className="card-img-top"
                                         />
                                         <div className="card-body">
