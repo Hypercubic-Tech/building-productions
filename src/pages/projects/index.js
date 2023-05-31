@@ -21,7 +21,7 @@ const index = () => {
     const searchValue = useSelector(state => state.proj.searchType)
 
     let projectsToMap = projectData;
-
+    console.log(projectsToMap, 'data')
     if (searchValue) {
         const lowercaseSearchType = searchValue.toLowerCase();
         projectsToMap = projectData.reduce((filteredProjects, project) => {
@@ -153,8 +153,7 @@ const index = () => {
                                             onError={(e) => {
                                                 e.target.src = "/images/test-img.png";
                                             }}
-                                            src='/images/test-img.png'
-                                            // src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data[0]?.attributes?.url ? item?.attributes?.image?.data[0]?.attributes?.url : "/images/test-img.png"}`}
+                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.[0]?.attributes?.url}` || "/images/test-img.png"}
                                             className="card-img-top"
                                         />
                                         <div className="card-body">
