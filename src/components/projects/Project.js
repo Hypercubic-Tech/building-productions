@@ -17,11 +17,6 @@ import Drawings from "../popup/Drawings";
 const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
-  const [summary, setSummary] = useState(0);
-  const [filteredProducts, setFilteredProducts] = useState(undefined);
-  const [defaultP, setDefaultP] = useState(undefined);
-  // const [pageIndex, setPageIndex] = useState(1);
-  const [showProduct, setShowProduct] = useState(false);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
@@ -33,22 +28,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
   };
-
-  // const incrementPageIndex = () => {
-  // let productLimit = 10
-  //   if (pageIndex < productLimit) {
-  //     setPageIndex(pageIndex + 1);
-  //   }
-  // };
-
-  // const decrementPageIndex = () => {
-  //   if (pageIndex > 1) {
-  //     setPageIndex(pageIndex - 1);
-  //   }
-  // };
-  // const changePageIndex = (num) => {
-  //   setPageIndex(num);
-  // };
 
   const totalSumTable = () => {
     setTotalSum(true)
