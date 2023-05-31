@@ -26,7 +26,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
   const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
   const categoryId = useSelector(state => state.cats.category);
-
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
@@ -84,6 +83,11 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
       defaultProductsHandler(categoryId, pageIndex);
     }
   }, [categoryId]);
+
+  const total = products.reduce((acc, product) => {
+    const productTotal = product?.attributes?.price * product?.attributes?.quantity;
+    return acc + productTotal;
+  }, 0);
 
   return (
     <>
@@ -337,7 +341,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                       </div>
                     </div>
                     <div className="card-body pt-0">
-                      <div className="summary">ჯამი: {summary} ლარი</div>
+                      <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
                         projectId={projectId}
                         defaultProductsHandler={defaultProductsHandler}

@@ -3,7 +3,9 @@ import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
   project: [],
-  image: []
+  galleryImages: [],
+  drawingsImages: [],
+  searchType: ''
 };
 
 export const projectSlice = createSlice({
@@ -13,9 +15,15 @@ export const projectSlice = createSlice({
     setProjectState(state, action) {
       state.project = [...state.project, action.payload];
     },
-    setProjectImage(state, action) {
-      state.image = [...state.image, ...action.payload];
+    setProjectGalleryImages(state, action) {
+      state.galleryImages = [...state.galleryImages, ...action.payload];
     },
+    setProjectDrawingsImages(state, action) {
+      state.drawingsImages = [...state.drawingsImages, ...action.payload];
+    },
+    setSearchValue(state, action) {
+      state.searchType = action.payload;
+    }
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -27,7 +35,5 @@ export const projectSlice = createSlice({
   },
 });
 
-export const { setProjectState, setProjectImage } = projectSlice.actions;
-export const selectProject = (state) => state.proj.project;
-export const selectProjectImage = (state) => state.proj.image;
+export const { setProjectState, setProjectGalleryImages, setProjectDrawingsImages, setSearchValue } = projectSlice.actions;
 export default projectSlice.reducer;

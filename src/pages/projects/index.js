@@ -9,6 +9,7 @@ import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import styles from "../../components/popup/Modal.module.css";
 import { setUpdateProject } from "../../store/slices/editProjectSlice";
+import { selectSearchValue } from "../../store/slices/projectSlice";
 
 const index = () => {
     const [close, setClose] = useState(false);
@@ -16,7 +17,23 @@ const index = () => {
     const [editProject, setEditProject] = useState(false);
     const [showProject, setShowProject] = useState(false);
     const [projectData, setProjectData] = useState(null);
-    const updateList = useSelector(state => state.update)
+    // const updateList = useSelector(state => state.update)
+    const searchValue = useSelector(state => state.proj.searchType)
+
+    let projectsToMap = projectData;
+
+    if (searchValue) {
+        const lowercaseSearchType = searchValue.toLowerCase();
+        projectsToMap = projectData.reduce((filteredProjects, project) => {
+            const projectTitle = project?.attributes?.title?.toLowerCase();
+            if (projectTitle === lowercaseSearchType) {
+                return [project];
+            } else if (projectTitle.includes(lowercaseSearchType)) {
+                return [...filteredProjects, project];
+            }
+            return filteredProjects;
+        }, []);
+    }
 
     const addProjectHandler = () => {
         setAddProject(!addProject);
@@ -127,9 +144,8 @@ const index = () => {
                     </button>
                 </div>
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
-                    {projectData?.length > 0 ? (
-                        projectData.map((item, index) => {
-                            console.log(item?.attributes?.image?.data?.lenght > 0 ? item?.attributes?.image?.data.attributes.url :  "hi", '')
+                    {projectsToMap?.length > 0 ? (
+                        projectsToMap.map((item, index) => {
                             return (
                                 <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
                                     <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>

@@ -20,18 +20,25 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
-  const products = useSelector(state => state.prod.products);
   const categoryId = useSelector(state => state.cats.category);
+  const products = useSelector(state => state.prod.products);
 
   let productsToMap = products;
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
-    const filteredProduct = products.filter(product => product.attributes.title.toLowerCase() === lowercaseSearchType);
-    if (filteredProduct.length > 0) {
-      productsToMap = filteredProduct;
+    const filteredProducts = products.filter((product) =>
+      product?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.unit?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.supplier?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.quantity?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType)
+    );
+
+    if (filteredProducts.length > 0) {
+      productsToMap = filteredProducts;
     }
   }
-  
+
   const handleIncrementPageIndex = () => {
     incrementPageIndex();
     defaultProductsHandler(categoryId, pageIndex + 1);
@@ -103,6 +110,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       )
       .then(() => {
         // getProductsHandler();
+        console.log(productId)
         dispatch(deleteProductState(productId));
       })
       .catch((error) => {
@@ -153,7 +161,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   }
 
   const totalProductPrice = parseFloat(productsTotal)
-  const vatTotalPrice = parseFloat(productsTotal) * parseFloat(vatTotal) / 100 + parseFloat(vatTotal);
+  const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
   const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
@@ -172,6 +180,30 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       totalSumHandler();
     };
   }, [projectId]);
+
+  const aggregatedProducts = {};
+
+  totalSumProduct?.forEach((product) => {
+    if (product.attributes.type === 'service') {
+      const title = product.attributes.title;
+      const unit = product.attributes.unit.data.attributes.title;
+      const quantity = product.attributes.quantity;
+      const price = product.attributes.price;
+      const key = `${unit}`;
+
+      if (aggregatedProducts[key]) {
+        aggregatedProducts[key].titles.push(title);
+        aggregatedProducts[key].quantity += quantity;
+      } else {
+        aggregatedProducts[key] = {
+          titles: [title],
+          unit,
+          quantity,
+          price,
+        };
+      }
+    }
+  });
 
   return (
     <>
@@ -192,16 +224,14 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <th>სტატუსი</th>
                 <th>ჯამი</th>
               </tr>
-              {totalSumProduct?.map((product, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{product?.attributes?.categories?.data[0]?.attributes?.title}</td>
-                    <td>{product?.attributes?.unit?.data?.attributes?.title}</td>
-                    <td>{product?.attributes?.quantity}</td>
-                    <td>{`${parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)} ლარი`}</td>
-                  </tr>
-                )
-              })}
+              {Object.values(aggregatedProducts).map((product, index) => (
+                <tr key={index}>
+                  <td>{product.titles.join(', ')}</td>
+                  <td>{product.unit}</td>
+                  <td>{product.quantity}</td>
+                  <td>{productsTotal} ლარი</td>
+                </tr>
+              ))}
               <tr>
                 <td></td>
                 <td></td>
@@ -250,8 +280,8 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <th className="georgian">რაოდენობა</th>
                 <th className="georgian">ერთეული</th>
                 <th className="georgian">ღირებულება</th>
-                <th className="georgian">სტატუსი</th>
                 <th className="georgian">ტიპი</th>
+                <th className="georgian">სტატუსი</th>
                 <th className="text-end min-w-100px georgian">ცვლილება</th>
               </tr>
             </thead>
@@ -357,7 +387,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                     </tr>
                   </tbody>
                 )
-            })}
+              })}
             </>
           )}
         </table>

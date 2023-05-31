@@ -17,7 +17,8 @@ export const productSlice = createSlice({
             state.products = action.payload;
         },
         deleteProductState(state, action) {
-            state.product = state.product.filter(
+            console.log(action)
+            state.products = state.products.filter(
                 (product) => product.id !== action.payload
             );
         },

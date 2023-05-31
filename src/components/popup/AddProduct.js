@@ -131,7 +131,7 @@ const AddProduct = ({
                     dispatch(setProductState(data.data));
                 })
         } catch (err) {
-            notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+            // notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
         setSelect(null);
