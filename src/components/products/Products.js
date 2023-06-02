@@ -151,13 +151,9 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   }
 
   const totalProductPrice = parseFloat(productsTotal)
-  console.log(totalProductPrice, 'totalProductPrice')
   const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
-  console.log(vatTotal, 'vatTotal')
   const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
-  console.log(unforseenExpenses, 'unforseenExpenses')
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
-  console.log(service_percentage, '');
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
 
   useEffect(() => {
