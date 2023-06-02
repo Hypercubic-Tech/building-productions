@@ -336,7 +336,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                       </td>
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
-                      <td className="georgian">{product?.attributes?.type === "product" ? product.attributes.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
+                      <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
@@ -348,7 +348,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                         {activeItem === product.id ? (
                           <div className={styles.modal}>
                             <div
-                              onClick={() => { editHandler(product); setSelect(product.attributes.type === 'product' ? 'edit-product' : 'edit-service') }}
+                              onClick={() => { editHandler(product); setSelect(product?.attributes?.type === 'product' ? 'edit-product' : 'edit-service') }}
                               className="menu-item px-3"
                             >
                               <a className="menu-link px-3 georgian padding0">
@@ -357,7 +357,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                               </a>
                             </div>
                             <div
-                              onClick={() => { confirmHandler(product.id) }}
+                              onClick={() => { confirmHandler(product?.id) }}
                               className="menu-item px-3 padding8"
                             >
                               <a
