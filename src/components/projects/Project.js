@@ -93,7 +93,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_types?.data[0].attributes.Title}{console.log(p)}
+                    {p?.attributes?.property_types?.data[0].attributes.Title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.conditions?.data[0]?.attributes?.title}
