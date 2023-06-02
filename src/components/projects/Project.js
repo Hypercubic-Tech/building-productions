@@ -72,7 +72,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
           className="container-xxl d-flex flex-stack flex-wrap"
         >
           {project && project.map((p, index) => {
-            console.log(p.attributes, 'p')
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
                 <h1>{p?.attributes?.title}</h1>
