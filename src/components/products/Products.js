@@ -1,22 +1,19 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import axios from "axios";
 import Swal from "sweetalert2";
 
 import { selectProduct, deleteProductState } from "../../store/slices/productSlice";
 
-import EditProduct from "../popup/EditProduct";
-import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
 const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, totalSum, searchType }) => {
-  const [editPopup, setEditPopup] = useState(false);
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-  const categoryId = useSelector(state => state.cats.category);
   const products = useSelector(state => state.prod.products);
   const router = useRouter();
   const { projectId } = router.query;
@@ -61,10 +58,6 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
     }
   };
 
-  const editHandlerPopup = (product) => {
-    console.log(product)
-  };
-
   const confirmHandler = (productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -100,7 +93,6 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
       )
       .then(() => {
-        console.log(productId)
         dispatch(deleteProductState(productId));
       })
       .catch((error) => {
@@ -293,6 +285,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 </tbody>
               )}
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
+                console.log(product)
                 return (
                   <tbody key={product?.id}>
                     <tr>
@@ -309,7 +302,6 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                           <a>
                             <div className="symbol-label georgian">
-                              {/* {console.log(product.attributes.type, 'product')} */}
                               <img
                                 onError={(e) => {
                                   e.target.src = "/images/test-img.png";
@@ -350,7 +342,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                         {activeItem === product.id ? (
                           <div className={styles.modal}>
                             <div
-                              onClick={() => { editHandler(product); editHandlerPopup(product) }}
+                              onClick={() => { editHandler(product); setSelect(product.attributes.type === 'product' ? 'edit-product' : 'edit-service') }}
                               className="menu-item px-3"
                             >
                               <a className="menu-link px-3 georgian padding0">
@@ -402,26 +394,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
             </li>
           </ul>
         </nav>
-
       </div>
-      {editPopup && editProductItem.type ? "product"(
-        <EditProduct product={editProductItem}
-          setSelect={setSelect}
-          craftStatus={craftStatus}
-          crafts={crafts}
-          unit={unit}
-          allCategories={allCategories}
-          suppliers={suppliers} />
-      ) : ("")}
-      {editPopup && editProductItem.type ? "service"(
-        <EditService product={editProductItem}
-          setSelect={setSelect}
-          craftStatus={craftStatus}
-          crafts={crafts}
-          unit={unit}
-          allCategories={allCategories}
-          suppliers={suppliers} />
-      ) : ("")}
     </>
   );
 };

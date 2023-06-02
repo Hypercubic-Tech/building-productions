@@ -20,7 +20,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
-  console.log(project.data[0].attributes, 'i need ')
+  console.log(project, 'i need ')
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
     address: project.data[0].attributes.address,
