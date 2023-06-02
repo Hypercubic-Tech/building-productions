@@ -120,7 +120,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   let vatTotal = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     vatTotal = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.vatPercent || 0),
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.vatPercent || 0),
       0
     );
   }
@@ -129,7 +129,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   let unforseenExpenses = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     unforseenExpenses = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0),
+      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses),
       0
     );
   }
@@ -137,8 +137,8 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   let service_percentage = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     service_percentage = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
-      0
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
+      
     );
   }
 

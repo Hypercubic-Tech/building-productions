@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import Link from "next/link";
-import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import styles from "../../components/popup/Modal.module.css";
-import { setUpdateProject } from "../../store/slices/editProjectSlice";
-import { selectSearchValue } from "../../store/slices/projectSlice";
 
 const index = () => {
     const [close, setClose] = useState(false);
@@ -17,8 +15,10 @@ const index = () => {
     const [editProject, setEditProject] = useState(false);
     const [showProject, setShowProject] = useState(false);
     const [projectData, setProjectData] = useState(null);
+    const [pageIndex, setPageIndex] = useState(1);
     // const updateList = useSelector(state => state.update)
     const searchValue = useSelector(state => state.proj.searchType)
+    let itemsPerPage = 2;
 
     let projectsToMap = projectData;
 
@@ -34,6 +34,27 @@ const index = () => {
             return filteredProjects;
         }, []);
     }
+
+    const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
+    const startIndex = (pageIndex - 1) * itemsPerPage;
+    const endIndex = pageIndex * itemsPerPage;
+  
+    const handleDecrementPageIndex = () => {
+      if (pageIndex > 1) {
+        setPageIndex(pageIndex - 1);
+      }
+    };
+  
+    const handleChangePageIndex = (event) => {
+      const newPageIndex = parseInt(event.target.id);
+      setPageIndex(newPageIndex);
+    };
+  
+    const handleIncrementPageIndex = () => {
+      if (pageIndex < totalPages) {
+        setPageIndex(pageIndex + 1);
+      }
+    };
 
     const addProjectHandler = () => {
         setAddProject(!addProject);
@@ -145,7 +166,7 @@ const index = () => {
                 </div>
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
                     {projectsToMap?.length > 0 ? (
-                        projectsToMap.map((item, index) => {
+                        projectsToMap.slice(startIndex, endIndex).map((item, index) => {
                             return (
                                 <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
                                     <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
@@ -189,6 +210,27 @@ const index = () => {
                         </div>
                     )}
                 </div>
+                <nav aria-label="Page navigation example" className="m-5 p-5">
+                    <ul className="pagination">
+                        <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
+                            <a className="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <li className="page-item" onClick={handleChangePageIndex} key={index + 1}>
+                                <a className="page-link" id={index + 1} href="#">
+                                    {index + 1}
+                                </a>
+                            </li>
+                        ))}
+                        <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
+                            <a className="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
             {editProject && (

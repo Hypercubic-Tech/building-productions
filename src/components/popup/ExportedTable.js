@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import { Export } from './Export';
 
 const YourComponent = () => {
     const [totalSumProduct, setTotalSumProduct] = useState(null);
+    const router = useRouter();
+    const { projectId } = router.query;
 
     useEffect(() => {
         if (projectId) {
@@ -32,7 +35,7 @@ const YourComponent = () => {
     let vatTotal = 0;
     if (totalSumProduct && totalSumProduct.length > 0) {
         vatTotal = totalSumProduct.reduce(
-            (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.vatPercent || 0),
+            (sum, product) => (product?.attributes?.project?.data?.attributes?.vatPercent || 0),
             0
         );
     }
@@ -41,7 +44,7 @@ const YourComponent = () => {
     let unforseenExpenses = 0;
     if (totalSumProduct && totalSumProduct.length > 0) {
         unforseenExpenses = totalSumProduct.reduce(
-            (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0),
+            (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses),
             0
         );
     }
@@ -49,17 +52,16 @@ const YourComponent = () => {
     let service_percentage = 0;
     if (totalSumProduct && totalSumProduct.length > 0) {
         service_percentage = totalSumProduct.reduce(
-            (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
-            0
+            (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
+
         );
     }
 
     const totalProductPrice = parseFloat(productsTotal)
-    const vatTotalPrice = parseFloat(productsTotal) * parseFloat(vatTotal) / 100 + parseFloat(vatTotal);
+    const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
     const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
     const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
     const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
-
 
     return (
         <div>
