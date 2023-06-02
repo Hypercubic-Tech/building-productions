@@ -371,7 +371,8 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
             </>
           )}
         </table>
-        {/* {filteredProducts?.length === 0 && <div style={{ width: '100vw', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>} */}
+        {console.log(productsToMap, 'prod')}
+        {productsToMap?.length === 0 && <div style={{ width: '100%', height: '100%',  margin: '100px 100px 100px 0px',  textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
