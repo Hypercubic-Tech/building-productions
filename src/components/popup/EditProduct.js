@@ -15,7 +15,6 @@ const EditProduct = ({
     suppliers,
     craftStatus,
 }) => {
-    console.log(product, 'product to edit')
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -27,6 +26,8 @@ const EditProduct = ({
     const [image, setImage] = useState(product.attributes.image.data.id);
     const [filteredCrafts, setFilteredCrafts] = useState();
     const [craftImage, setCraftImage] = useState();
+    const [supplierOption, setSupplierOption] = useState(product.attributes.supplier.data.id);
+    const [unitOption, setUnitOption] = useState(product.attributes.unit.data.id)
 
     const activeCategoryId = useSelector(state => state.cats.category);
 
@@ -52,7 +53,6 @@ const EditProduct = ({
         status: product.attributes.status
     });
 
-    console.log(product.attributes.status)
     useEffect(() => {
         const getCraftsByCategory = async () => {
             await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
@@ -300,6 +300,7 @@ const EditProduct = ({
                                         </label>
                                         <select
                                             onChange={(e) => {
+                                                setSupplierOption(e.target.value)
                                                 setProductData((prevSendData) => ({
                                                     ...prevSendData,
                                                     supplier: {
@@ -308,7 +309,7 @@ const EditProduct = ({
                                                 }));
                                             }}
                                             name="saler"
-                                            defaultValue={productData.supplier}
+                                            value={supplierOption}
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="მომწოდებელი"
                                         >
@@ -368,6 +369,7 @@ const EditProduct = ({
                                         </label>
                                         <select
                                             onClick={(e) => {
+                                                setUnitOption(e.target.value)
                                                 setProductData((prevSendData) => ({
                                                     ...prevSendData,
                                                     unit: {
@@ -376,7 +378,7 @@ const EditProduct = ({
                                                 }));
                                             }}
                                             name="count"
-                                            defaultValue={productData.unit}
+                                            defaultValue={unitOption}
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="საზომიერთ."
                                         >
@@ -416,7 +418,7 @@ const EditProduct = ({
                                             <label className="form-check-label" htmlFor="exampleCheckbox">
                                                 შეძენილია
                                             </label>
-                                            <input defaultChecked={false} onChange={(e) => setProductData((prevSendData) => ({
+                                            <input defaultChecked={productData.status ?  'checked' : ""} onChange={(e) => setProductData((prevSendData) => ({
                                                 ...prevSendData,
                                                 status: !prevSendData.status,
                                             }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />

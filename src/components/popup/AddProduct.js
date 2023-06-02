@@ -120,7 +120,6 @@ const AddProduct = ({
                 })
                 .then((res) => {
                     const data = res.data;
-                    console.log(data, 'creaftis damateba')
                     notify(false, "ხელობა დაემატა");
                     dispatch(setProductState(data.data));
                 })
