@@ -207,13 +207,15 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
-                  <td>{product.titles.join(', ')}</td>
-                  <td>{product.unit}</td>
-                  <td>{product.quantity}</td>
+                  <td>{product?.titles.join(', ')}</td>
+                  <td>{product?.unit}</td>
+                  <td>{product?.quantity}</td>
+                  <td>{product?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
                   <td>{productsTotal} ლარი</td>
                 </tr>
               ))}
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -224,10 +226,12 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
                 <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -238,10 +242,12 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
                 <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -284,8 +290,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                   </tr>
                 </tbody>
               )}
-              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
-                console.log(product)
+              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {console.log(product, 'product')
                 return (
                   <tbody key={product?.id}>
                     <tr>
@@ -307,7 +312,8 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                                   e.target.src = "/images/test-img.png";
                                 }}
                                 src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.image?.data?.attributes?.url : "/images/test-img.png"}
+                                  product?.attributes?.image?.data?.attributes?.url : `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                  product?.attributes?.craft_images?.data?.attributes?.image?.data?.attributes?.url}
                                 alt=""
                                 className="w-100"
                               />
