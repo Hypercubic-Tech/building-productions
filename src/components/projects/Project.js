@@ -71,7 +71,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
-          {project && project.map((p, index) => {
+          {project && project?.map((p, index) => {
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
                 <h1>{p?.attributes?.title}</h1>
@@ -93,16 +93,16 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.Title}
+                    {p?.attributes?.property_types?.data[0].attributes.Title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p.attributes.conditions.data[0].attributes.title}
+                    {p?.attributes?.conditions?.data[0]?.attributes?.title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p.attributes.current_condition.data.attributes.title}
+                    {p?.attributes?.current_condition?.data?.attributes?.title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p.attributes.area} მ2
+                    {p?.attributes?.area} მ2
                   </li>
 
                   <li className="breadcrumb-item text-warning georgian">
