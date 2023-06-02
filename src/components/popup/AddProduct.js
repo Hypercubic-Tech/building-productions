@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import { setProductState, setProducts } from '../../store/slices/productSlice';
+import { setCategory } from "../../store/slices/categorySlice";
+
 import notify from '../../utils/notify';
 
 const AddProduct = ({
@@ -118,6 +120,7 @@ const AddProduct = ({
                 })
                 .then((res) => {
                     const data = res.data;
+                    console.log(data)
                     notify(false, "ხელობა დაემატა");
                     dispatch(setProductState(data.data));
                 })
@@ -539,11 +542,9 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="დასახელება"
                                             >
-                                                <option value="none" disabled selected hidden > აირჩიეთ დასახელება</option>;+
-
+                                                <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;+
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
-
                                                         return (
                                                             <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}
