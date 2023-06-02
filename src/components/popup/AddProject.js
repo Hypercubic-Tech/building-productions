@@ -32,7 +32,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
         { id: null }
       ]
     },
-    property_type: {
+    property_types: {
       connect: [
         { id: null }
       ]
@@ -45,7 +45,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
         { id: null }
       ]
     },
-    condition: {
+    conditions: {
       connect: [
         { id: null }
       ]
@@ -80,13 +80,13 @@ const AddProject = ({ dismiss, setShowProject }) => {
 
   const stepChangeHandler = () => {
 
-    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
+    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_types.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     } else {
       setLoss(true);
     }
-    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
+    if (step === 2 && errors.stepTwo.length === 0 && sendData.conditions.connect[0].id && sendData.current_condition.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     }
@@ -351,7 +351,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
-                            property_type: {
+                            property_types: {
                               connect: [{ id: event.target.value }],
                             },
                           }));
@@ -558,7 +558,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                   onChange={(event) => {
                                     setSendData((prevSendData) => ({
                                       ...prevSendData,
-                                      condition: {
+                                      conditions: {
                                         connect: [{ id: event.target.value }],
                                       },
                                     }));
