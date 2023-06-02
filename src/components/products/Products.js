@@ -166,10 +166,10 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
 
   totalSumProduct?.forEach((product) => {
     if (product.attributes.type === 'service') {
-      const title = product.attributes.title;
-      const unit = product.attributes.unit.data.attributes.title;
-      const quantity = product.attributes.quantity;
-      const price = product.attributes.price;
+      const title = product?.attributes?.title;
+      const unit = product?.attributes?.unit?.data?.attributes?.title;
+      const quantity = product?.attributes?.quantity;
+      const price = product?.attributes?.price;
       const key = `${unit}`;
 
       if (aggregatedProducts[key]) {
