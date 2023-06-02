@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import { setProductState, setProducts } from '../../store/slices/productSlice';
+import { setCategory } from "../../store/slices/categorySlice";
+
 import notify from '../../utils/notify';
 
 const AddProduct = ({
@@ -118,6 +120,7 @@ const AddProduct = ({
                 })
                 .then((res) => {
                     const data = res.data;
+                    console.log(data)
                     notify(false, "ხელობა დაემატა");
                     dispatch(setProductState(data.data));
                 })
