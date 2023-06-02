@@ -1,8 +1,10 @@
-import styles from "../popup/RegModal.module.css";
 import { useState } from "react";
-import axios from "../../api/axios";
+import axios from "axios";
 
-function RegModal(props) {
+import notify from "../../utils/notify";
+import styles from "../popup/RegModal.module.css";
+
+const RegModal = ({ handleRegistration, onClose }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,26 +25,20 @@ function RegModal(props) {
     event.preventDefault();
 
     const { email, password, fullName } = event.target.elements;
-
-    if (!fullName.value || !email.value || !password.value) {
-    } else {
-      try {
-        console.log(email.value, password.value, fullName.value, "test");
-        const response = await axios.post("/api/register", {
-          email: email.value,
-          password: password.value,
-          fullName: fullName.value,
-        });
-        console.log(response);
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-      }
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
+        email: email.value,
+        password: password.value,
+        username: fullName.value,
+      })
+      .then(() => {
+        notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
+      });
+    } catch (err) {
+      notify(true, "რეგისტრაცია უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+      console.log(err);
     }
-
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("name", fullName);
+    handleRegistration(true);
   };
 
   return (
@@ -52,7 +48,7 @@ function RegModal(props) {
           <div className="d-flex justify-content-between align-items-center">
             <div className="text-muted">პროფილის შექმნა</div>
             <svg
-              onClick={props.onClose}
+              onClick={onClose}
               className={`${styles.closeBtn}`}
               width="64px"
               height="64px"
@@ -132,6 +128,6 @@ function RegModal(props) {
       </form>
     </div>
   );
-}
+};
 
 export default RegModal;

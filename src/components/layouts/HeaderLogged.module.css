@@ -1,13 +1,3 @@
-/* .loggedHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-.loggedHeader.sticky {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-} */
 .activeBg {
   background-color: #e4e6ef;
 }
@@ -67,19 +57,11 @@
 
 .popup {
   position: fixed;
-  top: 106px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
   width: 95%;
-  /* position: fixed;
-  width: 100;
-  height: auto;
-  z-index: 5;
-  top: 105px;
-  right: 80px; */
-  /* left: calc(10% - 40px);
-  right: calc(10% - 40px); */
 }
 
 /* end of popup element */

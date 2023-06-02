@@ -1,35 +1,19 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "@/api/axios";
-import styles from "./Modal.module.css";
+import axios from "axios";
 import Link from "next/link";
 
 import AddProject from "./AddProject";
 import EditProject from "./EditProject";
+import notify from "../../utils/notify";
+
+import styles from "./Modal.module.css";
 
 const HeaderPopup = () => {
   const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
-  const [projectsData, setProjectsData] = useState(false);
   const [editProjectData, setEditProjectData] = useState(null);
-
-  useEffect(() => {
-    const getDataHandler = async () => {
-      const userId = localStorage.getItem("userId");
-
-      await axiosInstance
-        .post("/api/admin/projects/get_users_projects", { userId })
-        .then((res) => {
-          let data = res.data;
-          setProjectsData(data.projects);
-          console.log(data, "data")
-        })
-        .catch((e) => {
-          console.log(e, "error");
-        });
-    };
-    getDataHandler();
-  }, []);
+  const [projectData, setProjectData] = useState(null);
 
   const addProjectHandler = () => {
     setAddProject(true);
@@ -41,34 +25,42 @@ const HeaderPopup = () => {
     setClose(false);
   };
 
-  const deleteHandler = async (item) => {
-    await axiosInstance
-      .post("/api/admin/projects/delete_project", {
-        item: item._id,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
+  const getProjectsData = async () => {
+    await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects`)
+      .then((res) => {
+        const data = res.data;
+        setProjectData(data.data)
       });
   };
 
-  const editHandler = async (item) => {
-    if (!editProject) {
-      setEditProject(true);
-    } else {
-      setEditProject(false);
+  useEffect(() => {
+    getProjectsData();
+  }, []);
+
+  const deleteProjectHandler = async (item) => {
+    console.log(item, "id");
+    const projectId = item.id;
+    try {
+      await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`)
+        .then(() => {
+          getProjectsData();
+          notify(false, "პროექტი წარმატებით წაიშალა");
+        })
+    } catch (error) {
+      notify(true, "პროექტის წაშლა უარყოფილია");
+      console.log(error);
     }
-    setEditProjectData(item);
-    setClose(true);
   };
 
   return (
     <>
       <div
-        style={{ display: close ? "none" : "", overflow: "auto", position: 'absolute', zIndex: '20' }}
-        className={`modal-xxl ${styles.modal}`}
+        style={{
+          display: close ? "none" : "",
+          position: "absolute",
+          zIndex: "20",
+        }}
+        className={`modal ${styles.modal}`}
       >
         <div className="modal-content">
           <div className="modal-header">
@@ -79,34 +71,39 @@ const HeaderPopup = () => {
               onClick={() => setClose(true)}
             />
           </div>
-          <div className="modal-body">
-            <div className="row">
-              {projectsData &&
-                projectsData.map((item, index) => {
+          <div className={` modal-body `}>
+            <div className={`${styles.gap20} ${styles.noWrap} row `}>
+              {projectData &&
+                projectData?.map((item, index) => {
                   return (
                     <div
                       key={index}
                       className="card col-2 d-flex "
                       style={{ width: "20rem", overflow: "hidden" }}
                     >
-                      <div className="col-11">
+                      <div>
                         <div className="card-body">
                           <Link
-                            href={`/projects/${item._id}`}
+                            onClick={() => setClose(true)}
+                            href={{
+                              pathname: `/projects/${item.id}`,
+                              query: { projectId: item.id },
+                            }}
+                            passHref
                             className="card-title"
                           >
-                            {item.objectName}
+                            {item?.attributes?.title}
                           </Link>
-                          <p className="card-text">{item.propertyType}</p>
-                          <div className="btn-group row">
+                          <p className="card-text">{item?.attributes?.address}</p>
+                          <div className={`${styles.gap20} row `}>
                             <div
-                              onClick={() => editHandler(item)}
-                              className="btn btn-primary"
+                              // onClick={() => editHandler(item)}
+                              className={` btn btn-primary `}
                             >
                               რედაქტირება
                             </div>
                             <div
-                              onClick={() => deleteHandler(item)}
+                              onClick={() => deleteProjectHandler(item)}
                               className="btn btn-danger"
                             >
                               წაშლა
@@ -119,7 +116,7 @@ const HeaderPopup = () => {
                 })}
             </div>
           </div>
-          <div className="modal-footer row">
+          <div className={`${styles.gutter0} modal-footer row `}>
             <button
               onClick={addProjectHandler}
               type="button"

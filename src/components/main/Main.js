@@ -1,10 +1,10 @@
-import AboutCompany from "@/components/main/AboutCompany";
+import AboutCompany from "../../components/main/AboutCompany";
 import Heading from "./Heading";
-import HowItWorks from "@/components/main/HowItWorks";
-import OurTeem from "@/components/main/OurTeem";
-import OurProjects from "@/components/main/OurProjects";
-import Price from "@/components/main/Price";
-import WhatOuerClientsSay from "@/components/main/WhatOurClientsSay";
+import HowItWorks from "../../components/main/HowItWorks";
+import OurTeem from "../../components/main/OurTeem";
+import OurProjects from "../../components/main/OurProjects";
+import Price from "../../components/main/Price";
+import WhatOuerClientsSay from "../../components/main/WhatOurClientsSay";
 import ContactUs from "./ContactUs";
 
 const priceData = {
@@ -21,6 +21,7 @@ const priceData = {
 };
 
 const Main = () => {
+
   return (
     <div
       id="kt_body"

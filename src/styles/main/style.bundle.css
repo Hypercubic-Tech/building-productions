@@ -2359,7 +2359,7 @@ textarea.form-control-lg {
   opacity: 0.5;
 }
 .form-switch {
-  padding-left: 3.75rem;
+  padding-left: 4.75rem;
 }
 .form-switch .form-check-input {
   width: 3.25rem;
@@ -5620,17 +5620,24 @@ fieldset:disabled .btn {
   margin-bottom: 0;
   line-height: 1.5;
 }
+/* .modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1.5rem
+} */
 .modal-body {
   position: relative;
   flex: 1 1 auto;
-  padding: 1.75rem;
+  padding: 1.5rem;
+  overflow-y: auto;
+  width: 100%;
 }
 .modal-footer {
   display: flex;
   flex-wrap: wrap;
   flex-shrink: 0;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   padding: 1.5rem;
   border-top: 1px solid #eff2f5;
   border-bottom-right-radius: 0.475rem;
@@ -48996,4 +49003,34 @@ body {
 }
 .relative {
   position: relative;
+}
+.padding{
+  padding: 0 2.25rem !important;
+}
+.m20{
+  margin-top: 12px;
+}
+.padding0{
+  padding: 0 !important;
+  display: inline !important;
+}
+.gap {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.padding10{
+  padding: 10px 0;
+}
+.padding-rem{
+  padding: 1.5rem !important;
+}
+.borderBottom tbody {
+  border-bottom: 1px dashed #eff2f5;
+}
+.borderBottom tbody:last-of-type{
+  border-bottom: none !important;
+}
+.fx {
+  display: flex;
 }

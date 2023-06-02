@@ -1,37 +1,117 @@
-import Project from "@/components/projects/Project";
-import axiosPrivate from "@/api/axios";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
-export const getStaticPaths = async () => {
-    //reqvest to get projects data
-    const res = await axiosPrivate.get("/api/admin/projects/get_projects");
+import Project from "../../components/projects/Project";
+import { setCategory } from "../../store/slices/categorySlice";
 
-    let paths = [];
-    if (res?.data?.length) {
-        paths = res?.data?.map((item) => {
-            return {
-                params: { projectId: item?._id },
-            };
+const index = () => {
+  const dispatch = useDispatch();
+  const [suppliers, setSuppliers] = useState(null);
+  const [unit, setUnit] = useState(null);
+  const [crafts, setCrafts] = useState(null);
+  const [project, setProject] = useState(null);
+  const [craftStatus, setCraftStatus] = useState(null);
+  const [projectCategory, setProjectCategory] = useState(null);
+  const [productOptions, setProductOptions] = useState(null);
+  const [editProductItem, setEditProductItem] = useState(null);
+  const router = useRouter();
+  const { projectId } = router.query;
+
+  useEffect(() => {
+    if (projectId) {
+      const getProject = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`)
+        .then((res) => {
+          const data = res.data;
+          setProject(data?.data);
         });
+      };
+
+      const getProductCategory = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`)
+        .then((res) => {
+          const data = res.data
+          setProductOptions(data);
+        });
+      };
+
+      const getProjectCategory = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
+          .then((res) => {
+            const data = res.data;
+            setProjectCategory(data.data);
+            dispatch(setCategory(data?.data[0]?.id));
+          });
+      };
+
+      getProductCategory();
+      getProject();
+      getProjectCategory();
     }
-    return {
-        paths,
-        fallback: true,
+  }, [projectId])
+
+  useEffect(() => {
+    const getSupplierHandler = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/suppliers`)
+        .then((res) => {
+          const data = res.data;
+          setSuppliers(data.data);
+        });
     };
-};
 
-export const getStaticProps = async ({ params }) => {
-    const projectId = params?.projectId || undefined;
-    const res = await axiosPrivate.post("/api/admin/projects/get_users_project", { projectId });
+    const getUnitHandler = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/units`)
+        .then((res) => {
+          const data = res.data;
+          setUnit(data.data);
+        });
+    };
 
-  return {
-    props: {
-      pr: res?.data?.project[0],
-    },
+    const getCraftsHandler = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=image,categories`)
+        .then((res) => {
+          const data = res.data;
+          setCrafts(data.data);
+        });
+    };
+
+    const getCraftsStatusHandler = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/craft-statuses`)
+        .then((res) => {
+          const data = res.data;
+          setCraftStatus(data.data);
+        });
+
+    };
+
+    getCraftsStatusHandler();
+    getCraftsHandler();
+    getSupplierHandler();
+    getUnitHandler();
+  }, []);
+
+  const editHandler = (product) => {
+    setEditProductItem(product);
   };
-};
 
-const index = ({ pr }) => {
-  return <Project pr={pr} />;
+  return <Project
+    pr={projectId}
+    productOptions={productOptions}
+    project={project}
+    craftStatus={craftStatus}
+    crafts={crafts}
+    suppliers={suppliers}
+    unit={unit}
+    projectCategory={projectCategory}
+    editHandler={editHandler}
+    editProductItem={editProductItem}
+  />;
 };
 
 export default index;

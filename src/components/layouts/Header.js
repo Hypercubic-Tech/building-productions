@@ -1,23 +1,36 @@
-import DefaultHeader from "./DefaultHeader";
-import HeaderLogged from "./HeaderLogged";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthState, setAuthState } from "@/store/slices/authSlice";
-import { useEffect } from "react";
+import { selectAuthState, setAuthState } from "../../store/slices/authSlice";
+
+import HeaderLogged from "./HeaderLogged";
+import DefaultHeader from "./DefaultHeader";
 
 function Header() {
+  const [header, setHeader] = useState(null);
   const loggedIn = useSelector(selectAuthState);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (
-      localStorage.getItem("access_token") &&
-      localStorage.getItem("access_token") !== ""
-    ) {
+    const accessToken = localStorage.getItem("access_token");
+
+    if (accessToken && accessToken !== "") {
       dispatch(setAuthState(true));
     }
-  }, [loggedIn, dispatch]);
+  }, [dispatch]);
 
-  return <>{loggedIn ? <HeaderLogged /> : <DefaultHeader />}</>;
+  useEffect(() => {
+    if (loggedIn) {
+      setHeader(<HeaderLogged />);
+    } else {
+      setHeader(<DefaultHeader />);
+    }
+  }, [loggedIn])
+
+  if (!header) {
+    return <div></div>;
+  }
+
+  return <>{header}</>;
 }
 
 export default Header;

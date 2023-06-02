@@ -1,24 +1,36 @@
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import {
   setAuthAccessToken,
   setAuthEmail,
   setAuthRole,
   setAuthUserId,
-} from "@/store/slices/authSlice";
-
+  setAuthState
+} from "../../store/slices/authSlice";
+import { setSearchValue } from "../../store/slices/projectSlice";
 import HeaderPopup from "../popup/HeaderPopup";
 
 import styles from "../layouts/HeaderLogged.module.css";
 
 function HeaderLogged() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [searchType, setSearchType] = useState('');
   const [popup, setPopup] = useState(false);
   const ref = useRef(null);
-  const [isSticky, setIsSticky] = useState(false);
   const dispatch = useDispatch();
+
+  const router = useRouter();
+  const { asPath } = router;
+
+  const handleSearchChange = async (e) => {
+    setSearchType(e.target.value);
+    dispatch(setSearchValue(e.target.value))
+  };
 
   const animation = useSpring({
     opacity: isModalOpen ? 1 : 0,
@@ -59,29 +71,26 @@ function HeaderLogged() {
     localStorage.removeItem("email");
     localStorage.removeItem("role");
     localStorage.removeItem("userId");
+
+    dispatch(setAuthState(false));
     dispatch(setAuthAccessToken(null));
     dispatch(setAuthUserId(null));
     dispatch(setAuthEmail(null));
     dispatch(setAuthRole(null));
-    window.location.reload();
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.pageYOffset > 0);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    if (asPath === "/projects") {
+      setIsFilterOpen(true);
+    } else {
+      setIsFilterOpen(false);
+    }
+  }, [asPath]);
 
   return (
     <div
       id="kt_header"
-      className={` header ${styles.loggedHeader} ${
-        isSticky ? styles.sticky : ""
-      }`}
+      className="header"
       data-kt-sticky="true"
       data-kt-sticky-name="header"
       data-kt-sticky-offset="{default: '200px', lg: '300px'}"
@@ -112,10 +121,10 @@ function HeaderLogged() {
               </svg>
             </span>
           </div>
-          <a href="../../demo11/dist/index.html">
+          <a href="/">
             <img
               alt="Logo"
-              src="assets/media/logos/logo-demo11.svg"
+              src="/assets/media/logos/logo-demo11.svg"
               className="h-20px h-lg-30px"
             />
           </a>
@@ -160,7 +169,7 @@ function HeaderLogged() {
                   </span>
                 </div>
               </div>
-              <form
+              {isFilterOpen && <form
                 data-kt-search-element="form"
                 className="d-none d-lg-block w-100 mb-5 mb-lg-0 position-relative"
                 autoComplete="off"
@@ -189,9 +198,10 @@ function HeaderLogged() {
                   type="text"
                   className="form-control bg-transparent ps-13 fs-7 h-40px"
                   name="search"
-                  defaultValue=""
-                  placeholder="Quick Search"
-                  data-kt-search-element="input"
+                  placeholder="ძიება"
+                  data-kt-search-element="search"
+                  value={searchType}
+                  onChange={(e) => handleSearchChange(e)}
                 />
                 <span
                   className="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5"
@@ -233,12 +243,14 @@ function HeaderLogged() {
                     </svg>
                   </span>
                 </span>
-              </form>
+              </form>}
             </div>
             <div className="d-flex align-items-center ms-3 ms-lg-4">
-              <div
-                onClick={popupHandler}
+              <Link
                 className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
+                href={{
+                  pathname: `/projects`,
+                }}
               >
                 <span className="svg-icon svg-icon-1">
                   <svg
@@ -253,19 +265,18 @@ function HeaderLogged() {
                     <path d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z" />
                   </svg>
                 </span>
-              </div>
-              {popup && (
-                <div className={styles.popup}>
-                  <HeaderPopup />
-                </div>
-              )}
+              </Link>
             </div>
+            {popup && (
+              <div className={styles.popup}>
+                <HeaderPopup />
+              </div>
+            )}
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
                 onClick={openModal}
-                className={` ${
-                  isModalOpen ? styles.activeBg : ""
-                } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
+                className={` ${isModalOpen ? styles.activeBg : ""
+                  } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
                 data-kt-menu-trigger="click"
                 data-kt-menu-attach="parent"
                 data-kt-menu-placement="bottom-end"
