@@ -79,11 +79,13 @@ const YourComponent = () => {
                                 <td>{product?.attributes?.categories?.data[0]?.attributes?.title}</td>
                                 <td>{product?.attributes?.unit?.data?.attributes?.title}</td>
                                 <td>{product?.attributes?.quantity}</td>
+                                <td>{product?.attributes?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
                                 <td>{`${parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)} ლარი`}</td>
                             </tr>
                         );
                     })}
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -94,10 +96,12 @@ const YourComponent = () => {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
                     </tr>
 
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -108,10 +112,12 @@ const YourComponent = () => {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td>{`მომსახურეობა ${parseFloat(service_percentage)}: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
                     </tr>
 
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
