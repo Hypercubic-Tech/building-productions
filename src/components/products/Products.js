@@ -285,7 +285,6 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 </tbody>
               )}
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
-                console.log(product)
                 return (
                   <tbody key={product?.id}>
                     <tr>

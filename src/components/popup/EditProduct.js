@@ -28,8 +28,6 @@ const EditProduct = ({
     const [craftImage, setCraftImage] = useState();
     const [supplierOption, setSupplierOption] = useState(product.attributes.supplier.data.id);
     const [unitOption, setUnitOption] = useState(product.attributes.unit.data.id)
-    console.log(unitOption, 'id sup ')
-    console.log(product.attributes, 'product to edit')
 
     const activeCategoryId = useSelector(state => state.cats.category);
 
@@ -55,7 +53,6 @@ const EditProduct = ({
         status: product.attributes.status
     });
 
-    console.log(product.attributes, ' changeeeee')
     useEffect(() => {
         const getCraftsByCategory = async () => {
             await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)

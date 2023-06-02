@@ -120,7 +120,6 @@ const AddProduct = ({
                 })
                 .then((res) => {
                     const data = res.data;
-                    console.log(data)
                     notify(false, "ხელობა დაემატა");
                     dispatch(setProductState(data.data));
                 })
@@ -269,8 +268,6 @@ const AddProduct = ({
                                                 className="image-input image-input-outline"
                                                 data-kt-image-input="true"
                                             >
-                                                {console.log(imgSrc, 'src')}
-                                                {console.log(image, 'src')}
                                                 {
                                                     imgSrc ? <img
                                                         src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`}

@@ -201,7 +201,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
   const finishHandler = () => {
     setClose(true);
     // createProjectHandler();
-    console.log(sendData, 'finished')
   };
 
   return (
