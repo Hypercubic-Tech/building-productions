@@ -52,6 +52,7 @@ const EditProduct = ({
         status: product.attributes.status
     });
 
+    console.log(product.attributes.status)
     useEffect(() => {
         const getCraftsByCategory = async () => {
             await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
@@ -415,9 +416,9 @@ const EditProduct = ({
                                             <label className="form-check-label" htmlFor="exampleCheckbox">
                                                 შეძენილია
                                             </label>
-                                            <input defaultChecked={productData.status} onChange={(e) => setProductData((prevSendData) => ({
+                                            <input defaultChecked={false} onChange={(e) => setProductData((prevSendData) => ({
                                                 ...prevSendData,
-                                                status: true,
+                                                status: !prevSendData.status,
                                             }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
                                         </div>
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
