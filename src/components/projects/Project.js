@@ -48,7 +48,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,craft_status&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,craft_status,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
@@ -71,7 +71,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
-          {project && project?.map((p, index) => {
+          {project && project?.map((p, index) => {console.log(p, 'd')
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
                 <h1>{p?.attributes?.title}</h1>
@@ -93,7 +93,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_types?.data[0].attributes.Title}
+                    {p?.attributes?.property_types?.data[0]?.attributes?.Title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.conditions?.data[0]?.attributes?.title}
