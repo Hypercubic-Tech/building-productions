@@ -21,7 +21,7 @@ const index = () => {
     const searchValue = useSelector(state => state.proj.searchType)
 
     let projectsToMap = projectData;
-    console.log(projectsToMap, 'data')
+
     if (searchValue) {
         const lowercaseSearchType = searchValue.toLowerCase();
         projectsToMap = projectData.reduce((filteredProjects, project) => {
