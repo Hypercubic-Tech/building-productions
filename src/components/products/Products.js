@@ -227,7 +227,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`დღგ ${parseFloat(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>

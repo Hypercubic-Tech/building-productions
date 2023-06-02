@@ -97,7 +97,7 @@ const YourComponent = () => {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
+                        <td>{`დღგ ${parseFloat(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
                     </tr>
 
                     <tr>
@@ -105,7 +105,7 @@ const YourComponent = () => {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                        <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
                     </tr>
 
                     <tr>
@@ -113,7 +113,7 @@ const YourComponent = () => {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{`მომსახურეობა ${parseFloat(service_percentage)}: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
+                        <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
                     </tr>
 
                     <tr>
