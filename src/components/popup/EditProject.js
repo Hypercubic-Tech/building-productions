@@ -19,7 +19,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
-  console.log(project.data[0].attributes, 'i need ')
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
     address: project.data[0].attributes.address,
@@ -33,27 +32,29 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
         { id: project?.data[0]?.attributes?.city?.data?.id }
       ]
     },
-    property_type: {
+    property_types: {
       connect: [
-        { id: project?.data[0]?.attributes?.property_type?.data?.id }
+        { id: project?.data[0]?.attributes?.property_types?.data[0]?.id }
       ]
-    },
-    categories: {
-      connect: []
     },
     current_condition: {
       connect: [
         { id: project?.data[0]?.attributes?.current_condition?.data?.id }
       ]
     },
-    condition: {
+    conditions: {
       connect: [
-        { id: project?.data[0]?.attributes.condition?.data?.id }
+        { id: project?.data[0]?.attributes.conditions?.data[0]?.id }
       ]
+    },
+    categories: {
+      connect: project.data[0].attributes.categories.data.map((cat) => ({
+        id: cat.id,
+      })),
     },
     service_percentage: project?.data[0]?.attributes?.service_percentage
   });
-  console.log(sendData)
+
   const dispatch = useDispatch();
 
   let errors = {
@@ -61,14 +62,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
     stepTwo: [],
     stepThree: [],
   };
-
-  const hiddenInputHandler = () => {
-    if (!hiddenInput) {
-      setHiddenInput(true)
-    } else {
-      setHiddenInput(false)
-    }
-  }
 
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
@@ -82,13 +75,13 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
 
   const stepChangeHandler = () => {
 
-    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
+    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_types.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     } else {
       setLoss(true);
     }
-    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
+    if (step === 2 && errors.stepTwo.length === 0 && sendData.conditions.connect[0].id && sendData.current_condition.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     }
@@ -129,10 +122,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
         console.log(error);
       }
     };
-    getPropertyTypesHandler();
-  }, []);
-
-  useEffect(() => {
     const getCitiesHandler = async () => {
       try {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
@@ -145,10 +134,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
         console.log(error);
       }
     };
-    getCitiesHandler();
-  }, []);
-
-  useEffect(() => {
     const getConditionHandler = async () => {
       try {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
@@ -160,10 +145,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
         console.log(error);
       }
     };
-    getConditionHandler();
-  }, []);
-
-  useEffect(() => {
     const getCurrentConditionHandler = async () => {
       try {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
@@ -175,10 +156,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
         console.log(error);
       }
     };
-    getCurrentConditionHandler();
-  }, []);
-
-  useEffect(() => {
     const getCategoriesHandler = async () => {
       try {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
@@ -190,7 +167,12 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
         console.log(error);
       }
     };
+
+    getPropertyTypesHandler();
     getCategoriesHandler();
+    getCitiesHandler();
+    getCurrentConditionHandler();
+    getConditionHandler();
   }, []);
 
   const createProjectHandler = async () => {
@@ -215,7 +197,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
 
   const finishHandler = () => {
     setClose(true);
-    createProjectHandler();
+    // createProjectHandler();
     console.log(sendData, 'finished')
   };
 
@@ -353,7 +335,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                       <select
                         required
                         id="property"
-                        defaultValue={sendData.title}
+                        defaultValue={project.data[0].attributes.property_types.data[0].id}
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
@@ -364,7 +346,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
                           return (
                             <option key={index} value={item.id}>{item.attributes.Title}</option>
@@ -375,26 +356,10 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                     <div className="w-100">
                       <div className="row mb-10">
                         <div className=" d-flex align-items-center">
-                          {/* <input
-                            form-check form-switch
-                            className="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            id="flexSwitchCheckDefault"
-                            onChange={(e) => {
-                              const isChecked = e.target.checked;
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                vat: isChecked,
-                              }));
-                              hiddenInputHandler();
-                            }}
-                          /> */}
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                             <span className={` georgian `}>დღგ-ს გადამხდელი / გაუთვალისწინებელი ხარჯები</span>
                           </label>
                         </div>
-                        {/* {hiddenInput ? ( */}
                         <div className={`${styles.inputWrap} col-6 `}>
                           <input
                             className="form-control georgian form-control-solid"
@@ -410,7 +375,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                           />
                           <i className={`${styles.percent} bi bi-percent `}></i>
                         </div>
-                        {/* ) : ""} */}
                         <div className={`${styles.inputWrap} col-6 `}>
                           <input
                             onChange={(event) => {
@@ -541,8 +505,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                     </div>
                   </div>
                 </div>
-                {/* STEP */}
-
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -577,8 +539,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                   className="form-check-input"
                                   type="radio"
                                   name="category"
-                                  value={item.id}
-                                  defaultChecked={sendData.condition ? true : ""}
+                                  defaultChecked={sendData.conditions.connect[0]?.id === item.id}
                                 />
                               </span>
                             </label>
@@ -619,8 +580,8 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                 className="form-check-input"
                                 type="radio"
                                 name="framework"
-                                value={item.id}
-                                defaultChecked={sendData.current_condition ? true : ""}
+                                // value={item.id}
+                                defaultChecked={sendData.current_condition.connect[0]?.id === item.id}
                               />
                             </span>
                           </label>
@@ -672,7 +633,9 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                         onChange={handleCategoryChange}
                                         className="form-check-input"
                                         type="checkbox"
-                                        value={item.id}
+                                        defaultChecked={sendData.categories.connect.some(
+                                          (cat) => cat.id === item.id
+                                        )}
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}
