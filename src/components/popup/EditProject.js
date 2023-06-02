@@ -18,6 +18,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
+  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_types?.data[0]?.id)
   const [hiddenInput, setHiddenInput] = useState(false);
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
@@ -34,7 +35,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
     },
     property_types: {
       connect: [
-        { id: project?.data[0]?.attributes?.property_types?.data[0]?.id }
+        { id: propertyOption }
       ]
     },
     current_condition: {
@@ -54,6 +55,8 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
     },
     service_percentage: project?.data[0]?.attributes?.service_percentage
   });
+
+  console.log(project)
 
   const dispatch = useDispatch();
 
@@ -335,14 +338,9 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                       <select
                         required
                         id="property"
-                        defaultValue={project.data[0].attributes.property_types.data[0].id}
+                        value={propertyOption}
                         onChange={(event) => {
-                          setSendData((prevSendData) => ({
-                            ...prevSendData,
-                            property_type: {
-                              connect: [{ id: event.target.value }],
-                            },
-                          }));
+                          setPropertyOption(event.target.value)
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
@@ -539,7 +537,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                   className="form-check-input"
                                   type="radio"
                                   name="category"
-                                  defaultChecked={sendData.conditions.connect[0]?.id === item.id}
+                                  checked={sendData.conditions.connect[0]?.id === item.id}
                                 />
                               </span>
                             </label>

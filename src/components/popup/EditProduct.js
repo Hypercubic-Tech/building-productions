@@ -416,7 +416,7 @@ const EditProduct = ({
                                             <label className="form-check-label" htmlFor="exampleCheckbox">
                                                 შეძენილია
                                             </label>
-                                            <input defaultChecked={false} onChange={(e) => setProductData((prevSendData) => ({
+                                            <input defaultChecked={productData.status ?  'checked' : ""} onChange={(e) => setProductData((prevSendData) => ({
                                                 ...prevSendData,
                                                 status: !prevSendData.status,
                                             }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
