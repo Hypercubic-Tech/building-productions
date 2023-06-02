@@ -9,7 +9,6 @@ import styles from "./Modal.module.css";
 import { setUpdateProject } from "../../store/slices/editProjectSlice";
 
 const EditProject = ({ dismiss, project, setShowProject }) => {
-  console.log(project)
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -20,7 +19,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
-  console.log(project, 'i need ')
+  console.log(project.data[0].attributes, 'i need ')
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
     address: project.data[0].attributes.address,
