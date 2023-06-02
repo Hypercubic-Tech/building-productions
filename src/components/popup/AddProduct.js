@@ -560,7 +560,7 @@ const AddProduct = ({
                                             </label>
                                             <input
                                                 onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
+                                                    setCraftData((prevSendData) => ({
                                                         ...prevSendData,
                                                         quantity: e.target.value,
                                                     }));

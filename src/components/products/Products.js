@@ -21,7 +21,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
-  let itemsPerPage = 2;
+  let itemsPerPage = 5;
 
   let productsToMap = products;
   if (searchType) {
