@@ -182,14 +182,14 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
     const projectId = project.data[0]?.id;
 
     try {
-      const response = await axios.put(
+      await axios.put(
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
         {
           data: sendData
         }
       );
-      // dispatch(setUpdateProject(true));
-      // dispatch(setUpdateProject(data.data))
+      dispatch(setUpdateProject(true));
+      dispatch(setUpdateProject(data.data))
       setShowProject(true)
       notify(false, "პროექტი რედაქტირდა");
     } catch (error) {
@@ -200,7 +200,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
 
   const finishHandler = () => {
     setClose(true);
-    // createProjectHandler();
+    createProjectHandler();
   };
 
   return (
@@ -374,13 +374,13 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                         </div>
                         <div className={`${styles.inputWrap} col-6 `}>
                           <input
+                            defaultValue={sendData.unforeseenExpenses}
                             onChange={(event) => {
                               setSendData((prevSendData) => ({
                                 ...prevSendData,
                                 unforeseenExpenses: event.target.value,
                               }));
                             }}
-                            defaultValue={sendData.unforeseenExpenses}
                             type="text"
                             className="form-control georgian form-control-solid"
                             placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"

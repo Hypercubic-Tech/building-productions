@@ -126,11 +126,10 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   }
 
 
-  let unforseenExpenses = 0;
+  let unforeseenExpenses = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
-    unforseenExpenses = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses),
-      0
+    unforeseenExpenses = totalSumProduct.reduce(
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses),
     );
   }
 
@@ -138,13 +137,12 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   if (totalSumProduct && totalSumProduct.length > 0) {
     service_percentage = totalSumProduct.reduce(
       (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
-      
     );
   }
 
   const totalProductPrice = parseFloat(productsTotal)
   const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
-  const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
+  const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100 + parseFloat(unforeseenExpenses)
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
 
@@ -154,6 +152,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
           .then((res) => {
             const data = res.data;
+            console.log(data, 'data')
             setTotalSumProduct(data.data);
           })
       };
@@ -235,7 +234,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
@@ -290,7 +289,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                   </tr>
                 </tbody>
               )}
-              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {console.log(product, 'product')
+              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
                 return (
                   <tbody key={product?.id}>
                     <tr>
