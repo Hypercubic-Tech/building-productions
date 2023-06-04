@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import { setProjectState } from "../../store/slices/projectSlice";
@@ -19,6 +19,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
+  const userId = useSelector(state => state.auth.user_id)
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -50,7 +51,12 @@ const AddProject = ({ dismiss, setShowProject }) => {
         { id: null }
       ]
     },
-    service_percentage: ""
+    service_percentage: "",
+    users_permissions_user: {
+      connect: [
+        { id: userId }
+      ]
+    }
   });
   const dispatch = useDispatch();
 
