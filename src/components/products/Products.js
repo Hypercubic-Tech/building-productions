@@ -10,7 +10,7 @@ import { selectProduct, deleteProductState } from "../../store/slices/productSli
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, totalSum, searchType }) => {
+const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
@@ -129,7 +129,8 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   let unforeseenExpenses = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     unforeseenExpenses = totalSumProduct.reduce(
-      (sum, product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses),
+      (product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses || 0),
+      0
     );
   }
 
@@ -152,7 +153,6 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
           .then((res) => {
             const data = res.data;
-            console.log(data, 'data')
             setTotalSumProduct(data.data);
           })
       };

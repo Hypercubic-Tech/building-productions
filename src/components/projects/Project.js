@@ -14,13 +14,12 @@ import EditService from "../popup/EditService";
 import { Export } from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
-const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
+const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
-  const categoryId = useSelector(state => state.cats.category);
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
@@ -120,7 +119,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
               }}
             >
               <a
-                // href="#"
                 className="btn btn-light-primary fw-bolder georgian"
                 data-kt-menu-trigger="click"
                 data-kt-menu-placement="bottom-end"
@@ -326,16 +324,10 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
                         projectId={projectId}
-                        editProductItem={editProductItem}
                         editHandler={editHandler}
                         services={services}
                         allProduct={allProduct}
                         setSelect={setSelect}
-                        craftStatus={craftStatus}
-                        crafts={crafts}
-                        unit={unit}
-                        allCategories={allCategories}
-                        suppliers={suppliers}
                         totalSum={totalSum}
                         searchType={searchType}
                       />
