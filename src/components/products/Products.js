@@ -323,7 +323,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                         <span>{product?.attributes?.title}</span>
                       </td>
                       <td className="georgian">
-                        <a href={`https://www.${product?.attributes?.productLink}`} target="_blank">
+                        <a href={`${product?.attributes?.productLink}`} target="_blank">
                           {product?.attributes?.supplier?.data?.attributes?.title}
                         </a>
                       </td>
