@@ -19,7 +19,7 @@ const index = () => {
     // const updateList = useSelector(state => state.update)
     const userId = useSelector(state => state.auth.user_id)
     const searchValue = useSelector(state => state.proj.searchType)
-    let itemsPerPage = 2;
+    let itemsPerPage = 5;
 
     let projectsToMap = projectData;
 
@@ -211,7 +211,7 @@ const index = () => {
                         </div>
                     )}
                 </div>
-                <nav aria-label="Page navigation example" className="m-5 p-5">
+                {projectsToMap?.length >= 5 && <nav aria-label="Page navigation example" className="m-5 p-5">
                     <ul className="pagination">
                         <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
                             <a className="page-link" href="#" aria-label="Previous">
@@ -231,7 +231,7 @@ const index = () => {
                             </a>
                         </li>
                     </ul>
-                </nav>
+                </nav>}
             </div>
             {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
             {editProject && (
