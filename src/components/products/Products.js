@@ -109,12 +109,27 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
   };
 
   let productsTotal = 0;
+  let categorySums = [];
+
   if (totalSumProduct && totalSumProduct.length > 0) {
-    productsTotal = totalSumProduct.reduce(
-      (sum, product) =>
-        sum + parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price),
-      0
-    );
+    totalSumProduct.forEach((product) => {
+      const categoryTitle = product?.attributes?.categories?.data[0]?.attributes?.title;
+      const quantity = parseInt(product?.attributes?.quantity);
+      const price = parseFloat(product?.attributes?.price);
+
+      if (categoryTitle) {
+        const existingCategorySum = categorySums.find((item) => item.title === categoryTitle);
+        if (existingCategorySum) {
+          existingCategorySum.sum += quantity * price;
+        } else {
+          categorySums.push({
+            title: categoryTitle,
+            sum: quantity * price,
+          });
+        }
+        productsTotal += quantity * price;
+      }
+    });
   }
 
   let vatTotal = 0;
@@ -125,11 +140,10 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
     );
   }
 
-
   let unforeseenExpenses = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     unforeseenExpenses = totalSumProduct.reduce(
-      (product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses || 0),
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses || 0),
       0
     );
   }
@@ -138,19 +152,20 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
   if (totalSumProduct && totalSumProduct.length > 0) {
     service_percentage = totalSumProduct.reduce(
       (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
+      0
     );
   }
 
-  const totalProductPrice = parseFloat(productsTotal)
-  const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
-  const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100 + parseFloat(unforeseenExpenses)
-  const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
-  const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
+  const totalProductPrice = parseFloat(productsTotal);
+  const vatTotalPrice = (parseFloat(totalProductPrice) * parseInt(vatTotal)) / (100 + parseFloat(vatTotal));
+  const unforeseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100;
+  const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
+  const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
 
   useEffect(() => {
     if (projectId) {
       const totalSumHandler = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
             const data = res.data;
             setTotalSumProduct(data.data);
@@ -164,24 +179,24 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
   const aggregatedProducts = {};
 
   totalSumProduct?.forEach((product) => {
-    if (product.attributes.type === 'service') {
-      const title = product?.attributes?.title;
-      const unit = product?.attributes?.unit?.data?.attributes?.title;
-      const quantity = product?.attributes?.quantity;
-      const price = product?.attributes?.price;
-      const key = `${unit}`;
+    const title = product?.attributes?.title;
+    const unit = product?.attributes?.unit?.data?.attributes?.title;
+    const categories = product?.attributes?.categories?.data[0]?.attributes?.title;
+    const quantity = product?.attributes?.quantity;
+    const price = product?.attributes?.price;
+    const key = `${categories}`;
 
-      if (aggregatedProducts[key]) {
-        aggregatedProducts[key].titles.push(title);
-        aggregatedProducts[key].quantity += quantity;
-      } else {
-        aggregatedProducts[key] = {
-          titles: [title],
-          unit,
-          quantity,
-          price,
-        };
-      }
+    if (aggregatedProducts[key]) {
+      aggregatedProducts[key].titles.push(title);
+      aggregatedProducts[key].quantity += quantity;
+    } else {
+      aggregatedProducts[key] = {
+        titles: [title],
+        unit,
+        quantity,
+        price,
+        categories
+      };
     }
   });
 
@@ -206,11 +221,11 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
-                  <td>{product?.titles.join(', ')}</td>
+                  <td>{product?.categories}</td>
                   <td>{product?.unit}</td>
                   <td>{product?.quantity}</td>
                   <td>{product?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
-                  <td>{productsTotal} ლარი</td>
+                  <td>{categorySums.find((item) => item.title === product?.categories)?.sum || 0} ლარი</td>
                 </tr>
               ))}
               <tr>
@@ -218,7 +233,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`სულ: ${productsTotal.toFixed(2) || 0} ლარი`}</td>
+                <td>{`სულ: ${Object.values(categorySums).reduce((total, category) => total + category.sum, 0) || 0} ლარი`}</td>
               </tr>
 
               <tr>
@@ -226,7 +241,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`დღგ ${parseFloat(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`დღგ ${parseInt(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
@@ -234,7 +249,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforeseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
@@ -312,7 +327,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                                 }}
                                 src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
                                   product?.attributes?.image?.data?.attributes?.url : `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.craft_images?.data?.attributes?.image?.data?.attributes?.url}
+                                product?.attributes?.craft_images?.data?.attributes?.image?.data?.attributes?.url}
                                 alt=""
                                 className="w-100"
                               />

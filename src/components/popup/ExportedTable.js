@@ -11,7 +11,7 @@ const YourComponent = () => {
     useEffect(() => {
         if (projectId) {
             const totalSumHandler = async () => {
-                await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
+                await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
                     .then((res) => {
                         const data = res.data;
                         setTotalSumProduct(data.data);
