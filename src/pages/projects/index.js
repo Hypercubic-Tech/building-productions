@@ -211,7 +211,7 @@ const index = () => {
                         </div>
                     )}
                 </div>
-                {projectsToMap?.length >= 5 && <nav aria-label="Page navigation example" className="m-5 p-5">
+                {projectsToMap?.length > 5 && <nav aria-label="Page navigation example" className="m-5 p-5">
                     <ul className="pagination">
                         <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
                             <a className="page-link" href="#" aria-label="Previous">
