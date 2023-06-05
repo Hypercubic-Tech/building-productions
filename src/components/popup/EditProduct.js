@@ -85,11 +85,11 @@ const EditProduct = ({
                 })
                 .then((res) => {
                     const data = res.data;
-                    notify(false, "პროდუქტი დაემატა");
+                    notify(false, "პროდუქტი რედაქტირდა");
                     dispatch(setProductState(data.data));
                 });
         } catch (err) {
-            notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+            notify(true, "პროდუქტის რედაქტირება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
         setSelect(null);

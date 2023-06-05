@@ -71,7 +71,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
-          {project && project?.map((p, index) => {console.log(p, 'd')
+          {project && project?.map((p, index) => {
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
                 <h1>{p?.attributes?.title}</h1>

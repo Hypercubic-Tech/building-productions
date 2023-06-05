@@ -138,7 +138,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   if (totalSumProduct && totalSumProduct.length > 0) {
     service_percentage = totalSumProduct.reduce(
       (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
-      
+
     );
   }
 
@@ -166,10 +166,10 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
 
   totalSumProduct?.forEach((product) => {
     if (product.attributes.type === 'service') {
-      const title = product?.attributes?.title;
-      const unit = product?.attributes?.unit?.data?.attributes?.title;
-      const quantity = product?.attributes?.quantity;
-      const price = product?.attributes?.price;
+      const title = product.attributes.title;
+      const unit = product.attributes.unit.data.attributes.title;
+      const quantity = product.attributes.quantity;
+      const price = product.attributes.price;
       const key = `${unit}`;
 
       if (aggregatedProducts[key]) {
@@ -207,15 +207,13 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
-                  <td>{product?.titles.join(', ')}</td>
-                  <td>{product?.unit}</td>
-                  <td>{product?.quantity}</td>
-                  <td>{product?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
+                  <td>{product.titles.join(', ')}</td>
+                  <td>{product.unit}</td>
+                  <td>{product.quantity}</td>
                   <td>{productsTotal} ლარი</td>
                 </tr>
               ))}
               <tr>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -226,12 +224,10 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td>{`დღგ ${parseFloat(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -242,12 +238,10 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
                 <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -290,7 +284,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                   </tr>
                 </tbody>
               )}
-              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {console.log(product, 'product')
+              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
                 return (
                   <tbody key={product?.id}>
                     <tr>
@@ -312,8 +306,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                                   e.target.src = "/images/test-img.png";
                                 }}
                                 src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.image?.data?.attributes?.url : `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.craft_images?.data?.attributes?.image?.data?.attributes?.url}
+                                  product?.attributes?.image?.data?.attributes?.url : "/images/test-img.png"}
                                 alt=""
                                 className="w-100"
                               />
@@ -336,7 +329,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                       </td>
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
-                      <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
+                      <td className="georgian">{product?.attributes?.type === "product" ? product.attributes.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
@@ -348,7 +341,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                         {activeItem === product.id ? (
                           <div className={styles.modal}>
                             <div
-                              onClick={() => { editHandler(product); setSelect(product?.attributes?.type === 'product' ? 'edit-product' : 'edit-service') }}
+                              onClick={() => { editHandler(product); setSelect(product.attributes.type === 'product' ? 'edit-product' : 'edit-service') }}
                               className="menu-item px-3"
                             >
                               <a className="menu-link px-3 georgian padding0">
@@ -357,7 +350,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                               </a>
                             </div>
                             <div
-                              onClick={() => { confirmHandler(product?.id) }}
+                              onClick={() => { confirmHandler(product.id) }}
                               className="menu-item px-3 padding8"
                             >
                               <a
@@ -378,8 +371,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
             </>
           )}
         </table>
-        {console.log(productsToMap, 'prod')}
-        {productsToMap?.length === 0 && <div style={{ width: '100%', height: '100%',  margin: '100px 100px 100px 0px',  textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
+        {productsToMap?.length === 0 && <div style={{ width: '100%', height: '100%', margin: '100px 100px 100px 0px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
