@@ -8,6 +8,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
   const [step, setStep] = useState(1);
   const [lossData, setLossData] = useState(false);
   const [paymentPlanState, setPaymentPlanState] = useState(null);
+  const [backBtn, setBackBtn] = useState(false);
   const [regData, setRegData] = useState({
     username: "",
     email: "",
@@ -18,30 +19,45 @@ const RegModal = ({ handleRegistration, onClose }) => {
     paymentMethod: "",
   });
 
+  let errors = {
+    stepOne: [],
+    stepTwo: [],
+    stepThree: [],
+  };
+
   const stepChangeHandler = () => {
-    if (
-      regData.userType.length > 0 &&
-      regData.username.length > 0 &&
-      regData.email.length > 0 &&
-      regData.phoneNumber.length > 0 &&
-      regData.password.length > 0
-    ) {
-      setStep(2)
+    if (step === 1 && errors?.stepOne?.length === 0 && regData?.userType && regData?.username && regData?.email && regData?.phoneNumber && regData?.password) {
+      setStep(step + 1);
       setLossData(false);
     } else {
-      setStep(1)
       setLossData(true);
     }
-  };
-
-  const stepChangeHandler2 = () => {
-    if (paymentPlanState === "paid") {
-      setStep(3)
+    if (step === 2 && errors?.stepTwo?.length === 0 && regData?.paymentPlan) {
+      setStep(step + 1);
+      setLossData(false);
+    }
+    if (step === 3 && errors?.stepThree?.length === 0 && regData?.paymentMethod) {
+      setStep(step + 1);
+      setLossData(false);
     }
   };
 
-  const getStatusClass = (step) => {
-    return `tab-content ${step === 3 ? 'show active' : ''}`;
+  const prevStepHandler = () => {
+    if (step > 1) {
+      setBackBtn(true);
+      setStep(step - 1);
+    }
+  };
+  
+
+  const getStatusClass = (stepIndex) => {
+    if (stepIndex < step) {
+      return "completed";
+    } else if (stepIndex === step) {
+      return "current";
+    } else {
+      return "pending";
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -64,7 +80,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
   };
 
   return (
-    <div className={`${getStatusClass(step)} ${styles.container}`} >
+    <div className={`${styles.container}`} >
       <form onSubmit={handleSubmit}>
         {step == 2 ? (
           <div className={getStatusClass(2)}>
@@ -106,6 +122,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 <div className="d-grid gap-2 mt-n1">
                   <label className="mt-2">აირჩიეთ გადახდის გეგმა:</label>
                   <select
+                    required
                     className="form-select form-select-solid georgian"
                     defaultValue="აირჩიეთ გადახდის გეგმა"
                     onChange={(e) => {
@@ -126,8 +143,11 @@ const RegModal = ({ handleRegistration, onClose }) => {
                   <button
                     className={` btn btn-success georgian ${styles.btn}`}
                     type="button"
-                    onClick={() => setStep(1)}
-                    style={{ width: "35%" }}
+                    onClick={prevStepHandler}
+                    style={{
+                      display: step === 1 ? "none" : "",
+                      width: "35%"
+                    }}
                   >
                     უკან
                   </button>
@@ -135,7 +155,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                     style={{ width: "35%" }}
                     className={` btn btn-success georgian ${styles.btn}`}
                     type={regData.paymentPlan === "free" ? 'submit' : 'button'}
-                    onClick={() => regData.paymentPlan === "paid" ? setStep(3) : ""}
+                    onClick={() => regData.paymentPlan === "paid" ? stepChangeHandler() : ""}
                   >
                     {regData.paymentPlan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
                   </button>
@@ -145,7 +165,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
           </div>
         ) : ""}
         {step === 1 ? (
-          <div className="col">
+          <div className={`${getStatusClass(1)} col`}>
             <div className="d-flex justify-content-between align-items-center mb-2">
               <div className="text-muted">რეგისტრაცია</div>
               <svg
@@ -183,6 +203,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
               <div className="d-grid gap-2 mt-n1">
                 <label className="mt-2">მომხმარებლის ტიპი:</label>
                 <select
+                  required
                   style={{ borderColor: lossData && regData.userType.length <= 0 ? "red" : "" }}
                   className="form-select form-select-solid georgian"
                   defaultValue="აირჩიეთ მომხმარებლის ტიპი"
@@ -341,6 +362,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 <div className="d-grid gap-2 mt-n1">
                   <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
                   <select
+                    required
                     className="form-select form-select-solid georgian"
                     defaultValue="აირჩიეთ გადახდის მეთოდი"
                     onChange={(e) => {
@@ -359,7 +381,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                   <button
                     className={` btn btn-success georgian ${styles.btn}`}
                     type="button"
-                    onClick={() => setStep(2)}
+                    onClick={prevStepHandler}
                     style={{ width: "35%" }}
                   >
                     უკან
@@ -367,7 +389,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                   <button
                     className={` btn btn-success georgian ${styles.btn}`}
                     type="submit"
-                    onClick={stepChangeHandler2}
+                    // onClick={stepChangeHandler2}
                   >
                     რეგისტრაცია
                   </button>
