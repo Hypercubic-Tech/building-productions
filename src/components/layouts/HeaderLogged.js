@@ -79,6 +79,10 @@ function HeaderLogged() {
     dispatch(setAuthRole(null));
   };
 
+  const accountPage = () => {
+    console.log('Account page')
+  }
+
   useEffect(() => {
     if (asPath === "/projects") {
       setIsFilterOpen(true);
@@ -311,12 +315,15 @@ function HeaderLogged() {
               {isModalOpen && (
                 <animated.div className="modal" style={animation}>
                   <div ref={ref} className={`${styles.modalWindow}`}>
+                    <div onClick={accountPage} className={styles.hover}>
+                      აქაუნთი
+                    </div>
                     <div onClick={handleLogout} className={styles.hover}>
                       გამოსვლა
-                    </div>
-                    <svg
+                      <svg
                       onClick={closeModal}
                       className={styles.closeBtn}
+                      style={{marginLeft: "70px"}}
                       width="64px"
                       height="64px"
                       viewBox="0 0 24 24"
@@ -344,6 +351,8 @@ function HeaderLogged() {
                         </g>
                       </g>
                     </svg>
+                    </div>
+                    
                   </div>
                 </animated.div>
               )}
