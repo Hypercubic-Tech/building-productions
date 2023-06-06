@@ -275,15 +275,10 @@ const RegModal = ({ handleRegistration, onClose }) => {
               />
               <span
                 style={{
-                  color:
-                    (lossData && regData.password.length >= 6) ? "green" :
-                      (lossData && regData.password.length < 6 && regData.password.length === 0) ? "red" :
-                        ""
+                  color: lossData || regData.password.length >= 6 ? "green" : (lossData || regData.password.length < 6 && regData.password.length !== 0) ? "red" : ""
                 }}
               >
-                {lossData && regData.password.length >= 6 ? <i className="bi bi-check2" /> :
-                  lossData && regData.password.length <= 6 && regData.password.length === 0 ? <i className="bi bi-x" /> :
-                    ""}
+                {lossData || regData.password.length >= 6 ? <i className="bi bi-check2" /> : (lossData || regData.password.length < 6 && regData.password.length !== 0) ? <i className="bi bi-x" /> : null}
                 პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს
               </span>
 
