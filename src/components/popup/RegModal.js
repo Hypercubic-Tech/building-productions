@@ -7,13 +7,14 @@ import styles from "../popup/RegModal.module.css";
 const RegModal = ({ handleRegistration, onClose }) => {
   const [step, setStep] = useState(1);
   const [lossData, setLossData] = useState(false);
-  const [paymentPlan, setPaymentPlan] = useState(null);
+  const [paymentPlanState, setPaymentPlanState] = useState(null);
   const [regData, setRegData] = useState({
     username: "",
     email: "",
     password: "",
     phoneNumber: "",
     userType: "",
+    paymentPlan: "",
     paymentMethod: "",
   });
 
@@ -34,9 +35,8 @@ const RegModal = ({ handleRegistration, onClose }) => {
   };
 
   const stepChangeHandler2 = () => {
-    if (paymentPlan === "paid") {
+    if (paymentPlanState === "paid") {
       setStep(3)
-      console.log(showThirdTab, 'showThirdTab')
     }
   };
 
@@ -47,11 +47,11 @@ const RegModal = ({ handleRegistration, onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { username, email, password, phoneNumber, userType, paymentMethod } = regData;
+    const { username, email, password, phoneNumber, userType, paymentPlan, paymentMethod } = regData;
 
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
-        username, email, password, phoneNumber, userType, paymentMethod
+        username, email, password, phoneNumber, userType, paymentPlan, paymentMethod
       })
         .then(() => {
           notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
@@ -112,9 +112,9 @@ const RegModal = ({ handleRegistration, onClose }) => {
                       console.log(e.target.value)
                       setRegData((prevSendData) => ({
                         ...prevSendData,
-                        paymentMethod: e.target.value
+                        paymentPlan: e.target.value
                       }));
-                      setPaymentPlan(e.target.value)
+                      setPaymentPlanState(e.target.value)
                     }}
                   >
                     <option disabled defaultValue="აირჩიეთ გადახდის გეგმა">აირჩიეთ გადახდის გეგმა</option>
@@ -122,20 +122,29 @@ const RegModal = ({ handleRegistration, onClose }) => {
                     <option id="2" value="paid">ფასიანი</option>
                   </select>
                 </div>
-                <button
-                  className={` btn btn-success georgian ${styles.btn}`}
-                  type={regData.paymentMethod === "free" ? 'submit' : 'button'}
-                  onClick={() => regData.paymentMethod === "paid" ? setStep(3) : ""}
-
-                >
-                  {regData.paymentMethod === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
-                </button>
+                <div className="d-flex justify-content-evenly">
+                  <button
+                    className={` btn btn-success georgian ${styles.btn}`}
+                    type="button"
+                    onClick={() => setStep(1)}
+                    style={{ width: "35%" }}
+                  >
+                    უკან
+                  </button>
+                  <button
+                    style={{ width: "35%" }}
+                    className={` btn btn-success georgian ${styles.btn}`}
+                    type={regData.paymentPlan === "free" ? 'submit' : 'button'}
+                    onClick={() => regData.paymentPlan === "paid" ? setStep(3) : ""}
+                  >
+                    {regData.paymentPlan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         ) : ""}
         {step === 1 ? (
-
           <div className="col">
             <div className="d-flex justify-content-between align-items-center mb-2">
               <div className="text-muted">რეგისტრაცია</div>
@@ -184,7 +193,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                     }));
                   }}
                 >
-                  <option disabled defaultValue="აირჩიეთ პაკეტი">აირჩიეთ მომხმარებლის ტიპი</option>
+                  <option disabled defaultValue="აირჩიეთ მომხმარებლის ტიპი">აირჩიეთ მომხმარებლის ტიპი</option>
                   <option id="1" value="personal">პერსონალური</option>
                   <option id="2" value="company">კომპანია</option>
                 </select>
@@ -192,9 +201,9 @@ const RegModal = ({ handleRegistration, onClose }) => {
               </div>
               {regData && (
                 <label className="mt-2">
-                  {regData.userType === "კომპანია"
+                  {regData?.userType === "company"
                     ? "კომპანიის სახელი"
-                    : regData.userType === "პერსონალური"
+                    : regData?.userType === "personal"
                       ? "სრული სახელი"
                       : "სახელი"}
                 </label>
@@ -224,7 +233,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 required
                 id="email"
                 className="form-control"
-                placeholder="იმეილი"
+                placeholder="youremail@gmail.com"
                 name="email"
                 type="email"
                 onChange={(e) => {
@@ -264,7 +273,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 required
                 id="password"
                 className="form-control"
-                placeholder="პაროლი"
+                placeholder="******"
                 type="password"
                 onChange={(e) => {
                   setRegData((prevSendData) => ({
@@ -333,7 +342,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                   <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
                   <select
                     className="form-select form-select-solid georgian"
-                    defaultValue="აირჩიეთ გადახდის გეგმა"
+                    defaultValue="აირჩიეთ გადახდის მეთოდი"
                     onChange={(e) => {
                       setRegData((prevSendData) => ({
                         ...prevSendData,
@@ -346,13 +355,23 @@ const RegModal = ({ handleRegistration, onClose }) => {
                     <option id="2" value="bog">BOG</option>
                   </select>
                 </div>
-                <button
-                  className={` btn btn-success georgian ${styles.btn}`}
-                  type="button"
-                  onClick={stepChangeHandler2}
-                >
-                  შემდეგ
-                </button>
+                <div className="d-flex align-items-center justify-content-evenly">
+                  <button
+                    className={` btn btn-success georgian ${styles.btn}`}
+                    type="button"
+                    onClick={() => setStep(2)}
+                    style={{ width: "35%" }}
+                  >
+                    უკან
+                  </button>
+                  <button
+                    className={` btn btn-success georgian ${styles.btn}`}
+                    type="submit"
+                    onClick={stepChangeHandler2}
+                  >
+                    რეგისტრაცია
+                  </button>
+                </div>
               </div>
             </div>
           </div>
