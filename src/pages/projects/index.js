@@ -17,8 +17,9 @@ const index = () => {
     const [projectData, setProjectData] = useState(null);
     const [pageIndex, setPageIndex] = useState(1);
     // const updateList = useSelector(state => state.update)
+    const userId = useSelector(state => state.auth.user_id)
     const searchValue = useSelector(state => state.proj.searchType)
-    let itemsPerPage = 2;
+    let itemsPerPage = 5;
 
     let projectsToMap = projectData;
 
@@ -68,7 +69,7 @@ const index = () => {
     };
 
     const getProjectsData = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image&filters[users_permissions_user][id][$eq]=${userId}`)
             .then((res) => {
                 const data = res.data;
                 setProjectData(data.data)
@@ -105,7 +106,7 @@ const index = () => {
             .fire({
                 title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
                 text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
-                icon: 'გაფრთხილება',
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'წაშლა',
                 cancelButtonText: 'უარყოფა',
@@ -210,7 +211,7 @@ const index = () => {
                         </div>
                     )}
                 </div>
-                <nav aria-label="Page navigation example" className="m-5 p-5">
+                {projectsToMap?.length > 5 && <nav aria-label="Page navigation example" className="m-5 p-5">
                     <ul className="pagination">
                         <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
                             <a className="page-link" href="#" aria-label="Previous">
@@ -230,7 +231,7 @@ const index = () => {
                             </a>
                         </li>
                     </ul>
-                </nav>
+                </nav>}
             </div>
             {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
             {editProject && (

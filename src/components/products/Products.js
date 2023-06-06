@@ -10,7 +10,7 @@ import { selectProduct, deleteProductState } from "../../store/slices/productSli
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, totalSum, searchType }) => {
+const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
@@ -109,12 +109,27 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   };
 
   let productsTotal = 0;
+  let categorySums = [];
+
   if (totalSumProduct && totalSumProduct.length > 0) {
-    productsTotal = totalSumProduct.reduce(
-      (sum, product) =>
-        sum + parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price),
-      0
-    );
+    totalSumProduct.forEach((product) => {
+      const categoryTitle = product?.attributes?.categories?.data[0]?.attributes?.title;
+      const quantity = parseInt(product?.attributes?.quantity);
+      const price = parseFloat(product?.attributes?.price);
+
+      if (categoryTitle) {
+        const existingCategorySum = categorySums.find((item) => item.title === categoryTitle);
+        if (existingCategorySum) {
+          existingCategorySum.sum += quantity * price;
+        } else {
+          categorySums.push({
+            title: categoryTitle,
+            sum: quantity * price,
+          });
+        }
+        productsTotal += quantity * price;
+      }
+    });
   }
 
   let vatTotal = 0;
@@ -125,11 +140,10 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
     );
   }
 
-
-  let unforseenExpenses = 0;
+  let unforeseenExpenses = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
-    unforseenExpenses = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses),
+    unforeseenExpenses = totalSumProduct.reduce(
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses || 0),
       0
     );
   }
@@ -138,20 +152,20 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   if (totalSumProduct && totalSumProduct.length > 0) {
     service_percentage = totalSumProduct.reduce(
       (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
-
+      0
     );
   }
 
-  const totalProductPrice = parseFloat(productsTotal)
-  const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
-  const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
-  const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
-  const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
+  const totalProductPrice = parseFloat(productsTotal);
+  const vatTotalPrice = (parseFloat(totalProductPrice) * parseInt(vatTotal)) / (100 + parseFloat(vatTotal));
+  const unforeseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100;
+  const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
+  const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
 
   useEffect(() => {
     if (projectId) {
       const totalSumHandler = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
             const data = res.data;
             setTotalSumProduct(data.data);
@@ -165,24 +179,24 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
   const aggregatedProducts = {};
 
   totalSumProduct?.forEach((product) => {
-    if (product.attributes.type === 'service') {
-      const title = product.attributes.title;
-      const unit = product.attributes.unit.data.attributes.title;
-      const quantity = product.attributes.quantity;
-      const price = product.attributes.price;
-      const key = `${unit}`;
+    const title = product?.attributes?.title;
+    const unit = product?.attributes?.unit?.data?.attributes?.title;
+    const categories = product?.attributes?.categories?.data[0]?.attributes?.title;
+    const quantity = product?.attributes?.quantity;
+    const price = product?.attributes?.price;
+    const key = `${categories}`;
 
-      if (aggregatedProducts[key]) {
-        aggregatedProducts[key].titles.push(title);
-        aggregatedProducts[key].quantity += quantity;
-      } else {
-        aggregatedProducts[key] = {
-          titles: [title],
-          unit,
-          quantity,
-          price,
-        };
-      }
+    if (aggregatedProducts[key]) {
+      aggregatedProducts[key].titles.push(title);
+      aggregatedProducts[key].quantity += quantity;
+    } else {
+      aggregatedProducts[key] = {
+        titles: [title],
+        unit,
+        quantity,
+        price,
+        categories
+      };
     }
   });
 
@@ -202,36 +216,35 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                 <th>სამუშაო</th>
                 <th>ერთეული</th>
                 <th>რაოდენობა</th>
-                <th>სტატუსი</th>
                 <th>ჯამი</th>
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
-                  <td>{product.titles.join(', ')}</td>
-                  <td>{product.unit}</td>
-                  <td>{product.quantity}</td>
-                  <td>{productsTotal} ლარი</td>
+                  <td>{product?.categories}</td>
+                  <td>{product?.unit}</td>
+                  <td>{product?.quantity}</td>
+                  <td>{categorySums.find((item) => item.title === product?.categories)?.sum || 0} ლარი</td>
                 </tr>
               ))}
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`სულ: ${productsTotal.toFixed(2) || 0} ლარი`}</td>
+                <td>{`სულ: ${Object.values(categorySums).reduce((total, category) => total + category.sum, 0) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`დღგ ${parseInt(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforeseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
@@ -306,7 +319,8 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                                   e.target.src = "/images/test-img.png";
                                 }}
                                 src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.image?.data?.attributes?.url : "/images/test-img.png"}
+                                  product?.attributes?.image?.data?.attributes?.url : `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                product?.attributes?.craft_images?.data?.attributes?.image?.data?.attributes?.url}
                                 alt=""
                                 className="w-100"
                               />
@@ -317,7 +331,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                         <span>{product?.attributes?.title}</span>
                       </td>
                       <td className="georgian">
-                        <a href={`https://www.${product?.attributes?.productLink}`} target="_blank">
+                        <a href={`${product?.attributes?.productLink}`} target="_blank">
                           {product?.attributes?.supplier?.data?.attributes?.title}
                         </a>
                       </td>
@@ -329,7 +343,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                       </td>
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
-                      <td className="georgian">{product?.attributes?.type === "product" ? product.attributes.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
+                      <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
@@ -341,7 +355,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                         {activeItem === product.id ? (
                           <div className={styles.modal}>
                             <div
-                              onClick={() => { editHandler(product); setSelect(product.attributes.type === 'product' ? 'edit-product' : 'edit-service') }}
+                              onClick={() => { editHandler(product); setSelect(product?.attributes?.type === 'product' ? 'edit-product' : 'edit-service') }}
                               className="menu-item px-3"
                             >
                               <a className="menu-link px-3 georgian padding0">
@@ -350,7 +364,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
                               </a>
                             </div>
                             <div
-                              onClick={() => { confirmHandler(product.id) }}
+                              onClick={() => { confirmHandler(product?.id) }}
                               className="menu-item px-3 padding8"
                             >
                               <a
@@ -371,8 +385,8 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
             </>
           )}
         </table>
-        {productsToMap?.length === 0 && <div style={{ width: '100%', height: '100%', margin: '100px 100px 100px 0px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
-        <nav aria-label="Page navigation example">
+        {/* {filteredProducts?.length === 0 && <div style={{ width: '100vw', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>} */}
+        {productsToMap.length > 5 && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Previous">
@@ -392,7 +406,7 @@ const Products = ({ editHandler, editProductItem, setSelect, craftStatus, crafts
               </a>
             </li>
           </ul>
-        </nav>
+        </nav>}
       </div>
     </>
   );
