@@ -11,6 +11,7 @@ import {
   setAuthUserId,
   setAuthState
 } from "../../store/slices/authSlice";
+import { setSearchValue } from "../../store/slices/projectSlice";
 import HeaderPopup from "../popup/HeaderPopup";
 
 import styles from "../layouts/HeaderLogged.module.css";
@@ -18,12 +19,18 @@ import styles from "../layouts/HeaderLogged.module.css";
 function HeaderLogged() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [searchType, setSearchType] = useState('');
   const [popup, setPopup] = useState(false);
   const ref = useRef(null);
   const dispatch = useDispatch();
 
   const router = useRouter();
   const { asPath } = router;
+
+  const handleSearchChange = async (e) => {
+    setSearchType(e.target.value);
+    dispatch(setSearchValue(e.target.value))
+  };
 
   const animation = useSpring({
     opacity: isModalOpen ? 1 : 0,
@@ -73,7 +80,7 @@ function HeaderLogged() {
   };
 
   useEffect(() => {
-    if(asPath === "/projects") {
+    if (asPath === "/projects") {
       setIsFilterOpen(true);
     } else {
       setIsFilterOpen(false);
@@ -191,9 +198,10 @@ function HeaderLogged() {
                   type="text"
                   className="form-control bg-transparent ps-13 fs-7 h-40px"
                   name="search"
-                  defaultValue=""
-                  placeholder="Quick Search"
-                  data-kt-search-element="input"
+                  placeholder="ძიება"
+                  data-kt-search-element="search"
+                  value={searchType}
+                  onChange={(e) => handleSearchChange(e)}
                 />
                 <span
                   className="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5"
@@ -259,19 +267,19 @@ function HeaderLogged() {
                 </span>
               </Link>
             </div>
-              {popup && (
-                <div className={styles.popup}>
-                  <HeaderPopup />
-                </div>
-              )}
+            {popup && (
+              <div className={styles.popup}>
+                <HeaderPopup />
+              </div>
+            )}
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
                 onClick={openModal}
                 className={` ${isModalOpen ? styles.activeBg : ""
-              } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
-              data-kt-menu-trigger="click"
-              data-kt-menu-attach="parent"
-              data-kt-menu-placement="bottom-end"
+                  } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
+                data-kt-menu-trigger="click"
+                data-kt-menu-attach="parent"
+                data-kt-menu-placement="bottom-end"
               >
                 <span className="svg-icon svg-icon-1">
                   <svg

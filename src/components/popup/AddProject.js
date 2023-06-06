@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import { setProjectState } from "../../store/slices/projectSlice";
@@ -8,7 +8,7 @@ import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 import { setUpdateProject } from "../../store/slices/editProjectSlice";
 
-const AddProject = ({ dismiss, setShowProject}) => {
+const AddProject = ({ dismiss, setShowProject }) => {
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -19,6 +19,7 @@ const AddProject = ({ dismiss, setShowProject}) => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
+  const userId = useSelector(state => state.auth.user_id)
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -32,7 +33,7 @@ const AddProject = ({ dismiss, setShowProject}) => {
         { id: null }
       ]
     },
-    property_type: {
+    property_types: {
       connect: [
         { id: null }
       ]
@@ -45,12 +46,17 @@ const AddProject = ({ dismiss, setShowProject}) => {
         { id: null }
       ]
     },
-    condition: {
+    conditions: {
       connect: [
         { id: null }
       ]
     },
-    service_percentage: ""
+    service_percentage: "",
+    users_permissions_user: {
+      connect: [
+        { id: userId }
+      ]
+    }
   });
   const dispatch = useDispatch();
 
@@ -80,13 +86,13 @@ const AddProject = ({ dismiss, setShowProject}) => {
 
   const stepChangeHandler = () => {
 
-    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
+    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_types.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     } else {
       setLoss(true);
     }
-    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
+    if (step === 2 && errors.stepTwo.length === 0 && sendData.conditions.connect[0].id && sendData.current_condition.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     }
@@ -351,7 +357,7 @@ const AddProject = ({ dismiss, setShowProject}) => {
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
-                            property_type: {
+                            property_types: {
                               connect: [{ id: event.target.value }],
                             },
                           }));
@@ -389,20 +395,20 @@ const AddProject = ({ dismiss, setShowProject}) => {
                           </label>
                         </div>
                         {/* {hiddenInput ? ( */}
-                          <div className={`${styles.inputWrap} col-6 `}>
-                            <input
-                              className="form-control georgian form-control-solid"
-                              placeholder="დღგ-ს გადამხდელი"
-                              type="text"
-                              onChange={(e) => {
-                                setSendData((prevSendData) => ({
-                                  ...prevSendData,
-                                  vatPercent: e.target.value,
-                                }));
-                              }}
-                            />
-                            <i className={`${styles.percent} bi bi-percent `}></i>
-                          </div>
+                        <div className={`${styles.inputWrap} col-6 `}>
+                          <input
+                            className="form-control georgian form-control-solid"
+                            placeholder="დღგ-ს გადამხდელი"
+                            type="text"
+                            onChange={(e) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                vatPercent: e.target.value,
+                              }));
+                            }}
+                          />
+                          <i className={`${styles.percent} bi bi-percent `}></i>
+                        </div>
                         {/* ) : ""} */}
                         <div className={`${styles.inputWrap} col-6 `}>
                           <input
@@ -471,26 +477,6 @@ const AddProject = ({ dismiss, setShowProject}) => {
                       </div>
                     </div>
                     <div className="row mb-10">
-                      <div style={{flexDirection: "column"}} className="d-flex align-items-center">
-                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                          <span className={`${styles.ml2} georgian `}>მომსახურეობის ხარჯები </span>
-                        </label>
-                        <input
-                          className="form-control georgian form-control-solid"
-                          type="text"
-                          id="flexSwitchCheckDefault"
-                          onChange={(e) => {
-                            setSendData((prevSendData) => ({
-                              ...prevSendData,
-                              service_percentage: e.target.value,
-                            }));
-                            // hiddenInputHandler();
-                          }}
-                        />
-
-                      </div>
-                    </div>
-                    <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
                           მისამართი / ტელეფონი
@@ -527,6 +513,27 @@ const AddProject = ({ dismiss, setShowProject}) => {
                         </div>
                       </div>
                     </div>
+                    <div className="row mb-10">
+                      <div style={{ flexDirection: "column" }} className="d-flex align-items-center">
+                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                          <span className={`${styles.ml2} georgian `}>მომსახურეობის ხარჯები </span>
+                        </label>
+                        <input
+                          className="form-control georgian form-control-solid"
+                          type="text"
+                          id="flexSwitchCheckDefault"
+                          placeholder="შეიყვანეთ მომსახურების ხარჯები (%)"
+                          onChange={(e) => {
+                            setSendData((prevSendData) => ({
+                              ...prevSendData,
+                              service_percentage: e.target.value,
+                            }));
+                            // hiddenInputHandler();
+                          }}
+                        />
+
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {/* STEP */}
@@ -557,7 +564,7 @@ const AddProject = ({ dismiss, setShowProject}) => {
                                   onChange={(event) => {
                                     setSendData((prevSendData) => ({
                                       ...prevSendData,
-                                      condition: {
+                                      conditions: {
                                         connect: [{ id: event.target.value }],
                                       },
                                     }));

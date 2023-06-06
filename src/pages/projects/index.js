@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import Link from "next/link";
-import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import styles from "../../components/popup/Modal.module.css";
-import { setUpdateProject } from "../../store/slices/editProjectSlice";
 
 const index = () => {
     const [close, setClose] = useState(false);
@@ -16,7 +15,47 @@ const index = () => {
     const [editProject, setEditProject] = useState(false);
     const [showProject, setShowProject] = useState(false);
     const [projectData, setProjectData] = useState(null);
-    const updateList = useSelector(state => state.update)
+    const [pageIndex, setPageIndex] = useState(1);
+    // const updateList = useSelector(state => state.update)
+    const userId = useSelector(state => state.auth.user_id)
+    const searchValue = useSelector(state => state.proj.searchType)
+    let itemsPerPage = 2;
+
+    let projectsToMap = projectData;
+
+    if (searchValue) {
+        const lowercaseSearchType = searchValue.toLowerCase();
+        projectsToMap = projectData.reduce((filteredProjects, project) => {
+            const projectTitle = project?.attributes?.title?.toLowerCase();
+            if (projectTitle === lowercaseSearchType) {
+                return [project];
+            } else if (projectTitle.includes(lowercaseSearchType)) {
+                return [...filteredProjects, project];
+            }
+            return filteredProjects;
+        }, []);
+    }
+
+    const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
+    const startIndex = (pageIndex - 1) * itemsPerPage;
+    const endIndex = pageIndex * itemsPerPage;
+  
+    const handleDecrementPageIndex = () => {
+      if (pageIndex > 1) {
+        setPageIndex(pageIndex - 1);
+      }
+    };
+  
+    const handleChangePageIndex = (event) => {
+      const newPageIndex = parseInt(event.target.id);
+      setPageIndex(newPageIndex);
+    };
+  
+    const handleIncrementPageIndex = () => {
+      if (pageIndex < totalPages) {
+        setPageIndex(pageIndex + 1);
+      }
+    };
 
     const addProjectHandler = () => {
         setAddProject(!addProject);
@@ -30,7 +69,7 @@ const index = () => {
     };
 
     const getProjectsData = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image&filters[users_permissions_user][id][$eq]=${userId}`)
             .then((res) => {
                 const data = res.data;
                 setProjectData(data.data)
@@ -65,19 +104,19 @@ const index = () => {
 
         swalWithBootstrapButtons
             .fire({
-                title: 'Confirm you want to delete project',
-                text: 'If you confirm that, project will be deleted',
+                title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
+                text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Delete',
-                cancelButtonText: 'Cancel',
+                confirmButtonText: 'წაშლა',
+                cancelButtonText: 'უარყოფა',
                 reverseButtons: true
             })
             .then((result) => {
                 if (result.isConfirmed) {
                     deleteProjectHandler(item);
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire('Cancelled', '');
+                    swalWithBootstrapButtons.fire('უარყოფილია', '');
                 }
             });
     };
@@ -127,8 +166,8 @@ const index = () => {
                     </button>
                 </div>
                 <div className={`${styles.flexWrap} d-flex justify-content-center `}>
-                    {projectData?.length > 0 ? (
-                        projectData.map((item, index) => {
+                    {projectsToMap?.length > 0 ? (
+                        projectsToMap.slice(startIndex, endIndex).map((item, index) => {
                             return (
                                 <div key={index} className={`card-body ${styles.wrapChild} card m-3`}>
                                     <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
@@ -136,9 +175,9 @@ const index = () => {
                                             onError={(e) => {
                                                 e.target.src = "/images/test-img.png";
                                             }}
-                                            src='/images/test-img.png'
-                                            // src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data[0]?.attributes?.url ? item?.attributes?.image?.data[0]?.attributes?.url : "/images/test-img.png"}`}
+                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.[0]?.attributes?.url}` || "/images/test-img.png"}
                                             className="card-img-top"
+                                            alt="project-img"
                                         />
                                         <div className="card-body">
                                             <Link
@@ -172,6 +211,27 @@ const index = () => {
                         </div>
                     )}
                 </div>
+                <nav aria-label="Page navigation example" className="m-5 p-5">
+                    <ul className="pagination">
+                        <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
+                            <a className="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <li className="page-item" onClick={handleChangePageIndex} key={index + 1}>
+                                <a className="page-link" id={index + 1} href="#">
+                                    {index + 1}
+                                </a>
+                            </li>
+                        ))}
+                        <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
+                            <a className="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
             {editProject && (

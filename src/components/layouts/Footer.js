@@ -1,7 +1,6 @@
 function Footer() {
   return (
-    <div style={{ minHeight: "100px" }}>
-    <div style={{position: "fixed", width: "100%", bottom: "0"}} className="landing-dark-separator landing-dark-bg">
+    <div className="landing-dark-separator landing-dark-bg">
       <div className="container">
         <div className="d-flex flex-column flex-md-row flex-stack py-7 py-lg-10">
           <div className="d-flex align-items-center order-2 order-md-1">
@@ -46,7 +45,6 @@ function Footer() {
           </ul>
         </div>
       </div>
-    </div>
     </div>
   );
 }

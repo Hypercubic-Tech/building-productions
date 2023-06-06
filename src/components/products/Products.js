@@ -1,70 +1,61 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import axios from "axios";
 import Swal from "sweetalert2";
 
 import { selectProduct, deleteProductState } from "../../store/slices/productSlice";
 
-import EditProduct from "../popup/EditProduct";
-import EditService from "../popup/EditService";
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex, searchType }) => {
-  const [defId, setDefId] = useState(null);
-  const [isTouched, setIsTouched] = useState(false);
-  const [editPopup, setEditPopup] = useState(false);
+const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
+  const [pageIndex, setPageIndex] = useState(1);
+  const products = useSelector(state => state.prod.products);
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
-  const products = useSelector(state => state.prod.products);
-  const categoryId = useSelector(state => state.cats.category);
+  let itemsPerPage = 5;
 
   let productsToMap = products;
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
-    const filteredProduct = products.filter(product => product.attributes.title.toLowerCase() === lowercaseSearchType);
-    if (filteredProduct.length > 0) {
-      productsToMap = filteredProduct;
+    const filteredProducts = products.filter((product) =>
+      product?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.unit?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.supplier?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.quantity?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.type?.toLowerCase().includes(lowercaseSearchType)
+    );
+
+    if (filteredProducts.length > 0) {
+      productsToMap = filteredProducts;
     }
   }
-  
-  const handleIncrementPageIndex = () => {
-    incrementPageIndex();
-    defaultProductsHandler(categoryId, pageIndex + 1);
-    console.log(event.target.id)
-  };
+
+  const totalPages = Math.ceil(productsToMap.length / itemsPerPage);
+  const startIndex = (pageIndex - 1) * itemsPerPage;
+  const endIndex = pageIndex * itemsPerPage;
 
   const handleDecrementPageIndex = () => {
-    decrementPageIndex();
-    defaultProductsHandler(defcategoryIdId, pageIndex - 1);
-    console.log(event.target.id)
+    if (pageIndex > 1) {
+      setPageIndex(pageIndex - 1);
+    }
   };
 
   const handleChangePageIndex = (event) => {
-    changePageIndex(parseInt(event.target.id));
-    defaultProductsHandler(categoryId, event.target.id);
-    console.log(event.target.id)
+    const newPageIndex = parseInt(event.target.id);
+    setPageIndex(newPageIndex);
   };
 
-  const getProductsHandler = async () => {
-    await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-      )
-      .then((res) => {
-        const data = res.data;
-        const id = data?.data[0]?.attributes?.categories?.data[0]?.id;
-        setDefId(id);
-        defaultProductsHandler(id);
-      })
-  };
-
-  const editHandlerPopup = (product) => {
-    console.log(product)
+  const handleIncrementPageIndex = () => {
+    if (pageIndex < totalPages) {
+      setPageIndex(pageIndex + 1);
+    }
   };
 
   const confirmHandler = (productId) => {
@@ -102,7 +93,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
       )
       .then(() => {
-        getProductsHandler();
         dispatch(deleteProductState(productId));
       })
       .catch((error) => {
@@ -130,16 +120,16 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   let vatTotal = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     vatTotal = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.vatPercent || 0),
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.vatPercent || 0),
       0
     );
   }
 
 
-  let unforseenExpenses = 0;
+  let unforeseenExpenses = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
-    unforseenExpenses = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0),
+    unforeseenExpenses = totalSumProduct.reduce(
+      (product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses || 0),
       0
     );
   }
@@ -147,20 +137,18 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   let service_percentage = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     service_percentage = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
-      0
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
     );
   }
 
   const totalProductPrice = parseFloat(productsTotal)
-  const vatTotalPrice = parseFloat(productsTotal) * parseFloat(vatTotal) / 100 + parseFloat(vatTotal);
-  const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
+  const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
+  const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100 + parseFloat(unforeseenExpenses)
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
 
   useEffect(() => {
     if (projectId) {
-      // getProductsHandler();
       const totalSumHandler = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
           .then((res) => {
@@ -172,6 +160,30 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       totalSumHandler();
     };
   }, [projectId]);
+
+  const aggregatedProducts = {};
+
+  totalSumProduct?.forEach((product) => {
+    if (product.attributes.type === 'service') {
+      const title = product?.attributes?.title;
+      const unit = product?.attributes?.unit?.data?.attributes?.title;
+      const quantity = product?.attributes?.quantity;
+      const price = product?.attributes?.price;
+      const key = `${unit}`;
+
+      if (aggregatedProducts[key]) {
+        aggregatedProducts[key].titles.push(title);
+        aggregatedProducts[key].quantity += quantity;
+      } else {
+        aggregatedProducts[key] = {
+          titles: [title],
+          unit,
+          quantity,
+          price,
+        };
+      }
+    }
+  });
 
   return (
     <>
@@ -192,17 +204,17 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <th>სტატუსი</th>
                 <th>ჯამი</th>
               </tr>
-              {totalSumProduct?.map((product, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{product?.attributes?.categories?.data[0]?.attributes?.title}</td>
-                    <td>{product?.attributes?.unit?.data?.attributes?.title}</td>
-                    <td>{product?.attributes?.quantity}</td>
-                    <td>{`${parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)} ლარი`}</td>
-                  </tr>
-                )
-              })}
+              {Object.values(aggregatedProducts).map((product, index) => (
+                <tr key={index}>
+                  <td>{product?.titles.join(', ')}</td>
+                  <td>{product?.unit}</td>
+                  <td>{product?.quantity}</td>
+                  <td>{product?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
+                  <td>{productsTotal} ლარი</td>
+                </tr>
+              ))}
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -213,24 +225,28 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
+                <td></td>
+                <td>{`დღგ ${parseFloat(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                <td></td>
+                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`მომსახურეობა ${parseFloat(service_percentage)}: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
+                <td></td>
+                <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -250,8 +266,8 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <th className="georgian">რაოდენობა</th>
                 <th className="georgian">ერთეული</th>
                 <th className="georgian">ღირებულება</th>
-                <th className="georgian">სტატუსი</th>
                 <th className="georgian">ტიპი</th>
+                <th className="georgian">სტატუსი</th>
                 <th className="text-end min-w-100px georgian">ცვლილება</th>
               </tr>
             </thead>
@@ -273,7 +289,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                   </tr>
                 </tbody>
               )}
-              {productsToMap && productsToMap.map((product) => {
+              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
                 return (
                   <tbody key={product?.id}>
                     <tr>
@@ -290,13 +306,13 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                           <a>
                             <div className="symbol-label georgian">
-                              {/* {console.log(product.attributes.type, 'product')} */}
                               <img
                                 onError={(e) => {
                                   e.target.src = "/images/test-img.png";
                                 }}
                                 src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.image?.data?.attributes?.url : "/images/test-img.png"}
+                                  product?.attributes?.image?.data?.attributes?.url : `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
+                                  product?.attributes?.craft_images?.data?.attributes?.image?.data?.attributes?.url}
                                 alt=""
                                 className="w-100"
                               />
@@ -319,7 +335,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                       </td>
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
-                      <td className="georgian">{product?.attributes?.type === "product" ? product.attributes.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
+                      <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
@@ -331,7 +347,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                         {activeItem === product.id ? (
                           <div className={styles.modal}>
                             <div
-                              onClick={() => { editHandler(product); editHandlerPopup(product) }}
+                              onClick={() => { editHandler(product); setSelect(product?.attributes?.type === 'product' ? 'edit-product' : 'edit-service') }}
                               className="menu-item px-3"
                             >
                               <a className="menu-link px-3 georgian padding0">
@@ -340,7 +356,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                               </a>
                             </div>
                             <div
-                              onClick={() => { confirmHandler(product.id) }}
+                              onClick={() => { confirmHandler(product?.id) }}
                               className="menu-item px-3 padding8"
                             >
                               <a
@@ -357,7 +373,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                     </tr>
                   </tbody>
                 )
-            })}
+              })}
             </>
           )}
         </table>
@@ -369,9 +385,13 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={1} href="#">1</a></li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={2} href="#">2</a></li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={3} href="#">3</a></li>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li className="page-item" onClick={handleChangePageIndex} key={index + 1}>
+                <a className="page-link" id={index + 1} href="#">
+                  {index + 1}
+                </a>
+              </li>
+            ))}
             <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -380,24 +400,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
           </ul>
         </nav>
       </div>
-      {editPopup && editProductItem.type ? "product"(
-        <EditProduct product={editProductItem}
-          setSelect={setSelect}
-          craftStatus={craftStatus}
-          crafts={crafts}
-          unit={unit}
-          allCategories={allCategories}
-          suppliers={suppliers} />
-      ) : ("")}
-      {editPopup && editProductItem.type ? "service"(
-        <EditService product={editProductItem}
-          setSelect={setSelect}
-          craftStatus={craftStatus}
-          crafts={crafts}
-          unit={unit}
-          allCategories={allCategories}
-          suppliers={suppliers} />
-      ) : ("")}
     </>
   );
 };

@@ -14,40 +14,18 @@ import EditService from "../popup/EditService";
 import { Export } from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
-const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
+const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
-  const [summary, setSummary] = useState(0);
-  const [filteredProducts, setFilteredProducts] = useState(undefined);
-  const [defaultP, setDefaultP] = useState(undefined);
-  const [pageIndex, setPageIndex] = useState(1);
-  const [showProduct, setShowProduct] = useState(false);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
-  const categoryId = useSelector(state => state.cats.category);
-
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
-  };
-
-  const incrementPageIndex = () => {
-    if (pageIndex < 3) {
-      setPageIndex(pageIndex + 1);
-    }
-  };
-
-  const decrementPageIndex = () => {
-    if (pageIndex > 1) {
-      setPageIndex(pageIndex - 1);
-    }
-  };
-  const changePageIndex = (num) => {
-    setPageIndex(num);
   };
 
   const totalSumTable = () => {
@@ -69,7 +47,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,craft_status,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
@@ -79,11 +57,10 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
     }
   };
 
-  useEffect(() => {
-    if (categoryId) {
-      defaultProductsHandler(categoryId, pageIndex);
-    }
-  }, [categoryId]);
+  const total = products.reduce((acc, product) => {
+    const productTotal = product?.attributes?.price * product?.attributes?.quantity;
+    return acc + productTotal;
+  }, 0);
 
   return (
     <>
@@ -93,10 +70,11 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
-          {project && project.map((p, index) => {
+          {project && project?.map((p, index) => {console.log(p, 'd')
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
-                <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
+                <h1>{p?.attributes?.title}</h1>
+                <h2 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={16}
@@ -108,17 +86,24 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                   </svg>
                   &nbsp;{p?.attributes?.address}
-                </h1>
+                </h2>
                 <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.condition?.data?.attributes?.title}
-                  </li>
-                  <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.property_types?.data[0]?.attributes?.Title}
                   </li>
+                  <li className="breadcrumb-item text-gray-600 georgian">
+                    {p?.attributes?.conditions?.data[0]?.attributes?.title}
+                  </li>
+                  <li className="breadcrumb-item text-gray-600 georgian">
+                    {p?.attributes?.current_condition?.data?.attributes?.title}
+                  </li>
+                  <li className="breadcrumb-item text-gray-600 georgian">
+                    {p?.attributes?.area} მ2
+                  </li>
+
                   <li className="breadcrumb-item text-warning georgian">
                     {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
                   </li>
@@ -134,7 +119,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
               }}
             >
               <a
-                // href="#"
                 className="btn btn-light-primary fw-bolder georgian"
                 data-kt-menu-trigger="click"
                 data-kt-menu-placement="bottom-end"
@@ -337,27 +321,14 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                       </div>
                     </div>
                     <div className="card-body pt-0">
-                      <div className="summary">ჯამი: {summary} ლარი</div>
+                      <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
                         projectId={projectId}
-                        defaultProductsHandler={defaultProductsHandler}
-                        defaultP={defaultP}
-                        editProductItem={editProductItem}
                         editHandler={editHandler}
                         services={services}
-                        filteredProducts={filteredProducts}
                         allProduct={allProduct}
                         setSelect={setSelect}
-                        craftStatus={craftStatus}
-                        crafts={crafts}
-                        unit={unit}
-                        allCategories={allCategories}
-                        suppliers={suppliers}
                         totalSum={totalSum}
-                        incrementPageIndex={incrementPageIndex}
-                        pageIndex={pageIndex}
-                        changePageIndex={changePageIndex}
-                        decrementPageIndex={decrementPageIndex}
                         searchType={searchType}
                       />
                     </div>
