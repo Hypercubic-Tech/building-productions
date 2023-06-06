@@ -25,10 +25,10 @@ const RegModal = ({ handleRegistration, onClose }) => {
       regData.phoneNumber.length > 0 &&
       regData.password.length > 0
     ) {
-      setStep(1)
+      setStep(2)
       setLossData(false);
     } else {
-      setStep(2)
+      setStep(1)
       setLossData(true);
     }
   };
@@ -291,7 +291,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
               <button
                 className={` btn btn-success georgian ${styles.btn}`}
                 type="button"
-                onClick={() => setStep(2)}
+                onClick={() => stepChangeHandler()}
               >
                 შემდეგ
               </button>
