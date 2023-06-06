@@ -8,6 +8,8 @@ const TableExport = ({totalSum, aggregatedProducts,
       totalSumPrice
     }) => {
     return(
+      <>
+        <>logo</>
         <table
           className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
           id="tableId"
@@ -194,6 +196,7 @@ const TableExport = ({totalSum, aggregatedProducts,
             </>
           )}
         </table>
+      </>
     );
 }
 
