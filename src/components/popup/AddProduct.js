@@ -25,7 +25,8 @@ const AddProduct = ({
     const [filteredCrafts, setFilteredCrafts] = useState();
     const [craftImage, setCraftImage] = useState();
 
-    const activeCategoryId = useSelector(state => state.cats.category);
+    const activeCategoryId = useSelector(state => state?.cats?.category);
+    console.log(activeCategoryId, 'activeCategoryId')
     // const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
 
     const [productData, setProductData] = useState({
@@ -108,8 +109,8 @@ const AddProduct = ({
             notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
-        setSelect(null);
         defaultProductsHandler(activeCategoryId);
+        setSelect(null);
     };
 
     const handleCraftSubmit = async () => {

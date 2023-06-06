@@ -13,6 +13,7 @@ import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
 import { Export } from "../popup/Export";
 import Drawings from "../popup/Drawings";
+import ExportPopup from "../popup/ExportPopup";
 
 const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
   const [select, setSelect] = useState(null);
@@ -70,7 +71,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
           id="kt_toolbar_container"
           className="container-xxl d-flex flex-stack flex-wrap"
         >
-          {project && project?.map((p, index) => {console.log(p, 'd')
+          {project && project?.map((p, index) => {
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
                 <h1>{p?.attributes?.title}</h1>
@@ -216,7 +217,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                           <button
                             type="button"
                             onClick={() => {
-                              setSelect("export");
+                              setSelect("exportPopUp");
                             }}
                             className="btn btn-light-primary me-3 georgian"
                             data-bs-toggle="modal"
@@ -330,6 +331,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                         setSelect={setSelect}
                         totalSum={totalSum}
                         searchType={searchType}
+                        select={select}
                       />
                     </div>
                   </div>

@@ -6,6 +6,7 @@ import { Export } from './Export';
 const YourComponent = () => {
     const [totalSumProduct, setTotalSumProduct] = useState(null);
     const router = useRouter();
+    const [popUp, setPopUp] = useState();
     const { projectId } = router.query;
 
     useEffect(() => {
@@ -65,93 +66,67 @@ const YourComponent = () => {
 
     return (
         <div>
-            <form id="tableId">
-                <div class="header">
-                    <div class="logo">
-                        img logo
-                    </div>
-                    <div class="invoisNumber">
-                        <div>
-                            <p>ინვოისის ნომერი: <span>2938464</span></p>
-                            <p>თარიღი: <span>21.06.2023</span></p>
-                        </div>
-                    </div>
-                    <div style="clear:both"></div>
-                </div>
+            <table id="ExportTableId">
+                <thead>
+                    <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                        <th>სამუშაო</th>
+                        <th>ერთეული</th>
+                        <th>რაოდენობა</th>
+                        <th>ჯამი</th>
+                    </tr>
+                    
+                    {totalSumProduct?.map((product, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{product?.attributes?.categories?.data[0]?.attributes?.title}</td>
+                                <td>{product?.attributes?.unit?.data?.attributes?.title}</td>
+                                <td>{product?.attributes?.quantity}</td>
+                                <td>{product?.attributes?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
+                                <td>{`${parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)} ლარი`}</td>
+                            </tr>
+                        );
+                    })}
+                    <tr>
+                        <td>rame</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{`სულ: ${productsTotal.toFixed(2) || 0} ლარი`}</td>
+                    </tr>
 
-                <div class="information">
-                    <p> <span> Company </span></p>
-                    <p>ს/ნ: <span> 29448375048 </span></p>
-                    <p>ტელეფონი: <span> 568 94 94 94 </span></p>
-                    <p>ელ-ფოსტა: <span> Contact@Company.ge </span></p>
-                    <p>ვებ-გვერდი: <span> Company.com </span></p>
-                    <p>სს თიბისი ბანკი: <span> GE66TB1100000023876354 </span></p>
-                    <p>სს საქართველოს ბანკი: <span> GE66BG1100002239837467 </span></p>
-                </div>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{`დღგ ${parseFloat(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
+                    </tr>
 
-                <table>
-                    <thead>
-                        <tr className="productDetails productDetailsBottom">
-                            <th>სამუშაო</th>
-                            <th>ერთეული</th>
-                            <th>რაოდენობა</th>
-                            <th>ჯამი</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>rame</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{`სულ: ${productsTotal.toFixed(2) || 0} ლარი`}</td>
-                        </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                    </tr>
 
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{`დღგ ${parseFloat(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
-                        </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
+                    </tr>
 
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{`სულ ჯამი: ${totalSumPrice.toFixed(2) || 0} ლარი`}</td>
-                        </tr>
-                        {totalSumProduct?.map((product, index) => {
-                                return (
-                                    <tr key={index} className="productDetails">
-                                        <td>{product?.attributes?.categories?.data[0]?.attributes?.title}</td>
-                                        <td>{product?.attributes?.unit?.data?.attributes?.title}</td>
-                                        <td>{product?.attributes?.quantity}</td>
-                                        <td>{product?.attributes?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
-                                        <td>{`${parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)} ლარი`}</td>
-                                    </tr>
-                                );
-                            })}
-                    </tbody>
-                </table>
-            </form>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{`სულ ჯამი: ${totalSumPrice.toFixed(2) || 0} ლარი`}</td>
+                    </tr>
+                </thead>
+            </table>
             <button onClick={exportToPDF}>Export to PDF</button>
             <button onClick={exportToExcel}>Export to EXCEL</button>
             <Export
