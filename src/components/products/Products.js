@@ -216,7 +216,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                 <th>სამუშაო</th>
                 <th>ერთეული</th>
                 <th>რაოდენობა</th>
-                <th>სტატუსი</th>
                 <th>ჯამი</th>
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
@@ -224,12 +223,10 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                   <td>{product?.categories}</td>
                   <td>{product?.unit}</td>
                   <td>{product?.quantity}</td>
-                  <td>{product?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
                   <td>{categorySums.find((item) => item.title === product?.categories)?.sum || 0} ლარი</td>
                 </tr>
               ))}
               <tr>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -240,12 +237,10 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
                 <td>{`დღგ ${parseInt(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -256,12 +251,10 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
                 <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
