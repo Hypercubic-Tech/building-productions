@@ -23,7 +23,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(1)
     const { email, password, fullName } = event.target.elements;
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
