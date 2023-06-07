@@ -384,7 +384,6 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 </select>
               </div>
               {lossData && regData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}
-              {console.log(regData?.paymentMethod?.length)}
               <div className="d-flex align-items-center justify-content-evenly">
                 <button
                   className={` btn btn-success georgian ${styles.btn}`}
