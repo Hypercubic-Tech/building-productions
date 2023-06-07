@@ -9,11 +9,11 @@ const TableExport = ({totalSum, aggregatedProducts,
     }) => {
     return(
       <>
-        <>logo</>
         <table
           className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
           id="tableId"
-        >
+          >
+          <>logo</>
           {totalSum ? (
             <thead>
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
