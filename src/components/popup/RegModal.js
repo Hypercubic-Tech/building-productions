@@ -238,6 +238,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
             </button>
           </div>
         </div>
+
         <div className={getStatusClass(2)}>
           <div className="col">
             <div className="d-flex justify-content-between align-items-center mb-2">
@@ -278,6 +279,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 <label className="mt-2">აირჩიეთ გადახდის გეგმა:</label>
                 <select
                   required
+                  style={{ borderColor: lossData && regData?.paymentPlan?.length === 0 ? "red" : "" }}
                   className="form-select form-select-solid georgian"
                   defaultValue="აირჩიეთ გადახდის გეგმა"
                   onChange={(e) => {
@@ -293,6 +295,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                   <option id="2" value="paid">ფასიანი</option>
                 </select>
               </div>
+              {lossData && regData?.paymentPlan?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>}
               <div className="d-flex justify-content-evenly">
                 <button
                   className={` btn btn-success georgian ${styles.btn}`}
@@ -308,10 +311,16 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 <button
                   style={{ width: "35%" }}
                   className={` btn btn-success georgian ${styles.btn}`}
-                  type={regData.paymentPlan === "free" ? 'submit' : 'button'}
-                  onClick={() => regData.paymentPlan === "paid" ? stepChangeHandler() : ""}
+                  type={regData?.paymentPlan === "free" ? 'submit' : 'button'}
+                  onClick={() => {
+                    if (regData?.paymentPlan === "paid") {
+                      stepChangeHandler();
+                    } else if (regData?.paymentPlan.length === 0) {
+                      stepChangeHandler();
+                    }
+                  }}
                 >
-                  {regData.paymentPlan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
+                  {regData?.paymentPlan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
                 </button>
               </div>
             </div>
@@ -353,11 +362,13 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 </g>
               </svg>
             </div>
+
             <div className="d-grid gap-2 mt-n1">
               <div className="d-grid gap-2 mt-n1">
                 <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
                 <select
                   required
+                  style={{ borderColor: lossData && regData?.paymentMethod?.length === 0 ? "red" : "" }}
                   className="form-select form-select-solid georgian"
                   defaultValue="აირჩიეთ გადახდის მეთოდი"
                   onChange={(e) => {
@@ -372,6 +383,8 @@ const RegModal = ({ handleRegistration, onClose }) => {
                   <option id="2" value="bog">BOG</option>
                 </select>
               </div>
+              {lossData && regData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}
+              {console.log(regData?.paymentMethod?.length)}
               <div className="d-flex align-items-center justify-content-evenly">
                 <button
                   className={` btn btn-success georgian ${styles.btn}`}
@@ -383,7 +396,8 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 </button>
                 <button
                   className={` btn btn-success georgian ${styles.btn}`}
-                  type="submit"
+                  type={regData?.paymentMethod?.length === 0 ? "button" : "submit"}
+                  onClick={() => regData?.paymentMethod?.length === 0 ? stepChangeHandler() : ""}
                 >
                   რეგისტრაცია
                 </button>
