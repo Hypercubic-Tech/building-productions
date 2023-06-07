@@ -311,7 +311,7 @@ function HeaderLogged() {
               {isModalOpen && (
                 <animated.div className="modal" style={animation}>
                   <div ref={ref} className={`${styles.modalWindow}`}>
-                    <div onClick={accountPage} className={styles.hover}>
+                    <div className={styles.hover}>
                       <Link
                       href={{
                         pathname: "/account"
