@@ -79,10 +79,6 @@ function HeaderLogged() {
     dispatch(setAuthRole(null));
   };
 
-  const accountPage = () => {
-    console.log('Account page')
-  }
-
   useEffect(() => {
     if (asPath === "/projects") {
       setIsFilterOpen(true);
