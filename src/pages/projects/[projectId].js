@@ -13,6 +13,7 @@ const index = () => {
   const [crafts, setCrafts] = useState(null);
   const [project, setProject] = useState(null);
   const [craftStatus, setCraftStatus] = useState(null);
+  const [productStatus, setProductStatus] = useState(null);
   const [projectCategory, setProjectCategory] = useState(null);
   const [productOptions, setProductOptions] = useState(null);
   const [editProductItem, setEditProductItem] = useState(null);
@@ -87,9 +88,19 @@ const index = () => {
           const data = res.data;
           setCraftStatus(data.data);
         });
-
     };
 
+    const getProductsStatusHandler = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/product-statuses`)
+        
+        .then((res) => {
+          const data = res.data;
+          setProductStatus(data.data);
+        });
+    };
+
+    getProductsStatusHandler();
     getCraftsStatusHandler();
     getCraftsHandler();
     getSupplierHandler();
@@ -102,6 +113,7 @@ const index = () => {
 
   return <Project
     pr={projectId}
+    productStatus={productStatus}
     productOptions={productOptions}
     project={project}
     craftStatus={craftStatus}

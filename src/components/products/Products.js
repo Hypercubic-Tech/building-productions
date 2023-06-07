@@ -5,15 +5,48 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import { selectProduct, deleteProductState } from "../../store/slices/productSlice";
+import { selectProduct, deleteProductState, setProductState, setProducts } from "../../store/slices/productSlice";
+import { setCategory } from "../../store/slices/categorySlice";
 
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
+const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus }) => {
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
+  const [productToEdit, setProductToEdit] = useState(null);
+  //   const [productData, setProductData] = useState({
+  //     image: image,
+  //     title: productToEdit,
+  //     type: "product",
+  //     supplier: {
+  //         connect: [{ id: null }],
+  //     },
+  //     productLink: "",
+  //     quantity: 0,
+  //     unit: {
+  //         connect: [{ id: null }],
+  //     },
+  //     price: 0,
+  //     categories: {
+  //         connect: [{ id: activeCategoryId }],
+  //     },
+  //     project: {
+  //         connect: [{ id: projectId }]
+  //     },
+  //     product_statuses: {
+  //         connect: [{ id: null }]
+  //     },
+  // });
+  const [updateCraftStatus, setUpdateCraftStatus] = useState({
+    craft_status: {
+      connect: [{ id: null }]
+    },
+  })
+  const [updateProductStatus, setUpdateProductStatus] = useState()
+
+  const activeCategoryId = useSelector(state => state.cats.category);
   const products = useSelector(state => state.prod.products);
   const router = useRouter();
   const { projectId } = router.query;
@@ -58,7 +91,37 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
     }
   };
 
-  const confirmHandler = (productId) => {
+  const defaultProductsHandler = async (id, pageIndex) => {
+    if (id) {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const data = response.data;
+        dispatch(setProducts(data.data));
+        dispatch(setCategory(id));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const handleGetEditProduct = async (e, product) => {
+    let productId = product.id
+
+    try {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
+        .then((res) => {
+          const data = res.data
+          setProductToEdit(data.data);
+          // confirmEdit(e, productId)
+        })
+    } catch (error) {
+      console.log(error)
+    }
+    console.log(productToEdit)
+  };
+
+  const confirmEdit = async (e, productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-primary',
@@ -66,25 +129,44 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
       },
       buttonsStyling: false
     });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: 'დაადასტურეთ, რომ გსურთ პროდუქტის წაშლა',
-        text: 'დადასტურების შემთხვევაში, პროდუქტი წაიშლება ავტომატურად',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'წაშლა',
-        cancelButtonText: 'უარყოფა',
-        reverseButtons: true
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          deleteProductHandler(productId);
-          notify(false, "პროდუქტი წაიშალა")
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია');
+  
+    await swalWithBootstrapButtons.fire({
+      title: 'დაადასტურეთ, რომ გსურთ პროდუქტის სტატუსის რედაქტირება',
+      text: 'დადასტურების შემთხვევაში, პროდუქტი რედაქტირდება ავტომატურად',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'რედაქტირება',
+      cancelButtonText: 'უარყოფა',
+      reverseButtons: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await Promise.all([
+            axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`, {
+              data: [
+                {
+                  id: productId,
+                  attributes: {
+                    product_statuses: updateProductStatus
+                  }
+                }
+              ]
+            }),
+            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`)
+          ]).then(([putResponse, getResponse]) => {
+            const updatedProduct = putResponse.data.data[0];
+            const updatedData = getResponse.data.data[0];
+  
+            notify(false, "პროდუქტი რედაქტირდა");
+            dispatch(setProductState(updatedData));
+          });
+        } catch (error) {
+          console.log(error);
         }
-      });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია');
+      }
+    });
   };
 
   const deleteProductHandler = async (productId) => {
@@ -161,6 +243,35 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
   const unforeseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100;
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
+
+
+  const confirmHandler = (item) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
+        text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'წაშლა',
+        cancelButtonText: 'უარყოფა',
+        reverseButtons: true
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          deleteProductHandler(item);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('უარყოფილია', '');
+        }
+      });
+  };
 
   useEffect(() => {
     if (projectId) {
@@ -343,7 +454,48 @@ const Products = ({ editHandler, setSelect, totalSum, searchType }) => {
                       </td>
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
-                      <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
+                      <td className="georgian">
+                        <div className="form-group">
+                          {product?.attributes?.type === "product" ? (
+                            <select
+                              className="form-select"
+                              defaultValue={product.attributes.product_statuses?.data[0]?.id}
+                              onChange={(e) => {
+                                setUpdateProductStatus(e.target.value)
+                                let productId = product.id
+                                confirmEdit(e, productId)
+                              }}
+                            >
+                              {productStatus && productStatus.map((item) => {
+                                return (
+                                  <option key={item.id} value={item.id}>{item.attributes.title}</option>
+                                )
+                              })}
+                            </select>
+                          ) : (
+                            <select
+                              className="form-select"
+                              defaultValue={product.attributes.craft_status?.data[0]?.id}
+                              onChange={(e) => {
+                                setUpdateCraftStatus((updateCraftStatus) => ({
+                                  ...updateCraftStatus,
+                                  craft_status: {
+                                    connect: [{ id: e.target.value }],
+                                  },
+                                }));
+                              }}
+                            >
+                              {craftStatus && craftStatus.map((item) => {
+                                return (
+                                  <option key={item.id} value={item.id}>{item.attributes.title}</option>
+                                )
+                              })}
+                            </select>
+                          )}
+                        </div>
+                      </td>
+                      {/* <td className="georgian">{product?.attributes?.type === "product" ? <select></select> : ""}</td> */}
+                      {/* <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td> */}
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>

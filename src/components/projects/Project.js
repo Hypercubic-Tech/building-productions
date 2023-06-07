@@ -14,7 +14,7 @@ import EditService from "../popup/EditService";
 import { Export } from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
-const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
+const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions, productStatus }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
@@ -35,7 +35,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_status,product_statuses,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data;
         dispatch(setProducts(data.data));
         dispatch(setCategory(id));
@@ -47,7 +47,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,craft_status,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,craft_status,product_statuses,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
@@ -298,12 +298,13 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
-                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
+                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} productStatus={productStatus} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
                         />}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
                             setSelect={setSelect}
                             craftStatus={craftStatus}
+                            productStatus={productStatus}
                             crafts={crafts}
                             unit={unit}
                             allCategories={projectCategory}
@@ -323,7 +324,9 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
+                        productStatus={productStatus}
                         projectId={projectId}
+                        craftStatus={craftStatus}
                         editHandler={editHandler}
                         services={services}
                         allProduct={allProduct}
