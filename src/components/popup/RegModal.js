@@ -303,13 +303,13 @@ const RegModal = ({ handleRegistration, onClose }) => {
                   onClick={prevStepHandler}
                   style={{
                     display: step === 1 ? "none" : "",
-                    width: "35%"
+                    width: "43%"
                   }}
                 >
                   უკან
                 </button>
                 <button
-                  style={{ width: "35%" }}
+                  style={{ width: "43%" }}
                   className={` btn btn-success georgian ${styles.btn}`}
                   type={regData?.paymentPlan === "free" ? 'submit' : 'button'}
                   onClick={() => {
