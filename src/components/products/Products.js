@@ -465,7 +465,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"
-                              value={product.attributes.product_statuses?.data[0]?.id}
+                              defaultValue={product.attributes.product_statuses?.data[0]?.id}
                               onChange={(e) => {
                                 setUpdateProductStatus(e.target.value)
                                 let productId = product.id
@@ -479,24 +479,25 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                               })}
                             </select>
                           ) : (
-                            <select
-                              className="form-select"
-                              defaultValue={product.attributes.craft_status?.data[0]?.id}
-                              onChange={(e) => {
-                                setUpdateCraftStatus((updateCraftStatus) => ({
-                                  ...updateCraftStatus,
-                                  craft_status: {
-                                    connect: [{ id: e.target.value }],
-                                  },
-                                }));
-                              }}
-                            >
-                              {craftStatus && craftStatus.map((item) => {
-                                return (
-                                  <option key={item.id} value={item.id}>{item.attributes.title}</option>
-                                )
-                              })}
-                            </select>
+                            // <select
+                            //   className="form-select"
+                            //   defaultValue={product.attributes.craft_status?.data[0]?.id}
+                            //   onChange={(e) => {
+                            //     setUpdateCraftStatus((updateCraftStatus) => ({
+                            //       ...updateCraftStatus,
+                            //       craft_status: {
+                            //         connect: [{ id: e.target.value }],
+                            //       },
+                            //     }));
+                            //   }}
+                            // >
+                            //   {craftStatus && craftStatus.map((item) => {
+                            //     return (
+                            //       <option key={item.id} value={item.id}>{item.attributes.title}</option>
+                            //     )
+                            //   })}
+                            // </select>
+                            ""
                           )}
                         </div>
                       </td>
