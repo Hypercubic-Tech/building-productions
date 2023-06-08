@@ -51,11 +51,11 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
                 <div className="modal-content custom-width" style={{ width: "90% ", height: "90%", margin: "5%" }}>
                 <div className="modal-header" id="kt_modal_add_user_header">
                         <h3>ამოღება</h3>
-                        <div className=" w-1000">
-                            <div className=" mb-100">
+                        <div className=" w-1000" style={{display: "flex", flexDirection: "row", alignItems: "center", gap: "15px"}}>
                                 <label className="required fs-6 fw-bold form-label mb-2 georgian">
                                 აირჩიეთ ფორმატი:
                                 </label>
+                            <div className=" mb-100" >
                                 <select
                                 name="format"
                                 data-control="select2"
@@ -70,16 +70,6 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
                                 </select>
                             </div>
                             <div className="text-center">
-                                <button
-                                type="reset"
-                                className="btn btn-light me-3 georgian"
-                                data-kt-users-modal-action="cancel"
-                                onClick={() => {
-                                    setSelect(null)
-                                }}
-                                >
-                                გამორთვა
-                                </button>
                                 <button
                                 className="btn btn-primary"
                                 data-kt-users-modal-action="submit"

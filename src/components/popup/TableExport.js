@@ -8,8 +8,8 @@ const TableExport = ({totalSum, aggregatedProducts,
       totalSumPrice, select
     }) => {
     return(
-      <div id="table2Id">
-       {select === "exportPopUp" && <div style={{margin: "50px"}}>
+      <div id="table2Id" style={{paddingTop: "30px"}}>
+       {select === "exportPopUp" && <div style={{margin: "50px", marginTop: "30px"}} >
             <img
               alt="Logo"
               src="/assets/media/logos/logo-demo11.svg"
