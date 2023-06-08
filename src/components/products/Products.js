@@ -461,10 +461,11 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
                       <td className="georgian">
                         <div className="form-group">
+                          {console.log(product.attributes.product_statuses?.data[0]?.id, 'hi')}
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"
-                              defaultValue={product.attributes.product_statuses?.data[0]?.id}
+                              value={product.attributes.product_statuses?.data[0]?.id}
                               onChange={(e) => {
                                 setUpdateProductStatus(e.target.value)
                                 let productId = product.id
