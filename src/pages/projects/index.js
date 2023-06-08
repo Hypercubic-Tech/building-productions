@@ -142,7 +142,7 @@ const index = () => {
     return (
         <>
             <div className="container-xxl">
-                <div className={` d-flex justify-content-between m-3 ${styles.mt20}`}>
+                <div className={` d-flex justify-content-between ${styles.mt20}`}>
                     <button
                         type="button"
                         className="btn btn-primary"
