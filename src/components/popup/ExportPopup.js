@@ -126,24 +126,24 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
                             </span>
                         </div>
                     </div>
-                            <TableExport 
-                                totalSum={totalSum} 
-                                select={select}
-                                aggregatedProducts={aggregatedProducts} 
-                                projectId={projectId}
-                                productsToMap={productsToMap} 
-                                startIndex={startIndex}
-                                endIndex={endIndex}
-                                activeItem={activeItem}
-                                totalSumPrice={totalSumPrice}
-                                categorySums={categorySums}
-                                vatTotal={vatTotal}
-                                vatTotalPrice={vatTotalPrice}
-                                unforeseenExpenses={unforeseenExpenses}
-                                unforeseenExpensesPrice={unforeseenExpensesPrice}
-                                service_percentage={service_percentage}
-                                servicePercentagePrice={servicePercentagePrice}
-                            />
+                        <TableExport 
+                            totalSum={totalSum} 
+                            select={select}
+                            aggregatedProducts={aggregatedProducts} 
+                            projectId={projectId}
+                            productsToMap={productsToMap} 
+                            startIndex={startIndex}
+                            endIndex={endIndex}
+                            activeItem={activeItem}
+                            totalSumPrice={totalSumPrice}
+                            categorySums={categorySums}
+                            vatTotal={vatTotal}
+                            vatTotalPrice={vatTotalPrice}
+                            unforeseenExpenses={unforeseenExpenses}
+                            unforeseenExpensesPrice={unforeseenExpensesPrice}
+                            service_percentage={service_percentage}
+                            servicePercentagePrice={servicePercentagePrice}
+                        />
                 </div>
             </div>
         </div>
