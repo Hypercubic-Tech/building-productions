@@ -6,12 +6,13 @@ import { Export } from './Export';
 const YourComponent = () => {
     const [totalSumProduct, setTotalSumProduct] = useState(null);
     const router = useRouter();
+    const [popUp, setPopUp] = useState();
     const { projectId } = router.query;
 
     useEffect(() => {
         if (projectId) {
             const totalSumHandler = async () => {
-                await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
+                await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
                     .then((res) => {
                         const data = res.data;
                         setTotalSumProduct(data.data);
@@ -79,7 +80,7 @@ const YourComponent = () => {
 
     return (
         <div>
-            <table id="tableId">
+            <table id="ExportTableId">
                 <thead>
                     <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                         <th>სამუშაო</th>
@@ -87,6 +88,7 @@ const YourComponent = () => {
                         <th>რაოდენობა</th>
                         <th>ჯამი</th>
                     </tr>
+                    
                     {totalSumProduct?.map((product, index) => {
                         return (
                             <tr key={index}>
@@ -98,7 +100,7 @@ const YourComponent = () => {
                         );
                     })}
                     <tr>
-                        <td></td>
+                        <td>rame</td>
                         <td></td>
                         <td></td>
                         <td>{`სულ: ${productsTotal.toFixed(2) || 0} ლარი`}</td>
