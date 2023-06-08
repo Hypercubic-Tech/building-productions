@@ -13,11 +13,7 @@ import TableExport from "../popup/TableExport";
 import ExportPopup from "../popup/ExportPopup";
 import styles from "./Products.module.css";
 
-<<<<<<< HEAD
-const Products = ({ editHandler, setSelect, totalSum, searchType, select }) => {
-=======
-const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus }) => {
->>>>>>> origin/whatever
+const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select }) => {
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
