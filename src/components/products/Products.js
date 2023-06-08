@@ -7,11 +7,12 @@ import Swal from "sweetalert2";
 
 import { selectProduct, deleteProductState, setProductState, setProducts } from "../../store/slices/productSlice";
 import { setCategory } from "../../store/slices/categorySlice";
+import ExportPopup from "../popup/ExportPopup"
 
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus }) => {
+const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select }) => {
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
@@ -567,8 +568,27 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
           </ul>
         </nav>}
       </div>
+      {select === "exportPopUp" &&
+                         <ExportPopup setSelect={setSelect}
+                            totalSum={totalSum} 
+                            aggregatedProducts={aggregatedProducts} 
+                            projectId={projectId}
+                            productsToMap={productsToMap} 
+                            startIndex={startIndex}
+                            endIndex={endIndex}
+                            activeItem={activeItem}
+                            totalSumPrice={totalSumPrice}
+                            categorySums={categorySums}
+                            vatTotal={vatTotal}
+                            vatTotalPrice={vatTotalPrice}
+                            unforeseenExpenses={unforeseenExpenses}
+                            unforeseenExpensesPrice={unforeseenExpensesPrice}
+                            service_percentage={service_percentage}
+                            servicePercentagePrice={servicePercentagePrice}
+                            select={select}
+                          />}
     </>
   );
 };
 
-export default Products;
+export default Products
