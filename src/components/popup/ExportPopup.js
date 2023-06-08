@@ -4,7 +4,11 @@ import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
 import TableExport from "./TableExport";
 
-const ExportPopup = ({ setSelect, totalSum, aggregatedProducts, projectId, productsToMap, startIndex, endIndex, activeItem, totalSumPrice }) => {
+const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
+     projectId, productsToMap, startIndex, endIndex, vatTotal, 
+     activeItem, unforeseenExpensesPrice, servicePercentagePrice,
+      totalSumPrice, categorySums, vatTotalPrice, unforeseenExpenses,
+      service_percentage, select }) => {
     const [format, setFormat] = useState('excel');
 
     const handleFormatChange = (e) => {
@@ -12,7 +16,7 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts, projectId, produ
     };
   
     const exportToPDF = () => {
-      const table = document.getElementById('tableId');
+      const table = document.getElementById('table2Id');
   
       html2canvas(table).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
@@ -27,7 +31,7 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts, projectId, produ
     };
   
     const exportToExcel = () => {
-      const workbook = XLSX.utils.table_to_book(document.getElementById('tableId'));
+      const workbook = XLSX.utils.table_to_book(document.getElementById('table2Id'));
       XLSX.writeFile(workbook, 'table.xlsx');
     };
   
@@ -134,6 +138,7 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts, projectId, produ
                     </div>
                             <TableExport 
                                 totalSum={totalSum} 
+                                select={select}
                                 aggregatedProducts={aggregatedProducts} 
                                 projectId={projectId}
                                 productsToMap={productsToMap} 
@@ -141,6 +146,13 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts, projectId, produ
                                 endIndex={endIndex}
                                 activeItem={activeItem}
                                 totalSumPrice={totalSumPrice}
+                                categorySums={categorySums}
+                                vatTotal={vatTotal}
+                                vatTotalPrice={vatTotalPrice}
+                                unforeseenExpenses={unforeseenExpenses}
+                                unforeseenExpensesPrice={unforeseenExpensesPrice}
+                                service_percentage={service_percentage}
+                                servicePercentagePrice={servicePercentagePrice}
                             />
                 </div>
             </div>

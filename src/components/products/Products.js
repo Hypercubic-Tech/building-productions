@@ -207,6 +207,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, select }) => {
       <div className="table-responsive">
         <TableExport 
           totalSum={totalSum} 
+          select={select} 
           aggregatedProducts={aggregatedProducts} 
           projectId={projectId}
           productsToMap={productsToMap} 
@@ -255,6 +256,14 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, select }) => {
                             endIndex={endIndex}
                             activeItem={activeItem}
                             totalSumPrice={totalSumPrice}
+                            categorySums={categorySums}
+                            vatTotal={vatTotal}
+                            vatTotalPrice={vatTotalPrice}
+                            unforeseenExpenses={unforeseenExpenses}
+                            unforeseenExpensesPrice={unforeseenExpensesPrice}
+                            service_percentage={service_percentage}
+                            servicePercentagePrice={servicePercentagePrice}
+                            select={select}
                           />}
     </>
   );

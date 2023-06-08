@@ -13,7 +13,6 @@ import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
 import { Export } from "../popup/Export";
 import Drawings from "../popup/Drawings";
-import ExportPopup from "../popup/ExportPopup";
 
 const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
   const [select, setSelect] = useState(null);

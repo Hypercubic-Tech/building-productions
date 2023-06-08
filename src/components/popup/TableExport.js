@@ -5,15 +5,21 @@ const TableExport = ({totalSum, aggregatedProducts,
     activeItem, categorySums, vatTotal, vatTotalPrice,
      unforeseenExpenses, unforeseenExpensesPrice,
       service_percentage, servicePercentagePrice,
-      totalSumPrice
+      totalSumPrice, select
     }) => {
     return(
-      <>
+      <div id="table2Id">
+       {select === "exportPopUp" && <div style={{margin: "50px"}}>
+            <img
+              alt="Logo"
+              src="/assets/media/logos/logo-demo11.svg"
+              className="h-20px h-lg-30px"
+            />
+        </div>}
         <table
           className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
-          id="tableId"
+          style={{marginLeft: "50px"}}
           >
-          <>logo</>
           {totalSum ? (
             <thead>
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
@@ -87,7 +93,7 @@ const TableExport = ({totalSum, aggregatedProducts,
                 <th className="georgian">ღირებულება</th>
                 <th className="georgian">ტიპი</th>
                 <th className="georgian">სტატუსი</th>
-                <th className="text-end min-w-100px georgian">ცვლილება</th>
+               {select === null && <th className="text-end min-w-100px georgian">ცვლილება</th>}
               </tr>
             </thead>
           )}
@@ -155,7 +161,8 @@ const TableExport = ({totalSum, aggregatedProducts,
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
-                      <td
+                      {console.log(select)}
+                      {select === null && <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
                         <div
@@ -188,7 +195,7 @@ const TableExport = ({totalSum, aggregatedProducts,
                             </div>
                           </div>
                         ) : ""}
-                      </td>
+                      </td>}
                     </tr>
                   </tbody>
                 )
@@ -196,7 +203,7 @@ const TableExport = ({totalSum, aggregatedProducts,
             </>
           )}
         </table>
-      </>
+      </div>
     );
 }
 

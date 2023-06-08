@@ -25,12 +25,27 @@ const YourComponent = () => {
 
 
     let productsTotal = 0;
+    let categorySums = [];
+
     if (totalSumProduct && totalSumProduct.length > 0) {
-        productsTotal = totalSumProduct.reduce(
-            (sum, product) =>
-                sum + parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price),
-            0
-        );
+        totalSumProduct.forEach((product) => {
+            const categoryTitle = product?.attributes?.categories?.data[0]?.attributes?.title;
+            const quantity = parseInt(product?.attributes?.quantity);
+            const price = parseFloat(product?.attributes?.price);
+
+            if (categoryTitle) {
+                const existingCategorySum = categorySums.find((item) => item.title === categoryTitle);
+                if (existingCategorySum) {
+                    existingCategorySum.sum += quantity * price;
+                } else {
+                    categorySums.push({
+                        title: categoryTitle,
+                        sum: quantity * price,
+                    });
+                }
+                productsTotal += quantity * price;
+            }
+        });
     }
 
     let vatTotal = 0;
@@ -41,11 +56,10 @@ const YourComponent = () => {
         );
     }
 
-
-    let unforseenExpenses = 0;
+    let unforeseenExpenses = 0;
     if (totalSumProduct && totalSumProduct.length > 0) {
-        unforseenExpenses = totalSumProduct.reduce(
-            (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses),
+        unforeseenExpenses = totalSumProduct.reduce(
+            (sum, product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses || 0),
             0
         );
     }
@@ -54,15 +68,15 @@ const YourComponent = () => {
     if (totalSumProduct && totalSumProduct.length > 0) {
         service_percentage = totalSumProduct.reduce(
             (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
-
+            0
         );
     }
 
-    const totalProductPrice = parseFloat(productsTotal)
-    const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
-    const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
-    const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
-    const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
+    const totalProductPrice = parseFloat(productsTotal);
+    const vatTotalPrice = (parseFloat(totalProductPrice) * parseInt(vatTotal)) / (100 + parseFloat(vatTotal));
+    const unforeseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100;
+    const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
+    const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
 
     return (
         <div>
@@ -81,7 +95,6 @@ const YourComponent = () => {
                                 <td>{product?.attributes?.categories?.data[0]?.attributes?.title}</td>
                                 <td>{product?.attributes?.unit?.data?.attributes?.title}</td>
                                 <td>{product?.attributes?.quantity}</td>
-                                <td>{product?.attributes?.status ? 'შეძენილია' : 'არ არის შეძენილი'}</td>
                                 <td>{`${parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price)} ლარი`}</td>
                             </tr>
                         );
@@ -90,12 +103,10 @@ const YourComponent = () => {
                         <td>rame</td>
                         <td></td>
                         <td></td>
-                        <td></td>
                         <td>{`სულ: ${productsTotal.toFixed(2) || 0} ლარი`}</td>
                     </tr>
 
                     <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -106,12 +117,10 @@ const YourComponent = () => {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                        <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforeseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
                     </tr>
 
                     <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -119,7 +128,6 @@ const YourComponent = () => {
                     </tr>
 
                     <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
