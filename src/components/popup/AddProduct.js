@@ -13,6 +13,7 @@ const AddProduct = ({
     unit,
     suppliers,
     craftStatus,
+    productStatus
 }) => {
     const dispatch = useDispatch();
 
@@ -25,9 +26,7 @@ const AddProduct = ({
     const [filteredCrafts, setFilteredCrafts] = useState();
     const [craftImage, setCraftImage] = useState();
 
-    const activeCategoryId = useSelector(state => state?.cats?.category);
-    console.log(activeCategoryId, 'activeCategoryId')
-    // const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
+    const activeCategoryId = useSelector(state => state.cats.category);
 
     const [productData, setProductData] = useState({
         image: image,
@@ -48,7 +47,9 @@ const AddProduct = ({
         project: {
             connect: [{ id: projectId }]
         },
-        status: false
+        product_statuses: {
+            connect: [{ id: null }]
+        },
     });
 
     const [craftData, setCraftData] = useState({
@@ -78,13 +79,14 @@ const AddProduct = ({
                     setFilteredCrafts(data)
                 })
         }
+
         getCraftsByCategory();
     }, []);
 
     const defaultProductsHandler = async (id, pageIndex) => {
         if (id) {
             try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,product_statuses&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
                 const data = response.data;
                 dispatch(setProducts(data.data));
                 dispatch(setCategory(id));
@@ -109,8 +111,8 @@ const AddProduct = ({
             notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
-        defaultProductsHandler(activeCategoryId);
         setSelect(null);
+        defaultProductsHandler(activeCategoryId);
     };
 
     const handleCraftSubmit = async () => {
@@ -125,7 +127,7 @@ const AddProduct = ({
                     dispatch(setProductState(data.data));
                 })
         } catch (err) {
-            // notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+            notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
         defaultProductsHandler(activeCategoryId);
@@ -456,19 +458,35 @@ const AddProduct = ({
                                             />
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
-                                        <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-
-                                            <div style={{ marginTop: '30px' }} className="form-check">
-                                                <label className="form-check-label" htmlFor="exampleCheckbox">
-                                                    შეძენილია
-                                                </label>
-                                                <input onChange={(e) => setProductData((prevSendData) => ({
-                                                    ...prevSendData,
-                                                    status: true,
-                                                }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
-                                            </div>
+                                        <div className="col-md-12 fv-row fv-plugins-icon-container">
+                                            <label className="required fs-5 fw-bold mb-2 georgian">
+                                                სტატუსი
+                                            </label>
+                                            <select
+                                                onClick={(e) => {
+                                                    setProductData((prevSendData) => ({
+                                                        ...prevSendData,
+                                                        product_statuses: {
+                                                            connect: [{ id: e.target.value }],
+                                                        },
+                                                    }));
+                                                }}
+                                                name="count"
+                                                defaultValue='none'
+                                                className="form-select form-select-solid georgian"
+                                                data-placeholder="საზომიერთ."
+                                            >
+                                                <option value="none" disabled hidden>აირჩიეთ სტატუსი</option>
+                                                {productStatus &&
+                                                    productStatus.map((status) => {
+                                                        return (
+                                                            <option key={status?.id} value={status?.id}>
+                                                                {status?.attributes?.title}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -679,7 +697,3 @@ const AddProduct = ({
 };
 
 export default AddProduct;
-
-
-// bakcup
-

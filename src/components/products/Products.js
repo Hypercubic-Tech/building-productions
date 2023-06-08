@@ -5,17 +5,54 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import { selectProduct, deleteProductState } from "../../store/slices/productSlice";
+import { selectProduct, deleteProductState, setProductState, setProducts } from "../../store/slices/productSlice";
+import { setCategory } from "../../store/slices/categorySlice";
 
 import notify from "../../utils/notify";
 import TableExport from "../popup/TableExport";
 import ExportPopup from "../popup/ExportPopup";
 import styles from "./Products.module.css";
 
+<<<<<<< HEAD
 const Products = ({ editHandler, setSelect, totalSum, searchType, select }) => {
+=======
+const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus }) => {
+>>>>>>> origin/whatever
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
+  const [productToEdit, setProductToEdit] = useState(null);
+  //   const [productData, setProductData] = useState({
+  //     image: image,
+  //     title: productToEdit,
+  //     type: "product",
+  //     supplier: {
+  //         connect: [{ id: null }],
+  //     },
+  //     productLink: "",
+  //     quantity: 0,
+  //     unit: {
+  //         connect: [{ id: null }],
+  //     },
+  //     price: 0,
+  //     categories: {
+  //         connect: [{ id: activeCategoryId }],
+  //     },
+  //     project: {
+  //         connect: [{ id: projectId }]
+  //     },
+  //     product_statuses: {
+  //         connect: [{ id: null }]
+  //     },
+  // });
+  const [updateCraftStatus, setUpdateCraftStatus] = useState({
+    craft_status: {
+      connect: [{ id: null }]
+    },
+  })
+  const [updateProductStatus, setUpdateProductStatus] = useState()
+
+  const activeCategoryId = useSelector(state => state.cats.category);
   const products = useSelector(state => state.prod.products);
   const router = useRouter();
   const { projectId } = router.query;
@@ -23,6 +60,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, select }) => {
   let itemsPerPage = 5;
 
   let productsToMap = products;
+
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
@@ -60,7 +98,37 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, select }) => {
     }
   };
 
-  const confirmHandler = (productId) => {
+  const defaultProductsHandler = async (id, pageIndex) => {
+    if (id) {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const data = response.data;
+        dispatch(setProducts(data.data));
+        dispatch(setCategory(id));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  // const handleGetEditProduct = async (e, product) => {
+  //   let productId = product.id
+
+  //   try {
+  //     await axios
+  //       .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
+  //       .then((res) => {
+  //         const data = res.data
+  //         setProductToEdit(data.data);
+  //         // confirmEdit(e, productId)
+  //       })
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  //   console.log(productToEdit)
+  // };
+
+  const confirmEdit = async (e, productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-primary',
@@ -68,26 +136,49 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, select }) => {
       },
       buttonsStyling: false
     });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: 'დაადასტურეთ, რომ გსურთ პროდუქტის წაშლა',
-        text: 'დადასტურების შემთხვევაში, პროდუქტი წაიშლება ავტომატურად',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'წაშლა',
-        cancelButtonText: 'უარყოფა',
-        reverseButtons: true
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          deleteProductHandler(productId);
-          notify(false, "პროდუქტი წაიშალა")
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია');
+  
+    await swalWithBootstrapButtons.fire({
+      title: 'დაადასტურეთ, რომ გსურთ პროდუქტის სტატუსის რედაქტირება',
+      text: 'დადასტურების შემთხვევაში, პროდუქტი რედაქტირდება ავტომატურად',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'რედაქტირება',
+      cancelButtonText: 'უარყოფა',
+      reverseButtons: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await Promise.all([
+            axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`, {
+              data: [
+                {
+                  id: productId,
+                  attributes: {
+                    product_statuses: {
+                      connect: [{ id: updateProductStatus }]
+                  },
+                  }
+                }
+              ]
+            }),
+            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*/${productId}`)
+          ]).then(([putResponse, getResponse]) => {
+            const updatedProduct = putResponse.data.data;
+            const updatedData = getResponse.data.data;
+            // console.log(updatedProduct, 'hihihihiih')
+            notify(false, "პროდუქტი რედაქტირდა");
+            dispatch(setProductState(updatedData));
+          });
+        } catch (error) {
+          console.log(error);
         }
-      });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია');
+      }
+    });
   };
+
+  // console.log(productsToMap, 'products')
 
   const deleteProductHandler = async (productId) => {
     await axios
@@ -163,6 +254,35 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, select }) => {
   const unforeseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100;
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
+
+
+  const confirmHandler = (item) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
+        text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'წაშლა',
+        cancelButtonText: 'უარყოფა',
+        reverseButtons: true
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          deleteProductHandler(item);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('უარყოფილია', '');
+        }
+      });
+  };
 
   useEffect(() => {
     if (projectId) {

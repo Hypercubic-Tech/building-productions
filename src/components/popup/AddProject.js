@@ -263,7 +263,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
             </span>
           </div>
         </div>
-        <div className="modal-body py-lg-10 px-lg-10">
+        <div className={` modal-body py-lg-10 px-lg-10 ${styles.scroll}`}>
           <div
             className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
             id="kt_modal_create_app_stepper"
@@ -372,68 +372,14 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         })}
                       </select>
                     </div>
-                    <div className="w-100">
-                      <div className="row mb-10">
-                        <div className=" d-flex align-items-center">
-                          {/* <input
-                            form-check form-switch
-                            className="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            id="flexSwitchCheckDefault"
-                            onChange={(e) => {
-                              const isChecked = e.target.checked;
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                vat: isChecked,
-                              }));
-                              hiddenInputHandler();
-                            }}
-                          /> */}
-                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className={` georgian `}>დღგ-ს გადამხდელი / გაუთვალისწინებელი ხარჯები</span>
-                          </label>
-                        </div>
-                        {/* {hiddenInput ? ( */}
-                        <div className={`${styles.inputWrap} col-6 `}>
-                          <input
-                            className="form-control georgian form-control-solid"
-                            placeholder="დღგ-ს გადამხდელი"
-                            type="text"
-                            onChange={(e) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                vatPercent: e.target.value,
-                              }));
-                            }}
-                          />
-                          <i className={`${styles.percent} bi bi-percent `}></i>
-                        </div>
-                        {/* ) : ""} */}
-                        <div className={`${styles.inputWrap} col-6 `}>
-                          <input
-                            onChange={(event) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                unforeseenExpenses: event.target.value,
-                              }));
-                            }}
-                            type="text"
-                            className="form-control georgian form-control-solid"
-                            placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
-                          />
-                          <i className={`${styles.percent} bi bi-percent `}></i>
-                        </div>
-                      </div>
-
-                    </div>
+                    
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
-                        <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მდებარეობა / ფართობი
-                        </label>
                         <div className="row fv-row">
                           <div className="col-6">
+                        <label className="required fs-6 fw-bold form-label georgian mb-2">
+                          მდებარეობა
+                        </label>
                             <select
                               id="city"
                               defaultValue='none'
@@ -458,6 +404,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             </select>
                           </div>
                           <div className="col-6">
+                          <label className="required fs-6 fw-bold form-label georgian mb-2">
+                          ფართობი
+                          </label>
                             <input
                               id="area"
                               onChange={(event) => {
@@ -478,11 +427,11 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
-                        <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მისამართი / ტელეფონი
-                        </label>
                         <div className="row fv-row">
                           <div className="col-6">
+                        <label className="required fs-6 fw-bold form-label georgian mb-2">
+                          მისამართი
+                        </label>
                             <input
                               id="address"
                               onChange={(event) => {
@@ -497,6 +446,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             />
                           </div>
                           <div className="col-6">
+                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                              ტელეფონი
+                            </label>
                             <input
                               id="phone"
                               onChange={(event) => {
@@ -513,26 +465,87 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="row mb-10">
-                      <div style={{ flexDirection: "column" }} className="d-flex align-items-center">
+                    <div className="w-100">
+                      <div className="row mb-10">
+                        {/* <div className=" d-flex align-items-center">
+                          <input
+                            form-check form-switch
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            onChange={(e) => {
+                              const isChecked = e.target.checked;
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                vat: isChecked,
+                              }));
+                              hiddenInputHandler();
+                            }}
+                          />
+                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                            <span className={` georgian `}>დღგ-ს გადამხდელი / გაუთვალისწინებელი ხარჯები</span>
+                          </label>
+                        </div> */}
+                        {/* {hiddenInput ? ( */}
+                        <div className={`${styles.inputWrap} col-4 `}>
                         <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                          <span className={`${styles.ml2} georgian `}>მომსახურეობის ხარჯები </span>
+                          <span className={` georgian `}>დღგ-ს გადამხდელი</span>
                         </label>
-                        <input
-                          className="form-control georgian form-control-solid"
-                          type="text"
-                          id="flexSwitchCheckDefault"
-                          placeholder="შეიყვანეთ მომსახურების ხარჯები (%)"
-                          onChange={(e) => {
-                            setSendData((prevSendData) => ({
-                              ...prevSendData,
-                              service_percentage: e.target.value,
-                            }));
-                            // hiddenInputHandler();
-                          }}
-                        />
-
+                          <input
+                            className="form-control georgian form-control-solid"
+                            placeholder="დღგ-ს გადამხდელი (%)"
+                            type="text"
+                            onChange={(e) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                vatPercent: e.target.value,
+                              }));
+                            }}
+                          />
+                          {/* <i className={`${styles.percent} bi bi-percent `}></i> */}
+                        </div>
+                        {/* ) : ""} */}
+                        <div className={`${styles.inputWrap} col-4 `}>
+                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                          <span className={` georgian `}>გაუთვალისწინებელი ხარჯები</span>
+                        </label>
+                          <input
+                            onChange={(event) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                unforeseenExpenses: event.target.value,
+                              }));
+                            }}
+                            type="text"
+                            className="form-control georgian form-control-solid"
+                            placeholder="გაუთვალისწინებელი ხარჯები (%)"
+                          />
+                          {/* <i className={`${styles.percent} bi bi-percent `}></i> */}
+                        </div>
+                        <div className={`${styles.inputWrap} col-4 `}>
+                          <div style={{ flexDirection: "column" }} className="d-flex">
+                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                            <span className={` georgian `}>მომსახურეობის ხარჯები </span>
+                          </label>
+                          <input
+                            className="form-control georgian form-control-solid"
+                            type="text"
+                            id="flexSwitchCheckDefault"
+                            placeholder="მომსახურების ხარჯები (%)"
+                            onChange={(e) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                service_percentage: e.target.value,
+                              }));
+                              // hiddenInputHandler();
+                            }}
+                              />
+                            {/* <i className={`${styles.percent} bi bi-percent `}></i> */}
+                          </div>
+                        </div>
                       </div>
+
                     </div>
                   </div>
                 </div>
