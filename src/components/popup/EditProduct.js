@@ -13,7 +13,7 @@ const EditProduct = ({
     setSelect,
     unit,
     suppliers,
-    craftStatus,
+    productStatus
 }) => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -28,9 +28,10 @@ const EditProduct = ({
     const [craftImage, setCraftImage] = useState();
     const [supplierOption, setSupplierOption] = useState(product.attributes.supplier.data.id);
     const [unitOption, setUnitOption] = useState(product.attributes.unit.data.id)
-
+    // console.log(product.attributes.product_status.data.id)
+    const [statusOption, setStatusOption] = useState(product.attributes.product_status.data.id)
     const activeCategoryId = useSelector(state => state.cats.category);
-
+    console.log(product?.attributes, 'prod')
     const [productData, setProductData] = useState({
         image: image,
         title: product.attributes.title,
@@ -50,7 +51,9 @@ const EditProduct = ({
         project: {
             connect: [{ id: projectId }]
         },
-        status: product.attributes.status
+        product_status: {
+            connect: [{ id: product?.attributes?.product_status?.data[0]?.id }]
+        },
     });
 
     useEffect(() => {
@@ -67,7 +70,7 @@ const EditProduct = ({
     const defaultProductsHandler = async (id, pageIndex) => {
         if (id) {
             try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
                 const data = response.data;
                 dispatch(setProducts(data.data));
                 dispatch(setCategory(id));
@@ -84,7 +87,7 @@ const EditProduct = ({
                     data: productData,
                 })
                 .then((res) => {
-                    const data = res.data;  
+                    const data = res.data;
                     notify(false, "პროდუქტი რედაქტირდა");
                     dispatch(setProductState(data.data));
                 });
@@ -95,7 +98,7 @@ const EditProduct = ({
         setSelect(null);
         defaultProductsHandler(activeCategoryId);
     };
-    
+
 
     const handleMediaUpload = async (img) => {
         if (!img) {
@@ -412,19 +415,35 @@ const EditProduct = ({
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
-                                    <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-
-                                        <div style={{ marginTop: '30px' }} className="form-check">
-                                            <label className="form-check-label" htmlFor="exampleCheckbox">
-                                                შეძენილია
-                                            </label>
-                                            <input defaultChecked={productData.status ?  'checked' : ""} onChange={(e) => setProductData((prevSendData) => ({
-                                                ...prevSendData,
-                                                status: !prevSendData.status,
-                                            }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
-                                        </div>
+                                    <div className="col-md-12 fv-row fv-plugins-icon-container">
+                                        <label className="required fs-5 fw-bold mb-2 georgian">
+                                            სტატუსი
+                                        </label>
+                                        <select
+                                            onClick={(e) => {
+                                                setProductData((prevSendData) => ({
+                                                    ...prevSendData,
+                                                    product_status: {
+                                                        connect: [{ id: e.target.value }],
+                                                    },
+                                                }));
+                                            }}
+                                            name="count"
+                                            defaultValue={statusOption}
+                                            className="form-select form-select-solid georgian"
+                                            data-placeholder="საზომიერთ."
+                                        >
+                                            <option value="none" disabled hidden>აირჩიეთ სტატუსი</option>
+                                            {productStatus &&
+                                                productStatus.map((status) => {
+                                                    return (
+                                                        <option key={status?.id} value={status?.id}>
+                                                            {status?.attributes?.title}
+                                                        </option>
+                                                    );
+                                                })}
+                                        </select>
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
-
                                     </div>
                                 </div>
                             </div>
