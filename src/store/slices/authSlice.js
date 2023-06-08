@@ -24,6 +24,7 @@ export const authSlice = createSlice({
     },
     setAuthEmail(state, action) {
       state.email = action.payload;
+      console.log(action)
     },
     setAuthUserId(state, action) {
       state.user_id = action.payload;

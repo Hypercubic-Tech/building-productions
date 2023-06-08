@@ -13,25 +13,24 @@ import notify from "../../utils/notify";
 import styles from "../popup/AuthModal.module.css";
 
 const AuthModal = ({ handleAuthorization, onClose }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [lossData, setLossData] = useState(false);
+  const [authData, setAuthData] = useState({
+    identifier: "",
+    password: "",
+  });
   const dispatch = useDispatch();
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (authData?.identifier?.length === 0 || authData?.password?.length === 0) {
+      return setLossData(true)
+    }
+
     await axios
       .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local`, {
-        identifier: email,
-        password: password,
+        identifier: authData?.identifier,
+        password: authData?.password,
       })
       .then((res) => {
         let data = res.data;
@@ -97,38 +96,50 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
             </svg>
           </div>
           <div className="d-grid gap-2">
-            <label className="mt-2 fx">Email:</label>
+            <label className="mt-2 fx">იმეილი:</label>
             <input
+              style={{ borderColor: lossData && authData?.identifier?.length <= 0 ? "red" : "" }}
               autoComplete="username"
-              required
-              id="email"
+              id="identifier"
               className="form-control"
-              placeholder="Email"
+              placeholder="youremail@gmail.com"
               type="email"
-              value={email}
-              onChange={handleEmailChange}
+              onChange={(e) => {
+                setAuthData((prevSendData) => ({
+                  ...prevSendData,
+                  identifier: e.target.value
+                }));
+              }}
             />
           </div>
+          {lossData && authData?.identifier?.length <= 0 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ იმეილი</p>}
           <div className="d-grid gap-2">
-            <label className="mt-2 fx">Password:</label>
+            <label className="mt-2 fx">პაროლი:</label>
             <input
+              style={{ borderColor: lossData && authData?.password?.length <= 0 ? "red" : "" }}
               autoComplete="current-password"
-              required
               id="password"
               className="form-control"
-              placeholder="Password"
+              placeholder="******"
               type="password"
-              value={password}
-              onChange={handlePasswordChange}
+              onChange={(e) => {
+                setAuthData((prevSendData) => ({
+                  ...prevSendData,
+                  password: e.target.value
+                }));
+              }}
             />
 
-            <button
-              className={` btn btn-success georgian ${styles.btn}`}
-              type="submit"
-            >
-              შესვლა
-            </button>
+
           </div>
+          {lossData && authData?.password?.length <= 0 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ პაროლი</p>}
+
+          <button
+            className={` btn btn-success georgian ${styles.btn}`}
+            type="submit"
+          >
+            შესვლა
+          </button>
         </div>
       </form>
     </div>

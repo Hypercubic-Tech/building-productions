@@ -159,7 +159,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
           ]).then(([putResponse, getResponse]) => {
             const updatedProduct = putResponse.data.data;
             const updatedData = getResponse.data.data;
-            console.log(updatedProduct, 'hihihihiih')
+            // console.log(updatedProduct, 'hihihihiih')
             notify(false, "პროდუქტი რედაქტირდა");
             dispatch(setProductState(updatedData));
           });
@@ -172,7 +172,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     });
   };
 
-  console.log(productsToMap, 'products')
+  // console.log(productsToMap, 'products')
 
   const deleteProductHandler = async (productId) => {
     await axios

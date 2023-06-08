@@ -15,7 +15,6 @@ const AddProduct = ({
     craftStatus,
     productStatus
 }) => {
-    console.log(productStatus)
     const dispatch = useDispatch();
 
     const router = useRouter();

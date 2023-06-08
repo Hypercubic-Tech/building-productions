@@ -2,7 +2,7 @@
   background-color: #e4e6ef;
 }
 .modalWindow {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   position: fixed;
   z-index: 9;
