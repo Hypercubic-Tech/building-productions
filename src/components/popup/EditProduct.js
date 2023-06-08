@@ -84,7 +84,7 @@ const EditProduct = ({
                     data: productData,
                 })
                 .then((res) => {
-                    const data = res.data;
+                    const data = res.data;  
                     notify(false, "პროდუქტი რედაქტირდა");
                     dispatch(setProductState(data.data));
                 });

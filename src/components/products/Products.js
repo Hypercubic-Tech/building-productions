@@ -54,6 +54,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   let itemsPerPage = 5;
 
   let productsToMap = products;
+
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
@@ -104,22 +105,22 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }
   };
 
-  const handleGetEditProduct = async (e, product) => {
-    let productId = product.id
+  // const handleGetEditProduct = async (e, product) => {
+  //   let productId = product.id
 
-    try {
-      await axios
-        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
-        .then((res) => {
-          const data = res.data
-          setProductToEdit(data.data);
-          // confirmEdit(e, productId)
-        })
-    } catch (error) {
-      console.log(error)
-    }
-    console.log(productToEdit)
-  };
+  //   try {
+  //     await axios
+  //       .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
+  //       .then((res) => {
+  //         const data = res.data
+  //         setProductToEdit(data.data);
+  //         // confirmEdit(e, productId)
+  //       })
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  //   console.log(productToEdit)
+  // };
 
   const confirmEdit = async (e, productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -147,16 +148,18 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                 {
                   id: productId,
                   attributes: {
-                    product_statuses: updateProductStatus
+                    product_statuses: {
+                      connect: [{ id: updateProductStatus }]
+                  },
                   }
                 }
               ]
             }),
-            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`)
+            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*/${productId}`)
           ]).then(([putResponse, getResponse]) => {
-            const updatedProduct = putResponse.data.data[0];
-            const updatedData = getResponse.data.data[0];
-  
+            const updatedProduct = putResponse.data.data;
+            const updatedData = getResponse.data.data;
+            console.log(updatedProduct, 'hihihihiih')
             notify(false, "პროდუქტი რედაქტირდა");
             dispatch(setProductState(updatedData));
           });
@@ -168,6 +171,8 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       }
     });
   };
+
+  console.log(productsToMap, 'products')
 
   const deleteProductHandler = async (productId) => {
     await axios
