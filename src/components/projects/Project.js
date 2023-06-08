@@ -216,7 +216,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                           <button
                             type="button"
                             onClick={() => {
-                              setSelect("export");
+                              setSelect("exportPopUp");
                             }}
                             className="btn btn-light-primary me-3 georgian"
                             data-bs-toggle="modal"
@@ -333,6 +333,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                         setSelect={setSelect}
                         totalSum={totalSum}
                         searchType={searchType}
+                        select={select}
                       />
                     </div>
                   </div>
