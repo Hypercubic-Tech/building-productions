@@ -259,6 +259,8 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       buttonsStyling: false
     });
 
+    // hotel california 
+    
     swalWithBootstrapButtons
       .fire({
         title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
