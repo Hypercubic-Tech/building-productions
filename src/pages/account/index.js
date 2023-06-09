@@ -11,7 +11,6 @@ const index = () => {
     const [image, setImage] = useState(null);
     const [isImageUpload, setIsImageUpload] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-    const [isClosed, setIsClosed] = useState(false);
     const authUserId = useSelector((state) => state.auth.user_id);
 
     const loggedUserInfo = async () => {
@@ -223,7 +222,7 @@ const index = () => {
                                         </div>
                                     )
                                 })}
-                                {isEdit && (<EditAccount authUser={authUser} onClose={closeUserProfileEdit} />)}
+                                {isEdit && (<EditAccount authUser={authUser} onClose={closeUserProfileEdit} loggedUserInfo={loggedUserInfo} />)}
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
 
-const EditAccount = ({ authUser, onClose }) => {
+const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
     const [step, setStep] = useState(1);
     const [lossData, setLossData] = useState(false);
     const [backBtn, setBackBtn] = useState(false);
@@ -17,8 +17,6 @@ const EditAccount = ({ authUser, onClose }) => {
         paymentMethod: authUser[0]?.paymentMethod,
     });
     const authUserId = useSelector((state) => state.auth.user_id);
-
-    console.log(editUserData, 'editUserData')
 
     let errors = {
         stepOne: [],
@@ -64,11 +62,12 @@ const EditAccount = ({ authUser, onClose }) => {
         await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUserId}`, {
             username: editUserData?.username,
             email: editUserData?.email,
-            phoneNumber: editUserData?.usphoneNumberername,
+            phoneNumber: editUserData?.phoneNumber,
             paymentPlan: editUserData?.paymentPlan,
             paymentMethod: editUserData?.paymentMethod
         })
         .then((res) => {
+            loggedUserInfo()
             notify(false, 'მომხმარებლის ინფორმაცია დარედაქტირდა')
             console.log(res.data);
         })
