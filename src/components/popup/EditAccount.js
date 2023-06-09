@@ -68,6 +68,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
         })
         .then((res) => {
             loggedUserInfo()
+            onClose()
             notify(false, 'მომხმარებლის ინფორმაცია დარედაქტირდა')
             console.log(res.data);
         })
