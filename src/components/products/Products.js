@@ -14,6 +14,7 @@ import styles from "./Products.module.css";
 
 const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select }) => {
   const [activeItem, setActiveItem] = useState();
+  const [activeStatusItem, setActiveStatusItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
   const [updateCraftStatus, setUpdateCraftStatus] = useState();
@@ -116,7 +117,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       if (result.isConfirmed) {
         try {
           await Promise.all([
-            axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`, {
+            axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?filters[id][$eq]=${productId}`, {
               data: [
                 {
                   id: productId,
@@ -128,7 +129,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                 }
               ]
             }),
-            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*/${productId}`)
+            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
           ]).then(([putResponse, getResponse]) => {
             const updatedProduct = putResponse.data.data;
             const updatedData = getResponse.data.data;
@@ -250,12 +251,20 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       });
   };
 
-  const statusChangeHandler = (event, product) => {
+  const getActiveItem = (event, product) => {
     // console.log(event.target.value, 'event')
-    // console.log(product.id, 'id')
-    // setUpdateProductStatus(event.target.value)
-    // let productId = product.id
-    // confirmEdit(event, productId)
+    console.log(product.id, 'id')
+    if (activeStatusItem === product.id) {
+      setActiveStatusItem(null)
+    } else {
+      setActiveStatusItem(product.id)
+      setUpdateProductStatus(event.target.value)
+      let productId = product.id
+      confirmEdit(event, productId)
+    }
+
+
+
   }
 
   useEffect(() => {
@@ -449,7 +458,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                               className="form-select"
                               value={updateProductStatus || product.attributes.product_status.data.id}
                               onChange={(event) => {
-                                statusChangeHandler(event, product)
+                                getActiveItem(event, product)
                               }}
                             >
                               {productStatus && productStatus.map((item) => {
