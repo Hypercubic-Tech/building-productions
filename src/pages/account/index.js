@@ -80,15 +80,19 @@ const index = () => {
     }, [isImageUpload]);
 
     const handleImageRemove = async () => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${authUser[0]?.avatar[0]?.id}`)
-            .then(() => {
-                setImgSrc(null);
-                loggedUserInfo();
-                notify(false, "სურათი წარმატებით წაიშალა");
-            })
-            .catch(() => {
-                notify(true, "სურათი არ არის ატვირთული");
-            });
+        if (authUser[0]?.avatar) {
+            await axios
+                .delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${authUser[0]?.avatar[0]?.id}`)
+                .then(() => {
+                    setImage(null);
+                    setImgSrc(null);
+                    setIsImageUpload(false);
+                    loggedUserInfo();
+                    notify(false, "სურათი წარმატებით წაიშალა");
+                })
+        } else {
+            notify(true, "სურათი არ არის ატვირთული");
+        }
     };
 
     return (
@@ -212,7 +216,7 @@ const index = () => {
                                                     </div>
                                                 </div>
                                             )}
-                                            {user?.paymentPlan === "paid" && user?.paymentMethod &&<hr />}
+                                            {user?.paymentPlan === "paid" && user?.paymentMethod && <hr />}
                                             <div className="col-sm-3 d-flex justify-content-start">
                                                 {!isEdit && <button className="btn btn-primary" onClick={editUserProfile}>
                                                     <i className="bi bi-pencil"></i>

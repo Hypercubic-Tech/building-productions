@@ -67,10 +67,9 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
             paymentMethod: editUserData?.paymentMethod
         })
         .then((res) => {
-            loggedUserInfo()
-            onClose()
-            notify(false, 'მომხმარებლის ინფორმაცია დარედაქტირდა')
-            console.log(res.data);
+            loggedUserInfo();
+            onClose();
+            notify(false, 'მომხმარებლის ინფორმაცია დარედაქტირდა');
         })
         .catch(() => {
             notify(true, 'მომხმარებლის ინფორმაციის რედაქტირება უარყოფილია')
