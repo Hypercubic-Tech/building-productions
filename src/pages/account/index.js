@@ -2,23 +2,88 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import notify from "../../utils/notify";
+
 const index = () => {
     const [authUser, setAuthUser] = useState([]);
+    const [imgSrc, setImgSrc] = useState(null);
+    const [image, setImage] = useState(null);
+    const [isImageUpload, setIsImageUpload] = useState(false);
     const authUserId = useSelector((state) => state.auth.user_id);
 
+    const loggedUserInfo = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`)
+            .then((res) => {
+                const data = res.data;
+                setAuthUser(data);
+            });
+    };
+
     useEffect(() => {
-        const loggedUserInfo = async () => {
-            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}`)
-                .then((res) => {
-                    const data = res.data;
-                    setAuthUser(data);
-                });
-        };
+
         loggedUserInfo()
     }, [authUserId]);
 
     const editUserProfile = () => {
         console.log('edit')
+    };
+
+    const handleMediaUpload = async (img) => {
+        if (!img) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("files", img);
+
+        try {
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            )
+                .then((res) => {
+                    const data = res.data;
+                    setImage(data[0]);
+                    setImgSrc(data[0].url)
+                    setIsImageUpload(true);
+                    notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+                });
+
+        } catch (err) {
+            console.error(err);
+            notify(true, "სურათის ატვირთვა უარყოფილია");
+        }
+    };
+
+    useEffect(() => {
+        if (isImageUpload) {
+            const userImageUpload = async () => {
+                await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUser[0]?.id}`, {
+                    avatar: image?.id,
+                })
+                .then(() => {
+                    loggedUserInfo();
+                });
+            };
+            userImageUpload()
+        }
+    }, [isImageUpload]);
+
+    const handleImageRemove = async () => {
+        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${authUser[0]?.avatar[0]?.id}`)
+            .then(() => {
+                setImgSrc(null);
+                loggedUserInfo();
+                notify(false, "სურათი წარმატებით წაიშალა");
+            })
+            .catch(() => {
+                notify(true, "სურათი არ არის ატვირთული");
+            });
     };
 
     return (
@@ -28,13 +93,58 @@ const index = () => {
                     <div className="col-md-3">
 
                         <div className="card card-primary card-outline mt-3 mb-3">
-                            <div className="card-body box-profile">
-                                <div className="text-center mb-3">
-                                    <img style={{ borderRadius: "50%" }} className="img-fluid img-circle" src="https://images.unsplash.com/photo-1579463148228-138296ac3b98?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" alt="User profile picture" />
-                                </div>
-                                <h1 className="text-center">{authUser[0]?.username}</h1>
-                                <h5 className="text-muted text-center">{authUser[0]?.userType}</h5>
-                            </div>
+                            {authUser && authUser?.map((user, index) => {
+                                return (
+                                    <div className="card-body box-profile" key={index}>
+                                        <div className="text-center mb-3 image-input image-input-outline w-100">
+                                            {authUser[0]?.avatar && authUser[0]?.avatar[0]?.url ? (
+                                                <img
+                                                    src={
+                                                        imgSrc
+                                                            ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`
+                                                            : `${process.env.NEXT_PUBLIC_BUILDING_URL}${authUser[0]?.avatar[0]?.url}`
+                                                    }
+                                                    width={125}
+                                                    height={125}
+                                                    style={{ borderRadius: "8px" }}
+                                                    alt="Picture of the product"
+                                                />
+                                            ) : (
+                                                <div className="image-input-wrapper w-125px h-125px w-100"></div>
+                                            )}
+
+                                            <label
+                                                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                data-kt-image-input-action="change"
+                                                data-bs-toggle="tooltip"
+                                                title="Change avatar"
+                                            >
+                                                <i className="bi bi-pencil-fill fs-7" />
+                                                <input
+                                                    onChange={(e) => {
+                                                        handleMediaUpload(e.target.files[0]);
+                                                    }}
+                                                    type="file"
+                                                    name="avatar"
+                                                />
+                                            </label>
+                                            <span
+                                                className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                                data-kt-image-input-action="remove"
+                                                data-bs-toggle="tooltip"
+                                                title="Remove avatar"
+                                                onClick={handleImageRemove}
+                                            >
+                                                <input
+                                                    type="hidden" name="avatar_remove" />
+                                                <i className="bi bi-x fs-2" />
+                                            </span>
+                                        </div>
+                                        <h1 className="text-center">{user?.username}</h1>
+                                        <h5 className="text-muted text-center">{user?.userType}</h5>
+                                    </div>
+                                )
+                            })}
 
                         </div>
                         {/* <div className="col-xl-7 mx-auto pt-5 pb-5">
@@ -268,7 +378,6 @@ const index = () => {
                     </div>
                 </div>
             </div>
-
         </>
     );
 };
