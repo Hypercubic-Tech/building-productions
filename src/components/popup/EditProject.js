@@ -25,17 +25,20 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
   const [cityOption, setCityOption] = useState(project.data[0].attributes.city.data.id);
   const [conditionOption, setConditionOption] = useState(project.data[0].attributes.conditions.data[0].id);
   const [currentConditionOption, setCurrentConditionOption] = useState(project.data[0].attributes.current_condition.data.id);
-  const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => { return cat.id }))
-  const [oldSelecetedCat, setOldSelectedCat] = useState();
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => ({
+    id: cat.id,
+  })))
+  console.log('opt')
+  // const [oldSelecetedCat, setOldSelectedCat] = useState();
+  // const [selectedCategories, setSelectedCategories] = useState([]);
 
-  useEffect(() => {
-    const oldCats = categories && categories.map((cat) => {
-      return cat.id
-    })
-    setOldSelectedCat(oldCats)
+  // useEffect(() => {
+  //   const oldCats = categories && categories.map((cat) => {
+  //     return cat.id
+  //   })
+  //   setOldSelectedCat(oldCats)
 
-  }, [categories])
+  // }, [categories])
 
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
@@ -47,7 +50,7 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
     unforeseenExpenses: project.data[0].attributes.unforeseenExpenses,
     city: {
       connect: [
-        { id: project?.data[0]?.attributes?.city?.data?.id }
+        { id: cityOption }
       ]
     },
     property_types: {
@@ -57,7 +60,7 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
     },
     current_condition: {
       connect: [
-        { id: project?.data[0]?.attributes?.current_condition?.data?.id }
+        { id: currentConditionOption }
       ]
     },
     conditions: {
@@ -66,10 +69,9 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
       ]
     },
     categories: {
-      connect: project.data[0].attributes.categories.data.map((cat) => ({
-        id: cat.id,
-      })),
+      connect: categoriesOption,
     },
+    
     service_percentage: project?.data[0]?.attributes?.service_percentage,
 
     users_permissions_user: {
@@ -102,40 +104,43 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
       return "pending";
     }
   };
+  console.log(sendData)
+  Array.prototype.remove = function () {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+      what = a[--L];
+      while ((ax = this.indexOf(what)) !== -1) {
+        this.splice(ax, 1);
+      }
+    }
+    return this;
+  };
 
   const handleCheckboxChange = (e) => {
     const id = e.target.value;
     const categoryId = +id;
-    
-    setSendData((prevState) => {
-      const updatedCategories = [...prevState.categories.connect];
-      const categoryExists = updatedCategories.some((cat) => cat.id === categoryId);
-  
-      if (e.target.checked && !categoryExists) {
-        // Add the category if the checkbox is checked and it's not already in the array
-        updatedCategories.push({ id: categoryId });
-      } else if (!e.target.checked && categoryExists) {
-        // Remove the category if the checkbox is unchecked and it exists in the array
-        const updatedCategoriesFiltered = updatedCategories.filter((cat) => cat.id !== categoryId);
-        return {
+    // console.log(selectedCategories, 'iji')
+    // console.log(sendData.categories.connect.remove()
+    // categoriesOption.remove(1)
+    // console.log(categoriesOption, '12')
+    if (e.target.checked) {
+      if (!sendData.categories.connect.some((cat) => cat.id === categoryId)) {
+        setSendData((prevState) => ({
           ...prevState,
           categories: {
-            connect: updatedCategoriesFiltered,
+            connect: [...prevState.categories.connect, { id: categoryId }],
           },
-        };
+        }));
       }
-  
-      return {
+    } else {
+      setSendData((prevState) => ({
         ...prevState,
         categories: {
-          connect: updatedCategories,
+          connect: prevState.categories.connect.filter((cat) => cat.id !== categoryId),
         },
-      };
-    });
+      }));
+    }
   };
-  
-
-
 
 
   const stepChangeHandler = () => {
@@ -682,7 +687,6 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                                         value={item.id}
                                         defaultChecked={categoriesOption.includes(item.id)}
                                         onChange={handleCheckboxChange}
-
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}
