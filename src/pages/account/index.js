@@ -66,9 +66,9 @@ const index = () => {
                 await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUser[0]?.id}`, {
                     avatar: image?.id,
                 })
-                .then(() => {
-                    loggedUserInfo();
-                });
+                    .then(() => {
+                        loggedUserInfo();
+                    });
             };
             userImageUpload()
         }
@@ -104,13 +104,13 @@ const index = () => {
                                                             ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`
                                                             : `${process.env.NEXT_PUBLIC_BUILDING_URL}${authUser[0]?.avatar[0]?.url}`
                                                     }
-                                                    width={125}
-                                                    height={125}
+                                                    width={200}
+                                                    height={200}
                                                     style={{ borderRadius: "8px" }}
                                                     alt="Picture of the product"
                                                 />
                                             ) : (
-                                                <div className="image-input-wrapper w-125px h-125px w-100"></div>
+                                                <div style={{ margin: "0 auto", borderRadius: "8px" }} className="image-input-wrapper w-200px h-200px w-100"></div>
                                             )}
 
                                             <label
@@ -118,6 +118,10 @@ const index = () => {
                                                 data-kt-image-input-action="change"
                                                 data-bs-toggle="tooltip"
                                                 title="Change avatar"
+                                                style={{
+                                                    right: "85px",
+                                                    top: "-10px"
+                                                }}
                                             >
                                                 <i className="bi bi-pencil-fill fs-7" />
                                                 <input
@@ -134,6 +138,10 @@ const index = () => {
                                                 data-bs-toggle="tooltip"
                                                 title="Remove avatar"
                                                 onClick={handleImageRemove}
+                                                style={{
+                                                    right: "85px",
+                                                    bottom: "-10px"
+                                                }}
                                             >
                                                 <input
                                                     type="hidden" name="avatar_remove" />
