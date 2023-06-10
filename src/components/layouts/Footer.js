@@ -1,16 +1,18 @@
+import Link from "next/link";
+
 function Footer() {
   return (
     <div className="landing-dark-separator landing-dark-bg">
       <div className="container">
         <div className="d-flex flex-column flex-md-row flex-stack py-7 py-lg-10">
           <div className="d-flex align-items-center order-2 order-md-1">
-            <a href="/">
-              <img
-                alt="Logo"
-                src="/assets/media/logos/logo-demo11.svg"
-                className="h-20px h-lg-30px"
-              />
-            </a>
+          <Link href="/">
+                <img
+                  alt="Logo"
+                  src="/assets/media/logos/logo-demo11.svg"
+                  className="logo-default h-25px h-lg-30px"
+                />
+              </Link>
             <span
               className="mx-5 fs-6 fw-bold text-gray-600 pt-1"
               href="https://keenthemes.com"
