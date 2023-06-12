@@ -25,20 +25,17 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
   const [cityOption, setCityOption] = useState(project.data[0].attributes.city.data.id);
   const [conditionOption, setConditionOption] = useState(project.data[0].attributes.conditions.data[0].id);
   const [currentConditionOption, setCurrentConditionOption] = useState(project.data[0].attributes.current_condition.data.id);
-  const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => ({
-    id: cat.id,
-  })))
-  console.log('opt')
-  // const [oldSelecetedCat, setOldSelectedCat] = useState();
-  // const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => { return cat.id }))
+  const [oldSelecetedCat, setOldSelectedCat] = useState();
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  // useEffect(() => {
-  //   const oldCats = categories && categories.map((cat) => {
-  //     return cat.id
-  //   })
-  //   setOldSelectedCat(oldCats)
+  useEffect(() => {
+    const oldCats = categories && categories.map((cat) => {
+      return cat.id
+    })
+    setOldSelectedCat(oldCats)
 
-  // }, [categories])
+  }, [categories])
 
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
@@ -50,7 +47,7 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
     unforeseenExpenses: project.data[0].attributes.unforeseenExpenses,
     city: {
       connect: [
-        { id: cityOption }
+        { id: project?.data[0]?.attributes?.city?.data?.id }
       ]
     },
     property_types: {
@@ -60,7 +57,7 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
     },
     current_condition: {
       connect: [
-        { id: currentConditionOption }
+        { id: project?.data[0]?.attributes?.current_condition?.data?.id }
       ]
     },
     conditions: {
@@ -69,9 +66,10 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
       ]
     },
     categories: {
-      connect: categoriesOption,
+      connect: project.data[0].attributes.categories.data.map((cat) => ({
+        id: cat.id,
+      })),
     },
-    
     service_percentage: project?.data[0]?.attributes?.service_percentage,
 
     users_permissions_user: {
@@ -104,26 +102,13 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
       return "pending";
     }
   };
-  console.log(sendData)
-  Array.prototype.remove = function () {
-    var what, a = arguments, L = a.length, ax;
-    while (L && this.length) {
-      what = a[--L];
-      while ((ax = this.indexOf(what)) !== -1) {
-        this.splice(ax, 1);
-      }
-    }
-    return this;
-  };
 
   const handleCheckboxChange = (e) => {
     const id = e.target.value;
     const categoryId = +id;
-    // console.log(selectedCategories, 'iji')
-    // console.log(sendData.categories.connect.remove()
-    // categoriesOption.remove(1)
-    // console.log(categoriesOption, '12')
+  
     if (e.target.checked) {
+      // Add the category if the checkbox is checked
       if (!sendData.categories.connect.some((cat) => cat.id === categoryId)) {
         setSendData((prevState) => ({
           ...prevState,
@@ -133,15 +118,17 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
         }));
       }
     } else {
+      // Remove the category if the checkbox is unchecked
       setSendData((prevState) => ({
         ...prevState,
         categories: {
           connect: prevState.categories.connect.filter((cat) => cat.id !== categoryId),
         },
       }));
+      console.log()
     }
   };
-
+  
 
   const stepChangeHandler = () => {
 
@@ -687,6 +674,7 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                                         value={item.id}
                                         defaultChecked={categoriesOption.includes(item.id)}
                                         onChange={handleCheckboxChange}
+
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}
