@@ -102,7 +102,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
 
     const changeUserPassword = async () => {
 
-        await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/change-password`,  {
+        await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/change-password`, {
             currentPassword: changePassword?.currentPassword,
             password: changePassword?.password,
             passwordConfirmation: changePassword?.passwordConfirmation
@@ -112,11 +112,17 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                 'Authorization': `Bearer ${userJwt}`
             }
         })
-        .then((res) => {
-            const data = res.data;
-            dispatch(setAuthAccessToken(data?.jwt));
-            onClose();
-        })
+            .then((res) => {
+                const data = res.data;
+                dispatch(setAuthAccessToken(data?.jwt));
+                onClose();
+                notify(false, 'მომხმარებლის პაროლი განახლებულია');
+
+            })
+            .catch(() => {
+                notify(true, 'მომხმარებლის პაროლი განახლება უარყოფილია');
+
+            });
     };
 
     return (
@@ -513,7 +519,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                             </span>}
 
                             {lossData && changePassword?.passwordConfirmation?.length < 6 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ პაროლი</p>}
-                            
+
                             <button
                                 className={` btn btn-success georgian ${styles.btn}`}
                                 type="button"

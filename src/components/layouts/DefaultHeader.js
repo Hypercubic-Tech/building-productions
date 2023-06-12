@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Auth from "../popup/Auth";
 import { useSpring, animated } from "react-spring";
+import Link from "next/link";
 
 function DefaultHeader() {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -47,18 +48,13 @@ function DefaultHeader() {
         <div className="container-xxl">
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
-              <a href="/">
+            <Link href="/">
                 <img
                   alt="Logo"
                   src="/assets/media/logos/logo-demo11.svg"
                   className="logo-default h-25px h-lg-30px"
                 />
-                <img
-                  alt="Logo"
-                  src="/assets/media/logos/logo-demo11.svg"
-                  className="logo-sticky h-20px h-lg-25px"
-                />
-              </a>
+              </Link>
             </div>
             <div className="d-lg-block" id="kt_header_nav_wrapper">
             </div>
