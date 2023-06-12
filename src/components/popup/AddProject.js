@@ -121,81 +121,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
     }
   };
 
-  useEffect(() => {
-    const getPropertyTypesHandler = async () => {
-      try {
-        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
-          .then((res) => {
-            const data = res.data;
-            setPropertyType(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getPropertyTypesHandler();
-  }, []);
-
-  useEffect(() => {
-    const getCitiesHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
-          .then((res) => {
-            const data = res.data;
-            setCities(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCitiesHandler();
-  }, []);
-
-  useEffect(() => {
-    const getConditionHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCondition(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getConditionHandler();
-  }, []);
-
-  useEffect(() => {
-    const getCurrentConditionHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCurrentCondition(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCurrentConditionHandler();
-  }, []);
-
-  useEffect(() => {
-    const getCategoriesHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-          .then((res) => {
-            const data = res.data;
-            setCategories(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCategoriesHandler();
-  }, []);
+  
 
   const createProjectHandler = async () => {
     try {
@@ -218,6 +144,75 @@ const AddProject = ({ dismiss, setShowProject }) => {
     setClose(true);
     createProjectHandler();
   };
+
+  useEffect(() => {
+    const getCategoriesHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
+          .then((res) => {
+            const data = res.data;
+            setCategories(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getCurrentConditionHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCurrentCondition(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getConditionHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCondition(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getCitiesHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
+          .then((res) => {
+            const data = res.data;
+            setCities(data.data)
+          })
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getPropertyTypesHandler = async () => {
+      try {
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
+          .then((res) => {
+            const data = res.data;
+            setPropertyType(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getCategoriesHandler();
+    getCurrentConditionHandler();
+    getConditionHandler();
+    getCitiesHandler();
+    getPropertyTypesHandler();
+  }, []);
 
   return (
     <div
@@ -368,19 +363,19 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
                           return (
-                            <option key={index} value={item.id}>{item.attributes.Title}</option>
+                            <option key={index} value={item.id}>{item.attributes.title}</option>
                           )
                         })}
                       </select>
                     </div>
-                    
+
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <div className="row fv-row">
                           <div className="col-6">
-                        <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მდებარეობა
-                        </label>
+                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                              მდებარეობა
+                            </label>
                             <select
                               id="city"
                               defaultValue='none'
@@ -405,9 +400,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             </select>
                           </div>
                           <div className="col-6">
-                          <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          ფართობი
-                          </label>
+                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                              ფართობი
+                            </label>
                             <input
                               id="area"
                               onChange={(event) => {
@@ -430,9 +425,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                       <div className="col-md-12 fv-row">
                         <div className="row fv-row">
                           <div className="col-6">
-                        <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მისამართი
-                        </label>
+                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                              მისამართი
+                            </label>
                             <input
                               id="address"
                               onChange={(event) => {
@@ -490,9 +485,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         </div> */}
                         {/* {hiddenInput ? ( */}
                         <div className={`${styles.inputWrap} col-4 `}>
-                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                          <span className={` georgian `}>დღგ-ს გადამხდელი</span>
-                        </label>
+                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                            <span className={` georgian `}>დღგ-ს გადამხდელი</span>
+                          </label>
                           <input
                             className="form-control georgian form-control-solid"
                             placeholder="დღგ-ს გადამხდელი (%)"
@@ -508,9 +503,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         </div>
                         {/* ) : ""} */}
                         <div className={`${styles.inputWrap} col-4 `}>
-                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                          <span className={` georgian `}>გაუთვალისწინებელი ხარჯები</span>
-                        </label>
+                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                            <span className={` georgian `}>გაუთვალისწინებელი ხარჯები</span>
+                          </label>
                           <input
                             onChange={(event) => {
                               setSendData((prevSendData) => ({
@@ -526,22 +521,22 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         </div>
                         <div className={`${styles.inputWrap} col-4 `}>
                           <div style={{ flexDirection: "column" }} className="d-flex">
-                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className={` georgian `}>მომსახურეობის ხარჯები </span>
-                          </label>
-                          <input
-                            className="form-control georgian form-control-solid"
-                            type="text"
-                            id="flexSwitchCheckDefault"
-                            placeholder="მომსახურების ხარჯები (%)"
-                            onChange={(e) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                service_percentage: e.target.value,
-                              }));
-                              // hiddenInputHandler();
-                            }}
-                              />
+                            <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                              <span className={` georgian `}>მომსახურეობის ხარჯები </span>
+                            </label>
+                            <input
+                              className="form-control georgian form-control-solid"
+                              type="text"
+                              id="flexSwitchCheckDefault"
+                              placeholder="მომსახურების ხარჯები (%)"
+                              onChange={(e) => {
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  service_percentage: e.target.value,
+                                }));
+                                // hiddenInputHandler();
+                              }}
+                            />
                             {/* <i className={`${styles.percent} bi bi-percent `}></i> */}
                           </div>
                         </div>
