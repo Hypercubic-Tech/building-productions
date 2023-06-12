@@ -235,7 +235,7 @@ const index = () => {
             </div>
             {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
             {editProject && (
-                <EditProject setShowProject={setShowProject} project={editProject} dismiss={dismissHandler} />
+                <EditProject setEditProject={setEditProject} setShowProject={setShowProject} project={editProject} dismiss={dismissHandler} />
             )}
         </>
     );

@@ -133,7 +133,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
           ]).then(([putResponse, getResponse]) => {
             const updatedProduct = putResponse.data.data;
             const updatedData = getResponse.data.data;
-            // console.log(updatedProduct, 'hihihihiih')
             notify(false, "პროდუქტი რედაქტირდა");
             dispatch(setProductState(updatedData));
           });
@@ -252,8 +251,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   };
 
   const getActiveItem = (event, product) => {
-    // console.log(event.target.value, 'event')
-    console.log(product.id, 'id')
     if (activeStatusItem === product.id) {
       setActiveStatusItem(null)
     } else {
@@ -450,9 +447,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
                       <td className="georgian">
                         <div className="form-group">
-                          {console.log(product.attributes.product_status?.data?.id, 'status')}
-                          {console.log(product.attributes, 'product')}
-                          {console.log(updateProductStatus, 'prodddd')}
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"

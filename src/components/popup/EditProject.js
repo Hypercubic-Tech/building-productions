@@ -6,9 +6,9 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({ dismiss, setShowProject, project }) => {
+const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   const userId = useSelector(state => state.auth.user_id)
-  console.log(project)
+  console.log(project.data[0].attributes)
 
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
@@ -21,21 +21,24 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
 
-  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_types?.data[0]?.id);
+  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type.data.id);
   const [cityOption, setCityOption] = useState(project.data[0].attributes.city.data.id);
-  const [conditionOption, setConditionOption] = useState(project.data[0].attributes.conditions.data[0].id);
+  const [conditionOption, setConditionOption] = useState(project.data[0].attributes.condition.data.id);
+  console.log(conditionOption, 'opt')
   const [currentConditionOption, setCurrentConditionOption] = useState(project.data[0].attributes.current_condition.data.id);
+  console.log(currentConditionOption, 'current')
+
   const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => { return cat.id }))
-  const [oldSelecetedCat, setOldSelectedCat] = useState();
-  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  useEffect(() => {
-    const oldCats = categories && categories.map((cat) => {
-      return cat.id
-    })
-    setOldSelectedCat(oldCats)
+  // const [oldSelecetedCat, setOldSelectedCat] = useState();
 
-  }, [categories])
+  // useEffect(() => {
+  //   const oldCats = categories && categories.map((cat) => {
+  //     return cat.id
+  //   })
+  //   setOldSelectedCat(oldCats)
+
+  // }, [categories])
 
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
@@ -47,22 +50,22 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
     unforeseenExpenses: project.data[0].attributes.unforeseenExpenses,
     city: {
       connect: [
-        { id: project?.data[0]?.attributes?.city?.data?.id }
+        { id: project.data[0].attributes.city.data.id }
       ]
     },
-    property_types: {
+    property_type: {
       connect: [
-        { id: propertyOption }
+        { id: project?.data[0]?.attributes?.property_type.data.id }
       ]
     },
     current_condition: {
       connect: [
-        { id: project?.data[0]?.attributes?.current_condition?.data?.id }
+        { id: project.data[0].attributes.current_condition.data.id }
       ]
     },
-    conditions: {
+    condition: {
       connect: [
-        { id: conditionOption }
+        { id: project.data[0].attributes.condition.data.id }
       ]
     },
     categories: {
@@ -103,42 +106,42 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
     }
   };
 
-  const handleCheckboxChange = (e) => {
-    const id = e.target.value;
-    const categoryId = +id;
+  const handleCheckboxChange = (event) => {
+    const categoryId = event.target.value;
   
-    if (e.target.checked) {
-      // Add the category if the checkbox is checked
-      if (!sendData.categories.connect.some((cat) => cat.id === categoryId)) {
-        setSendData((prevState) => ({
-          ...prevState,
-          categories: {
-            connect: [...prevState.categories.connect, { id: categoryId }],
-          },
-        }));
-      }
-    } else {
-      // Remove the category if the checkbox is unchecked
+    // Remove the category item if it's unchecked
+    if (!event.target.checked) {
+      const sendDataCategories = sendData.categories.connect.filter((cat) => cat.id !== categoryId);
       setSendData((prevState) => ({
         ...prevState,
         categories: {
-          connect: prevState.categories.connect.filter((cat) => cat.id !== categoryId),
+          connect: sendDataCategories,
         },
       }));
-      console.log()
+    } else {
+      // Add the category item if it's checked and not already present in sendData.categories.connect
+      if (!sendData.categories.connect.some((cat) => cat.id === categoryId)) {
+        const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
+        setSendData((prevState) => ({
+          ...prevState,
+          categories: {
+            connect: sendDataCategories,
+          },
+        }));
+      }
     }
   };
-  
+
 
   const stepChangeHandler = () => {
 
-    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_types.connect[0].id) {
+    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     } else {
       setLoss(true);
     }
-    if (step === 2 && errors.stepTwo.length === 0 && sendData.conditions.connect[0].id && sendData.current_condition.connect[0].id) {
+    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     }
@@ -164,16 +167,16 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
       })
         .then((res) => {
           const data = res.data;
-          setShowProject(true)
-          // dispatch(setUpdateProject(data.data))
+          setShowProject(true);
+          setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
         })
     } catch (error) {
-      notify(true, "პროექტის რედაქტირდა უარყოფილია");
+      notify(true, "პროექტის რედაქტირება უარყოფილია");
       console.error(error);
     }
   }
-
+  console.log(sendData, 'final')
   const finishHandler = () => {
     setClose(true);
     createProjectHandler();
@@ -385,10 +388,16 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                         value={propertyOption}
                         onChange={(event) => {
                           setPropertyOption(event.target.value)
+                          setSendData((prevSendData) => ({
+                            ...prevSendData,
+                            property_type: {
+                              connect: [{ id: event.target.value }],
+                            },
+                          }));
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option>
+                        {/* <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option> */}
                         {propertyType && propertyType.map((item, index) => {
                           return (
                             <option key={index} value={item.id}>{item.attributes.title}</option> // .titles gamo ar mushaobs sheidlzeba tqventan .Title imushavebs
@@ -409,6 +418,12 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                               value={cityOption}
                               onChange={(event) => {
                                 setCityOption(event.target.value)
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  city: {
+                                    connect: [{ id: event.target.value }],
+                                  },
+                                }));
                               }}
                               name="locale"
                               className="form-select form-select-solid georgian"
@@ -574,9 +589,15 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                               <span className="form-check form-check-custom form-check-solid">
                                 <input
                                   id="input-validation-building"
-                                  defaultChecked={conditionOption === item.id}
+                                  defaultChecked={conditionOption === item.id ? 'checked' : ''}
                                   onChange={(event) => {
-                                    setConditionOption(event.target.value)
+                                    setConditionOption(event.target.value);
+                                    setSendData((prevSendData) => ({
+                                      ...prevSendData,
+                                      condition: {
+                                        connect: [{ id: event.target.value }],
+                                      },
+                                    }));
                                   }}
                                   className="form-check-input"
                                   type="radio"
@@ -613,7 +634,13 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                                 id="input-validation"
                                 defaultChecked={currentConditionOption === item.id ? 'checked' : ''}
                                 onChange={(event) => {
-                                  setCurrentConditionOption(event.target.value)
+                                  setCurrentConditionOption(event.target.value);
+                                  setSendData((prevSendData) => ({
+                                    ...prevSendData,
+                                    current_condition: {
+                                      connect: [{ id: event.target.value }],
+                                    },
+                                  }));
                                 }}
                                 className="form-check-input"
                                 type="radio"
@@ -651,7 +678,6 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                         placeholder="ობიექტის დასახელება"
                       />
                     </div>
-
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <label className="required fs-6 fw-bold form-label georgian mb-2">
@@ -672,9 +698,8 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                                         className="form-check-input"
                                         type="checkbox"
                                         value={item.id}
-                                        defaultChecked={categoriesOption.includes(item.id)}
+                                        defaultChecked={sendData.categories.connect.some((cat) => cat.id === item.id)}
                                         onChange={handleCheckboxChange}
-
                                       />
                                       <label
                                         onClick={(e) => e.preventDefault()}
@@ -710,8 +735,6 @@ const EditProject = ({ dismiss, setShowProject, project }) => {
                     </div>
                   </div>
                 </div>
-                {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
-
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
                     <button
