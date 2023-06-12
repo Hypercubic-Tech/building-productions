@@ -8,7 +8,6 @@ import styles from "./Modal.module.css";
 
 const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   const userId = useSelector(state => state.auth.user_id)
-  console.log(project.data[0].attributes)
 
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
@@ -24,11 +23,8 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type.data.id);
   const [cityOption, setCityOption] = useState(project.data[0].attributes.city.data.id);
   const [conditionOption, setConditionOption] = useState(project.data[0].attributes.condition.data.id);
-  console.log(conditionOption, 'opt')
   const [currentConditionOption, setCurrentConditionOption] = useState(project.data[0].attributes.current_condition.data.id);
-  console.log(currentConditionOption, 'current')
-
-  const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => { return cat.id }))
+  // const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => { return cat.id }))
 
   // const [oldSelecetedCat, setOldSelectedCat] = useState();
 
@@ -176,7 +172,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       console.error(error);
     }
   }
-  console.log(sendData, 'final')
   const finishHandler = () => {
     setClose(true);
     createProjectHandler();
@@ -770,10 +765,8 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                       უკან
                     </button>
                   </div>
-
                   <div>
                     {loss && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი</p>}
-
                     <button
                       onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}
