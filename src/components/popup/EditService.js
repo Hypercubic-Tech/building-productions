@@ -71,25 +71,6 @@ const EditService = ({
     }
   };
 
-  const handleSubmit = async () => {
-    try {
-      await axios
-        .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
-          data: productData,
-        })
-        .then((res) => {
-          const data = res.data;
-          notify(false, "პროდუქტი დაემატა");
-          dispatch(setProductState(data.data));
-        })
-    } catch (err) {
-      notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
-      console.log(err);
-    }
-    setSelect(null);
-    defaultProductsHandler(activeCategoryId);
-  };
-
   const handleCraftSubmit = async () => {
     try {
       await axios
@@ -102,7 +83,7 @@ const EditService = ({
           dispatch(setProductState(data.data));
         })
     } catch (err) {
-      // notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+      notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
       console.log(err);
     }
     defaultProductsHandler(activeCategoryId);

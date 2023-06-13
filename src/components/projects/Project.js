@@ -20,6 +20,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
+  const activeCategoryId = useSelector(state => state.cats.category);
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
   };
-
   const totalSumTable = () => {
     setTotalSum(true)
   };
@@ -36,14 +36,15 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
     if (id) {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_status,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
-        const data = response.data;
-        dispatch(setProducts(data.data));
+        const data = response.data.data;
+        dispatch(setProducts(data));
         dispatch(setCategory(id));
       } catch (error) {
         console.error(error);
       }
     }
   };
+  
 
   const filterProductCategory = async (id) => {
     try {
@@ -64,8 +65,8 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
   }, 0);
 
   useEffect(() => {
-    defaultProductsHandler();
-  }, [])
+    defaultProductsHandler(activeCategoryId);
+  }, [activeCategoryId, projectId])
 
   return (
     <>

@@ -31,7 +31,6 @@ const Main = () => {
   const router = useRouter();
   const { id_token } = router.query;
   const userObject = id_token ? jwt_decode(id_token) : null;
-  console.log(userObject)
 
   useEffect(() => {
     if (id_token) {

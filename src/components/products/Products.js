@@ -66,36 +66,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }
   };
 
-  const defaultProductsHandler = async (id, pageIndex) => {
-    if (id) {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
-        const data = response.data;
-        dispatch(setProducts(data.data));
-        dispatch(setCategory(id));
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  // const handleGetEditProduct = async (e, product) => {
-  //   let productId = product.id
-
-  //   try {
-  //     await axios
-  //       .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
-  //       .then((res) => {
-  //         const data = res.data
-  //         setProductToEdit(data.data);
-  //         // confirmEdit(e, productId)
-  //       })
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  //   console.log(productToEdit)
-  // };
-
   const confirmEdit = async (event, productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
