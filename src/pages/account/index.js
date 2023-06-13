@@ -12,9 +12,16 @@ const index = () => {
     const [isImageUpload, setIsImageUpload] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const authUserId = useSelector((state) => state.auth.user_id);
+    const authEmail = useSelector((state) => state.auth.email);
 
     const loggedUserInfo = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`)
+        let url;
+        if (authUserId) {
+            url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
+        } else {
+            url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${authEmail}&populate=*`;
+        }
+        await axios.get(url)
             .then((res) => {
                 const data = res.data;
                 setAuthUser(data);
