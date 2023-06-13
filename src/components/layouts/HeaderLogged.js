@@ -318,7 +318,7 @@ function HeaderLogged() {
                       }}
                       passHref
                       >
-                        აქაუნთი
+                        პროფილი
                       </Link>
                     </div>
                     <div onClick={handleLogout} className={styles.hover}>

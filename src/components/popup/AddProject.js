@@ -220,7 +220,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
       className={`${styles.modal}`}
     >
       <div className={styles.overlay}></div>
-      <div className="modal-content">
+      <div className={` ${styles.mainBg} modal-content `}>
         <div className="modal-header">
           <h2 className="georgian">ობიექტის დამატება</h2>
           <div
