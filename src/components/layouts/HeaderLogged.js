@@ -318,7 +318,7 @@ function HeaderLogged() {
                       }}
                       passHref
                       >
-                        აქაუნთი
+                        პროფილი
                       </Link>
                     </div>
                     <Link href="/">

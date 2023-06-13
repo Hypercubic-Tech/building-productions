@@ -258,7 +258,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       className={`${styles.modal}`}
     >
       <div className={styles.overlay}></div>
-      <div className="modal-content">
+      <div className={` ${styles.mainBg} modal-content `}>
         <div className="modal-header">
           <h2 className="georgian">ობიექტის რედაქტირება</h2>
           <div

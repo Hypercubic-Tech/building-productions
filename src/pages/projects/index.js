@@ -207,7 +207,7 @@ const index = () => {
                     ) : (
                         <div>
                             {/* style={{height: "85vh"}} */}
-                            <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
+                            <h2 className={` ${styles.notFound} geo-title `}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
                         </div>
                     )}
                 </div>

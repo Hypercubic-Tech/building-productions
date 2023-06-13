@@ -24,7 +24,7 @@ const OurTeem = () => {
             us.
           </div>
         </div>
-        <div className="tns tns-default active">
+        {/* <div className="tns tns-default active">
           <div
             data-tns="true"
             data-tns-loop="true"
@@ -209,7 +209,7 @@ const OurTeem = () => {
               </svg>
             </span>
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

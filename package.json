@@ -23,6 +23,7 @@
     "next-redux-wrapper": "^8.1.0",
     "pdfmake": "^0.2.7",
     "react": "18.2.0",
+    "react-bootstrap": "^2.7.4",
     "react-dom": "18.2.0",
     "react-export-excel": "^0.5.3",
     "react-pdf": "^7.0.1",
