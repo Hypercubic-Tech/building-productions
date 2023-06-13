@@ -165,7 +165,7 @@ const SignedWithGoogleModal = ({ onClose }) => {
                                 }))
                             }}
                         />
-                        {lossData && regData.username.length <= 0 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ სახელი</p>}
+                        {lossData && regData.username.length <= 3 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ სახელი</p>}
                     </div>
                     <div className="d-grid gap-2 mt-n1">
                         <label className="mt-2">იმეილი:</label>

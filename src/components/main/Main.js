@@ -38,7 +38,7 @@ const Main = () => {
   const userObject = id_token ? jwt_decode(id_token) : null;
 
   const toggleModal = () => {
-    setIsClosed(true);
+    setIsClosed(false);
   };
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const Main = () => {
         <Price price={priceData} />
         <WhatOuerClientsSay />
         <ContactUs />
-        {id_token && isAuthWithGoogle?.length === 0 && <SignedWithGoogleModal onClose={toggleModal} userEmail={userObject?.email} userToken={id_token} />}
+        {id_token && isClosed && isAuthWithGoogle?.length === 0 && <SignedWithGoogleModal onClose={toggleModal} userEmail={userObject?.email} userToken={id_token} />}
       </div>
     </div>
   );

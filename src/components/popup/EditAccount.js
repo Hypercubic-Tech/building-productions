@@ -241,7 +241,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                             შემდეგ
                         </button>
                     </div>
-                    <span onClick={passwordStepHandler} className="d-flex justify-content-center align-items-center py-2">მომხმარებლის პაროლის შეცვლა</span>
+                    {authUserId !== null && <span onClick={passwordStepHandler} className="d-flex justify-content-center align-items-center py-2">მომხმარებლის პაროლის შეცვლა</span>}
 
                 </div>
 
@@ -410,7 +410,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                     </div>
                 </div>
 
-                <div className={getStatusClass(4)}>
+                {authUserId !== null && <div className={getStatusClass(4)}>
                     <div className="col">
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div className="text-muted">რედაქტირება</div>
@@ -529,7 +529,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>}
             </form>
         </div>
     );
