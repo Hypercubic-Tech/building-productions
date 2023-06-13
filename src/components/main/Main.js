@@ -1,3 +1,9 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import jwt_decode from "jwt-decode";
+import { setAuthAccessToken, setAuthEmail } from "../../store/slices/authSlice";
+
 import AboutCompany from "../../components/main/AboutCompany";
 import Heading from "./Heading";
 import HowItWorks from "../../components/main/HowItWorks";
@@ -21,6 +27,21 @@ const priceData = {
 };
 
 const Main = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { id_token } = router.query;
+  const userObject = id_token ? jwt_decode(id_token) : null;
+  console.log(userObject)
+
+  useEffect(() => {
+    if (id_token) {
+      localStorage.setItem("access_token", id_token);
+      localStorage.setItem("email", userObject?.email);
+      
+      dispatch(setAuthAccessToken(id_token));
+      dispatch(setAuthEmail(userObject?.email));
+    }
+  }, [id_token]);
 
   return (
     <div
