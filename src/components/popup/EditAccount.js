@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
+import { setAuthAccessToken, setAuthEmail } from "../../store/slices/authSlice";
 import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
 
@@ -16,12 +17,20 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
         paymentPlan: authUser[0]?.paymentPlan,
         paymentMethod: authUser[0]?.paymentMethod,
     });
+    const [changePassword, setChangePassword] = useState({
+        currentPassword: '',
+        password: '',
+        passwordConfirmation: '',
+    });
     const authUserId = useSelector((state) => state.auth.user_id);
+    const userJwt = useSelector((state) => state.auth.access_token);
+    const dispatch = useDispatch();
 
     let errors = {
         stepOne: [],
         stepTwo: [],
         stepThree: [],
+        stepFour: [],
     };
 
     const stepChangeHandler = () => {
@@ -39,12 +48,23 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
             setStep(step + 1);
             setLossData(false);
         }
+        if (step === 4 && errors?.stepFour?.length === 0 && editUserData?.password) {
+            setStep(step + 1);
+            setLossData(false);
+        }
     };
 
     const prevStepHandler = () => {
         if (step > 1) {
             setBackBtn(true);
             setStep(step - 1);
+        }
+    };
+
+    const passwordStepHandler = () => {
+        if (step === 1) {
+            setBackBtn(true);
+            setStep(4);
         }
     };
 
@@ -66,14 +86,43 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
             paymentPlan: editUserData?.paymentPlan,
             paymentMethod: editUserData?.paymentMethod
         })
-        .then((res) => {
-            loggedUserInfo();
-            onClose();
-            notify(false, 'მომხმარებლის ინფორმაცია დარედაქტირდა');
+            .then((res) => {
+                const data = res.data;
+
+                dispatch(setAuthEmail(data?.email));
+                loggedUserInfo();
+                onClose();
+
+                notify(false, 'მომხმარებლის ინფორმაცია დარედაქტირდა');
+            })
+            .catch(() => {
+                notify(true, 'მომხმარებლის ინფორმაციის რედაქტირება უარყოფილია')
+            })
+    };
+
+    const changeUserPassword = async () => {
+
+        await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/change-password`, {
+            currentPassword: changePassword?.currentPassword,
+            password: changePassword?.password,
+            passwordConfirmation: changePassword?.passwordConfirmation
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userJwt}`
+            }
         })
-        .catch(() => {
-            notify(true, 'მომხმარებლის ინფორმაციის რედაქტირება უარყოფილია')
-        })
+            .then((res) => {
+                const data = res.data;
+                dispatch(setAuthAccessToken(data?.jwt));
+                onClose();
+                notify(false, 'მომხმარებლის პაროლი განახლებულია');
+
+            })
+            .catch(() => {
+                notify(true, 'მომხმარებლის პაროლი განახლება უარყოფილია');
+
+            });
     };
 
     return (
@@ -192,6 +241,8 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                             შემდეგ
                         </button>
                     </div>
+                    <span onClick={passwordStepHandler} className="d-flex justify-content-center align-items-center py-2">მომხმარებლის პაროლის შეცვლა</span>
+
                 </div>
 
                 <div className={getStatusClass(2)}>
@@ -355,6 +406,127 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                                     რედაქტირება
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={getStatusClass(4)}>
+                    <div className="col">
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                            <div className="text-muted">რედაქტირება</div>
+                            <svg
+                                onClick={onClose}
+                                className={`${styles.closeBtn}`}
+                                width="64px"
+                                height="64px"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                <g
+                                    id="SVGRepo_tracerCarrier"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    stroke="#CCCCCC"
+                                    strokeWidth="0.336"
+                                ></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <g id="Menu / Close_MD">
+                                        <path
+                                            id="Vector"
+                                            d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
+                                            stroke="#000000"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        ></path>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <div className="d-grid gap-2">
+                            <label className="mt-2">აქტიური პაროლი:</label>
+                            <input
+                                style={{ borderColor: lossData && changePassword?.currentPassword?.length <= 0 ? "red" : "" }}
+                                autoComplete="current-password"
+                                required
+                                id="password"
+                                className="form-control"
+                                placeholder="******"
+                                type="password"
+                                onChange={(e) => {
+                                    setChangePassword((prevSendData) => ({
+                                        ...prevSendData,
+                                        currentPassword: e.target.value
+                                    }))
+                                }}
+                            />
+                            {lossData && changePassword?.currentPassword?.length < 6 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ პაროლი</p>}
+                        </div>
+                        <div className="d-grid gap-2">
+                            <label className="mt-2">ახალი პაროლი:</label>
+                            <input
+                                style={{ borderColor: lossData && changePassword?.password?.length <= 0 ? "red" : "" }}
+                                autoComplete="current-password"
+                                required
+                                id="password"
+                                className="form-control"
+                                placeholder="******"
+                                type="password"
+                                onChange={(e) => {
+                                    setChangePassword((prevSendData) => ({
+                                        ...prevSendData,
+                                        password: e.target.value
+                                    }))
+                                }}
+                            />
+                            <span
+                                style={{
+                                    color: lossData && changePassword?.password?.length < 6 ? "red" : (changePassword?.password?.length >= 6) ? "green" : ""
+                                }}
+                            >
+                                {lossData && changePassword?.password?.length < 6 ? <i className="bi bi-x" /> : (changePassword?.password?.length >= 6 ? <i className="bi bi-check2" /> : "")}
+                                პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს
+                            </span>
+                            {lossData && changePassword?.password?.length < 6 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ პაროლი</p>}
+                        </div>
+                        <div className="d-grid gap-2">
+                            <label className="mt-2">დაადასტურეთ პაროლი:</label>
+                            <input
+                                style={{ borderColor: lossData && changePassword?.passwordConfirmation?.length <= 0 ? "red" : "" }}
+                                autoComplete="current-password"
+                                required
+                                id="password"
+                                className="form-control"
+                                placeholder="******"
+                                type="password"
+                                onChange={(e) => {
+                                    setChangePassword((prevSendData) => ({
+                                        ...prevSendData,
+                                        passwordConfirmation: e.target.value
+                                    }))
+                                }}
+                            />
+
+                            {lossData && changePassword?.passwordConfirmation !== changePassword?.password && <span
+                                style={{
+                                    color: lossData && changePassword?.passwordConfirmation !== changePassword?.password ? "red" : (lossData && changePassword?.passwordConfirmation === changePassword?.password) ? "green" : ""
+                                }}
+                            >
+                                {lossData && changePassword?.passwordConfirmation !== changePassword?.password ? <i className="bi bi-x" /> : (<i className="bi bi-check2" />)}
+                                პაროლი ან განმეორებითი პაროლი არასწორია!
+                            </span>}
+
+                            {lossData && changePassword?.passwordConfirmation?.length < 6 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ პაროლი</p>}
+
+                            <button
+                                className={` btn btn-success georgian ${styles.btn}`}
+                                type="button"
+                                onClick={changeUserPassword}
+                            >
+                                პაროლის შეცვლა
+                            </button>
                         </div>
                     </div>
                 </div>

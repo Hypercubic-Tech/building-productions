@@ -14,38 +14,11 @@ import styles from "./Products.module.css";
 
 const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select }) => {
   const [activeItem, setActiveItem] = useState();
+  const [activeStatusItem, setActiveStatusItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-  const [productToEdit, setProductToEdit] = useState(null);
-  //   const [productData, setProductData] = useState({
-  //     image: image,
-  //     title: productToEdit,
-  //     type: "product",
-  //     supplier: {
-  //         connect: [{ id: null }],
-  //     },
-  //     productLink: "",
-  //     quantity: 0,
-  //     unit: {
-  //         connect: [{ id: null }],
-  //     },
-  //     price: 0,
-  //     categories: {
-  //         connect: [{ id: activeCategoryId }],
-  //     },
-  //     project: {
-  //         connect: [{ id: projectId }]
-  //     },
-  //     product_statuses: {
-  //         connect: [{ id: null }]
-  //     },
-  // });
-  const [updateCraftStatus, setUpdateCraftStatus] = useState({
-    craft_status: {
-      connect: [{ id: null }]
-    },
-  })
-  const [updateProductStatus, setUpdateProductStatus] = useState()
+  const [updateCraftStatus, setUpdateCraftStatus] = useState();
+  const [updateProductStatus, setUpdateProductStatus] = useState();
 
   const activeCategoryId = useSelector(state => state.cats.category);
   const products = useSelector(state => state.prod.products);
@@ -123,7 +96,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   //   console.log(productToEdit)
   // };
 
-  const confirmEdit = async (e, productId) => {
+  const confirmEdit = async (event, productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-primary',
@@ -131,7 +104,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       },
       buttonsStyling: false
     });
-  
+
     await swalWithBootstrapButtons.fire({
       title: 'დაადასტურეთ, რომ გსურთ პროდუქტის სტატუსის რედაქტირება',
       text: 'დადასტურების შემთხვევაში, პროდუქტი რედაქტირდება ავტომატურად',
@@ -144,19 +117,19 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       if (result.isConfirmed) {
         try {
           await Promise.all([
-            axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`, {
+            axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?filters[id][$eq]=${productId}`, {
               data: [
                 {
                   id: productId,
                   attributes: {
                     product_statuses: {
-                      connect: [{ id: updateProductStatus }]
-                  },
+                      connect: [{ id: event.target.value }]
+                    },
                   }
                 }
               ]
             }),
-            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*/${productId}`)
+            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
           ]).then(([putResponse, getResponse]) => {
             const updatedProduct = putResponse.data.data;
             const updatedData = getResponse.data.data;
@@ -173,7 +146,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     });
   };
 
-  // console.log(productsToMap, 'products')
 
   const deleteProductHandler = async (productId) => {
     await axios
@@ -278,6 +250,22 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
         }
       });
   };
+
+  const getActiveItem = (event, product) => {
+    // console.log(event.target.value, 'event')
+    console.log(product.id, 'id')
+    if (activeStatusItem === product.id) {
+      setActiveStatusItem(null)
+    } else {
+      setActiveStatusItem(product.id)
+      setUpdateProductStatus(event.target.value)
+      let productId = product.id
+      confirmEdit(event, productId)
+    }
+
+
+
+  }
 
   useEffect(() => {
     if (projectId) {
@@ -462,15 +450,15 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
                       <td className="georgian">
                         <div className="form-group">
-                          {console.log(product.attributes.product_statuses?.data[0]?.id, 'hi')}
+                          {console.log(product.attributes.product_status?.data?.id, 'status')}
+                          {console.log(product.attributes, 'product')}
+                          {console.log(updateProductStatus, 'prodddd')}
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"
-                              defaultValue={product.attributes.product_statuses?.data[0]?.id}
-                              onChange={(e) => {
-                                setUpdateProductStatus(e.target.value)
-                                let productId = product.id
-                                confirmEdit(e, productId)
+                              value={updateProductStatus || product.attributes.product_status.data.id}
+                              onChange={(event) => {
+                                getActiveItem(event, product)
                               }}
                             >
                               {productStatus && productStatus.map((item) => {
@@ -569,24 +557,24 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
         </nav>}
       </div>
       {select === "exportPopUp" &&
-                         <ExportPopup setSelect={setSelect}
-                            totalSum={totalSum} 
-                            aggregatedProducts={aggregatedProducts} 
-                            projectId={projectId}
-                            productsToMap={productsToMap} 
-                            startIndex={startIndex}
-                            endIndex={endIndex}
-                            activeItem={activeItem}
-                            totalSumPrice={totalSumPrice}
-                            categorySums={categorySums}
-                            vatTotal={vatTotal}
-                            vatTotalPrice={vatTotalPrice}
-                            unforeseenExpenses={unforeseenExpenses}
-                            unforeseenExpensesPrice={unforeseenExpensesPrice}
-                            service_percentage={service_percentage}
-                            servicePercentagePrice={servicePercentagePrice}
-                            select={select}
-                          />}
+        <ExportPopup setSelect={setSelect}
+          totalSum={totalSum}
+          aggregatedProducts={aggregatedProducts}
+          projectId={projectId}
+          productsToMap={productsToMap}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          activeItem={activeItem}
+          totalSumPrice={totalSumPrice}
+          categorySums={categorySums}
+          vatTotal={vatTotal}
+          vatTotalPrice={vatTotalPrice}
+          unforeseenExpenses={unforeseenExpenses}
+          unforeseenExpensesPrice={unforeseenExpensesPrice}
+          service_percentage={service_percentage}
+          servicePercentagePrice={servicePercentagePrice}
+          select={select}
+        />}
     </>
   );
 };
