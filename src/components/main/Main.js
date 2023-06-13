@@ -12,6 +12,7 @@ import OurProjects from "../../components/main/OurProjects";
 import Price from "../../components/main/Price";
 import WhatOuerClientsSay from "../../components/main/WhatOurClientsSay";
 import ContactUs from "./ContactUs";
+import Faq from "./Faq";
 
 const priceData = {
   monthlyPrice: {
@@ -60,6 +61,7 @@ const Main = () => {
         <Price price={priceData} />
         <WhatOuerClientsSay />
         <ContactUs />
+        <Faq />
       </div>
     </div>
   );
