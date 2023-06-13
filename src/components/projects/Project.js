@@ -57,10 +57,15 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
     }
   };
 
+
   const total = products.reduce((acc, product) => {
     const productTotal = product?.attributes?.price * product?.attributes?.quantity;
     return acc + productTotal;
   }, 0);
+
+  useEffect(() => {
+    defaultProductsHandler();
+  }, [])
 
   return (
     <>
@@ -92,10 +97,11 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_types?.data[0]?.attributes?.Title}
+                    {p?.attributes?.property_type?.data?.attributes?.title} 
+                    {/* make .title to .Title and it will work -.- */}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.conditions?.data[0]?.attributes?.title}
+                    {p?.attributes?.condition?.data?.attributes?.title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.current_condition?.data?.attributes?.title}
@@ -103,7 +109,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.area} მ2
                   </li>
-
                   <li className="breadcrumb-item text-warning georgian">
                     {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
                   </li>

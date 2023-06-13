@@ -433,9 +433,12 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                         <span>{product?.attributes?.title}</span>
                       </td>
                       <td className="georgian">
-                        <a href={`${product?.attributes?.productLink}`} target="_blank">
-                          {product?.attributes?.supplier?.data?.attributes?.title}
-                        </a>
+                        {product.attributes.type === 'product' ? (
+                          <a href={`${product?.attributes?.productLink}`} target="_blank">
+                            {product?.attributes?.supplier?.data?.attributes?.title}
+                          </a>
+                        ) : " - "}
+
                       </td>
                       <td className="georgian">
                         {product?.attributes?.quantity}
@@ -462,30 +465,27 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                               })}
                             </select>
                           ) : (
-                            // <select
-                            //   className="form-select"
-                            //   defaultValue={product.attributes.craft_status?.data[0]?.id}
-                            //   onChange={(e) => {
-                            //     setUpdateCraftStatus((updateCraftStatus) => ({
-                            //       ...updateCraftStatus,
-                            //       craft_status: {
-                            //         connect: [{ id: e.target.value }],
-                            //       },
-                            //     }));
-                            //   }}
-                            // >
-                            //   {craftStatus && craftStatus.map((item) => {
-                            //     return (
-                            //       <option key={item.id} value={item.id}>{item.attributes.title}</option>
-                            //     )
-                            //   })}
-                            // </select>
-                            ""
+                            <select
+                              className="form-select"
+                              defaultValue={product.attributes.craft_status?.data[0]?.id}
+                              onChange={(e) => {
+                                setUpdateCraftStatus((updateCraftStatus) => ({
+                                  ...updateCraftStatus,
+                                  craft_status: {
+                                    connect: [{ id: e.target.value }],
+                                  },
+                                }));
+                              }}
+                            >
+                              {craftStatus && craftStatus.map((item) => {
+                                return (
+                                  <option key={item.id} value={item.id}>{item.attributes.title}</option>
+                                )
+                              })}
+                            </select>
                           )}
                         </div>
                       </td>
-                      {/* <td className="georgian">{product?.attributes?.type === "product" ? <select></select> : ""}</td> */}
-                      {/* <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td> */}
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
@@ -527,7 +527,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
             </>
           )}
         </table>
-        {/* {filteredProducts?.length === 0 && <div style={{ width: '100vw', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>} */}
+        {productsToMap?.length === 0 && <div style={{ width: '100%', margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         {productsToMap.length > 5 && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>

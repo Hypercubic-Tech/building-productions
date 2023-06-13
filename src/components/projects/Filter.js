@@ -29,7 +29,6 @@ const Filter = ({
         >
           {projectCategory &&
             projectCategory.map((item, index) => {
-              console.log(item.attributes.icon.data.attributes.url, 'item')
               return (
                 <div
                   onClick={() => {
