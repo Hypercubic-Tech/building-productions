@@ -8,7 +8,7 @@ import styles from "./Modal.module.css";
 
 const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   const userId = useSelector(state => state.auth.user_id)
-
+  console.log(project.data[0].attributes.categories, 'proj')
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -104,29 +104,34 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
 
   const handleCheckboxChange = (event) => {
     const categoryId = event.target.value;
-  
-    // Remove the category item if it's unchecked
-    if (!event.target.checked) {
-      const sendDataCategories = sendData.categories.connect.filter((cat) => cat.id !== categoryId);
+
+    if (event.target.checked) {
+      const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
       setSendData((prevState) => ({
         ...prevState,
         categories: {
           connect: sendDataCategories,
         },
       }));
-    } else {
-      // Add the category item if it's checked and not already present in sendData.categories.connect
-      if (!sendData.categories.connect.some((cat) => cat.id === categoryId)) {
-        const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
-        setSendData((prevState) => ({
-          ...prevState,
-          categories: {
-            connect: sendDataCategories,
-          },
-        }));
-      }
+    }
+
+    if (!event.target.checked) {
+      const sendDataCategories = sendData.categories.connect.filter((item) => {
+        console.log(item.id, 'item') 
+        return (
+          item.id !== +categoryId)
+      });
+
+      setSendData((prevState) => ({
+        ...prevState,
+        categories: {
+          connect: sendDataCategories,
+        },
+      }));
     }
   };
+
+  console.log(sendData.categories, 'categories in arr')
 
 
   const stepChangeHandler = () => {
@@ -158,11 +163,12 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
     try {
       let projectId = project.data[0].id
 
-      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`, {
+      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}`, {
         data: sendData
       })
         .then((res) => {
           const data = res.data;
+          console.log(data, 'after request')
           setShowProject(true);
           setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
