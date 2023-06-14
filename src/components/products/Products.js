@@ -14,8 +14,8 @@ import styles from "./Products.module.css";
 const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select }) => {
   const dispatch = useDispatch();
 
-  const { projectId } = router.query;
   const router = useRouter();
+  const { projectId } = router.query;
   
   const products = useSelector(state => state.prod.products);
 
