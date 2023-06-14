@@ -44,6 +44,7 @@
 }
 .hover {
   transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 10px;
 }
 .hover:hover {
   color: #2B3467;
