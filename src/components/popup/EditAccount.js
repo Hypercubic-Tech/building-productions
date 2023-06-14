@@ -241,7 +241,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                             შემდეგ
                         </button>
                     </div>
-                    {authUserId !== null && <span onClick={passwordStepHandler} className="d-flex justify-content-center align-items-center py-2">მომხმარებლის პაროლის შეცვლა</span>}
+                    {authUserId === null && <span onClick={passwordStepHandler} className="d-flex justify-content-center align-items-center py-2">მომხმარებლის პაროლის შეცვლა</span>}
 
                 </div>
 

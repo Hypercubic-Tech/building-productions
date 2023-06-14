@@ -6,9 +6,8 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
+const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProjectsData }) => {
   const userId = useSelector(state => state.auth.user_id)
-  console.log(project.data[0].attributes.categories, 'proj')
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -113,6 +112,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
           connect: sendDataCategories,
         },
       }));
+      console.log(sendDataCategories, 'sendDataCategories')
     }
 
     if (!event.target.checked) {
@@ -128,11 +128,9 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
           connect: sendDataCategories,
         },
       }));
+      console.log(sendDataCategories, '!sendDataCategories')
     }
   };
-
-  console.log(sendData.categories, 'categories in arr')
-
 
   const stepChangeHandler = () => {
 
@@ -163,7 +161,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
     try {
       let projectId = project.data[0].id
 
-      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}`, {
+      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`, {
         data: sendData
       })
         .then((res) => {
@@ -172,6 +170,8 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
           setShowProject(true);
           setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
+
+          getProjectsData();
         })
     } catch (error) {
       notify(true, "პროექტის რედაქტირება უარყოფილია");
@@ -402,7 +402,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                         {/* <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option> */}
                         {propertyType && propertyType.map((item, index) => {
                           return (
-                            <option key={index} value={item.id}>{item.attributes.title}</option> // .titles gamo ar mushaobs sheidlzeba tqventan .Title imushavebs
+                            <option key={index} value={item.id}>{item.attributes.Title}</option> // .titles gamo ar mushaobs sheidlzeba tqventan .Title imushavebs
                           )
                         })}
                       </select>

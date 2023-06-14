@@ -138,7 +138,7 @@ const HeaderPopup = () => {
       </div>
       {addProject && <AddProject dismiss={dismissHandler} />}
       {editProject && (
-        <EditProject data={editProjectData} dismiss={dismissHandler} />
+        <EditProject data={editProjectData} dismiss={dismissHandler} getProjectsData={getProjectsData()}/>
       )}
     </>
   );

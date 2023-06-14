@@ -48,8 +48,6 @@ const Main = () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email][$eq]=${userObject?.email}`)
           .then((res) => {
             const data = res.data;
-            console.log(data, 'data')
-            console.log(data[0].id, 'dataid')
             setIsAuthWithGoogle(data)
             if (data?.length === 0) {
               
