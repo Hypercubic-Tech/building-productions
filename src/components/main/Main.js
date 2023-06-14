@@ -49,7 +49,6 @@ const Main = () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email][$eq]=${userObject?.email}`)
           .then((res) => {
             const data = res.data;
-            console.log(data, 'data')
             setIsAuthWithGoogle(data)
             if (data?.length === 0) {
               localStorage.setItem("access_token", id_token);

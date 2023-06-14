@@ -78,7 +78,6 @@ const SignedWithGoogleModal = ({ onClose }) => {
             })
                 .then((res) => {
                     const data = res.data;
-                    console.log(data)
                     notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');
                     onClose();
                 })
