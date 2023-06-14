@@ -12,6 +12,7 @@ import OurProjects from "../../components/main/OurProjects";
 import Price from "../../components/main/Price";
 import WhatOuerClientsSay from "../../components/main/WhatOurClientsSay";
 import ContactUs from "./ContactUs";
+import Faq from "./Faq";
 import SignedWithGoogleModal from "../popup/SignedWithGoogleModal";
 import axios from "axios";
 import notify from "../../utils/notify";
@@ -92,6 +93,7 @@ const Main = () => {
         <Price price={priceData} />
         <WhatOuerClientsSay />
         <ContactUs />
+        <Faq />
         {id_token && isClosed && isAuthWithGoogle?.length === 0 && <SignedWithGoogleModal onClose={toggleModal} userEmail={userObject?.email} userToken={id_token} />}
       </div>
     </div>

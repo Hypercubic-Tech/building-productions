@@ -363,7 +363,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
                           return (
-                            <option key={index} value={item.id}>{item.attributes.title}</option>
+                            <option key={index} value={item.id}>{item.attributes.Title}</option>
                           )
                         })}
                       </select>
