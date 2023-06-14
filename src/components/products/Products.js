@@ -421,9 +421,9 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                             <select
                               className="form-select"
                               defaultValue={updateProductStatus || product?.attributes?.product_status?.data?.id}
-                              onChange={(event) => {
-                                getActiveItem(event, product)
-                              }}
+                              // onChange={(event) => {
+                              //   getActiveItem(event, product)
+                              // }}
                             >
                               {productStatus && productStatus.map((item) => {
                                 return (
