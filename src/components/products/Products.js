@@ -497,7 +497,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
             </>
           )}
         </table>
-        {productsToMap?.length === 0 && <div style={{margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
+        {productsToMap?.length === 0 && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         {productsToMap.length > 5 && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
