@@ -34,7 +34,7 @@ const Gallery = ({ setSelect }) => {
                 setIsProjectImages(data?.data[0]?.attributes?.image?.data)
             })
     };
-    console.log(isProjectImages, 'isProjectImages')
+
     useEffect(() => {
         if (projectId) {
             getProductsHandler();
