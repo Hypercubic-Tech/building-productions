@@ -15,6 +15,8 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const dispatch = useDispatch();
 
   const { projectId } = router.query;
+  const router = useRouter();
+  
   const products = useSelector(state => state.prod.products);
 
   const [activeItem, setActiveItem] = useState();
@@ -24,7 +26,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const [updateCraftStatus, setUpdateCraftStatus] = useState();
   const [updateProductStatus, setUpdateProductStatus] = useState();
 
-  const router = useRouter();
  
   let itemsPerPage = 5;
 
