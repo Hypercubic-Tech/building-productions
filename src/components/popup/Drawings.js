@@ -222,7 +222,7 @@ const Drawings = ({ setSelect }) => {
                                     flexDirection: "column"
                                 }}
                                 className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
-                                <button className="btn btn-primary georgian image-input"
+                                <div className="btn btn-primary georgian image-input"
                                     style={{
                                         position: "absolute",
                                         right: "50px",
@@ -273,7 +273,7 @@ const Drawings = ({ setSelect }) => {
                                         </svg>
                                     </div>
                                     {/* <div className="image-input-wrapper w-125px h-125px"></div> */}
-                                </button>
+                                </div>
 
                                 {projectImages && (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">

@@ -145,7 +145,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
               }}
             >
               <a
-                href="#"
                 className="btn btn-primary fw-bolder georgian"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_create_app"
