@@ -20,6 +20,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
   const products = useSelector(state => state.prod.products);
+  const activeCategoryId = useSelector(state => state.cats.category);
   const router = useRouter();
   const { projectId } = router.query;
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
   };
-
   const totalSumTable = () => {
     setTotalSum(true)
   };
@@ -36,14 +36,15 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
     if (id) {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_status,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
-        const data = response.data;
-        dispatch(setProducts(data.data));
+        const data = response.data.data;
+        dispatch(setProducts(data));
         dispatch(setCategory(id));
       } catch (error) {
         console.error(error);
       }
     }
   };
+  
 
   const filterProductCategory = async (id) => {
     try {
@@ -57,10 +58,15 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
     }
   };
 
+
   const total = products.reduce((acc, product) => {
     const productTotal = product?.attributes?.price * product?.attributes?.quantity;
     return acc + productTotal;
   }, 0);
+
+  useEffect(() => {
+    defaultProductsHandler(activeCategoryId);
+  }, [activeCategoryId, projectId])
 
   return (
     <>
@@ -92,10 +98,11 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_types?.data[0]?.attributes?.Title}
+                    {p?.attributes?.property_type?.data?.attributes?.Title} 
+                    {/* make .title to .Title and it will work -.- */}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.conditions?.data[0]?.attributes?.title}
+                    {p?.attributes?.condition?.data?.attributes?.title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.current_condition?.data?.attributes?.title}
@@ -103,7 +110,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.area} მ2
                   </li>
-
                   <li className="breadcrumb-item text-warning georgian">
                     {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
                   </li>

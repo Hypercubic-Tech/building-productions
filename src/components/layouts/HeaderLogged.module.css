@@ -1,8 +1,7 @@
 .activeBg {
-  background-color: #e4e6ef;
+  border-color: #2B3467;
 }
 .modalWindow {
-  /* display: flex; */
   align-items: center;
   position: fixed;
   z-index: 9;
@@ -11,11 +10,24 @@
   top: 70px;
   right: 90px;
   border-radius: 4px;
-  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
+  box-shadow:
+  0 1px 1px hsl(0deg 0% 0% / 0.075),
+  0 2px 2px hsl(0deg 0% 0% / 0.075),
+  0 4px 4px hsl(0deg 0% 0% / 0.075),
+  0 8px 8px hsl(0deg 0% 0% / 0.075),
+  0 16px 16px hsl(0deg 0% 0% / 0.075);
+  -webkit-box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+  0 2px 2px hsl(0deg 0% 0% / 0.075),
+  0 4px 4px hsl(0deg 0% 0% / 0.075),
+  0 8px 8px hsl(0deg 0% 0% / 0.075),
+  0 16px 16px hsl(0deg 0% 0% / 0.075);;
+  -moz-box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+  0 2px 2px hsl(0deg 0% 0% / 0.075),
+  0 4px 4px hsl(0deg 0% 0% / 0.075),
+  0 8px 8px hsl(0deg 0% 0% / 0.075),
+  0 16px 16px hsl(0deg 0% 0% / 0.075);;
   padding: 10px;
-  background-color: #fff;
+  background-color: #FCFFE7;
 }
 .modalWindow > div {
   cursor: pointer;
@@ -65,6 +77,7 @@
 }
 
 /* end of popup element */
+
 @media (max-width: 768px) {
   .backdrop {
     width: 30px;

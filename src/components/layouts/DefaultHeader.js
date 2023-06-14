@@ -40,7 +40,7 @@ function DefaultHeader() {
   return (
     <>
       <div
-        className="landing-header header-bg"
+        className="landing-header"
         data-kt-sticky="true"
         data-kt-sticky-name="landing-header"
         data-kt-sticky-offset="{default: '200px', lg: '300px'}"

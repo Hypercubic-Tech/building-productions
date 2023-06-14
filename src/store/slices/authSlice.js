@@ -17,16 +17,13 @@ export const authSlice = createSlice({
       state.loggedIn = action.payload;
     },
     setAuthAccessToken(state, action) {
-      console.log(action, 'token')
       state.access_token = action.payload;
     },
     setAuthRole(state, action) {
       state.role = action.payload;
     },
     setAuthEmail(state, action) {
-      console.log(action, 'email')
       state.email = action.payload;
-      console.log(action)
     },
     setAuthUserId(state, action) {
       state.user_id = action.payload;

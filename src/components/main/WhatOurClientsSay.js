@@ -180,28 +180,6 @@ const WhatOuerClientsSay = () => {
             </div>
           </div>
         </div>
-        <div
-          className="d-flex flex-stack flex-wrap flex-md-nowrap card-rounded shadow p-8 p-lg-12 mb-n5 mb-lg-n13"
-          style={{
-            background: "linear-gradient(90deg, #20AA3E 0%, #03A588 100%)",
-          }}
-        >
-          <div className="my-2 me-5">
-            <div className="fs-1 fs-lg-2qx fw-bolder text-white mb-2">
-              Start With Metronic Today,
-              <span className="fw-normal">Speed Up Development!</span>
-            </div>
-            <div className="fs-6 fs-lg-5 text-white fw-bold opacity-75">
-              Join over 100,000 Professionals Community to Stay Ahead
-            </div>
-          </div>
-          <a
-            href="https://1.envato.market/EA4JP"
-            className="btn btn-lg btn-outline border-2 btn-outline-white flex-shrink-0 my-2"
-          >
-            Purchase on Themeforest
-          </a>
-        </div>
       </div>
     </div>
   );

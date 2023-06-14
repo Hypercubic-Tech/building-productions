@@ -73,7 +73,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
           notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
         });
     } catch (err) {
-      notify(true, "რეგისტრაცია უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+      notify(true, "რეგისტრაცია უარყოფილია, იმეილი ან სახელი უკვე გამოყენებულია");
       console.log(err);
     }
     handleRegistration(true);
@@ -147,7 +147,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
               </label>
             )}
             <input
-              style={{ borderColor: lossData && regData.username.length <= 0 ? "red" : "" }}
+              style={{ borderColor: lossData && regData.username.length < 3 ? "red" : "" }}
               autoComplete="username"
               required
               id="fullName"
@@ -161,7 +161,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 }))
               }}
             />
-            {lossData && regData.username.length <= 0 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ სახელი</p>}
+            {lossData && regData.username.length < 3 && <p style={{ color: 'red' }}>სახელი უნდა შეიცავდეს მინიმუმ 3 სიმბოლოს</p>}
           </div>
           <div className="d-grid gap-2 mt-n1">
             <label className="mt-2">იმეილი:</label>

@@ -11,7 +11,7 @@ const HowItWorks = () => {
       <div className="container">
         <div className="text-center mb-17">
           <h3
-            className="fs-2hx text-dark mb-5 georgian"
+            className="geo-title fs-2hx text-dark mb-5 georgian"
             id="how-it-works"
             data-kt-scroll-offset="{default: 100, lg: 150}"
           >
@@ -97,7 +97,7 @@ const HowItWorks = () => {
             </div>
           </div>
         </div>
-        <div className="tns tns-default">
+        {/* <div className="tns tns-default">
           <div
             data-tns="true"
             data-tns-loop="true"
@@ -180,8 +180,8 @@ const HowItWorks = () => {
               </svg>
             </span>
           </button>
-          {/* <SwiperComp  imgs={[logo1, logo2, logo3, logo4]} type = {1} /> */}
-        </div>
+          <SwiperComp  imgs={[logo1, logo2, logo3, logo4]} type = {1} />
+        </div> */}
       </div>
     </div>
   );

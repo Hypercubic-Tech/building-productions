@@ -39,22 +39,22 @@ const index = () => {
     const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
     const startIndex = (pageIndex - 1) * itemsPerPage;
     const endIndex = pageIndex * itemsPerPage;
-  
+
     const handleDecrementPageIndex = () => {
-      if (pageIndex > 1) {
-        setPageIndex(pageIndex - 1);
-      }
+        if (pageIndex > 1) {
+            setPageIndex(pageIndex - 1);
+        }
     };
-  
+
     const handleChangePageIndex = (event) => {
-      const newPageIndex = parseInt(event.target.id);
-      setPageIndex(newPageIndex);
+        const newPageIndex = parseInt(event.target.id);
+        setPageIndex(newPageIndex);
     };
-  
+
     const handleIncrementPageIndex = () => {
-      if (pageIndex < totalPages) {
-        setPageIndex(pageIndex + 1);
-      }
+        if (pageIndex < totalPages) {
+            setPageIndex(pageIndex + 1);
+        }
     };
 
     const addProjectHandler = () => {
@@ -89,7 +89,7 @@ const index = () => {
             setEditProject(data);
 
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     };
 
@@ -207,7 +207,7 @@ const index = () => {
                     ) : (
                         <div>
                             {/* style={{height: "85vh"}} */}
-                            <h2 className={styles.notFound}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
+                            <h2 className={` ${styles.notFound} geo-title `}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
                         </div>
                     )}
                 </div>
@@ -234,9 +234,7 @@ const index = () => {
                 </nav>}
             </div>
             {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
-            {editProject && (
-                <EditProject setShowProject={setShowProject} project={editProject} dismiss={dismissHandler} />
-            )}
+            {editProject && <EditProject setEditProject={setEditProject} setShowProject={setShowProject} project={editProject} dismiss={dismissHandler} />}
         </>
     );
 };

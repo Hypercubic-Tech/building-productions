@@ -28,10 +28,8 @@ const EditProduct = ({
     const [craftImage, setCraftImage] = useState();
     const [supplierOption, setSupplierOption] = useState(product.attributes.supplier.data.id);
     const [unitOption, setUnitOption] = useState(product.attributes.unit.data.id)
-    // console.log(product.attributes.product_status.data.id)
     const [statusOption, setStatusOption] = useState(product.attributes.product_status.data.id)
     const activeCategoryId = useSelector(state => state.cats.category);
-    console.log(product?.attributes, 'prod')
     const [productData, setProductData] = useState({
         image: image,
         title: product.attributes.title,

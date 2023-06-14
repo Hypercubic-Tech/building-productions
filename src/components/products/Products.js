@@ -66,36 +66,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }
   };
 
-  const defaultProductsHandler = async (id, pageIndex) => {
-    if (id) {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
-        const data = response.data;
-        dispatch(setProducts(data.data));
-        dispatch(setCategory(id));
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  // const handleGetEditProduct = async (e, product) => {
-  //   let productId = product.id
-
-  //   try {
-  //     await axios
-  //       .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
-  //       .then((res) => {
-  //         const data = res.data
-  //         setProductToEdit(data.data);
-  //         // confirmEdit(e, productId)
-  //       })
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  //   console.log(productToEdit)
-  // };
-
   const confirmEdit = async (event, productId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -133,7 +103,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
           ]).then(([putResponse, getResponse]) => {
             const updatedProduct = putResponse.data.data;
             const updatedData = getResponse.data.data;
-            // console.log(updatedProduct, 'hihihihiih')
             notify(false, "პროდუქტი რედაქტირდა");
             dispatch(setProductState(updatedData));
           });
@@ -252,8 +221,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   };
 
   const getActiveItem = (event, product) => {
-    // console.log(event.target.value, 'event')
-    console.log(product.id, 'id')
     if (activeStatusItem === product.id) {
       setActiveStatusItem(null)
     } else {
@@ -436,9 +403,12 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                         <span>{product?.attributes?.title}</span>
                       </td>
                       <td className="georgian">
-                        <a href={`${product?.attributes?.productLink}`} target="_blank">
-                          {product?.attributes?.supplier?.data?.attributes?.title}
-                        </a>
+                        {product.attributes.type === 'product' ? (
+                          <a href={`${product?.attributes?.productLink}`} target="_blank">
+                            {product?.attributes?.supplier?.data?.attributes?.title}
+                          </a>
+                        ) : " - "}
+
                       </td>
                       <td className="georgian">
                         {product?.attributes?.quantity}
@@ -450,9 +420,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
                       <td className="georgian">
                         <div className="form-group">
-                          {console.log(product.attributes.product_status?.data?.id, 'status')}
-                          {console.log(product.attributes, 'product')}
-                          {console.log(updateProductStatus, 'prodddd')}
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"
@@ -468,30 +435,27 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                               })}
                             </select>
                           ) : (
-                            // <select
-                            //   className="form-select"
-                            //   defaultValue={product.attributes.craft_status?.data[0]?.id}
-                            //   onChange={(e) => {
-                            //     setUpdateCraftStatus((updateCraftStatus) => ({
-                            //       ...updateCraftStatus,
-                            //       craft_status: {
-                            //         connect: [{ id: e.target.value }],
-                            //       },
-                            //     }));
-                            //   }}
-                            // >
-                            //   {craftStatus && craftStatus.map((item) => {
-                            //     return (
-                            //       <option key={item.id} value={item.id}>{item.attributes.title}</option>
-                            //     )
-                            //   })}
-                            // </select>
-                            ""
+                            <select
+                              className="form-select"
+                              defaultValue={product.attributes.craft_status?.data[0]?.id}
+                              onChange={(e) => {
+                                setUpdateCraftStatus((updateCraftStatus) => ({
+                                  ...updateCraftStatus,
+                                  craft_status: {
+                                    connect: [{ id: e.target.value }],
+                                  },
+                                }));
+                              }}
+                            >
+                              {craftStatus && craftStatus.map((item) => {
+                                return (
+                                  <option key={item.id} value={item.id}>{item.attributes.title}</option>
+                                )
+                              })}
+                            </select>
                           )}
                         </div>
                       </td>
-                      {/* <td className="georgian">{product?.attributes?.type === "product" ? <select></select> : ""}</td> */}
-                      {/* <td className="georgian">{product?.attributes?.type === "product" ? product?.attributes?.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td> */}
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
@@ -533,7 +497,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
             </>
           )}
         </table>
-        {/* {filteredProducts?.length === 0 && <div style={{ width: '100vw', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>} */}
+        {productsToMap?.length === 0 && <div style={{margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         {productsToMap.length > 5 && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>

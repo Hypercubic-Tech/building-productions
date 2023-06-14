@@ -1,14 +1,9 @@
 import Auth from "../popup/Auth.js";
-import HeaderPopup from "../popup/HeaderPopup";
 import Link from 'next/link';
 import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectAuthState,
-  setAuthState,
-  selectAuthAccessToken,
-} from "../../store/slices/authSlice";
+import { setAuthState } from "../../store/slices/authSlice";
 
 const Heading = () => {
   const loggedIn = useSelector(setAuthState);
@@ -61,22 +56,29 @@ const Heading = () => {
     <div className="mb-0" id="home">
       <div
         className="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
-        style={{
-          backgroundImage: "url(assets/media/svg/illustrations/landing.svg)",
-        }}
+        // style={{
+        //   backgroundImage: "url(assets/media/svg/illustrations/landing.svg)",
+        // }}
       >
         <div className="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9 relative">
           <div className="text-center mb-5 mb-lg-10 py-10 py-lg-20">
-            <h1 className="text-white lh-base fw-bolder fs-2x fs-lg-3x mb-15 georgian">
+            <h1
+            //     style={{
+            //     background:
+            //     "linear-gradient(to right, #12CE5D 0%, #FFD80C 100%)",
+            //     WebkitBackgroundClip: "text",
+            //     WebkitTextFillColor: "transparent",
+            // }}
+              className="geo-title lh-base fw-bolder fs-2x fs-lg-3x mb-15 georgian">
               გამოთვალე მარტივად
               <br />
               <span
-                style={{
-                  background:
-                    "linear-gradient(to right, #12CE5D 0%, #FFD80C 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
+                // style={{
+                //   background:
+                //   "linear-gradient(to right, #12CE5D 0%, #FFD80C 100%)",
+                //   WebkitBackgroundClip: "text",
+                //   WebkitTextFillColor: "transparent",
+                // }}
               >
                 <span id="kt_landing_hero_text">სარემონტო ხარჯთაღრიცხვა!</span>
               </span>

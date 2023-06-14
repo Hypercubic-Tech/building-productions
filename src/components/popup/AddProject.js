@@ -33,7 +33,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
         { id: null }
       ]
     },
-    property_types: {
+    property_type: {
       connect: [
         { id: null }
       ]
@@ -46,7 +46,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
         { id: null }
       ]
     },
-    conditions: {
+    condition: {
       connect: [
         { id: null }
       ]
@@ -86,13 +86,13 @@ const AddProject = ({ dismiss, setShowProject }) => {
 
   const stepChangeHandler = () => {
 
-    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_types.connect[0].id) {
+    if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     } else {
       setLoss(true);
     }
-    if (step === 2 && errors.stepTwo.length === 0 && sendData.conditions.connect[0].id && sendData.current_condition.connect[0].id) {
+    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     }
@@ -217,9 +217,10 @@ const AddProject = ({ dismiss, setShowProject }) => {
   return (
     <div
       style={{ display: close ? "none" : "", "marginTop": "80px" }}
-      className={`modal-xxl ${styles.modal}`}
+      className={`${styles.modal}`}
     >
-      <div className="modal-content">
+      <div className={styles.overlay}></div>
+      <div className={` ${styles.mainBg} modal-content `}>
         <div className="modal-header">
           <h2 className="georgian">ობიექტის დამატება</h2>
           <div
@@ -260,17 +261,17 @@ const AddProject = ({ dismiss, setShowProject }) => {
         </div>
         <div className={` modal-body py-lg-10 px-lg-10 ${styles.scroll}`}>
           <div
-            className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
+            className="stepper stepper-pills stepper-column d-flex flex-column d-flef flex-row-fluid"
             id="kt_modal_create_app_stepper"
           >
-            <div className="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-              <div className="stepper-nav ps-lg-10">
+            <div className="d-flex justify-content-center flex-row-auto w-100">
+              <div className={` ${styles.gap} stepper-nav `}>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(1)}`}
                   data-kt-stepper-element="nav"
                 >
-                  <div className="stepper-line w-40px" />
-                  <div className="stepper-icon w-40px h-40px">
+                  {/* <div className="stepper-line w-40px" /> */}
+                  <div className="stepper-icon">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">1</span>
                   </div>
@@ -284,8 +285,8 @@ const AddProject = ({ dismiss, setShowProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(2)}`}
                   data-kt-stepper-element="nav"
                 >
-                  <div className="stepper-line w-40px" />
-                  <div className="stepper-icon w-40px h-40px">
+                  {/* <div className="stepper-line w-40px" /> */}
+                  <div className="stepper-icon">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">2</span>
                   </div>
@@ -301,8 +302,8 @@ const AddProject = ({ dismiss, setShowProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(3)}`}
                   data-kt-stepper-element="nav"
                 >
-                  <div className="stepper-line w-40px" />
-                  <div className="stepper-icon w-40px h-40px">
+                  {/* <div className="stepper-line w-40px" /> */}
+                  <div className="stepper-icon">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">3</span>
                   </div>
@@ -318,8 +319,8 @@ const AddProject = ({ dismiss, setShowProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(4)}`}
                   data-kt-stepper-element="nav"
                 >
-                  <div className="stepper-line w-40px" />
-                  <div className="stepper-icon w-40px h-40px">
+                  {/* <div className="stepper-line w-40px" /> */}
+                  <div className="stepper-icon">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">4</span>
                   </div>
@@ -352,7 +353,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
-                            property_types: {
+                            property_type: {
                               connect: [{ id: event.target.value }],
                             },
                           }));
@@ -362,7 +363,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
                           return (
-                            <option key={index} value={item.id}>{item.attributes.title}</option>
+                            <option key={index} value={item.id}>{item.attributes.Title}</option>
                           )
                         })}
                       </select>
@@ -572,7 +573,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                   onChange={(event) => {
                                     setSendData((prevSendData) => ({
                                       ...prevSendData,
-                                      conditions: {
+                                      condition: {
                                         connect: [{ id: event.target.value }],
                                       },
                                     }));
