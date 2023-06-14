@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import bcrypt from 'bcryptjs';
 import axios from "axios";
+
+import { setAuthUserId } from "../../store/slices/authSlice";
 
 import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
@@ -10,6 +12,7 @@ const SignedWithGoogleModal = ({ onClose }) => {
     const [step, setStep] = useState(1);
     const [lossData, setLossData] = useState(false);
     const [backBtn, setBackBtn] = useState(false);
+    const dispatch = useDispatch();
     const authUserEmail = useSelector((state) => state.auth.email);
     const userJwt = useSelector((state) => state.auth.access_token);
     const userJwtString = JSON.stringify(userJwt);
@@ -78,7 +81,9 @@ const SignedWithGoogleModal = ({ onClose }) => {
             })
                 .then((res) => {
                     const data = res.data;
-                    console.log(data)
+                    console.log(data, 'data')
+                    localStorage.setItem("userId", data?.user?.id);
+                    dispatch(setAuthUserId(data?.user?.id))
                     notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');
                     onClose();
                 })

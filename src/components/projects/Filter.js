@@ -39,7 +39,7 @@ const Filter = ({
                 >
                   <a className={`menu-link active py-3 colored-element ${activeCategoryId === item?.id ? 'bg-primary' : ""}`}>
                     <span className={`menu-title georgian ${styles.item}`}>
-                      <img className={styles.icon} src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item.attributes.icon.data.attributes.url}`} />
+                      <img className={styles.icon} src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.icon?.data?.attributes?.url}`} />
                       {/* <i className="bi bi-plug-fill" />{" "} */}
                       {item?.attributes?.title}
                     </span>

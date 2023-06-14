@@ -322,12 +322,12 @@ function HeaderLogged() {
                       </Link>
                     </div>
                     <Link href="/">
-                      <div onClick={handleLogout} className={styles.hover}>
+                      <div onClick={handleLogout} className={styles.hover} style={{ padding: "10px" }}>
                         გამოსვლა
                         <svg
                           onClick={closeModal}
                           className={styles.closeBtn}
-                          style={{ marginLeft: "70px" }}
+                          style={{ marginLeft: "50px" }}
                           width="64px"
                           height="64px"
                           viewBox="0 0 24 24"
