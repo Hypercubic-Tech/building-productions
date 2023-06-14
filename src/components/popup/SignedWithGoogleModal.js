@@ -66,21 +66,26 @@ const SignedWithGoogleModal = ({ onClose }) => {
     };
 
     const submitGoogleAuthUserData = async () => {
-        await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
-            username: regData?.username,
-            email: regData?.email,
-            userType: regData?.userType,
-            password: regData?.password,
-            phoneNumber: regData?.phoneNumber,
-            paymentPlan: regData?.paymentPlan,
-            paymentMethod: regData?.paymentMethod
-        })
-            .then((res) => {
-                const data = res.data;
-                console.log(data)
-                notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');
-                onClose();
+        try {
+            await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
+                username: regData?.username,
+                email: regData?.email,
+                userType: regData?.userType,
+                password: regData?.password,
+                phoneNumber: regData?.phoneNumber,
+                paymentPlan: regData?.paymentPlan,
+                paymentMethod: regData?.paymentMethod
             })
+                .then((res) => {
+                    const data = res.data;
+                    console.log(data)
+                    notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');
+                    onClose();
+                })
+        } catch (err) {
+            notify(true, 'რეგისტრაცია უარყოფილია, იმეილი ან სახელი უკვე გამოყენებულია');
+            console.log(err)
+        }
     };
 
     return (

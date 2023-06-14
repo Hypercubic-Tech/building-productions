@@ -73,7 +73,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
           notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
         });
     } catch (err) {
-      notify(true, "რეგისტრაცია უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+      notify(true, "რეგისტრაცია უარყოფილია, იმეილი ან სახელი უკვე გამოყენებულია");
       console.log(err);
     }
     handleRegistration(true);
