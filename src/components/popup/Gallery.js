@@ -19,10 +19,10 @@ const Gallery = ({ setSelect }) => {
     const router = useRouter();
     const { projectId } = router.query;
     const [imgSrc, setImgSrc] = useState(null);
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState([]);
     const [isImageUpload, setIsImageUpload] = useState(false);
-    const [isProjectImages, setIsProjectImages] = useState(null);
-    const [isImageState, setIsImageState] = useState(false); 
+    const [isProjectImages, setIsProjectImages] = useState([]);
+    const [isImageState, setIsImageState] = useState(false);
 
     const getProductsHandler = async () => {
         await axios
@@ -31,71 +31,72 @@ const Gallery = ({ setSelect }) => {
             )
             .then((res) => {
                 const data = res.data
-                console.log(data?.data[0].attributes.image.data, 'fuchu')
                 setIsProjectImages(data?.data[0]?.attributes?.image?.data)
             })
     };
-
+    console.log(isProjectImages, 'isProjectImages')
     useEffect(() => {
         if (projectId) {
             getProductsHandler();
         }
     }, [projectId]);
 
-    const handleMediaUpload = async (img) => {
-        if (!img) {
+    const handleMediaUpload = async (files) => {
+        if (!files) {
             return;
         }
 
         const formData = new FormData();
-        formData.append("files", img);
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            formData.append("files", file);
+        }
 
         try {
-            await axios.post(
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
-                formData,
-                {
+            await axios
+                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                }
-            )
+                })
                 .then((res) => {
-                    const data = res.data;
-                    setImage(data[0]);
-                    setImgSrc(data[0].url)
+                    const newImages = isProjectImages ? [...image, ...isProjectImages, ...res.data] : [...image, ...isProjectImages, ...res.data];
+                    setImage(newImages);
+                    setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
-                    notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+                    getProductsHandler();
+                    notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
                 });
-
         } catch (err) {
             console.error(err);
-            notify(true, "სურათის ატვირთვა უარყოფილია");
+            notify(true, "სურათების ატვირთვა უარყოფილია");
         }
     };
 
     useEffect(() => {
         if (isImageUpload) {
             const userImageUpload = async () => {
-                await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`, {
-                    data: {
-                        image: image?.id,
+                await axios.put(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+                    {
+                        data: {
+                            image: image.map((p) => p.id),
+                        },
                     }
-                })
+                )
                     .then(() => {
                         getProductsHandler();
                     });
             };
-            userImageUpload()
+            userImageUpload();
         }
-    }, [isImageUpload]);
+    }, [isImageUpload, image]);
 
     const toggleImages = () => {
         if (!isImageState) {
             setIsImageState(false)
         } else {
             setIsImageState(true)
-
         }
     };
 
@@ -145,7 +146,7 @@ const Gallery = ({ setSelect }) => {
                         <div
                             className="btn btn-icon btn-sm btn-active-icon-primary"
                             data-kt-users-modal-action="close"
-                            style={{ marginLeft: "90%" }}
+                            style={{ marginLeft: "80%" }}
                         >
                             <span
                                 className="svg-icon svg-icon-1"
@@ -224,7 +225,8 @@ const Gallery = ({ setSelect }) => {
                                                 cursor: "pointer"
                                             }}
                                             onChange={(e) => {
-                                                handleMediaUpload(e.target.files[0]);
+                                                console.log(e.target.files, 'files')
+                                                handleMediaUpload(e.target.files);
                                             }}
                                             type="file"
                                             name="avatar"
@@ -240,7 +242,6 @@ const Gallery = ({ setSelect }) => {
 
                                 {isProjectImages && (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">
-                                        {console.log(isProjectImages, 'buzi')}
                                         {isProjectImages?.map((projectImg, index) => (
                                             <a
                                                 key={projectImg?.id}
@@ -264,6 +265,7 @@ const Gallery = ({ setSelect }) => {
                                                     margin: "20px"
                                                 }}>
                                                     <img
+                                                        key={index}
                                                         src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
                                                         className="img-responsive col-sm"
                                                         style={{
