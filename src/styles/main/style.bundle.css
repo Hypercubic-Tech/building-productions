@@ -1,19 +1,24 @@
 @charset "UTF-8";
+
 @font-face {
   font-family: 'NotoSans-Regular';
   src: url('/fonts/NotoSans-Regular.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'Roboto-Light';
   src: url('/fonts/Roboto-Light.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'Roboto-Regular';
   src: url('/fonts/Roboto-Regular.ttf') format('truetype');
 }
+
 .geo-title {
   font-family: 'FiraGO', 'NotoSans-Regular';
 }
+
 :root {
   --bs-blue: #009ef6;
   --bs-indigo: #6610f2;
@@ -73,11 +78,46 @@
   --bs-body-color: #181c32;
   --bs-body-bg: #ffffff;
 }
+.cream-bg {
+  color: #FCFFE7;
+}
+.blue-bg {
+  color: #2B3467;
+}
+.light-blue-bg {
+  color: #BAD7E9;
+}
+
+.cream {
+  color: #FCFFE7;
+}
+.blue {
+  color: #2B3467;
+}
+.light-blue {
+  color: #BAD7E9;
+}
 *,
 ::after,
 ::before {
   box-sizing: border-box;
 }
+
+.custom-input::-webkit-inner-spin-button,
+.custom-input::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+.custom-input {
+  -moz-appearance: textfield !important;
+}
+
+.custom-input::-webkit-outer-spin-button,
+.custom-input::-webkit-inner-spin-button {
+  display: none !important;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
@@ -9231,7 +9271,7 @@ fieldset:disabled .btn {
 }
 .text-white {
   --bs-text-opacity: 1;
-  color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+  color: #FCFFE7 !important;
 }
 .text-light {
   --bs-text-opacity: 1;
@@ -9283,7 +9323,7 @@ fieldset:disabled .btn {
 }
 .text-white-50 {
   --bs-text-opacity: 1;
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: #FCFFE7 !important;
 }
 .text-reset {
   --bs-text-opacity: 1;
@@ -9312,10 +9352,7 @@ fieldset:disabled .btn {
 }
 .bg-primary {
   --bs-bg-opacity: 1;
-  background-color: rgba(
-    var(--bs-primary-rgb),
-    var(--bs-bg-opacity)
-  ) !important;
+  background-color: #2B3467 !important;
 }
 .bg-secondary {
   --bs-bg-opacity: 1;
@@ -9356,10 +9393,7 @@ fieldset:disabled .btn {
 }
 .bg-body {
   --bs-bg-opacity: 1;
-  background-color: rgba(
-    var(--bs-body-bg-rgb),
-    var(--bs-bg-opacity)
-  ) !important;
+  background-color: #BAD7E9 !important;
 }
 .bg-transparent {
   --bs-bg-opacity: 1;
@@ -25055,7 +25089,7 @@ fieldset:disabled .btn {
 }
 .bg-body {
   --bg-color: 255, 255, 255;
-  background-color: #fff !important;
+  background-color: #BAD7E9 !important;
 }
 .bg-lighten {
   background-color: rgba(245, 248, 250, 0.5) !important;
@@ -25519,7 +25553,7 @@ fieldset:disabled .btn {
   box-shadow: 0 0.1rem 0.75rem 0.25rem rgba(0, 0, 0, 0.05);
 }
 .text-white {
-  color: #fff !important;
+  color: #FCFFE7 !important;
 }
 .text-inverse-white {
   color: #7e8299 !important;

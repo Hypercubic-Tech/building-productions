@@ -454,7 +454,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                               }}
                               name="area"
                               type="number"
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ობიექტის ფართობი"
                               data-placeholder="area"
                             ></input>
@@ -479,7 +479,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                                 }));
                               }}
                               type="text"
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
                             />
                           </div>
@@ -497,7 +497,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                                 }));
                               }}
                               type="number"
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
                             />
                           </div>
@@ -511,7 +511,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                             <span className={` georgian `}>დღგ-ს გადამხდელი</span>
                           </label>
                           <input
-                            className="form-control georgian form-control-solid"
+                            className="custom-input form-control georgian form-control-solid"
                             placeholder="დღგ-ს გადამხდელი (%)"
                             type="text"
                             defaultValue={sendData.vatPercent}
@@ -536,7 +536,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                               }));
                             }}
                             type="text"
-                            className="form-control georgian form-control-solid"
+                            className="custom-input form-control georgian form-control-solid"
                             placeholder="გაუთვალისწინებელი ხარჯები (%)"
                           />
                         </div>
@@ -547,7 +547,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                             </label>
                             <input
                               defaultValue={sendData.service_percentage}
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               type="text"
                               id="flexSwitchCheckDefault"
                               placeholder="მომსახურების ხარჯები (%)"
