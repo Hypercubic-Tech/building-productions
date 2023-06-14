@@ -19,21 +19,10 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
 
-  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type.data.id);
-  const [cityOption, setCityOption] = useState(project.data[0].attributes.city.data.id);
-  const [conditionOption, setConditionOption] = useState(project.data[0].attributes.condition.data.id);
-  const [currentConditionOption, setCurrentConditionOption] = useState(project.data[0].attributes.current_condition.data.id);
-  // const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => { return cat.id }))
-
-  // const [oldSelecetedCat, setOldSelectedCat] = useState();
-
-  // useEffect(() => {
-  //   const oldCats = categories && categories.map((cat) => {
-  //     return cat.id
-  //   })
-  //   setOldSelectedCat(oldCats)
-
-  // }, [categories])
+  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type?.data?.id);
+  const [cityOption, setCityOption] = useState(project?.data[0]?.attributes.city?.data?.id);
+  const [conditionOption, setConditionOption] = useState(project?.data[0]?.attributes?.condition?.data?.id);
+  const [currentConditionOption, setCurrentConditionOption] = useState(project?.data[0]?.attributes?.current_condition?.data?.id);
 
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
@@ -64,8 +53,8 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
       ]
     },
     categories: {
-      connect: project.data[0].attributes.categories.data.map((cat) => ({
-        id: cat.id,
+      connect: project.data[0].attributes.categories.data.map((category) => ({
+        id: category.id,
       })),
     },
     service_percentage: project?.data[0]?.attributes?.service_percentage,
@@ -101,26 +90,42 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
     }
   };
 
+  // const handleCheckboxChange = (event) => {
+  //   const categoryId = event.target.value;
+
+  //   if (event.target.checked) {
+  //     const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
+  //     setSendData((prevState) => ({
+  //       ...prevState,
+  //       categories: {
+  //         connect: sendDataCategories,
+  //       },
+  //     }));
+  //     console.log(sendDataCategories, 'sendDataCategories')
+  //   }
+
+  //   if (!event.target.checked) {
+  //     const sendDataCategories = sendData.categories.connect.filter((item) => {
+  //       console.log(item.id, 'item') 
+  //       return (
+  //         item.id !== +categoryId)
+  //     });
+
+  //     setSendData((prevState) => ({
+  //       ...prevState,
+  //       categories: {
+  //         connect: sendDataCategories,
+  //       },
+  //     }));
+  //     console.log(sendDataCategories, '!sendDataCategories')
+  //   }
+  // };
+
   const handleCheckboxChange = (event) => {
-    const categoryId = event.target.value;
+    const categoryId = parseInt(event.target.value);
 
     if (event.target.checked) {
       const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
-      setSendData((prevState) => ({
-        ...prevState,
-        categories: {
-          connect: sendDataCategories,
-        },
-      }));
-      console.log(sendDataCategories, 'sendDataCategories')
-    }
-
-    if (!event.target.checked) {
-      const sendDataCategories = sendData.categories.connect.filter((item) => {
-        console.log(item.id, 'item') 
-        return (
-          item.id !== +categoryId)
-      });
 
       setSendData((prevState) => ({
         ...prevState,
@@ -128,9 +133,18 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
           connect: sendDataCategories,
         },
       }));
-      console.log(sendDataCategories, '!sendDataCategories')
+    } else {
+      const dataOfCategories = sendData.categories.connect.filter((item) => item.id !== categoryId);
+      console.log(dataOfCategories, 'dataOfCategories')
+      setSendData((prevState) => ({
+        ...prevState,
+        categories: {
+          connect: dataOfCategories,
+        },
+      }));
     }
   };
+
 
   const stepChangeHandler = () => {
 
@@ -164,9 +178,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
       await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`, {
         data: sendData
       })
-        .then((res) => {
-          const data = res.data;
-          console.log(data, 'after request')
+        .then(() => {
           setShowProject(true);
           setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
@@ -690,7 +702,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                             <div className="d-flex flex-column">
                               {categories &&
                                 categories.map((item, index) => {
-
                                   return (
                                     <div
                                       key={index}
@@ -700,15 +711,15 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                                         className="form-check-input"
                                         type="checkbox"
                                         value={item.id}
-                                        defaultChecked={sendData.categories.connect.some((cat) => cat.id === item.id)}
+                                        defaultChecked={sendData?.categories?.connect?.some((cat) => cat?.id === item?.id)}
                                         onChange={handleCheckboxChange}
                                       />
-                                      <label
+                                      <div
                                         onClick={(e) => e.preventDefault()}
                                         className="form-check-label georgian"
                                       >
                                         {item.attributes.title}
-                                      </label>
+                                      </div>
                                     </div>
                                   );
                                 })}

@@ -20,7 +20,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
   const userId = useSelector(state => state.auth.user_id)
-  console.log(userId, 'ds yleo')
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -121,8 +120,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
       }));
     }
   };
-
-  
 
   const createProjectHandler = async () => {
     try {
