@@ -98,7 +98,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.title} 
+                    {p?.attributes?.property_type?.data?.attributes?.Title} 
                     {/* make .title to .Title and it will work -.- */}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">

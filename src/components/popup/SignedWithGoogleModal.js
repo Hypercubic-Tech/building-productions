@@ -81,7 +81,6 @@ const SignedWithGoogleModal = ({ onClose }) => {
             })
                 .then((res) => {
                     const data = res.data;
-                    console.log(data, 'data')
                     localStorage.setItem("userId", data?.user?.id);
                     dispatch(setAuthUserId(data?.user?.id))
                     notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');

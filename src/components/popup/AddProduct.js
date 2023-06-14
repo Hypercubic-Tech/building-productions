@@ -569,7 +569,7 @@ const AddProduct = ({
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
                                                         return (
-                                                            <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
+                                                            <option key={item?.id + index} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}
                                                             </option>
                                                         );

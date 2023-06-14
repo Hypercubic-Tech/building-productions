@@ -60,7 +60,7 @@ const Gallery = ({ setSelect }) => {
                     },
                 })
                 .then((res) => {
-                    const newImages = isProjectImages ? [...image, ...isProjectImages, ...res.data] : [...image, ...isProjectImages, ...res.data];
+                    const newImages = isProjectImages ? [...image, ...isProjectImages, ...res.data] : [...image, ...res.data];
                     setImage(newImages);
                     setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
@@ -193,7 +193,7 @@ const Gallery = ({ setSelect }) => {
                                 <div className="btn btn-primary georgian image-input"
                                     style={{
                                         position: "absolute",
-                                        right: "50px",
+                                        right: "70px",
                                         top: "0",
                                         display: "flex",
                                         justifyContent: "center",
