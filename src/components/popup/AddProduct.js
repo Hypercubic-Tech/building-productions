@@ -69,6 +69,10 @@ const AddProduct = ({
         craft_status: {
             connect: [{ id: null }]
         },
+        craft_img_url: "",
+        project: {
+            connect: [{ id: projectId }]
+        },
     });
 
     useEffect(() => {
@@ -397,6 +401,7 @@ const AddProduct = ({
                                                 რაოდენობა
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
@@ -445,6 +450,7 @@ const AddProduct = ({
                                                 ღირეულება
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
@@ -550,7 +556,8 @@ const AddProduct = ({
                                                     setCraftImage(filteredArray[0].attributes.image.data.attributes.url)
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        title: e.target.value
+                                                        title: e.target.value,
+                                                        craft_img_url: filteredArray[0].attributes.image.data.attributes.url
                                                     }));
                                                 }}
                                                 name="count"
@@ -562,7 +569,7 @@ const AddProduct = ({
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
                                                         return (
-                                                            <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
+                                                            <option key={item?.id + index} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}
                                                             </option>
                                                         );
@@ -575,6 +582,7 @@ const AddProduct = ({
                                                 რაოდენობა
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
@@ -623,6 +631,7 @@ const AddProduct = ({
                                                 ღირეულება
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
@@ -644,7 +653,9 @@ const AddProduct = ({
                                                 onClick={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        craft_status: e.target.value
+                                                        craft_status: {
+                                                            connect: [{ id: e.target.value }],
+                                                        },
                                                     }));
                                                 }}
                                                 name="count"

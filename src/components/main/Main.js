@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
-import { setAuthAccessToken, setAuthEmail } from "../../store/slices/authSlice";
+import { setAuthAccessToken, setAuthEmail, setAuthUserId } from "../../store/slices/authSlice";
 
 import AboutCompany from "../../components/main/AboutCompany";
 import Heading from "./Heading";
@@ -49,12 +49,14 @@ const Main = () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email][$eq]=${userObject?.email}`)
           .then((res) => {
             const data = res.data;
-            console.log(data, 'data')
             setIsAuthWithGoogle(data)
             if (data?.length === 0) {
+              
               localStorage.setItem("access_token", id_token);
               localStorage.setItem("email", userObject?.email);
-
+              localStorage.setItem("userId", data[0]?.id);
+              
+              dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
 
@@ -62,7 +64,9 @@ const Main = () => {
             } else {
               localStorage.setItem("access_token", id_token);
               localStorage.setItem("email", userObject?.email);
-
+              localStorage.setItem("userId", data[0]?.id);
+              
+              dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
 

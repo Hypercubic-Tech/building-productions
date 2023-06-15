@@ -1,18 +1,24 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import { selectProduct, deleteProductState, setProductState, setProducts } from "../../store/slices/productSlice";
-import { setCategory } from "../../store/slices/categorySlice";
-import ExportPopup from "../popup/ExportPopup"
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProductState, setProductState } from "../../store/slices/productSlice";
 
+import ExportPopup from "../popup/ExportPopup"
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
 const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select }) => {
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+  const { projectId } = router.query;
+  
+  const products = useSelector(state => state.prod.products);
+
   const [activeItem, setActiveItem] = useState();
   const [activeStatusItem, setActiveStatusItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
@@ -20,11 +26,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const [updateCraftStatus, setUpdateCraftStatus] = useState();
   const [updateProductStatus, setUpdateProductStatus] = useState();
 
-  const activeCategoryId = useSelector(state => state.cats.category);
-  const products = useSelector(state => state.prod.products);
-  const router = useRouter();
-  const { projectId } = router.query;
-  const dispatch = useDispatch();
+ 
   let itemsPerPage = 5;
 
   let productsToMap = products;
@@ -229,9 +231,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       let productId = product.id
       confirmEdit(event, productId)
     }
-
-
-
   }
 
   useEffect(() => {
@@ -390,10 +389,8 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                                 onError={(e) => {
                                   e.target.src = "/images/test-img.png";
                                 }}
-                                src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.image?.data?.attributes?.url : `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                product?.attributes?.craft_images?.data?.attributes?.image?.data?.attributes?.url}
-                                alt=""
+                                src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}` : `${process.env.NEXT_PUBLIC_BUILDING_URL}${product.attributes.craft_img_url}`}
+                                alt="product img"
                                 className="w-100"
                               />
                             </div>
@@ -423,10 +420,10 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"
-                              value={updateProductStatus || product.attributes.product_status.data.id}
-                              onChange={(event) => {
-                                getActiveItem(event, product)
-                              }}
+                              defaultValue={updateProductStatus || product?.attributes?.product_status?.data?.id}
+                              // onChange={(event) => {
+                              //   getActiveItem(event, product)
+                              // }}
                             >
                               {productStatus && productStatus.map((item) => {
                                 return (
@@ -438,14 +435,14 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                             <select
                               className="form-select"
                               defaultValue={product.attributes.craft_status?.data[0]?.id}
-                              onChange={(e) => {
-                                setUpdateCraftStatus((updateCraftStatus) => ({
-                                  ...updateCraftStatus,
-                                  craft_status: {
-                                    connect: [{ id: e.target.value }],
-                                  },
-                                }));
-                              }}
+                              // onChange={(e) => {
+                              //   setUpdateCraftStatus((updateCraftStatus) => ({
+                              //     ...updateCraftStatus,
+                              //     craft_status: {
+                              //       connect: [{ id: e.target.value }],
+                              //     },
+                              //   }));
+                              // }}
                             >
                               {craftStatus && craftStatus.map((item) => {
                                 return (
@@ -497,7 +494,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
             </>
           )}
         </table>
-        {productsToMap?.length === 0 && <div style={{margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
+        {productsToMap?.length === 0 && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         {productsToMap.length > 5 && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>

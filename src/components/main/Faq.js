@@ -46,7 +46,6 @@ const Faq = () => {
             <h1 className={styles.h1}>Faq</h1>
             <div className={styles.faq__list}>
                 { faqs && faqs?.map((item, index) => {
-                    console.log(item?.attributes.question)
                     return (
                         <div className={styles.faq__item}>
                             <div className={styles.faq__questions} onClick={() => {

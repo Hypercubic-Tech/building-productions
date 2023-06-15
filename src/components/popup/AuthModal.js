@@ -38,6 +38,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
       })
       .then((res) => {
         let data = res.data;
+        console.log(data.user.id)
         localStorage.setItem("access_token", data.jwt);
         localStorage.setItem("email", data.user.email);
         localStorage.setItem("userId", data.user.id);

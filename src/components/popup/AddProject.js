@@ -20,6 +20,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
   const userId = useSelector(state => state.auth.user_id)
+  console.log(userId, 'ds yleo')
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -413,7 +414,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                               }}
                               name="area"
                               type="number"
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ობიექტის ფართობი"
                               data-placeholder="area"
                             ></input>
@@ -437,7 +438,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                 }));
                               }}
                               type="text"
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
                             />
                           </div>
@@ -454,7 +455,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                 }));
                               }}
                               type="number"
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
                             />
                           </div>
@@ -489,7 +490,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             <span className={` georgian `}>დღგ-ს გადამხდელი</span>
                           </label>
                           <input
-                            className="form-control georgian form-control-solid"
+                            className="custom-input form-control georgian form-control-solid"
                             placeholder="დღგ-ს გადამხდელი (%)"
                             type="text"
                             onChange={(e) => {
@@ -514,7 +515,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                               }));
                             }}
                             type="text"
-                            className="form-control georgian form-control-solid"
+                            className="custom-input form-control georgian form-control-solid"
                             placeholder="გაუთვალისწინებელი ხარჯები (%)"
                           />
                           {/* <i className={`${styles.percent} bi bi-percent `}></i> */}
@@ -525,7 +526,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                               <span className={` georgian `}>მომსახურეობის ხარჯები </span>
                             </label>
                             <input
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               type="text"
                               id="flexSwitchCheckDefault"
                               placeholder="მომსახურების ხარჯები (%)"

@@ -35,7 +35,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_status,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_img_url,craft_status,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data.data;
         dispatch(setProducts(data));
         dispatch(setCategory(id));
@@ -48,7 +48,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,craft_status,product_status,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_img_url,supplier,craft_status,product_status,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
@@ -145,7 +145,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
               }}
             >
               <a
-                href="#"
                 className="btn btn-primary fw-bolder georgian"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_create_app"
