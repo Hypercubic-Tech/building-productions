@@ -13,36 +13,37 @@ const EditProduct = ({
     setSelect,
     unit,
     suppliers,
-    productStatus
+    productStatus,
+    filterProductCategory
 }) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
     const projectId = router.query.projectId;
-    const productId = product.id
+    const productId = product?.id
     const [lossProduct, setLossProduct] = useState(false);
     const [toggle, setToggle] = useState(true);
-    const [imgSrc, setImgSrc] = useState(product.attributes.image.data.attributes.url);
-    const [image, setImage] = useState(product.attributes.image.data.id);
+    const [imgSrc, setImgSrc] = useState(product?.attributes?.image?.data?.attributes?.url);
+    const [image, setImage] = useState(product?.attributes?.image?.data?.id);
     const [filteredCrafts, setFilteredCrafts] = useState();
     const [craftImage, setCraftImage] = useState();
-    const [supplierOption, setSupplierOption] = useState(product.attributes.supplier.data.id);
-    const [unitOption, setUnitOption] = useState(product.attributes.unit.data.id)
-    const [statusOption, setStatusOption] = useState(product.attributes.product_status.data.id)
-    const activeCategoryId = useSelector(state => state.cats.category);
+    const [supplierOption, setSupplierOption] = useState(product?.attributes?.supplier?.data?.id);
+    const [unitOption, setUnitOption] = useState(product?.attributes?.unit?.data?.id)
+    const [statusOption, setStatusOption] = useState(product?.attributes?.product_status?.data?.id)
+    const activeCategoryId = useSelector(state => state?.cats?.category);
     const [productData, setProductData] = useState({
         image: image,
-        title: product.attributes.title,
+        title: product?.attributes?.title,
         type: "product",
         supplier: {
-            connect: [{ id: product.attributes.supplier.data.id }],
+            connect: [{ id: product?.attributes?.supplier?.data?.id }],
         },
-        productLink: product.attributes.productLink,
-        quantity: product.attributes.quantity,
+        productLink: product?.attributes?.productLink,
+        quantity: product?.attributes?.quantity,
         unit: {
-            connect: [{ id: product.attributes.unit.data.id }],
+            connect: [{ id: product?.attributes?.unit?.data?.id }],
         },
-        price: product.attributes.price,
+        price: product?.attributes?.price,
         categories: {
             connect: [{ id: activeCategoryId }],
         },
@@ -143,7 +144,6 @@ const EditProduct = ({
         } else {
             notify(true, "სურათი არ არის ატვირთული");
         }
-
     };
 
     return (

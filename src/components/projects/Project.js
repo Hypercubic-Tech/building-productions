@@ -313,7 +313,8 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                             crafts={crafts}
                             unit={unit}
                             allCategories={projectCategory}
-                            suppliers={suppliers} />
+                            suppliers={suppliers}
+                            filterProductCategory={filterProductCategory}/>
                         }
                         {select === "edit-service" &&
                           <EditService product={editProductItem}

@@ -16,7 +16,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
 
   const router = useRouter();
   const { projectId } = router.query;
-  
+
   const products = useSelector(state => state.prod.products);
 
   const [activeItem, setActiveItem] = useState();
@@ -26,7 +26,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const [updateCraftStatus, setUpdateCraftStatus] = useState();
   const [updateProductStatus, setUpdateProductStatus] = useState();
 
- 
   let itemsPerPage = 5;
 
   let productsToMap = products;
@@ -88,26 +87,40 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await Promise.all([
-            axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?filters[id][$eq]=${productId}`, {
-              data: [
-                {
-                  id: productId,
-                  attributes: {
-                    product_statuses: {
-                      connect: [{ id: event.target.value }]
-                    },
-                  }
-                }
-              ]
-            }),
-            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
-          ]).then(([putResponse, getResponse]) => {
-            const updatedProduct = putResponse.data.data;
-            const updatedData = getResponse.data.data;
-            notify(false, "პროდუქტი რედაქტირდა");
-            dispatch(setProductState(updatedData));
-          });
+          // await Promise.all([
+          //   axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?filters[id][$eq]=${productId}`, {
+          //     data: [
+          //       {
+          //         id: productId,
+          //         attributes: {
+          //           product_statuses: {
+          //             connect: [{ id: event.target.value }]
+          //           },
+          //         }
+          //       }
+          //     ]
+          //   }),
+          //   axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
+          // ]).then(([putResponse, getResponse]) => {
+          //   const updatedProduct = putResponse.data.data;
+          //   const updatedData = getResponse.data.data;
+          //   notify(false, "პროდუქტი რედაქტირდა");
+          //   dispatch(setProductState(updatedData));
+          // });
+          await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`, {
+            data: {
+              id: productId,
+              product_statuses: {
+                connect: [{ id: event.target.value }]
+              },
+            }
+          })
+            .then((res) => {
+              const data = res.data;
+              console.log(data, 'confrm')
+              dispatch(setProductState(data.data));
+              notify(false, "პროდუქტი რედაქტირდა");
+            })
         } catch (error) {
           console.log(error);
         }
@@ -222,16 +235,16 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       });
   };
 
-  const getActiveItem = (event, product) => {
+  const getActiveItem = (selectedId, product) => {
     if (activeStatusItem === product.id) {
-      setActiveStatusItem(null)
+      setActiveStatusItem(null);
     } else {
-      setActiveStatusItem(product.id)
-      setUpdateProductStatus(event.target.value)
-      let productId = product.id
-      confirmEdit(event, productId)
+      setActiveStatusItem(product.id);
+      setUpdateProductStatus(selectedId);
+      let productId = product.id;
+      confirmEdit(selectedId, productId);
     }
-  }
+  };
 
   useEffect(() => {
     if (projectId) {
@@ -297,6 +310,12 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                   <td>{categorySums.find((item) => item.title === product?.categories)?.sum || 0} ლარი</td>
                 </tr>
               ))}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
               <tr>
                 <td></td>
                 <td></td>
@@ -421,28 +440,29 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                             <select
                               className="form-select"
                               defaultValue={updateProductStatus || product?.attributes?.product_status?.data?.id}
-                              // onChange={(event) => {
-                              //   getActiveItem(event, product)
-                              // }}
+                              onChange={(event) => {
+                                console.log(event.target.value, 'selected ID');
+                                getActiveItem(event, product);
+                              }}
                             >
                               {productStatus && productStatus.map((item) => {
                                 return (
-                                  <option key={item.id} value={item.id}>{item.attributes.title}</option>
-                                )
+                                  <option key={item.id} value={item?.id}>{item?.attributes?.title}</option>
+                                );
                               })}
                             </select>
                           ) : (
                             <select
                               className="form-select"
-                              defaultValue={product.attributes.craft_status?.data[0]?.id}
-                              // onChange={(e) => {
-                              //   setUpdateCraftStatus((updateCraftStatus) => ({
-                              //     ...updateCraftStatus,
-                              //     craft_status: {
-                              //       connect: [{ id: e.target.value }],
-                              //     },
-                              //   }));
-                              // }}
+                              defaultValue={product?.attributes?.craft_status?.data[0]?.id}
+                              onChange={(e) => {
+                                setUpdateCraftStatus((updateCraftStatus) => ({
+                                  ...updateCraftStatus,
+                                  craft_status: {
+                                    connect: [{ id: e.target.value }],
+                                  },
+                                }));
+                              }}
                             >
                               {craftStatus && craftStatus.map((item) => {
                                 return (

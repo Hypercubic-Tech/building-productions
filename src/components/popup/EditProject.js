@@ -90,43 +90,12 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
     }
   };
 
-  // const handleCheckboxChange = (event) => {
-  //   const categoryId = event.target.value;
-
-  //   if (event.target.checked) {
-  //     const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
-  //     setSendData((prevState) => ({
-  //       ...prevState,
-  //       categories: {
-  //         connect: sendDataCategories,
-  //       },
-  //     }));
-  //     console.log(sendDataCategories, 'sendDataCategories')
-  //   }
-
-  //   if (!event.target.checked) {
-  //     const sendDataCategories = sendData.categories.connect.filter((item) => {
-  //       console.log(item.id, 'item') 
-  //       return (
-  //         item.id !== +categoryId)
-  //     });
-
-  //     setSendData((prevState) => ({
-  //       ...prevState,
-  //       categories: {
-  //         connect: sendDataCategories,
-  //       },
-  //     }));
-  //     console.log(sendDataCategories, '!sendDataCategories')
-  //   }
-  // };
-
   const handleCheckboxChange = (event) => {
     const categoryId = parseInt(event.target.value);
 
     if (event.target.checked) {
       const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
-
+      console.log(sendDataCategories, 'sendDataCategories checked')
       setSendData((prevState) => ({
         ...prevState,
         categories: {
@@ -144,7 +113,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
       }));
     }
   };
-
 
   const stepChangeHandler = () => {
 
@@ -173,8 +141,8 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
 
   const createProjectHandler = async () => {
     try {
-      let projectId = project.data[0].id
-
+      let projectId = project?.data[0]?.id;
+      console.log(sendData, 'before sending')
       await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`, {
         data: sendData
       })
@@ -183,13 +151,14 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
           setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
 
-          getProjectsData();
         })
+
     } catch (error) {
       notify(true, "პროექტის რედაქტირება უარყოფილია");
       console.error(error);
     }
   }
+
   const finishHandler = () => {
     setClose(true);
     createProjectHandler();

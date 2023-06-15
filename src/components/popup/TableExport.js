@@ -43,6 +43,14 @@ const TableExport = ({totalSum, aggregatedProducts,
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{`სულ: ${Object?.values(categorySums).reduce((total, category) => total + category.sum, 0) || 0} ლარი`}</td>
               </tr>
 
