@@ -37,8 +37,6 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
     console.log(options, 'options')
   }, [id_token])
 
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
