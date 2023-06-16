@@ -14,7 +14,7 @@ import EditService from "../popup/EditService";
 import { Export } from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
-const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions, productStatus }) => {
+const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions, productStatus, defaultImage }) => {
   const [select, setSelect] = useState(null);
   const [services, setServices] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
@@ -96,7 +96,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.Title} 
+                    {p?.attributes?.property_type?.data?.attributes?.Title}
                     {/* make .title to .Title and it will work -.- */}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
@@ -312,7 +312,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                             unit={unit}
                             allCategories={projectCategory}
                             suppliers={suppliers}
-                            filterProductCategory={filterProductCategory}/>
+                            filterProductCategory={filterProductCategory} />
                         }
                         {select === "edit-service" &&
                           <EditService product={editProductItem}
@@ -328,6 +328,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
+                        defaultImage={defaultImage}
                         productStatus={productStatus}
                         projectId={projectId}
                         craftStatus={craftStatus}
