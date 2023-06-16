@@ -27,7 +27,7 @@ const Faq = () => {
     const [active, setActive] = useState(null);
     const [faqs, setFaqs] = useState(null);
 
-    
+
     useEffect(() => {
         const faqRequest = async () => {
             try {
@@ -41,15 +41,15 @@ const Faq = () => {
         faqRequest();
     }, []);
 
-    return(
+    return (
         <div className={styles.bodyContainer}>
             <h1 className={styles.h1}>Faq</h1>
             <div className={styles.faq__list}>
-                { faqs && faqs?.map((item, index) => {
+                {faqs && faqs?.map((item, index) => {
                     return (
-                        <div className={styles.faq__item}>
+                        <div key={index} className={styles.faq__item}>
                             <div className={styles.faq__questions} onClick={() => {
-                                if ( index === active) {
+                                if (index === active) {
                                     setActive(null);
                                 } else {
                                     setActive(index);
@@ -58,7 +58,7 @@ const Faq = () => {
                                 {item?.attributes?.question}
                                 <div className={styles.plass} key={index + 1} >{active === index ? "-" : "+"}</div>
                             </div>
-                            <div className={styles.faq__answers} style={{display: active === index ? "block" : "none" }} key={index + 2}>{item?.attributes?.answer}</div>
+                            <div className={styles.faq__answers} style={{ display: active === index ? "block" : "none" }} key={index + 2}>{item?.attributes?.answer}</div>
                         </div>
                     );
                 })
