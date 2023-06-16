@@ -143,20 +143,15 @@ const index = () => {
         }
     };
 
-    const router = useRouter();
-
-    const handleGoBack = () => {
-        router.back();
-    };
-
     return (
         <>
             <div className="container-xxl">
                 <div className={` d-flex justify-content-between ${styles.mt20}`}>
-                    <button
+                    <Link
                         type="button"
                         className="btn btn-primary"
-                        onClick={handleGoBack}>უკან დაბრუნება</button>
+                        href='/'>უკან დაბრუნება
+                    </Link>
                     <button
                         onClick={addProjectHandler}
                         type="button"
