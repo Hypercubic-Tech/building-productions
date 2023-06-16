@@ -15,7 +15,6 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
         email: authUser[0]?.email,
         phoneNumber: authUser[0]?.phoneNumber,
         paymentPlan: authUser[0]?.paymentPlan,
-        paymentMethod: authUser[0]?.paymentMethod,
     });
     const [changePassword, setChangePassword] = useState({
         currentPassword: '',
@@ -30,7 +29,6 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
         stepOne: [],
         stepTwo: [],
         stepThree: [],
-        stepFour: [],
     };
 
     const stepChangeHandler = () => {
@@ -44,11 +42,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
             setStep(step + 1);
             setLossData(false);
         }
-        if (step === 3 && errors?.stepThree?.length === 0 && editUserData?.paymentMethod) {
-            setStep(step + 1);
-            setLossData(false);
-        }
-        if (step === 4 && errors?.stepFour?.length === 0 && editUserData?.password) {
+        if (step === 4 && errors?.stepThree?.length === 0 && editUserData?.password) {
             setStep(step + 1);
             setLossData(false);
         }
@@ -64,7 +58,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
     const passwordStepHandler = () => {
         if (step === 1) {
             setBackBtn(true);
-            setStep(4);
+            setStep(3);
         }
     };
 
@@ -84,7 +78,6 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
             email: editUserData?.email,
             phoneNumber: editUserData?.phoneNumber,
             paymentPlan: editUserData?.paymentPlan,
-            paymentMethod: editUserData?.paymentMethod
         })
             .then((res) => {
                 const data = res.data;
@@ -241,7 +234,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                             შემდეგ
                         </button>
                     </div>
-                    {authUserId === null && <span onClick={passwordStepHandler} className="d-flex justify-content-center align-items-center py-2">მომხმარებლის პაროლის შეცვლა</span>}
+                    {authUserId !== null && <span onClick={passwordStepHandler} className="d-flex justify-content-center align-items-center py-2">მომხმარებლის პაროლის შეცვლა</span>}
 
                 </div>
 
@@ -316,92 +309,8 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                                 <button
                                     style={{ width: "43%" }}
                                     className={` btn btn-success georgian ${styles.btn}`}
-                                    type={editUserData?.paymentPlan === "free" ? 'button' : 'button'}
-                                    onClick={() => {
-                                        if (editUserData?.paymentPlan === "paid") {
-                                            stepChangeHandler();
-                                        } else {
-                                            sendUserUpdatedInfo();
-                                        }
-                                    }}
-                                >
-                                    {editUserData?.paymentPlan === "free" ? 'რედაქტირება' : 'შემდეგ'}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={getStatusClass(3)}>
-                    <div className="col">
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div className="text-muted">რედაქტირება</div>
-                            <svg
-                                onClick={onClose}
-                                className={`${styles.closeBtn}`}
-                                width="64px"
-                                height="64px"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                                <g
-                                    id="SVGRepo_tracerCarrier"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    stroke="#CCCCCC"
-                                    strokeWidth="0.336"
-                                ></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <g id="Menu / Close_MD">
-                                        <path
-                                            id="Vector"
-                                            d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
-                                            stroke="#000000"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        ></path>
-                                    </g>
-                                </g>
-                            </svg>
-                        </div>
-
-                        <div className="d-grid gap-2 mt-n1">
-                            <div className="d-grid gap-2 mt-n1">
-                                <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
-                                <select
-                                    required
-                                    style={{ borderColor: lossData && editUserData?.paymentMethod?.length === 0 ? "red" : "" }}
-                                    className="form-select form-select-solid georgian"
-                                    value={editUserData?.paymentMethod}
-                                    onChange={(e) => {
-                                        setEditUserData((prevSendData) => ({
-                                            ...prevSendData,
-                                            paymentMethod: e.target.value
-                                        }));
-                                    }}
-                                >
-                                    <option disabled value="აირჩიეთ გადახდის მეთოდი">აირჩიეთ გადახდის მეთოდი</option>
-                                    <option id="1" value="tbc">TBC</option>
-                                    <option id="2" value="bog">BOG</option>
-                                </select>
-                            </div>
-                            {lossData && editUserData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}
-                            <div className="d-flex align-items-center justify-content-evenly">
-                                <button
-                                    className={` btn btn-success georgian ${styles.btn}`}
                                     type="button"
-                                    onClick={prevStepHandler}
-                                    style={{ width: "35%" }}
-                                >
-                                    უკან
-                                </button>
-                                <button
-                                    className={` btn btn-success georgian ${styles.btn}`}
-                                    type="button"
-                                    onClick={() => editUserData?.paymentMethod?.length === 0 ? stepChangeHandler() : sendUserUpdatedInfo()}
+                                    onClick={sendUserUpdatedInfo}
                                 >
                                     რედაქტირება
                                 </button>
@@ -410,7 +319,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                     </div>
                 </div>
 
-                {authUserId !== null && <div className={getStatusClass(4)}>
+                {authUserId !== null && <div className={getStatusClass(3)}>
                     <div className="col">
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div className="text-muted">რედაქტირება</div>

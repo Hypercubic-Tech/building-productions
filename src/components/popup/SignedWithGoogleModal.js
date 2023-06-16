@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import bcrypt from 'bcryptjs';
 import axios from "axios";
 
@@ -13,6 +14,7 @@ const SignedWithGoogleModal = ({ onClose }) => {
     const [lossData, setLossData] = useState(false);
     const [backBtn, setBackBtn] = useState(false);
     const dispatch = useDispatch();
+    const router = useRouter();
     const authUserEmail = useSelector((state) => state.auth.email);
     const userJwt = useSelector((state) => state.auth.access_token);
     const userJwtString = JSON.stringify(userJwt);
@@ -24,13 +26,11 @@ const SignedWithGoogleModal = ({ onClose }) => {
         phoneNumber: "",
         userType: "",
         paymentPlan: "",
-        paymentMethod: "",
     });
 
     let errors = {
         stepOne: [],
         stepTwo: [],
-        stepThree: [],
 
     };
 
@@ -42,10 +42,6 @@ const SignedWithGoogleModal = ({ onClose }) => {
             setLossData(true);
         }
         if (step === 2 && errors?.stepTwo?.length === 0 && regData?.paymentPlan) {
-            setStep(step + 1);
-            setLossData(false);
-        }
-        if (step === 3 && errors?.stepThree?.length === 0 && regData?.paymentMethod) {
             setStep(step + 1);
             setLossData(false);
         }
@@ -77,7 +73,6 @@ const SignedWithGoogleModal = ({ onClose }) => {
                 password: regData?.password,
                 phoneNumber: regData?.phoneNumber,
                 paymentPlan: regData?.paymentPlan,
-                paymentMethod: regData?.paymentMethod
             })
                 .then((res) => {
                     const data = res.data;
@@ -85,6 +80,7 @@ const SignedWithGoogleModal = ({ onClose }) => {
                     dispatch(setAuthUserId(data?.user?.id))
                     notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');
                     onClose();
+                    router.push('/')
                 })
         } catch (err) {
             notify(true, 'რეგისტრაცია უარყოფილია, იმეილი ან სახელი უკვე გამოყენებულია');
@@ -298,18 +294,10 @@ const SignedWithGoogleModal = ({ onClose }) => {
                                 <button
                                     style={{ width: "43%" }}
                                     className={` btn btn-success georgian ${styles.btn}`}
-                                    type={regData?.paymentPlan === "free" ? 'button' : 'button'}
-                                    onClick={() => {
-                                        if (regData?.paymentPlan === "paid") {
-                                            stepChangeHandler();
-                                        } else if (regData?.paymentPlan.length === 0) {
-                                            stepChangeHandler();
-                                        } else if (regData?.paymentPlan === "free") {
-                                            submitGoogleAuthUserData()
-                                        }
-                                    }}
+                                    type="button"
+                                    onClick={submitGoogleAuthUserData}
                                 >
-                                    {regData?.paymentPlan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
+                                    რეგისტრაცია
                                 </button>
                             </div>
                         </div>
@@ -352,45 +340,6 @@ const SignedWithGoogleModal = ({ onClose }) => {
                             </svg>
                         </div>
 
-                        <div className="d-grid gap-2 mt-n1">
-                            <div className="d-grid gap-2 mt-n1">
-                                <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
-                                <select
-                                    required
-                                    style={{ borderColor: lossData && regData?.paymentMethod?.length === 0 ? "red" : "" }}
-                                    className="form-select form-select-solid georgian"
-                                    defaultValue="აირჩიეთ გადახდის მეთოდი"
-                                    onChange={(e) => {
-                                        setRegData((prevSendData) => ({
-                                            ...prevSendData,
-                                            paymentMethod: e.target.value
-                                        }));
-                                    }}
-                                >
-                                    <option disabled value="აირჩიეთ გადახდის მეთოდი">აირჩიეთ გადახდის მეთოდი</option>
-                                    <option id="1" value="tbc">TBC</option>
-                                    <option id="2" value="bog">BOG</option>
-                                </select>
-                            </div>
-                            {lossData && regData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}
-                            <div className="d-flex align-items-center justify-content-evenly">
-                                <button
-                                    className={` btn btn-success georgian ${styles.btn}`}
-                                    type="button"
-                                    onClick={prevStepHandler}
-                                    style={{ width: "35%" }}
-                                >
-                                    უკან
-                                </button>
-                                <button
-                                    className={` btn btn-success georgian ${styles.btn}`}
-                                    type={regData?.paymentMethod?.length === 0 ? "button" : "button"}
-                                    onClick={() => regData?.paymentMethod?.length === 0 ? stepChangeHandler() : submitGoogleAuthUserData()}
-                                >
-                                    რეგისტრაცია
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </form>
