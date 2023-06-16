@@ -16,9 +16,10 @@ const index = () => {
     const [showProject, setShowProject] = useState(false);
     const [projectData, setProjectData] = useState(null);
     const [pageIndex, setPageIndex] = useState(1);
-    // const updateList = useSelector(state => state.update)
+
     const userId = useSelector(state => state.auth.user_id)
     const searchValue = useSelector(state => state.proj.searchType)
+
     let itemsPerPage = 5;
 
     let projectsToMap = projectData;
@@ -69,15 +70,25 @@ const index = () => {
     };
 
     const getProjectsData = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image&filters[users_permissions_user][id][$eq]=${userId}`)
-            .then((res) => {
-                const data = res.data;
-                setProjectData(data.data)
-            });
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image&filters[users_permissions_user][id][$eq]=${userId}`);
+            setShowProject(false);
+            return response.data;
+
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
     };
 
+
     useEffect(() => {
-        getProjectsData();
+        const fetchData = async () => {
+            const data = await getProjectsData();
+            setProjectData(data.data)
+        };
+
+        fetchData();
     }, [showProject]);
 
     const editHandler = async (item) => {
@@ -206,7 +217,6 @@ const index = () => {
                         })
                     ) : (
                         <div>
-                            {/* style={{height: "85vh"}} */}
                             <h2 className={` ${styles.notFound} geo-title `}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
                         </div>
                     )}
