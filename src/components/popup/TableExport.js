@@ -1,9 +1,9 @@
 import styles from "../products/Products.module.css"
 
 const TableExport = ({totalSum, aggregatedProducts,
-   projectId, productsToMap, startIndex, endIndex,
-    activeItem, categorySums, vatTotal, vatTotalPrice,
-     unforeseenExpenses, unforeseenExpensesPrice,
+      projectId, productsToMap, startIndex, endIndex,
+      activeItem, categorySums, vatTotal, vatTotalPrice,
+      unforeseenExpenses, unforeseenExpensesPrice,
       service_percentage, servicePercentagePrice,
       totalSumPrice, select
     }) => {

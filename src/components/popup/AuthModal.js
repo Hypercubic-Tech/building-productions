@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import NextAuth from "next-auth";
-import FacebookProvider from "next-auth/providers/facebook";
 import axios from "axios";
 
 import {
@@ -24,18 +22,6 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id_token } = router.query;
-
-  useEffect(() => {
-    const options = {
-      providers: [
-        FacebookProvider({
-          clientId: "1587506561660707",
-          clientSecret: "79b410e9ad51a7d4d226a6d0ab8573b1"
-        }),
-      ],
-    }
-    console.log(options, 'options')
-  }, [id_token])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
