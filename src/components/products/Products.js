@@ -11,9 +11,8 @@ import ExportPopup from "../popup/ExportPopup"
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select }) => {
+const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select, defaultImage }) => {
   const dispatch = useDispatch();
-
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -117,7 +116,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
           })
             .then((res) => {
               const data = res.data;
-              console.log(data, 'confrm')
               dispatch(setProductState(data.data));
               notify(false, "პროდუქტი რედაქტირდა");
             })
@@ -406,7 +404,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                             <div className="symbol-label georgian">
                               <img
                                 onError={(e) => {
-                                  e.target.src = "/images/test-img.png";
+                                  e.target.src = process.env.NEXT_PUBLIC_BUILDING_URL + defaultImage;
                                 }}
                                 src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}` : `${process.env.NEXT_PUBLIC_BUILDING_URL}${product.attributes.craft_img_url}`}
                                 alt="product img"
@@ -441,7 +439,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                               className="form-select"
                               defaultValue={updateProductStatus || product?.attributes?.product_status?.data?.id}
                               onChange={(event) => {
-                                console.log(event.target.value, 'selected ID');
                                 getActiveItem(event, product);
                               }}
                             >

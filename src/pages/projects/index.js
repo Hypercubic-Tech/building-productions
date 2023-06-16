@@ -15,6 +15,7 @@ const index = () => {
     const [editProject, setEditProject] = useState(false);
     const [showProject, setShowProject] = useState(false);
     const [projectData, setProjectData] = useState(null);
+    const [defaultImage, setDefaultImage] = useState(null);
     const [pageIndex, setPageIndex] = useState(1);
 
     const userId = useSelector(state => state.auth.user_id)
@@ -80,16 +81,6 @@ const index = () => {
         }
     };
 
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getProjectsData();
-            setProjectData(data.data)
-        };
-
-        fetchData();
-    }, [showProject]);
-
     const editHandler = async (item) => {
         let id = item.id
 
@@ -143,6 +134,30 @@ const index = () => {
         }
     };
 
+    useEffect(() => {
+        const getDefaultImage = async () => {
+            await axios
+                .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`)
+
+                .then((res) => {
+                    const data = res.data;
+                    setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
+                });
+        };
+
+        getDefaultImage();
+    }, [])
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getProjectsData();
+            setProjectData(data.data)
+        };
+
+        fetchData();
+    }, [showProject]);
+
     return (
         <>
             <div className="container-xxl">
@@ -178,7 +193,7 @@ const index = () => {
                                     <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
                                         <img
                                             onError={(e) => {
-                                                e.target.src = "/images/test-img.png";
+                                                e.target.src = process.env.NEXT_PUBLIC_BUILDING_URL + defaultImage;
                                             }}
                                             src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.[0]?.attributes?.url}` || "/images/test-img.png"}
                                             className="card-img-top"

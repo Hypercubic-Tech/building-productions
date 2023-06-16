@@ -8,6 +8,9 @@ import { setCategory } from "../../store/slices/categorySlice";
 
 const index = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { projectId } = router.query;
+
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
   const [crafts, setCrafts] = useState(null);
@@ -17,9 +20,8 @@ const index = () => {
   const [projectCategory, setProjectCategory] = useState(null);
   const [productOptions, setProductOptions] = useState(null);
   const [editProductItem, setEditProductItem] = useState(null);
-  const router = useRouter();
-  const { projectId } = router.query;
-
+  const [defaultImage, setDefaultImage] = useState(null);
+  
   useEffect(() => {
     if (projectId) {
       const getProject = async () => {
@@ -100,6 +102,18 @@ const index = () => {
         });
     };
 
+
+    const getDefaultImage = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`)
+        
+        .then((res) => {
+          const data = res.data;
+          setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
+        });
+    };
+
+    getDefaultImage();
     getProductsStatusHandler();
     getCraftsStatusHandler();
     getCraftsHandler();
@@ -123,6 +137,7 @@ const index = () => {
     projectCategory={projectCategory}
     editHandler={editHandler}
     editProductItem={editProductItem}
+    defaultImage={defaultImage}
   />;
 };
 
