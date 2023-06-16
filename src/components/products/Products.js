@@ -130,7 +130,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     });
   };
 
-
   const deleteProductHandler = async (productId) => {
     await axios
       .delete(
@@ -205,7 +204,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const unforeseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100;
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
-
 
   const confirmHandler = (item) => {
     const swalWithBootstrapButtons = Swal.mixin({

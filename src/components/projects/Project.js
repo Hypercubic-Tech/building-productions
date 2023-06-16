@@ -44,7 +44,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
       }
     }
   };
-  
 
   const filterProductCategory = async (id) => {
     try {
@@ -57,7 +56,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
       console.error(error);
     }
   };
-
 
   const total = products.reduce((acc, product) => {
     const productTotal = product?.attributes?.price * product?.attributes?.quantity;
