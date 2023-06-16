@@ -17,23 +17,24 @@ const EditService = ({
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const projectId = router.query.projectId;
   const productId = product.id;
+  
   const activeCategoryId = useSelector(state => state.cats.category);
 
-  const projectId = router.query.projectId;
   const [lossProduct, setLossProduct] = useState(false);
   const [filteredCrafts, setFilteredCrafts] = useState();
-  const [craftImage, setCraftImage] = useState(product.attributes.craft_img_url);
-  const [craftTitle, setCraftTitle] = useState(product.attributes.title);
-  const [craftUnit, setCraftUnit] = useState(product.attributes.unit.data.id);
-  const [craftStatusOption, setCraftStatusOption] = useState(product.attributes.craft_status.data.id);
+  const [craftImage, setCraftImage] = useState(product?.attributes?.craft_img_url);
+  const [craftTitle, setCraftTitle] = useState(product?.attributes?.title);
+  const [craftUnit, setCraftUnit] = useState(product?.attributes?.unit?.data?.id);
+  const [craftStatusOption, setCraftStatusOption] = useState(product?.attributes?.craft_status?.data?.id);
 
   const [craftData, setCraftData] = useState({
-    title: product.attributes.title,
+    title: product?.attributes?.title,
     type: "service",
-    quantity: product.attributes.quantity,
+    quantity: product?.attributes?.quantity,
     unit: {
-      connect: [{ id: product.attributes.unit.data.id }],
+      connect: [{ id: product?.attributes?.unit?.data?.id }],
     },
     price: product.attributes.price,
     categories: {
@@ -43,9 +44,9 @@ const EditService = ({
       connect: [{ id: projectId }]
     },
     craft_status: {
-      connect: [{ id: product.attributes.craft_status.data.id }]
+      connect: [{ id: product?.attributes?.craft_status?.data?.id }]
     },
-    craft_img_url: product.attributes.craft_img_url
+    craft_img_url: product?.attributes?.craft_img_url
   });
 
   useEffect(() => {
