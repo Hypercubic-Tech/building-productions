@@ -401,6 +401,7 @@ const AddProduct = ({
                                                 რაოდენობა
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
@@ -449,6 +450,7 @@ const AddProduct = ({
                                                 ღირეულება
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
@@ -580,6 +582,7 @@ const AddProduct = ({
                                                 რაოდენობა
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
@@ -628,6 +631,7 @@ const AddProduct = ({
                                                 ღირეულება
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,

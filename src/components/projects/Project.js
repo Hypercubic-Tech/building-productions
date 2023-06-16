@@ -98,7 +98,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.title} 
+                    {p?.attributes?.property_type?.data?.attributes?.Title} 
                     {/* make .title to .Title and it will work -.- */}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
@@ -145,7 +145,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
               }}
             >
               <a
-                href="#"
                 className="btn btn-primary fw-bolder georgian"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_create_app"
@@ -314,7 +313,8 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                             crafts={crafts}
                             unit={unit}
                             allCategories={projectCategory}
-                            suppliers={suppliers} />
+                            suppliers={suppliers}
+                            filterProductCategory={filterProductCategory}/>
                         }
                         {select === "edit-service" &&
                           <EditService product={editProductItem}

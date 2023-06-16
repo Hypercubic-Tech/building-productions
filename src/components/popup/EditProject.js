@@ -6,9 +6,8 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
+const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProjectsData }) => {
   const userId = useSelector(state => state.auth.user_id)
-  console.log(project.data[0].attributes.categories, 'proj')
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -20,21 +19,10 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
 
-  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type.data.id);
-  const [cityOption, setCityOption] = useState(project.data[0].attributes.city.data.id);
-  const [conditionOption, setConditionOption] = useState(project.data[0].attributes.condition.data.id);
-  const [currentConditionOption, setCurrentConditionOption] = useState(project.data[0].attributes.current_condition.data.id);
-  // const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => { return cat.id }))
-
-  // const [oldSelecetedCat, setOldSelectedCat] = useState();
-
-  // useEffect(() => {
-  //   const oldCats = categories && categories.map((cat) => {
-  //     return cat.id
-  //   })
-  //   setOldSelectedCat(oldCats)
-
-  // }, [categories])
+  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type?.data?.id);
+  const [cityOption, setCityOption] = useState(project?.data[0]?.attributes.city?.data?.id);
+  const [conditionOption, setConditionOption] = useState(project?.data[0]?.attributes?.condition?.data?.id);
+  const [currentConditionOption, setCurrentConditionOption] = useState(project?.data[0]?.attributes?.current_condition?.data?.id);
 
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
@@ -65,8 +53,8 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       ]
     },
     categories: {
-      connect: project.data[0].attributes.categories.data.map((cat) => ({
-        id: cat.id,
+      connect: project.data[0].attributes.categories.data.map((category) => ({
+        id: category.id,
       })),
     },
     service_percentage: project?.data[0]?.attributes?.service_percentage,
@@ -103,36 +91,28 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   };
 
   const handleCheckboxChange = (event) => {
-    const categoryId = event.target.value;
+    const categoryId = parseInt(event.target.value);
 
     if (event.target.checked) {
       const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
+      console.log(sendDataCategories, 'sendDataCategories checked')
       setSendData((prevState) => ({
         ...prevState,
         categories: {
           connect: sendDataCategories,
         },
       }));
-    }
-
-    if (!event.target.checked) {
-      const sendDataCategories = sendData.categories.connect.filter((item) => {
-        console.log(item.id, 'item') 
-        return (
-          item.id !== +categoryId)
-      });
-
+    } else {
+      const dataOfCategories = sendData.categories.connect.filter((item) => item.id !== categoryId);
+      console.log(dataOfCategories, 'dataOfCategories')
       setSendData((prevState) => ({
         ...prevState,
         categories: {
-          connect: sendDataCategories,
+          connect: dataOfCategories,
         },
       }));
     }
   };
-
-  console.log(sendData.categories, 'categories in arr')
-
 
   const stepChangeHandler = () => {
 
@@ -161,23 +141,24 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
 
   const createProjectHandler = async () => {
     try {
-      let projectId = project.data[0].id
-
-      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}`, {
+      let projectId = project?.data[0]?.id;
+      console.log(sendData, 'before sending')
+      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`, {
         data: sendData
       })
-        .then((res) => {
-          const data = res.data;
-          console.log(data, 'after request')
+        .then(() => {
           setShowProject(true);
           setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
+
         })
+
     } catch (error) {
       notify(true, "პროექტის რედაქტირება უარყოფილია");
       console.error(error);
     }
   }
+
   const finishHandler = () => {
     setClose(true);
     createProjectHandler();
@@ -402,7 +383,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                         {/* <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option> */}
                         {propertyType && propertyType.map((item, index) => {
                           return (
-                            <option key={index} value={item.id}>{item.attributes.title}</option> // .titles gamo ar mushaobs sheidlzeba tqventan .Title imushavebs
+                            <option key={index} value={item.id}>{item.attributes.Title}</option> // .titles gamo ar mushaobs sheidlzeba tqventan .Title imushavebs
                           )
                         })}
                       </select>
@@ -690,7 +671,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                             <div className="d-flex flex-column">
                               {categories &&
                                 categories.map((item, index) => {
-
                                   return (
                                     <div
                                       key={index}
@@ -700,15 +680,15 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                                         className="form-check-input"
                                         type="checkbox"
                                         value={item.id}
-                                        defaultChecked={sendData.categories.connect.some((cat) => cat.id === item.id)}
+                                        defaultChecked={sendData?.categories?.connect?.some((cat) => cat?.id === item?.id)}
                                         onChange={handleCheckboxChange}
                                       />
-                                      <label
+                                      <div
                                         onClick={(e) => e.preventDefault()}
                                         className="form-check-label georgian"
                                       >
                                         {item.attributes.title}
-                                      </label>
+                                      </div>
                                     </div>
                                   );
                                 })}

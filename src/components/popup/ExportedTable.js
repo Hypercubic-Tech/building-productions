@@ -88,7 +88,7 @@ const YourComponent = () => {
                         <th>რაოდენობა</th>
                         <th>ჯამი</th>
                     </tr>
-                    
+
                     {totalSumProduct?.map((product, index) => {
                         return (
                             <tr key={index}>
@@ -99,6 +99,14 @@ const YourComponent = () => {
                             </tr>
                         );
                     })}
+
+                    <tr>
+                        <td>rame</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
                     <tr>
                         <td>rame</td>
                         <td></td>

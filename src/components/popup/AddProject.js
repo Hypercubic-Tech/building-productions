@@ -121,8 +121,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
     }
   };
 
-  
-
   const createProjectHandler = async () => {
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects`, {

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
-import { setAuthAccessToken, setAuthEmail } from "../../store/slices/authSlice";
+import { setAuthAccessToken, setAuthEmail, setAuthUserId } from "../../store/slices/authSlice";
 
 import AboutCompany from "../../components/main/AboutCompany";
 import Heading from "./Heading";
@@ -51,21 +51,27 @@ const Main = () => {
             const data = res.data;
             setIsAuthWithGoogle(data)
             if (data?.length === 0) {
+              
               localStorage.setItem("access_token", id_token);
               localStorage.setItem("email", userObject?.email);
-
+              localStorage.setItem("userId", data[0]?.id);
+              
+              dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
-
+              router.push('/');
               notify(false, 'თქვენ წარმატებით გაიარეთ ავტორიზაცია!');
             } else {
               localStorage.setItem("access_token", id_token);
               localStorage.setItem("email", userObject?.email);
-
+              localStorage.setItem("userId", data[0]?.id);
+              
+              dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
 
               notify(false, 'თქვენ წარმატებით გაიარეთ ავტორიზაცია!');
+              router.push('/');
             }
           })
 
