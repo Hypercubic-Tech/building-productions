@@ -30,20 +30,22 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   let productsToMap = products;
 
   if (searchType) {
+    console.log(searchType, 'searchType')
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
-      product?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.title?.toLowerCase()?.includes(lowercaseSearchType) ||
       product?.attributes?.unit?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.supplier?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.quantity?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.type?.toLowerCase().includes(lowercaseSearchType)
     );
-
+  
     if (filteredProducts.length > 0) {
       productsToMap = filteredProducts;
     }
   }
+  
 
   const totalPages = Math.ceil(productsToMap.length / itemsPerPage);
   const startIndex = (pageIndex - 1) * itemsPerPage;
@@ -509,7 +511,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
             </>
           )}
         </table>
-        {productsToMap?.length === 0 && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
+        {!productsToMap?.length && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         {productsToMap.length > 5 && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>

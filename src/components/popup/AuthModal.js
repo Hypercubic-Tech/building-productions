@@ -21,7 +21,6 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   });
   const dispatch = useDispatch();
   const router = useRouter();
-  const { id_token } = router.query;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
