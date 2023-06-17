@@ -34,7 +34,7 @@ const Project = ({ project,
   const { projectId } = router.query;
 
   const products = useSelector(state => state.prod.products);
-  const activeCategoryId = useSelector(state => state.cats.category);
+  const activeCategoryId = useSelector(state => state?.cats?.category);
 
   const [select, setSelect] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
@@ -47,7 +47,7 @@ const Project = ({ project,
     setTotalSum(true)
   };
 
-  const defaultProductsHandler = async (id, pageIndex) => {
+  const defaultProductsHandler = async (id) => {
     if (id) {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_img_url,craft_status,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
@@ -78,8 +78,10 @@ const Project = ({ project,
   }, 0);
 
   useEffect(() => {
-    defaultProductsHandler(activeCategoryId);
-  }, [activeCategoryId, projectId])
+    if (activeCategoryId && projectId) {
+      defaultProductsHandler(activeCategoryId);
+    }
+  }, [])
 
   return (
     <>
@@ -324,8 +326,7 @@ const Project = ({ project,
                             crafts={crafts}
                             unit={unit}
                             allCategories={projectCategory}
-                            suppliers={suppliers}
-                            filterProductCategory={filterProductCategory} />
+                            suppliers={suppliers} />
                         }
                         {select === "edit-service" &&
                           <EditService product={editProductItem}

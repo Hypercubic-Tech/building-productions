@@ -75,8 +75,6 @@ const AddProduct = ({
         },
     });
 
-
-
     const defaultProductsHandler = async (id, pageIndex) => {
         try {
             const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,product_status&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
