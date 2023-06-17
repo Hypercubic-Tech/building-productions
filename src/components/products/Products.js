@@ -27,9 +27,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   let itemsPerPage = 5;
 
   let productsToMap = products;
-
   if (searchType) {
-    console.log(searchType, 'searchType')
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
       product?.attributes?.title?.toLowerCase()?.includes(lowercaseSearchType) ||
@@ -39,12 +37,11 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.type?.toLowerCase().includes(lowercaseSearchType)
     );
-  
-    if (filteredProducts.length > 0) {
+    console.log(filteredProducts, 'filteredProducts');
+    if (filteredProducts?.length >= 0) {
       productsToMap = filteredProducts;
     }
   }
-  
 
   const totalPages = Math.ceil(productsToMap.length / itemsPerPage);
   const startIndex = (pageIndex - 1) * itemsPerPage;
@@ -376,9 +373,9 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                   </tr>
                 </tbody>
               )}
-              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
+              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
                 return (
-                  <tbody key={product?.id}>
+                  <tbody key={index}>
                     <tr>
                       <td style={{ gap: '3px', alignItems: 'center' }} className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
