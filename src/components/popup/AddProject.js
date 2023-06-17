@@ -37,7 +37,8 @@ const AddProject = ({ dismiss, setShowProject }) => {
       ]
     },
     categories: {
-      connect: []
+      connect: [],
+      disconnect: []
     },
     current_condition: {
       connect: [
