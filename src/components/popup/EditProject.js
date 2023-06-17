@@ -7,17 +7,14 @@ import styles from "./Modal.module.css";
 
 const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   const userId = useSelector(state => state.auth.user_id)
-
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
-  const [backBtn, setBackBtn] = useState(false);
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [hiddenInput, setHiddenInput] = useState(false);
 
   const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type?.data?.id);
   const [cityOption, setCityOption] = useState(project?.data[0]?.attributes.city?.data?.id);
@@ -56,6 +53,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       connect: project.data[0].attributes.categories.data.map((category) => ({
         id: category.id,
       })),
+      disconnect: []
     },
     service_percentage: project?.data[0]?.attributes?.service_percentage,
 
@@ -65,8 +63,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       ]
     }
   });
-
-  // console.log(sendData, 'data data')
 
   let errors = {
     stepOne: [],
@@ -86,38 +82,34 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
 
   const handleCheckboxChange = (event) => {
     const categoryId = parseInt(event.target.value);
-
+  
     if (event.target.checked) {
       const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
-
+  
       setSendData((prevState) => ({
         ...prevState,
         categories: {
+          ...prevState.categories,
           connect: sendDataCategories,
+          disconnect: prevState.categories.disconnect.filter((item) => item.id !== categoryId),
         },
       }));
     } else {
-      const dataOfCategories = [];
-
-      sendData.categories.connect.filter((item) => {
-        if (item.id === categoryId) {
-          return;
-        } else {
-          dataOfCategories.push(item);
-        }
-      });
-
+      const sendDataCategories = sendData.categories.connect.filter((item) => item.id !== categoryId);
+  
       setSendData((prevState) => ({
         ...prevState,
         categories: {
-          connect: dataOfCategories,
+          ...prevState.categories,
+          connect: sendDataCategories,
+          disconnect: [...prevState.categories.disconnect, { id: categoryId }],
         },
       }));
     }
   };
+  
 
   const stepChangeHandler = () => {
-
     if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
@@ -128,15 +120,14 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       setStep(step + 1);
       setLoss(false);
     }
-    if (step === 3 && errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0) {
-      setStep(step + 1);
-      setLoss(false);
+    if (step === 3 &&  errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0 || sendData.categories.disconnect.length > 0) {
+      setStep(step + 1)
+      setLoss(false)
     }
   };
 
   const prevStepHandler = () => {
     if (step > 1) {
-      setBackBtn(true);
       setStep(step - 1);
     }
   };
@@ -147,9 +138,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}?populate=categories`, {
         data: sendData
       })
-        .then((res) => {
-          console.log(res)
-          setSendData(res.data.data);
+        .then(() => {
           setShowProject(true);
           setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
