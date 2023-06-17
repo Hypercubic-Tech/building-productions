@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
-
 
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProjectsData }) => {
+const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   const userId = useSelector(state => state.auth.user_id)
+
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -66,19 +66,13 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
     }
   });
 
+  // console.log(sendData, 'data data')
+
   let errors = {
     stepOne: [],
     stepTwo: [],
     stepThree: [],
   };
-
-  const hiddenInputHandler = () => {
-    if (!hiddenInput) {
-      setHiddenInput(true)
-    } else {
-      setHiddenInput(false)
-    }
-  }
 
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
@@ -95,7 +89,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
 
     if (event.target.checked) {
       const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
-      console.log(sendDataCategories, 'sendDataCategories checked')
+
       setSendData((prevState) => ({
         ...prevState,
         categories: {
@@ -103,8 +97,16 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
         },
       }));
     } else {
-      const dataOfCategories = sendData.categories.connect.filter((item) => item.id !== categoryId);
-      console.log(dataOfCategories, 'dataOfCategories')
+      const dataOfCategories = [];
+
+      sendData.categories.connect.filter((item) => {
+        if (item.id === categoryId) {
+          return;
+        } else {
+          dataOfCategories.push(item);
+        }
+      });
+
       setSendData((prevState) => ({
         ...prevState,
         categories: {
@@ -139,20 +141,19 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
     }
   };
 
-  const createProjectHandler = async () => {
+  const editProjectHandler = async () => {
     try {
       let projectId = project?.data[0]?.id;
-      console.log(sendData, 'before sending')
-      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`, {
+      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}?populate=categories`, {
         data: sendData
       })
-        .then(() => {
+        .then((res) => {
+          console.log(res)
+          setSendData(res.data.data);
           setShowProject(true);
           setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
-
-        })
-
+        });
     } catch (error) {
       notify(true, "პროექტის რედაქტირება უარყოფილია");
       console.error(error);
@@ -161,7 +162,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
 
   const finishHandler = () => {
     setClose(true);
-    createProjectHandler();
+    editProjectHandler();
   };
 
   useEffect(() => {
@@ -289,7 +290,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                   className={`${"stepper-item"} ${getStatusClass(1)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/* <div className="stepper-line w-40px" /> */}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">1</span>
@@ -304,7 +304,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                   className={`${"stepper-item"} ${getStatusClass(2)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/* <div className="stepper-line w-40px" /> */}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">2</span>
@@ -321,7 +320,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                   className={`${"stepper-item"} ${getStatusClass(3)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/* <div className="stepper-line w-40px" /> */}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">3</span>
@@ -338,7 +336,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                   className={`${"stepper-item"} ${getStatusClass(4)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/* <div className="stepper-line w-40px" /> */}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">4</span>
@@ -380,15 +377,13 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        {/* <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option> */}
                         {propertyType && propertyType.map((item, index) => {
                           return (
-                            <option key={index} value={item.id}>{item.attributes.Title}</option> // .titles gamo ar mushaobs sheidlzeba tqventan .Title imushavebs
+                            <option key={index} value={item.id}>{item.attributes.Title}</option>
                           )
                         })}
                       </select>
                     </div>
-
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <div className="row fv-row">
@@ -537,7 +532,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                                   ...prevSendData,
                                   service_percentage: e.target.value,
                                 }));
-                                // hiddenInputHandler();
                               }}
                             />
                           </div>
@@ -547,8 +541,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                     </div>
                   </div>
                 </div>
-                {/* STEP */}
-
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -791,7 +783,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject, getProj
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
                     </button>
-
                     <button
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}

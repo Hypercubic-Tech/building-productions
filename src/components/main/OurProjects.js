@@ -27,9 +27,8 @@ const OurProjects = () => {
                 <li className="nav-item">
                   <a
                     style={{ cursor: "pointer" }}
-                    className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${
-                      step === 1 ? "active" : ""
-                    } `}
+                    className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${step === 1 ? "active" : ""
+                      } `}
                     onClick={() => setStep(1)}
                     data-bs-toggle="tab"
                     data-bs-target="#kt_landing_projects_latest"
@@ -40,9 +39,8 @@ const OurProjects = () => {
                 <li className="nav-item">
                   <a
                     style={{ cursor: "pointer" }}
-                    className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${
-                      step === 2 ? "active" : ""
-                    }`}
+                    className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${step === 2 ? "active" : ""
+                      }`}
                     onClick={() => setStep(2)}
                     data-bs-toggle="tab"
                     data-bs-target="#kt_landing_projects_web_design"
@@ -53,9 +51,8 @@ const OurProjects = () => {
                 <li className="nav-item">
                   <a
                     style={{ cursor: "pointer" }}
-                    className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${
-                      step === 3 ? "active" : ""
-                    }`}
+                    className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${step === 3 ? "active" : ""
+                      }`}
                     onClick={() => setStep(3)}
                     data-bs-toggle="tab"
                     data-bs-target="#kt_landing_projects_mobile_apps"
@@ -66,9 +63,8 @@ const OurProjects = () => {
                 <li className="nav-item">
                   <a
                     style={{ cursor: "pointer" }}
-                    className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${
-                      step === 4 ? "active" : ""
-                    }`}
+                    className={`nav-link text-gray-500 text-active-primary px-3 px-lg-6 ${step === 4 ? "active" : ""
+                      }`}
                     onClick={() => setStep(4)}
                     data-bs-toggle="tab"
                     data-bs-target="#kt_landing_projects_development"
@@ -83,7 +79,6 @@ const OurProjects = () => {
                 className={`tab-pane fade ${step === 1 ? "active show" : ""}`}
                 id="kt_landing_projects_latest"
               >
-                {/* imgs */}
                 <div className="row g-10">
                   <div className="col-lg-6">
                     <a

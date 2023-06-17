@@ -1,12 +1,9 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react'
 
 import axios from 'axios';
 import Swal from "sweetalert2";
 import LightGallery from 'lightgallery/react';
 
-import { selectProjectImage, setProjectDrawingsImages } from '../../store/slices/projectSlice';
 import lgZoom from 'lightgallery/plugins/zoom';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import notify from '../../utils/notify';
@@ -16,31 +13,12 @@ import 'lightgallery/css/lg-zoom.css';
 import 'lightgallery/css/lg-thumbnail.css';
 
 const Drawings = ({ setSelect }) => {
-    const router = useRouter();
-    const { projectId } = router.query;
-    const dispatch = useDispatch();
+
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState([]);
     const [isImageUpload, setIsImageUpload] = useState(false);
     const [isProjectImages, setIsProjectImages] = useState([]);
     const [isImageState, setIsImageState] = useState(false);
-
-    // const getProductsHandler = async () => {
-    //     await axios
-    //         .get(
-    //             `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=image`
-    //         )
-    //         .then((res) => {
-    //             const data = res.data
-    //             setIsProjectImages(data?.data[0]?.attributes?.image?.data)
-    //         })
-    // };
-
-    // useEffect(() => {
-    //     if (projectId) {
-    //         getProductsHandler();
-    //     }
-    // }, [projectId]);
 
     const handleMediaUpload = async (files) => {
         if (!files) {
@@ -66,7 +44,6 @@ const Drawings = ({ setSelect }) => {
                     setImage(newImages);
                     setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
-                    // getProductsHandler();
                     notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
                 });
         } catch (err) {
@@ -74,25 +51,6 @@ const Drawings = ({ setSelect }) => {
             notify(true, "სურათების ატვირთვა უარყოფილია");
         }
     };
-
-    // useEffect(() => {
-    //     if (isImageUpload) {
-    //         const userImageUpload = async () => {
-    //             await axios.put(
-    //                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
-    //                 {
-    //                     data: {
-    //                         image: image.map((p) => p.id),
-    //                     },
-    //                 }
-    //             )
-    //                 .then(() => {
-    //                     getProductsHandler();
-    //                 });
-    //         };
-    //         userImageUpload();
-    //     }
-    // }, [isImageUpload, image]);
 
     const toggleImages = () => {
         if (!isImageState) {

@@ -4,26 +4,41 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from "../../store/slices/categorySlice";
 import { setProducts } from "../../store/slices/productSlice";
 
-import Products from "../products/Products";
-import Filter from "./Filter";
 import axios from "axios";
+
+import Filter from "./Filter";
+import Products from "../products/Products";
 import AddProduct from "../popup/AddProduct";
 import Gallery from "../popup/Gallery";
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
-import { Export } from "../popup/Export";
+import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
-const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions, productStatus, defaultImage }) => {
-  const [select, setSelect] = useState(null);
-  const [services, setServices] = useState(null);
-  const [totalSum, setTotalSum] = useState(false);
-  const [searchType, setSearchType] = useState('');
+const Project = ({ project,
+  crafts,
+  unit,
+  suppliers,
+  craftStatus,
+  allProduct,
+  projectCategory,
+  editHandler,
+  editProductItem,
+  productOptions,
+  productStatus,
+  defaultImage
+}) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { projectId } = router.query;
+
   const products = useSelector(state => state.prod.products);
   const activeCategoryId = useSelector(state => state.cats.category);
-  const router = useRouter();
-  const { projectId } = router.query;
-  const dispatch = useDispatch();
+
+  const [select, setSelect] = useState(null);
+  const [totalSum, setTotalSum] = useState(false);
+  const [searchType, setSearchType] = useState('');
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
@@ -99,7 +114,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.property_type?.data?.attributes?.Title}
-                    {/* make .title to .Title and it will work -.- */}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.condition?.data?.attributes?.title}
@@ -299,7 +313,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                             Delete Selected
                           </button>
                         </div>
-                        {/* ფილტრი */}
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
@@ -335,7 +348,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                         projectId={projectId}
                         craftStatus={craftStatus}
                         editHandler={editHandler}
-                        services={services}
                         allProduct={allProduct}
                         setSelect={setSelect}
                         totalSum={totalSum}

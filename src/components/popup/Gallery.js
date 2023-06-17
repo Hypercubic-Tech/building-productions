@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import axios from 'axios';
 import Swal from "sweetalert2";
@@ -15,9 +15,9 @@ import 'lightgallery/css/lg-zoom.css';
 import 'lightgallery/css/lg-thumbnail.css';
 
 const Gallery = ({ setSelect }) => {
-    const dispatch = useDispatch();
     const router = useRouter();
     const { projectId } = router.query;
+
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState([]);
     const [isImageUpload, setIsImageUpload] = useState(false);
@@ -34,12 +34,6 @@ const Gallery = ({ setSelect }) => {
                 setIsProjectImages(data?.data[0]?.attributes?.image?.data)
             })
     };
-
-    useEffect(() => {
-        if (projectId) {
-            getProductsHandler();
-        }
-    }, [projectId]);
 
     const handleMediaUpload = async (files) => {
         if (!files) {
@@ -72,25 +66,6 @@ const Gallery = ({ setSelect }) => {
             notify(true, "სურათების ატვირთვა უარყოფილია");
         }
     };
-
-    useEffect(() => {
-        if (isImageUpload) {
-            const userImageUpload = async () => {
-                await axios.put(
-                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
-                    {
-                        data: {
-                            image: image.map((p) => p.id),
-                        },
-                    }
-                )
-                    .then(() => {
-                        getProductsHandler();
-                    });
-            };
-            userImageUpload();
-        }
-    }, [isImageUpload, image]);
 
     const toggleImages = () => {
         if (!isImageState) {
@@ -136,6 +111,31 @@ const Gallery = ({ setSelect }) => {
             })
         setImgSrc(null);
     };
+
+    useEffect(() => {
+        if (isImageUpload) {
+            const userImageUpload = async () => {
+                await axios.put(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+                    {
+                        data: {
+                            image: image.map((p) => p.id),
+                        },
+                    }
+                )
+                    .then(() => {
+                        getProductsHandler();
+                    });
+            };
+            userImageUpload();
+        }
+    }, [isImageUpload, image]);
+
+    useEffect(() => {
+        if (projectId) {
+            getProductsHandler();
+        }
+    }, [projectId]);
 
     return (
         <div className="modal fade show" style={{ zIndex: isImageState ? "0" : "100" }}>
@@ -237,7 +237,6 @@ const Gallery = ({ setSelect }) => {
                                             <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
                                         </svg>
                                     </div>
-                                    {/* <div className="image-input-wrapper w-125px h-125px"></div> */}
                                 </div>
 
                                 {isProjectImages && (
@@ -249,14 +248,6 @@ const Gallery = ({ setSelect }) => {
                                                 className="gallery-item"
                                                 onClick={toggleImages}
                                             >
-                                                <div>
-                                                    {/* <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        value=""
-                                                        id="flexCheckDefault"
-                                                    /> */}
-                                                </div>
                                                 <div style={{
                                                     display: "flex",
                                                     flexDirection: "column",

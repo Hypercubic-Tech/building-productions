@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
 import bcrypt from 'bcryptjs';
 import axios from "axios";
 
@@ -10,15 +10,19 @@ import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
 
 const SignedWithGoogleModal = ({ onClose }) => {
-    const [step, setStep] = useState(1);
-    const [lossData, setLossData] = useState(false);
-    const [backBtn, setBackBtn] = useState(false);
     const dispatch = useDispatch();
     const router = useRouter();
+    const [step, setStep] = useState(1);
+
     const authUserEmail = useSelector((state) => state.auth.email);
     const userJwt = useSelector((state) => state.auth.access_token);
+
     const userJwtString = JSON.stringify(userJwt);
     const hashedPassword = bcrypt.hashSync(userJwtString, 10);
+
+    const [lossData, setLossData] = useState(false);
+    const [backBtn, setBackBtn] = useState(false);
+
     const [regData, setRegData] = useState({
         username: "",
         email: authUserEmail,

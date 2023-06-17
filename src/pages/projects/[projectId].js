@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-import Project from "../../components/projects/Project";
 import { setCategory } from "../../store/slices/categorySlice";
+
+import Project from "../../components/projects/Project";
 
 const index = () => {
   const dispatch = useDispatch();
@@ -22,39 +23,6 @@ const index = () => {
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
   
-  useEffect(() => {
-    if (projectId) {
-      const getProject = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`)
-        .then((res) => {
-          const data = res.data;
-          setProject(data?.data);
-        });
-      };
-
-      const getProductCategory = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`)
-        .then((res) => {
-          const data = res.data
-          setProductOptions(data);
-        });
-      };
-
-      const getProjectCategory = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
-          .then((res) => {
-            const data = res.data;
-            setProjectCategory(data.data);
-            dispatch(setCategory(data?.data[0]?.id));
-          });
-      };
-
-      getProductCategory();
-      getProject();
-      getProjectCategory();
-    }
-  }, [projectId])
-
   useEffect(() => {
     const getSupplierHandler = async () => {
       await axios
@@ -120,13 +88,45 @@ const index = () => {
     getSupplierHandler();
     getUnitHandler();
   }, []);
+  
+  useEffect(() => {
+    if (projectId) {
+      const getProject = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`)
+        .then((res) => {
+          const data = res.data;
+          setProject(data?.data);
+        });
+      };
+
+      const getProductCategory = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`)
+        .then((res) => {
+          const data = res.data
+          setProductOptions(data);
+        });
+      };
+
+      const getProjectCategory = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
+          .then((res) => {
+            const data = res.data;
+            setProjectCategory(data.data);
+            dispatch(setCategory(data?.data[0]?.id));
+          });
+      };
+
+      getProductCategory();
+      getProject();
+      getProjectCategory();
+    }
+  }, [projectId])
 
   const editHandler = (product) => {
     setEditProductItem(product);
   };
 
   return <Project
-    pr={projectId}
     productStatus={productStatus}
     productOptions={productOptions}
     project={project}
