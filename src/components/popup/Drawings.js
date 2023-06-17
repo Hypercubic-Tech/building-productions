@@ -1,12 +1,9 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react'
 
 import axios from 'axios';
 import Swal from "sweetalert2";
 import LightGallery from 'lightgallery/react';
 
-import { selectProjectImage, setProjectDrawingsImages } from '../../store/slices/projectSlice';
 import lgZoom from 'lightgallery/plugins/zoom';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import notify from '../../utils/notify';
@@ -16,9 +13,7 @@ import 'lightgallery/css/lg-zoom.css';
 import 'lightgallery/css/lg-thumbnail.css';
 
 const Drawings = ({ setSelect }) => {
-    const router = useRouter();
-    const { projectId } = router.query;
-    const dispatch = useDispatch();
+
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState([]);
     const [isImageUpload, setIsImageUpload] = useState(false);
@@ -65,7 +60,6 @@ const Drawings = ({ setSelect }) => {
                     setImage(newImages);
                     setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
-                    // getProductsHandler();
                     notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
                 });
         } catch (err) {

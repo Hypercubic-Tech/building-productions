@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 const AboutCompany = () => {
   const [count, setCount] = useState(650);
   const [isCounting, setIsCounting] = useState(false);
+  const [count1, setCount1] = useState(30);
+  const [count2, setCount2] = useState(0);
+  const [isCounting1, setIsCounting1] = useState(false);
+  const [isCounting2, setIsCounting2] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
@@ -34,9 +38,6 @@ const AboutCompany = () => {
     return () => clearInterval(intervalId);
   }, [isCounting, count]);
 
-  const [count1, setCount1] = useState(30);
-  const [isCounting1, setIsCounting1] = useState(false);
-
   useEffect(() => {
     function handleScroll() {
       if (window.scrollY >= 930 && !isCounting1) {
@@ -66,9 +67,6 @@ const AboutCompany = () => {
 
     return () => clearInterval(intervalId);
   }, [isCounting1, count1]);
-
-  const [count2, setCount2] = useState(0);
-  const [isCounting2, setIsCounting2] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
@@ -136,9 +134,6 @@ const AboutCompany = () => {
             <div className="d-flex flex-wrap flex-center justify-content-lg-between mb-15 mx-auto w-xl-900px">
               <div
                 className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                // style={{
-                //   backgroundImage: 'url("assets/media/svg/misc/octagon.svg")',
-                // }}
               >
                 <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                   <svg
@@ -203,9 +198,6 @@ const AboutCompany = () => {
               </div>
               <div
                 className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                // style={{
-                //   backgroundImage: 'url("assets/media/svg/misc/octagon.svg")',
-                // }}
               >
                 <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                   <svg
@@ -249,9 +241,6 @@ const AboutCompany = () => {
               </div>
               <div
                 className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                // style={{
-                //   backgroundImage: 'url("assets/media/svg/misc/octagon.svg")',
-                // }}
               >
                 <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                   <svg

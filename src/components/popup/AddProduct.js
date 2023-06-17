@@ -16,17 +16,17 @@ const AddProduct = ({
     productStatus
 }) => {
     const dispatch = useDispatch();
-
     const router = useRouter();
+
     const projectId = router.query.projectId;
+    const activeCategoryId = useSelector(state => state.cats.category);
+
     const [lossProduct, setLossProduct] = useState(false);
     const [toggle, setToggle] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
     const [filteredCrafts, setFilteredCrafts] = useState();
     const [craftImage, setCraftImage] = useState();
-
-    const activeCategoryId = useSelector(state => state.cats.category);
 
     const [productData, setProductData] = useState({
         image: image,
@@ -75,29 +75,17 @@ const AddProduct = ({
         },
     });
 
-    useEffect(() => {
-        const getCraftsByCategory = async () => {
-            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
-                .then((res) => {
-                    const data = res.data;
-                    setFilteredCrafts(data)
-                })
-        }
 
-        getCraftsByCategory();
-    }, []);
 
     const defaultProductsHandler = async (id, pageIndex) => {
-        // if (id) {
-            try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,product_status&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
-                const data = response.data;
-                dispatch(setProducts(data.data));
-                dispatch(setCategory(id));
-            } catch (error) {
-                console.error(error);
-            }
-        // }
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,product_status&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+            const data = response.data;
+            dispatch(setProducts(data.data));
+            dispatch(setCategory(id));
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const handleSubmit = async () => {
@@ -168,13 +156,6 @@ const AddProduct = ({
         }
     };
 
-    useEffect(() => {
-        setProductData((prevProductData) => ({
-            ...prevProductData,
-            image: image
-        }));
-    }, [image]);
-
     const handleImageRemove = async () => {
         if (image) {
             await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
@@ -185,6 +166,25 @@ const AddProduct = ({
         }
 
     };
+
+    useEffect(() => {
+        setProductData((prevProductData) => ({
+            ...prevProductData,
+            image: image
+        }));
+    }, [image]);
+
+    useEffect(() => {
+        const getCraftsByCategory = async () => {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
+                .then((res) => {
+                    const data = res.data;
+                    setFilteredCrafts(data)
+                })
+        }
+
+        getCraftsByCategory();
+    }, []);
 
     return (
         <div
@@ -574,7 +574,7 @@ const AddProduct = ({
                                                             </option>
                                                         );
                                                     })
-                                                }   
+                                                }
                                             </select>
                                         </div>
                                         <div className="col-md-4 fv-row fv-plugins-icon-container">

@@ -54,7 +54,6 @@ const Filter = ({
           >
             <a className={`${"menu-link"} ${"active"} ${"py-3"} ${activeCategoryId === null ? 'bg-primary' : ""}`}>
               <span className={`menu-title georgian ${styles.item}`}>
-                {/* <i className="bi bi-plug-fill" />  */}
                 <svg className={styles.icon} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
                   <g id="SVGRepo_bgCarrier" strokeWidth="0">
                   </g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round">

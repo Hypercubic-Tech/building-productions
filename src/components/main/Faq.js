@@ -1,32 +1,11 @@
 import { useEffect, useState } from "react"
-import styles from "./Faq.module.css"
 import axios from "axios";
 
-const faqData = [
-    {
-        questions: "question",
-        answer: "answer",
-    },
-    {
-        questions: "question",
-        answer: "answer",
-    },
-    {
-        questions: "question",
-        answer: "answer",
-    },
-    {
-        questions: "question",
-        answer: "answer",
-    },
-];
-
-
+import styles from "./Faq.module.css"
 
 const Faq = () => {
     const [active, setActive] = useState(null);
     const [faqs, setFaqs] = useState(null);
-
 
     useEffect(() => {
         const faqRequest = async () => {

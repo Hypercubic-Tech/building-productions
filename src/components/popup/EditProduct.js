@@ -50,7 +50,7 @@ const EditProduct = ({
         project: {
             connect: [{ id: projectId }]
         },
-        product_statuses: {
+        product_status: {
             connect: [{ id: product?.attributes?.product_status?.data[0]?.id }]
         },
     });

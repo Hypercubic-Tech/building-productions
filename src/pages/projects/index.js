@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -10,6 +10,9 @@ import AddProject from "../../components/popup/AddProject";
 import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
+    const userId = useSelector(state => state.auth.user_id)
+    const searchValue = useSelector(state => state.proj.searchType)
+
     const [close, setClose] = useState(false);
     const [addProject, setAddProject] = useState(false);
     const [editProject, setEditProject] = useState(false);
@@ -18,8 +21,7 @@ const index = () => {
     const [defaultImage, setDefaultImage] = useState(null);
     const [pageIndex, setPageIndex] = useState(1);
 
-    const userId = useSelector(state => state.auth.user_id)
-    const searchValue = useSelector(state => state.proj.searchType)
+
     let itemsPerPage = 8;
 
     let projectsToMap = projectData;

@@ -14,16 +14,15 @@ import styles from "./Products.module.css";
 const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select, defaultImage }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
   const { projectId } = router.query;
+  const activeCategoryId = useSelector(state => state?.cats?.category);
 
   const products = useSelector(state => state.prod.products);
 
   const [activeItem, setActiveItem] = useState();
-  const [activeStatusItem, setActiveStatusItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-  const [updateCraftStatus, setUpdateCraftStatus] = useState();
-  const [updateProductStatus, setUpdateProductStatus] = useState();
 
   let itemsPerPage = 5;
 
@@ -68,7 +67,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }
   };
 
-  const confirmEdit = async (event, productId) => {
+  const confirmEdit = async (selectedId, product) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-primary',
@@ -87,45 +86,48 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       reverseButtons: true
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try {
-          // await Promise.all([
-          //   axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?filters[id][$eq]=${productId}`, {
-          //     data: [
-          //       {
-          //         id: productId,
-          //         attributes: {
-          //           product_statuses: {
-          //             connect: [{ id: event.target.value }]
-          //           },
-          //         }
-          //       }
-          //     ]
-          //   }),
-          //   axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${productId}`)
-          // ]).then(([putResponse, getResponse]) => {
-          //   const updatedProduct = putResponse.data.data;
-          //   const updatedData = getResponse.data.data;
-          //   notify(false, "პროდუქტი რედაქტირდა");
-          //   dispatch(setProductState(updatedData));
-          // });
-          await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`, {
-            data: {
-              id: productId,
-              product_statuses: {
-                connect: [{ id: event.target.value }]
-              },
-            }
+        let productData = {
+          image: product?.attributes?.image?.data?.id,
+          title: product?.attributes?.title,
+          type: "product",
+          supplier: {
+            connect: [{ id: product?.attributes?.supplier?.data?.id }],
+          },
+          productLink: product?.attributes?.productLink,
+          quantity: product?.attributes?.quantity,
+          unit: {
+            connect: [{ id: product?.attributes?.unit?.data?.id }],
+          },
+          price: product?.attributes?.price,
+          categories: {
+            connect: [{ id: activeCategoryId }],
+          },
+          project: {
+            connect: [{ id: projectId }]
+          },
+          product_status: {
+            connect: [{ id: selectedId }]
+          },
+        };
+
+        await axios
+          .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${product.id}`, {
+            data: productData,
           })
-            .then((res) => {
-              const data = res.data;
-              dispatch(setProductState(data.data));
-              notify(false, "პროდუქტი რედაქტირდა");
-            })
-        } catch (error) {
-          console.log(error);
-        }
+          .then(res => {
+            dispatch(setProductState(res.data.data));
+            notify(false, "პროდუქტი რედაქტირდა");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია');
+        swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
+          .then(() => {
+            window.location.reload();
+          });
       }
     });
   };
@@ -234,29 +236,8 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   };
 
   const getActiveItem = (selectedId, product) => {
-    if (activeStatusItem === product.id) {
-      setActiveStatusItem(null);
-    } else {
-      setActiveStatusItem(product.id);
-      setUpdateProductStatus(selectedId);
-      let productId = product.id;
-      confirmEdit(selectedId, productId);
-    }
+    confirmEdit(+selectedId, product);
   };
-
-  useEffect(() => {
-    if (projectId) {
-      const totalSumHandler = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
-          .then((res) => {
-            const data = res.data;
-            setTotalSumProduct(data.data);
-          })
-      };
-
-      totalSumHandler();
-    };
-  }, [projectId]);
 
   const aggregatedProducts = {};
 
@@ -282,6 +263,20 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }
   });
 
+  useEffect(() => {
+    if (projectId) {
+      const totalSumHandler = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
+          .then((res) => {
+            const data = res.data;
+            setTotalSumProduct(data.data);
+          })
+      };
+
+      totalSumHandler();
+    };
+  }, [projectId]);
+
   return (
     <>
       <div className="table-responsive">
@@ -291,9 +286,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
         >
           {totalSum ? (
             <thead>
-              {/* <div>
-                <h3>განფასება</h3>
-              </div> */}
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                 <th>სამუშაო</th>
                 <th>ერთეული</th>
@@ -356,7 +348,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                   <div className="form-check form-check-sm form-check-custom form-check-solid me-3">
                   </div>
                 </th>
-                {/* min-w-125px */}
                 <th className="georgian">დასახელება</th>
                 <th className="georgian">მომწოდებელი</th>
                 <th className="georgian">რაოდენობა</th>
@@ -389,15 +380,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                 return (
                   <tbody key={product?.id}>
                     <tr>
-                      <td>
-                        <div className="form-check form-check-sm form-check-custom form-check-solid">
-                          {/* <input
-                            className="form-check-input"
-                            type="checkbox"
-                            defaultValue={1}
-                          /> */}
-                        </div>
-                      </td>
                       <td style={{ gap: '3px', alignItems: 'center' }} className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                           <a>
@@ -412,7 +394,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                               />
                             </div>
                           </a>
-
                         </div>
                         <span>{product?.attributes?.title}</span>
                       </td>
@@ -422,7 +403,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                             {product?.attributes?.supplier?.data?.attributes?.title}
                           </a>
                         ) : " - "}
-
                       </td>
                       <td className="georgian">
                         {product?.attributes?.quantity}
@@ -437,9 +417,9 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"
-                              defaultValue={updateProductStatus || product?.attributes?.product_status?.data?.id}
+                              defaultValue={product?.attributes?.product_status?.data?.id}
                               onChange={(event) => {
-                                getActiveItem(event, product);
+                                getActiveItem(event.target.value, product);
                               }}
                             >
                               {productStatus && productStatus.map((item) => {

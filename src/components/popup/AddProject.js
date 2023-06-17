@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
-
-import { setProjectState } from "../../store/slices/projectSlice";
 
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
-import { setUpdateProject } from "../../store/slices/editProjectSlice";
 
 const AddProject = ({ dismiss, setShowProject }) => {
+  const userId = useSelector(state => state.auth.user_id)
+
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
@@ -19,7 +18,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
   const [hiddenInput, setHiddenInput] = useState(false);
-  const userId = useSelector(state => state.auth.user_id)
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -58,7 +56,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
       ]
     }
   });
-  const dispatch = useDispatch();
 
   let errors = {
     stepOne: [],
@@ -129,7 +126,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
         .then((res) => {
           const data = res.data;
           setShowProject(true)
-          // dispatch(setUpdateProject(data.data))
           notify(false, "პროექტი დაემატა");
         })
     } catch (error) {
@@ -461,27 +457,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                     <div className="w-100">
                       <div className="row mb-10">
-                        {/* <div className=" d-flex align-items-center">
-                          <input
-                            form-check form-switch
-                            className="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            id="flexSwitchCheckDefault"
-                            onChange={(e) => {
-                              const isChecked = e.target.checked;
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                vat: isChecked,
-                              }));
-                              hiddenInputHandler();
-                            }}
-                          />
-                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className={` georgian `}>დღგ-ს გადამხდელი / გაუთვალისწინებელი ხარჯები</span>
-                          </label>
-                        </div> */}
-                        {/* {hiddenInput ? ( */}
                         <div className={`${styles.inputWrap} col-4 `}>
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                             <span className={` georgian `}>დღგ-ს გადამხდელი</span>
@@ -497,9 +472,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                               }));
                             }}
                           />
-                          {/* <i className={`${styles.percent} bi bi-percent `}></i> */}
                         </div>
-                        {/* ) : ""} */}
                         <div className={`${styles.inputWrap} col-4 `}>
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                             <span className={` georgian `}>გაუთვალისწინებელი ხარჯები</span>
@@ -515,7 +488,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             className="custom-input form-control georgian form-control-solid"
                             placeholder="გაუთვალისწინებელი ხარჯები (%)"
                           />
-                          {/* <i className={`${styles.percent} bi bi-percent `}></i> */}
                         </div>
                         <div className={`${styles.inputWrap} col-4 `}>
                           <div style={{ flexDirection: "column" }} className="d-flex">
@@ -532,19 +504,14 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                   ...prevSendData,
                                   service_percentage: e.target.value,
                                 }));
-                                // hiddenInputHandler();
                               }}
                             />
-                            {/* <i className={`${styles.percent} bi bi-percent `}></i> */}
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
-                {/* STEP */}
-
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -708,8 +675,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                   </div>
                 </div>
-                {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
-
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
                     <button
@@ -744,10 +709,8 @@ const AddProject = ({ dismiss, setShowProject }) => {
                       უკან
                     </button>
                   </div>
-
                   <div>
                     {loss && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი</p>}
-
                     <button
                       onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}
@@ -786,7 +749,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
                     </button>
-
                     <button
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}
