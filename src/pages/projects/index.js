@@ -30,9 +30,10 @@ const index = () => {
         const lowercaseSearchType = searchValue.toLowerCase();
         projectsToMap = projectData.reduce((filteredProjects, project) => {
             const projectTitle = project?.attributes?.title?.toLowerCase();
-            if (projectTitle === lowercaseSearchType) {
+            const projectAddress = project?.attributes?.address?.toLowerCase(); // Added line
+            if (projectTitle === lowercaseSearchType || projectAddress === lowercaseSearchType) { // Modified line
                 return [project];
-            } else if (projectTitle.includes(lowercaseSearchType)) {
+            } else if (projectTitle.includes(lowercaseSearchType) || projectAddress.includes(lowercaseSearchType)) { // Modified line
                 return [...filteredProjects, project];
             }
             return filteredProjects;

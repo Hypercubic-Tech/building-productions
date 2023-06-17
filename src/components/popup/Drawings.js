@@ -20,6 +20,23 @@ const Drawings = ({ setSelect }) => {
     const [isProjectImages, setIsProjectImages] = useState([]);
     const [isImageState, setIsImageState] = useState(false);
 
+    const getProductsHandler = async () => {
+        await axios
+            .get(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=drawing`
+            )
+            .then((res) => {
+                const data = res.data
+                setIsProjectImages(data?.data[0]?.attributes?.drawing?.data)
+            })
+    };
+
+    useEffect(() => {
+        if (projectId) {
+            getProductsHandler();
+        }
+    }, [projectId]);
+
     const handleMediaUpload = async (files) => {
         if (!files) {
             return;
@@ -39,8 +56,7 @@ const Drawings = ({ setSelect }) => {
                     },
                 })
                 .then((res) => {
-                    console.log(res.data, 'babua bebia')
-                    const newImages = isProjectImages ? [...image, ...isProjectImages, ...res.data] : [...image, ...isProjectImages, ...res.data];
+                    const newImages = isProjectImages ? [...image, ...isProjectImages, ...res.data] : [...image, ...res.data];
                     setImage(newImages);
                     setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
@@ -51,6 +67,25 @@ const Drawings = ({ setSelect }) => {
             notify(true, "სურათების ატვირთვა უარყოფილია");
         }
     };
+
+    useEffect(() => {
+        if (isImageUpload) {
+            const userImageUpload = async () => {
+                await axios.put(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+                    {
+                        data: {
+                            drawing: image.map((p) => p.id),
+                        },
+                    }
+                )
+                    .then(() => {
+                        getProductsHandler();
+                    });
+            };
+            userImageUpload();
+        }
+    }, [isImageUpload, image]);
 
     const toggleImages = () => {
         if (!isImageState) {
@@ -198,7 +233,6 @@ const Drawings = ({ setSelect }) => {
                                         </svg>
                                     </div>
                                 </div>
-
                                 {isProjectImages && (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">
                                         {isProjectImages.map((projectImg, index) => (

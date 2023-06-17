@@ -60,7 +60,6 @@ const Project = ({ project,
     }
   };
 
-
   const filterProductCategory = async (id) => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_img_url,supplier,craft_status,product_status,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
@@ -72,7 +71,6 @@ const Project = ({ project,
       console.error(error);
     }
   };
-
 
   const total = products.reduce((acc, product) => {
     const productTotal = product?.attributes?.price * product?.attributes?.quantity;
