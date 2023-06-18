@@ -90,7 +90,7 @@ const SignedWithGoogleModal = ({ onClose }) => {
                     dispatch(setAuthUserId(data?.user?.id))
                     notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');
                     onClose();
-                    router.push('/')
+                    // router.push('/')
                 })
         } catch (err) {
             notify(true, 'რეგისტრაცია უარყოფილია, იმეილი ან სახელი უკვე გამოყენებულია');

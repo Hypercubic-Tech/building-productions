@@ -259,7 +259,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   });
 
   useEffect(() => {
-    if (projectId) {
+    if (projectId && productsToMap) {
       const totalSumHandler = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
@@ -270,7 +270,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
 
       totalSumHandler();
     };
-  }, [projectId]);
+  }, [projectId, productsToMap]);
 
   return (
     <>
