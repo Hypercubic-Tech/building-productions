@@ -19,11 +19,9 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const activeCategoryId = useSelector(state => state?.cats?.category);
 
   const products = useSelector(state => state.prod.products);
-
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-
   let itemsPerPage = 5;
 
   let productsToMap = products;
@@ -37,7 +35,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.type?.toLowerCase().includes(lowercaseSearchType)
     );
-    console.log(filteredProducts, 'filteredProducts');
+
     if (filteredProducts?.length >= 0) {
       productsToMap = filteredProducts;
     }

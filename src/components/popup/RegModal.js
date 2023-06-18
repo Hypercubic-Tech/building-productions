@@ -16,11 +16,13 @@ const RegModal = ({ handleRegistration, onClose }) => {
     phoneNumber: "",
     userType: "",
     paymentPlan: "",
+    paymentMethod: "",
   });
 
   let errors = {
     stepOne: [],
     stepTwo: [],
+    stepThree: [],
   };
 
   const stepChangeHandler = () => {
@@ -31,6 +33,10 @@ const RegModal = ({ handleRegistration, onClose }) => {
       setLossData(true);
     }
     if (step === 2 && errors?.stepTwo?.length === 0 && regData?.paymentPlan) {
+      setStep(step + 1);
+      setLossData(false);
+    }
+    if (step === 3 && errors?.stepThree?.length === 0 && regData?.paymentMethod) {
       setStep(step + 1);
       setLossData(false);
     }
@@ -57,11 +63,11 @@ const RegModal = ({ handleRegistration, onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { username, email, password, phoneNumber, userType, paymentPlan } = regData;
+    const { username, email, password, phoneNumber, userType, paymentPlan, paymentMethod } = regData;
 
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
-        username, email, password, phoneNumber, userType, paymentPlan
+        username, email, password, phoneNumber, userType, paymentPlan, paymentMethod
       })
         .then(() => {
           notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
@@ -305,10 +311,16 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 <button
                   style={{ width: "43%" }}
                   className={` btn btn-success georgian ${styles.btn}`}
-                  type="button"
-                  onClick={handleSubmit}
+                  type={regData?.paymentPlan === "free" ? 'submit' : 'button'}
+                  onClick={() => {
+                    if (regData?.paymentPlan === "paid") {
+                      stepChangeHandler();
+                    } else if (regData?.paymentPlan.length === 0) {
+                      stepChangeHandler();
+                    }
+                  }}
                 >
-                  რეგისტრაცია
+                  {regData?.paymentPlan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
                 </button>
               </div>
             </div>
@@ -350,7 +362,45 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 </g>
               </svg>
             </div>
-            
+            <div className="d-grid gap-2 mt-n1">
+              <div className="d-grid gap-2 mt-n1">
+                <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
+                <select
+                  required
+                  style={{ borderColor: lossData && regData?.paymentMethod?.length === 0 ? "red" : "" }}
+                  className="form-select form-select-solid georgian"
+                  defaultValue="აირჩიეთ გადახდის მეთოდი"
+                  onChange={(e) => {
+                    setRegData((prevSendData) => ({
+                      ...prevSendData,
+                      paymentMethod: e.target.value
+                    }));
+                  }}
+                >
+                  <option disabled value="აირჩიეთ გადახდის მეთოდი">აირჩიეთ გადახდის მეთოდი</option>
+                  <option id="1" value="tbc">TBC</option>
+                  <option id="2" value="bog">BOG</option>
+                </select>
+              </div>
+              {lossData && regData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}
+              <div className="d-flex align-items-center justify-content-evenly">
+                <button
+                  className={` btn btn-success georgian ${styles.btn}`}
+                  type="button"
+                  onClick={prevStepHandler}
+                  style={{ width: "35%" }}
+                >
+                  უკან
+                </button>
+                <button
+                  className={` btn btn-success georgian ${styles.btn}`}
+                  type={regData?.paymentMethod?.length === 0 ? "button" : "submit"}
+                  onClick={() => regData?.paymentMethod?.length === 0 ? stepChangeHandler() : ""}
+                >
+                  რეგისტრაცია
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </form>
