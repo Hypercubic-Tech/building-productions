@@ -384,7 +384,6 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                                 >
                                     <option disabled value="აირჩიეთ გადახდის მეთოდი">აირჩიეთ გადახდის მეთოდი</option>
                                     <option id="1" value="tbc">TBC</option>
-                                    <option id="2" value="bog">BOG</option>
                                 </select>
                             </div>
                             {lossData && editUserData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}
