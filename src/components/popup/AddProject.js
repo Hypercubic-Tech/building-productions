@@ -720,7 +720,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                       type="button"
                       className="btn georgian btn-lg btn-light-primary me-3"
                     >
-                      <span className="svg-icon svg-icon-3 me-1">
+                      {/* <span className="svg-icon svg-icon-3 me-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width={24}
@@ -742,7 +742,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             fill="black"
                           />
                         </svg>
-                      </span>
+                      </span> */}
                       უკან
                     </button>
                   </div>
@@ -796,7 +796,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                       className="btn btn-lg georgian btn-primary"
                     >
                       გაგრძელება
-                      <span className="svg-icon svg-icon-3 ms-1 me-0">
+                      {/* <span className="svg-icon svg-icon-3 ms-1 me-0">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width={24}
@@ -819,7 +819,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             fill="black"
                           />
                         </svg>
-                      </span>
+                      </span> */}
                     </button>
                   </div>
                 </div>
