@@ -454,7 +454,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                 </tbody>
               )}
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
-                const initialSelectedValue = product.attributes.craft_status.data.id
+                const initialSelectedValue = product?.attributes?.craft_status?.data?.id
                 const itemSelectedValues = selectedValues[product.id] || initialSelectedValue
 
                 return (
