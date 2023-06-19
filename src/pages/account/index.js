@@ -219,7 +219,7 @@ const index = () => {
                                                         <h6 className="mb-0">გადახდის მეთოდი</h6>
                                                     </div>
                                                     <div className="col-sm-6">
-                                                        {user?.paymentMethod === "bog" ? 'საქართველოს ბანკი' : 'თბს ბანკი'}
+                                                        {user?.paymentMethod === "tbc" ? 'თბს ბანკი' : ''}
                                                     </div>
                                                 </div>
                                             )}

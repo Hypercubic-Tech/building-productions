@@ -19,17 +19,13 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const activeCategoryId = useSelector(state => state?.cats?.category);
 
   const products = useSelector(state => state.prod.products);
-
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-
   let itemsPerPage = 5;
 
   let productsToMap = products;
-
   if (searchType) {
-    console.log(searchType, 'searchType')
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
       product?.attributes?.title?.toLowerCase()?.includes(lowercaseSearchType) ||
@@ -39,12 +35,11 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
       product?.attributes?.price?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.type?.toLowerCase().includes(lowercaseSearchType)
     );
-  
-    if (filteredProducts.length > 0) {
+
+    if (filteredProducts?.length >= 0) {
       productsToMap = filteredProducts;
     }
   }
-  
 
   const totalPages = Math.ceil(productsToMap.length / itemsPerPage);
   const startIndex = (pageIndex - 1) * itemsPerPage;
@@ -264,7 +259,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   });
 
   useEffect(() => {
-    if (projectId) {
+    if (projectId && productsToMap) {
       const totalSumHandler = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
@@ -275,7 +270,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
 
       totalSumHandler();
     };
-  }, [projectId]);
+  }, [projectId, productsToMap]);
 
   return (
     <>
@@ -368,9 +363,9 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                   </tr>
                 </tbody>
               )}
-              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product) => {
+              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
                 return (
-                  <tbody key={product?.id}>
+                  <tbody key={index}>
                     <tr>
                       <td style={{ gap: '3px', alignItems: 'center' }} className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">

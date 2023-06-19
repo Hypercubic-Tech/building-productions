@@ -13,8 +13,7 @@ const EditProduct = ({
     setSelect,
     unit,
     suppliers,
-    productStatus,
-    filterProductCategory
+    productStatus
 }) => {
     const dispatch = useDispatch();
     const router = useRouter();
