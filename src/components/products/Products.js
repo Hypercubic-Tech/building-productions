@@ -22,7 +22,11 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-  const [defaultValue, setDefaultValue] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  // const [selectedValue, setSelectedValue] = useState('');
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [selectedValues, setSelectedValues] = useState([]);
+
 
   let itemsPerPage = 5;
 
@@ -326,6 +330,18 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }
   });
 
+  const handleToggleDropdown = (productId) => {
+    setActiveDropdown(productId === activeDropdown ? null : productId);
+  };
+
+
+  const handleSelectOption = (value, productId) => {
+    setSelectedValues((prevSelectedValues) => ({
+      ...prevSelectedValues,
+      [productId]: value,
+    }));
+    setActiveDropdown(null)
+  };
 
   useEffect(() => {
     if (projectId && productsToMap) {
@@ -333,6 +349,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
             const data = res.data;
+            console.log(data)
             setTotalSumProduct(data.data);
           })
       };
@@ -341,12 +358,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     };
   }, [projectId, productsToMap]);
 
-  useEffect(() => {
-    if (productsToMap && productsToMap.length > 0) {
-      setDefaultValue(productsToMap[0]?.attributes?.craft_status?.data?.id);
-    }
-  }, []);
-  console.log(defaultValue)
   return (
     <>
       <div className="table-responsive">
@@ -439,7 +450,9 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                 </tbody>
               )}
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
-                console.log(defaultValue, 'def value')
+                const initialSelectedValue = product.attributes.craft_status.data.id
+                const itemSelectedValues = selectedValues[product.id] || initialSelectedValue
+
                 return (
                   <tbody key={index}>
                     <tr>
@@ -492,20 +505,28 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                               })}
                             </select>
                           ) : (
-                            <select
-                              className="form-select"
-                              defaultValue={defaultValue}
-                              onChange={(event) => {
-                                getActiveServiceItem(event.target.value, product)
-                                setDefaultValue(event.target.value)
-                              }}
-                            >
-                              {craftStatus && craftStatus.map((item) => {
-                                return (
-                                  <option key={item.id} value={item.id}>{item.attributes.title}</option>
-                                )
-                              })}
-                            </select>
+                            <div className="dropdown">
+                              <div
+                                className="dropdown-toggle"
+                                onClick={() => handleToggleDropdown(product.id)}
+                              >
+                                {itemSelectedValues}
+                              </div>
+                              {activeDropdown === product.id && (
+                                <div style={{ display: "block" }} className="dropdown-menu">
+                                  {craftStatus &&
+                                    craftStatus.map((item) => (
+                                      <div
+                                        key={item.id}
+                                        className="dropdown-item"
+                                        onClick={() => handleSelectOption(item.id, product.id)}
+                                      >
+                                        {item.attributes.title}
+                                      </div>
+                                    ))}
+                                </div>
+                              )}
+                            </div>
                           )}
                         </div>
                       </td>
