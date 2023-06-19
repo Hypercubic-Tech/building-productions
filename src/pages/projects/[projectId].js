@@ -22,7 +22,7 @@ const index = () => {
   const [productOptions, setProductOptions] = useState(null);
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
-  
+
   useEffect(() => {
     const getSupplierHandler = async () => {
       await axios
@@ -63,7 +63,7 @@ const index = () => {
     const getProductsStatusHandler = async () => {
       await axios
         .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/product-statuses`)
-        
+
         .then((res) => {
           const data = res.data;
           setProductStatus(data.data);
@@ -74,7 +74,7 @@ const index = () => {
     const getDefaultImage = async () => {
       await axios
         .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`)
-        
+
         .then((res) => {
           const data = res.data;
           setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
@@ -88,39 +88,32 @@ const index = () => {
     getSupplierHandler();
     getUnitHandler();
   }, []);
-  
+
   useEffect(() => {
-    if (projectId) {
-      const getProject = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`)
-        .then((res) => {
-          const data = res.data;
-          setProject(data?.data);
-        });
-      };
+    const fetchData = async () => {
+      if (projectId) {
+        try {
+          const projectRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`);
+          const projectData = projectRes.data?.data;
+          setProject(projectData);
 
-      const getProductCategory = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`)
-        .then((res) => {
-          const data = res.data
-          setProductOptions(data);
-        });
-      };
+          const productRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`);
+          const productData = productRes.data;
+          setProductOptions(productData);
 
-      const getProjectCategory = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`)
-          .then((res) => {
-            const data = res.data;
-            setProjectCategory(data.data);
-            dispatch(setCategory(data?.data[0]?.id));
-          });
-      };
+          const categoryRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`);
+          const categoryData = categoryRes.data.data;
+          setProjectCategory(categoryData);
+          dispatch(setCategory(categoryData[0]?.id));
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    };
 
-      getProductCategory();
-      getProject();
-      getProjectCategory();
-    }
-  }, [projectId])
+    fetchData();
+  }, [projectId]);
+
 
   const editHandler = (product) => {
     setEditProductItem(product);

@@ -78,10 +78,13 @@ const Project = ({ project,
   }, 0);
 
   useEffect(() => {
+    const defaultProductCallBack = async () => {
     if (activeCategoryId && projectId) {
-      defaultProductsHandler(activeCategoryId);
+        await defaultProductsHandler(activeCategoryId);
+      }
     }
-  }, [])
+    defaultProductCallBack()
+  }, [activeCategoryId, projectId])
 
   return (
     <>
