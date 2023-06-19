@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import jwt_decode from "jwt-decode";
 import { setAuthAccessToken, setAuthEmail, setAuthUserId } from "../store/slices/authSlice";
+import jwt_decode from "jwt-decode";
 
 import AboutCompany from "../components/main/AboutCompany";
 import Heading from "../components/main/Heading";

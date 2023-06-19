@@ -128,14 +128,14 @@ const index = () => {
     const deleteProjectHandler = async (item) => {
         const projectId = item.id;
         try {
-            await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`)
-                .then(() => {
-                    getProjectsData();
-                })
+          await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`);
+          const data = await getProjectsData();
+          setProjectData(data.data);
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
-    };
+      };
+      
 
     useEffect(() => {
         const getDefaultImage = async () => {
