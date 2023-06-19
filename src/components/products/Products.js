@@ -22,9 +22,12 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
+  const [defaultValue, setDefaultValue] = useState();
+
   let itemsPerPage = 5;
 
   let productsToMap = products;
+
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
@@ -103,6 +106,67 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
           product_status: {
             connect: [{ id: selectedId }]
           },
+        };
+
+        await axios
+          .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${product.id}`, {
+            data: productData,
+          })
+          .then(res => {
+            dispatch(setProductState(res.data.data));
+            notify(false, "პროდუქტი რედაქტირდა");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    });
+  };
+
+  const confirmServiceEdit = async (selectedId, product) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    await swalWithBootstrapButtons.fire({
+      title: 'დაადასტურეთ, რომ გსურთ პროდუქტის სტატუსის რედაქტირება',
+      text: 'დადასტურების შემთხვევაში, პროდუქტი რედაქტირდება ავტომატურად',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'რედაქტირება',
+      cancelButtonText: 'უარყოფა',
+      reverseButtons: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let productData = {
+          title: product?.attributes?.title,
+          type: "service",
+          quantity: product?.attributes?.quantity,
+          unit: {
+            connect: [{ id: product?.attributes?.unit?.data?.id }],
+          },
+          price: product.attributes.price,
+          categories: {
+            connect: [{ id: activeCategoryId }],
+          },
+          project: {
+            connect: [{ id: projectId }]
+          },
+          craft_status: {
+            connect: [{ id: selectedId }]
+          },
+          craft_img_url: product?.attributes?.craft_img_url
         };
 
         await axios
@@ -234,6 +298,10 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     confirmEdit(+selectedId, product);
   };
 
+  const getActiveServiceItem = (selectedId, product) => {
+    confirmServiceEdit(+selectedId, product);
+  };
+
   const aggregatedProducts = {};
 
   totalSumProduct?.forEach((product) => {
@@ -258,6 +326,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }
   });
 
+
   useEffect(() => {
     if (projectId && productsToMap) {
       const totalSumHandler = async () => {
@@ -272,6 +341,12 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     };
   }, [projectId, productsToMap]);
 
+  useEffect(() => {
+    if (productsToMap && productsToMap.length > 0) {
+      setDefaultValue(productsToMap[0]?.attributes?.craft_status?.data?.id);
+    }
+  }, []);
+  console.log(defaultValue)
   return (
     <>
       <div className="table-responsive">
@@ -364,6 +439,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                 </tbody>
               )}
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
+                console.log(defaultValue, 'def value')
                 return (
                   <tbody key={index}>
                     <tr>
@@ -418,14 +494,10 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                           ) : (
                             <select
                               className="form-select"
-                              defaultValue={product?.attributes?.craft_status?.data[0]?.id}
-                              onChange={(e) => {
-                                setUpdateCraftStatus((updateCraftStatus) => ({
-                                  ...updateCraftStatus,
-                                  craft_status: {
-                                    connect: [{ id: e.target.value }],
-                                  },
-                                }));
+                              defaultValue={defaultValue}
+                              onChange={(event) => {
+                                getActiveServiceItem(event.target.value, product)
+                                setDefaultValue(event.target.value)
                               }}
                             >
                               {craftStatus && craftStatus.map((item) => {
