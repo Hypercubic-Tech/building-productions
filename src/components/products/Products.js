@@ -335,13 +335,17 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   };
 
 
-  const handleSelectOption = (value, productId) => {
+  const handleSelectOption = (value, product) => {
+    let productId = product.id
     setSelectedValues((prevSelectedValues) => ({
       ...prevSelectedValues,
       [productId]: value,
     }));
     setActiveDropdown(null)
+    confirmServiceEdit(+value, product);
   };
+
+  console.log(selectedValues)
 
   useEffect(() => {
     if (projectId && productsToMap) {
@@ -519,7 +523,7 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                                       <div
                                         key={item.id}
                                         className="dropdown-item"
-                                        onClick={() => handleSelectOption(item.id, product.id)}
+                                        onClick={() => handleSelectOption(item.id, product)}
                                       >
                                         {item.attributes.title}
                                       </div>
