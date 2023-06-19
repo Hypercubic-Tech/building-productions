@@ -59,7 +59,7 @@ const Home = () => {
               dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
-              router.push('/');
+              // router.push('/');
               notify(false, 'თქვენ წარმატებით გაიარეთ ავტორიზაცია!');
             } else {
               localStorage.setItem("access_token", id_token);
