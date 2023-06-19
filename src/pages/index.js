@@ -1,23 +1,21 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthAccessToken, setAuthEmail, setAuthUserId } from "../store/slices/authSlice";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
-import notify from "../utils/notify";
+import { setAuthAccessToken, setAuthEmail, setAuthUserId } from "../store/slices/authSlice";
 
 import AboutCompany from "../components/main/AboutCompany";
 import Heading from "../components/main/Heading";
 import HowItWorks from "../components/main/HowItWorks";
-import OurTeem from "../components/main/OurTeam";
+import OurTeam from "../components/main/OurTeam";
 import OurProjects from "../components/main/OurProjects";
 import Price from "../components/main/Price";
 import WhatOuerClientsSay from "../components/main/WhatOurClientsSay";
 import ContactUs from "../components/main/ContactUs";
 import Faq from "../components/main/Faq";
 import SignedWithGoogleModal from "../components/popup/SignedWithGoogleModal";
-
+import axios from "axios";
+import notify from "../utils/notify";
 
 const priceData = {
   monthlyPrice: {
@@ -33,14 +31,12 @@ const priceData = {
 };
 
 const Home = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-
-  const { id_token } = router.query;
-  const userObject = id_token ? jwt_decode(id_token) : null;
-
   const [isAuthWithGoogle, setIsAuthWithGoogle] = useState(null);
   const [isClosed, setIsClosed] = useState(true);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { id_token } = router.query;
+  const userObject = id_token ? jwt_decode(id_token) : null;
 
   const toggleModal = () => {
     setIsClosed(false);
@@ -55,11 +51,11 @@ const Home = () => {
             const data = res.data;
             setIsAuthWithGoogle(data)
             if (data?.length === 0) {
-
+              
               localStorage.setItem("access_token", id_token);
               localStorage.setItem("email", userObject?.email);
               localStorage.setItem("userId", data[0]?.id);
-
+              
               dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
@@ -69,7 +65,7 @@ const Home = () => {
               localStorage.setItem("access_token", id_token);
               localStorage.setItem("email", userObject?.email);
               localStorage.setItem("userId", data[0]?.id);
-
+              
               dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
@@ -97,7 +93,7 @@ const Home = () => {
         <Heading />
         <HowItWorks />
         <AboutCompany />
-        <OurTeem />
+        <OurTeam />
         <OurProjects />
         <Price price={priceData} />
         <WhatOuerClientsSay />

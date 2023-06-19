@@ -307,28 +307,24 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                 <td></td>
                 <td>{`სულ: ${Object.values(categorySums).reduce((total, category) => total + category.sum, 0) || 0} ლარი`}</td>
               </tr>
-
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>{`დღგ ${parseInt(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
-
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforeseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
-
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
-
               <tr>
                 <td></td>
                 <td></td>
@@ -339,10 +335,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
           ) : (
             <thead>
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                <th className="w-10px pe-2">
-                  <div className="form-check form-check-sm form-check-custom form-check-solid me-3">
-                  </div>
-                </th>
                 <th className="georgian">დასახელება</th>
                 <th className="georgian">მომწოდებელი</th>
                 <th className="georgian">რაოდენობა</th>
