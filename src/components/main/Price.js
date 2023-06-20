@@ -41,7 +41,7 @@ const Price = ({ price }) => {
               <div
                 className="nav-group landing-dark-bg d-inline-flex mb-15"
                 data-kt-buttons="true"
-                style={{ border: "1px dashed #2B4666" }}
+                // style={{ border: "1px dashed #2B4666" }}
               >
                 <a
                   onClick={() => {
