@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory } from "../../store/slices/categorySlice";
-import { setProducts } from "../../store/slices/productSlice";
 
 import axios from "axios";
+
+import { setCategory } from "../../store/slices/categorySlice";
+import { setProducts } from "../../store/slices/productSlice";
 
 import Filter from "./Filter";
 import Products from "../products/Products";
@@ -50,7 +51,7 @@ const Project = ({ project,
   const defaultProductsHandler = async (id) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_img_url,craft_status,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data.data;
         dispatch(setProducts(data));
         dispatch(setCategory(id));
@@ -62,7 +63,7 @@ const Project = ({ project,
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_img_url,supplier,craft_status,product_status,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));

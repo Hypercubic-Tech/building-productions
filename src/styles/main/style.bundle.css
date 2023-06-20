@@ -2132,6 +2132,7 @@ progress {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #BAD7E9;
+  border-radius: 6px;
   appearance: none;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -2841,6 +2842,7 @@ textarea.form-control.is-invalid {
   z-index: 3;
 }
 .btn {
+  border-radius: 32px;
   display: inline-block;
   font-weight: 500;
   line-height: 1.5;
@@ -2853,8 +2855,7 @@ textarea.form-control.is-invalid {
   border: 1px solid transparent;
   padding: 0.75rem 1.5rem;
   font-size: 1.1rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 @media (prefers-reduced-motion: reduce) {
   .btn {
@@ -2864,6 +2865,7 @@ textarea.form-control.is-invalid {
 .btn:hover {
   color: #181c32;
   text-decoration: none;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:focus + .btn,
 .btn:focus {
@@ -2941,9 +2943,10 @@ fieldset:disabled .btn {
     0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .btn-light:hover {
-  color: #000;
+  /* color: #000;
   background-color: #f7f9fb;
-  border-color: #f6f9fb;
+  border-color: #f6f9fb; */
+  opacity: 0.7;
 }
 .btn-check:focus + .btn-light,
 .btn-light:focus {
@@ -2984,9 +2987,10 @@ fieldset:disabled .btn {
     0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .btn-primary:hover {
-  color: #000;
+  opacity: 0.7;
+  /* color: #000;
   background-color: #6ad59b;
-  border-color: #62d295;
+  border-color: #62d295; */
 }
 .btn-check:focus + .btn-primary,
 .btn-primary:focus {
@@ -3027,9 +3031,10 @@ fieldset:disabled .btn {
     0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .btn-secondary:hover {
-  color: #000;
+  /* color: #000;
   background-color: #e8eaf1;
-  border-color: #e7e9f1;
+  border-color: #e7e9f1; */
+  opacity: 0.7;
 }
 .btn-check:focus + .btn-secondary,
 .btn-secondary:focus {
@@ -25573,11 +25578,11 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-hover-white:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-hover-white:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-white {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25594,14 +25599,14 @@ fieldset:disabled .btn {
   color: #7e8299 !important;
 }
 .text-hover-inverse-white:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .text-hover-inverse-white:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-white {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25618,11 +25623,11 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-active-white.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-active-white.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-white {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25639,17 +25644,17 @@ fieldset:disabled .btn {
   color: #7e8299 !important;
 }
 .text-active-inverse-white.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .text-active-inverse-white.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-primary {
-  color: #BAD7E9 !important;
+  color: #FCFFE7 !important
 }
 .text-inverse-primary {
   color: #fff !important;
@@ -25672,11 +25677,11 @@ fieldset:disabled .btn {
   color: #BAD7E9 !important;
 }
 .text-hover-primary:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .text-hover-primary:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-primary {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25693,14 +25698,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-hover-inverse-primary:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-hover-inverse-primary:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-primary {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25717,11 +25722,11 @@ fieldset:disabled .btn {
   color: #BAD7E9 !important;
 }
 .text-active-primary.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .text-active-primary.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-primary {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25741,14 +25746,14 @@ fieldset:disabled .btn {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-active-inverse-primary.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-secondary {
   color: #e4e6ef !important;
@@ -25771,11 +25776,11 @@ fieldset:disabled .btn {
   color: #e4e6ef !important;
 }
 .text-hover-secondary:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .text-hover-secondary:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-secondary {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25795,14 +25800,14 @@ fieldset:disabled .btn {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .text-hover-inverse-secondary:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-secondary {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25819,14 +25824,14 @@ fieldset:disabled .btn {
   color: #e4e6ef !important;
 }
 .text-active-secondary.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .text-active-secondary.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-secondary {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25846,14 +25851,14 @@ fieldset:disabled .btn {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .text-active-inverse-secondary.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-light {
   color: #f5f8fa !important;
@@ -25876,11 +25881,11 @@ fieldset:disabled .btn {
   color: #f5f8fa !important;
 }
 .text-hover-light:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .text-hover-light:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-light {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25897,14 +25902,14 @@ fieldset:disabled .btn {
   color: #7e8299 !important;
 }
 .text-hover-inverse-light:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .text-hover-inverse-light:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-light {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25921,11 +25926,11 @@ fieldset:disabled .btn {
   color: #f5f8fa !important;
 }
 .text-active-light.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .text-active-light.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-light {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25942,14 +25947,14 @@ fieldset:disabled .btn {
   color: #7e8299 !important;
 }
 .text-active-inverse-light.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .text-active-inverse-light.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-success {
   color: #00b2ff !important;
@@ -25975,11 +25980,11 @@ fieldset:disabled .btn {
   color: #00b2ff !important;
 }
 .text-hover-success:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .text-hover-success:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-success {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -25996,14 +26001,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-hover-inverse-success:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-hover-inverse-success:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-success {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26020,11 +26025,11 @@ fieldset:disabled .btn {
   color: #00b2ff !important;
 }
 .text-active-success.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .text-active-success.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-success {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26044,14 +26049,14 @@ fieldset:disabled .btn {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-active-inverse-success.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-info {
   color: #7239ea !important;
@@ -26077,11 +26082,11 @@ fieldset:disabled .btn {
   color: #7239ea !important;
 }
 .text-hover-info:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .text-hover-info:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-info {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26098,14 +26103,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-hover-inverse-info:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-hover-inverse-info:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-info {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26122,11 +26127,11 @@ fieldset:disabled .btn {
   color: #7239ea !important;
 }
 .text-active-info.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .text-active-info.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-info {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26143,14 +26148,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-active-inverse-info.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-active-inverse-info.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-warning {
   color: #ffc700 !important;
@@ -26176,11 +26181,11 @@ fieldset:disabled .btn {
   color: #ffc700 !important;
 }
 .text-hover-warning:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .text-hover-warning:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-warning {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26197,14 +26202,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-hover-inverse-warning:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-hover-inverse-warning:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-warning {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26221,11 +26226,11 @@ fieldset:disabled .btn {
   color: #ffc700 !important;
 }
 .text-active-warning.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .text-active-warning.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-warning {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26245,14 +26250,14 @@ fieldset:disabled .btn {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-active-inverse-warning.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-danger {
   color: #f1416c !important;
@@ -26278,11 +26283,11 @@ fieldset:disabled .btn {
   color: #f1416c !important;
 }
 .text-hover-danger:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .text-hover-danger:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-danger {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26299,14 +26304,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-hover-inverse-danger:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-hover-inverse-danger:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-danger {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26323,11 +26328,11 @@ fieldset:disabled .btn {
   color: #f1416c !important;
 }
 .text-active-danger.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .text-active-danger.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-danger {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26344,14 +26349,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-active-inverse-danger.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-active-inverse-danger.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-dark {
   color: #181c32 !important;
@@ -26377,11 +26382,11 @@ fieldset:disabled .btn {
   color: #181c32 !important;
 }
 .text-hover-dark:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .text-hover-dark:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-hover-inverse-dark {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26398,14 +26403,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-hover-inverse-dark:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-hover-inverse-dark:hover
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-dark {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26422,11 +26427,11 @@ fieldset:disabled .btn {
   color: #181c32 !important;
 }
 .text-active-dark.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .text-active-dark.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-inverse-dark {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26443,14 +26448,14 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 .text-active-inverse-dark.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .text-active-inverse-dark.active
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-muted {
   color: #a1a5b7 !important;
@@ -26470,11 +26475,11 @@ fieldset:disabled .btn {
   color: #a1a5b7 !important;
 }
 .text-hover-muted:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .text-hover-muted:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-muted {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26491,11 +26496,11 @@ fieldset:disabled .btn {
   color: #a1a5b7 !important;
 }
 .text-active-muted.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .text-active-muted.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-100 {
   color: #f5f8fa !important;
@@ -26515,11 +26520,11 @@ fieldset:disabled .btn {
   color: #f5f8fa !important;
 }
 .text-hover-gray-100:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .text-hover-gray-100:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-100 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26536,11 +26541,11 @@ fieldset:disabled .btn {
   color: #f5f8fa !important;
 }
 .text-active-gray-100.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .text-active-gray-100.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-200 {
   color: #eff2f5 !important;
@@ -26560,11 +26565,11 @@ fieldset:disabled .btn {
   color: #eff2f5 !important;
 }
 .text-hover-gray-200:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .text-hover-gray-200:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-200 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26581,11 +26586,11 @@ fieldset:disabled .btn {
   color: #eff2f5 !important;
 }
 .text-active-gray-200.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .text-active-gray-200.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-300 {
   color: #e4e6ef !important;
@@ -26605,11 +26610,11 @@ fieldset:disabled .btn {
   color: #e4e6ef !important;
 }
 .text-hover-gray-300:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .text-hover-gray-300:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-300 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26626,11 +26631,11 @@ fieldset:disabled .btn {
   color: #e4e6ef !important;
 }
 .text-active-gray-300.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .text-active-gray-300.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-400 {
   color: #b5b5c3 !important;
@@ -26650,11 +26655,11 @@ fieldset:disabled .btn {
   color: #b5b5c3 !important;
 }
 .text-hover-gray-400:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .text-hover-gray-400:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-400 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26671,11 +26676,11 @@ fieldset:disabled .btn {
   color: #b5b5c3 !important;
 }
 .text-active-gray-400.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .text-active-gray-400.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-500 {
   color: #a1a5b7 !important;
@@ -26695,11 +26700,11 @@ fieldset:disabled .btn {
   color: #a1a5b7 !important;
 }
 .text-hover-gray-500:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .text-hover-gray-500:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-500 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26716,11 +26721,11 @@ fieldset:disabled .btn {
   color: #a1a5b7 !important;
 }
 .text-active-gray-500.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .text-active-gray-500.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-600 {
   color: #7e8299 !important;
@@ -26740,11 +26745,11 @@ fieldset:disabled .btn {
   color: #7e8299 !important;
 }
 .text-hover-gray-600:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .text-hover-gray-600:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-600 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26761,11 +26766,11 @@ fieldset:disabled .btn {
   color: #7e8299 !important;
 }
 .text-active-gray-600.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .text-active-gray-600.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-700 {
   color: #5e6278 !important;
@@ -26785,11 +26790,11 @@ fieldset:disabled .btn {
   color: #5e6278 !important;
 }
 .text-hover-gray-700:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .text-hover-gray-700:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-700 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26806,11 +26811,11 @@ fieldset:disabled .btn {
   color: #5e6278 !important;
 }
 .text-active-gray-700.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .text-active-gray-700.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-800 {
   color: #3f4254 !important;
@@ -26830,11 +26835,11 @@ fieldset:disabled .btn {
   color: #3f4254 !important;
 }
 .text-hover-gray-800:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .text-hover-gray-800:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-800 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26851,11 +26856,11 @@ fieldset:disabled .btn {
   color: #3f4254 !important;
 }
 .text-active-gray-800.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .text-active-gray-800.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-gray-900 {
   color: #181c32 !important;
@@ -26875,11 +26880,11 @@ fieldset:disabled .btn {
   color: #181c32 !important;
 }
 .text-hover-gray-900:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .text-hover-gray-900:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .text-active-gray-900 {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -26896,11 +26901,11 @@ fieldset:disabled .btn {
   color: #181c32 !important;
 }
 .text-active-gray-900.active .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .text-active-gray-900.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .fw-boldest {
   font-weight: 700 !important;
@@ -27202,7 +27207,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .page-item.next:not(:hover):not(:focus):not(.disabled)
@@ -27215,7 +27220,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .page-item.next:not(:hover):not(:focus):not(.disabled) .page-link .previous,
 .page-item.previous:not(:hover):not(:focus):not(.disabled)
@@ -27241,7 +27246,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .page-item:focus:not(.disabled)
@@ -27249,7 +27254,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .page-item:focus:not(.disabled) .page-link .previous {
   background-repeat: no-repeat;
@@ -27271,7 +27276,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .page-item:hover:not(.disabled)
@@ -27279,7 +27284,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .page-item:hover:not(.disabled) .page-link .previous {
   background-repeat: no-repeat;
@@ -27297,11 +27302,11 @@ a:hover {
   color: #fff;
 }
 .page-item.active .page-link .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .page-item.active .page-link .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .page-item.active .page-link .previous {
   background-repeat: no-repeat;
@@ -27319,7 +27324,7 @@ a:hover {
   color: #b5b5c3;
 }
 .page-item.disabled .page-link .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .page-item.disabled
@@ -27327,7 +27332,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .page-item.disabled .page-link .previous {
   background-repeat: no-repeat;
@@ -28645,7 +28650,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .menu-white
@@ -28655,7 +28660,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-white .menu-item .menu-link .menu-bullet .bullet {
   background-color: #fff;
@@ -28686,7 +28691,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .menu-icon-white
@@ -28696,7 +28701,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-white .menu-item .menu-link .menu-bullet .bullet {
   background-color: #fff;
@@ -28727,7 +28732,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-primary
@@ -28737,7 +28742,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-primary .menu-item .menu-link .menu-bullet .bullet {
   background-color: #BAD7E9;
@@ -28768,7 +28773,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-icon-primary
@@ -28778,7 +28783,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-primary .menu-item .menu-link .menu-bullet .bullet {
   background-color: #BAD7E9;
@@ -28809,7 +28814,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .menu-secondary
@@ -28819,7 +28824,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-secondary .menu-item .menu-link .menu-bullet .bullet {
   background-color: #e4e6ef;
@@ -28850,7 +28855,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .menu-icon-secondary
@@ -28860,7 +28865,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-secondary .menu-item .menu-link .menu-bullet .bullet {
   background-color: #e4e6ef;
@@ -28891,7 +28896,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .menu-light
@@ -28901,7 +28906,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-light .menu-item .menu-link .menu-bullet .bullet {
   background-color: #f5f8fa;
@@ -28932,7 +28937,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .menu-icon-light
@@ -28942,7 +28947,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-light .menu-item .menu-link .menu-bullet .bullet {
   background-color: #f5f8fa;
@@ -28973,7 +28978,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .menu-success
@@ -28983,7 +28988,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-success .menu-item .menu-link .menu-bullet .bullet {
   background-color: #00b2ff;
@@ -29014,7 +29019,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .menu-icon-success
@@ -29024,7 +29029,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-success .menu-item .menu-link .menu-bullet .bullet {
   background-color: #00b2ff;
@@ -29055,7 +29060,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .menu-info
@@ -29065,7 +29070,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-info .menu-item .menu-link .menu-bullet .bullet {
   background-color: #7239ea;
@@ -29096,7 +29101,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .menu-icon-info
@@ -29106,7 +29111,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-info .menu-item .menu-link .menu-bullet .bullet {
   background-color: #7239ea;
@@ -29137,7 +29142,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .menu-warning
@@ -29147,7 +29152,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-warning .menu-item .menu-link .menu-bullet .bullet {
   background-color: #ffc700;
@@ -29178,7 +29183,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .menu-icon-warning
@@ -29188,7 +29193,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-warning .menu-item .menu-link .menu-bullet .bullet {
   background-color: #ffc700;
@@ -29219,7 +29224,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .menu-danger
@@ -29229,7 +29234,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-danger .menu-item .menu-link .menu-bullet .bullet {
   background-color: #f1416c;
@@ -29260,7 +29265,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .menu-icon-danger
@@ -29270,7 +29275,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-danger .menu-item .menu-link .menu-bullet .bullet {
   background-color: #f1416c;
@@ -29301,7 +29306,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .menu-dark
@@ -29311,7 +29316,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-dark .menu-item .menu-link .menu-bullet .bullet {
   background-color: #181c32;
@@ -29342,7 +29347,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .menu-icon-dark
@@ -29352,7 +29357,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-dark .menu-item .menu-link .menu-bullet .bullet {
   background-color: #181c32;
@@ -29383,7 +29388,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .menu-muted
@@ -29393,7 +29398,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-muted .menu-item .menu-link .menu-bullet .bullet {
   background-color: #a1a5b7;
@@ -29424,7 +29429,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .menu-icon-muted
@@ -29434,7 +29439,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-muted .menu-item .menu-link .menu-bullet .bullet {
   background-color: #a1a5b7;
@@ -29465,7 +29470,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .menu-gray-100
@@ -29475,7 +29480,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-100 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #f5f8fa;
@@ -29506,7 +29511,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .menu-icon-gray-100
@@ -29516,7 +29521,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-100 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #f5f8fa;
@@ -29547,7 +29552,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .menu-gray-200
@@ -29557,7 +29562,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-200 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #eff2f5;
@@ -29588,7 +29593,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .menu-icon-gray-200
@@ -29598,7 +29603,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-200 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #eff2f5;
@@ -29629,7 +29634,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .menu-gray-300
@@ -29639,7 +29644,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-300 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #e4e6ef;
@@ -29670,7 +29675,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .menu-icon-gray-300
@@ -29680,7 +29685,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-300 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #e4e6ef;
@@ -29711,7 +29716,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .menu-gray-400
@@ -29721,7 +29726,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-400 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #b5b5c3;
@@ -29752,7 +29757,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .menu-icon-gray-400
@@ -29762,7 +29767,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-400 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #b5b5c3;
@@ -29793,7 +29798,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .menu-gray-500
@@ -29803,7 +29808,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-500 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #a1a5b7;
@@ -29834,7 +29839,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .menu-icon-gray-500
@@ -29844,7 +29849,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-500 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #a1a5b7;
@@ -29875,7 +29880,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .menu-gray-600
@@ -29885,7 +29890,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-600 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #7e8299;
@@ -29916,7 +29921,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .menu-icon-gray-600
@@ -29926,7 +29931,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-600 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #7e8299;
@@ -29957,7 +29962,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .menu-gray-700
@@ -29967,7 +29972,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-700 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #5e6278;
@@ -29998,7 +30003,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .menu-icon-gray-700
@@ -30008,7 +30013,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-700 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #5e6278;
@@ -30039,7 +30044,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .menu-gray-800
@@ -30049,7 +30054,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-800 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #3f4254;
@@ -30080,7 +30085,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .menu-icon-gray-800
@@ -30090,7 +30095,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-800 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #3f4254;
@@ -30121,7 +30126,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .menu-gray-900
@@ -30131,7 +30136,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-gray-900 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #181c32;
@@ -30162,7 +30167,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .menu-icon-gray-900
@@ -30172,7 +30177,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-bullet-gray-900 .menu-item .menu-link .menu-bullet .bullet {
   background-color: #181c32;
@@ -30256,7 +30261,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-hover-primary
@@ -30273,7 +30278,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-hover-primary
   .menu-item
@@ -30331,7 +30336,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-show-primary
@@ -30348,7 +30353,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-show-primary .menu-item.here > .menu-link .menu-bullet .bullet,
 .menu-show-primary .menu-item.show > .menu-link .menu-bullet .bullet {
@@ -30382,7 +30387,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-active-primary
@@ -30392,7 +30397,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-active-primary .menu-item .menu-link.active .menu-bullet .bullet {
   background-color: #BAD7E9;
@@ -30448,7 +30453,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-primary
@@ -30465,7 +30470,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-primary
   .menu-item
@@ -30523,7 +30528,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-primary
@@ -30540,7 +30545,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-primary .menu-item.here > .menu-link .menu-bullet .bullet,
 .menu-state-primary .menu-item.show > .menu-link .menu-bullet .bullet {
@@ -30574,7 +30579,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-primary
@@ -30584,7 +30589,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-primary .menu-item .menu-link.active .menu-bullet .bullet {
   background-color: #BAD7E9;
@@ -30643,7 +30648,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .menu-hover-bg-primary
@@ -30660,7 +30665,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-hover-bg-primary
   .menu-item
@@ -30719,7 +30724,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .menu-show-bg-primary
@@ -30736,7 +30741,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-show-bg-primary .menu-item.here > .menu-link .menu-bullet .bullet,
 .menu-show-bg-primary .menu-item.show > .menu-link .menu-bullet .bullet {
@@ -30771,7 +30776,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .menu-active-bg-primary
@@ -30781,7 +30786,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-active-bg-primary .menu-item .menu-link.active .menu-bullet .bullet {
   background-color: #fff;
@@ -30840,7 +30845,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .menu-state-bg-primary
@@ -30857,7 +30862,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-bg-primary
   .menu-item
@@ -30916,7 +30921,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .menu-state-bg-primary
@@ -30933,7 +30938,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-bg-primary .menu-item.here > .menu-link .menu-bullet .bullet,
 .menu-state-bg-primary .menu-item.show > .menu-link .menu-bullet .bullet {
@@ -30968,7 +30973,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .menu-state-bg-primary
@@ -30978,7 +30983,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-bg-primary .menu-item .menu-link.active .menu-bullet .bullet {
   background-color: #fff;
@@ -31021,7 +31026,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-show-bg-light-primary
@@ -31038,7 +31043,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-show-bg-light-primary .menu-item.here > .menu-link .menu-bullet .bullet,
 .menu-show-bg-light-primary .menu-item.show > .menu-link .menu-bullet .bullet {
@@ -31101,7 +31106,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-hover-bg-light-primary
@@ -31118,7 +31123,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-hover-bg-light-primary
   .menu-item
@@ -31167,7 +31172,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-active-bg-light-primary
@@ -31177,7 +31182,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-active-bg-light-primary
   .menu-item
@@ -31224,7 +31229,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-bg-light-primary
@@ -31241,7 +31246,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-bg-light-primary .menu-item.here > .menu-link .menu-bullet .bullet,
 .menu-state-bg-light-primary .menu-item.show > .menu-link .menu-bullet .bullet {
@@ -31304,7 +31309,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-bg-light-primary
@@ -31321,7 +31326,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-bg-light-primary
   .menu-item
@@ -31370,7 +31375,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-bg-light-primary
@@ -31380,7 +31385,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-bg-light-primary .menu-item .menu-link.active .menu-bullet .bullet {
   background-color: #BAD7E9;
@@ -31499,7 +31504,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-hover-icon-primary
@@ -31516,7 +31521,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-show-icon-primary .menu-item.here > .menu-link,
 .menu-show-icon-primary .menu-item.show > .menu-link {
@@ -31540,7 +31545,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-show-icon-primary
@@ -31557,7 +31562,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-active-icon-primary .menu-item .menu-link.active {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -31572,7 +31577,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-active-icon-primary
@@ -31582,7 +31587,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-icon-primary
   .menu-item
@@ -31618,7 +31623,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-icon-primary
@@ -31635,7 +31640,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-icon-primary .menu-item.here > .menu-link,
 .menu-state-icon-primary .menu-item.show > .menu-link {
@@ -31659,7 +31664,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-icon-primary
@@ -31676,7 +31681,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-state-icon-primary .menu-item .menu-link.active {
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -31691,7 +31696,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .menu-state-icon-primary
@@ -31701,7 +31706,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .menu-hover-bullet-primary
   .menu-item
@@ -31952,7 +31957,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .card
@@ -31962,7 +31967,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .card .card-header .card-title,
 .card .card-header .card-title .card-label {
@@ -32388,11 +32393,11 @@ a:hover {
   color: #7e8299;
 }
 .btn.btn-white .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn.btn-white .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-white.dropdown-toggle:after {
   color: #7e8299;
@@ -32436,7 +32441,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-white .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn-check:active
@@ -32464,7 +32469,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-white .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-white.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-white.dropdown-toggle:after,
@@ -32527,7 +32532,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-white .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn-check:active
@@ -32559,7 +32564,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-white.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-white.dropdown-toggle:after,
@@ -32580,11 +32585,11 @@ a:hover {
   color: #7e8299;
 }
 .btn.btn-light .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn.btn-light .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light.dropdown-toggle:after {
   color: #7e8299;
@@ -32628,7 +32633,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn-check:active
@@ -32656,7 +32661,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light.dropdown-toggle:after,
@@ -32719,7 +32724,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-light .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn-check:active
@@ -32751,7 +32756,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-light.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-light.dropdown-toggle:after,
@@ -32772,11 +32777,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-primary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-primary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-primary.dropdown-toggle:after {
   color: #fff;
@@ -32789,9 +32794,10 @@ a:hover {
 .btn.btn-primary:focus:not(.btn-active),
 .btn.btn-primary:hover:not(.btn-active),
 .show > .btn.btn-primary {
-  color: #2B3467;
+  /* color: #2B3467;
   border-color: #BAD7E9;
-  background-color: #BAD7E9 !important;
+  background-color: #BAD7E9 !important; */
+  opacity: 0.7;
 }
 .btn-check:active + .btn.btn-primary i,
 .btn-check:checked + .btn.btn-primary i,
@@ -32801,7 +32807,8 @@ a:hover {
 .btn.btn-primary:focus:not(.btn-active) i,
 .btn.btn-primary:hover:not(.btn-active) i,
 .show > .btn.btn-primary i {
-  color: #fff;
+  /* color: #fff; */
+  opacity: 0.7;
 }
 .btn-check:active
   + .btn.btn-primary
@@ -32828,7 +32835,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-primary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #2B3467;
 }
 .btn-check:active
@@ -32856,7 +32863,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-primary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-primary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-primary.dropdown-toggle:after,
@@ -32866,7 +32873,8 @@ a:hover {
 .btn.btn-primary:focus:not(.btn-active).dropdown-toggle:after,
 .btn.btn-primary:hover:not(.btn-active).dropdown-toggle:after,
 .show > .btn.btn-primary.dropdown-toggle:after {
-  color: #fff;
+  /* color: #fff; */
+  opacity: 0.7;
 }
 .btn.btn-light-primary {
   color: #2B3467;
@@ -32877,11 +32885,11 @@ a:hover {
   color: #BAD7E9;
 }
 .btn.btn-light-primary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #2B3467;
 }
 .btn.btn-light-primary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-primary.dropdown-toggle:after {
   color: #BAD7E9;
@@ -32895,9 +32903,10 @@ a:hover {
 .btn.btn-light-primary:focus:not(.btn-active),
 .btn.btn-light-primary:hover:not(.btn-active),
 .show > .btn.btn-light-primary {
-  color: #fff;
+  /* color: #fff;
   border-color: #BAD7E9;
-  background-color: #2B3467 !important;
+  background-color: #2B3467 !important; */
+  opacity: 0.7;
 }
 .btn-check:active + .btn.btn-light-primary i,
 .btn-check:checked + .btn.btn-light-primary i,
@@ -32934,7 +32943,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-primary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -32966,7 +32975,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-primary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-primary.dropdown-toggle:after,
@@ -33029,7 +33038,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-primary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -33064,7 +33073,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-primary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-primary.dropdown-toggle:after,
@@ -33130,7 +33139,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .btn-check:active
@@ -33168,7 +33177,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-light-primary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-light-primary.dropdown-toggle:after,
@@ -33192,11 +33201,11 @@ a:hover {
   color: #3f4254;
 }
 .btn.btn-secondary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .btn.btn-secondary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-secondary.dropdown-toggle:after {
   color: #3f4254;
@@ -33209,9 +33218,10 @@ a:hover {
 .btn.btn-secondary:focus:not(.btn-active),
 .btn.btn-secondary:hover:not(.btn-active),
 .show > .btn.btn-secondary {
-  color: #3f4254;
+  /* color: #3f4254;
   border-color: #b5b5c3;
-  background-color: #b5b5c3 !important;
+  background-color: #b5b5c3 !important; */
+  opacity: 0.7;
 }
 .btn-check:active + .btn.btn-secondary i,
 .btn-check:checked + .btn.btn-secondary i,
@@ -33221,7 +33231,8 @@ a:hover {
 .btn.btn-secondary:focus:not(.btn-active) i,
 .btn.btn-secondary:hover:not(.btn-active) i,
 .show > .btn.btn-secondary i {
-  color: #3f4254;
+  /* color: #3f4254; */
+  opacity: 0.7;
 }
 .btn-check:active
   + .btn.btn-secondary
@@ -33248,7 +33259,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-secondary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .btn-check:active
@@ -33276,7 +33287,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-secondary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-secondary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-secondary.dropdown-toggle:after,
@@ -33286,7 +33297,8 @@ a:hover {
 .btn.btn-secondary:focus:not(.btn-active).dropdown-toggle:after,
 .btn.btn-secondary:hover:not(.btn-active).dropdown-toggle:after,
 .show > .btn.btn-secondary.dropdown-toggle:after {
-  color: #3f4254;
+  /* color: #3f4254; */
+  opacity: 0.7;
 }
 .btn.btn-bg-secondary {
   border-color: #e4e6ef;
@@ -33339,7 +33351,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-secondary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .btn-check:active
@@ -33377,7 +33389,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-secondary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-secondary.dropdown-toggle:after,
@@ -33398,11 +33410,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-success .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-success .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-success.dropdown-toggle:after {
   color: #fff;
@@ -33454,7 +33466,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-success .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -33482,7 +33494,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-success .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-success.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-success.dropdown-toggle:after,
@@ -33503,11 +33515,11 @@ a:hover {
   color: #00b2ff;
 }
 .btn.btn-light-success .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .btn.btn-light-success .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-success.dropdown-toggle:after {
   color: #00b2ff;
@@ -33559,7 +33571,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-success .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -33591,7 +33603,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-success.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-success.dropdown-toggle:after,
@@ -33615,9 +33627,8 @@ a:hover {
 .btn.btn-active-success:focus:not(.btn-active),
 .btn.btn-active-success:hover:not(.btn-active),
 .show > .btn.btn-active-success {
-  color: #fff;
-  border-color: #00b2ff;
-  background-color: #00b2ff !important;
+  color: #FCFFE7;
+  background-color: #2B3467 !important;
 }
 .btn-check:active + .btn.btn-active-success i,
 .btn-check:checked + .btn.btn-active-success i,
@@ -33654,7 +33665,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-success .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -33689,7 +33700,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-success.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-success.dropdown-toggle:after,
@@ -33755,7 +33766,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .btn-check:active
@@ -33793,7 +33804,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-light-success.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-light-success.dropdown-toggle:after,
@@ -33817,11 +33828,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-info .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-info.dropdown-toggle:after {
   color: #fff;
@@ -33865,7 +33876,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -33893,7 +33904,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-info .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-info.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-info.dropdown-toggle:after,
@@ -33914,11 +33925,11 @@ a:hover {
   color: #7239ea;
 }
 .btn.btn-light-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .btn.btn-light-info .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-info.dropdown-toggle:after {
   color: #7239ea;
@@ -33970,7 +33981,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -33998,7 +34009,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-info .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-info.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-info.dropdown-toggle:after,
@@ -34061,7 +34072,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -34089,7 +34100,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-info .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-info.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-info.dropdown-toggle:after,
@@ -34148,7 +34159,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-light-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .btn-check:active
@@ -34186,7 +34197,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-light-info.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-light-info.dropdown-toggle:after,
@@ -34210,11 +34221,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-warning .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-warning .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-warning.dropdown-toggle:after {
   color: #fff;
@@ -34266,7 +34277,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-warning .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -34294,7 +34305,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-warning .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-warning.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-warning.dropdown-toggle:after,
@@ -34315,11 +34326,11 @@ a:hover {
   color: #ffc700;
 }
 .btn.btn-light-warning .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .btn.btn-light-warning .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-warning.dropdown-toggle:after {
   color: #ffc700;
@@ -34371,7 +34382,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-warning .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -34403,7 +34414,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-warning.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-warning.dropdown-toggle:after,
@@ -34466,7 +34477,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-warning .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -34501,7 +34512,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-warning.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-warning.dropdown-toggle:after,
@@ -34567,7 +34578,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .btn-check:active
@@ -34605,7 +34616,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-light-warning.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-light-warning.dropdown-toggle:after,
@@ -34629,11 +34640,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-danger .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-danger .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-danger.dropdown-toggle:after {
   color: #fff;
@@ -34681,7 +34692,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-danger .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -34709,7 +34720,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-danger .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-danger.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-danger.dropdown-toggle:after,
@@ -34730,11 +34741,11 @@ a:hover {
   color: #f1416c;
 }
 .btn.btn-light-danger .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .btn.btn-light-danger .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-danger.dropdown-toggle:after {
   color: #f1416c;
@@ -34786,7 +34797,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-danger .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -34818,7 +34829,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-danger.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-danger.dropdown-toggle:after,
@@ -34881,7 +34892,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-danger .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -34913,7 +34924,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-danger.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-danger.dropdown-toggle:after,
@@ -34976,7 +34987,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .btn-check:active
@@ -35014,7 +35025,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-light-danger.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-light-danger.dropdown-toggle:after,
@@ -35038,11 +35049,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-dark .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-dark.dropdown-toggle:after {
   color: #fff;
@@ -35086,7 +35097,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -35114,7 +35125,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-dark .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-dark.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-dark.dropdown-toggle:after,
@@ -35135,11 +35146,11 @@ a:hover {
   color: #181c32;
 }
 .btn.btn-light-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn.btn-light-dark .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-dark.dropdown-toggle:after {
   color: #181c32;
@@ -35191,7 +35202,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -35219,7 +35230,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-dark .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-dark.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-dark.dropdown-toggle:after,
@@ -35282,7 +35293,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -35310,7 +35321,7 @@ a:hover {
   svg:hover
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-dark .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-dark.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-dark.dropdown-toggle:after,
@@ -35369,7 +35380,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-light-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn-check:active
@@ -35407,7 +35418,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-light-dark.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-light-dark.dropdown-toggle:after,
@@ -35429,11 +35440,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-color-white .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-color-white .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-white.dropdown-toggle:after {
   color: #fff;
@@ -35487,7 +35498,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -35525,7 +35536,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-white.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-white.dropdown-toggle:after,
@@ -35541,11 +35552,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-icon-white .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-icon-white .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-white.dropdown-toggle:after {
   color: #fff;
@@ -35585,7 +35596,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-icon-white .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -35623,7 +35634,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-white.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-white.dropdown-toggle:after,
@@ -35655,11 +35666,11 @@ a:hover {
   color: #BAD7E9;
 }
 .btn.btn-color-primary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .btn.btn-color-primary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-primary.dropdown-toggle:after {
   color: #BAD7E9;
@@ -35672,8 +35683,9 @@ a:hover {
 .btn.btn-active-color-primary:focus:not(.btn-active),
 .btn.btn-active-color-primary:hover:not(.btn-active),
 .show > .btn.btn-active-color-primary {
-  color: #BAD7E9;
-  border-color: #2B3467;
+  /* color: #BAD7E9;
+  border-color: #2B3467; */
+  opacity: 0.7;
 }
 .btn-check:active + .btn.btn-active-color-primary i,
 .btn-check:checked + .btn.btn-active-color-primary i,
@@ -35717,7 +35729,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .btn-check:active
@@ -35755,7 +35767,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-primary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-primary.dropdown-toggle:after,
@@ -35771,11 +35783,11 @@ a:hover {
   color: #BAD7E9;
 }
 .btn.btn-icon-primary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .btn.btn-icon-primary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-primary.dropdown-toggle:after {
   color: #BAD7E9;
@@ -35819,7 +35831,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .btn-check:active
@@ -35857,7 +35869,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-primary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-primary.dropdown-toggle:after,
@@ -35889,11 +35901,11 @@ a:hover {
   color: #e4e6ef;
 }
 .btn.btn-color-secondary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .btn.btn-color-secondary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-secondary.dropdown-toggle:after {
   color: #e4e6ef;
@@ -35953,7 +35965,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .btn-check:active
@@ -35991,7 +36003,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-secondary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-secondary.dropdown-toggle:after,
@@ -36007,11 +36019,11 @@ a:hover {
   color: #e4e6ef;
 }
 .btn.btn-icon-secondary .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .btn.btn-icon-secondary .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-secondary.dropdown-toggle:after {
   color: #e4e6ef;
@@ -36058,7 +36070,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .btn-check:active
@@ -36096,7 +36108,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-secondary.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-secondary.dropdown-toggle:after,
@@ -36128,11 +36140,11 @@ a:hover {
   color: #f5f8fa;
 }
 .btn.btn-color-light .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .btn.btn-color-light .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-light.dropdown-toggle:after {
   color: #f5f8fa;
@@ -36186,7 +36198,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .btn-check:active
@@ -36224,7 +36236,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-light.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-light.dropdown-toggle:after,
@@ -36240,11 +36252,11 @@ a:hover {
   color: #f5f8fa;
 }
 .btn.btn-icon-light .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .btn.btn-icon-light .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-light.dropdown-toggle:after {
   color: #f5f8fa;
@@ -36284,7 +36296,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-icon-light .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .btn-check:active
@@ -36322,7 +36334,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-light.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-light.dropdown-toggle:after,
@@ -36354,11 +36366,11 @@ a:hover {
   color: #00b2ff;
 }
 .btn.btn-color-success .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .btn.btn-color-success .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-success.dropdown-toggle:after {
   color: #00b2ff;
@@ -36415,7 +36427,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .btn-check:active
@@ -36453,7 +36465,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-success.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-success.dropdown-toggle:after,
@@ -36469,11 +36481,11 @@ a:hover {
   color: #00b2ff;
 }
 .btn.btn-icon-success .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .btn.btn-icon-success .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-success.dropdown-toggle:after {
   color: #00b2ff;
@@ -36517,7 +36529,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .btn-check:active
@@ -36555,7 +36567,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-success.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-success.dropdown-toggle:after,
@@ -36587,11 +36599,11 @@ a:hover {
   color: #7239ea;
 }
 .btn.btn-color-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .btn.btn-color-info .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-info.dropdown-toggle:after {
   color: #7239ea;
@@ -36641,7 +36653,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-color-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .btn-check:active
@@ -36679,7 +36691,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-info.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-info.dropdown-toggle:after,
@@ -36695,11 +36707,11 @@ a:hover {
   color: #7239ea;
 }
 .btn.btn-icon-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .btn.btn-icon-info .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-info.dropdown-toggle:after {
   color: #7239ea;
@@ -36739,7 +36751,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-icon-info .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .btn-check:active
@@ -36777,7 +36789,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-info.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-info.dropdown-toggle:after,
@@ -36809,11 +36821,11 @@ a:hover {
   color: #ffc700;
 }
 .btn.btn-color-warning .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .btn.btn-color-warning .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-warning.dropdown-toggle:after {
   color: #ffc700;
@@ -36870,7 +36882,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .btn-check:active
@@ -36908,7 +36920,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-warning.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-warning.dropdown-toggle:after,
@@ -36924,11 +36936,11 @@ a:hover {
   color: #ffc700;
 }
 .btn.btn-icon-warning .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .btn.btn-icon-warning .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-warning.dropdown-toggle:after {
   color: #ffc700;
@@ -36972,7 +36984,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .btn-check:active
@@ -37010,7 +37022,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-warning.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-warning.dropdown-toggle:after,
@@ -37042,11 +37054,11 @@ a:hover {
   color: #f1416c;
 }
 .btn.btn-color-danger .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .btn.btn-color-danger .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-danger.dropdown-toggle:after {
   color: #f1416c;
@@ -37100,7 +37112,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .btn-check:active
@@ -37138,7 +37150,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-danger.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-danger.dropdown-toggle:after,
@@ -37154,11 +37166,11 @@ a:hover {
   color: #f1416c;
 }
 .btn.btn-icon-danger .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .btn.btn-icon-danger .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-danger.dropdown-toggle:after {
   color: #f1416c;
@@ -37202,7 +37214,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .btn-check:active
@@ -37240,7 +37252,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-danger.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-danger.dropdown-toggle:after,
@@ -37272,11 +37284,11 @@ a:hover {
   color: #181c32;
 }
 .btn.btn-color-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn.btn-color-dark .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-dark.dropdown-toggle:after {
   color: #181c32;
@@ -37326,7 +37338,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-color-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn-check:active
@@ -37364,7 +37376,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-dark.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-dark.dropdown-toggle:after,
@@ -37380,11 +37392,11 @@ a:hover {
   color: #181c32;
 }
 .btn.btn-icon-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn.btn-icon-dark .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-dark.dropdown-toggle:after {
   color: #181c32;
@@ -37424,7 +37436,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-icon-dark .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn-check:active
@@ -37462,7 +37474,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-dark.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-dark.dropdown-toggle:after,
@@ -37494,11 +37506,11 @@ a:hover {
   color: #a1a5b7;
 }
 .btn.btn-color-muted .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .btn.btn-color-muted .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-muted.dropdown-toggle:after {
   color: #a1a5b7;
@@ -37552,7 +37564,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .btn-check:active
@@ -37590,7 +37602,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-muted.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-muted.dropdown-toggle:after,
@@ -37606,11 +37618,11 @@ a:hover {
   color: #a1a5b7;
 }
 .btn.btn-icon-muted .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .btn.btn-icon-muted .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-muted.dropdown-toggle:after {
   color: #a1a5b7;
@@ -37650,7 +37662,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-active-icon-muted .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .btn-check:active
@@ -37688,7 +37700,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-muted.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-muted.dropdown-toggle:after,
@@ -37720,11 +37732,11 @@ a:hover {
   color: #f5f8fa;
 }
 .btn.btn-color-gray-100 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .btn.btn-color-gray-100 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-100.dropdown-toggle:after {
   color: #f5f8fa;
@@ -37781,7 +37793,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .btn-check:active
@@ -37819,7 +37831,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-100.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-100.dropdown-toggle:after,
@@ -37835,11 +37847,11 @@ a:hover {
   color: #f5f8fa;
 }
 .btn.btn-icon-gray-100 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .btn.btn-icon-gray-100 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-100.dropdown-toggle:after {
   color: #f5f8fa;
@@ -37886,7 +37898,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .btn-check:active
@@ -37924,7 +37936,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-100.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-100.dropdown-toggle:after,
@@ -37956,11 +37968,11 @@ a:hover {
   color: #eff2f5;
 }
 .btn.btn-color-gray-200 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .btn.btn-color-gray-200 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-200.dropdown-toggle:after {
   color: #eff2f5;
@@ -38017,7 +38029,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .btn-check:active
@@ -38055,7 +38067,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-200.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-200.dropdown-toggle:after,
@@ -38071,11 +38083,11 @@ a:hover {
   color: #eff2f5;
 }
 .btn.btn-icon-gray-200 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .btn.btn-icon-gray-200 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-200.dropdown-toggle:after {
   color: #eff2f5;
@@ -38122,7 +38134,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .btn-check:active
@@ -38160,7 +38172,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-200.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-200.dropdown-toggle:after,
@@ -38192,11 +38204,11 @@ a:hover {
   color: #e4e6ef;
 }
 .btn.btn-color-gray-300 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .btn.btn-color-gray-300 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-300.dropdown-toggle:after {
   color: #e4e6ef;
@@ -38253,7 +38265,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .btn-check:active
@@ -38291,7 +38303,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-300.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-300.dropdown-toggle:after,
@@ -38307,11 +38319,11 @@ a:hover {
   color: #e4e6ef;
 }
 .btn.btn-icon-gray-300 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .btn.btn-icon-gray-300 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-300.dropdown-toggle:after {
   color: #e4e6ef;
@@ -38358,7 +38370,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .btn-check:active
@@ -38396,7 +38408,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-300.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-300.dropdown-toggle:after,
@@ -38428,11 +38440,11 @@ a:hover {
   color: #b5b5c3;
 }
 .btn.btn-color-gray-400 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .btn.btn-color-gray-400 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-400.dropdown-toggle:after {
   color: #b5b5c3;
@@ -38489,7 +38501,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .btn-check:active
@@ -38527,7 +38539,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-400.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-400.dropdown-toggle:after,
@@ -38543,11 +38555,11 @@ a:hover {
   color: #b5b5c3;
 }
 .btn.btn-icon-gray-400 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .btn.btn-icon-gray-400 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-400.dropdown-toggle:after {
   color: #b5b5c3;
@@ -38594,7 +38606,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .btn-check:active
@@ -38632,7 +38644,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-400.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-400.dropdown-toggle:after,
@@ -38664,11 +38676,11 @@ a:hover {
   color: #a1a5b7;
 }
 .btn.btn-color-gray-500 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .btn.btn-color-gray-500 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-500.dropdown-toggle:after {
   color: #a1a5b7;
@@ -38725,7 +38737,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .btn-check:active
@@ -38763,7 +38775,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-500.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-500.dropdown-toggle:after,
@@ -38779,11 +38791,11 @@ a:hover {
   color: #a1a5b7;
 }
 .btn.btn-icon-gray-500 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .btn.btn-icon-gray-500 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-500.dropdown-toggle:after {
   color: #a1a5b7;
@@ -38830,7 +38842,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .btn-check:active
@@ -38868,7 +38880,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-500.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-500.dropdown-toggle:after,
@@ -38900,11 +38912,11 @@ a:hover {
   color: #7e8299;
 }
 .btn.btn-color-gray-600 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn.btn-color-gray-600 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-600.dropdown-toggle:after {
   color: #7e8299;
@@ -38961,7 +38973,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn-check:active
@@ -38999,7 +39011,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-600.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-600.dropdown-toggle:after,
@@ -39015,11 +39027,11 @@ a:hover {
   color: #7e8299;
 }
 .btn.btn-icon-gray-600 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn.btn-icon-gray-600 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-600.dropdown-toggle:after {
   color: #7e8299;
@@ -39066,7 +39078,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn-check:active
@@ -39104,7 +39116,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-600.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-600.dropdown-toggle:after,
@@ -39136,12 +39148,12 @@ a:hover {
   color: #2B3467;
 }
 .btn.btn-color-gray-700 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #2B3467;
   opacity: 1;
 }
 .btn.btn-color-gray-700 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-700.dropdown-toggle:after {
   color: #2B3467;
@@ -39198,7 +39210,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .btn-check:active
@@ -39236,7 +39248,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-700.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-700.dropdown-toggle:after,
@@ -39252,11 +39264,11 @@ a:hover {
   color: #5e6278;
 }
 .btn.btn-icon-gray-700 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .btn.btn-icon-gray-700 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-700.dropdown-toggle:after {
   color: #5e6278;
@@ -39303,7 +39315,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .btn-check:active
@@ -39341,7 +39353,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-700.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-700.dropdown-toggle:after,
@@ -39373,11 +39385,11 @@ a:hover {
   color: #3f4254;
 }
 .btn.btn-color-gray-800 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .btn.btn-color-gray-800 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-800.dropdown-toggle:after {
   color: #3f4254;
@@ -39434,7 +39446,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .btn-check:active
@@ -39472,7 +39484,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-800.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-800.dropdown-toggle:after,
@@ -39488,11 +39500,11 @@ a:hover {
   color: #3f4254;
 }
 .btn.btn-icon-gray-800 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .btn.btn-icon-gray-800 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-800.dropdown-toggle:after {
   color: #3f4254;
@@ -39539,7 +39551,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .btn-check:active
@@ -39577,7 +39589,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-800.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-800.dropdown-toggle:after,
@@ -39609,11 +39621,11 @@ a:hover {
   color: #181c32;
 }
 .btn.btn-color-gray-900 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn.btn-color-gray-900 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-color-gray-900.dropdown-toggle:after {
   color: #181c32;
@@ -39670,7 +39682,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn-check:active
@@ -39708,7 +39720,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-color-gray-900.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-color-gray-900.dropdown-toggle:after,
@@ -39724,11 +39736,11 @@ a:hover {
   color: #181c32;
 }
 .btn.btn-icon-gray-900 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn.btn-icon-gray-900 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-icon-gray-900.dropdown-toggle:after {
   color: #181c32;
@@ -39775,7 +39787,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .btn-check:active
@@ -39813,7 +39825,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-active-icon-gray-900.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-active-icon-gray-900.dropdown-toggle:after,
@@ -39847,11 +39859,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-facebook .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-facebook .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-facebook.dropdown-toggle:after {
   color: #fff;
@@ -39876,11 +39888,11 @@ a:hover {
   color: #3b5998;
 }
 .btn.btn-light-facebook .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3b5998;
 }
 .btn.btn-light-facebook .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-facebook.dropdown-toggle:after {
   color: #3b5998;
@@ -39932,7 +39944,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-facebook .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -39967,7 +39979,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-facebook.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-facebook.dropdown-toggle:after,
@@ -39988,11 +40000,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-google .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-google .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-google.dropdown-toggle:after {
   color: #fff;
@@ -40017,11 +40029,11 @@ a:hover {
   color: #dd4b39;
 }
 .btn.btn-light-google .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #dd4b39;
 }
 .btn.btn-light-google .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-google.dropdown-toggle:after {
   color: #dd4b39;
@@ -40073,7 +40085,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-google .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -40105,7 +40117,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-google.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-google.dropdown-toggle:after,
@@ -40126,11 +40138,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-twitter .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-twitter .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-twitter.dropdown-toggle:after {
   color: #fff;
@@ -40155,11 +40167,11 @@ a:hover {
   color: #1da1f2;
 }
 .btn.btn-light-twitter .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #1da1f2;
 }
 .btn.btn-light-twitter .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-twitter.dropdown-toggle:after {
   color: #1da1f2;
@@ -40211,7 +40223,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-twitter .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -40243,7 +40255,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-twitter.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-twitter.dropdown-toggle:after,
@@ -40264,11 +40276,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-instagram .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-instagram .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-instagram.dropdown-toggle:after {
   color: #fff;
@@ -40293,11 +40305,11 @@ a:hover {
   color: #e1306c;
 }
 .btn.btn-light-instagram .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e1306c;
 }
 .btn.btn-light-instagram .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-instagram.dropdown-toggle:after {
   color: #e1306c;
@@ -40349,7 +40361,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-instagram .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -40384,7 +40396,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-instagram.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-instagram.dropdown-toggle:after,
@@ -40405,11 +40417,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-youtube .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-youtube .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-youtube.dropdown-toggle:after {
   color: #fff;
@@ -40434,11 +40446,11 @@ a:hover {
   color: red;
 }
 .btn.btn-light-youtube .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: red;
 }
 .btn.btn-light-youtube .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-youtube.dropdown-toggle:after {
   color: red;
@@ -40490,7 +40502,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-youtube .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -40522,7 +40534,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-youtube.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-youtube.dropdown-toggle:after,
@@ -40543,11 +40555,11 @@ a:hover {
   color: #fff;
 }
 .btn.btn-linkedin .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn.btn-linkedin .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-linkedin.dropdown-toggle:after {
   color: #fff;
@@ -40572,11 +40584,11 @@ a:hover {
   color: #0077b5;
 }
 .btn.btn-light-linkedin .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #0077b5;
 }
 .btn.btn-light-linkedin .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-light-linkedin.dropdown-toggle:after {
   color: #0077b5;
@@ -40628,7 +40640,7 @@ a:hover {
   svg
   [fill]:not(.permanent):not(g),
 .show > .btn.btn-light-linkedin .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .btn-check:active
@@ -40663,7 +40675,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active + .btn.btn-light-linkedin.dropdown-toggle:after,
 .btn-check:checked + .btn.btn-light-linkedin.dropdown-toggle:after,
@@ -40688,14 +40700,14 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .btn.btn-outline.btn-outline-dashed.btn-outline-default
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn.btn-outline.btn-outline-dashed.btn-outline-default.dropdown-toggle:after {
   color: #7e8299;
@@ -40760,7 +40772,7 @@ a:hover {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .btn-check:active
@@ -40798,7 +40810,7 @@ a:hover {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .btn-check:active
   + .btn.btn-outline.btn-outline-dashed.btn-outline-default.dropdown-toggle:after,
@@ -42802,7 +42814,7 @@ code:not([class*="language-"]) {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .accordion.accordion-icon-toggle
@@ -42810,7 +42822,7 @@ code:not([class*="language-"]) {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .accordion.accordion-icon-toggle .collapsed .accordion-icon {
   transition: all 0.2s ease;
@@ -42825,7 +42837,7 @@ code:not([class*="language-"]) {
   .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .accordion.accordion-icon-toggle
@@ -42834,7 +42846,7 @@ code:not([class*="language-"]) {
   .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .accordion.accordion-borderless .accordion-item {
   border: 0;
@@ -45931,11 +45943,11 @@ code:not([class*="language-"]) {
   width: 24px;
 }
 .scrolltop .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .scrolltop .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .scrolltop > i {
   font-size: 1.3rem;
@@ -45945,11 +45957,11 @@ code:not([class*="language-"]) {
   color: #fff;
 }
 .scrolltop:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .scrolltop:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 [data-kt-scrolltop="on"] .scrolltop {
   opacity: 0.3;
@@ -45984,144 +45996,144 @@ code:not([class*="language-"]) {
   width: 1.15rem;
 }
 .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-white svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #fff;
 }
 .svg-icon.svg-icon-white svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-primary svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .svg-icon.svg-icon-primary svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-secondary svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .svg-icon.svg-icon-secondary svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-light svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .svg-icon.svg-icon-light svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-success svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .svg-icon.svg-icon-success svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-info svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7239ea;
 }
 .svg-icon.svg-icon-info svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-warning svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffc700;
 }
 .svg-icon.svg-icon-warning svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-danger svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .svg-icon.svg-icon-danger svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-dark svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .svg-icon.svg-icon-dark svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-muted svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .svg-icon.svg-icon-muted svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-100 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f5f8fa;
 }
 .svg-icon.svg-icon-gray-100 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-200 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #eff2f5;
 }
 .svg-icon.svg-icon-gray-200 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-300 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #e4e6ef;
 }
 .svg-icon.svg-icon-gray-300 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-400 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .svg-icon.svg-icon-gray-400 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-500 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #a1a5b7;
 }
 .svg-icon.svg-icon-gray-500 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-600 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #7e8299;
 }
 .svg-icon.svg-icon-gray-600 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-700 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #5e6278;
 }
 .svg-icon.svg-icon-gray-700 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-800 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #3f4254;
 }
 .svg-icon.svg-icon-gray-800 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-gray-900 svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #181c32;
 }
 .svg-icon.svg-icon-gray-900 svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .svg-icon.svg-icon-1 svg {
   height: 1.75rem !important;
@@ -47338,11 +47350,11 @@ code:not([class*="language-"]) {
   line-height: 1;
 }
 .rating-label > .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .rating-label > .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 label.rating-label {
   cursor: pointer;
@@ -47353,12 +47365,12 @@ label.rating-label > i {
 }
 div.rating-label.checked > .svg-icon svg [fill]:not(.permanent):not(g),
 label.rating-label > .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffad0f;
 }
 div.rating-label.checked > .svg-icon svg:hover [fill]:not(.permanent):not(g),
 label.rating-label > .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .rating-input:checked ~ .rating-label > i {
   color: #b5b5c3;
@@ -47368,7 +47380,7 @@ label.rating-label > .svg-icon svg:hover [fill]:not(.permanent):not(g) {
   > .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 .rating-input:checked
@@ -47376,13 +47388,13 @@ label.rating-label > .svg-icon svg:hover [fill]:not(.permanent):not(g) {
   > .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .rating:hover label.rating-label > i {
   color: #ffad0f;
 }
 .rating:hover label.rating-label > .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #ffad0f;
 }
 .rating:hover
@@ -47390,7 +47402,7 @@ label.rating-label > .svg-icon svg:hover [fill]:not(.permanent):not(g) {
   > .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 label.rating-label:hover ~ .rating-label > i {
   color: #b5b5c3;
@@ -47400,7 +47412,7 @@ label.rating-label:hover
   > .svg-icon
   svg
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #b5b5c3;
 }
 label.rating-label:hover
@@ -47408,7 +47420,7 @@ label.rating-label:hover
   > .svg-icon
   svg:hover
   [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .stepper [data-kt-stepper-element="content"],
 .stepper [data-kt-stepper-element="info"] {
@@ -47898,11 +47910,11 @@ label.rating-label:hover
   color: #00b2ff;
 }
 .explore-btn-dismiss:hover .svg-icon svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #00b2ff;
 }
 .explore-btn-dismiss:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .explore-btn-primary {
   border: 0;
@@ -47943,21 +47955,21 @@ label.rating-label:hover
   color: #BAD7E9;
 }
 .explore-icon-success svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #BAD7E9;
 }
 .explore-icon-success svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .explore-icon-danger {
   color: #f1416c;
 }
 .explore-icon-danger svg [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
   fill: #f1416c;
 }
 .explore-icon-danger svg:hover [fill]:not(.permanent):not(g) {
-  transition: fill 0.3s ease;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 }
 .explore-label-free {
   color: #fff;

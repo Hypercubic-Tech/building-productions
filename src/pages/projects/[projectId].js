@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import { setCategory } from "../../store/slices/categorySlice";
+import { setAuthState } from "../../store/slices/authSlice";
 
 import Project from "../../components/projects/Project";
+import Unauthorized from "../401";
 
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
+
+  const loggedIn = useSelector(setAuthState);
+  const isLoggedIn = loggedIn.payload.auth.loggedIn
 
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
@@ -119,19 +124,27 @@ const index = () => {
     setEditProductItem(product);
   };
 
-  return <Project
-    productStatus={productStatus}
-    productOptions={productOptions}
-    project={project}
-    craftStatus={craftStatus}
-    crafts={crafts}
-    suppliers={suppliers}
-    unit={unit}
-    projectCategory={projectCategory}
-    editHandler={editHandler}
-    editProductItem={editProductItem}
-    defaultImage={defaultImage}
-  />;
+  return (
+    <>
+      {!isLoggedIn ? (
+        <Unauthorized />
+      ) : (
+        <Project
+          productStatus={productStatus}
+          productOptions={productOptions}
+          project={project}
+          craftStatus={craftStatus}
+          crafts={crafts}
+          suppliers={suppliers}
+          unit={unit}
+          projectCategory={projectCategory}
+          editHandler={editHandler}
+          editProductItem={editProductItem}
+          defaultImage={defaultImage}
+        />
+      )}
+    </>
+  )
 };
 
 export default index;

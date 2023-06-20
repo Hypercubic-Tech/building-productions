@@ -11,7 +11,16 @@ import ExportPopup from "../popup/ExportPopup"
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select, defaultImage }) => {
+const Products = ({
+  editHandler,
+  setSelect,
+  totalSum,
+  searchType,
+  productStatus,
+  craftStatus,
+  select,
+  defaultImage
+}) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -22,9 +31,15 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [selectedValues, setSelectedValues] = useState([]);
+
+
   let itemsPerPage = 5;
 
   let productsToMap = products;
+
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
@@ -103,6 +118,67 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
           product_status: {
             connect: [{ id: selectedId }]
           },
+        };
+
+        await axios
+          .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${product.id}`, {
+            data: productData,
+          })
+          .then(res => {
+            dispatch(setProductState(res.data.data));
+            notify(false, "პროდუქტი რედაქტირდა");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    });
+  };
+
+  const confirmServiceEdit = async (selectedId, product) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    await swalWithBootstrapButtons.fire({
+      title: 'დაადასტურეთ, რომ გსურთ პროდუქტის სტატუსის რედაქტირება',
+      text: 'დადასტურების შემთხვევაში, პროდუქტი რედაქტირდება ავტომატურად',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'რედაქტირება',
+      cancelButtonText: 'უარყოფა',
+      reverseButtons: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let productData = {
+          title: product?.attributes?.title,
+          type: "service",
+          quantity: product?.attributes?.quantity,
+          unit: {
+            connect: [{ id: product?.attributes?.unit?.data?.id }],
+          },
+          price: product.attributes.price,
+          categories: {
+            connect: [{ id: activeCategoryId }],
+          },
+          project: {
+            connect: [{ id: projectId }]
+          },
+          craft_status: {
+            connect: [{ id: selectedId }]
+          },
+          craft_img_url: product?.attributes?.craft_img_url
         };
 
         await axios
@@ -234,6 +310,10 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     confirmEdit(+selectedId, product);
   };
 
+  // const getActiveServiceItem = (selectedId, product) => {
+  //   confirmServiceEdit(+selectedId, product);
+  // };
+
   const aggregatedProducts = {};
 
   totalSumProduct?.forEach((product) => {
@@ -258,12 +338,30 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     }
   });
 
+  const handleToggleDropdown = (productId) => {
+    setActiveDropdown(productId === activeDropdown ? null : productId);
+  };
+
+
+  const handleSelectOption = (value, product) => {
+    let productId = product.id
+    setSelectedValues((prevSelectedValues) => ({
+      ...prevSelectedValues,
+      [productId]: value,
+    }));
+    setActiveDropdown(null)
+    confirmServiceEdit(+value, product);
+  };
+
+  console.log(selectedValues)
+
   useEffect(() => {
     if (projectId && productsToMap) {
       const totalSumHandler = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
             const data = res.data;
+            console.log(data)
             setTotalSumProduct(data.data);
           })
       };
@@ -364,6 +462,9 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                 </tbody>
               )}
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
+                const initialSelectedValue = product?.attributes?.craft_status?.data?.id
+                const itemSelectedValues = selectedValues[product.id] || initialSelectedValue
+
                 return (
                   <tbody key={index}>
                     <tr>
@@ -416,24 +517,28 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
                               })}
                             </select>
                           ) : (
-                            <select
-                              className="form-select"
-                              defaultValue={product?.attributes?.craft_status?.data[0]?.id}
-                              onChange={(e) => {
-                                setUpdateCraftStatus((updateCraftStatus) => ({
-                                  ...updateCraftStatus,
-                                  craft_status: {
-                                    connect: [{ id: e.target.value }],
-                                  },
-                                }));
-                              }}
-                            >
-                              {craftStatus && craftStatus.map((item) => {
-                                return (
-                                  <option key={item.id} value={item.id}>{item.attributes.title}</option>
-                                )
-                              })}
-                            </select>
+                            <div className="dropdown">
+                              <div
+                                className="dropdown-toggle"
+                                onClick={() => handleToggleDropdown(product.id)}
+                              >
+                                {itemSelectedValues}
+                              </div>
+                              {activeDropdown === product.id && (
+                                <div style={{ display: "block" }} className="dropdown-menu">
+                                  {craftStatus &&
+                                    craftStatus.map((item) => (
+                                      <div
+                                        key={item.id}
+                                        className="dropdown-item"
+                                        onClick={() => handleSelectOption(item.id, product)}
+                                      >
+                                        {item.attributes.title}
+                                      </div>
+                                    ))}
+                                </div>
+                              )}
+                            </div>
                           )}
                         </div>
                       </td>
