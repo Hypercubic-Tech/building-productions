@@ -11,7 +11,16 @@ import ExportPopup from "../popup/ExportPopup"
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus, craftStatus, select, defaultImage }) => {
+const Products = ({
+  editHandler,
+  setSelect,
+  totalSum,
+  searchType,
+  productStatus,
+  craftStatus,
+  select,
+  defaultImage
+}) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -23,7 +32,6 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  // const [selectedValue, setSelectedValue] = useState('');
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [selectedValues, setSelectedValues] = useState([]);
 
@@ -302,9 +310,9 @@ const Products = ({ editHandler, setSelect, totalSum, searchType, productStatus,
     confirmEdit(+selectedId, product);
   };
 
-  const getActiveServiceItem = (selectedId, product) => {
-    confirmServiceEdit(+selectedId, product);
-  };
+  // const getActiveServiceItem = (selectedId, product) => {
+  //   confirmServiceEdit(+selectedId, product);
+  // };
 
   const aggregatedProducts = {};
 
