@@ -15,9 +15,10 @@ import Unauthorized from "../401";
 const index = () => {
     const userId = useSelector(state => state.auth.user_id)
     const searchValue = useSelector(state => state.proj.searchType)
-    const loggedIn = useSelector(setAuthState);
-    const isLoggedIn = loggedIn.payload.auth.loggedIn
-
+    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+    // const isLoggedIn = loggedIn.payload.auth.loggedIn
+    console.log(isLoggedIn)
+    console.log(121212)
     const [close, setClose] = useState(false);
     const [addProject, setAddProject] = useState(false);
     const [editProject, setEditProject] = useState(false);
