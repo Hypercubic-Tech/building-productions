@@ -62,7 +62,7 @@ const Project = ({ project,
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=*`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
