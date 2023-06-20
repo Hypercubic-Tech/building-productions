@@ -54,11 +54,11 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   };
 
   const authenticateWithGoogle = () => {
-    router.push('http://localhost:1377/api/connect/google')
+    router.push('https://calcheloba.onrender.com/api/connect/google')
   };
 
   const authenticateWithFacebook = () => {
-    router.push('http://localhost:1377/api/connect/facebook')
+    router.push('https://calcheloba.onrender.com/api/connect/facebook')
   };
 
   return (
