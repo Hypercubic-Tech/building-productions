@@ -54,7 +54,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   };
 
   const authenticateWithGoogle = () => {
-    router.push('https://calcheloba.onrender.com/api/connect/google/callback')
+    router.push('https://calcheloba.onrender.com/api/connect/google')
   };
 
   const authenticateWithFacebook = () => {
