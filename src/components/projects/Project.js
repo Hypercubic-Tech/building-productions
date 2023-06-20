@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory } from "../../store/slices/categorySlice";
-import { setProducts } from "../../store/slices/productSlice";
 
 import axios from "axios";
+
+import { setCategory } from "../../store/slices/categorySlice";
+import { setProducts } from "../../store/slices/productSlice";
 
 import Filter from "./Filter";
 import Products from "../products/Products";
