@@ -225,7 +225,6 @@ const Gallery = ({ setSelect }) => {
                                                 cursor: "pointer"
                                             }}
                                             onChange={(e) => {
-                                                console.log(e.target.files, 'files')
                                                 handleMediaUpload(e.target.files);
                                             }}
                                             type="file"

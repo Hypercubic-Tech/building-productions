@@ -26,8 +26,8 @@ const Products = ({
 
   const { projectId } = router.query;
   const activeCategoryId = useSelector(state => state?.cats?.category);
-  console.log(activeCategoryId)
   const products = useSelector(state => state.prod.products);
+
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
@@ -355,7 +355,6 @@ const Products = ({
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
             const data = res.data;
-            console.log(data)
             setTotalSumProduct(data.data);
           })
       };
