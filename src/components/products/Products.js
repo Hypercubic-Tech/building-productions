@@ -26,7 +26,7 @@ const Products = ({
 
   const { projectId } = router.query;
   const activeCategoryId = useSelector(state => state?.cats?.category);
-
+  console.log(activeCategoryId)
   const products = useSelector(state => state.prod.products);
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
@@ -310,10 +310,6 @@ const Products = ({
     confirmEdit(+selectedId, product);
   };
 
-  // const getActiveServiceItem = (selectedId, product) => {
-  //   confirmServiceEdit(+selectedId, product);
-  // };
-
   const aggregatedProducts = {};
 
   totalSumProduct?.forEach((product) => {
@@ -352,8 +348,6 @@ const Products = ({
     setActiveDropdown(null)
     confirmServiceEdit(+value, product);
   };
-
-  console.log(selectedValues)
 
   useEffect(() => {
     if (projectId && productsToMap) {
@@ -583,7 +577,7 @@ const Products = ({
             </>
           )}
         </table>
-        {!productsToMap?.length && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
+        {!productsToMap?.length && activeCategoryId && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
         {productsToMap.length > 5 && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
