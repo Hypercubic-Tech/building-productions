@@ -8,7 +8,7 @@ const TableExcel = ({totalSum, aggregatedProducts,
       totalSumPrice, select
     }) => {
     return(
-      <div id="table2Id" style={{paddingTop: "30px"}}>
+      <div id="table1Id" style={{paddingTop: "30px"}}>
        {select === "exportPopUp" && <div style={{margin: "50px", marginTop: "30px"}} >
             <img
               alt="Logo"
@@ -22,15 +22,26 @@ const TableExcel = ({totalSum, aggregatedProducts,
           >
           {totalSum ? (
             <thead>
+                <tr></tr>
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                <th></th>
                 <th>სამუშაო</th>
                 <th>ერთეული</th>
                 <th>რაოდენობა</th>
                 <th>სტატუსი</th>
                 <th>ჯამი</th>
               </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
+                    <td></td>
                   <td>{product?.categories}</td>
                   <td>{product?.unit}</td>
                   <td>{product?.quantity}</td>
@@ -43,10 +54,29 @@ const TableExcel = ({totalSum, aggregatedProducts,
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{`სულ: ${Object?.values(categorySums).reduce((total, category) => total + category.sum, 0) || 0} ლარი`}</td>
               </tr>
 
               <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -59,6 +89,16 @@ const TableExcel = ({totalSum, aggregatedProducts,
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforeseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
@@ -67,10 +107,31 @@ const TableExcel = ({totalSum, aggregatedProducts,
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
 
               <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>

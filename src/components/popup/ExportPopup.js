@@ -32,7 +32,7 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
     };
   
     const exportToExcel = () => {
-      const workbook = XLSX.utils.table_to_book(document.getElementById('table2Id'));
+      const workbook = XLSX.utils.table_to_book(document.getElementById('table1Id'));
       console.log(workbook, 'rame')
       XLSX.writeFile(workbook, 'table.xlsx');
     };
