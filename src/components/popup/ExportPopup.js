@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
-import TableExport from "./TableExport";
+import TablePDF from "./TablePDF";
+import TableExcel from './TableExcel';
 
 const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
      projectId, productsToMap, startIndex, endIndex, vatTotal, 
@@ -32,6 +33,7 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
   
     const exportToExcel = () => {
       const workbook = XLSX.utils.table_to_book(document.getElementById('table2Id'));
+      console.log(workbook, 'rame')
       XLSX.writeFile(workbook, 'table.xlsx');
     };
   
@@ -57,16 +59,16 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
                                 </label>
                             <div className=" mb-100" >
                                 <select
-                                name="format"
-                                data-control="select2"
-                                data-placeholder="აირჩიეთ ფორმატი"
-                                data-hide-search="true"
-                                className="form-select form-select-solid georgian"
-                                value={format}
-                                onChange={handleFormatChange}
+                                    name="format"
+                                    data-control="select2"
+                                    data-placeholder="აირჩიეთ ფორმატი"
+                                    data-hide-search="true"
+                                    className="form-select form-select-solid georgian"
+                                    value={format}
+                                    onChange={handleFormatChange}
                                 >
-                                <option value="excel">Excel</option>
-                                <option value="pdf">PDF</option>
+                                    <option value="excel">Excel</option>
+                                    <option value="pdf">PDF</option>
                                 </select>
                             </div>
                             <div className="text-center">
@@ -126,7 +128,7 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
                             </span>
                         </div>
                     </div>
-                        <TableExport 
+                        {format === 'pdf' && <TablePDF 
                             totalSum={totalSum} 
                             select={select}
                             aggregatedProducts={aggregatedProducts} 
@@ -143,7 +145,26 @@ const ExportPopup = ({ setSelect, totalSum, aggregatedProducts,
                             unforeseenExpensesPrice={unforeseenExpensesPrice}
                             service_percentage={service_percentage}
                             servicePercentagePrice={servicePercentagePrice}
-                        />
+                        />}
+                        {format === 'excel' && <TableExcel 
+                            totalSum={totalSum} 
+                            select={select}
+                            aggregatedProducts={aggregatedProducts} 
+                            projectId={projectId}
+                            productsToMap={productsToMap} 
+                            startIndex={startIndex}
+                            endIndex={endIndex}
+                            activeItem={activeItem}
+                            totalSumPrice={totalSumPrice}
+                            categorySums={categorySums}
+                            vatTotal={vatTotal}
+                            vatTotalPrice={vatTotalPrice}
+                            unforeseenExpenses={unforeseenExpenses}
+                            unforeseenExpensesPrice={unforeseenExpensesPrice}
+                            service_percentage={service_percentage}
+                            servicePercentagePrice={servicePercentagePrice}
+                        />}
+                        
                 </div>
             </div>
         </div>
