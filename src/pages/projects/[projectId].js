@@ -15,7 +15,6 @@ const index = () => {
   const { projectId } = router.query;
   const loggedIn = useSelector(setAuthState);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  console.log(isLoggedIn)
 
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);

@@ -17,8 +17,6 @@ const index = () => {
     const searchValue = useSelector(state => state.proj.searchType)
     const isLoggedIn = useSelector((state) => state.auth.loggedIn);
     // const isLoggedIn = loggedIn.payload.auth.loggedIn
-    console.log(isLoggedIn)
-    console.log(121212)
     const [close, setClose] = useState(false);
     const [addProject, setAddProject] = useState(false);
     const [editProject, setEditProject] = useState(false);

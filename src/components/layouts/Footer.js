@@ -9,7 +9,7 @@ function Footer() {
           <Link href="/">
                 <img
                   alt="Logo"
-                  src="/assets/media/logos/logo-demo11.svg"
+                  src=""
                   className="logo-default h-25px h-lg-30px"
                 />
               </Link>

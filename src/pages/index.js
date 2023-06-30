@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setAuthAccessToken, setAuthEmail, setAuthUserId } from "../store/slices/authSlice";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 import AboutCompany from "../components/main/AboutCompany";
 import Heading from "../components/main/Heading";
 import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
-import OurProjects from "../components/main/OurProjects";
 import Price from "../components/main/Price";
-import WhatOuerClientsSay from "../components/main/WhatOurClientsSay";
 import ContactUs from "../components/main/ContactUs";
 import Faq from "../components/main/Faq";
 import SignedWithGoogleModal from "../components/popup/SignedWithGoogleModal";
-import axios from "axios";
 import notify from "../utils/notify";
 
 const priceData = {
@@ -92,11 +90,9 @@ const Home = () => {
       <div className="d-flex flex-column flex-root">
         <Heading />
         <HowItWorks />
-        <AboutCompany />
         <OurTeam />
-        <OurProjects />
+        <AboutCompany />
         <Price price={priceData} />
-        <WhatOuerClientsSay />
         <ContactUs />
         <Faq />
         {id_token && isClosed && isAuthWithGoogle?.length === 0 && <SignedWithGoogleModal onClose={toggleModal} userEmail={userObject?.email} userToken={id_token} />}

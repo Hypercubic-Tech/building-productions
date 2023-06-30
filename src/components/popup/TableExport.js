@@ -12,7 +12,7 @@ const TableExport = ({totalSum, aggregatedProducts,
        {select === "exportPopUp" && <div style={{margin: "50px", marginTop: "30px"}} >
             <img
               alt="Logo"
-              src="/assets/media/logos/logo-demo11.svg"
+              src=""
               className="h-20px h-lg-30px"
             />
         </div>}

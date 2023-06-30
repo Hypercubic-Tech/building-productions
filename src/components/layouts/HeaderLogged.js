@@ -125,7 +125,7 @@ function HeaderLogged() {
             <span>
               <img
                 alt="Logo"
-                src="/assets/media/logos/logo-demo11.svg"
+                src=""
                 className="logo-default h-25px h-lg-30px"
               />
             </span>

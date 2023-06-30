@@ -21,7 +21,7 @@ const HowItWorks = () => {
           <div className="col-md-4 px-5">
             <div className="text-center mb-10 mb-md-0">
               <img
-                src="assets/media/illustrations/sketchy-1/2.png"
+                src=""
                 className="mh-125px mb-9"
                 alt=""
               />
@@ -45,7 +45,7 @@ const HowItWorks = () => {
           <div className="col-md-4 px-5">
             <div className="text-center mb-10 mb-md-0">
               <img
-                src="assets/media/illustrations/sketchy-1/8.png"
+                src=""
                 className="mh-125px mb-9"
                 alt=""
               />
@@ -69,7 +69,7 @@ const HowItWorks = () => {
           <div className="col-md-4 px-5">
             <div className="text-center mb-10 mb-md-0">
               <img
-                src="assets/media/illustrations/sketchy-1/12.png"
+                src=""
                 className="mh-125px mb-9"
                 alt=""
               />

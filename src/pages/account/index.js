@@ -11,7 +11,6 @@ import Unauthorized from "../401";
 const index = () => {
     const loggedIn = useSelector(setAuthState);
     const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-    console.log(isLoggedIn)
 
     const [authUser, setAuthUser] = useState([]);
     const [imgSrc, setImgSrc] = useState(null);
