@@ -15,6 +15,10 @@ import styles from "../popup/AuthModal.module.css";
 
 const AuthModal = ({ handleAuthorization, onClose }) => {
   const [lossData, setLossData] = useState(false);
+  const [isForgot, setIsForgot] = useState(false);
+  const [forgotData, setForgotData] = useState({
+    email: ""
+  });
   const [authData, setAuthData] = useState({
     identifier: "",
     password: "",
@@ -53,6 +57,29 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
       });
   };
 
+  const forgotPassword = async (event) => {
+    setIsForgot(true);
+    event.preventDefault();
+  };
+
+  const forgotPasswordHandler = async (event) => {
+    if (forgotData?.email?.length === 0) {
+      return setLossData(true);
+    }
+
+    await axios.post('https://calcheloba.onrender.com/api/auth/forgot-password', {
+      email: forgotData?.email,
+      url: 'https://calcheloba.onrender.com/api/auth/reset-password'
+    })
+      .then((res) => {
+        const data = res.data;
+        console.log(data)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  };
+
   const authenticateWithGoogle = () => {
     router.push('https://calcheloba.onrender.com/api/connect/google')
   };
@@ -64,7 +91,8 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   return (
     <div className={`${styles.container}`}>
       <form onSubmit={handleSubmit}>
-        <div className="row">
+
+        {!isForgot && <div className="row">
           <div className="d-flex justify-content-between">
             <div>
               <div className="text-muted">არ ხარ დარეგისტრირებული?</div>
@@ -145,6 +173,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
           </div>
           {lossData && authData?.password?.length <= 0 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ პაროლი</p>}
           <div className="d-grid gap-2">
+            <span onClick={forgotPassword} style={{ paddingTop: "5px", cursor: "pointer" }}>დაგავიწყდა პაროლი?</span>
             <button
               className={` btn btn-success georgian ${styles.btn}`}
               type="submit"
@@ -172,7 +201,77 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
             </button>
           </div>
 
-        </div>
+        </div>}
+
+        {isForgot && <div className="row">
+          <div className="d-flex justify-content-between">
+            <div>
+              <div
+                // onClick={() => handleAuthorization(false)}
+                className={`${styles.registrationBtn} row `}
+              >
+                პაროლის აღდგენა
+              </div>
+            </div>
+            <svg
+              onClick={onClose}
+              className={styles.closeBtn}
+              width="64px"
+              height="64px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                stroke="#CCCCCC"
+                strokeWidth="0.336"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <g id="Menu / Close_MD">
+                  <path
+                    id="Vector"
+                    d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
+                    stroke="#000000"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div className="d-grid gap-2">
+            <label className="mt-2 fx">იმეილი:</label>
+            <input
+              style={{ borderColor: lossData && forgotData?.email?.length <= 0 ? "red" : "" }}
+              autoComplete="username"
+              id="identifier"
+              className="form-control"
+              placeholder="youremail@gmail.com"
+              type="email"
+              onChange={(e) => {
+                setForgotData((prevSendData) => ({
+                  ...prevSendData,
+                  email: e.target.value
+                }));
+              }}
+            />
+          </div>
+          {lossData && forgotData?.email?.length <= 0 && <p style={{ color: 'red' }}>გთხოვთ შეიყვანოთ იმეილი</p>}
+          <div className="d-grid gap-2 mt-2">
+            <button
+              className={` btn btn-success georgian ${styles.btn}`}
+              type="button"
+              onClick={forgotPasswordHandler}
+            >
+              გაგზავნა
+            </button>
+          </div>
+        </div>}
       </form>
     </div>
   );
