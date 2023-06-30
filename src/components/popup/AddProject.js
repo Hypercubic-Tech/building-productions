@@ -363,7 +363,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
                         })}
                       </select>
                     </div>
-
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <div className="row fv-row">
