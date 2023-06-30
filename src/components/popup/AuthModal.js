@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -53,11 +53,11 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
   };
 
   const authenticateWithGoogle = () => {
-    router.push('http://localhost:1377/api/connect/google')
+    router.push('https://calcheloba.onrender.com/api/connect/google')
   };
 
   const authenticateWithFacebook = () => {
-    router.push('http://localhost:1377/api/connect/facebook')
+    router.push('https://calcheloba.onrender.com/api/connect/facebook')
   };
 
   return (
