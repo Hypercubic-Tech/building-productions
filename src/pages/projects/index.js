@@ -139,6 +139,33 @@ const index = () => {
             console.log(error);
         }
     };
+    // ` d-flex justify-content-between ${styles.mt20}`
+    let buttonWrap = (
+        <div className={styles.buttons}>
+            <Link
+                type="button"
+                className="btn btn-primary"
+                href='/'>უკან დაბრუნება
+            </Link>
+            <button
+                onClick={addProjectHandler}
+                type="button"
+                className="btn btn-primary"
+            >
+                დაამატე ობიექტი
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-plus"
+                    viewBox="0 0 16 16"
+                >
+                    <path d="M8 3a.5.5 0 0 1 .5.5v3.5h3a.5.5 0 0 1 0 1h-3v3.5a.5.5 0 0 1-1 0V8h-3a.5.5 0 0 1 0-1h3V3.5A.5.5 0 0 1 8 3z" />
+                </svg>
+            </button>
+        </div>
+    )
 
 
     useEffect(() => {
@@ -172,30 +199,7 @@ const index = () => {
             ) : (
                 <>
                     <div className="container-xxl">
-                        <div className={` d-flex justify-content-between ${styles.mt20}`}>
-                            <Link
-                                type="button"
-                                className="btn btn-primary"
-                                href='/'>უკან დაბრუნება
-                            </Link>
-                            <button
-                                onClick={addProjectHandler}
-                                type="button"
-                                className="btn btn-primary"
-                            >
-                                დაამატე ობიექტი
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    className="bi bi-plus"
-                                    viewBox="0 0 16 16"
-                                >
-                                    <path d="M8 3a.5.5 0 0 1 .5.5v3.5h3a.5.5 0 0 1 0 1h-3v3.5a.5.5 0 0 1-1 0V8h-3a.5.5 0 0 1 0-1h3V3.5A.5.5 0 0 1 8 3z" />
-                                </svg>
-                            </button>
-                        </div>
+                        {projectsToMap?.length > 0 ? buttonWrap : ""}
                         <div className={`${styles.flexWrap} d-flex justify-content-center `}>
                             {projectsToMap?.length > 0 ? (
                                 projectsToMap.slice(startIndex, endIndex).map((item, index) => {
@@ -236,8 +240,9 @@ const index = () => {
                                     )
                                 })
                             ) : (
-                                <div>
-                                    <h2 className={` ${styles.notFound} geo-title `}>პროექტი ვერ მოიძებნა. დაამატე პროექტი</h2>
+                                <div className={styles.wrap}>
+                                    <h2 className={` ${styles.notFound} geo-title `}>პროექტები ვერ მოიძებნა</h2>
+                                    {buttonWrap}
                                 </div>
                             )}
                         </div>
