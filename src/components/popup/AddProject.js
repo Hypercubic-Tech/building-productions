@@ -4,6 +4,7 @@ import axios from "axios";
 
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
+import Button from "../ui/Button";
 
 const AddProject = ({ dismiss, setShowProject }) => {
   const userId = useSelector(state => state.auth.user_id)
@@ -17,7 +18,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [hiddenInput, setHiddenInput] = useState(false);
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -63,14 +63,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
     stepTwo: [],
     stepThree: [],
   };
-
-  const hiddenInputHandler = () => {
-    if (!hiddenInput) {
-      setHiddenInput(true)
-    } else {
-      setHiddenInput(false)
-    }
-  }
 
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
@@ -215,60 +207,32 @@ const AddProject = ({ dismiss, setShowProject }) => {
       className={`${styles.modal}`}
     >
       <div className={styles.overlay}></div>
-      <div className={` ${styles.mainBg} modal-content `}>
-        <div className="modal-header">
-          <h2 className="georgian">ობიექტის დამატება</h2>
-          <div
-            className="btn btn-sm btn-icon btn-active-color-primary"
-            data-bs-dismiss="modal"
-            onClick={dismiss}
-          >
-            <span className="svg-icon svg-icon-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <rect
-                  opacity="0.5"
-                  x={6}
-                  y="17.3137"
-                  width={16}
-                  height={2}
-                  rx={1}
-                  transform="rotate(-45 6 17.3137)"
-                  fill="black"
-                />
-                <rect
-                  x="7.41422"
-                  y={6}
-                  width={16}
-                  height={2}
-                  rx={1}
-                  transform="rotate(45 7.41422 6)"
-                  fill="black"
-                />
-              </svg>
-            </span>
-          </div>
-        </div>
-        <div className={` modal-body py-lg-10 px-lg-10 ${styles.scroll}`}>
+      <div className={` ${styles.mainBg} `}>
+        <Button
+          type={'back'}
+          text={'უკან დაბრუნება'}
+          close={setClose}
+        />
+        <div style={{ marginTop: '30px' }} className='modal-body py-lg-10 px-lg-10'>
           <div
             className="stepper stepper-pills stepper-column d-flex flex-column d-flef flex-row-fluid"
             id="kt_modal_create_app_stepper"
           >
             <div className="d-flex justify-content-center flex-row-auto w-100">
-              <div className={` ${styles.gap} stepper-nav `}>
+              <div className={`stepper-nav`}>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(1)}`}
                   data-kt-stepper-element="nav"
                 >
                   {/* <div className="stepper-line w-40px" /> */}
-                  <div className="stepper-icon">
-                    <i className="stepper-check fas fa-check" />
-                    <span className="stepper-number">1</span>
+                  <div className={styles.item}>
+                    <div className="stepper-icon">
+                      <i className="stepper-check fas fa-check" />
+                      <span className="stepper-number">1</span>
+                    </div>
+                    <span>
+                      ===
+                    </span>
                   </div>
                   <div className="stepper-label">
                     <h3 className="stepper-title georgian">კატეგორია</h3>
