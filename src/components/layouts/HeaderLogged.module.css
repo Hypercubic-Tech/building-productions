@@ -47,8 +47,8 @@
   padding: 10px;
 }
 .hover:hover {
-  color: #2B3467;
-  background-color: #BAD7E9;
+  color: #070707;
+  background-color: rgba(245, 248, 250, 0.8);
   border-radius: 4px;
 }
 .closeBtn {

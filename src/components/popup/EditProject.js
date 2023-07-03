@@ -1,40 +1,25 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
-
 
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
 const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   const userId = useSelector(state => state.auth.user_id)
-  console.log(project.data[0].attributes.categories, 'proj')
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
-  const [backBtn, setBackBtn] = useState(false);
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [hiddenInput, setHiddenInput] = useState(false);
 
-  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type.data.id);
-  const [cityOption, setCityOption] = useState(project.data[0].attributes.city.data.id);
-  const [conditionOption, setConditionOption] = useState(project.data[0].attributes.condition.data.id);
-  const [currentConditionOption, setCurrentConditionOption] = useState(project.data[0].attributes.current_condition.data.id);
-  // const [categoriesOption, setCategoriesOption] = useState(project.data[0].attributes.categories.data.map((cat) => { return cat.id }))
-
-  // const [oldSelecetedCat, setOldSelectedCat] = useState();
-
-  // useEffect(() => {
-  //   const oldCats = categories && categories.map((cat) => {
-  //     return cat.id
-  //   })
-  //   setOldSelectedCat(oldCats)
-
-  // }, [categories])
+  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type?.data?.id);
+  const [cityOption, setCityOption] = useState(project?.data[0]?.attributes.city?.data?.id);
+  const [conditionOption, setConditionOption] = useState(project?.data[0]?.attributes?.condition?.data?.id);
+  const [currentConditionOption, setCurrentConditionOption] = useState(project?.data[0]?.attributes?.current_condition?.data?.id);
 
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
@@ -65,9 +50,10 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       ]
     },
     categories: {
-      connect: project.data[0].attributes.categories.data.map((cat) => ({
-        id: cat.id,
+      connect: project.data[0].attributes.categories.data.map((category) => ({
+        id: category.id,
       })),
+      disconnect: []
     },
     service_percentage: project?.data[0]?.attributes?.service_percentage,
 
@@ -84,14 +70,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
     stepThree: [],
   };
 
-  const hiddenInputHandler = () => {
-    if (!hiddenInput) {
-      setHiddenInput(true)
-    } else {
-      setHiddenInput(false)
-    }
-  }
-
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
       return "completed";
@@ -103,39 +81,35 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
   };
 
   const handleCheckboxChange = (event) => {
-    const categoryId = event.target.value;
-
+    const categoryId = parseInt(event.target.value);
+  
     if (event.target.checked) {
       const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
+  
       setSendData((prevState) => ({
         ...prevState,
         categories: {
+          ...prevState.categories,
           connect: sendDataCategories,
+          disconnect: prevState.categories.disconnect.filter((item) => item.id !== categoryId),
         },
       }));
-    }
-
-    if (!event.target.checked) {
-      const sendDataCategories = sendData.categories.connect.filter((item) => {
-        console.log(item.id, 'item') 
-        return (
-          item.id !== +categoryId)
-      });
-
+    } else {
+      const sendDataCategories = sendData.categories.connect.filter((item) => item.id !== categoryId);
+  
       setSendData((prevState) => ({
         ...prevState,
         categories: {
+          ...prevState.categories,
           connect: sendDataCategories,
+          disconnect: [...prevState.categories.disconnect, { id: categoryId }],
         },
       }));
     }
   };
-
-  console.log(sendData.categories, 'categories in arr')
-
+  
 
   const stepChangeHandler = () => {
-
     if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
@@ -146,41 +120,38 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       setStep(step + 1);
       setLoss(false);
     }
-    if (step === 3 && errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0) {
-      setStep(step + 1);
-      setLoss(false);
+    if (step === 3 &&  errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0 || sendData.categories.disconnect.length > 0) {
+      setStep(step + 1)
+      setLoss(false)
     }
   };
 
   const prevStepHandler = () => {
     if (step > 1) {
-      setBackBtn(true);
       setStep(step - 1);
     }
   };
 
-  const createProjectHandler = async () => {
+  const editProjectHandler = async () => {
     try {
-      let projectId = project.data[0].id
-
-      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}`, {
+      let projectId = project?.data[0]?.id;
+      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}?populate=categories`, {
         data: sendData
       })
-        .then((res) => {
-          const data = res.data;
-          console.log(data, 'after request')
+        .then(() => {
           setShowProject(true);
           setEditProject(false);
           notify(false, "პროექტი რედაქტირდა");
-        })
+        });
     } catch (error) {
       notify(true, "პროექტის რედაქტირება უარყოფილია");
       console.error(error);
     }
   }
+
   const finishHandler = () => {
     setClose(true);
-    createProjectHandler();
+    editProjectHandler();
   };
 
   useEffect(() => {
@@ -308,7 +279,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(1)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/* <div className="stepper-line w-40px" /> */}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">1</span>
@@ -323,7 +293,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(2)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/* <div className="stepper-line w-40px" /> */}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">2</span>
@@ -340,7 +309,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(3)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/* <div className="stepper-line w-40px" /> */}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">3</span>
@@ -357,7 +325,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(4)}`}
                   data-kt-stepper-element="nav"
                 >
-                  {/* <div className="stepper-line w-40px" /> */}
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">4</span>
@@ -399,15 +366,13 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        {/* <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option> */}
                         {propertyType && propertyType.map((item, index) => {
                           return (
-                            <option key={index} value={item.id}>{item.attributes.title}</option> // .titles gamo ar mushaobs sheidlzeba tqventan .Title imushavebs
+                            <option key={index} value={item.id}>{item.attributes.Title}</option>
                           )
                         })}
                       </select>
                     </div>
-
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
                         <div className="row fv-row">
@@ -556,7 +521,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                                   ...prevSendData,
                                   service_percentage: e.target.value,
                                 }));
-                                // hiddenInputHandler();
                               }}
                             />
                           </div>
@@ -566,8 +530,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                     </div>
                   </div>
                 </div>
-                {/* STEP */}
-
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -690,7 +652,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                             <div className="d-flex flex-column">
                               {categories &&
                                 categories.map((item, index) => {
-
                                   return (
                                     <div
                                       key={index}
@@ -700,15 +661,15 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                                         className="form-check-input"
                                         type="checkbox"
                                         value={item.id}
-                                        defaultChecked={sendData.categories.connect.some((cat) => cat.id === item.id)}
+                                        defaultChecked={sendData?.categories?.connect?.some((cat) => cat?.id === item?.id)}
                                         onChange={handleCheckboxChange}
                                       />
-                                      <label
+                                      <div
                                         onClick={(e) => e.preventDefault()}
                                         className="form-check-label georgian"
                                       >
                                         {item.attributes.title}
-                                      </label>
+                                      </div>
                                     </div>
                                   );
                                 })}
@@ -811,7 +772,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
                     </button>
-
                     <button
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}

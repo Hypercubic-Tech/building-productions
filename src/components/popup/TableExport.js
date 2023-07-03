@@ -1,9 +1,9 @@
 import styles from "../products/Products.module.css"
 
 const TableExport = ({totalSum, aggregatedProducts,
-   projectId, productsToMap, startIndex, endIndex,
-    activeItem, categorySums, vatTotal, vatTotalPrice,
-     unforeseenExpenses, unforeseenExpensesPrice,
+      projectId, productsToMap, startIndex, endIndex,
+      activeItem, categorySums, vatTotal, vatTotalPrice,
+      unforeseenExpenses, unforeseenExpensesPrice,
       service_percentage, servicePercentagePrice,
       totalSumPrice, select
     }) => {
@@ -12,7 +12,7 @@ const TableExport = ({totalSum, aggregatedProducts,
        {select === "exportPopUp" && <div style={{margin: "50px", marginTop: "30px"}} >
             <img
               alt="Logo"
-              src="/assets/media/logos/logo-demo11.svg"
+              src=""
               className="h-20px h-lg-30px"
             />
         </div>}
@@ -38,6 +38,14 @@ const TableExport = ({totalSum, aggregatedProducts,
                   <td>{categorySums?.find((item) => item.title === product?.categories)?.sum || 0} ლარი</td>
                 </tr>
               ))}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
               <tr>
                 <td></td>
                 <td></td>

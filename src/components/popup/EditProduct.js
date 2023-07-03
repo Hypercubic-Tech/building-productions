@@ -19,30 +19,30 @@ const EditProduct = ({
     const router = useRouter();
 
     const projectId = router.query.projectId;
-    const productId = product.id
+    const productId = product?.id
     const [lossProduct, setLossProduct] = useState(false);
     const [toggle, setToggle] = useState(true);
-    const [imgSrc, setImgSrc] = useState(product.attributes.image.data.attributes.url);
-    const [image, setImage] = useState(product.attributes.image.data.id);
+    const [imgSrc, setImgSrc] = useState(product?.attributes?.image?.data?.attributes?.url);
+    const [image, setImage] = useState(product?.attributes?.image?.data?.id);
     const [filteredCrafts, setFilteredCrafts] = useState();
     const [craftImage, setCraftImage] = useState();
-    const [supplierOption, setSupplierOption] = useState(product.attributes.supplier.data.id);
-    const [unitOption, setUnitOption] = useState(product.attributes.unit.data.id)
-    const [statusOption, setStatusOption] = useState(product.attributes.product_status.data.id)
-    const activeCategoryId = useSelector(state => state.cats.category);
+    const [supplierOption, setSupplierOption] = useState(product?.attributes?.supplier?.data?.id);
+    const [unitOption, setUnitOption] = useState(product?.attributes?.unit?.data?.id)
+    const [statusOption, setStatusOption] = useState(product?.attributes?.product_status?.data?.id)
+    const activeCategoryId = useSelector(state => state?.cats?.category);
     const [productData, setProductData] = useState({
         image: image,
-        title: product.attributes.title,
+        title: product?.attributes?.title,
         type: "product",
         supplier: {
-            connect: [{ id: product.attributes.supplier.data.id }],
+            connect: [{ id: product?.attributes?.supplier?.data?.id }],
         },
-        productLink: product.attributes.productLink,
-        quantity: product.attributes.quantity,
+        productLink: product?.attributes?.productLink,
+        quantity: product?.attributes?.quantity,
         unit: {
-            connect: [{ id: product.attributes.unit.data.id }],
+            connect: [{ id: product?.attributes?.unit?.data?.id }],
         },
-        price: product.attributes.price,
+        price: product?.attributes?.price,
         categories: {
             connect: [{ id: activeCategoryId }],
         },
@@ -68,7 +68,7 @@ const EditProduct = ({
     const defaultProductsHandler = async (id, pageIndex) => {
         if (id) {
             try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
                 const data = response.data;
                 dispatch(setProducts(data.data));
                 dispatch(setCategory(id));
@@ -143,7 +143,6 @@ const EditProduct = ({
         } else {
             notify(true, "სურათი არ არის ატვირთული");
         }
-
     };
 
     return (

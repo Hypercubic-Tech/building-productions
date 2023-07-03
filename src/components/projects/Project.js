@@ -1,29 +1,45 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux';
+
+import axios from "axios";
+
 import { setCategory } from "../../store/slices/categorySlice";
 import { setProducts } from "../../store/slices/productSlice";
 
-import Products from "../products/Products";
 import Filter from "./Filter";
-import axios from "axios";
+import Products from "../products/Products";
 import AddProduct from "../popup/AddProduct";
 import Gallery from "../popup/Gallery";
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
-import { Export } from "../popup/Export";
+import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
-const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions, productStatus }) => {
+const Project = ({ project,
+  crafts,
+  unit,
+  suppliers,
+  craftStatus,
+  allProduct,
+  projectCategory,
+  editHandler,
+  editProductItem,
+  productOptions,
+  productStatus,
+  defaultImage
+}) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { projectId } = router.query;
+
+  const products = useSelector(state => state.prod.products);
+  const activeCategoryId = useSelector(state => state?.cats?.category);
+
   const [select, setSelect] = useState(null);
-  const [services, setServices] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
-  const products = useSelector(state => state.prod.products);
-  const activeCategoryId = useSelector(state => state.cats.category);
-  const router = useRouter();
-  const { projectId } = router.query;
-  const dispatch = useDispatch();
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
@@ -32,10 +48,10 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
     setTotalSum(true)
   };
 
-  const defaultProductsHandler = async (id, pageIndex) => {
+  const defaultProductsHandler = async (id) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,craft_status,product_status,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
         const data = response.data.data;
         dispatch(setProducts(data));
         dispatch(setCategory(id));
@@ -44,11 +60,10 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
       }
     }
   };
-  
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,craft_status,product_status,craft_images&filters[project][id]=${projectId}&filters[categories][id]=${id}&populate=craft_images.image`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
@@ -58,14 +73,18 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
     }
   };
 
-
   const total = products.reduce((acc, product) => {
     const productTotal = product?.attributes?.price * product?.attributes?.quantity;
     return acc + productTotal;
   }, 0);
 
   useEffect(() => {
-    defaultProductsHandler(activeCategoryId);
+    const defaultProductCallBack = async () => {
+    if (activeCategoryId && projectId) {
+        await defaultProductsHandler(activeCategoryId);
+      }
+    }
+    defaultProductCallBack()
   }, [activeCategoryId, projectId])
 
   return (
@@ -98,8 +117,7 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.title} 
-                    {/* make .title to .Title and it will work -.- */}
+                    {p?.attributes?.property_type?.data?.attributes?.Title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.condition?.data?.attributes?.title}
@@ -145,7 +163,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
               }}
             >
               <a
-                href="#"
                 className="btn btn-primary fw-bolder georgian"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_create_app"
@@ -300,7 +317,6 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                             Delete Selected
                           </button>
                         </div>
-                        {/* ფილტრი */}
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
@@ -330,11 +346,11 @@ const Project = ({ project, crafts, unit, suppliers, craftStatus, allProduct, pr
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
+                        defaultImage={defaultImage}
                         productStatus={productStatus}
                         projectId={projectId}
                         craftStatus={craftStatus}
                         editHandler={editHandler}
-                        services={services}
                         allProduct={allProduct}
                         setSelect={setSelect}
                         totalSum={totalSum}

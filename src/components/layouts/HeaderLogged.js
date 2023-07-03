@@ -122,12 +122,14 @@ function HeaderLogged() {
             </span>
           </div>
           <Link href="/">
-                <img
-                  alt="Logo"
-                  src="/assets/media/logos/logo-demo11.svg"
-                  className="logo-default h-25px h-lg-30px"
-                />
-              </Link>
+            <span>
+              <img
+                alt="Logo"
+                src=""
+                className="logo-default h-25px h-lg-30px"
+              />
+            </span>
+          </Link>
         </div>
         <div className="d-flex align-items-center">
           <div className="d-flex align-items-center flex-shrink-0">
@@ -248,9 +250,8 @@ function HeaderLogged() {
             <div className="d-flex align-items-center ms-3 ms-lg-4">
               <Link
                 className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
-                href={{
-                  pathname: `/projects`,
-                }}
+
+                href='/projects'
               >
                 <span className="svg-icon svg-icon-1">
                   <svg
@@ -313,21 +314,18 @@ function HeaderLogged() {
                   <div ref={ref} className={`${styles.modalWindow}`}>
                     <div className={styles.hover}>
                       <Link
-                      href={{
-                        pathname: "/account"
-                      }}
-                      passHref
+                        href='/account'
                       >
-                        პროფილი
+                        <span>აქაუნთი</span>
                       </Link>
                     </div>
                     <Link href="/">
-                      <div onClick={handleLogout} className={styles.hover}>
+                      <div onClick={handleLogout} className={styles.hover} style={{ padding: "10px" }}>
                         გამოსვლა
                         <svg
                           onClick={closeModal}
                           className={styles.closeBtn}
-                          style={{ marginLeft: "70px" }}
+                          style={{ marginLeft: "50px" }}
                           width="64px"
                           height="64px"
                           viewBox="0 0 24 24"
@@ -357,7 +355,6 @@ function HeaderLogged() {
                         </svg>
                       </div>
                     </Link>
-
                   </div>
                 </animated.div>
               )}

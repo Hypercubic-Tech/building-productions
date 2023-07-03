@@ -1,25 +1,20 @@
-import Auth from "../popup/Auth.js";
-import Link from 'next/link';
 import { useState, useEffect, useRef } from "react";
-import { useSpring, animated } from "react-spring";
+import Link from 'next/link';
+
 import { useSelector, useDispatch } from "react-redux";
+import { useSpring, animated } from "react-spring";
 import { setAuthState } from "../../store/slices/authSlice";
 
+import Auth from "../popup/Auth.js";
+
 const Heading = () => {
+  const dispatch = useDispatch();
+
   const loggedIn = useSelector(setAuthState);
   const log = loggedIn.payload.auth.loggedIn;
-  const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
 
-  useEffect(() => {
-    if (
-      localStorage.getItem("access_token") &&
-      localStorage.getItem("access_token") !== ""
-    ) {
-      dispatch(setAuthState(true));
-    }
-  }, [loggedIn, dispatch]);
+  const [showModal, setShowModal] = useState(false);
 
   const animation = useSpring({
     opacity: showModal ? 1 : 0,
@@ -52,9 +47,18 @@ const Heading = () => {
     };
   }, [showModal]);
 
+  useEffect(() => {
+    if (
+      localStorage.getItem("access_token") &&
+      localStorage.getItem("access_token") !== ""
+    ) {
+      dispatch(setAuthState(true));
+    }
+  }, [loggedIn, dispatch]);
+
   return (
     <div className="mb-0" id="home">
-      <div
+       <div
         className="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
         // style={{
         //   backgroundImage: "url(assets/media/svg/illustrations/landing.svg)",

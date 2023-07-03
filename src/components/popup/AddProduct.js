@@ -16,17 +16,17 @@ const AddProduct = ({
     productStatus
 }) => {
     const dispatch = useDispatch();
-
     const router = useRouter();
+
     const projectId = router.query.projectId;
+    const activeCategoryId = useSelector(state => state.cats.category);
+
     const [lossProduct, setLossProduct] = useState(false);
     const [toggle, setToggle] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
     const [filteredCrafts, setFilteredCrafts] = useState();
     const [craftImage, setCraftImage] = useState();
-
-    const activeCategoryId = useSelector(state => state.cats.category);
 
     const [productData, setProductData] = useState({
         image: image,
@@ -69,30 +69,20 @@ const AddProduct = ({
         craft_status: {
             connect: [{ id: null }]
         },
+        craft_img_url: "",
+        project: {
+            connect: [{ id: projectId }]
+        },
     });
 
-    useEffect(() => {
-        const getCraftsByCategory = async () => {
-            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
-                .then((res) => {
-                    const data = res.data;
-                    setFilteredCrafts(data)
-                })
-        }
-
-        getCraftsByCategory();
-    }, []);
-
     const defaultProductsHandler = async (id, pageIndex) => {
-        if (id) {
-            try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier,product_status&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
-                const data = response.data;
-                dispatch(setProducts(data.data));
-                dispatch(setCategory(id));
-            } catch (error) {
-                console.error(error);
-            }
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+            const data = response.data;
+            dispatch(setProducts(data.data));
+            dispatch(setCategory(id));
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -164,13 +154,6 @@ const AddProduct = ({
         }
     };
 
-    useEffect(() => {
-        setProductData((prevProductData) => ({
-            ...prevProductData,
-            image: image
-        }));
-    }, [image]);
-
     const handleImageRemove = async () => {
         if (image) {
             await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
@@ -181,6 +164,25 @@ const AddProduct = ({
         }
 
     };
+
+    useEffect(() => {
+        setProductData((prevProductData) => ({
+            ...prevProductData,
+            image: image
+        }));
+    }, [image]);
+
+    useEffect(() => {
+        const getCraftsByCategory = async () => {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
+                .then((res) => {
+                    const data = res.data;
+                    setFilteredCrafts(data)
+                })
+        }
+
+        getCraftsByCategory();
+    }, []);
 
     return (
         <div
@@ -397,6 +399,7 @@ const AddProduct = ({
                                                 რაოდენობა
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
@@ -445,6 +448,7 @@ const AddProduct = ({
                                                 ღირეულება
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
@@ -550,7 +554,8 @@ const AddProduct = ({
                                                     setCraftImage(filteredArray[0].attributes.image.data.attributes.url)
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        title: e.target.value
+                                                        title: e.target.value,
+                                                        craft_img_url: filteredArray[0].attributes.image.data.attributes.url
                                                     }));
                                                 }}
                                                 name="count"
@@ -562,7 +567,7 @@ const AddProduct = ({
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
                                                         return (
-                                                            <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
+                                                            <option key={item?.id + index} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}
                                                             </option>
                                                         );
@@ -575,6 +580,7 @@ const AddProduct = ({
                                                 რაოდენობა
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
@@ -623,6 +629,7 @@ const AddProduct = ({
                                                 ღირეულება
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
@@ -644,7 +651,9 @@ const AddProduct = ({
                                                 onClick={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        craft_status: e.target.value
+                                                        craft_status: {
+                                                            connect: [{ id: e.target.value }],
+                                                        },
                                                     }));
                                                 }}
                                                 name="count"

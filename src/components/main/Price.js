@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 const Price = ({ price }) => {
-  const [monthly, setMonthly] = useState(true);
   const [annual, setAnnual] = useState(false);
+  const [monthly, setMonthly] = useState(true);
   const [selected, setSelected] = useState(3);
 
   return (
@@ -72,45 +72,40 @@ const Price = ({ price }) => {
                 <div className="col-xl-4">
                   <div className="d-flex h-100 align-items-center">
                     <div
-                      className={`w-100 d-flex flex-column flex-center rounded-3 ${
-                        selected === 1 ? "bg-primary" : "bg-body"
-                      } py-15 px-10`}
+                      className={`w-100 d-flex flex-column flex-center rounded-3 ${selected === 1 ? "bg-primary" : "bg-body"
+                        } py-15 px-10`}
                     >
                       <div className="mb-7 text-center">
                         <h1
-                          className={`${
-                            selected === 1
+                          className={`${selected === 1
                               ? "text-white mb-5 fw-boldest"
                               : "text-dark mb-5 fw-boldest"
-                          }`}
+                            }`}
                         >
                           Startup
                         </h1>
                         <div
-                          className={`${
-                            selected === 1
+                          className={`${selected === 1
                               ? "text-white opacity-75 fw-bold mb-5"
                               : "text-gray-400 fw-bold mb-5"
-                          }`}
+                            }`}
                         >
                           Best Settings for Startups
                         </div>
                         <div className="text-center">
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "mb-2 text-white"
                                 : "mb-2 text-primary"
-                            }`}
+                              }`}
                           >
                             $
                           </span>
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "fs-3x fw-bolder text-white"
                                 : "fs-3x fw-bolder text-primary"
-                            }`}
+                              }`}
                             data-kt-plan-price-month={99}
                             data-kt-plan-price-annual={999}
                           >
@@ -119,11 +114,10 @@ const Price = ({ price }) => {
                               : `${price.annualPrice.startup}`}
                           </span>
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "fs-7 fw-bold text-white opacity-75"
                                 : "fs-7 fw-bold opacity-50"
-                            }`}
+                              }`}
                             data-kt-plan-price-month="Mon"
                             data-kt-plan-price-annual="Ann"
                           >
@@ -134,20 +128,18 @@ const Price = ({ price }) => {
                       <div className="w-100 mb-10">
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Up to 10 Active Users
                           </span>
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -174,20 +166,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Up to 30 Project Integrations
                           </span>
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -214,20 +204,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Keen Analytics Platform
                           </span>
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -268,20 +256,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Targets Timelines &amp; Files
                           </span>
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -322,20 +308,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack">
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Unlimited Projects
                           </span>
                           <span
-                            className={`${
-                              selected === 1
+                            className={`${selected === 1
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -379,11 +363,10 @@ const Price = ({ price }) => {
                         onClick={() => {
                           setSelected(1);
                         }}
-                        className={`${
-                          selected === 1
+                        className={`${selected === 1
                             ? "btn btn-color-primary btn-active-light-primary btn-light"
                             : "btn btn-primary"
-                        }`}
+                          }`}
                       >
                         Select
                       </a>
@@ -393,45 +376,40 @@ const Price = ({ price }) => {
                 <div className="col-xl-4">
                   <div className="d-flex h-100 align-items-center">
                     <div
-                      className={`w-100 d-flex flex-column flex-center rounded-3 ${
-                        selected === 2 ? "bg-primary" : "bg-body"
-                      } py-15 px-10`}
+                      className={`w-100 d-flex flex-column flex-center rounded-3 ${selected === 2 ? "bg-primary" : "bg-body"
+                        } py-15 px-10`}
                     >
                       <div className="mb-7 text-center">
                         <h1
-                          className={`${
-                            selected === 2
+                          className={`${selected === 2
                               ? "text-white mb-5 fw-boldest"
                               : "text-dark mb-5 fw-boldest"
-                          }`}
+                            }`}
                         >
                           Business
                         </h1>
                         <div
-                          className={`${
-                            selected === 2
+                          className={`${selected === 2
                               ? "text-white opacity-75 fw-bold mb-5"
                               : "text-gray-400 fw-bold mb-5"
-                          }`}
+                            }`}
                         >
                           Best Settings for Business
                         </div>
                         <div className="text-center">
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "mb-2 text-white"
                                 : "mb-2 text-primary"
-                            }`}
+                              }`}
                           >
                             $
                           </span>
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "fs-3x fw-bolder text-white"
                                 : "fs-3x fw-bolder text-primary"
-                            }`}
+                              }`}
                             data-kt-plan-price-month={199}
                             data-kt-plan-price-annual={1999}
                           >
@@ -440,11 +418,10 @@ const Price = ({ price }) => {
                               : `${price.annualPrice.business}`}
                           </span>
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "fs-7 fw-bold text-white opacity-75"
                                 : "fs-7 fw-bold opacity-50"
-                            }`}
+                              }`}
                             data-kt-plan-price-month="Mon"
                             data-kt-plan-price-annual="Ann"
                           >
@@ -455,20 +432,18 @@ const Price = ({ price }) => {
                       <div className="w-100 mb-10">
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Up to 10 Active Users
                           </span>
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -495,20 +470,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Up to 30 Project Integrations
                           </span>
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -535,20 +508,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Keen Analytics Platform
                           </span>
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -575,20 +546,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Targets Timelines &amp; Files
                           </span>
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -615,20 +584,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack">
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Unlimited Projects
                           </span>
                           <span
-                            className={`${
-                              selected === 2
+                            className={`${selected === 2
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -672,11 +639,10 @@ const Price = ({ price }) => {
                         onClick={() => {
                           setSelected(2);
                         }}
-                        className={`${
-                          selected === 2
+                        className={`${selected === 2
                             ? "btn btn-color-primary btn-active-light-primary btn-light"
                             : "btn btn-primary"
-                        }`}
+                          }`}
                       >
                         Select
                       </a>
@@ -686,45 +652,40 @@ const Price = ({ price }) => {
                 <div className="col-xl-4">
                   <div className="d-flex h-100 align-items-center">
                     <div
-                      className={`w-100 d-flex flex-column flex-center rounded-3 ${
-                        selected === 3 ? "bg-primary" : "bg-body"
-                      } py-15 px-10`}
+                      className={`w-100 d-flex flex-column flex-center rounded-3 ${selected === 3 ? "bg-primary" : "bg-body"
+                        } py-15 px-10`}
                     >
                       <div className="mb-7 text-center">
                         <h1
-                          className={`${
-                            selected === 3
+                          className={`${selected === 3
                               ? "text-white mb-5 fw-boldest"
                               : "text-dark mb-5 fw-boldest"
-                          }`}
+                            }`}
                         >
                           Enterprise
                         </h1>
                         <div
-                          className={`${
-                            selected === 3
+                          className={`${selected === 3
                               ? "text-white opacity-75 fw-bold mb-5"
                               : "text-gray-400 fw-bold mb-5"
-                          }`}
+                            }`}
                         >
                           Best Settings for Enterprise
                         </div>
                         <div className="text-center">
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "mb-2 text-white"
                                 : "mb-2 text-primary"
-                            }`}
+                              }`}
                           >
                             $
                           </span>
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "fs-3x fw-bolder text-white"
                                 : "fs-3x fw-bolder text-primary"
-                            }`}
+                              }`}
                             data-kt-plan-price-month={999}
                             data-kt-plan-price-annual={9999}
                           >
@@ -733,11 +694,10 @@ const Price = ({ price }) => {
                               : `${price.annualPrice.enterprise}`}
                           </span>
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "fs-7 fw-bold text-white opacity-75"
                                 : "fs-7 fw-bold opacity-50"
-                            }`}
+                              }`}
                             data-kt-plan-price-month="Mon"
                             data-kt-plan-price-annual="Ann"
                           >
@@ -748,20 +708,18 @@ const Price = ({ price }) => {
                       <div className="w-100 mb-10">
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Up to 10 Active Users
                           </span>
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -788,20 +746,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Up to 30 Project Integrations
                           </span>
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -828,20 +784,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Keen Analytics Platform
                           </span>
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -868,20 +822,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack mb-5">
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Targets Timelines &amp; Files
                           </span>
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -908,20 +860,18 @@ const Price = ({ price }) => {
                         </div>
                         <div className="d-flex flex-stack">
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "fw-bold fs-6 text-white opacity-75"
                                 : "fw-bold fs-6 text-gray-800 text-start pe-3"
-                            }`}
+                              }`}
                           >
                             Unlimited Projects
                           </span>
                           <span
-                            className={`${
-                              selected === 3
+                            className={`${selected === 3
                                 ? "svg-icon svg-icon-1 svg-icon-white"
                                 : "svg-icon svg-icon-1 svg-icon-success"
-                            }`}
+                              }`}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -951,11 +901,10 @@ const Price = ({ price }) => {
                         onClick={() => {
                           setSelected(3);
                         }}
-                        className={`${
-                          selected === 3
+                        className={`${selected === 3
                             ? "btn btn-color-primary btn-active-light-primary btn-light"
                             : "btn btn-primary"
-                        }`}
+                          }`}
                       >
                         Select
                       </a>

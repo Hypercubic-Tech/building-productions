@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setCategory } from "../../store/slices/categorySlice";
@@ -13,7 +11,7 @@ const Filter = ({
 }) => {
   const dispatch = useDispatch();
 
-  const activeCategoryId = useSelector(state => state.cats.category);
+  const activeCategoryId = useSelector(state => state?.cats?.category);
 
   return (
     <div className="header-menu-container container-xxl d-flex flex-stack h-lg-75px">
@@ -39,7 +37,7 @@ const Filter = ({
                 >
                   <a className={`menu-link active py-3 colored-element ${activeCategoryId === item?.id ? 'bg-primary' : ""}`}>
                     <span className={`menu-title georgian ${styles.item}`}>
-                      <img className={styles.icon} src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item.attributes.icon.data.attributes.url}`} />
+                      <img className={styles.icon} src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.icon?.data?.attributes?.url}`} />
                       {/* <i className="bi bi-plug-fill" />{" "} */}
                       {item?.attributes?.title}
                     </span>
@@ -56,7 +54,6 @@ const Filter = ({
           >
             <a className={`${"menu-link"} ${"active"} ${"py-3"} ${activeCategoryId === null ? 'bg-primary' : ""}`}>
               <span className={`menu-title georgian ${styles.item}`}>
-                {/* <i className="bi bi-plug-fill" />  */}
                 <svg className={styles.icon} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
                   <g id="SVGRepo_bgCarrier" strokeWidth="0">
                   </g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round">

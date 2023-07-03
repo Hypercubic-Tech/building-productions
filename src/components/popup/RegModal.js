@@ -73,7 +73,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
           notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
         });
     } catch (err) {
-      notify(true, "რეგისტრაცია უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+      notify(true, "რეგისტრაცია უარყოფილია, იმეილი ან სახელი უკვე გამოყენებულია");
       console.log(err);
     }
     handleRegistration(true);
@@ -362,7 +362,6 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 </g>
               </svg>
             </div>
-
             <div className="d-grid gap-2 mt-n1">
               <div className="d-grid gap-2 mt-n1">
                 <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
@@ -380,7 +379,6 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 >
                   <option disabled value="აირჩიეთ გადახდის მეთოდი">აირჩიეთ გადახდის მეთოდი</option>
                   <option id="1" value="tbc">TBC</option>
-                  <option id="2" value="bog">BOG</option>
                 </select>
               </div>
               {lossData && regData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}

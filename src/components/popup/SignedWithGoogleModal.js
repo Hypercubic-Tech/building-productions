@@ -1,19 +1,28 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
 import bcrypt from 'bcryptjs';
 import axios from "axios";
+
+import { setAuthUserId } from "../../store/slices/authSlice";
 
 import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
 
 const SignedWithGoogleModal = ({ onClose }) => {
+    const dispatch = useDispatch();
+    const router = useRouter();
     const [step, setStep] = useState(1);
-    const [lossData, setLossData] = useState(false);
-    const [backBtn, setBackBtn] = useState(false);
+
     const authUserEmail = useSelector((state) => state.auth.email);
     const userJwt = useSelector((state) => state.auth.access_token);
+
     const userJwtString = JSON.stringify(userJwt);
     const hashedPassword = bcrypt.hashSync(userJwtString, 10);
+
+    const [lossData, setLossData] = useState(false);
+    const [backBtn, setBackBtn] = useState(false);
+
     const [regData, setRegData] = useState({
         username: "",
         email: authUserEmail,
@@ -28,7 +37,6 @@ const SignedWithGoogleModal = ({ onClose }) => {
         stepOne: [],
         stepTwo: [],
         stepThree: [],
-
     };
 
     const stepChangeHandler = () => {
@@ -66,21 +74,28 @@ const SignedWithGoogleModal = ({ onClose }) => {
     };
 
     const submitGoogleAuthUserData = async () => {
-        await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
-            username: regData?.username,
-            email: regData?.email,
-            userType: regData?.userType,
-            password: regData?.password,
-            phoneNumber: regData?.phoneNumber,
-            paymentPlan: regData?.paymentPlan,
-            paymentMethod: regData?.paymentMethod
-        })
-            .then((res) => {
-                const data = res.data;
-                console.log(data)
-                notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');
-                onClose();
+        try {
+            await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
+                username: regData?.username,
+                email: regData?.email,
+                userType: regData?.userType,
+                password: regData?.password,
+                phoneNumber: regData?.phoneNumber,
+                paymentPlan: regData?.paymentPlan,
+                paymentMethod: regData?.paymentMethod
             })
+                .then((res) => {
+                    const data = res.data;
+                    localStorage.setItem("userId", data?.user?.id);
+                    dispatch(setAuthUserId(data?.user?.id))
+                    notify(false, 'თქვენ წარმატებით გაიარეთ რეგისტრაცია');
+                    onClose();
+                    // router.push('/')
+                })
+        } catch (err) {
+            notify(true, 'რეგისტრაცია უარყოფილია, იმეილი ან სახელი უკვე გამოყენებულია');
+            console.log(err)
+        }
     };
 
     return (
@@ -342,7 +357,6 @@ const SignedWithGoogleModal = ({ onClose }) => {
                                 </g>
                             </svg>
                         </div>
-
                         <div className="d-grid gap-2 mt-n1">
                             <div className="d-grid gap-2 mt-n1">
                                 <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
@@ -360,7 +374,6 @@ const SignedWithGoogleModal = ({ onClose }) => {
                                 >
                                     <option disabled value="აირჩიეთ გადახდის მეთოდი">აირჩიეთ გადახდის მეთოდი</option>
                                     <option id="1" value="tbc">TBC</option>
-                                    <option id="2" value="bog">BOG</option>
                                 </select>
                             </div>
                             {lossData && regData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}

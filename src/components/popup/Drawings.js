@@ -1,12 +1,10 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
 
 import axios from 'axios';
 import Swal from "sweetalert2";
 import LightGallery from 'lightgallery/react';
 
-import { selectProjectImage, setProjectDrawingsImages } from '../../store/slices/projectSlice';
 import lgZoom from 'lightgallery/plugins/zoom';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import notify from '../../utils/notify';
@@ -17,26 +15,22 @@ import 'lightgallery/css/lg-thumbnail.css';
 
 const Drawings = ({ setSelect }) => {
     const router = useRouter();
-    const dispatch = useDispatch();
-    const projectId = router.query.projectId;
-    const projectImages = useSelector(state => state.proj.drawingsImages);
+    const { projectId } = router.query;
+    
     const [imgSrc, setImgSrc] = useState(null);
-    const [projectImgs, setProjectImgs] = useState(null);
-    const [image, setImage] = useState(null);
-    const [imageState, setImageState] = useState(false);
-    const [projectData, setProjectData] = useState({
-        image: image
-    });
+    const [image, setImage] = useState([]);
+    const [isImageUpload, setIsImageUpload] = useState(false);
+    const [isProjectImages, setIsProjectImages] = useState([]);
+    const [isImageState, setIsImageState] = useState(false);
 
     const getProductsHandler = async () => {
         await axios
             .get(
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image`
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=drawing`
             )
             .then((res) => {
                 const data = res.data
-                let imgs = data.data[0].attributes.image.data;
-                setProjectImgs(imgs)
+                setIsProjectImages(data?.data[0]?.attributes?.drawing?.data)
             })
     };
 
@@ -46,82 +40,62 @@ const Drawings = ({ setSelect }) => {
         }
     }, [projectId]);
 
-    const handleUpdateProjectImage = useCallback(async () => {
-        try {
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
-                {
-                    data: projectData,
-                    image: image,
-                }
-            ).then(() => {
-                getProductsHandler();
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    }, [projectId, projectData, image]);
-
-    const handleMediaUpload = useCallback(async (fileList) => {
-        try {
-            const uploadPromises = fileList.map((file) => {
-                const formData = new FormData();
-                formData.append("files", file);
-
-                return axios.post(
-                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
-                    formData,
-                    {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
-                );
-            });
-
-            const uploadResponses = await Promise.all(uploadPromises);
-            const uploadedImages = uploadResponses.map((response) => response.data[0]);
-            dispatch(setProjectDrawingsImages(uploadedImages));
-
-            setImage((prevImages) => {
-                if (!Array.isArray(prevImages) || prevImages === undefined) {
-                    return [...uploadedImages];
-                }
-                return [...prevImages, ...uploadedImages];
-            });
-            notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
-
-            localStorage.setItem('projectImage', JSON.stringify(image));
-        } catch (err) {
-            notify(true, "სურათების ატვირთვა უარყოფილია");
-            console.error(err);
-        }
-    }, [setImage]);
-
-    useEffect(() => {
-        if (imgSrc && !image) {
-            handleMediaUpload();
-        }
-    }, [imgSrc, image, handleMediaUpload]);
-
-    useEffect(() => {
-        setProjectData((prevProductData) => ({
-            ...prevProductData,
-            image: image,
-        }));
-    }, [image]);
-
-    useEffect(() => {
-        if (image) {
-            handleUpdateProjectImage();
-        }
-    }, [image, handleUpdateProjectImage]);
-
-    const handleFileUpload = (fileList) => {
-        if (!fileList || fileList.length === 0) {
+    const handleMediaUpload = async (files) => {
+        if (!files) {
             return;
         }
-        handleMediaUpload(fileList);
+
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            formData.append("files", file);
+        }
+
+        try {
+            await axios
+                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((res) => {
+                    const newImages = isProjectImages ? [...image, ...isProjectImages, ...res.data] : [...image, ...res.data];
+                    setImage(newImages);
+                    setImgSrc(newImages[0].url);
+                    setIsImageUpload(true);
+                    notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
+                });
+        } catch (err) {
+            console.error(err);
+            notify(true, "სურათების ატვირთვა უარყოფილია");
+        }
+    };
+
+    useEffect(() => {
+        if (isImageUpload) {
+            const userImageUpload = async () => {
+                await axios.put(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+                    {
+                        data: {
+                            drawing: image.map((p) => p.id),
+                        },
+                    }
+                )
+                    .then(() => {
+                        getProductsHandler();
+                    });
+            };
+            userImageUpload();
+        }
+    }, [isImageUpload, image]);
+
+    const toggleImages = () => {
+        if (!isImageState) {
+            setIsImageState(false)
+        } else {
+            setIsImageState(true)
+        }
     };
 
     const confirmHandler = (imageId) => {
@@ -156,21 +130,13 @@ const Drawings = ({ setSelect }) => {
     const handleDeleteImage = async (imageId) => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
             .then(() => {
-                getProductsHandler()
+                // getProductsHandler()
             })
         setImgSrc(null);
     };
 
-    const toggleHandler = () => {
-        if (!imageState) {
-            setImageState(false)
-        } else {
-            setImageState(true)
-        }
-    }
-
     return (
-        <div className="modal fade show" style={{ zIndex: imageState ? "0" : "100" }}>
+        <div className="modal fade show" style={{ zIndex: isImageState ? "0" : "100" }}>
             <div className="modal modal-dialog-centered custom-width">
                 <div className="modal-content custom-width" style={{ width: "90% ", height: "90%", margin: "5%" }}>
                     <div className="modal-header" id="kt_modal_add_user_header">
@@ -178,7 +144,7 @@ const Drawings = ({ setSelect }) => {
                         <div
                             className="btn btn-icon btn-sm btn-active-icon-primary"
                             data-kt-users-modal-action="close"
-                            style={{ marginLeft: "90%" }}
+                            style={{ marginLeft: "80%" }}
                         >
                             <span
                                 className="svg-icon svg-icon-1"
@@ -219,10 +185,10 @@ const Drawings = ({ setSelect }) => {
                     <div className="modal-body mx-5 mx-xl-15 my-7 d-flex flex-wrap">
                         <form id="kt_modal_add_user_form" className="form">
                             <div style={{
-                                    flexDirection: "column"
-                                }}
+                                flexDirection: "column"
+                            }}
                                 className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
-                                <button className="btn btn-primary georgian image-input"
+                                <div className="btn btn-primary georgian image-input"
                                     style={{
                                         position: "absolute",
                                         right: "50px",
@@ -257,11 +223,7 @@ const Drawings = ({ setSelect }) => {
                                                 cursor: "pointer"
                                             }}
                                             onChange={(e) => {
-                                                const files = e.target.files;
-
-                                                const fileList = Array.from(files);
-
-                                                handleFileUpload(fileList);
+                                                handleMediaUpload(e.target.files);
                                             }}
                                             type="file"
                                             name="avatar"
@@ -272,26 +234,16 @@ const Drawings = ({ setSelect }) => {
                                             <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
                                         </svg>
                                     </div>
-                                    {/* <div className="image-input-wrapper w-125px h-125px"></div> */}
-                                </button>
-
-                                {projectImages && (
+                                </div>
+                                {isProjectImages && (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} elementClassNames="custom-class-name">
-                                        {projectImages.map((projectImg, index) => (
+                                        {isProjectImages.map((projectImg, index) => (
                                             <a
                                                 key={projectImg?.id}
-                                                href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.url}`}
+                                                href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
                                                 className="gallery-item"
-                                                onClick={toggleHandler}
+                                                onClick={toggleImages}
                                             >
-                                                <div>
-                                                    {/* <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        value=""
-                                                        id="flexCheckDefault"
-                                                    /> */}
-                                                </div>
                                                 <div style={{
                                                     display: "flex",
                                                     flexDirection: "column",
@@ -299,18 +251,18 @@ const Drawings = ({ setSelect }) => {
                                                     height: "auto",
                                                     margin: "20px"
                                                 }}>
-                                                <img
-                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.url}`}
-                                                    className="img-responsive col-sm"
-                                                    style={{
-                                                        width: "50%",
-                                                        height: "auto",
-                                                        marginLeft: "auto",
-                                                        marginRight: "auto",
-                                                        objectFit: "contain"
-                                                    }}
-                                                />
-                                                    </div>
+                                                    <img
+                                                        src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                        className="img-responsive col-sm"
+                                                        style={{
+                                                            width: "50%",
+                                                            height: "auto",
+                                                            marginLeft: "auto",
+                                                            marginRight: "auto",
+                                                            objectFit: "contain"
+                                                        }}
+                                                    />
+                                                </div>
                                             </a>
                                         ))}
                                     </LightGallery>
