@@ -17,9 +17,9 @@
   background-color: rgba(0, 0, 0, 0.7);
   z-index: -1;
 }
-.mainBg {
-  background-color: #FCFFE7;
-}
+/* .mainBg {
+  /* background-color: #FCFFE7; } */
+
 .gap {
   gap: 20px;
 }
