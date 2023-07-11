@@ -9,7 +9,7 @@ const Price = ({ price }) => {
     <div className="mt-sm-n20">
       <div className="landing-curve landing-dark-color">
       </div>
-      <div className="py-20 landing-dark-bg">
+      <div className="landing-dark-bg">
         <div>
           <div className="d-flex flex-column container pt-lg-20">
             <div className="text-center" id="kt_pricing">
@@ -23,7 +23,7 @@ const Price = ({ price }) => {
                     setMonthly(true);
                     setAnnual(false);
                   }}
-                  className={`me-2 btn btn-color-gray-600 btn-active btn-active-success px-6 py-3 me-2 ${[
+                  className={`custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
                     monthly ? "active" : "",
                   ]} `}
                   data-kt-plan="month"
@@ -35,7 +35,7 @@ const Price = ({ price }) => {
                     setMonthly(false);
                     setAnnual(true);
                   }}
-                  className={`btn btn-color-gray-600 btn-active btn-active-success px-6 py-3 ${[
+                  className={`custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
                     annual ? "active" : "",
                   ]} `}
                   data-kt-plan="annual"

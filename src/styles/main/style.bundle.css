@@ -168,7 +168,7 @@ h6 {
   margin-bottom: 0.5rem;
   font-weight: 600;
   line-height: 1.2;
-  color: #181c32;
+  color: #2B3467;
 }
 .h1,
 h1 {
@@ -18206,9 +18206,9 @@ fieldset:disabled .btn {
   .fs-lg-2tx {
     font-size: calc(1.4rem + 1.8vw) !important;
   }
-  .fs-lg-3x {
-    font-size: calc(1.425rem + 2.1vw);
-  }
+  /* .fs-lg-3x {
+    font-size: 2rem
+  } */
   .fs-lg-3qx {
     font-size: calc(1.45rem + 2.4vw) !important;
   }
@@ -24374,9 +24374,9 @@ fieldset:disabled .btn {
   .fs-2tx {
     font-size: 2.75rem !important;
   }
-  .fs-3x {
+  /* .fs-3x {
     font-size: 3rem !important;
-  }
+  } */
   .fs-3qx {
     font-size: 3.25rem !important;
   }
@@ -24545,9 +24545,9 @@ fieldset:disabled .btn {
   .fs-lg-2tx {
     font-size: 2.75rem !important;
   }
-  .fs-lg-3x {
+  /* .fs-lg-3x {
     font-size: 3rem !important;
-  }
+  } */
   .fs-lg-3qx {
     font-size: 3.25rem !important;
   }
@@ -32303,8 +32303,8 @@ a:hover {
 .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(
     .border-active
   ):not(.btn-flush):not(.btn-icon) {
-  /* border: 0; */
-  padding: calc(0.75rem + 1px) calc(1.5rem + 1px);
+  /* padding: calc(0.75rem + 1px) calc(1.5rem + 1px); */
+  padding: 0.75rem 1rem;
 }
 .btn-group-lg
   > .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(
@@ -48969,8 +48969,8 @@ main {
   padding-left: 22px;
 }
 .team {
-  width: 700px;
-  height: 500px;
+  width: 630px;
+  height: 450px;
   object-fit: contain;
 }
 .btn-bordered {
@@ -48979,16 +48979,21 @@ main {
   padding: 4px;
   width: fit-content;
 }
-.btn-bordered svg {
-  width: 32px;
-  height: 32px;
-  margin-right: 16px;
+.btn-bordered svg { 
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
 }
 .calc-img, .faq-bg {
   width: 400px;
   height: 515px;
   object-fit: contain;
 }
+/* .faq-bg {
+  width: 675px;
+  height: 684px;
+  object-fit: contain;
+} */
 .under-line {
   border-bottom: 1px solid #8D93B6;
 }
@@ -49029,19 +49034,57 @@ main {
   cursor: pointer;
 }
 
+.pt-256 {
+  padding-top: 128px;
+}
+.fs-lg-3x, .fs-3x {
+  font-size: 2rem !important;
+}
+.mb-320 {
+  margin-bottom: 100px;
+}
+.custom-padding {
+  padding: 0.5rem 1rem !important;
+}
 /* custom responsive */
 
-@media screen and (min-width: 1920) {
-  .mt-169 {
-    margin-top: 169px;
-  } 
-  .custom-svg {
-    width: 104px;
-    height: 104px;
-    margin-left: 16px;
+@media (min-width: 1920px) and (max-width: 2560px)  {
+  .custom-padding {
+    padding: 0.75rem 1rem !important;
   }
+  .btn-bordered svg {
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+  }
+  .mb-320 {
+    margin-bottom: 320px;
+  }
+  .calc-img {
+    width: 400px;
+    height: 515px;
+    object-fit: contain;
+  }
+  .faq-bg {
+    width: 566px;
+    height: 615px;
+    object-fit: contain;
+  }
+  .fs-lg-3x, .fs-3x {
+    font-size: 3rem !important;
+  }
+    .mt-169 {
+      margin-top: 169px;
+    } 
+    /* .custom-svg {
+      width: 104px;
+      height: 104px;
+      margin-left: 16px;
+    } */
+    .pt-256 {
+      padding-top: 256px;
+    }
 }
-
 @media (max-width: 1199.98px) {
   .banner {
     width: 500px !important;

@@ -25,9 +25,24 @@ const Faq = () => {
 
     let items = [
       {
+        itemNumber: 0,
+        question: "როგორ ვისარგებლოთ ამ სერვისით?",
+        answer: "ლორემ იპსუმ რომლითაც პასპორტით დაუგდებს თითონაც პრისი,ნაჭრითა ქალაქებში იტრიალებს. გაიცინე მოხუცის გაზრდილ დაგუბებულინიშნობაში ცეცხლი. სამყაროსათვის შესასვლელს გადმონაშთო,პასპორტით უგვანობა მიმართლებდა ქალაქებში პირადად.",
+      },
+      {
         itemNumber: 1,
-        title: "როგორ ვისარგებლოთ ამ სერვისით?",
-        content: "ლორემ იპსუმ რომლითაც პასპორტით დაუგდებს თითონაც პრისი,ნაჭრითა ქალაქებში იტრიალებს. გაიცინე მოხუცის გაზრდილ დაგუბებულინიშნობაში ცეცხლი. სამყაროსათვის შესასვლელს გადმონაშთო,პასპორტით უგვანობა მიმართლებდა ქალაქებში პირადად პიესისმონაწილეობას დათრგუნულმა ქართლიც",
+        question: "ფასიანია თქვენი სერვისი?",
+        answer: "ლორემ იპსუმ რომლითაც პასპორტით დაუგდებს თითონაც პრისი,ნაჭრითა ქალაქებში იტრიალებს. გაიცინე მოხუცის გაზრდილ დაგუბებულინიშნობაში ცეცხლი. სამყაროსათვის შესასვლელს გადმონაშთო,პასპორტით უგვანობა მიმართლებდა ქალაქებში პირადად.",
+      },
+      {
+        itemNumber: 2,
+        question: "როგორ ვისარგებლოთ ამ სერვისით?",
+        answer: "ლორემ იპსუმ რომლითაც პასპორტით დაუგდებს თითონაც პრისი,ნაჭრითა ქალაქებში იტრიალებს. გაიცინე მოხუცის გაზრდილ დაგუბებულინიშნობაში ცეცხლი. სამყაროსათვის შესასვლელს გადმონაშთო,პასპორტით უგვანობა მიმართლებდა ქალაქებში პირადად.",
+      },
+      {
+        itemNumber: 3,
+        question: "ფასიანია თქვენი სერვისი?",
+        answer: "ლორემ იპსუმ რომლითაც პასპორტით დაუგდებს თითონაც პრისი,ნაჭრითა ქალაქებში იტრიალებს. გაიცინე მოხუცის გაზრდილ დაგუბებულინიშნობაში ცეცხლი. სამყაროსათვის შესასვლელს გადმონაშთო,პასპორტით უგვანობა მიმართლებდა ქალაქებში პირადად.",
       },
     ];
   
@@ -41,28 +56,29 @@ const Faq = () => {
   
 
     return (
+        <div className="container-lg pt-256 mb-320">
+            <div className="d-flex w-100 align-items-center">
         <div className="container">
-            <div className="d-flex w-100">
-        <div className="container">
-        <h3 className={`${styles.borderBottom} m-color fs-2hx fw-bold mb-5 georgian`}>
-                    ხშირად დასმული კითხვები
+        <h3 className="m-color fs-2hx fw-bold mb-8 georgian">
+        ხშირად დასმული კითხვები
         </h3>
-        {items.map((item) => {
+        {items.map((item, i) => {
             return (
-          <Faqs
-            visible={visible}
-            hanlder={hanlder}
-            itemNumber={item.itemNumber}
-            title={item.title}
-            content={item.content}
+              <Faqs
+              key={i}
+              visible={visible}
+              hanlder={hanlder}
+              itemNumber={item.itemNumber}
+              question={item.question}
+              answer={item.answer}
           />
         );
       })}
     </div>
-                <div className="w-50 relative">
-            <img className="faq-bg" src="/images/faq.png" alt="faq"/>
-                </div>
-            </div>
+        <div className="w-50 relative">
+          <img className="faq-bg" src="/images/faq.png" alt="faq"/>
+        </div>
+        </div>
         </div>
 
         // <div className={styles.bodyContainer}>
