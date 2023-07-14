@@ -5,7 +5,6 @@ import { setAuthAccessToken, setAuthEmail, setAuthUserId } from "../store/slices
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-import AboutCompany from "../components/main/AboutCompany";
 import Heading from "../components/main/Heading";
 import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
@@ -17,14 +16,14 @@ import notify from "../utils/notify";
 
 const priceData = {
   monthlyPrice: {
-    startup: 50,
-    business: 150,
-    enterprise: 200,
+    startup: 20,
+    business: 50,
+    enterprise: 100,
   },
   annualPrice: {
-    startup: 500,
-    business: 700,
-    enterprise: 1000,
+    startup: 100,
+    business: 180,
+    enterprise: 360,
   },
 };
 
@@ -91,9 +90,8 @@ const Home = () => {
         <Heading />
         <HowItWorks />
         <OurTeam />
-        <AboutCompany />
         <Price price={priceData} />
-        <ContactUs />
+        {/* <ContactUs /> */}
         <Faq />
         {id_token && isClosed && isAuthWithGoogle?.length === 0 && <SignedWithGoogleModal onClose={toggleModal} userEmail={userObject?.email} userToken={id_token} />}
       </div>

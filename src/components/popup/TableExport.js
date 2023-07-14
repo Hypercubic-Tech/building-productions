@@ -13,7 +13,7 @@ const TableExport = ({totalSum, aggregatedProducts,
             <img
               alt="Logo"
               src=""
-              className="h-20px h-lg-30px"
+              className="h-20px h-lg-50px"
             />
         </div>}
         <table

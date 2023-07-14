@@ -120,7 +120,7 @@ const AboutCompany = () => {
             data-kt-scroll-offset="{default: 100, lg: 150}"
           >
             <h3 className="fs-2hx fw-bolder mb-5 georgian">
-              კომპანიის შესახებ
+              ჩვენი გუნდი
             </h3>
             <div className="fs-5 text-gray-700 fw-bold georgian">
               კომპანია „ReCounter“ დაარსდა 2022 წელს და პირველად საქართველოში
