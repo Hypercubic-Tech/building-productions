@@ -17,9 +17,6 @@
   background-color: rgba(0, 0, 0, 0.7);
   z-index: -1;
 }
-/* .mainBg {
-  /* background-color: #FCFFE7; } */
-
 .gap {
   gap: 20px;
 }
@@ -31,11 +28,13 @@
   padding: 20px 0 0.75rem 0 !important;
 }
 .flexWrap {
+  gap: 60px;
   flex-wrap: wrap;
   justify-content: flex-start !important;
+  margin-bottom: 60px;
 }
 .wrapChild {
-  flex: 0 0 23.2%;
+  flex: 0 0 30%;
 }
 .imgWrap img {
   max-width: 100%;
@@ -94,7 +93,8 @@
 
 .buttons {
   display: flex;
-  gap: 32px;
+  /* gap: 32px; */
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -107,10 +107,18 @@ and (max-width : 991px) {
 }
 
 @media (max-width: 767px) {
+  .flexWrap {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+  }
   .wrapChild {
-    flex: 0 0 100%;
+    flex: 0 0 90%;
   }
   .mt20 {
     padding-top: 0.75rem !important;
+  }
+  .width100 {
+    width: 100%;
   }
 }
