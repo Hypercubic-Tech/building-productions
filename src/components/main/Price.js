@@ -7,8 +7,8 @@ const Price = ({ price }) => {
 
   return (
     <div className="mt-sm-n20">
-      <div className="landing-curve landing-dark-color">
-      </div>
+      {/* <div className="landing-curve landing-dark-color">
+      </div> */}
       <div className="landing-dark-bg">
         <div>
           <div className="d-flex flex-column container pt-lg-20">
@@ -105,8 +105,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 1
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Up to 10 Active Users
@@ -125,8 +125,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 1
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Up to 30 Project Integrations
@@ -145,8 +145,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 1
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Keen Analytics Platform
@@ -165,8 +165,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 1
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Targets Timelines &amp; Files
@@ -185,8 +185,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack">
                           <span
                             className={`${selected === 1
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Unlimited Projects
@@ -277,8 +277,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 2
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Up to 10 Active Users
@@ -297,8 +297,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 2
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Up to 30 Project Integrations
@@ -317,8 +317,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 2
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Keen Analytics Platform
@@ -337,8 +337,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 2
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Targets Timelines &amp; Files
@@ -357,8 +357,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack">
                           <span
                             className={`${selected === 2
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Unlimited Projects
@@ -449,8 +449,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 3
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Up to 10 Active Users
@@ -469,8 +469,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 3
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Up to 30 Project Integrations
@@ -489,8 +489,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 3
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Keen Analytics Platform
@@ -509,8 +509,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack mb-5">
                           <span
                             className={`${selected === 3
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Targets Timelines &amp; Files
@@ -529,8 +529,8 @@ const Price = ({ price }) => {
                         <div className="d-flex flex-stack">
                           <span
                             className={`${selected === 3
-                                ? "fw-bold fs-6 text-white opacity-75"
-                                : "fw-bold fs-6 text-gray-800 text-start pe-3"
+                                ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
                               }`}
                           >
                             Unlimited Projects

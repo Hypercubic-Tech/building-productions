@@ -34,7 +34,7 @@
   color: #2B3467;
   cursor: pointer;
   margin: 10px 0;
-  display: inline-block;
+  width: fit-content;
 }
 .registrationBtn:hover {
   color: #BAD7E9;
@@ -44,11 +44,10 @@
   height: 22px;
   cursor: pointer;
 }
-.closeBtn path {
-  stroke: #00b1fe;
+.closeBtn {
   transition: all 0.3s ease;
 }
 
-.closeBtn:hover path {
-  stroke: #0098da;
+.closeBtn:hover {
+  opacity: 0.6;
 }

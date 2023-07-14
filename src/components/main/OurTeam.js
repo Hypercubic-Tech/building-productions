@@ -100,18 +100,18 @@ const AboutCompany = () => {
 
   return (
     <div className="mt-sm-n10">
-      <div className="landing-curve landing-dark-color">
-      </div>
+      {/* <div className="landing-curve landing-dark-color">
+      </div> */}
       <div className="pt-18 landing-dark-bg mt-169">
       {/* pb-15 */}
         <div className="container">
           <div
-            className=" d-flex align-center align-items-center mt-15 mb-18"
+            className="custom-row d-flex align-center align-items-center mt-15 mb-18"
             id="achievements"
             data-kt-scroll-offset="{default: 100, lg: 150}"
           >
           <img className="team" src="/images/team.png" alt="banner"/>
-            <div className="w-50">
+            <div className="w-50 responsive-w-100 responsive-justify-center">
             <h3 className="m-color fs-2hx fw-bold mb-5 georgian">
               ჩვენი გუნდი
             </h3>

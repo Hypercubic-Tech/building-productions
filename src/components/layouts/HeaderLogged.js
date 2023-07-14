@@ -95,7 +95,7 @@ function HeaderLogged() {
       data-kt-sticky-name="header"
       data-kt-sticky-offset="{default: '200px', lg: '300px'}"
     >
-      <div className="container-xxl d-flex flex-grow-1 flex-stack cream-bg">
+      <div className="container d-flex flex-grow-1 flex-stack cream-bg">
         <div className="d-flex align-items-center me-5">
           <div
             className="d-lg-none btn btn-icon btn-active-color-primary w-30px h-30px ms-n2 me-3"
@@ -122,13 +122,11 @@ function HeaderLogged() {
             </span>
           </div>
           <Link href="/">
-            <span>
-              <img
-                alt="Logo"
-                src=""
-                className="logo-default h-25px h-lg-30px"
-              />
-            </span>
+                <img
+                  alt="Logo"
+                  src="/images/Logo.png"
+                  className="logo-default h-lg-50px"
+                />
           </Link>
         </div>
         <div className="d-flex align-items-center">

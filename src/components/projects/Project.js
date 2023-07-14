@@ -93,7 +93,7 @@ const Project = ({ project,
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
-          className="container-xxl d-flex flex-stack flex-wrap"
+          className="container d-flex flex-stack flex-wrap"
         >
           {project && project?.map((p, index) => {
             return (

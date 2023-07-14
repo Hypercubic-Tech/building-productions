@@ -84,8 +84,14 @@
 .cream-bg {
   background-color: #FCFFE7 !important;
 }
+.cream {
+  color: #FCFFE7 !important;
+}
+.blue {
+  color: #2B3467 !important;
+}
 .blue-bg {
-  color: #2B3467;
+  background-color: #2B3467 !important;
 }
 .light-blue-bg {
   color: #BAD7E9;
@@ -99,12 +105,6 @@
 }
 .width-100 {
   width: 100%;
-}
-.cream {
-  color: #FCFFE7 !important;
-}
-.blue {
-  color: #2B3467;
 }
 .light-blue {
   color: #BAD7E9;
@@ -49102,6 +49102,39 @@ main {
   }
 }
 @media (max-width: 767.98px) {
+  .custom-row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+    margin-right: calc(var(--bs-gutter-x) * -0.5);
+    margin-left: calc(var(--bs-gutter-x) * -0.5);
+  }
+  .custom-row > * {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+    padding-left: calc(var(--bs-gutter-x) * 0.5);
+    margin-top: var(--bs-gutter-y);
+  }
+  .responsive-justify-center {
+    justify-content: center;
+  }
+  .responsive-w-100{
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+  }
+  .faq-bg {
+    width: fit-content;
+    height: 215px;
+    object-fit: contain;
+  }
+  .h-lg-50px {
+    height: 28px;
+  }
   .custom-svg {
     width: 26px;
     height: 26px;
@@ -49114,8 +49147,12 @@ main {
     font-size: 1.5rem !important;
   }
   .banner {
-    width: 200px !important;
-    height: 150px !important;
+    width: fit-content !important;
+    height: 215px !important;
+  }
+  .calc-img {
+    width: fit-content !important;
+    height: 215px !important;
   }
   .mt-169 {
     margin-top: 42px;

@@ -44,16 +44,16 @@ function DefaultHeader() {
         data-kt-sticky-name="landing-header"
         data-kt-sticky-offset="{default: '200px', lg: '300px'}"
       >
-        <div className="container-xxl d-flex flex-grow-1 cream-bg">
+        <div className="container d-flex flex-grow-1 cream-bg">
           <div className="d-flex align-items-center justify-content-between width-100 cream-bg">
             <div className="d-flex align-items-center">
             <Link href="/">
                 <img
                   alt="Logo"
-                  src=""
-                  className="logo-default h-25px h-lg-30px"
+                  src="/images/Logo.png"
+                  className="logo-default h-lg-50px"
                 />
-              </Link>
+            </Link>
             </div>
             <div className="d-lg-block" id="kt_header_nav_wrapper">
             </div>

@@ -56,9 +56,9 @@ const Faq = () => {
   
 
     return (
-        <div className="container-lg pt-256 mb-320">
-            <div className="d-flex w-100 align-items-center">
-        <div className="container">
+        <div className="container pt-256 mb-320">
+        <div className="d-flex w-100 align-items-center custom-row responsive-justify-center">
+        <div className="">
         <h3 className="m-color fs-2hx fw-bold mb-8 georgian">
         ხშირად დასმული კითხვები
         </h3>

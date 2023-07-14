@@ -1,0 +1,18 @@
+.mb18 {
+    margin: 18px 0;
+}
+.mr18 {
+    margin-right: 18px;
+}
+.iconHover svg path {
+    transition: 0.6s;
+}
+.iconHover:hover path {
+    opacity: 0.6;
+}
+.social svg path {
+    transition: 0.6s;
+}
+.social svg:hover path {
+    opacity: 0.6;
+}

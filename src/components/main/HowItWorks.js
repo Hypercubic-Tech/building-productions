@@ -3,7 +3,7 @@ const HowItWorks = () => {
   return (
     <div style={{marginTop: "30px"}} className="mb-n10 mb-lg-n20 z-index-2">
       <div className="container">
-        <div className="d-flex w-100 relative mt-169 col-responsive">
+        <div className="d-flex w-100 relative mt-169 align-items-center col-responsive">
         <div className="w-100 gy-10 mb-md-20">
         <div className="">
             <div className="mb-17">
@@ -73,8 +73,10 @@ const HowItWorks = () => {
               </div>
             </div>
           </div>
-        </div>
+          </div>
+          <div className="relative responsive-w-100 align-items-center">
         <img className="calc-img" src="/images/calc.png" alt="banner"/>
+          </div>
         </div>
       </div>
     </div>
