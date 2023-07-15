@@ -65,6 +65,9 @@
 .closeBtn:hover path {
   stroke: #0098da;
 }
+.search {
+  cursor: pointer;
+}
 
 /* popup element */
 

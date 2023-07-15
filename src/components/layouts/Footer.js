@@ -3,7 +3,7 @@ import styles from "./Footer.module.css"
 
 function Footer() {
   return (
-    <div className="landing-dark-separator cream-bg landing-dark-bg">
+    <div className={` landing-dark-separator cream-bg landing-dark-bg ${styles.zIndex}`}>
       <div className="container cream-bg">
         <div className="d-flex flex-column flex-md-row flex-stack py-7">
         {/* py-lg-10 */}

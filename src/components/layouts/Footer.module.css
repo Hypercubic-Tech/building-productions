@@ -1,3 +1,7 @@
+.zIndex {
+    z-index: 1;
+    position: relative;
+}
 .mb18 {
     margin: 8px 0;
 }

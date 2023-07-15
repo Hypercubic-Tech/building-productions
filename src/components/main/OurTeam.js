@@ -111,7 +111,7 @@ const AboutCompany = () => {
             data-kt-scroll-offset="{default: 100, lg: 150}"
           >
           <img className="team" src="/images/team.png" alt="banner"/>
-            <div className="w-50 responsive-w-100 responsive-justify-center">
+            <div className="w-50 responsive-w-100 responsive-justify-center ms-4">
             <h3 className="m-color fs-2hx fw-bold mb-5 georgian">
               ჩვენი გუნდი
             </h3>

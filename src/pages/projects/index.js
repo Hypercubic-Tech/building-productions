@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-import { setAuthState } from "../../store/slices/authSlice";
+// import { setAuthState } from "../../store/slices/authSlice";
+
+import BuildingBg from "../../components/svg/BuildingBg";
 
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -32,16 +34,20 @@ const index = () => {
 
     if (searchValue) {
         const lowercaseSearchType = searchValue.toLowerCase();
-        projectsToMap = projectData.reduce((filteredProjects, project) => {
-            const projectTitle = project?.attributes?.title?.toLowerCase();
-            const projectAddress = project?.attributes?.address?.toLowerCase(); // Added line
-            if (projectTitle === lowercaseSearchType || projectAddress === lowercaseSearchType) { // Modified line
-                return [project];
-            } else if (projectTitle.includes(lowercaseSearchType) || projectAddress.includes(lowercaseSearchType)) { // Modified line
-                return [...filteredProjects, project];
-            }
-            return filteredProjects;
-        }, []);
+        // if (projectData && Array.isArray(projectData)) {
+            projectsToMap = projectData.reduce((filteredProjects, project) => {
+                const projectTitle = project?.attributes?.title?.toLowerCase();
+                const projectAddress = project?.attributes?.address?.toLowerCase(); // Added line
+                if (projectTitle === lowercaseSearchType || projectAddress === lowercaseSearchType) { // Modified line
+                    return [project];
+                } else if (projectTitle.includes(lowercaseSearchType) || projectAddress.includes(lowercaseSearchType)) { // Modified line
+                    return [...filteredProjects, project];
+                }
+                return filteredProjects;
+            }, []);
+        // } else {
+        //     console.log('projectData is null or not an array');
+        // }
     }
 
     const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
@@ -191,9 +197,10 @@ const index = () => {
                 <Unauthorized />
             ) : (
                 <>
-                    <div className="container">
+                        <div className="container">
                         {projectsToMap?.length > 0 ? buttonWrap : ""}
-                        <div className={`${styles.flexWrap} d-flex justify-content-center `}>
+                            <div className={`${styles.flexWrap} d-flex justify-content-center `}>
+                        {/* <BuildingBg /> */}
                             {projectsToMap?.length > 0 ? (
                                 projectsToMap.slice(startIndex, endIndex).map((item, index) => {
                                     return (
@@ -240,9 +247,10 @@ const index = () => {
                                     )
                                 })
                             ) : (
-                                <div className={styles.wrap}>
+                                    <div className={styles.wrap}>
                                     <h2 className={` ${styles.notFound} geo-title `}>პროექტები ვერ მოიძებნა</h2>
                                     {buttonWrap}
+                                        {/* <BuildingBg /> */}
                                 </div>
                             )}
                         </div>

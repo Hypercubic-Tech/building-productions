@@ -17,9 +17,19 @@
   background-color: rgba(0, 0, 0, 0.7);
   z-index: -1;
 }
-.gap {
+
+/* .gap {
   gap: 20px;
+} */
+/* 
+.line path {
+  stroke: #CFD3EB;
 }
+.line {
+  width: 20%;
+  margin-top: 15px;
+} */
+
 .scroll {
   overflow-x: auto;
   height: 450px;
@@ -75,25 +85,27 @@
   right: 20px;
   top: 44px;
 }
-/* .notFound {
 
-  color: #2B3467;
-} */
+/* notFound  */
 
 .wrap {
   display: flex;
+  text-align: center;
   flex-direction: column;
   position: absolute;
-  gap: 16px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
+  /* z-index: 1;
+  height: 100%;
+  width: 100%;   */
 }
+/* .notFound {
+} */
 
 .buttons {
   display: flex;
-  /* gap: 32px; */
+  gap: 32px;
   justify-content: space-between;
   align-items: center;
 }

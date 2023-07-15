@@ -81,6 +81,16 @@ const AddProject = ({ dismiss, setShowProject }) => {
       return "pending";
     }
   };
+  
+  const getStatusClassName = (stepIndex) => {
+    if (stepIndex < step) {
+      return "custom-completed";
+    } else if (stepIndex === step) {
+      return "custom-current";
+    } else {
+      return "custom-pending";
+    }
+  };
 
   const stepChangeHandler = () => {
 
@@ -219,37 +229,15 @@ const AddProject = ({ dismiss, setShowProject }) => {
         <div className="modal-header">
           <h2 className="georgian">ობიექტის დამატება</h2>
           <div
-            className="btn btn-sm btn-icon btn-active-color-primary"
+            className="btn red-ghost-btn"
+            // btn-sm btn-icon btn-active-color-primary
             data-bs-dismiss="modal"
             onClick={dismiss}
           >
-            <span className="svg-icon svg-icon-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <rect
-                  opacity="0.5"
-                  x={6}
-                  y="17.3137"
-                  width={16}
-                  height={2}
-                  rx={1}
-                  transform="rotate(-45 6 17.3137)"
-                  fill="black"
-                />
-                <rect
-                  x="7.41422"
-                  y={6}
-                  width={16}
-                  height={2}
-                  rx={1}
-                  transform="rotate(45 7.41422 6)"
-                  fill="black"
-                />
+            <span className="svg-icon-1">
+              პროცესის შეწყვეტა
+            <svg className="ms-4" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.4 13.3077L9 9.7077L12.6 13.3077L13.3077 12.6L9.7077 9L13.3077 5.4L12.6 4.6923L9 8.2923L5.4 4.6923L4.6923 5.4L8.2923 9L4.6923 12.6L5.4 13.3077ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#EB455F"/>
               </svg>
             </span>
           </div>
@@ -275,7 +263,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     <div className="stepper-desc georgian">ობიექტის აღწერა</div>
                   </div>
                 </div>
-
+                <svg className={` line ${getStatusClassName(1)}`} width="368" height="1" viewBox="0 0 368 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB"/>
+                </svg>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(2)}`}
                   data-kt-stepper-element="nav"
@@ -292,7 +282,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                   </div>
                 </div>
-
+                <svg className={` line ${getStatusClassName(2)}`} width="368" height="1" viewBox="0 0 368 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB"/>
+                </svg>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(3)}`}
                   data-kt-stepper-element="nav"
@@ -309,7 +301,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                   </div>
                 </div>
-
+                <svg className={` line ${getStatusClassName(3)}`} width="368" height="1" viewBox="0 0 368 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB"/>
+                </svg>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(4)}`}
                   data-kt-stepper-element="nav"

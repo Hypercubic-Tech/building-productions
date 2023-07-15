@@ -4634,6 +4634,7 @@ fieldset:disabled .btn {
   background-color: rgba(245, 248, 250, 0.35);
   background-clip: border-box;
   border: 1px solid #eff2f5;
+  border-radius: 4px;
   box-shadow: none;
 }
 .card > hr {
@@ -40865,9 +40866,10 @@ code:not([class*="language-"]) {
 }
 .form-control.form-control-solid {
   background-color: #fff;
-  border-color: #fff;
   color: #2B3467;
   transition: color 0.2s ease, background-color 0.2s ease;
+  border: 1px solid #CFD3EB;
+
 }
 .form-control.form-control-solid::placeholder {
   color: #a1a5b7;
@@ -40926,7 +40928,7 @@ code:not([class*="language-"]) {
 }
 .form-select.form-select-solid {
   background-color: #fff;
-  border-color: #fff;
+  border-color: #CFD3EB;
   color: #2B3467;
   transition: color 0.2s ease, background-color 0.2s ease;
 }
@@ -47490,6 +47492,7 @@ label.rating-label:hover
   display: flex;
   align-items: center;
   transition: color 0.2s ease, background-color 0.2s ease;
+  flex-direction: column;
 }
 .stepper.stepper-pills .stepper-item .stepper-icon {
   display: flex;
@@ -47498,9 +47501,9 @@ label.rating-label:hover
   transition: color 0.2s ease, background-color 0.2s ease;
   width: 30px;
   height: 30px;
-  background-color: #BAD7E9;
-  margin-right: 1.2rem;
+  /* margin-right: 1.2rem; */
   border-radius: 50%;
+  border: 1px solid #CFD3EB;
 }
 .stepper.stepper-pills .stepper-item .stepper-icon .stepper-check {
   display: none;
@@ -47515,6 +47518,7 @@ label.rating-label:hover
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
 }
 .stepper.stepper-pills .stepper-item .stepper-label .stepper-title {
   color: #3f4254;
@@ -49062,6 +49066,7 @@ main {
   background-color: #2B3467 !important;
 }
 .red-ghost-btn:hover {
+  opacity: inherit !important;
   background-color: #EB455F !important;
   color: #fff !important;
 }
@@ -49102,6 +49107,21 @@ main {
 .rotate-svg-btn:hover .rotate-svg {
   transform: rotate(90deg);
 }
+.line {
+  width: 20%;
+  margin-top: 15px;
+}
+
+.custom-current {
+  stroke: #2B3467 !important;
+}
+.custom-completed {
+  stroke: #2B3467 !important;
+}
+.custom-pending {
+  stroke: #000 !important;
+}
+
 /* custom responsive */
 
 @media (min-width: 1920px) and (max-width: 2560px)  {
