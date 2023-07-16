@@ -28,13 +28,28 @@
     -moz-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
 }
+.responsive {
+    display: flex;
+    justify-content: flex-end;
+}
+.width50 {
+    width: 50%;
+}
 @media (min-width: 1920px) and (max-width: 2560px)  {
     .borderBottom {
         border-bottom: 1px solid #2B3467;
         padding: 40px 0 !important;
     }
-  
   }
+  @media (max-width: 767.98px) {
+    .width50 {
+        width: 100%;
+    }
+    .responsive {
+        display: inline-block;
+    }
+  }
+
 /* .bodyContainer {
     display: flex;
     flex-direction: column;

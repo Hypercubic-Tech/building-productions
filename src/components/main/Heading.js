@@ -79,7 +79,7 @@ const Heading = () => {
              <Link href="/projects">
               <div className="btn-bordered">
                 <div
-                className="btn btn-primary georgian"
+                className="btn btn-primary georgian fill-btn"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_create_app"
                 id="kt_toolbar_primary_button"
@@ -99,7 +99,7 @@ const Heading = () => {
               <div className="btn-bordered">
                 <div
                 onClick={handleAuthClick}
-                className="btn btn-primary georgian"
+                className="btn btn-primary georgian fill-btn"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_create_app"
                 id="kt_toolbar_primary_button"

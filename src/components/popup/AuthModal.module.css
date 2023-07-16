@@ -26,8 +26,17 @@
   0 8px 8px hsl(0deg 0% 0% / 0.075),
   0 16px 16px hsl(0deg 0% 0% / 0.075);;
 }
+.borderBottom {
+  border-bottom: 1px solid #2B3467;
+}
+.borderBottom:hover {
+  border-bottom: 1px solid #BAD7E9;
+}
 .btn {
   margin-top: 10px;
+}
+.cursorNone {
+  cursor:auto !important;
 }
 .registrationBtn {
   transition: all 0.3s ease;
@@ -47,7 +56,9 @@
 .closeBtn {
   transition: all 0.3s ease;
 }
-
+.closeBtn path {
+  fill: #2B3467;
+}
 .closeBtn:hover {
   opacity: 0.6;
 }

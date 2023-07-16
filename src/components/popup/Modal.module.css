@@ -30,10 +30,10 @@
   margin-top: 15px;
 } */
 
-.scroll {
+/* .scroll {
   overflow-x: auto;
   height: 450px;
-}
+} */
 .mt20 {
   padding: 20px 0 0.75rem 0 !important;
 }
@@ -52,7 +52,11 @@
   object-fit: contain;
   height: 210px;
 }
-
+.outline {
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid #2B3467;
+}
 .errorBorder {
   border: 1px solid red !important;
 }
@@ -63,6 +67,9 @@
 .gap20 {
   gap: 20px;
   --bs-gutter-x: -56px;
+}
+.customGap {
+  gap: 20px;
 }
 .gutter0 {
   --bs-gutter-x: 0;

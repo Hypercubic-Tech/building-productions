@@ -167,19 +167,19 @@ const index = () => {
     )
 
 
-    useEffect(() => {
-        const getDefaultImage = async () => {
-            await axios
-                .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`)
+    // useEffect(() => {
+    //     const getDefaultImage = async () => {
+    //         await axios
+    //             .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`)
 
-                .then((res) => {
-                    const data = res.data;
-                    setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
-                });
-        };
+    //             .then((res) => {
+    //                 const data = res.data;
+    //                 setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
+    //             });
+    //     };
 
-        getDefaultImage();
-    }, [])
+    //     getDefaultImage();
+    // }, [])
 
 
     useEffect(() => {

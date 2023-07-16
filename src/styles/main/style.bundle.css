@@ -177,7 +177,7 @@ h1 {
 @media (min-width: 1200px) {
   .h1,
   h1 {
-    font-size: 1.75rem;
+    font-size: 3rem;
   }
 }
 .h2,
@@ -655,6 +655,10 @@ progress {
   .container-xxl {
     max-width: 1320px;
   }
+}
+.gutter-zero {
+  --bs-gutter-x: 0 !important;
+  flex-direction: column;
 }
 .row {
   --bs-gutter-x: 1.5rem;
@@ -2995,6 +2999,18 @@ fieldset:disabled .btn {
   border-color: #BAD7E9;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.btn-primary-custom {
+  color: #fff;
+  background-color: #2B3467;
+}
+.btn-primary-custom:hover {
+  color: #2B3467;
+  background-color: #fff;
+  border: 1px solid #2B3467;
+}
+.buy-btn:hover{
+  opacity: 0.6;
 }
 .btn-primary:hover {
   opacity: 0.7;
@@ -40998,8 +41014,8 @@ code:not([class*="language-"]) {
 }
 .form-check.form-check-solid .form-check-input {
   border: 0;
-  background-color: #eff2f5;
-  border-radius: 50%;
+  background-color: #fff;
+  border-radius: 4px;
 }
 .form-check.form-check-solid .form-check-input:active,
 .form-check.form-check-solid .form-check-input:focus {
@@ -41007,8 +41023,8 @@ code:not([class*="language-"]) {
   background-color: #eff2f5;
 }
 .form-check.form-check-solid .form-check-input:checked {
-  background-color: #BAD7E9;
-  border-radius: 50%;
+  background-color: #2B3467;
+  border-radius: 4px;
 }
 .form-check.form-check-success .form-check-input:checked {
   background-color: #00b2ff;
@@ -47511,7 +47527,7 @@ label.rating-label:hover
 }
 .stepper.stepper-pills .stepper-item .stepper-icon .stepper-number {
   font-weight: 600;
-  color: #2B3467 !important;
+  color: #8D93B6 !important;
   font-size: 1.25rem;
 }
 .stepper.stepper-pills .stepper-item .stepper-label {
@@ -47521,7 +47537,7 @@ label.rating-label:hover
   text-align: center;
 }
 .stepper.stepper-pills .stepper-item .stepper-label .stepper-title {
-  color: #3f4254;
+  color: #8D93B6;
   font-weight: 600;
   font-size: 1.25rem;
   margin-bottom: 0.3rem;
@@ -47545,15 +47561,15 @@ label.rating-label:hover
   font-size: 1.35rem;
 }
 .stepper.stepper-pills .stepper-item.current .stepper-label .stepper-title {
-  color: #7e8299;
+  color: #2B3467;
 }
 .stepper.stepper-pills .stepper-item.current .stepper-label .stepper-desc {
-  color: #b5b5c3;
+  color: #2B3467;
 }
 .stepper.stepper-pills .stepper-item.completed .stepper-icon,
 .stepper.stepper-pills .stepper-item.current:last-child .stepper-icon {
   transition: color 0.2s ease, background-color 0.2s ease;
-  background-color: #e8fff3;
+  background-color: #2B3467;
 }
 .stepper.stepper-pills .stepper-item.completed .stepper-icon .stepper-check,
 .stepper.stepper-pills
@@ -47575,14 +47591,14 @@ label.rating-label:hover
   .stepper-item.current:last-child
   .stepper-label
   .stepper-title {
-  color: #a1a5b7;
+  color: #2B3467;
 }
 .stepper.stepper-pills .stepper-item.completed .stepper-label .stepper-desc,
 .stepper.stepper-pills
   .stepper-item.current:last-child
   .stepper-label
   .stepper-desc {
-  color: #b5b5c3;
+  color: #2B3467;
 }
 .stepper.stepper-pills.stepper-column .stepper-nav {
   flex-direction: row;
@@ -48245,7 +48261,7 @@ html a:hover {
 body {
   display: flex;
   flex-direction: column;
-  color: #181c32;
+  color: #2B3467;
 }
 router-outlet {
   display: none;
@@ -49085,7 +49101,7 @@ main {
   transition: 0.6s;
 }
 .fill-btn:hover svg path {
-  fill: #2B3467;
+  fill: #2B3467 !important;
 }
 .fill-btn:hover {
   opacity: inherit !important;
@@ -49120,6 +49136,9 @@ main {
 }
 .custom-pending {
   stroke: #000 !important;
+}
+.border-none {
+  border: none !important;
 }
 
 /* custom responsive */

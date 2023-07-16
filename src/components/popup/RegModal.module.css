@@ -9,6 +9,22 @@
   width: 100%;
   border-radius: 8px;
   max-width: 360px;
+  box-shadow:
+  0 1px 1px hsl(0deg 0% 0% / 0.075),
+  0 2px 2px hsl(0deg 0% 0% / 0.075),
+  0 4px 4px hsl(0deg 0% 0% / 0.075),
+  0 8px 8px hsl(0deg 0% 0% / 0.075),
+  0 16px 16px hsl(0deg 0% 0% / 0.075);
+  -webkit-box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+  0 2px 2px hsl(0deg 0% 0% / 0.075),
+  0 4px 4px hsl(0deg 0% 0% / 0.075),
+  0 8px 8px hsl(0deg 0% 0% / 0.075),
+  0 16px 16px hsl(0deg 0% 0% / 0.075);;
+  -moz-box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+  0 2px 2px hsl(0deg 0% 0% / 0.075),
+  0 4px 4px hsl(0deg 0% 0% / 0.075),
+  0 8px 8px hsl(0deg 0% 0% / 0.075),
+  0 16px 16px hsl(0deg 0% 0% / 0.075);;
 }
 .btn {
   margin-top: 10px;
@@ -20,14 +36,35 @@
   margin: 8.8px 0;
 }
 .closeBtn path {
-  stroke: #00b1fe;
+  fill: #2B3467;
+}
+.closeBtn {
   transition: all 0.3s ease;
 }
 
-.closeBtn:hover path {
-  stroke: #0098da;
+.closeBtn:hover {
+  opacity: 0.6;
 }
 
 .none {
   display: none;
+}
+.borderBottom {
+  border-bottom: 1px solid #2B3467;
+}
+.borderBottom:hover {
+  border-bottom: 1px solid #BAD7E9;
+}
+.cursorNone {
+  cursor:auto !important;
+}
+.registrationBtn {
+  transition: all 0.3s ease;
+  color: #2B3467;
+  cursor: pointer;
+  margin: 10px 0;
+  width: fit-content;
+}
+.registrationBtn:hover {
+  color: #BAD7E9;
 }
