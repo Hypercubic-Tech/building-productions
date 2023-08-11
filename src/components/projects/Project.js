@@ -117,7 +117,7 @@ const Project = ({ project,
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.Title}
+                    {p?.attributes?.property_type?.data?.attributes?.title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.condition?.data?.attributes?.title}
