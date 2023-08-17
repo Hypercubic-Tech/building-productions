@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
-
-import { setProjectState } from "../../store/slices/projectSlice";
 
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
-import { setUpdateProject } from "../../store/slices/editProjectSlice";
 
-const EditProject = ({ dismiss, project, setShowProject }) => {
-  console.log(project)
+const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
+  const userId = useSelector(state => state.auth.user_id)
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
-  const [backBtn, setBackBtn] = useState(false);
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [hiddenInput, setHiddenInput] = useState(false);
-  console.log(project.data[0].attributes, 'i need ')
+
+  const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type?.data?.id);
+  const [cityOption, setCityOption] = useState(project?.data[0]?.attributes.city?.data?.id);
+  const [conditionOption, setConditionOption] = useState(project?.data[0]?.attributes?.condition?.data?.id);
+  const [currentConditionOption, setCurrentConditionOption] = useState(project?.data[0]?.attributes?.current_condition?.data?.id);
+
   const [sendData, setSendData] = useState({
     title: project.data[0].attributes.title,
     address: project.data[0].attributes.address,
@@ -31,45 +31,44 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
     unforeseenExpenses: project.data[0].attributes.unforeseenExpenses,
     city: {
       connect: [
-        { id: project?.data[0]?.attributes?.city?.data?.id }
+        { id: project.data[0].attributes.city.data.id }
       ]
     },
     property_type: {
       connect: [
-        { id: project?.data[0]?.attributes?.property_type?.data?.id }
+        { id: project?.data[0]?.attributes?.property_type.data.id }
       ]
-    },
-    categories: {
-      connect: []
     },
     current_condition: {
       connect: [
-        { id: project?.data[0]?.attributes?.current_condition?.data?.id }
+        { id: project.data[0].attributes.current_condition.data.id }
       ]
     },
     condition: {
       connect: [
-        { id: project?.data[0]?.attributes.condition?.data?.id }
+        { id: project.data[0].attributes.condition.data.id }
       ]
     },
-    service_percentage: project?.data[0]?.attributes?.service_percentage
+    categories: {
+      connect: project.data[0].attributes.categories.data.map((category) => ({
+        id: category.id,
+      })),
+      disconnect: []
+    },
+    service_percentage: project?.data[0]?.attributes?.service_percentage,
+
+    users_permissions_user: {
+      connect: [
+        { id: userId }
+      ]
+    }
   });
-  console.log(sendData)
-  const dispatch = useDispatch();
 
   let errors = {
     stepOne: [],
     stepTwo: [],
     stepThree: [],
   };
-
-  const hiddenInputHandler = () => {
-    if (!hiddenInput) {
-      setHiddenInput(true)
-    } else {
-      setHiddenInput(false)
-    }
-  }
 
   const getStatusClass = (stepIndex) => {
     if (stepIndex < step) {
@@ -81,8 +80,36 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
     }
   };
 
-  const stepChangeHandler = () => {
+  const handleCheckboxChange = (event) => {
+    const categoryId = parseInt(event.target.value);
+  
+    if (event.target.checked) {
+      const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
+  
+      setSendData((prevState) => ({
+        ...prevState,
+        categories: {
+          ...prevState.categories,
+          connect: sendDataCategories,
+          disconnect: prevState.categories.disconnect.filter((item) => item.id !== categoryId),
+        },
+      }));
+    } else {
+      const sendDataCategories = sendData.categories.connect.filter((item) => item.id !== categoryId);
+  
+      setSendData((prevState) => ({
+        ...prevState,
+        categories: {
+          ...prevState.categories,
+          connect: sendDataCategories,
+          disconnect: [...prevState.categories.disconnect, { id: categoryId }],
+        },
+      }));
+    }
+  };
+  
 
+  const stepChangeHandler = () => {
     if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
@@ -93,91 +120,39 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
       setStep(step + 1);
       setLoss(false);
     }
-    if (step === 3 && errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0) {
-      setStep(step + 1);
-      setLoss(false);
+    if (step === 3 &&  errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0 || sendData.categories.disconnect.length > 0) {
+      setStep(step + 1)
+      setLoss(false)
     }
   };
 
   const prevStepHandler = () => {
     if (step > 1) {
-      setBackBtn(true);
       setStep(step - 1);
     }
   };
 
-  const handleCategoryChange = (e) => {
-    const categoryId = e.target.value;
-    if (!sendData.categories.connect.some(cat => cat.id === categoryId)) {
-      setSendData(prevState => ({
-        ...prevState,
-        categories: {
-          connect: [...prevState.categories.connect, { id: categoryId }]
-        }
-      }));
+  const editProjectHandler = async () => {
+    try {
+      let projectId = project?.data[0]?.id;
+      await axios.put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}?populate=categories`, {
+        data: sendData
+      })
+        .then(() => {
+          setShowProject(true);
+          setEditProject(false);
+          notify(false, "პროექტი რედაქტირდა");
+        });
+    } catch (error) {
+      notify(true, "პროექტის რედაქტირება უარყოფილია");
+      console.error(error);
     }
+  }
+
+  const finishHandler = () => {
+    setClose(true);
+    editProjectHandler();
   };
-
-  useEffect(() => {
-    const getPropertyTypesHandler = async () => {
-      try {
-        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
-          .then((res) => {
-            const data = res.data;
-            setPropertyType(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getPropertyTypesHandler();
-  }, []);
-
-  useEffect(() => {
-    const getCitiesHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
-          .then((res) => {
-            const data = res.data;
-            setCities(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCitiesHandler();
-  }, []);
-
-  useEffect(() => {
-    const getConditionHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCondition(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getConditionHandler();
-  }, []);
-
-  useEffect(() => {
-    const getCurrentConditionHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCurrentCondition(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCurrentConditionHandler();
-  }, []);
 
   useEffect(() => {
     const getCategoriesHandler = async () => {
@@ -191,41 +166,70 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
         console.log(error);
       }
     };
+
+    const getCurrentConditionHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCurrentCondition(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getConditionHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCondition(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getCitiesHandler = async () => {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
+          .then((res) => {
+            const data = res.data;
+            setCities(data.data)
+          })
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getPropertyTypesHandler = async () => {
+      try {
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
+          .then((res) => {
+            const data = res.data;
+            setPropertyType(data.data)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getCategoriesHandler();
+    getCurrentConditionHandler();
+    getConditionHandler();
+    getCitiesHandler();
+    getPropertyTypesHandler();
   }, []);
-
-  const createProjectHandler = async () => {
-    const projectId = project.data[0]?.id;
-
-    try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
-        {
-          data: sendData
-        }
-      );
-      // dispatch(setUpdateProject(true));
-      // dispatch(setUpdateProject(data.data))
-      setShowProject(true)
-      notify(false, "პროექტი რედაქტირდა");
-    } catch (error) {
-      notify(true, "პროექტის რედაქტირება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
-      console.error(error);
-    }
-  };
-
-  const finishHandler = () => {
-    setClose(true);
-    createProjectHandler();
-    console.log(sendData, 'finished')
-  };
 
   return (
     <div
       style={{ display: close ? "none" : "", "marginTop": "80px" }}
-      className={`modal-xxl ${styles.modal}`}
+      className={`${styles.modal}`}
     >
-      <div className="modal-content">
+      <div className={styles.overlay}></div>
+      <div className={` ${styles.mainBg} modal-content `}>
         <div className="modal-header">
           <h2 className="georgian">ობიექტის რედაქტირება</h2>
           <div
@@ -264,18 +268,17 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
             </span>
           </div>
         </div>
-        <div className="modal-body py-lg-10 px-lg-10">
+        <div className={` modal-body py-lg-10 px-lg-10 ${styles.scroll}`}>
           <div
-            className="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid"
+            className="stepper stepper-pills stepper-column d-flex flex-column d-flex flex-row-fluid"
             id="kt_modal_create_app_stepper"
           >
-            <div className="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-              <div className="stepper-nav ps-lg-10">
+            <div className="d-flex justify-content-center flex-row-auto w-100">
+              <div className={` ${styles.gap} stepper-nav `}>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(1)}`}
                   data-kt-stepper-element="nav"
                 >
-                  <div className="stepper-line w-40px" />
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">1</span>
@@ -290,7 +293,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(2)}`}
                   data-kt-stepper-element="nav"
                 >
-                  <div className="stepper-line w-40px" />
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">2</span>
@@ -307,7 +309,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(3)}`}
                   data-kt-stepper-element="nav"
                 >
-                  <div className="stepper-line w-40px" />
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">3</span>
@@ -324,7 +325,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                   className={`${"stepper-item"} ${getStatusClass(4)}`}
                   data-kt-stepper-element="nav"
                 >
-                  <div className="stepper-line w-40px" />
                   <div className="stepper-icon w-40px h-40px">
                     <i className="stepper-check fas fa-check" />
                     <span className="stepper-number">4</span>
@@ -354,8 +354,9 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                       <select
                         required
                         id="property"
-                        defaultValue={sendData.title}
+                        value={propertyOption}
                         onChange={(event) => {
+                          setPropertyOption(event.target.value)
                           setSendData((prevSendData) => ({
                             ...prevSendData,
                             property_type: {
@@ -365,7 +366,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                         }}
                         className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
                       >
-                        <option value="none" disabled hidden>აირჩიერ ქონების ტიპი</option>
                         {propertyType && propertyType.map((item, index) => {
                           return (
                             <option key={index} value={item.id}>{item.attributes.Title}</option>
@@ -373,74 +373,18 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                         })}
                       </select>
                     </div>
-                    <div className="w-100">
-                      <div className="row mb-10">
-                        <div className=" d-flex align-items-center">
-                          {/* <input
-                            form-check form-switch
-                            className="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            id="flexSwitchCheckDefault"
-                            onChange={(e) => {
-                              const isChecked = e.target.checked;
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                vat: isChecked,
-                              }));
-                              hiddenInputHandler();
-                            }}
-                          /> */}
-                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                            <span className={` georgian `}>დღგ-ს გადამხდელი / გაუთვალისწინებელი ხარჯები</span>
-                          </label>
-                        </div>
-                        {/* {hiddenInput ? ( */}
-                        <div className={`${styles.inputWrap} col-6 `}>
-                          <input
-                            className="form-control georgian form-control-solid"
-                            placeholder="დღგ-ს გადამხდელი"
-                            type="text"
-                            defaultValue={sendData.vatPercent}
-                            onChange={(e) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                vatPercent: e.target.value,
-                              }));
-                            }}
-                          />
-                          <i className={`${styles.percent} bi bi-percent `}></i>
-                        </div>
-                        {/* ) : ""} */}
-                        <div className={`${styles.inputWrap} col-6 `}>
-                          <input
-                            onChange={(event) => {
-                              setSendData((prevSendData) => ({
-                                ...prevSendData,
-                                unforeseenExpenses: event.target.value,
-                              }));
-                            }}
-                            defaultValue={sendData.unforeseenExpenses}
-                            type="text"
-                            className="form-control georgian form-control-solid"
-                            placeholder="შეიყვანეთ გაუთვალისწინებელი ხარჯები"
-                          />
-                          <i className={`${styles.percent} bi bi-percent `}></i>
-                        </div>
-                      </div>
-
-                    </div>
                     <div className="row mb-10">
                       <div className="col-md-12 fv-row">
-                        <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მდებარეობა / ფართობი
-                        </label>
                         <div className="row fv-row">
                           <div className="col-6">
+                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                              მდებარეობა
+                            </label>
                             <select
                               id="city"
-                              defaultValue={sendData.city}
+                              value={cityOption}
                               onChange={(event) => {
+                                setCityOption(event.target.value)
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
                                   city: {
@@ -461,6 +405,9 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                             </select>
                           </div>
                           <div className="col-6">
+                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                              ფართობი
+                            </label>
                             <input
                               id="area"
                               defaultValue={sendData.area}
@@ -471,8 +418,8 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                 }));
                               }}
                               name="area"
-                              type="text"
-                              className="form-control georgian form-control-solid"
+                              type="number"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ობიექტის ფართობი"
                               data-placeholder="area"
                             ></input>
@@ -481,33 +428,12 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                       </div>
                     </div>
                     <div className="row mb-10">
-                      <div style={{ flexDirection: "column" }} className="d-flex align-items-center">
-                        <label className="d-flex align-items-center fs-5 fw-bold mb-2">
-                          <span className={`${styles.ml2} georgian `}>მომსახურეობის ხარჯები </span>
-                        </label>
-                        <input
-                          className="form-control georgian form-control-solid"
-                          type="text"
-                          // id="flexSwitchCheckDefault"
-                          defaultValue={sendData.service_percentage}
-                          onChange={(e) => {
-                            setSendData((prevSendData) => ({
-                              ...prevSendData,
-                              service_percentage: e.target.value,
-                            }));
-                            // hiddenInputHandler();
-                          }}
-                        />
-
-                      </div>
-                    </div>
-                    <div className="row mb-10">
                       <div className="col-md-12 fv-row">
-                        <label className="required fs-6 fw-bold form-label georgian mb-2">
-                          მისამართი / ტელეფონი
-                        </label>
                         <div className="row fv-row">
                           <div className="col-6">
+                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                              მისამართი
+                            </label>
                             <input
                               id="address"
                               defaultValue={sendData.address}
@@ -518,32 +444,92 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                 }));
                               }}
                               type="text"
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ზუსტი მისამართი"
                             />
                           </div>
                           <div className="col-6">
+                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                              ტელეფონი
+                            </label>
                             <input
                               id="phone"
+                              defaultValue={sendData.phoneNumber}
                               onChange={(event) => {
                                 setSendData((prevSendData) => ({
                                   ...prevSendData,
                                   phoneNumber: event.target.value,
                                 }));
                               }}
-                              value={sendData.phoneNumber}
                               type="number"
-                              className="form-control georgian form-control-solid"
+                              className="custom-input form-control georgian form-control-solid"
                               placeholder="ტელეფონი"
                             />
                           </div>
                         </div>
                       </div>
                     </div>
+                    <div className="w-100">
+                      <div className="row mb-10">
+                        <div className={`${styles.inputWrap} col-4 `}>
+                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                            <span className={` georgian `}>დღგ-ს გადამხდელი</span>
+                          </label>
+                          <input
+                            className="custom-input form-control georgian form-control-solid"
+                            placeholder="დღგ-ს გადამხდელი (%)"
+                            type="text"
+                            defaultValue={sendData.vatPercent}
+                            onChange={(e) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                vatPercent: e.target.value,
+                              }));
+                            }}
+                          />
+                        </div>
+                        <div className={`${styles.inputWrap} col-4 `}>
+                          <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                            <span className={` georgian `}>გაუთვალისწინებელი ხარჯები</span>
+                          </label>
+                          <input
+                            defaultValue={sendData.unforeseenExpenses}
+                            onChange={(event) => {
+                              setSendData((prevSendData) => ({
+                                ...prevSendData,
+                                unforeseenExpenses: event.target.value,
+                              }));
+                            }}
+                            type="text"
+                            className="custom-input form-control georgian form-control-solid"
+                            placeholder="გაუთვალისწინებელი ხარჯები (%)"
+                          />
+                        </div>
+                        <div className={`${styles.inputWrap} col-4 `}>
+                          <div style={{ flexDirection: "column" }} className="d-flex">
+                            <label className="d-flex align-items-center fs-5 fw-bold mb-2">
+                              <span className={` georgian `}>მომსახურეობის ხარჯები </span>
+                            </label>
+                            <input
+                              defaultValue={sendData.service_percentage}
+                              className="custom-input form-control georgian form-control-solid"
+                              type="text"
+                              id="flexSwitchCheckDefault"
+                              placeholder="მომსახურების ხარჯები (%)"
+                              onChange={(e) => {
+                                setSendData((prevSendData) => ({
+                                  ...prevSendData,
+                                  service_percentage: e.target.value,
+                                }));
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
-                {/* STEP */}
-
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -566,8 +552,10 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                               </span>
                               <span className="form-check form-check-custom form-check-solid">
                                 <input
-                                  // id="input-validation-building"
+                                  id="input-validation-building"
+                                  defaultChecked={conditionOption === item.id ? 'checked' : ''}
                                   onChange={(event) => {
+                                    setConditionOption(event.target.value);
                                     setSendData((prevSendData) => ({
                                       ...prevSendData,
                                       condition: {
@@ -579,7 +567,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                   type="radio"
                                   name="category"
                                   value={item.id}
-                                  defaultChecked={sendData.condition ? true : ""}
                                 />
                               </span>
                             </label>
@@ -609,7 +596,9 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                             <span className="form-check form-check-custom form-check-solid">
                               <input
                                 id="input-validation"
+                                defaultChecked={currentConditionOption === item.id ? 'checked' : ''}
                                 onChange={(event) => {
+                                  setCurrentConditionOption(event.target.value);
                                   setSendData((prevSendData) => ({
                                     ...prevSendData,
                                     current_condition: {
@@ -621,7 +610,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                 type="radio"
                                 name="framework"
                                 value={item.id}
-                                defaultChecked={sendData.current_condition ? true : ""}
                               />
                             </span>
                           </label>
@@ -641,6 +629,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                       </label>
                       <input
                         id="input-validation-object"
+                        defaultValue={sendData.title}
                         onChange={(event) => {
                           setSendData((prevSendData) => ({
                             ...prevSendData,
@@ -648,7 +637,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                           }));
                         }}
                         type="text"
-                        defaultValue={sendData.title}
                         className="form-control georgian form-control-lg form-control-solid"
                         name="dbname"
                         placeholder="ობიექტის დასახელება"
@@ -670,17 +658,18 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                                       className="form-check form-check-custom form-check-solid mb-2"
                                     >
                                       <input
-                                        onChange={handleCategoryChange}
                                         className="form-check-input"
                                         type="checkbox"
                                         value={item.id}
+                                        defaultChecked={sendData?.categories?.connect?.some((cat) => cat?.id === item?.id)}
+                                        onChange={handleCheckboxChange}
                                       />
-                                      <label
+                                      <div
                                         onClick={(e) => e.preventDefault()}
                                         className="form-check-label georgian"
                                       >
                                         {item.attributes.title}
-                                      </label>
+                                      </div>
                                     </div>
                                   );
                                 })}
@@ -709,8 +698,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                     </div>
                   </div>
                 </div>
-                {/* {loss && <p style={{color: 'red'}}>რაღაცა აკლია!!!</p>} */}
-
                 <div className="d-flex flex-stack pt-10">
                   <div className="me-2">
                     <button
@@ -719,7 +706,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                       type="button"
                       className="btn georgian btn-lg btn-light-primary me-3"
                     >
-                      <span className="svg-icon svg-icon-3 me-1">
+                      {/* <span className="svg-icon svg-icon-3 me-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width={24}
@@ -741,14 +728,12 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                             fill="black"
                           />
                         </svg>
-                      </span>
+                      </span> */}
                       უკან
                     </button>
                   </div>
-
                   <div>
-                    {/* {loss && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი</p>} */}
-
+                    {loss && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი</p>}
                     <button
                       onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}
@@ -756,7 +741,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                       className="btn btn-lg btn-primary"
                     >
                       <span className="indicator-label georgian">
-                        რედაქტირდა
+                        რედაქტირება
                         <span className="svg-icon svg-icon-3 ms-2 me-0">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -787,7 +772,6 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
                     </button>
-
                     <button
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}
@@ -795,7 +779,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                       className="btn btn-lg georgian btn-primary"
                     >
                       გაგრძელება
-                      <span className="svg-icon svg-icon-3 ms-1 me-0">
+                      {/* <span className="svg-icon svg-icon-3 ms-1 me-0">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width={24}
@@ -818,7 +802,7 @@ const EditProject = ({ dismiss, project, setShowProject }) => {
                             fill="black"
                           />
                         </svg>
-                      </span>
+                      </span> */}
                     </button>
                   </div>
                 </div>

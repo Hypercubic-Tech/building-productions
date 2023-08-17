@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 const AboutCompany = () => {
   const [count, setCount] = useState(650);
   const [isCounting, setIsCounting] = useState(false);
+  const [count1, setCount1] = useState(30);
+  const [count2, setCount2] = useState(0);
+  const [isCounting1, setIsCounting1] = useState(false);
+  const [isCounting2, setIsCounting2] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
@@ -34,9 +38,6 @@ const AboutCompany = () => {
     return () => clearInterval(intervalId);
   }, [isCounting, count]);
 
-  const [count1, setCount1] = useState(30);
-  const [isCounting1, setIsCounting1] = useState(false);
-
   useEffect(() => {
     function handleScroll() {
       if (window.scrollY >= 930 && !isCounting1) {
@@ -66,9 +67,6 @@ const AboutCompany = () => {
 
     return () => clearInterval(intervalId);
   }, [isCounting1, count1]);
-
-  const [count2, setCount2] = useState(0);
-  const [isCounting2, setIsCounting2] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
@@ -121,8 +119,8 @@ const AboutCompany = () => {
             id="achievements"
             data-kt-scroll-offset="{default: 100, lg: 150}"
           >
-            <h3 className="fs-2hx text-white fw-bolder mb-5 georgian">
-              კომპანიის შესახებ
+            <h3 className="fs-2hx fw-bolder mb-5 georgian">
+              ჩვენი გუნდი
             </h3>
             <div className="fs-5 text-gray-700 fw-bold georgian">
               კომპანია „ReCounter“ დაარსდა 2022 წელს და პირველად საქართველოში
@@ -136,9 +134,6 @@ const AboutCompany = () => {
             <div className="d-flex flex-wrap flex-center justify-content-lg-between mb-15 mx-auto w-xl-900px">
               <div
                 className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                style={{
-                  backgroundImage: 'url("assets/media/svg/misc/octagon.svg")',
-                }}
               >
                 <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                   <svg
@@ -186,7 +181,7 @@ const AboutCompany = () => {
                   </svg>
                 </span>
                 <div className="mb-0">
-                  <div className="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
+                  <div className="fs-lg-2hx fs-2x fw-bolder d-flex flex-center">
                     <div
                       className="min-w-70px"
                       data-kt-countup="true"
@@ -203,9 +198,6 @@ const AboutCompany = () => {
               </div>
               <div
                 className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                style={{
-                  backgroundImage: 'url("assets/media/svg/misc/octagon.svg")',
-                }}
               >
                 <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                   <svg
@@ -232,7 +224,7 @@ const AboutCompany = () => {
                   </svg>
                 </span>
                 <div className="mb-0">
-                  <div className="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
+                  <div className="fs-lg-2hx fs-2x fw-bolder d-flex flex-center">
                     <div
                       className="min-w-70px"
                       data-kt-countup="true"
@@ -249,9 +241,6 @@ const AboutCompany = () => {
               </div>
               <div
                 className="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                style={{
-                  backgroundImage: 'url("assets/media/svg/misc/octagon.svg")',
-                }}
               >
                 <span className="svg-icon svg-icon-2tx svg-icon-white mb-3">
                   <svg
@@ -278,7 +267,7 @@ const AboutCompany = () => {
                   </svg>
                 </span>
                 <div className="mb-0">
-                  <div className="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
+                  <div className="fs-lg-2hx fs-2x fw-bolder d-flex flex-center">
                     <div
                       className="min-w-70px"
                       data-kt-countup="true"

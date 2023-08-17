@@ -1,71 +1,112 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+
+import { setProductState, setProducts } from '../../store/slices/productSlice';
+import { setCategory } from "../../store/slices/categorySlice";
+
 import notify from '../../utils/notify';
-import styles from "./AddProduct.module.css";
 
 const EditProduct = ({
+    product,
     setSelect,
     unit,
-    allCategories,
     suppliers,
-    product
+    productStatus
 }) => {
+    const dispatch = useDispatch();
     const router = useRouter();
-    const projectId = router.query.projectId;
-    const [lossProduct, setLossProduct] = useState(false);
-    const [imgSrc, setImgSrc] = useState(null);
-    const [imageId, setImageId] = useState(null);
 
+    const projectId = router.query.projectId;
+    const productId = product?.id
+    const [lossProduct, setLossProduct] = useState(false);
+    const [toggle, setToggle] = useState(true);
+    const [imgSrc, setImgSrc] = useState(product?.attributes?.image?.data?.attributes?.url);
+    const [image, setImage] = useState(product?.attributes?.image?.data?.id);
+    const [filteredCrafts, setFilteredCrafts] = useState();
+    const [craftImage, setCraftImage] = useState();
+    const [supplierOption, setSupplierOption] = useState(product?.attributes?.supplier?.data?.id);
+    const [unitOption, setUnitOption] = useState(product?.attributes?.unit?.data?.id)
+    const [statusOption, setStatusOption] = useState(product?.attributes?.product_status?.data?.id)
+    const activeCategoryId = useSelector(state => state?.cats?.category);
     const [productData, setProductData] = useState({
-        files: {
-            connect: [{ id: imageId }]
-        },
-        title: "",
+        image: image,
+        title: product?.attributes?.title,
         type: "product",
-        purchased: false,
         supplier: {
-            connect: [{ id: null }],
+            connect: [{ id: product?.attributes?.supplier?.data?.id }],
         },
-        productLink: "",
-        quantity: 0,
+        productLink: product?.attributes?.productLink,
+        quantity: product?.attributes?.quantity,
         unit: {
-            connect: [{ id: null }],
+            connect: [{ id: product?.attributes?.unit?.data?.id }],
         },
-        price: 0,
+        price: product?.attributes?.price,
         categories: {
-            connect: [{ id: null }],
+            connect: [{ id: activeCategoryId }],
         },
         project: {
             connect: [{ id: projectId }]
-        }
+        },
+        product_status: {
+            connect: [{ id: product?.attributes?.product_status?.data[0]?.id }]
+        },
     });
+
+    useEffect(() => {
+        const getCraftsByCategory = async () => {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
+                .then((res) => {
+                    const data = res.data;
+                    setFilteredCrafts(data)
+                })
+        }
+        getCraftsByCategory();
+    }, []);
+
+    const defaultProductsHandler = async (id, pageIndex) => {
+        if (id) {
+            try {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+                const data = response.data;
+                dispatch(setProducts(data.data));
+                dispatch(setCategory(id));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
     const handleSubmit = async () => {
         try {
             await axios
-                .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
+                .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`, {
                     data: productData,
                 })
-                .then(() => {
-                    notify(false, "პროდუქტი დაემატა");
-                })
+                .then((res) => {
+                    const data = res.data;
+                    notify(false, "პროდუქტი რედაქტირდა");
+                    dispatch(setProductState(data.data));
+                });
         } catch (err) {
-            notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+            notify(true, "პროდუქტის რედაქტირება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
         setSelect(null);
+        defaultProductsHandler(activeCategoryId);
     };
 
-    const handleMediaUpload = useCallback(async () => {
-        if (!imgSrc) {
+
+    const handleMediaUpload = async (img) => {
+        if (!img) {
             return;
         }
 
-        try {
-            const formData = new FormData();
-            formData.append("files", imgSrc);
+        const formData = new FormData();
+        formData.append("files", img);
 
+        try {
             const res = await axios.post(
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
                 formData,
@@ -77,36 +118,32 @@ const EditProduct = ({
             );
 
             const data = res.data;
-            setImageId(data[0]?.id);
+            setImage(data[0]);
+            setImgSrc(data[0].url)
 
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
+            console.error(err);
             notify(true, "სურათის ატვირთვა უარყოფილია");
-            console.log(err);
         }
-    }, [imgSrc]);
-
-    useEffect(() => {
-        if (imgSrc) {
-            handleMediaUpload();
-        }
-    }, [imgSrc, handleMediaUpload]);
+    };
 
     useEffect(() => {
         setProductData((prevProductData) => ({
             ...prevProductData,
-            files: {
-                connect: [{ id: imageId }]
-            }
+            image: image
         }));
-    }, [imageId]);
+    }, [image]);
 
     const handleImageRemove = async () => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
-        setImgSrc(null);
-        notify(false, "სურათი წარმატებით წაიშალა");
+        if (image) {
+            await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
+            setImgSrc(null);
+            notify(false, "სურათი წარმატებით წაიშალა");
+        } else {
+            notify(true, "სურათი არ არის ატვირთული");
+        }
     };
-
 
     return (
         <div
@@ -123,7 +160,8 @@ const EditProduct = ({
                         <div
                             className={` d-flex justify-content-center align-items-center w-100 p-2 `}
                         >
-                            <h3>პროდუქციის რედაქტირება</h3>
+                            <h2>პროდუქტის რედაქტირება</h2>
+
                         </div>
                         <div
                             className="btn btn-icon btn-sm btn-active-icon-primary"
@@ -165,7 +203,6 @@ const EditProduct = ({
                             </span>
                         </div>
                     </div>
-
                     <div style={{ width: "90%" }} className="modal-body mx-5 mx-xl-15 my-7">
                         <form id="kt_modal_add_user_form" className="form">
                             <div
@@ -186,8 +223,7 @@ const EditProduct = ({
                                         >
                                             {
                                                 imgSrc ? <img
-                                                    src={imgSrc}
-                                                    // i dont have img in obj :C
+                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`}
                                                     width={125}
                                                     height={125}
                                                     style={{ borderRadius: "8px" }}
@@ -206,15 +242,7 @@ const EditProduct = ({
                                                 <i className="bi bi-pencil-fill fs-7" />
                                                 <input
                                                     onChange={(e) => {
-                                                        setImgSrc(e.target.files[0])
-                                                        const file = e.target.files[0];
-                                                        const reader = new FileReader();
-
-                                                        reader.onload = (event) => {
-                                                            setImgSrc(event.target.result);
-                                                        };
-
-                                                        reader.readAsDataURL(file);
+                                                        handleMediaUpload(e.target.files[0]);
                                                     }}
                                                     type="file"
                                                     name="avatar"
@@ -262,16 +290,17 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="პროდუქციის დასახელება"
                                             name="title"
-                                            defaultValue={product.attributes.title}
+                                            defaultValue={productData.title}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
-                                    <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                    <div className="col-md-12 fv-row fv-plugins-icon-container">
                                         <label className="required fs-5 fw-bold mb-2 georgian">
                                             მომწოდებელი
                                         </label>
                                         <select
-                                            onClick={(e) => {
+                                            onChange={(e) => {
+                                                setSupplierOption(e.target.value)
                                                 setProductData((prevSendData) => ({
                                                     ...prevSendData,
                                                     supplier: {
@@ -280,13 +309,13 @@ const EditProduct = ({
                                                 }));
                                             }}
                                             name="saler"
+                                            value={supplierOption}
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="მომწოდებელი"
-                                            defaultValue={product.attributes.title}
                                         >
                                             {suppliers &&
                                                 suppliers.map((sup) => {
-                                                    <option value="none" disabled hidden >აირჩიეთ მომწოდებელი</option>;
+
                                                     return (
                                                         <option key={sup?.id} value={sup?.id}>
                                                             {sup?.attributes?.title}
@@ -311,6 +340,7 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="http://momwodebeli.ge"
                                             name="prodactElAddress"
+                                            defaultValue={productData.productLink}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -329,6 +359,7 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="პრო: რაოდენობა"
                                             name="quantity"
+                                            defaultValue={productData.quantity}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -338,6 +369,7 @@ const EditProduct = ({
                                         </label>
                                         <select
                                             onClick={(e) => {
+                                                setUnitOption(e.target.value)
                                                 setProductData((prevSendData) => ({
                                                     ...prevSendData,
                                                     unit: {
@@ -346,11 +378,10 @@ const EditProduct = ({
                                                 }));
                                             }}
                                             name="count"
-                                            defaultValue='none'
+                                            defaultValue={unitOption}
                                             className="form-select form-select-solid georgian"
                                             data-placeholder="საზომიერთ."
                                         >
-                                            <option value="none" disabled hidden > აირჩიეთ ერთეული</option>;
                                             {unit &&
                                                 unit.map((u) => {
                                                     return (
@@ -377,33 +408,34 @@ const EditProduct = ({
                                             className="form-control form-control-solid georgian"
                                             placeholder="პროდ: ღირებულება"
                                             name="price"
+                                            defaultValue={productData.price}
                                         />
                                         <div className="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
-                                    <div className="col-md-4 fv-row fv-plugins-icon-container">
+                                    <div className="col-md-12 fv-row fv-plugins-icon-container">
                                         <label className="required fs-5 fw-bold mb-2 georgian">
-                                            კატეგორია
+                                            სტატუსი
                                         </label>
                                         <select
                                             onClick={(e) => {
                                                 setProductData((prevSendData) => ({
                                                     ...prevSendData,
-                                                    categories: {
+                                                    product_status: {
                                                         connect: [{ id: e.target.value }],
                                                     },
                                                 }));
                                             }}
                                             name="count"
+                                            defaultValue={statusOption}
                                             className="form-select form-select-solid georgian"
-                                            data-placeholder="კატეგოია"
-                                            defaultValue='none'
+                                            data-placeholder="საზომიერთ."
                                         >
-                                            <option value="none" disabled hidden > აირჩიეთ კატეგორია</option>;
-                                            {allCategories &&
-                                                allCategories.map((item) => {
+                                            <option value="none" disabled hidden>აირჩიეთ სტატუსი</option>
+                                            {productStatus &&
+                                                productStatus.map((status) => {
                                                     return (
-                                                        <option key={item?.id} value={item?.id}>
-                                                            {item?.attributes?.title}
+                                                        <option key={status?.id} value={status?.id}>
+                                                            {status?.attributes?.title}
                                                         </option>
                                                     );
                                                 })}
@@ -412,8 +444,7 @@ const EditProduct = ({
                                     </div>
                                 </div>
                             </div>
-                            {lossProduct && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი</p>}
-
+                            {lossProduct && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი!!!</p>}
                             <div className="text-center pt-15">
                                 <button
                                     onClick={() => {
@@ -443,3 +474,7 @@ const EditProduct = ({
 };
 
 export default EditProduct;
+
+
+// bakcup
+

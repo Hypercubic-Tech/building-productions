@@ -1,33 +1,49 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import { selectProduct, deleteProductState } from "../../store/slices/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProductState, setProductState } from "../../store/slices/productSlice";
 
-import EditProduct from "../popup/EditProduct";
-import EditService from "../popup/EditService";
+import ExportPopup from "../popup/ExportPopup"
 import notify from "../../utils/notify";
 import styles from "./Products.module.css";
 
-const Products = ({ changePageIndex, editHandler, filteredProducts, editProductItem, setSelect, craftStatus, crafts, unit, allCategories, suppliers, defaultProductsHandler, defaultP, totalSum, incrementPageIndex, pageIndex, decrementPageIndex, searchType }) => {
-  const [defId, setDefId] = useState(null);
-  const [isTouched, setIsTouched] = useState(false);
-  const [editPopup, setEditPopup] = useState(false);
-  const [activeItem, setActiveItem] = useState();
-  const [totalSumProduct, setTotalSumProduct] = useState(null);
-  const router = useRouter();
-  const { projectId } = router.query;
+const Products = ({
+  editHandler,
+  setSelect,
+  totalSum,
+  searchType,
+  productStatus,
+  craftStatus,
+  select,
+  defaultImage
+}) => {
   const dispatch = useDispatch();
-  const categoryId = useSelector(state => state.cats.category);
+  const router = useRouter();
+
+  const { projectId } = router.query;
+  const activeCategoryId = useSelector(state => state?.cats?.category);
   const products = useSelector(state => state.prod.products);
 
+  const [activeItem, setActiveItem] = useState();
+  const [totalSumProduct, setTotalSumProduct] = useState(null);
+  const [pageIndex, setPageIndex] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [selectedValues, setSelectedValues] = useState([]);
+
+
+  let itemsPerPage = 5;
+
   let productsToMap = products;
+
   if (searchType) {
     const lowercaseSearchType = searchType.toLowerCase();
     const filteredProducts = products.filter((product) =>
-      product?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
+      product?.attributes?.title?.toLowerCase()?.includes(lowercaseSearchType) ||
       product?.attributes?.unit?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.supplier?.data?.attributes?.title?.toLowerCase().includes(lowercaseSearchType) ||
       product?.attributes?.quantity?.toString()?.toLowerCase().includes(lowercaseSearchType) ||
@@ -35,44 +51,33 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       product?.attributes?.type?.toLowerCase().includes(lowercaseSearchType)
     );
 
-    if (filteredProducts.length > 0) {
+    if (filteredProducts?.length >= 0) {
       productsToMap = filteredProducts;
     }
   }
 
-  const handleIncrementPageIndex = () => {
-    incrementPageIndex();
-    defaultProductsHandler(categoryId, pageIndex + 1);
-  };
+  const totalPages = Math.ceil(productsToMap.length / itemsPerPage);
+  const startIndex = (pageIndex - 1) * itemsPerPage;
+  const endIndex = pageIndex * itemsPerPage;
 
   const handleDecrementPageIndex = () => {
-    decrementPageIndex();
-    defaultProductsHandler(categoryId, pageIndex - 1);
+    if (pageIndex > 1) {
+      setPageIndex(pageIndex - 1);
+    }
   };
 
   const handleChangePageIndex = (event) => {
-    changePageIndex(parseInt(event.target.id));
-    defaultProductsHandler(categoryId, event.target.id);
+    const newPageIndex = parseInt(event.target.id);
+    setPageIndex(newPageIndex);
   };
 
-  // const getProductsHandler = async () => {
-  //   await axios
-  //     .get(
-  //       `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-  //     )
-  //     .then((res) => {
-  //       const data = res.data;
-  //       const id = data?.data[0]?.attributes?.categories?.data[0]?.id;
-  //       setDefId(id);
-  //       defaultProductsHandler(id);
-  //     })
-  // };
-
-  const editHandlerPopup = (product) => {
-    console.log(product)
+  const handleIncrementPageIndex = () => {
+    if (pageIndex < totalPages) {
+      setPageIndex(pageIndex + 1);
+    }
   };
 
-  const confirmHandler = (productId) => {
+  const confirmEdit = async (selectedId, product) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-primary',
@@ -81,24 +86,121 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
       buttonsStyling: false
     });
 
-    swalWithBootstrapButtons
-      .fire({
-        title: 'დაადასტურეთ, რომ გსურთ პროდუქტის წაშლა',
-        text: 'დადასტურების შემთხვევაში, პროდუქტი წაიშლება ავტომატურად',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'წაშლა',
-        cancelButtonText: 'უარყოფა',
-        reverseButtons: true
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          deleteProductHandler(productId);
-          notify(false, "პროდუქტი წაიშალა")
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია');
-        }
-      });
+    await swalWithBootstrapButtons.fire({
+      title: 'დაადასტურეთ, რომ გსურთ პროდუქტის სტატუსის რედაქტირება',
+      text: 'დადასტურების შემთხვევაში, პროდუქტი რედაქტირდება ავტომატურად',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'რედაქტირება',
+      cancelButtonText: 'უარყოფა',
+      reverseButtons: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let productData = {
+          image: product?.attributes?.image?.data?.id,
+          title: product?.attributes?.title,
+          type: "product",
+          supplier: {
+            connect: [{ id: product?.attributes?.supplier?.data?.id }],
+          },
+          productLink: product?.attributes?.productLink,
+          quantity: product?.attributes?.quantity,
+          unit: {
+            connect: [{ id: product?.attributes?.unit?.data?.id }],
+          },
+          price: product?.attributes?.price,
+          categories: {
+            connect: [{ id: activeCategoryId }],
+          },
+          project: {
+            connect: [{ id: projectId }]
+          },
+          product_status: {
+            connect: [{ id: selectedId }]
+          },
+        };
+
+        await axios
+          .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${product.id}`, {
+            data: productData,
+          })
+          .then(res => {
+            dispatch(setProductState(res.data.data));
+            notify(false, "პროდუქტი რედაქტირდა");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    });
+  };
+
+  const confirmServiceEdit = async (selectedId, product) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    await swalWithBootstrapButtons.fire({
+      title: 'დაადასტურეთ, რომ გსურთ პროდუქტის სტატუსის რედაქტირება',
+      text: 'დადასტურების შემთხვევაში, პროდუქტი რედაქტირდება ავტომატურად',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'რედაქტირება',
+      cancelButtonText: 'უარყოფა',
+      reverseButtons: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let productData = {
+          title: product?.attributes?.title,
+          type: "service",
+          quantity: product?.attributes?.quantity,
+          unit: {
+            connect: [{ id: product?.attributes?.unit?.data?.id }],
+          },
+          price: product.attributes.price,
+          categories: {
+            connect: [{ id: activeCategoryId }],
+          },
+          project: {
+            connect: [{ id: projectId }]
+          },
+          craft_status: {
+            connect: [{ id: selectedId }]
+          },
+          craft_img_url: product?.attributes?.craft_img_url
+        };
+
+        await axios
+          .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${product.id}`, {
+            data: productData,
+          })
+          .then(res => {
+            dispatch(setProductState(res.data.data));
+            notify(false, "პროდუქტი რედაქტირდა");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    });
   };
 
   const deleteProductHandler = async (productId) => {
@@ -107,8 +209,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products/${productId}`
       )
       .then(() => {
-        // getProductsHandler();
-        console.log(productId)
         dispatch(deleteProductState(productId));
       })
       .catch((error) => {
@@ -125,27 +225,41 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   };
 
   let productsTotal = 0;
+  let categorySums = [];
+
   if (totalSumProduct && totalSumProduct.length > 0) {
-    productsTotal = totalSumProduct.reduce(
-      (sum, product) =>
-        sum + parseInt(product?.attributes?.quantity) * parseFloat(product?.attributes?.price),
-      0
-    );
+    totalSumProduct.forEach((product) => {
+      const categoryTitle = product?.attributes?.categories?.data[0]?.attributes?.title;
+      const quantity = parseInt(product?.attributes?.quantity);
+      const price = parseFloat(product?.attributes?.price);
+
+      if (categoryTitle) {
+        const existingCategorySum = categorySums.find((item) => item.title === categoryTitle);
+        if (existingCategorySum) {
+          existingCategorySum.sum += quantity * price;
+        } else {
+          categorySums.push({
+            title: categoryTitle,
+            sum: quantity * price,
+          });
+        }
+        productsTotal += quantity * price;
+      }
+    });
   }
 
   let vatTotal = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     vatTotal = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.vatPercent || 0),
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.vatPercent || 0),
       0
     );
   }
 
-
-  let unforseenExpenses = 0;
+  let unforeseenExpenses = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
-    unforseenExpenses = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.unforseenExpenses || 0),
+    unforeseenExpenses = totalSumProduct.reduce(
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.unforeseenExpenses || 0),
       0
     );
   }
@@ -153,22 +267,92 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
   let service_percentage = 0;
   if (totalSumProduct && totalSumProduct.length > 0) {
     service_percentage = totalSumProduct.reduce(
-      (sum, product) => sum + (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
+      (sum, product) => (product?.attributes?.project?.data?.attributes?.service_percentage || 0),
       0
     );
   }
 
-  const totalProductPrice = parseFloat(productsTotal)
-  const vatTotalPrice = parseFloat(totalProductPrice) * parseFloat(vatTotal) / (100 + parseFloat(vatTotal));
-  const unforseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforseenExpenses) / 100 + parseFloat(unforseenExpenses)
-  const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100 + parseFloat(service_percentage)
-  const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforseenExpensesPrice) + parseFloat(servicePercentagePrice)
+  const totalProductPrice = parseFloat(productsTotal);
+  const vatTotalPrice = (parseFloat(totalProductPrice) * parseInt(vatTotal)) / (100 + parseFloat(vatTotal));
+  const unforeseenExpensesPrice = parseFloat(productsTotal) * parseFloat(unforeseenExpenses) / 100;
+  const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
+  const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
+
+  const confirmHandler = (item) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
+        text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'წაშლა',
+        cancelButtonText: 'უარყოფა',
+        reverseButtons: true
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          deleteProductHandler(item);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('უარყოფილია', '');
+        }
+      });
+  };
+
+  const getActiveItem = (selectedId, product) => {
+    confirmEdit(+selectedId, product);
+  };
+
+  const aggregatedProducts = {};
+
+  totalSumProduct?.forEach((product) => {
+    const title = product?.attributes?.title;
+    const unit = product?.attributes?.unit?.data?.attributes?.title;
+    const categories = product?.attributes?.categories?.data[0]?.attributes?.title;
+    const quantity = product?.attributes?.quantity;
+    const price = product?.attributes?.price;
+    const key = `${categories}`;
+
+    if (aggregatedProducts[key]) {
+      aggregatedProducts[key].titles.push(title);
+      aggregatedProducts[key].quantity += quantity;
+    } else {
+      aggregatedProducts[key] = {
+        titles: [title],
+        unit,
+        quantity,
+        price,
+        categories
+      };
+    }
+  });
+
+  const handleToggleDropdown = (productId) => {
+    setActiveDropdown(productId === activeDropdown ? null : productId);
+  };
+
+
+  const handleSelectOption = (value, product) => {
+    let productId = product.id
+    setSelectedValues((prevSelectedValues) => ({
+      ...prevSelectedValues,
+      [productId]: value,
+    }));
+    setActiveDropdown(null)
+    confirmServiceEdit(+value, product);
+  };
 
   useEffect(() => {
-    if (projectId) {
-      // getProductsHandler();
+    if (projectId && productsToMap) {
       const totalSumHandler = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
             const data = res.data;
             setTotalSumProduct(data.data);
@@ -177,31 +361,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
 
       totalSumHandler();
     };
-  }, [projectId]);
-
-  const aggregatedProducts = {};
-
-  totalSumProduct?.forEach((product) => {
-    if (product.attributes.type === 'service') {
-      const title = product.attributes.title;
-      const unit = product.attributes.unit.data.attributes.title;
-      const quantity = product.attributes.quantity;
-      const price = product.attributes.price;
-      const key = `${unit}`;
-
-      if (aggregatedProducts[key]) {
-        aggregatedProducts[key].titles.push(title);
-        aggregatedProducts[key].quantity += quantity;
-      } else {
-        aggregatedProducts[key] = {
-          titles: [title],
-          unit,
-          quantity,
-          price,
-        };
-      }
-    }
-  });
+  }, [projectId, productsToMap]);
 
   return (
     <>
@@ -212,52 +372,50 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
         >
           {totalSum ? (
             <thead>
-              {/* <div>
-                <h3>განფასება</h3>
-              </div> */}
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                 <th>სამუშაო</th>
                 <th>ერთეული</th>
                 <th>რაოდენობა</th>
-                <th>სტატუსი</th>
                 <th>ჯამი</th>
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
-                  <td>{product.titles.join(', ')}</td>
-                  <td>{product.unit}</td>
-                  <td>{product.quantity}</td>
-                  <td>{productsTotal} ლარი</td>
+                  <td>{product?.categories}</td>
+                  <td>{product?.unit}</td>
+                  <td>{product?.quantity}</td>
+                  <td>{categorySums.find((item) => item.title === product?.categories)?.sum || 0} ლარი</td>
                 </tr>
               ))}
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`სულ: ${productsTotal.toFixed(2) || 0} ლარი`}</td>
+                <td></td>
               </tr>
-
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`დღგ: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`სულ: ${Object.values(categorySums).reduce((total, category) => total + category.sum, 0) || 0} ლარი`}</td>
               </tr>
-
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${parseFloat(unforseenExpenses)}%: ${unforseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+                <td>{`დღგ ${parseInt(vatTotal)}%: ${vatTotalPrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
-
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${unforeseenExpensesPrice.toFixed(2) || 0} ლარი`}</td>
+              </tr>
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${servicePercentagePrice.toFixed(2) || 0} ლარი`}</td>
               </tr>
-
               <tr>
                 <td></td>
                 <td></td>
@@ -268,11 +426,6 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
           ) : (
             <thead>
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                <th className="w-10px pe-2">
-                  <div className="form-check form-check-sm form-check-custom form-check-solid me-3">
-                  </div>
-                </th>
-                {/* min-w-125px */}
                 <th className="georgian">დასახელება</th>
                 <th className="georgian">მომწოდებელი</th>
                 <th className="georgian">რაოდენობა</th>
@@ -301,43 +454,36 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                   </tr>
                 </tbody>
               )}
-              {productsToMap && productsToMap.map((product) => {
+              {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
+                const initialSelectedValue = product?.attributes?.craft_status?.data?.id
+                const itemSelectedValues = selectedValues[product.id] || initialSelectedValue
+
                 return (
-                  <tbody key={product?.id}>
+                  <tbody key={index}>
                     <tr>
-                      <td>
-                        <div className="form-check form-check-sm form-check-custom form-check-solid">
-                          {/* <input
-                            className="form-check-input"
-                            type="checkbox"
-                            defaultValue={1}
-                          /> */}
-                        </div>
-                      </td>
                       <td style={{ gap: '3px', alignItems: 'center' }} className="d-flex align-items-center">
                         <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
                           <a>
                             <div className="symbol-label georgian">
-                              {/* {console.log(product.attributes.type, 'product')} */}
                               <img
                                 onError={(e) => {
-                                  e.target.src = "/images/test-img.png";
+                                  e.target.src = process.env.NEXT_PUBLIC_BUILDING_URL + defaultImage;
                                 }}
-                                src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}` +
-                                  product?.attributes?.image?.data?.attributes?.url : "/images/test-img.png"}
-                                alt=""
+                                src={product.attributes.type === 'product' ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}` : `${process.env.NEXT_PUBLIC_BUILDING_URL}${product.attributes.craft_img_url}`}
+                                alt="product img"
                                 className="w-100"
                               />
                             </div>
                           </a>
-
                         </div>
                         <span>{product?.attributes?.title}</span>
                       </td>
                       <td className="georgian">
-                        <a href={`https://www.${product?.attributes?.productLink}`} target="_blank">
-                          {product?.attributes?.supplier?.data?.attributes?.title}
-                        </a>
+                        {product.attributes.type === 'product' ? (
+                          <a href={`${product?.attributes?.productLink}`} target="_blank">
+                            {product?.attributes?.supplier?.data?.attributes?.title}
+                          </a>
+                        ) : " - "}
                       </td>
                       <td className="georgian">
                         {product?.attributes?.quantity}
@@ -347,7 +493,48 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                       </td>
                       <td className="georgian">{product?.attributes?.price}</td>
                       <td className="georgian">{product?.attributes?.type === "product" ? "პროდუქტი" : "სერვისი"}</td>
-                      <td className="georgian">{product?.attributes?.type === "product" ? product.attributes.status ? "შეძენილია" : "არაა შეძენილი" : "პროცესშია"}</td>
+                      <td className="georgian">
+                        <div className="form-group">
+                          {product?.attributes?.type === "product" ? (
+                            <select
+                              className="form-select"
+                              defaultValue={product?.attributes?.product_status?.data?.id}
+                              onChange={(event) => {
+                                getActiveItem(event.target.value, product);
+                              }}
+                            >
+                              {productStatus && productStatus.map((item) => {
+                                return (
+                                  <option key={item.id} value={item?.id}>{item?.attributes?.title}</option>
+                                );
+                              })}
+                            </select>
+                          ) : (
+                            <div className="dropdown">
+                              <div
+                                className="dropdown-toggle"
+                                onClick={() => handleToggleDropdown(product.id)}
+                              >
+                                {itemSelectedValues}
+                              </div>
+                              {activeDropdown === product.id && (
+                                <div style={{ display: "block" }} className="dropdown-menu">
+                                  {craftStatus &&
+                                    craftStatus.map((item) => (
+                                      <div
+                                        key={item.id}
+                                        className="dropdown-item"
+                                        onClick={() => handleSelectOption(item.id, product)}
+                                      >
+                                        {item.attributes.title}
+                                      </div>
+                                    ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </td>
                       <td
                         onClick={() => changeModalHandler(product)}
                         className={`${'text-end'} ${styles.changeModal}`}>
@@ -359,7 +546,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                         {activeItem === product.id ? (
                           <div className={styles.modal}>
                             <div
-                              onClick={() => { editHandler(product); editHandlerPopup(product) }}
+                              onClick={() => { editHandler(product); setSelect(product?.attributes?.type === 'product' ? 'edit-product' : 'edit-service') }}
                               className="menu-item px-3"
                             >
                               <a className="menu-link px-3 georgian padding0">
@@ -368,7 +555,7 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
                               </a>
                             </div>
                             <div
-                              onClick={() => { confirmHandler(product.id) }}
+                              onClick={() => { confirmHandler(product?.id) }}
                               className="menu-item px-3 padding8"
                             >
                               <a
@@ -389,45 +576,50 @@ const Products = ({ changePageIndex, editHandler, filteredProducts, editProductI
             </>
           )}
         </table>
-        {/* {filteredProducts?.length === 0 && <div style={{ width: '100vw', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>} */}
-        <nav aria-label="Page navigation example">
+        {!productsToMap?.length && activeCategoryId && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
+        {productsToMap.length > 5 && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={1} href="#">1</a></li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={2} href="#">2</a></li>
-            <li className="page-item" onClick={handleChangePageIndex}><a className="page-link" id={3} href="#">3</a></li>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li className="page-item" onClick={handleChangePageIndex} key={index + 1}>
+                <a className="page-link" id={index + 1} href="#">
+                  {index + 1}
+                </a>
+              </li>
+            ))}
             <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
           </ul>
-        </nav>
+        </nav>}
       </div>
-      {editPopup && editProductItem.type ? "product"(
-        <EditProduct product={editProductItem}
-          setSelect={setSelect}
-          craftStatus={craftStatus}
-          crafts={crafts}
-          unit={unit}
-          allCategories={allCategories}
-          suppliers={suppliers} />
-      ) : ("")}
-      {editPopup && editProductItem.type ? "service"(
-        <EditService product={editProductItem}
-          setSelect={setSelect}
-          craftStatus={craftStatus}
-          crafts={crafts}
-          unit={unit}
-          allCategories={allCategories}
-          suppliers={suppliers} />
-      ) : ("")}
+      {select === "exportPopUp" &&
+        <ExportPopup setSelect={setSelect}
+          totalSum={totalSum}
+          aggregatedProducts={aggregatedProducts}
+          projectId={projectId}
+          productsToMap={productsToMap}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          activeItem={activeItem}
+          totalSumPrice={totalSumPrice}
+          categorySums={categorySums}
+          vatTotal={vatTotal}
+          vatTotalPrice={vatTotalPrice}
+          unforeseenExpenses={unforeseenExpenses}
+          unforeseenExpensesPrice={unforeseenExpensesPrice}
+          service_percentage={service_percentage}
+          servicePercentagePrice={servicePercentagePrice}
+          select={select}
+        />}
     </>
   );
 };
 
-export default Products;
+export default Products

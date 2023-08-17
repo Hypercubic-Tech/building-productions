@@ -1,0 +1,29 @@
+.backBtn {
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.backBtn span {
+    color: #EB455F;
+    font-size: 16px;
+    transition: .6s;
+}
+
+.backBtn svg, .backBtn svg path {
+    transition: 0.6s;
+}
+
+.backBtn:hover span {
+    color: #2B3467;
+}
+
+.backBtn:hover svg {
+    transform: translateX(-5px);
+}
+
+.backBtn:hover svg path {
+    fill: #2B3467;
+}

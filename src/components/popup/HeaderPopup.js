@@ -38,7 +38,6 @@ const HeaderPopup = () => {
   }, []);
 
   const deleteProjectHandler = async (item) => {
-    console.log(item, "id");
     const projectId = item.id;
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`)
@@ -139,7 +138,7 @@ const HeaderPopup = () => {
       </div>
       {addProject && <AddProject dismiss={dismissHandler} />}
       {editProject && (
-        <EditProject data={editProjectData} dismiss={dismissHandler} />
+        <EditProject data={editProjectData} dismiss={dismissHandler} getProjectsData={getProjectsData()}/>
       )}
     </>
   );

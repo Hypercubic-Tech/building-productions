@@ -95,7 +95,7 @@ function HeaderLogged() {
       data-kt-sticky-name="header"
       data-kt-sticky-offset="{default: '200px', lg: '300px'}"
     >
-      <div className="container-xxl d-flex flex-grow-1 flex-stack">
+      <div className="container d-flex flex-grow-1 flex-stack cream-bg">
         <div className="d-flex align-items-center me-5">
           <div
             className="d-lg-none btn btn-icon btn-active-color-primary w-30px h-30px ms-n2 me-3"
@@ -121,13 +121,13 @@ function HeaderLogged() {
               </svg>
             </span>
           </div>
-          <a href="/">
-            <img
-              alt="Logo"
-              src="/assets/media/logos/logo-demo11.svg"
-              className="h-20px h-lg-30px"
-            />
-          </a>
+          <Link href="/">
+                <img
+                  alt="Logo"
+                  src="/images/Logo.png"
+                  className="logo-default h-lg-50px"
+                />
+          </Link>
         </div>
         <div className="d-flex align-items-center">
           <div className="d-flex align-items-center flex-shrink-0">
@@ -248,9 +248,8 @@ function HeaderLogged() {
             <div className="d-flex align-items-center ms-3 ms-lg-4">
               <Link
                 className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
-                href={{
-                  pathname: `/projects`,
-                }}
+
+                href='/projects'
               >
                 <span className="svg-icon svg-icon-1">
                   <svg
@@ -311,39 +310,49 @@ function HeaderLogged() {
               {isModalOpen && (
                 <animated.div className="modal" style={animation}>
                   <div ref={ref} className={`${styles.modalWindow}`}>
-                    <div onClick={handleLogout} className={styles.hover}>
-                      გამოსვლა
+                    <div className={styles.hover}>
+                      <Link
+                        href='/account'
+                      >
+                        <span>აქაუნთი</span>
+                      </Link>
                     </div>
-                    <svg
-                      onClick={closeModal}
-                      className={styles.closeBtn}
-                      width="64px"
-                      height="64px"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                      <g
-                        id="SVGRepo_tracerCarrier"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        stroke="#CCCCCC"
-                        strokeWidth="0.336"
-                      ></g>
-                      <g id="SVGRepo_iconCarrier">
-                        <g id="Menu / Close_MD">
-                          <path
-                            id="Vector"
-                            d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
-                            stroke="#000000"
-                            strokeWidth="2"
+                    <Link href="/">
+                      <div onClick={handleLogout} className={styles.hover} style={{ padding: "10px" }}>
+                        გამოსვლა
+                        <svg
+                          onClick={closeModal}
+                          className={styles.closeBtn}
+                          style={{ marginLeft: "50px" }}
+                          width="64px"
+                          height="64px"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                          ></path>
-                        </g>
-                      </g>
-                    </svg>
+                            stroke="#CCCCCC"
+                            strokeWidth="0.336"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <g id="Menu / Close_MD">
+                              <path
+                                id="Vector"
+                                d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
+                                stroke="#000000"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              ></path>
+                            </g>
+                          </g>
+                        </svg>
+                      </div>
+                    </Link>
                   </div>
                 </animated.div>
               )}

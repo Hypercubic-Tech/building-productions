@@ -1,65 +1,59 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux';
+
+import axios from "axios";
+
 import { setCategory } from "../../store/slices/categorySlice";
 import { setProducts } from "../../store/slices/productSlice";
 
-import Products from "../products/Products";
 import Filter from "./Filter";
-import axios from "axios";
+import Products from "../products/Products";
 import AddProduct from "../popup/AddProduct";
 import Gallery from "../popup/Gallery";
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
-import { Export } from "../popup/Export";
+import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
 
-const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus, allProduct, projectCategory, editHandler, editProductItem, productOptions }) => {
+const Project = ({ project,
+  crafts,
+  unit,
+  suppliers,
+  craftStatus,
+  allProduct,
+  projectCategory,
+  editHandler,
+  editProductItem,
+  productOptions,
+  productStatus,
+  defaultImage
+}) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { projectId } = router.query;
+
+  const products = useSelector(state => state.prod.products);
+  const activeCategoryId = useSelector(state => state?.cats?.category);
+
   const [select, setSelect] = useState(null);
-  const [services, setServices] = useState(null);
-  const [summary, setSummary] = useState(0);
-  const [filteredProducts, setFilteredProducts] = useState(undefined);
-  const [defaultP, setDefaultP] = useState(undefined);
-  const [pageIndex, setPageIndex] = useState(1);
-  const [showProduct, setShowProduct] = useState(false);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
-  const products = useSelector(state => state.prod.products);
-  const categoryId = useSelector(state => state.cats.category);
-  const router = useRouter();
-  const { projectId } = router.query;
-  const dispatch = useDispatch();
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
   };
-
-  const incrementPageIndex = () => {
-  let productLimit = 10
-    if (pageIndex < productLimit) {
-      setPageIndex(pageIndex + 1);
-    }
-  };
-
-  const decrementPageIndex = () => {
-    if (pageIndex > 1) {
-      setPageIndex(pageIndex - 1);
-    }
-  };
-  const changePageIndex = (num) => {
-    setPageIndex(num);
-  };
-
   const totalSumTable = () => {
     setTotalSum(true)
   };
 
-  const defaultProductsHandler = async (id, pageIndex) => {
+  const defaultProductsHandler = async (id) => {
     if (id) {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=3`);
-        const data = response.data;
-        dispatch(setProducts(data.data));
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+        const data = response.data.data;
+        dispatch(setProducts(data));
         dispatch(setCategory(id));
       } catch (error) {
         console.error(error);
@@ -69,7 +63,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
 
   const filterProductCategory = async (id) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}&pagination[page]=${pageIndex}&pagination[pageSize]=3`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
       const data = response.data;
       dispatch(setProducts(data.data));
       dispatch(setCategory(id));
@@ -79,16 +73,19 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
     }
   };
 
-  useEffect(() => {
-    if (categoryId) {
-      defaultProductsHandler(categoryId, pageIndex);
-    }
-  }, [categoryId]);
-
   const total = products.reduce((acc, product) => {
     const productTotal = product?.attributes?.price * product?.attributes?.quantity;
     return acc + productTotal;
   }, 0);
+
+  useEffect(() => {
+    const defaultProductCallBack = async () => {
+    if (activeCategoryId && projectId) {
+        await defaultProductsHandler(activeCategoryId);
+      }
+    }
+    defaultProductCallBack()
+  }, [activeCategoryId, projectId])
 
   return (
     <>
@@ -96,12 +93,13 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
       <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
         <div
           id="kt_toolbar_container"
-          className="container-xxl d-flex flex-stack flex-wrap"
+          className="container d-flex flex-stack flex-wrap"
         >
-          {project && project.map((p, index) => {
+          {project && project?.map((p, index) => {
             return (
               <div className="page-title d-flex flex-column me-3" key={index}>
-                <h1 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
+                <h1>{p?.attributes?.title}</h1>
+                <h2 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={16}
@@ -113,16 +111,22 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                   </svg>
                   &nbsp;{p?.attributes?.address}
-                </h1>
+                </h2>
                 <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
                   <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.city?.data?.attributes?.city}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
+                    {p?.attributes?.property_type?.data?.attributes?.title}
+                  </li>
+                  <li className="breadcrumb-item text-gray-600 georgian">
                     {p?.attributes?.condition?.data?.attributes?.title}
                   </li>
                   <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_types?.data[0]?.attributes?.Title}
+                    {p?.attributes?.current_condition?.data?.attributes?.title}
+                  </li>
+                  <li className="breadcrumb-item text-gray-600 georgian">
+                    {p?.attributes?.area} მ2
                   </li>
                   <li className="breadcrumb-item text-warning georgian">
                     {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
@@ -139,7 +143,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
               }}
             >
               <a
-                // href="#"
                 className="btn btn-light-primary fw-bolder georgian"
                 data-kt-menu-trigger="click"
                 data-kt-menu-placement="bottom-end"
@@ -160,7 +163,6 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
               }}
             >
               <a
-                href="#"
                 className="btn btn-primary fw-bolder georgian"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_create_app"
@@ -237,7 +239,7 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                           <button
                             type="button"
                             onClick={() => {
-                              setSelect("export");
+                              setSelect("exportPopUp");
                             }}
                             className="btn btn-light-primary me-3 georgian"
                             data-bs-toggle="modal"
@@ -315,16 +317,16 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                             Delete Selected
                           </button>
                         </div>
-                        {/* ფილტრი */}
                         {select === "gallery" && <Gallery setSelect={setSelect} />}
                         {select === "dranings" && <Drawings setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
-                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
+                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} productStatus={productStatus} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
                         />}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
                             setSelect={setSelect}
                             craftStatus={craftStatus}
+                            productStatus={productStatus}
                             crafts={crafts}
                             unit={unit}
                             allCategories={projectCategory}
@@ -344,26 +346,16 @@ const Project = ({ project, crafts, unit, allCategories, suppliers, craftStatus,
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
+                        defaultImage={defaultImage}
+                        productStatus={productStatus}
                         projectId={projectId}
-                        defaultProductsHandler={defaultProductsHandler}
-                        defaultP={defaultP}
-                        editProductItem={editProductItem}
+                        craftStatus={craftStatus}
                         editHandler={editHandler}
-                        services={services}
-                        filteredProducts={filteredProducts}
                         allProduct={allProduct}
                         setSelect={setSelect}
-                        craftStatus={craftStatus}
-                        crafts={crafts}
-                        unit={unit}
-                        allCategories={allCategories}
-                        suppliers={suppliers}
                         totalSum={totalSum}
-                        incrementPageIndex={incrementPageIndex}
-                        pageIndex={pageIndex}
-                        changePageIndex={changePageIndex}
-                        decrementPageIndex={decrementPageIndex}
                         searchType={searchType}
+                        select={select}
                       />
                     </div>
                   </div>

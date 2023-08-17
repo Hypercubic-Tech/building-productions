@@ -1,39 +1,32 @@
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-
 import axios from 'axios';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import { setProductState, setProducts } from '../../store/slices/productSlice';
+import { setCategory } from "../../store/slices/categorySlice";
 
 import notify from '../../utils/notify';
 
 const AddProduct = ({
-    project,
     setSelect,
     unit,
-    allCategories,
     suppliers,
     craftStatus,
-    crafts,
+    productStatus
 }) => {
     const dispatch = useDispatch();
-
     const router = useRouter();
+
     const projectId = router.query.projectId;
+    const activeCategoryId = useSelector(state => state.cats.category);
+
     const [lossProduct, setLossProduct] = useState(false);
-    const [lossCraft, setLossCraft] = useState(false);
     const [toggle, setToggle] = useState(true);
-    const [isTouched, setIsTouched] = useState(true);
     const [imgSrc, setImgSrc] = useState(null);
     const [image, setImage] = useState(null);
     const [filteredCrafts, setFilteredCrafts] = useState();
-    const [title, setTitle] = useState();
     const [craftImage, setCraftImage] = useState();
-
-    const activeCategoryId = useSelector(state => state.cats.category);
-    // const activeCategory = allCategories.find((category) => category.id === activeCategoryId)
 
     const [productData, setProductData] = useState({
         image: image,
@@ -54,7 +47,9 @@ const AddProduct = ({
         project: {
             connect: [{ id: projectId }]
         },
-        status: false
+        product_status: {
+            connect: [{ id: null }]
+        },
     });
 
     const [craftData, setCraftData] = useState({
@@ -74,29 +69,20 @@ const AddProduct = ({
         craft_status: {
             connect: [{ id: null }]
         },
+        craft_img_url: "",
+        project: {
+            connect: [{ id: projectId }]
+        },
     });
 
-    useEffect(() => {
-        const getCraftsByCategory = async () => {
-            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
-                .then((res) => {
-                    const data = res.data;
-                    setFilteredCrafts(data)
-                })
-        }
-        getCraftsByCategory();
-    }, []);
-
     const defaultProductsHandler = async (id, pageIndex) => {
-        if (id) {
-            try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=categories,project,image,unit,supplier&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
-                const data = response.data;
-                dispatch(setProducts(data.data));
-                dispatch(setCategory(id));
-            } catch (error) {
-                console.error(error);
-            }
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+            const data = response.data;
+            dispatch(setProducts(data.data));
+            dispatch(setCategory(id));
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -125,15 +111,16 @@ const AddProduct = ({
                 .post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products`, {
                     data: craftData,
                 })
-                .then(() => {
+                .then((res) => {
+                    const data = res.data;
                     notify(false, "ხელობა დაემატა");
-                    setShowProduct(true)
                     dispatch(setProductState(data.data));
                 })
         } catch (err) {
-            // notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
+            notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
             console.log(err);
         }
+        defaultProductsHandler(activeCategoryId);
         setSelect(null);
     };
 
@@ -157,14 +144,25 @@ const AddProduct = ({
             );
 
             const data = res.data;
-            console.log(data[0], 'age dzma');
             setImage(data[0]);
+            setImgSrc(data[0].url)
 
             notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
         } catch (err) {
             console.error(err);
             notify(true, "სურათის ატვირთვა უარყოფილია");
         }
+    };
+
+    const handleImageRemove = async () => {
+        if (image) {
+            await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
+            setImgSrc(null);
+            notify(false, "სურათი წარმატებით წაიშალა");
+        } else {
+            notify(true, "სურათი არ არის ატვირთული");
+        }
+
     };
 
     useEffect(() => {
@@ -174,11 +172,17 @@ const AddProduct = ({
         }));
     }, [image]);
 
-    const handleImageRemove = async () => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${image?.id}`)
-        setImgSrc(null);
-        notify(false, "სურათი წარმატებით წაიშალა");
-    };
+    useEffect(() => {
+        const getCraftsByCategory = async () => {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
+                .then((res) => {
+                    const data = res.data;
+                    setFilteredCrafts(data)
+                })
+        }
+
+        getCraftsByCategory();
+    }, []);
 
     return (
         <div
@@ -271,7 +275,7 @@ const AddProduct = ({
                                             >
                                                 {
                                                     imgSrc ? <img
-                                                        src={imgSrc}
+                                                        src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`}
                                                         width={125}
                                                         height={125}
                                                         style={{ borderRadius: "8px" }}
@@ -395,6 +399,7 @@ const AddProduct = ({
                                                 რაოდენობა
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
@@ -443,6 +448,7 @@ const AddProduct = ({
                                                 ღირეულება
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setProductData((prevSendData) => ({
                                                         ...prevSendData,
@@ -456,19 +462,35 @@ const AddProduct = ({
                                             />
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
-                                        <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-
-                                            <div style={{ marginTop: '30px' }} className="form-check">
-                                                <label className="form-check-label" htmlFor="exampleCheckbox">
-                                                    შეძენილია
-                                                </label>
-                                                <input onChange={(e) => setProductData((prevSendData) => ({
-                                                    ...prevSendData,
-                                                    status: true,
-                                                }))} className="form-check-input" type="checkbox" id="exampleCheckbox" />
-                                            </div>
+                                        <div className="col-md-12 fv-row fv-plugins-icon-container">
+                                            <label className="required fs-5 fw-bold mb-2 georgian">
+                                                სტატუსი
+                                            </label>
+                                            <select
+                                                onClick={(e) => {
+                                                    setProductData((prevSendData) => ({
+                                                        ...prevSendData,
+                                                        product_status: {
+                                                            connect: [{ id: e.target.value }],
+                                                        },
+                                                    }));
+                                                }}
+                                                name="count"
+                                                defaultValue='none'
+                                                className="form-select form-select-solid georgian"
+                                                data-placeholder="საზომიერთ."
+                                            >
+                                                <option value="none" disabled hidden>აირჩიეთ სტატუსი</option>
+                                                {productStatus &&
+                                                    productStatus.map((status) => {
+                                                        return (
+                                                            <option key={status?.id} value={status?.id}>
+                                                                {status?.attributes?.title}
+                                                            </option>
+                                                        );
+                                                    })}
+                                            </select>
                                             <div className="fv-plugins-message-container invalid-feedback"></div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -532,7 +554,8 @@ const AddProduct = ({
                                                     setCraftImage(filteredArray[0].attributes.image.data.attributes.url)
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        title: e.target.value
+                                                        title: e.target.value,
+                                                        craft_img_url: filteredArray[0].attributes.image.data.attributes.url
                                                     }));
                                                 }}
                                                 name="count"
@@ -540,13 +563,11 @@ const AddProduct = ({
                                                 className="form-select form-select-solid georgian"
                                                 data-placeholder="დასახელება"
                                             >
-                                                <option value="none" disabled selected hidden > აირჩიეთ დასახელება</option>;+
-
+                                                <option value="none" disabled hidden > აირჩიეთ დასახელება</option>;+
                                                 {filteredCrafts &&
                                                     filteredCrafts?.data.map((item, index) => {
-
                                                         return (
-                                                            <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
+                                                            <option key={item?.id + index} value={item?.attributes?.title}>
                                                                 {item?.attributes?.title}
                                                             </option>
                                                         );
@@ -559,8 +580,9 @@ const AddProduct = ({
                                                 რაოდენობა
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
-                                                    setProductData((prevSendData) => ({
+                                                    setCraftData((prevSendData) => ({
                                                         ...prevSendData,
                                                         quantity: e.target.value,
                                                     }));
@@ -607,6 +629,7 @@ const AddProduct = ({
                                                 ღირეულება
                                             </label>
                                             <input
+                                                onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
@@ -628,7 +651,9 @@ const AddProduct = ({
                                                 onClick={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
-                                                        craft_status: e.target.value
+                                                        craft_status: {
+                                                            connect: [{ id: e.target.value }],
+                                                        },
                                                     }));
                                                 }}
                                                 name="count"
@@ -681,7 +706,3 @@ const AddProduct = ({
 };
 
 export default AddProduct;
-
-
-// bakcup
-

@@ -1,3 +1,4 @@
+
 const ContactUs = () => {
   return (
     <div className="mb-0">
@@ -18,24 +19,24 @@ const ContactUs = () => {
           <div className="row py-10 py-lg-20">
             <div className="col-lg-6 pe-lg-16 mb-10 mb-lg-0">
               <div className="rounded landing-dark-border p-9 mb-10">
-                <h2 className="text-white">Would you need a Custom License?</h2>
+                <h2 className="">Would you need a Custom License?</h2>
                 <span className="fw-normal fs-4 text-gray-700">
                   Email us to
                   <a
                     href="https://keenthemes.com/support"
-                    className="text-white opacity-50 text-hover-primary"
+                    className=" opacity-50 text-hover-primary"
                   >
                     support@keenthemes.com
                   </a>
                 </span>
               </div>
               <div className="rounded landing-dark-border p-9">
-                <h2 className="text-white">How About a Custom Project?</h2>
+                <h2 className="">How About a Custom Project?</h2>
                 <span className="fw-normal fs-4 text-gray-700">
                   Use Our Custom Development Service.
                   <a
                     href="../../demo11/dist/pages/profile/overview.html"
-                    className="text-white opacity-50 text-hover-primary"
+                    className=" opacity-50 text-hover-primary"
                   >
                     Click to Get a Quote
                   </a>
@@ -50,37 +51,37 @@ const ContactUs = () => {
                   </h4>
                   <a
                     href="#"
-                    className="text-white opacity-50 text-hover-primary fs-5 mb-6"
+                    className=" opacity-50 text-hover-primary fs-5 mb-6"
                   >
                     FAQ
                   </a>
                   <a
                     href="#"
-                    className="text-white opacity-50 text-hover-primary fs-5 mb-6"
+                    className=" opacity-50 text-hover-primary fs-5 mb-6"
                   >
                     Documentaions
                   </a>
                   <a
                     href="#"
-                    className="text-white opacity-50 text-hover-primary fs-5 mb-6"
+                    className=" opacity-50 text-hover-primary fs-5 mb-6"
                   >
                     Video Tuts
                   </a>
                   <a
                     href="#"
-                    className="text-white opacity-50 text-hover-primary fs-5 mb-6"
+                    className=" opacity-50 text-hover-primary fs-5 mb-6"
                   >
                     Changelog
                   </a>
                   <a
                     href="#"
-                    className="text-white opacity-50 text-hover-primary fs-5 mb-6"
+                    className=" opacity-50 text-hover-primary fs-5 mb-6"
                   >
                     Github
                   </a>
                   <a
                     href="#"
-                    className="text-white opacity-50 text-hover-primary fs-5"
+                    className=" opacity-50 text-hover-primary fs-5"
                   >
                     Tutorials
                   </a>
@@ -91,51 +92,51 @@ const ContactUs = () => {
                   </h4>
                   <a href="#" className="mb-6">
                     <img
-                      src="assets/media/svg/brand-logos/facebook-4.svg"
+                      src=""
                       className="h-20px me-2"
                       alt=""
                     />
-                    <span className="text-white opacity-50 text-hover-primary fs-5 mb-6">
+                    <span className=" opacity-50 text-hover-primary fs-5 mb-6">
                       Facebook
                     </span>
                   </a>
                   <a href="#" className="mb-6">
                     <img
-                      src="assets/media/svg/brand-logos/github.svg"
+                      src=""
                       className="h-20px me-2"
                       alt=""
                     />
-                    <span className="text-white opacity-50 text-hover-primary fs-5 mb-6">
+                    <span className=" opacity-50 text-hover-primary fs-5 mb-6">
                       Github
                     </span>
                   </a>
                   <a href="#" className="mb-6">
                     <img
-                      src="assets/media/svg/brand-logos/twitter.svg"
+                      src=""
                       className="h-20px me-2"
                       alt=""
                     />
-                    <span className="text-white opacity-50 text-hover-primary fs-5 mb-6">
+                    <span className=" opacity-50 text-hover-primary fs-5 mb-6">
                       Twitter
                     </span>
                   </a>
                   <a href="#" className="mb-6">
                     <img
-                      src="assets/media/svg/brand-logos/dribbble-icon-1.svg"
+                      src=""
                       className="h-20px me-2"
                       alt=""
                     />
-                    <span className="text-white opacity-50 text-hover-primary fs-5 mb-6">
+                    <span className=" opacity-50 text-hover-primary fs-5 mb-6">
                       Dribbble
                     </span>
                   </a>
                   <a href="#" className="mb-6">
                     <img
-                      src="assets/media/svg/brand-logos/instagram-2-1.svg"
+                      src=""
                       className="h-20px me-2"
                       alt=""
                     />
-                    <span className="text-white opacity-50 text-hover-primary fs-5 mb-6">
+                    <span className=" opacity-50 text-hover-primary fs-5 mb-6">
                       Instagram
                     </span>
                   </a>
