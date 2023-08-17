@@ -58,7 +58,7 @@ const Faq = () => {
     return (
         <div className="container pt-256 mb-320">
         <div className="d-flex w-100 align-items-center custom-row responsive-justify-center">
-        <div className="">
+        <div className={styles.width50}>
         <h3 className="m-color fs-2hx fw-bold mb-8 georgian">
         ხშირად დასმული კითხვები
         </h3>
@@ -75,7 +75,7 @@ const Faq = () => {
         );
       })}
     </div>
-        <div className="w-50 relative">
+        <div className={`${styles.responsive} w-50 relative `}>
           <img className="faq-bg" src="/images/faq.png" alt="faq"/>
         </div>
         </div>

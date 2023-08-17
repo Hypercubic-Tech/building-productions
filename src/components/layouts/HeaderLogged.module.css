@@ -2,6 +2,7 @@
   border-color: #2B3467;
 }
 .modalWindow {
+  background-color: #fff;
   align-items: center;
   position: fixed;
   z-index: 9;
@@ -48,7 +49,7 @@
 }
 .hover:hover {
   color: #070707;
-  background-color: rgba(245, 248, 250, 0.8);
+  background-color: #D9D9D9;
   border-radius: 4px;
 }
 .closeBtn {
@@ -57,13 +58,8 @@
   cursor: pointer;
   margin-left: 4px;
 }
-.closeBtn path {
-  stroke: #00b1fe;
-  transition: all 0.3s ease;
-}
-
-.closeBtn:hover path {
-  stroke: #0098da;
+.search {
+  cursor: pointer;
 }
 
 /* popup element */
