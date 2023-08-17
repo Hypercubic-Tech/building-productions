@@ -23,7 +23,7 @@ const Price = ({ price }) => {
                     setMonthly(true);
                     setAnnual(false);
                   }}
-                  className={`custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
+                  className={`buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
                     monthly ? "active" : "",
                   ]} `}
                   data-kt-plan="month"
@@ -35,7 +35,7 @@ const Price = ({ price }) => {
                     setMonthly(false);
                     setAnnual(true);
                   }}
-                  className={`custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
+                  className={`buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
                     annual ? "active" : "",
                   ]} `}
                   data-kt-plan="annual"
@@ -207,7 +207,7 @@ const Price = ({ price }) => {
                         onClick={() => {
                           setSelected(1);
                         }}
-                        className={`${selected === 1
+                        className={` border-none ${selected === 1
                             ? "btn btn-color-primary btn-active-light-primary btn-light br-4"
                             : "btn btn-primary br-4 br-4"
                           }`}
@@ -379,7 +379,7 @@ const Price = ({ price }) => {
                         onClick={() => {
                           setSelected(2);
                         }}
-                        className={`${selected === 2
+                        className={` border-none ${selected === 2
                             ? "btn btn-color-primary btn-active-light-primary btn-light br-4"
                             : "btn btn-primary br-4"
                           }`}
@@ -551,7 +551,7 @@ const Price = ({ price }) => {
                         onClick={() => {
                           setSelected(3);
                         }}
-                        className={`${selected === 3
+                        className={` border-none ${selected === 3
                             ? "btn btn-color-primary btn-active-light-primary btn-light br-4"
                             : "btn btn-primary br-4 br-4 br-4"
                           }`}

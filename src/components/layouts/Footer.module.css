@@ -1,5 +1,9 @@
+.zIndex {
+    z-index: 1;
+    position: relative;
+}
 .mb18 {
-    margin: 18px 0;
+    margin: 8px 0;
 }
 .mr18 {
     margin-right: 18px;
@@ -15,4 +19,16 @@
 }
 .social svg:hover path {
     opacity: 0.6;
+}
+.iconHover svg {
+    width: 18px;
+    height: 18px;
+}
+@media (min-width: 1920px) and (max-width: 2560px)  {
+    .mb18 {
+        margin: 18px 0;
+    }
+}
+@media (max-width: 767.98px) {
+   
 }
