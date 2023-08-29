@@ -59,12 +59,12 @@ const Heading = () => {
   return (
     <div className="mb-0" id="home">
        <div
-        className="container bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
+        className="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
         // style={{
         //   backgroundImage: "url(assets/media/svg/illustrations/landing.svg)",
         // }}
       >
-        <div className="d-flex flex-center w-100 relative mt-169 col-responsive justify-content-between">
+        <div className="container d-flex flex-center w-100 relative mt-169 col-responsive justify-content-between">
         {/* min-h-lg-500px min-h-350px px-9 */}
           <div className="text-center mb-5 mb-lg-10 py-10 py-lg-20">
             <h1 className="text-start geo-title lh-base fw-bold f-rem2 fs-lg-3x mb-15 georgian">
