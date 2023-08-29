@@ -34,7 +34,7 @@ const index = () => {
 
     if (searchValue) {
         const lowercaseSearchType = searchValue.toLowerCase();
-        // if (projectData && Array.isArray(projectData)) {
+        if (projectData && Array.isArray(projectData)) {
             projectsToMap = projectData.reduce((filteredProjects, project) => {
                 const projectTitle = project?.attributes?.title?.toLowerCase();
                 const projectAddress = project?.attributes?.address?.toLowerCase(); // Added line
@@ -45,9 +45,9 @@ const index = () => {
                 }
                 return filteredProjects;
             }, []);
-        // } else {
-        //     console.log('projectData is null or not an array');
-        // }
+        } else {
+            console.log('projectData is null or not an array');
+        }
     }
 
     const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
