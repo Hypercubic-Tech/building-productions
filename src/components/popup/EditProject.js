@@ -230,7 +230,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
     >
       <div className={styles.overlay}></div>
       <div className={` ${styles.mainBg} modal-content `}>
-        <div className="modal-header">
+        <div  className={`modal-header py-sm-10 px-sm-10 container ${styles.modalHeader}`}>
           <h2 className="georgian">ობიექტის რედაქტირება</h2>
           <div
             className="btn btn-sm btn-icon btn-active-color-primary"
@@ -336,7 +336,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                 </div>
               </div>
             </div>
-            <div className="flex-row-fluid py-lg-5 px-lg-15">
+            <div className="flex-row-fluid py-lg-5">
               <form className="form needs-validation" noValidate="novalidate">
                 <div
                   className={getStatusClass(1)}
@@ -537,7 +537,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                   <div className="w-100">
                     <div className="fv-row">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
-                        <span className="required georgian">მდგომარეობა</span>
+                        <span className="required fw-bolder georgian fs-4">მდგომარეობა</span>
                       </label>
                       <div className="fv-row">
                         {condition && condition.map((item, index) => {
@@ -545,7 +545,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                             <label key={index} className="d-flex flex-stack mb-5 cursor-pointer">
                               <span className="d-flex align-items-center me-2">
                                 <span className="d-flex flex-column">
-                                  <span className="fw-bolder georgian fs-6">
+                                  <span className="georgian fs-6">
                                     {item.attributes.title}
                                   </span>
                                 </span>
@@ -576,7 +576,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                     </div>
                     <div className="fv-row">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
-                        <span className="required georgian">
+                        <span className="required georgian fw-bolder fs-4">
                           არსებული მდგომარეობა
                         </span>
                       </label>
@@ -585,7 +585,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                           <label key={index} className="d-flex flex-stack cursor-pointer mb-5">
                             <span className="d-flex align-items-center me-2">
                               <span className="d-flex flex-column">
-                                <span className="fw-bolder georgian fs-6">
+                                <span className=" georgian fs-6">
                                   {item.attributes.title}
                                 </span>
                                 <span className="fs-7 georgian text-muted">
