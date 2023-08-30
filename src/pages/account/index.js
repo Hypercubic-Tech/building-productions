@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 import { setAuthState } from "../../store/slices/authSlice";
 
@@ -9,7 +10,6 @@ import EditAccount from "../../components/popup/EditAccount";
 import Unauthorized from "../401";
 
 const index = () => {
-    const loggedIn = useSelector(setAuthState);
     const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
     const [authUser, setAuthUser] = useState([]);
@@ -20,6 +20,8 @@ const index = () => {
     const authUserId = useSelector((state) => state.auth.user_id);
     const authEmail = useSelector((state) => state.auth.email);
 
+    const { data: session } = useSession();
+  
     const loggedUserInfo = async () => {
         let url;
         if (authUserId) {
