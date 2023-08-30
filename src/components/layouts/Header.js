@@ -28,7 +28,7 @@ function Header() {
   }, [session, dispatch]);
 
 
-  console.log(session, "ff");
+  // console.log(session, "ff");
 
   useEffect(() => {
     if (loggedIn || session !== undefined ) {
