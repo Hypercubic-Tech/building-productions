@@ -34,6 +34,9 @@
 }
 .btn {
   margin-top: 10px;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
 }
 .cursorNone {
   cursor:auto !important;
