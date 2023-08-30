@@ -3,6 +3,7 @@ import { useSpring, animated } from "react-spring";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 
 import {
   setAuthAccessToken,
@@ -77,6 +78,8 @@ function HeaderLogged() {
     dispatch(setAuthUserId(null));
     dispatch(setAuthEmail(null));
     dispatch(setAuthRole(null));
+
+    signOut();
   };
 
   useEffect(() => {

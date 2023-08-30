@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 import { setAuthState } from "../../store/slices/authSlice";
 
@@ -107,6 +108,9 @@ const index = () => {
             notify(true, "სურათი არ არის ატვირთული");
         }
     };
+
+    const { data: session } = useSession();
+    console.log(session);
 
     return (
         <>
