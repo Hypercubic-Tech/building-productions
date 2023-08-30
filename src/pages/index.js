@@ -28,15 +28,28 @@ const priceData = {
 };
 
 const Home = () => {
-  const [isAuthWithGoogle, setIsAuthWithGoogle] = useState(null);
-  const [isClosed, setIsClosed] = useState(true);
   const dispatch = useDispatch();
   const router = useRouter();
   const { id_token } = router.query;
   const userObject = id_token ? jwt_decode(id_token) : null;
 
+  const [isAuthWithGoogle, setIsAuthWithGoogle] = useState(null);
+  const [isClosed, setIsClosed] = useState(true);
+
+  const [faqData, setFaqData] = useState(null);
+
   const toggleModal = () => {
     setIsClosed(false);
+  };
+
+  const getFaqData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/FAQs`);
+      const data = response.data;
+      setFaqData(data?.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -48,11 +61,11 @@ const Home = () => {
             const data = res.data;
             setIsAuthWithGoogle(data)
             if (data?.length === 0) {
-              
+
               localStorage.setItem("access_token", id_token);
               localStorage.setItem("email", userObject?.email);
               localStorage.setItem("userId", data[0]?.id);
-              
+
               dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
@@ -62,7 +75,7 @@ const Home = () => {
               localStorage.setItem("access_token", id_token);
               localStorage.setItem("email", userObject?.email);
               localStorage.setItem("userId", data[0]?.id);
-              
+
               dispatch(setAuthUserId(data[0]?.id))
               dispatch(setAuthAccessToken(id_token));
               dispatch(setAuthEmail(userObject?.email));
@@ -78,6 +91,10 @@ const Home = () => {
     }
   }, [id_token]);
 
+  useEffect(() => {
+    getFaqData();
+  }, []);
+
   return (
     <div
       id="kt_body"
@@ -92,7 +109,7 @@ const Home = () => {
         <OurTeam />
         <Price price={priceData} />
         {/* <ContactUs /> */}
-        <Faq />
+        <Faq faqData={faqData} />
         {id_token && isClosed && isAuthWithGoogle?.length === 0 && <SignedWithGoogleModal onClose={toggleModal} userEmail={userObject?.email} userToken={id_token} />}
       </div>
     </div>

@@ -1,12 +1,12 @@
 .modal {
-  z-index: 1;
+  z-index: 1000;
   width: 100%;
-  height: auto;
-  top: 30px;
+  height: 100vh;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  position: absolute;
+  position: fixed;
 }
 .overlay {
   position: fixed;
@@ -46,14 +46,25 @@
 }
 
 .wrapChild {
-  flex: 0 0 30%;
+  width: calc(33.333% - 20px);
+  background: rgba(0,0,0,0.01);
 }
-
-.imgWrap img {
-  max-width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  height: 210px;
+.cardLinkImg {
+  position: relative;
+  padding-top: 58%;
+  overflow: hidden;
+}
+.cardLinkImg img {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+  object-fit: cover;
+}
+.cardLink:hover .cardLinkImg img{
+  transform: scale(1.05);
 }
 .outline {
   padding: 2px;
@@ -69,17 +80,20 @@
   background-color: red;
 }
 
-.gap20 {
+.moodalButtons {
   gap: 20px;
-  --bs-gutter-x: -56px;
+  --bs-gutter-x: 0px;
+  padding: 10px 15px;
+  display: flex;
 }
 .customGap {
   gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
 }
 .gutter0 {
   --bs-gutter-x: 0;
 }
-
 .noWrap {
   flex-wrap: nowrap !important;
 }
@@ -134,13 +148,38 @@
   justify-content: space-between;
   align-items: center;
 }
-
-@media only screen and (min-width : 768px) and (max-width : 991px) {
-  .wrapChild {
-    flex: 0 0 30.6%;
+.cardTtl div{
+  font-size: 1.3em;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+}
+.cardLink:hover .cardTtl div{
+  color: #000000;
+}
+.cardTtl p svg {
+  margin-right: 5px;
+}
+.cardTtl p {
+  color: #eb445f;
+}
+.projectBg {
+  position: absolute;
+  bottom: -50px;
+  opacity: .1;
+  width: 100%;
+}
+.modalHeader h2 {
+  font-size: 2em;
+}
+@media (max-width: 1900px) {
+  .flexWrap {
+    gap: 30px;
   }
 }
-
+@media (max-width: 1199px) {
+  .wrapChild {
+    width: calc(50% - 15px);
+  }
+}
 @media (max-width: 767px) {
   .flexWrap {
     display: flex;
@@ -148,7 +187,7 @@
     align-items: center !important;
   }
   .wrapChild {
-    flex: 0 0 90%;
+    width: 100%;
   }
 
   .mt20 {
@@ -156,5 +195,21 @@
   }
   .width100 {
     width: 100%;
+  }
+  .modalHeader h2 {
+    margin: 25px 0px;
+  }
+  .modalHeader {
+    flex-direction: column-reverse;
+  }
+  .modalHeader > div {
+    margin-top: 15px;
+  }
+  .modal {
+    height: auto;
+  }
+  .inputWrap {
+    width: 100%!important;
+    margin-bottom: 15px;
   }
 }
