@@ -213,12 +213,12 @@ const AddProject = ({ dismiss, setShowProject }) => {
 
   return (
     <div
-      style={{ display: close ? "none" : "", "marginTop": "80px" }}
+      style={{ display: close ? "none" : "" }}
       className={`${styles.modal}`}
     >
       <div className={styles.overlay}></div>
       <div className={` ${styles.mainBg} modal-content `}>
-        <div className="modal-header">
+        <div className={`modal-header py-sm-10 px-sm-10 container ${styles.modalHeader}`}>
           <h2 className="georgian">ობიექტის დამატება</h2>
           <div
             className="btn red-ghost-btn"
@@ -234,7 +234,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
             </span>
           </div>
         </div>
-        <div className={` modal-body py-lg-10 px-lg-10 ${styles.scroll}`}>
+        <div className={` modal-body py-sm-10 px-sm-10 container ${styles.scroll}`}>
           <div
             className="stepper stepper-pills stepper-column d-flex flex-column d-flef flex-row-fluid"
             id="kt_modal_create_app_stepper"
@@ -316,7 +316,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                 </div>
               </div>
             </div>
-            <div className="flex-row-fluid py-lg-5 px-lg-15">
+            <div className="flex-row-fluid py-lg-5">
               <form className="form needs-validation" noValidate="novalidate">
                 <div
                   className={getStatusClass(1)}
@@ -510,14 +510,14 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     <div className="fv-row">
                       <div className="fv-row">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
-                        <span className="required georgian">მდგომარეობა</span>
+                        <span className="fw-bolder required georgian fs-4">მდგომარეობა</span>
                       </label>
                         {condition && condition.map((item, index) => {
                           return (
                             <label key={index} className="d-flex mb-5 flex-stack cursor-pointer">
                               <span className="d-flex align-items-center me-2">
                                 <span className="d-flex flex-column">
-                                  <span className="fw-bolder georgian fs-6">
+                                  <span className="georgian fs-6">
                                     {item.attributes.title}
                                   </span>
                                 </span>
@@ -548,7 +548,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                     <div className="fv-row">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-4">
-                        <span className="required georgian">
+                        <span className="fw-bolder required georgian fs-4">
                           არსებული მდგომარეობა
                         </span>
                       </label>
@@ -557,7 +557,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                           <label key={index} className="d-flex flex-stack cursor-pointer mb-5">
                             <span className="d-flex align-items-center me-2">
                               <span className="d-flex flex-column">
-                                <span className="fw-bolder georgian fs-6">
+                                <span className="georgian fs-6">
                                   {item.attributes.title}
                                 </span>
                                 {/* <span className="fs-7 georgian text-muted">
@@ -620,7 +620,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                           შესასრულებელი სამუშაოები
                         </label>
                         <div className="row fv-row">
-                          <div className="col-6">
+                          <div className="col-12">
                             <div className={`${styles.customGap} d-flex`}>
                               {categories &&
                                 categories.map((item, index) => {
