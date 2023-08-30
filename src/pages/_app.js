@@ -12,11 +12,11 @@ export default function App({
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-          <Layout>
            <SessionProvider session={session}>
-              <Component {...pageProps} />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
             </SessionProvider>
-          </Layout>
         <ToastContainer />
       </PersistGate>
     </Provider>
