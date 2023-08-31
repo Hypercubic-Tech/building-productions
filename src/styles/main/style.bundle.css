@@ -32840,6 +32840,12 @@ a:hover {
   /* color: #fff; */
   opacity: 0.7;
 }
+.btn svg {
+    margin-right: 5px;
+}
+.lg-react-element {
+    width: 100%!important;
+}
 .btn-check:active
   + .btn.btn-primary
   .svg-icon
@@ -46029,7 +46035,7 @@ code:not([class*="language-"]) {
 }
 .svg-icon svg [fill]:not(.permanent):not(g) {
   transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
-  fill: #a1a5b7;
+  /*fill: #a1a5b7;*/
 }
 .svg-icon svg:hover [fill]:not(.permanent):not(g) {
   transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
@@ -46078,7 +46084,7 @@ code:not([class*="language-"]) {
 }
 .svg-icon.svg-icon-warning svg [fill]:not(.permanent):not(g) {
   transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
-  fill: #ffc700;
+  /*fill: #ffc700;*/
 }
 .svg-icon.svg-icon-warning svg:hover [fill]:not(.permanent):not(g) {
   transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
@@ -48349,7 +48355,7 @@ body {
     flex-direction: column;
     /* z-index: 2; */
     /* height: 160px; */
-    height: 100px;
+    height: 80px;
     transition: left ease;
     background-color: #FCFFE7;
   }

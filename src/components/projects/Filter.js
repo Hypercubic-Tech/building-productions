@@ -14,16 +14,8 @@ const Filter = ({
   const activeCategoryId = useSelector(state => state?.cats?.category);
 
   return (
-    <div className="header-menu-container container-xxl d-flex flex-stack h-lg-75px">
-      <div className="header-menu flex-column flex-lg-row">
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "15px",
-            height: "100px",
-          }}
-          className="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch flex-grow-1"
+    <div className="container">
+        <div className={styles.filterContainer}
         >
           {projectCategory &&
             projectCategory.map((item, index) => {
@@ -33,10 +25,10 @@ const Filter = ({
                     filterProductCategory(item?.id);
                   }}
                   key={index}
-                  className={`menu-item here show menu-lg-down-accordion me-lg-1`}
+                  className={styles.filterBtn}
                 >
-                  <a className={`menu-link active py-3 colored-element ${activeCategoryId === item?.id ? 'bg-primary' : ""}`}>
-                    <span className={`menu-title georgian ${styles.item}`}>
+                  <a className={`${styles.filterBtnIn} georgian ${activeCategoryId === item?.id ? styles.filterBtnInActive : ""}`}>
+                    <span className={`menu-title georgian ${styles.item} fw-boldest`}>
                       <img className={styles.icon} src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.icon?.data?.attributes?.url}`} />
                       {/* <i className="bi bi-plug-fill" />{" "} */}
                       {item?.attributes?.title}
@@ -46,14 +38,14 @@ const Filter = ({
               );
             })}
           <div
-            className="menu-item here show menu-lg-down-accordion me-lg-1"
+            className={styles.filterBtn}
             onClick={() => {
               totalSumOnClick();
               dispatch(setCategory(null));
             }}
           >
-            <a className={`${"menu-link"} ${"active"} ${"py-3"} ${activeCategoryId === null ? 'bg-primary' : ""}`}>
-              <span className={`menu-title georgian ${styles.item}`}>
+            <a className={`${styles.filterBtnIn} ${"menu-link"} ${"active"} ${"py-3"} ${activeCategoryId === null ? styles.filterBtnInActive : ""}`}>
+              <span className={`menu-title georgian ${styles.item} fw-boldest`}>
                 <svg className={styles.icon} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
                   <g id="SVGRepo_bgCarrier" strokeWidth="0">
                   </g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round">
@@ -70,7 +62,6 @@ const Filter = ({
             </a>
           </div>
         </div>
-      </div>
     </div>
   );
 };

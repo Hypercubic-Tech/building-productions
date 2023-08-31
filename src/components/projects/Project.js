@@ -15,6 +15,7 @@ import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
 import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
+import styles from "./Project.module.css";
 
 const Project = ({ project,
   crafts,
@@ -90,105 +91,108 @@ const Project = ({ project,
   return (
     <>
       <Filter totalSumOnClick={totalSumTable} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
-      <div className="toolbar py-5 py-lg-5" id="kt_toolbar">
-        <div
-          id="kt_toolbar_container"
-          className="container d-flex flex-stack flex-wrap"
-        >
-          {project && project?.map((p, index) => {
-            return (
-              <div className="page-title d-flex flex-column me-3" key={index}>
-                <h1>{p?.attributes?.title}</h1>
-                <h2 className="d-flex text-dark fw-bolder my-1 fs-3 georgian">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={16}
-                    height={16}
-                    fill="currentColor"
-                    className="bi bi-geo-alt-fill"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                  </svg>
-                  &nbsp;{p?.attributes?.address}
-                </h2>
-                <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
-                  <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.city?.data?.attributes?.city}
-                  </li>
-                  <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.property_type?.data?.attributes?.title}
-                  </li>
-                  <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.condition?.data?.attributes?.title}
-                  </li>
-                  <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.current_condition?.data?.attributes?.title}
-                  </li>
-                  <li className="breadcrumb-item text-gray-600 georgian">
-                    {p?.attributes?.area} მ2
-                  </li>
-                  <li className="breadcrumb-item text-warning georgian">
-                    {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
-                  </li>
-                </ul>
-              </div>
-            )
-          })}
-          <div className="d-flex align-items-center py-2 py-md-1">
-            <div
-              className="me-3"
-              onClick={() => {
-                setSelect("gallery")
-              }}
-            >
-              <a
-                className="btn btn-light-primary fw-bolder georgian"
-                data-kt-menu-trigger="click"
-                data-kt-menu-placement="bottom-end"
-              >
-                <i className="bi bi-image-fill" />
-                სურათები
-              </a>
+      <div className={styles.toolbarContainer}>
+        <img src="/images/test-img.png" alt="main-photo" className={styles.toolbarImg}/>
+        <div className={`${styles.toolbarDesc}`}>
+          <div
+              className={`container ${styles.toolbarDescContainer}`}
+          >
+            {project && project?.map((p, index) => {
+              return (
+                  <div className="page-title d-flex flex-column me-3" key={index}>
+                    <h1>{p?.attributes?.title}</h1>
+                    <h2 className={`d-flex fw-bolder my-1 fs-3 georgian ${styles.toolbarAddress}`}>
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={16}
+                          height={16}
+                          fill="#eb445f"
+                          className="bi bi-geo-alt-fill"
+                          viewBox="0 0 16 16"
+                      >
+                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                      </svg>
+                      &nbsp;{p?.attributes?.address}
+                    </h2>
+                    <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
+                      <li className="breadcrumb-item text-gray-600 georgian">
+                        {p?.attributes?.city?.data?.attributes?.city}
+                      </li>
+                      <li className="breadcrumb-item text-gray-600 georgian">
+                        {p?.attributes?.property_type?.data?.attributes?.title}
+                      </li>
+                      <li className="breadcrumb-item text-gray-600 georgian">
+                        {p?.attributes?.condition?.data?.attributes?.title}
+                      </li>
+                      <li className="breadcrumb-item text-gray-600 georgian">
+                        {p?.attributes?.current_condition?.data?.attributes?.title}
+                      </li>
+                      <li className="breadcrumb-item text-gray-600 georgian">
+                        {p?.attributes?.area} მ2
+                      </li>
+                      <li className="breadcrumb-item text-gray-600 georgian">
+                        {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
+                      </li>
+                    </ul>
+                  </div>
+              )
+            })}
+            <div className="d-flex align-items-center py-2 py-md-1">
               <div
-                className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                data-kt-menu="true"
-                id="kt_menu_61484d4eae1ca"
-              ></div>
-            </div>
-            <div
-              className="d-flex align-items-center py-2 py-md-1"
-              onClick={() => {
-                setSelect("dranings")
-              }}
-            >
-              <a
-                className="btn btn-primary fw-bolder georgian"
-                data-bs-toggle="modal"
-                data-bs-target="#kt_modal_create_app"
-                id="kt_toolbar_primary_button"
+                  className="me-3"
+                  onClick={() => {
+                    setSelect("gallery")
+                  }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={16}
-                  height={16}
-                  fill="currentColor"
-                  className="bi bi-rulers"
-                  viewBox="0 0 16 16"
+                <a
+                    className="btn btn-light-primary fw-bolder georgian"
+                    data-kt-menu-trigger="click"
+                    data-kt-menu-placement="bottom-end"
                 >
-                  <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
-                </svg>
-                ნახაზები
-              </a>
+                  <i className="bi bi-image-fill" />
+                  სურათები
+                </a>
+                <div
+                    className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
+                    data-kt-menu="true"
+                    id="kt_menu_61484d4eae1ca"
+                ></div>
+              </div>
+              <div
+                  className="d-flex align-items-center py-2 py-md-1"
+                  onClick={() => {
+                    setSelect("dranings")
+                  }}
+              >
+                <a
+                    className="btn btn-primary fw-bolder georgian"
+                    data-bs-toggle="modal"
+                    data-bs-target="#kt_modal_create_app"
+                    id="kt_toolbar_primary_button"
+                >
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={16}
+                      height={16}
+                      fill="currentColor"
+                      className="bi bi-rulers"
+                      viewBox="0 0 16 16"
+                  >
+                    <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
+                  </svg>
+                  ნახაზები
+                </a>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
       <div
         id="kt_content_container"
-        className="d-flex flex-column-fluid align-items-start container-xxl"
+        className={`container`}
       >
-        <div className="content flex-row-fluid" id="kt_content">
+        <div className={`${styles.tableContainer}`}>
           <div className="row gy-0 gx-10">
             <div className="col-xl-12">
               <div className="mb-10">
