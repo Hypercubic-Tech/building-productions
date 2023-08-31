@@ -5,9 +5,8 @@ import axios from "axios";
 
 export default NextAuth({
   providers: [GoogleProvider, FacebookProvider],
-
   session: { strategy: "jwt" },
-
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session, token, user }) {
       session.jwt = token.jwt;
