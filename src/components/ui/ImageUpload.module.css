@@ -1,0 +1,27 @@
+.ImageUpload {
+  border: 1px solid #6d749c;
+  padding: 16px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: fit-content;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.textAndSvg {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  color: #2b3467;
+  gap: 5px;
+}
+
