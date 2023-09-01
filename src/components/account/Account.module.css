@@ -1,0 +1,47 @@
+.mainContainer {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.imageContainer {
+  height: 480px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.imageBorder {
+  width: 400px;
+  height: 400px;
+  border-radius: 4px;
+  border: 1px solid #6d749c;
+  position: relative;
+}
+
+.userInfoWrapper {
+  width: 100%;
+}
+
+.userInfo {
+  border: 1px solid #6d749c;
+  padding: 16px;
+  border-radius: 4px;
+  opacity: 0.5;
+}
+.userInfoContainer {
+  align-items: center;
+}
+
+@media (max-width: 1300px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+
+  .imageContainer {
+    display: flex;
+    justify-content: flex-start;
+  }
+}
