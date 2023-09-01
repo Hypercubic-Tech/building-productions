@@ -32840,7 +32840,7 @@ a:hover {
   /* color: #fff; */
   opacity: 0.7;
 }
-.btn svg {
+.btn-primary svg {
     margin-right: 5px;
 }
 .lg-react-element {
