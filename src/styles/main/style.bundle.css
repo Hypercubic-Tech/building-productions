@@ -41112,6 +41112,8 @@ code:not([class*="language-"]) {
 }
 .modal .modal-dialog {
   outline: 0 !important;
+    position: relative;
+    z-index: 10;
 }
 .modal.modal-sticky.modal-sticky-bottom-end {
   padding: 0 !important;

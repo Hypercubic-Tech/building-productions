@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { setProductState, setProducts } from '../../store/slices/productSlice';
 import { setCategory } from "../../store/slices/categorySlice";
-
+import styles from "./AddProduct.module.css";
 import notify from '../../utils/notify';
 
 const AddProduct = ({
@@ -69,10 +69,7 @@ const AddProduct = ({
         craft_status: {
             connect: [{ id: null }]
         },
-        craft_img_url: "",
-        project: {
-            connect: [{ id: projectId }]
-        },
+        craft_img_url: ""
     });
 
     const defaultProductsHandler = async (id, pageIndex) => {
@@ -187,78 +184,71 @@ const AddProduct = ({
     return (
         <div
             style={{ display: "block", paddingLeft: "0px" }}
-            className="modal fade show"
-            id="kt_modal_export_users"
+            className={`modal fade show ${styles.addProductModal}`}
             role="dialig"
             tabIndex={-1}
             aria-hidden="true"
         >
-            <div className="modal-dialog modal-dialog-centered mw-650px">
-                <div className="modal-content">
+            <div className={`modal-dialog modal-dialog-centered mw-650px`}>
+                <div className="modal-content" style={{borderRadius: '4px'}}>
                     <div className="modal-header" id="kt_modal_add_user_header">
+                        <h2>დაამატე პროდუქტი</h2>
                         <div
-                            className={` d-flex justify-content-center align-items-center w-100 p-2 `}
+                            className={`${styles.modalClose}`}
+                            data-kt-users-modal-action="close"
+                            onClick={() => {
+                                setSelect(null);
+                            }}
                         >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={35}
+                                height={35}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+                                <rect
+                                    x={6}
+                                    y="17.3137"
+                                    width={16}
+                                    height={2}
+                                    rx={1}
+                                    transform="rotate(-45 6 17.3137)"
+                                    fill="#EB455F"
+                                />
+                                <rect
+                                    x="7.41422"
+                                    y={6}
+                                    width={16}
+                                    height={2}
+                                    rx={1}
+                                    transform="rotate(45 7.41422 6)"
+                                    fill="#EB455F"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="modal-body">
+                        <div className={styles.productMode}>
                             <div
                                 onClick={() => setToggle(true)}
-                                className={` ${toggle ? "primary-focus" : ""
-                                    } text-hover-primary mx-5 cursor-pointer `}
+                                className={`fw-bolder ${toggle ? styles.active : ""
+                                } `}
                             >
-                                პროდუქციის დამატება
+                                პროდუქტი
                             </div>
                             <div
                                 onClick={() => setToggle(false)}
-                                className={`${!toggle ? "primary-focus" : ""
-                                    } text-hover-primary mx-5 cursor-pointer `}
+                                className={`fw-bolder ${!toggle ? styles.active : ""
+                                }`}
                             >
-                                ხელობის დამატება
+                                ხელობა
                             </div>
                         </div>
-                        <div
-                            className="btn btn-icon btn-sm btn-active-icon-primary"
-                            data-kt-users-modal-action="close"
-                        >
-                            <span
-                                className="svg-icon svg-icon-1"
-                                onClick={() => {
-                                    setSelect(null);
-                                }}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={24}
-                                    height={24}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <rect
-                                        opacity="0.5"
-                                        x={6}
-                                        y="17.3137"
-                                        width={16}
-                                        height={2}
-                                        rx={1}
-                                        transform="rotate(-45 6 17.3137)"
-                                        fill="black"
-                                    />
-                                    <rect
-                                        x="7.41422"
-                                        y={6}
-                                        width={16}
-                                        height={2}
-                                        rx={1}
-                                        transform="rotate(45 7.41422 6)"
-                                        fill="black"
-                                    />
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
-                    <div style={{ width: "90%" }} className="modal-body mx-5 mx-xl-15 my-7">
                         {toggle ? (
                             <form id="kt_modal_add_user_form" className="form">
                                 <div
-                                    className="d-flex flex-column pe-7"
+                                    className="d-flex flex-column"
                                     id="kt_modal_add_user_scroll"
                                     data-kt-scroll="true"
                                     data-kt-scroll-activate="{default: false, lg: true}"
@@ -267,7 +257,7 @@ const AddProduct = ({
                                     data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                                     data-kt-scroll-offset="300px"
                                 >
-                                    <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                                    <div className={`notice d-flex rounded mb-9 p-6 ${styles.pictureContainer}`}>
                                         <span className="svg-icon svg-icon-2tx svg-icon-warning me-4">
                                             <div
                                                 className="image-input image-input-outline"
@@ -326,8 +316,8 @@ const AddProduct = ({
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row mb-5">
-                                        <div className="col-md-8 fv-row fv-plugins-icon-container">
+                                    <div className={`row mb-5 ${styles.productInputs}`}>
+                                        <div className="col-md-12 fv-row fv-plugins-icon-container">
                                             <label className="required fs-5 fw-bold mb-2 georgian">
                                                 დასახელება
                                             </label>
@@ -519,7 +509,7 @@ const AddProduct = ({
                         ) : (
                             <form id="kt_modal_add_user_form" className="form">
                                 <div
-                                    className="d-flex flex-column pe-7"
+                                    className="d-flex flex-column"
                                     id="kt_modal_add_user_scroll"
                                     data-kt-scroll="true"
                                     data-kt-scroll-activate="{default: false, lg: true}"
@@ -528,7 +518,7 @@ const AddProduct = ({
                                     data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                                     data-kt-scroll-offset="300px"
                                 >
-                                    <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                                    <div className={`notice d-flex rounded mb-9 p-6 ${styles.pictureContainer}`}>
                                         <div className='d-flex flex-stack flex-grow-1'>
 
                                             <img
