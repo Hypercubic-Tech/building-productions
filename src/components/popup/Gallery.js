@@ -185,7 +185,6 @@ const Gallery = ({ setSelect }) => {
                         </div>
                     </div>
                     <div className="modal-body d-flex flex-wrap  py-sm-10 px-sm-10 container">
-                        hi
                         <form id="kt_modal_add_user_form" className="form" style={{ width: '100%' }}>
                             <div style={{
                                 flexDirection: "column"
