@@ -235,7 +235,7 @@ const EditService = ({
                       ერთეული
                     </label>
                     <select
-                      onClick={(e) => {
+                      onChange={(e) => {
                         setCraftUnit(e.target.value)
                         setCraftData((prevSendData) => ({
                           ...prevSendData,
@@ -285,7 +285,7 @@ const EditService = ({
                       სტატუსი
                     </label>
                     <select
-                      onClick={(e) => {
+                      onChange={(e) => {
                         setCraftStatusOption(e.target.value)
                         setCraftData((prevSendData) => ({
                           ...prevSendData,

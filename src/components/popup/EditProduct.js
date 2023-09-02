@@ -368,7 +368,7 @@ const EditProduct = ({
                                             ერთეული
                                         </label>
                                         <select
-                                            onClick={(e) => {
+                                            onChange={(e) => {
                                                 setUnitOption(e.target.value)
                                                 setProductData((prevSendData) => ({
                                                     ...prevSendData,
@@ -417,7 +417,7 @@ const EditProduct = ({
                                             სტატუსი
                                         </label>
                                         <select
-                                            onClick={(e) => {
+                                            onChange={(e) => {
                                                 setProductData((prevSendData) => ({
                                                     ...prevSendData,
                                                     product_status: {

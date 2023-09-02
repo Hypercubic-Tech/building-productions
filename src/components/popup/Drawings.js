@@ -132,7 +132,7 @@ const Drawings = ({ setSelect }) => {
     const handleDeleteImage = async (imageId) => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
             .then(() => {
-                // getProductsHandler()
+                getProductsHandler()
             })
         setImgSrc(null);
     };
