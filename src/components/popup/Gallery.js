@@ -139,6 +139,10 @@ const Gallery = ({ setSelect }) => {
         }
     }, [projectId]);
 
+    console.log(projectId, 'project');
+    console.log(image, 'image');
+    console.log(isImageUpload, 'image')
+
     return (
         <div className="modal fade show" style={{ zIndex: isImageState ? "0" : "100" }}>
             <div className="modal modal-dialog-centered custom-width">
@@ -152,42 +156,40 @@ const Gallery = ({ setSelect }) => {
                                 setSelect(null);
                             }}
                         >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={35}
-                                    height={35}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <rect
-                                        x={6}
-                                        y="17.3137"
-                                        width={16}
-                                        height={2}
-                                        rx={1}
-                                        transform="rotate(-45 6 17.3137)"
-                                        fill="#EB455F"
-                                    />
-                                    <rect
-                                        x="7.41422"
-                                        y={6}
-                                        width={16}
-                                        height={2}
-                                        rx={1}
-                                        transform="rotate(45 7.41422 6)"
-                                        fill="#EB455F"
-                                    />
-                                </svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={35}
+                                height={35}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+                                <rect
+                                    x={6}
+                                    y="17.3137"
+                                    width={16}
+                                    height={2}
+                                    rx={1}
+                                    transform="rotate(-45 6 17.3137)"
+                                    fill="#EB455F"
+                                />
+                                <rect
+                                    x="7.41422"
+                                    y={6}
+                                    width={16}
+                                    height={2}
+                                    rx={1}
+                                    transform="rotate(45 7.41422 6)"
+                                    fill="#EB455F"
+                                />
+                            </svg>
                         </div>
                     </div>
                     <div className="modal-body d-flex flex-wrap  py-sm-10 px-sm-10 container">
-                        <form id="kt_modal_add_user_form" className="form" style={{width:'100%'}}>
+                        <form id="kt_modal_add_user_form" className="form" style={{ width: '100%' }}>
                             <div style={{
                                 flexDirection: "column"
                             }}
                                 className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
-
-
                                 { (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} className={styles.galleryItems} elementClassNames="custom-class-name" selector=".gallery-item">
                                         <div className={styles.galleryItems}>
@@ -217,33 +219,32 @@ const Gallery = ({ setSelect }) => {
                                                     </svg>
                                                 </div>
                                             </div>
-                                        {isProjectImages?.map((projectImg, index) => (
-                                            <div className={styles.galleryItem}>
-                                                <a
-                                                    key={projectImg?.id}
-                                                    href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
-                                                    className={`gallery-item`}
-                                                    onClick={toggleImages}
-                                                >
-                                                    <div className={styles.galleryItemImg}>
-                                                        <img
-                                                            key={index}
-                                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
-                                                            className="img-responsive col-sm"
-                                                        />
-                                                    </div>
-                                                </a>
-                                                <div className={styles.galleryItemBtns}>
-                                                    <div className={styles.galleryItemBtn}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                                    </div>
-                                                    <div className={styles.galleryItemBtn}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="#EB455F"></rect><rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="#EB455F"></rect></svg>
+                                            {isProjectImages?.map((projectImg, index) => (
+                                                <div key={index} className={styles.galleryItem}>
+                                                    <a
+                                                        key={projectImg?.id}
+                                                        href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                        className={`gallery-item`}
+                                                        onClick={toggleImages}
+                                                    >
+                                                        <div className={styles.galleryItemImg}>
+                                                            <img
+                                                                key={index}
+                                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                                className="img-responsive col-sm"
+                                                            />
+                                                        </div>
+                                                    </a>
+                                                    <div className={styles.galleryItemBtns}>
+                                                        <div className={styles.galleryItemBtn}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                                        </div>
+                                                        <div className={styles.galleryItemBtn}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="#EB455F"></rect><rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="#EB455F"></rect></svg>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                        ))}
+                                            ))}
                                         </div>
                                     </LightGallery>
                                 )}

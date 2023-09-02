@@ -82,10 +82,10 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
 
   const handleCheckboxChange = (event) => {
     const categoryId = parseInt(event.target.value);
-  
+
     if (event.target.checked) {
       const sendDataCategories = [...sendData.categories.connect, { id: categoryId }];
-  
+
       setSendData((prevState) => ({
         ...prevState,
         categories: {
@@ -96,7 +96,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       }));
     } else {
       const sendDataCategories = sendData.categories.connect.filter((item) => item.id !== categoryId);
-  
+
       setSendData((prevState) => ({
         ...prevState,
         categories: {
@@ -107,7 +107,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       }));
     }
   };
-  
+
 
   const stepChangeHandler = () => {
     if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
@@ -120,7 +120,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
       setStep(step + 1);
       setLoss(false);
     }
-    if (step === 3 &&  errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0 || sendData.categories.disconnect.length > 0) {
+    if (step === 3 && errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0 || sendData.categories.disconnect.length > 0) {
       setStep(step + 1)
       setLoss(false)
     }
@@ -230,7 +230,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
     >
       <div className={styles.overlay}></div>
       <div className={` ${styles.mainBg} modal-content `}>
-        <div  className={`modal-header py-sm-10 px-sm-10 container ${styles.modalHeader}`}>
+        <div className={`modal-header py-sm-10 px-sm-10 container ${styles.modalHeader}`}>
           <h2 className="georgian">ობიექტის რედაქტირება</h2>
           <div
             className="btn btn-sm btn-icon btn-active-color-primary"
@@ -368,7 +368,7 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                       >
                         {propertyType && propertyType.map((item, index) => {
                           return (
-                            <option key={index} value={item.id}>{item.attributes.Title}</option>
+                            <option key={index} value={item.id}>{item.attributes.title}</option>
                           )
                         })}
                       </select>
@@ -526,7 +526,6 @@ const EditProject = ({ dismiss, setShowProject, project, setEditProject }) => {
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>

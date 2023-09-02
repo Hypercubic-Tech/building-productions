@@ -81,7 +81,7 @@ const Project = ({ project,
 
   useEffect(() => {
     const defaultProductCallBack = async () => {
-    if (activeCategoryId && projectId) {
+      if (activeCategoryId && projectId) {
         await defaultProductsHandler(activeCategoryId);
       }
     }
@@ -92,91 +92,92 @@ const Project = ({ project,
     <>
       <Filter totalSumOnClick={totalSumTable} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
       <div className={styles.toolbarContainer}>
-        <img src="/images/test-img.png" alt="main-photo" className={styles.toolbarImg}/>
+        <img src="/images/test-img.png" alt="main-photo" className={styles.toolbarImg} />
         <div className={`${styles.toolbarDesc}`}>
           <div
-              className={`container ${styles.toolbarDescContainer}`}
+            className={`container ${styles.toolbarDescContainer}`}
           >
             {project && project?.map((p, index) => {
               return (
-                  <div className="page-title d-flex flex-column me-3" key={index}>
-                    <h1>{p?.attributes?.title}</h1>
-                    <h2 className={`d-flex fw-bolder my-1 fs-3 georgian ${styles.toolbarAddress}`}>
-                      <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={16}
-                          height={16}
-                          fill="#eb445f"
-                          className="bi bi-geo-alt-fill"
-                          viewBox="0 0 16 16"
-                      >
-                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                      </svg>
-                      &nbsp;{p?.attributes?.address}
-                    </h2>
-                    <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
-                      <li className="breadcrumb-item text-gray-600 georgian">
-                        {p?.attributes?.city?.data?.attributes?.city}
-                      </li>
-                      <li className="breadcrumb-item text-gray-600 georgian">
-                        {p?.attributes?.property_type?.data?.attributes?.title}
-                      </li>
-                      <li className="breadcrumb-item text-gray-600 georgian">
-                        {p?.attributes?.condition?.data?.attributes?.title}
-                      </li>
-                      <li className="breadcrumb-item text-gray-600 georgian">
-                        {p?.attributes?.current_condition?.data?.attributes?.title}
-                      </li>
-                      <li className="breadcrumb-item text-gray-600 georgian">
-                        {p?.attributes?.area} მ2
-                      </li>
-                      <li className="breadcrumb-item text-gray-600 georgian">
-                        {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
-                      </li>
-                    </ul>
-                  </div>
+                <div className="page-title d-flex flex-column me-3" key={index}>
+                  <h1>{p?.attributes?.title}</h1>
+                  <h2 className={`d-flex fw-bolder my-1 fs-3 georgian ${styles.toolbarAddress}`}>
+                    <svg
+                      style={{ marginBottom: '6px' }}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={16}
+                      height={16}
+                      fill="#eb445f"
+                      className="bi bi-geo-alt-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                    </svg>
+                    &nbsp;{p?.attributes?.address}
+                  </h2>
+                  <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
+                    <li className="breadcrumb-item text-gray-600 georgian">
+                      {p?.attributes?.city?.data?.attributes?.city}
+                    </li>
+                    <li className="breadcrumb-item text-gray-600 georgian">
+                      {p?.attributes?.property_type?.data?.attributes?.title}
+                    </li>
+                    <li className="breadcrumb-item text-gray-600 georgian">
+                      {p?.attributes?.condition?.data?.attributes?.title}
+                    </li>
+                    <li className="breadcrumb-item text-gray-600 georgian">
+                      {p?.attributes?.current_condition?.data?.attributes?.title}
+                    </li>
+                    <li className="breadcrumb-item text-gray-600 georgian">
+                      {p?.attributes?.area} მ2
+                    </li>
+                    <li className="breadcrumb-item text-gray-600 georgian">
+                      {new Date(p?.attributes?.createdAt).toISOString().slice(0, 10)}
+                    </li>
+                  </ul>
+                </div>
               )
             })}
             <div className="d-flex align-items-center py-2 py-md-1">
               <div
-                  className="me-3"
-                  onClick={() => {
-                    setSelect("gallery")
-                  }}
+                className="me-3"
+                onClick={() => {
+                  setSelect("gallery")
+                }}
               >
                 <a
-                    className="btn btn-light-primary fw-bolder georgian"
-                    data-kt-menu-trigger="click"
-                    data-kt-menu-placement="bottom-end"
+                  className="btn btn-light-primary fw-bolder georgian"
+                  data-kt-menu-trigger="click"
+                  data-kt-menu-placement="bottom-end"
                 >
                   <i className="bi bi-image-fill" />
                   სურათები
                 </a>
                 <div
-                    className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                    data-kt-menu="true"
-                    id="kt_menu_61484d4eae1ca"
+                  className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
+                  data-kt-menu="true"
+                  id="kt_menu_61484d4eae1ca"
                 ></div>
               </div>
               <div
-                  className="d-flex align-items-center py-2 py-md-1"
-                  onClick={() => {
-                    setSelect("dranings")
-                  }}
+                className="d-flex align-items-center py-2 py-md-1"
+                onClick={() => {
+                  setSelect("dranings")
+                }}
               >
                 <a
-                    className="btn btn-primary fw-bolder georgian"
-                    data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_create_app"
-                    id="kt_toolbar_primary_button"
+                  className="btn btn-primary fw-bolder georgian"
+                  data-bs-toggle="modal"
+                  data-bs-target="#kt_modal_create_app"
+                  id="kt_toolbar_primary_button"
                 >
                   <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={16}
-                      height={16}
-                      fill="currentColor"
-                      className="bi bi-rulers"
-                      viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={16}
+                    height={16}
+                    fill="currentColor"
+                    className="bi bi-rulers"
+                    viewBox="0 0 16 16"
                   >
                     <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
                   </svg>
