@@ -1,13 +1,11 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "../../../providers/GoogleProvider";
-import FacebookProvider from "../../../providers/FacebookProvider";
 import axios from "axios";
 
 export default NextAuth({
-  providers: [GoogleProvider, FacebookProvider],
-
+  providers: [GoogleProvider],
   session: { strategy: "jwt" },
-
+  // secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session, token, user }) {
       session.jwt = token.jwt;
