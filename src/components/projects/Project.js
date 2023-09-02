@@ -91,15 +91,20 @@ const Project = ({ project,
     <>
       <Filter totalSumOnClick={totalSumTable} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
       {project && project.map((p, index) => {
+        const id = p?.attributes?.main_img_id;
+        const imgId = parseInt(id);
+        const imageWithMainId = p?.attributes?.image?.data?.find(image => image.id === imgId);
+
         return (
           <div key={index} className={styles.toolbarContainer}>
-            <img src={
-              p?.attributes?.main_img_url && process.env.NEXT_PUBLIC_BUILDING_URL + p?.attributes?.main_img_url
-              ||
-              p?.attributes?.image?.data?.[0]?.attributes?.url && process.env.NEXT_PUBLIC_BUILDING_URL + p?.attributes?.image?.data?.[0]?.attributes?.url
-              ||
-              '/images/test-img.png'
-            } alt="main-photo" className={styles.toolbarImg} />
+            <img
+              src={imageWithMainId && process.env.NEXT_PUBLIC_BUILDING_URL + imageWithMainId?.attributes?.url
+                ||
+                p?.attributes?.image?.data?.[0]?.attributes?.url && process.env.NEXT_PUBLIC_BUILDING_URL + p?.attributes?.image?.data?.[0]?.attributes?.url
+                ||
+                '/images/test-img.png'
+              }
+              alt="main-photo" className={styles.toolbarImg} />
             <div className={`${styles.toolbarDesc}`}>
               <div
                 className={`container ${styles.toolbarDescContainer}`}
@@ -194,7 +199,6 @@ const Project = ({ project,
           </div>
         )
       })}
-
       <div
         id="kt_content_container"
         className={`container`}

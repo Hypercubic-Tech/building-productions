@@ -202,7 +202,10 @@ const index = () => {
                             {/* <BuildingBg /> */}
                             {projectsToMap?.length > 0 ? (
                                 projectsToMap.slice(startIndex, endIndex).map((item, index) => {
-                                    console.log(item, 'item')
+                                    const id = item?.attributes?.main_img_id;
+                                    const imgId = parseInt(id);
+                                    const imageWithMainId = item?.attributes?.image?.data?.find(image => image.id === imgId);
+
                                     return (
                                         <div key={index} className={`card-body ${styles.wrapChild} card`}>
                                             <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
@@ -216,8 +219,7 @@ const index = () => {
                                                 >
                                                     <div className={styles.cardLinkImg}>
                                                         <img
-                                                            src={
-                                                                item?.attributes?.main_img_url && process.env.NEXT_PUBLIC_BUILDING_URL + item?.attributes?.main_img_url
+                                                            src={imageWithMainId && process.env.NEXT_PUBLIC_BUILDING_URL + imageWithMainId?.attributes?.url
                                                                 ||
                                                                 item?.attributes?.image?.data?.[0]?.attributes?.url && process.env.NEXT_PUBLIC_BUILDING_URL + item?.attributes?.image?.data?.[0]?.attributes?.url
                                                                 ||

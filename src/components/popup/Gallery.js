@@ -109,7 +109,6 @@ const Gallery = ({ setSelect }) => {
     };
 
     const handleDeleteImage = async (imageId) => {
-        console.log(imageId);
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
             .then(() => {
                 getProductsHandler()
@@ -122,7 +121,7 @@ const Gallery = ({ setSelect }) => {
             `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
             {
                 data: {
-                    main_img_url: choosedImage
+                    main_img_id: choosedImage
                 },
             }
         )
@@ -132,14 +131,9 @@ const Gallery = ({ setSelect }) => {
             });
     };
 
-    const choosedMainImg = (url) => {
-        setChoosedImage(url);
-
-        if(choosedImage === url) {
-            setMainPicture();
-        }
+    const choosedMainImg = (id) => {
+        setChoosedImage(id);
     };
-    console.log(choosedImage, 'choosen one')
 
     useEffect(() => {
         if (isImageUpload) {
@@ -165,6 +159,12 @@ const Gallery = ({ setSelect }) => {
             getProductsHandler();
         }
     }, [projectId]);
+
+    useEffect(() => {
+        if (choosedImage) {
+            setMainPicture();
+        }
+    }, [choosedImage]);
 
     return (
         <div className="modal fade show" style={{ zIndex: isImageState ? "0" : "100" }}>
@@ -243,7 +243,6 @@ const Gallery = ({ setSelect }) => {
                                                 </div>
                                             </div>
                                             {isProjectImages && isProjectImages?.map((projectImg, index) => {
-                                                console.log(projectImg , 'iomg')
                                                 return (
                                                     <div key={index} className={styles.galleryItem}>
                                                         <a
@@ -261,12 +260,13 @@ const Gallery = ({ setSelect }) => {
                                                             </div>
                                                         </a>
                                                         <div className={styles.galleryItemBtns}>
-                                                            <div onClick={() => choosedMainImg(projectImg?.attributes?.url)} className={styles.galleryItemBtn}>
+                                                            <div onClick={() => choosedMainImg(projectImg?.id)} className={styles.galleryItemBtn}>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                                                             </div>
                                                             <div onClick={() => confirmHandler(projectImg?.id)} className={styles.galleryItemBtn}>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="#EB455F"></rect><rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="#EB455F"></rect></svg>
-                                                            </div>
+                                                                <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M3.11537 16C2.65512 16 2.27083 15.8458 1.9625 15.5375C1.65417 15.2291 1.5 14.8448 1.5 14.3846V1.99996H0.5V0.999963H4.5V0.230713H10.5V0.999963H14.5V1.99996H13.5V14.3846C13.5 14.8448 13.3458 15.2291 13.0375 15.5375C12.7292 15.8458 12.3449 16 11.8846 16H3.11537ZM5.30768 13H6.3077V3.99996H5.30768V13ZM8.6923 13H9.69232V3.99996H8.6923V13Z" fill="#EB455F" />
+                                                                </svg>                                                            </div>
                                                         </div>
                                                     </div>
                                                 )
