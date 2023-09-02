@@ -84,7 +84,7 @@ const index = () => {
 
     const getProjectsData = async () => {
         try {
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image&filters[users_permissions_user][id][$eq]=${userId}`);
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`);
             setShowProject(false);
             return response.data;
 
@@ -164,8 +164,7 @@ const index = () => {
                 დაამატე ობიექტი
             </button>
         </div>
-    )
-
+    );
 
     useEffect(() => {
         const getDefaultImage = async () => {
@@ -179,8 +178,7 @@ const index = () => {
         };
 
         getDefaultImage();
-    }, [])
-
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -204,6 +202,7 @@ const index = () => {
                             {/* <BuildingBg /> */}
                             {projectsToMap?.length > 0 ? (
                                 projectsToMap.slice(startIndex, endIndex).map((item, index) => {
+                                    console.log(item, 'item')
                                     return (
                                         <div key={index} className={`card-body ${styles.wrapChild} card`}>
                                             <div className={`${styles.imgWrap} card`} style={{ paddingBottom: '20px' }}>
@@ -217,11 +216,13 @@ const index = () => {
                                                 >
                                                     <div className={styles.cardLinkImg}>
                                                         <img
-                                                            onError={(e) => {
-                                                                e.target.src = process.env.NEXT_PUBLIC_BUILDING_URL + defaultImage;
-                                                            }}
-                                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${item?.attributes?.image?.data?.[0]?.attributes?.url ? item?.attributes?.image?.data?.[0]?.attributes?.url : '/images/test-img.png'}`}
-                                                            // src="/images/test-img.png"
+                                                            src={
+                                                                item?.attributes?.main_img_url && process.env.NEXT_PUBLIC_BUILDING_URL + item?.attributes?.main_img_url
+                                                                ||
+                                                                item?.attributes?.image?.data?.[0]?.attributes?.url && process.env.NEXT_PUBLIC_BUILDING_URL + item?.attributes?.image?.data?.[0]?.attributes?.url
+                                                                ||
+                                                                '/images/test-img.png'
+                                                            }
                                                             className="card-img-top"
                                                             alt="project-img"
                                                         />

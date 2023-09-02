@@ -26,6 +26,8 @@ const Gallery = ({ setSelect }) => {
     const [isProjectImages, setIsProjectImages] = useState([]);
     const [isImageState, setIsImageState] = useState(false);
 
+    const [choosedImage, setChoosedImage] = useState(null);
+
     const getProductsHandler = async () => {
         await axios
             .get(
@@ -107,12 +109,37 @@ const Gallery = ({ setSelect }) => {
     };
 
     const handleDeleteImage = async (imageId) => {
+        console.log(imageId);
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
             .then(() => {
                 getProductsHandler()
             })
         setImgSrc(null);
     };
+
+    const setMainPicture = async () => {
+        await axios.put(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+            {
+                data: {
+                    main_img_url: choosedImage
+                },
+            }
+        )
+            .then((res) => {
+                notify(false, "ფოტოსურათი წარმატებით დაყენდა მთავარ ფოტოდ");
+                getProductsHandler();
+            });
+    };
+
+    const choosedMainImg = (url) => {
+        setChoosedImage(url);
+
+        if(choosedImage === url) {
+            setMainPicture();
+        }
+    };
+    console.log(choosedImage, 'choosen one')
 
     useEffect(() => {
         if (isImageUpload) {
@@ -138,10 +165,6 @@ const Gallery = ({ setSelect }) => {
             getProductsHandler();
         }
     }, [projectId]);
-
-    console.log(projectId, 'project');
-    console.log(image, 'image');
-    console.log(isImageUpload, 'image')
 
     return (
         <div className="modal fade show" style={{ zIndex: isImageState ? "0" : "100" }}>
@@ -190,7 +213,7 @@ const Gallery = ({ setSelect }) => {
                                 flexDirection: "column"
                             }}
                                 className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
-                                { (
+                                {(
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} className={styles.galleryItems} elementClassNames="custom-class-name" selector=".gallery-item">
                                         <div className={styles.galleryItems}>
                                             <div className={`${styles.galleryItem}`}>
@@ -219,32 +242,35 @@ const Gallery = ({ setSelect }) => {
                                                     </svg>
                                                 </div>
                                             </div>
-                                            {isProjectImages?.map((projectImg, index) => (
-                                                <div key={index} className={styles.galleryItem}>
-                                                    <a
-                                                        key={projectImg?.id}
-                                                        href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
-                                                        className={`gallery-item`}
-                                                        onClick={toggleImages}
-                                                    >
-                                                        <div className={styles.galleryItemImg}>
-                                                            <img
-                                                                key={index}
-                                                                src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
-                                                                className="img-responsive col-sm"
-                                                            />
-                                                        </div>
-                                                    </a>
-                                                    <div className={styles.galleryItemBtns}>
-                                                        <div className={styles.galleryItemBtn}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                                        </div>
-                                                        <div className={styles.galleryItemBtn}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="#EB455F"></rect><rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="#EB455F"></rect></svg>
+                                            {isProjectImages && isProjectImages?.map((projectImg, index) => {
+                                                console.log(projectImg , 'iomg')
+                                                return (
+                                                    <div key={index} className={styles.galleryItem}>
+                                                        <a
+                                                            key={projectImg?.id}
+                                                            href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                            className={`gallery-item`}
+                                                            onClick={toggleImages}
+                                                        >
+                                                            <div className={styles.galleryItemImg}>
+                                                                <img
+                                                                    key={index}
+                                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                                    className="img-responsive col-sm"
+                                                                />
+                                                            </div>
+                                                        </a>
+                                                        <div className={styles.galleryItemBtns}>
+                                                            <div onClick={() => choosedMainImg(projectImg?.attributes?.url)} className={styles.galleryItemBtn}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                                            </div>
+                                                            <div onClick={() => confirmHandler(projectImg?.id)} className={styles.galleryItemBtn}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="#EB455F"></rect><rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="#EB455F"></rect></svg>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))}
+                                                )
+                                            })}
                                         </div>
                                     </LightGallery>
                                 )}

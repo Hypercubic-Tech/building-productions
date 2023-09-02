@@ -117,7 +117,6 @@ const index = () => {
     fetchData();
   }, [projectId]);
 
-
   const editHandler = (product) => {
     setEditProductItem(product);
   };

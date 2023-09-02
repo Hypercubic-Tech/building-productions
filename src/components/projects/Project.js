@@ -87,19 +87,24 @@ const Project = ({ project,
     }
     defaultProductCallBack()
   }, [activeCategoryId, projectId])
-
   return (
     <>
       <Filter totalSumOnClick={totalSumTable} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
-      <div className={styles.toolbarContainer}>
-        <img src="/images/test-img.png" alt="main-photo" className={styles.toolbarImg} />
-        <div className={`${styles.toolbarDesc}`}>
-          <div
-            className={`container ${styles.toolbarDescContainer}`}
-          >
-            {project && project?.map((p, index) => {
-              return (
-                <div className="page-title d-flex flex-column me-3" key={index}>
+      {project && project.map((p, index) => {
+        return (
+          <div key={index} className={styles.toolbarContainer}>
+            <img src={
+              p?.attributes?.main_img_url && process.env.NEXT_PUBLIC_BUILDING_URL + p?.attributes?.main_img_url
+              ||
+              p?.attributes?.image?.data?.[0]?.attributes?.url && process.env.NEXT_PUBLIC_BUILDING_URL + p?.attributes?.image?.data?.[0]?.attributes?.url
+              ||
+              '/images/test-img.png'
+            } alt="main-photo" className={styles.toolbarImg} />
+            <div className={`${styles.toolbarDesc}`}>
+              <div
+                className={`container ${styles.toolbarDescContainer}`}
+              >
+                <div className="page-title d-flex flex-column me-3">
                   <h1>{p?.attributes?.title}</h1>
                   <h2 className={`d-flex fw-bolder my-1 fs-3 georgian ${styles.toolbarAddress}`}>
                     <svg
@@ -136,59 +141,60 @@ const Project = ({ project,
                     </li>
                   </ul>
                 </div>
-              )
-            })}
-            <div className="d-flex align-items-center py-2 py-md-1">
-              <div
-                className="me-3"
-                onClick={() => {
-                  setSelect("gallery")
-                }}
-              >
-                <a
-                  className="btn btn-light-primary fw-bolder georgian"
-                  data-kt-menu-trigger="click"
-                  data-kt-menu-placement="bottom-end"
-                >
-                  <i className="bi bi-image-fill" />
-                  სურათები
-                </a>
-                <div
-                  className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                  data-kt-menu="true"
-                  id="kt_menu_61484d4eae1ca"
-                ></div>
-              </div>
-              <div
-                className="d-flex align-items-center py-2 py-md-1"
-                onClick={() => {
-                  setSelect("dranings")
-                }}
-              >
-                <a
-                  className="btn btn-primary fw-bolder georgian"
-                  data-bs-toggle="modal"
-                  data-bs-target="#kt_modal_create_app"
-                  id="kt_toolbar_primary_button"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={16}
-                    height={16}
-                    fill="currentColor"
-                    className="bi bi-rulers"
-                    viewBox="0 0 16 16"
+                <div className="d-flex align-items-center py-2 py-md-1">
+                  <div
+                    className="me-3"
+                    onClick={() => {
+                      setSelect("gallery")
+                    }}
                   >
-                    <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
-                  </svg>
-                  ნახაზები
-                </a>
+                    <a
+                      className="btn btn-light-primary fw-bolder georgian"
+                      data-kt-menu-trigger="click"
+                      data-kt-menu-placement="bottom-end"
+                    >
+                      <i className="bi bi-image-fill" />
+                      სურათები
+                    </a>
+                    <div
+                      className="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
+                      data-kt-menu="true"
+                      id="kt_menu_61484d4eae1ca"
+                    ></div>
+                  </div>
+                  <div
+                    className="d-flex align-items-center py-2 py-md-1"
+                    onClick={() => {
+                      setSelect("dranings")
+                    }}
+                  >
+                    <a
+                      className="btn btn-primary fw-bolder georgian"
+                      data-bs-toggle="modal"
+                      data-bs-target="#kt_modal_create_app"
+                      id="kt_toolbar_primary_button"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={16}
+                        height={16}
+                        fill="currentColor"
+                        className="bi bi-rulers"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z" />
+                      </svg>
+                      ნახაზები
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-      </div>
+          </div>
+        )
+      })}
+
       <div
         id="kt_content_container"
         className={`container`}
