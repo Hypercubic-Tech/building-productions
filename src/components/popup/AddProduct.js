@@ -642,7 +642,7 @@ const AddProduct = ({
                                                 სტატუსი
                                             </label>
                                             <select
-                                                onClick={(e) => {
+                                                onChange={(e) => {
                                                     setCraftData((prevSendData) => ({
                                                         ...prevSendData,
                                                         craft_status: {
