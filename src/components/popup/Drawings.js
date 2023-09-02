@@ -186,7 +186,7 @@ const Drawings = ({ setSelect }) => {
                                  className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
 
 
-                                {isProjectImages && (
+                                { (
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} className={styles.galleryItems} elementClassNames="custom-class-name" selector=".gallery-item">
                                         <div className={styles.galleryItems}>
                                             <div className={`${styles.galleryItem}`}>
