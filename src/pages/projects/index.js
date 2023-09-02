@@ -32,6 +32,10 @@ const index = () => {
 
     let projectsToMap = projectData;
 
+    const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
+    const startIndex = (pageIndex - 1) * itemsPerPage;
+    const endIndex = pageIndex * itemsPerPage;
+
     if (searchValue) {
         const lowercaseSearchType = searchValue.toLowerCase();
         if (projectData && Array.isArray(projectData)) {
@@ -49,10 +53,6 @@ const index = () => {
             console.log('projectData is null or not an array');
         }
     }
-
-    const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
-    const startIndex = (pageIndex - 1) * itemsPerPage;
-    const endIndex = pageIndex * itemsPerPage;
 
     const handleDecrementPageIndex = () => {
         if (pageIndex > 1) {
@@ -145,7 +145,7 @@ const index = () => {
             console.log(error);
         }
     };
-    // ` d-flex justify-content-between ${styles.mt20}`
+
     let buttonWrap = (
         <div className={`${styles.buttons} my-6`}>
             <Link
