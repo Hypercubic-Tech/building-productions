@@ -5,10 +5,10 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import EditAccount from "../../components/popup/EditAccount";
 import Unauthorized from "../../pages/401";
-
-import styles from "./Account.module.css";
 import EditButton from "../ui/EditButton";
 import ImageUpload from "../ui/ImageUpload";
+
+import styles from "./Account.module.css";
 
 const index = () => {
   const [authUser, setAuthUser] = useState([]);
@@ -20,11 +20,6 @@ const index = () => {
   const authEmail = useSelector((state) => state.auth.email);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const { data: session } = useSession();
-  const [uploadedImage, setUploadedImage] = useState(null);
-
-  const handleImageUpload = (file) => {
-    setUploadedImage(file);
-  };
 
   const loggedUserInfo = async () => {
     let url;
@@ -115,8 +110,6 @@ const index = () => {
     }
   };
 
-  console.log(authUser, session?.user);
-
   return (
     <>
       {!isLoggedIn ? (
@@ -125,11 +118,11 @@ const index = () => {
         <div className={`${styles.mainContainer} container`}>
           <div className={styles.imageContainer}>
             <div className={styles.imageBorder}>
-              {((authUser || session?.user) && uploadedImage && (
+              {((authUser || session?.user) && imgSrc && (
                 <img
-                  src={URL.createObjectURL(uploadedImage)}
-                  width={398}
-                  height={398}
+                  src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`}
+                  width={390}
+                  height={382}
                   style={{ borderRadius: "8px" }}
                   alt="Picture of the product"
                 />
@@ -146,7 +139,7 @@ const index = () => {
                 </h2>
               )}
             </div>
-            <ImageUpload onImageUpload={handleImageUpload} />
+            <ImageUpload onImageUpload={handleMediaUpload} />
           </div>
           {authUser.length > 0
             ? authUser?.map((user, index) => {
