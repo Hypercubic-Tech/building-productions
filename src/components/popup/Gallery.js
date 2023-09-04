@@ -16,7 +16,7 @@ import 'lightgallery/css/lg-thumbnail.css';
 
 import styles from './Gallery.module.css'
 
-const Gallery = ({ setSelect }) => {
+const Gallery = ({ setSelect, getProjectById }) => {
     const router = useRouter();
     const { projectId } = router.query;
 
@@ -111,7 +111,8 @@ const Gallery = ({ setSelect }) => {
     const handleDeleteImage = async (imageId) => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
             .then(() => {
-                getProductsHandler()
+                getProductsHandler();
+                getProjectById();
             })
         setImgSrc(null);
     };
@@ -128,6 +129,7 @@ const Gallery = ({ setSelect }) => {
             .then((res) => {
                 notify(false, "ფოტოსურათი წარმატებით დაყენდა მთავარ ფოტოდ");
                 getProductsHandler();
+                getProjectById();
             });
     };
 

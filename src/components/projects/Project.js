@@ -17,7 +17,8 @@ import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
 import styles from "./Project.module.css";
 
-const Project = ({ project,
+const Project = ({
+  project,
   crafts,
   unit,
   suppliers,
@@ -28,7 +29,8 @@ const Project = ({ project,
   editProductItem,
   productOptions,
   productStatus,
-  defaultImage
+  defaultImage,
+  getProjectById
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -170,7 +172,7 @@ const Project = ({ project,
                   <div
                     className="d-flex align-items-center py-2 py-md-1"
                     onClick={() => {
-                      setSelect("dranings")
+                      setSelect("dranings") 
                     }}
                   >
                     <a
@@ -332,8 +334,8 @@ const Project = ({ project,
                             Delete Selected
                           </button>
                         </div>
-                        {select === "gallery" && <Gallery setSelect={setSelect} />}
-                        {select === "dranings" && <Drawings setSelect={setSelect} />}
+                        {select === "gallery" && <Gallery getProjectById={getProjectById} setSelect={setSelect} />}
+                        {select === "dranings" && <Drawings getProjectById={getProjectById} setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
                         {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} productStatus={productStatus} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
                         />}
