@@ -9,6 +9,7 @@ import EditButton from "../ui/EditButton";
 import ImageUpload from "../ui/ImageUpload";
 
 import styles from "./Account.module.css";
+import { a } from "react-spring";
 
 const index = () => {
   const [authUser, setAuthUser] = useState([]);
@@ -67,6 +68,7 @@ const index = () => {
           setImgSrc(data[0].url);
           setIsImageUpload(true);
           notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+          console.log(data);
         });
     } catch (err) {
       console.error(err);
@@ -74,41 +76,95 @@ const index = () => {
     }
   };
 
-  useEffect(() => {
-    if (isImageUpload) {
-      const userImageUpload = async () => {
-        await axios
-          .put(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUser[0]?.id}`,
-            {
-              avatar: image?.id,
-            }
-          )
-          .then(() => {
-            loggedUserInfo();
-          });
-      };
-      userImageUpload();
-    }
-  }, [isImageUpload]);
-
   const handleImageRemove = async () => {
     if (authUser[0]?.avatar) {
-      await axios
-        .delete(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${authUser[0]?.avatar[0]?.id}`
-        )
-        .then(() => {
-          setImage(null);
-          setImgSrc(null);
-          setIsImageUpload(false);
-          loggedUserInfo();
-          notify(false, "სურათი წარმატებით წაიშალა");
-        });
-    } else {
-      notify(true, "სურათი არ არის ატვირთული");
+      const avatarId = authUser[0].avatar[0]?.id;
+      if (avatarId) {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${avatarId}`
+        );
+      }
+    }
+    await axios
+      .put(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUser[0]?.id}`,
+        {
+          avatar: null,
+        }
+      )
+      .then(() => {
+        loggedUserInfo();
+        setImgSrc(null);
+        setIsImageUpload(false);
+      });
+  };
+
+  const handleMediaUpdate = async (img) => {
+    if (!img) {
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append("files", img);
+  
+    try {
+      if (isImageUpload) {
+        const confirmUpdate = window.confirm("Do you want to update the existing image?");
+        if (!confirmUpdate) {
+          return; 
+        }
+  
+        // Use the handleImageRemove function to delete the old image
+        await handleImageRemove();
+      }
+  
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      const data = res.data;
+      setImage(data[0]);
+      setImgSrc(data[0].url);
+      setIsImageUpload(true);
+      notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+      notify(true, "სურათის ატვირთვა უარყოფილია");
     }
   };
+
+  const handleUserImage = async () => {
+    if (authUser[0]?.avatar) {
+      await axios
+        .get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${authUser[0]?.avatar[0]?.id}`
+        )
+        .then((res) => {
+          const data = res.data;
+          setImgSrc(data.url);
+        });
+    }
+
+    if (isImageUpload) {
+      await axios
+        .put(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUser[0]?.id}`,
+          {
+            avatar: image?.id,
+          }
+        )
+        .then(() => {
+          loggedUserInfo();
+        });
+    }
+  };
+
+  useEffect(() => {
+    handleUserImage();
+  }, [authUser, isImageUpload]);
 
   return (
     <>
@@ -121,8 +177,8 @@ const index = () => {
               {((authUser || session?.user) && imgSrc && (
                 <img
                   src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`}
-                  width={390}
-                  height={382}
+                  width={"100%"}
+                  height={"100%"}
                   style={{ borderRadius: "8px" }}
                   alt="Picture of the product"
                 />
@@ -139,7 +195,12 @@ const index = () => {
                 </h2>
               )}
             </div>
-            <ImageUpload onImageUpload={handleMediaUpload} />
+            <ImageUpload
+              onImageUpload={
+                isImageUpload ? handleMediaUpdate : handleMediaUpload
+              }
+              handleImageRemove={handleImageRemove}
+            />
           </div>
           {authUser.length > 0
             ? authUser?.map((user, index) => {

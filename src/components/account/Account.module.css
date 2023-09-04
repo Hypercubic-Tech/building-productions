@@ -45,3 +45,30 @@
     justify-content: flex-start;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .mainContainer {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+
+  .imageContainer {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .userInfoWrapper {
+    width: 100%;
+  }
+
+  .userInfo {
+    width: 100%;
+  }
+
+  .userInfoContainer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+}
