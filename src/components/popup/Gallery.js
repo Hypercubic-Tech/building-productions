@@ -63,6 +63,7 @@ const Gallery = ({ setSelect, getProjectById }) => {
                     setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
                     getProductsHandler();
+                    getProjectById();
                     notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
                 });
         } catch (err) {
@@ -150,6 +151,7 @@ const Gallery = ({ setSelect, getProjectById }) => {
                 )
                     .then(() => {
                         getProductsHandler();
+                        getProjectById();
                     });
             };
             userImageUpload();

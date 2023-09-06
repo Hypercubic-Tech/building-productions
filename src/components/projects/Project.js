@@ -91,7 +91,6 @@ const Project = ({
   }, [activeCategoryId, projectId])
   return (
     <>
-      <Filter totalSumOnClick={totalSumTable} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
       {project && project.map((p, index) => {
         const id = p?.attributes?.main_img_id;
         const imgId = parseInt(id);
@@ -201,6 +200,7 @@ const Project = ({
           </div>
         )
       })}
+      <Filter totalSumOnClick={totalSumTable} filterProductCategory={filterProductCategory} projectCategory={projectCategory} />
       <div
         id="kt_content_container"
         className={`container`}

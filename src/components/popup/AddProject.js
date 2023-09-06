@@ -502,6 +502,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                   </div>
                 </div>
+                
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
