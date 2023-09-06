@@ -35,7 +35,7 @@ const Gallery = ({ setSelect, getProjectById }) => {
             )
             .then((res) => {
                 const data = res.data
-                setIsProjectImages(data?.data[0]?.attributes?.image?.data)
+                    (data?.data[0]?.attributes?.image?.data)
             })
     };
 
