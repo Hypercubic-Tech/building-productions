@@ -34,8 +34,8 @@ const Gallery = ({ setSelect, getProjectById }) => {
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=image`
             )
             .then((res) => {
-                const data = res.data
-                    (data?.data[0]?.attributes?.image?.data)
+                const data = res?.data
+                    setIsProjectImages(data?.data[0]?.attributes?.image?.data)
             })
     };
 

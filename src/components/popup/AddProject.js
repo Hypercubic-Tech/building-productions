@@ -502,7 +502,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -526,17 +526,17 @@ const AddProject = ({ dismiss, setShowProject }) => {
                               <span className="form-check form-check-custom form-check-solid">
                                 <div className={styles.outline}>
                                   <input
-                                    id="input-validation-building"
-                                    onChange={(event) => {
+                                    id={`radio-${index}`}
+                                    onChange={() => {
                                       setSendData((prevSendData) => ({
                                         ...prevSendData,
                                         condition: {
-                                          connect: [{ id: event.target.value }],
+                                          connect: [{ id: item.id }],
                                         },
                                       }));
                                     }}
                                     className="form-check-input"
-                                    type="checkbox"
+                                    type="radio"
                                     name="category"
                                     value={item.id}
                                   />
@@ -545,6 +545,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             </label>
                           )
                         })}
+
                       </div>
                     </div>
                     <div className="fv-row">
@@ -579,7 +580,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                     }));
                                   }}
                                   className="form-check-input"
-                                  type="checkbox"
+                                  type="radio"
                                   name="framework"
                                   value={item.id}
                                 />
