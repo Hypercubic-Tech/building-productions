@@ -27,6 +27,28 @@ const index = () => {
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
 
+  const getProjectById = async () => {
+    if (projectId) {
+      try {
+        const projectRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`);
+        const projectData = projectRes.data?.data;
+        setProject(projectData);
+
+        const productRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`);
+        const productData = productRes.data;
+        setProductOptions(productData);
+
+        const categoryRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`);
+        const categoryData = categoryRes.data.data;
+        setProjectCategory(categoryData);
+        dispatch(setCategory(categoryData[0]?.id));
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  };
+
+
   useEffect(() => {
     const getSupplierHandler = async () => {
       await axios
@@ -74,17 +96,17 @@ const index = () => {
         });
     };
 
-    // const getDefaultImage = async () => {
-    //   await axios
-    //     .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`)
+    const getDefaultImage = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`)
 
-    //     .then((res) => {
-    //       const data = res.data;
-    //       setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
-    //     });
-    // };
+        .then((res) => {
+          const data = res.data;
+          setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
+        });
+    };
 
-    // getDefaultImage();
+    getDefaultImage();
     getProductsStatusHandler();
     getCraftsStatusHandler();
     getCraftsHandler();
@@ -93,30 +115,8 @@ const index = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (projectId) {
-        try {
-          const projectRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`);
-          const projectData = projectRes.data?.data;
-          setProject(projectData);
-
-          const productRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`);
-          const productData = productRes.data;
-          setProductOptions(productData);
-
-          const categoryRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`);
-          const categoryData = categoryRes.data.data;
-          setProjectCategory(categoryData);
-          dispatch(setCategory(categoryData[0]?.id));
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    };
-
-    fetchData();
+    getProjectById();
   }, [projectId]);
-
 
   const editHandler = (product) => {
     setEditProductItem(product);
@@ -139,6 +139,7 @@ const index = () => {
           editHandler={editHandler}
           editProductItem={editProductItem}
           defaultImage={defaultImage}
+          getProjectById={getProjectById}
         />
       )}
     </>

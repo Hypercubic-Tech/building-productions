@@ -5,10 +5,10 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import EditAccount from "../../components/popup/EditAccount";
 import Unauthorized from "../../pages/401";
-
-import styles from "./Account.module.css";
 import EditButton from "../ui/EditButton";
 import ImageUpload from "../ui/ImageUpload";
+
+import styles from "./Account.module.css";
 
 const index = () => {
   const [authUser, setAuthUser] = useState([]);
@@ -16,39 +16,28 @@ const index = () => {
   const [image, setImage] = useState(null);
   const [isImageUpload, setIsImageUpload] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [avatarId, setAvatarId] = useState(null);
   const authUserId = useSelector((state) => state.auth.user_id);
   const authEmail = useSelector((state) => state.auth.email);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const { data: session } = useSession();
-  const [uploadedImage, setUploadedImage] = useState(null);
-
-  const handleImageUpload = (file) => {
-    setUploadedImage(file);
-  };
 
   const loggedUserInfo = async () => {
     let url;
-    if (authUserId) {
+
+    if (session?.user) {
+      setAuthUser(session.user);
+    } else if (authUserId) {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
     } else {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${authEmail}&populate=*`;
     }
-    await axios.get(url).then((res) => {
-      const data = res.data;
-      setAuthUser(data);
-    });
-  };
-
-  useEffect(() => {
-    loggedUserInfo();
-  }, [authUserId]);
-
-  const closeUserProfileEdit = () => {
-    setIsEdit(false);
-  };
-
-  const editUserProfile = () => {
-    setIsEdit(true);
+    if (url) {
+      await axios.get(url).then((res) => {
+        const data = res.data;
+        setAuthUser(data);
+      });
+    }
   };
 
   const handleMediaUpload = async (img) => {
@@ -79,43 +68,92 @@ const index = () => {
     }
   };
 
-  useEffect(() => {
-    if (isImageUpload) {
-      const userImageUpload = async () => {
-        await axios
-          .put(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUser[0]?.id}`,
-            {
-              avatar: image?.id,
-            }
-          )
-          .then(() => {
-            loggedUserInfo();
-          });
-      };
-      userImageUpload();
-    }
-  }, [isImageUpload]);
-
   const handleImageRemove = async () => {
+    console.log("authUser:", authUser);
+    console.log("authUser avatar:", authUser[0]?.avatar);
+  
     if (authUser[0]?.avatar) {
-      await axios
-        .delete(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${authUser[0]?.avatar[0]?.id}`
-        )
-        .then(() => {
-          setImage(null);
-          setImgSrc(null);
-          setIsImageUpload(false);
-          loggedUserInfo();
-          notify(false, "სურათი წარმატებით წაიშალა");
-        });
-    } else {
-      notify(true, "სურათი არ არის ატვირთული");
+      const avatarId = authUser[0].avatar[0]?.id;
+      console.log("avatarId:", avatarId);
+      if (avatarId) {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${avatarId}`
+        );
+      }
+    }
+    await axios
+      .put(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUser[0]?.id}`,
+        {
+          avatar: null,
+        }
+      )
+      .then(() => {
+        loggedUserInfo();
+        setImgSrc(null);
+        setIsImageUpload(false);
+      });
+  };
+  
+
+  const handleMediaUpdate = async (img) => {
+    if (!img) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("files", img);
+
+    try {
+      await handleImageRemove();
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const data = res.data;
+      setImage(data[0]);
+      setImgSrc(data[0].url);
+      setIsImageUpload(true);
+      console.log("Ff");
+      notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
+    } catch (err) {
+      console.error(err);
+      notify(true, "სურათის ატვირთვა უარყოფილია");
     }
   };
 
-  console.log(authUser, session?.user);
+  const handleUserImage = async () => {
+    if (isImageUpload) {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUser[0]?.id}`,
+        {
+          avatar: image?.id,
+        }
+      );
+    }
+
+    if (authUser[0]?.avatar) {
+      await axios
+        .get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${authUser[0]?.avatar[0]?.id}`
+        )
+        .then((res) => {
+          const data = res.data;
+          setImgSrc(data.url);
+        });
+    }
+  };
+  useEffect(() => {
+    loggedUserInfo();
+    handleUserImage();
+  }, [authUserId, session, isImageUpload]);
 
   return (
     <>
@@ -125,11 +163,11 @@ const index = () => {
         <div className={`${styles.mainContainer} container`}>
           <div className={styles.imageContainer}>
             <div className={styles.imageBorder}>
-              {((authUser || session?.user) && uploadedImage && (
+              {((authUser || session?.user) && imgSrc && (
                 <img
-                  src={URL.createObjectURL(uploadedImage)}
-                  width={398}
-                  height={398}
+                  src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`}
+                  width={"100%"}
+                  height={"100%"}
                   style={{ borderRadius: "8px" }}
                   alt="Picture of the product"
                 />
@@ -146,7 +184,10 @@ const index = () => {
                 </h2>
               )}
             </div>
-            <ImageUpload onImageUpload={handleImageUpload} />
+            <ImageUpload
+              onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
+              handleImageRemove={handleImageRemove}
+            />
           </div>
           {authUser.length > 0
             ? authUser?.map((user, index) => {
@@ -224,7 +265,7 @@ const index = () => {
                     {user?.paymentPlan === "paid" && user?.paymentMethod && (
                       <hr />
                     )}
-                    {!isEdit && <EditButton onClick={editUserProfile} />}
+                    {!isEdit && <EditButton onClick={() => setIsEdit(true)} />}
                   </div>
                 );
               })
@@ -265,13 +306,13 @@ const index = () => {
                     </div>
                   </div>
                   <hr />
-                  {!isEdit && <EditButton onClick={editUserProfile} />}
+                  {!isEdit && <EditButton onClick={() => setIsEdit(true)} />}
                 </div>
               )}
           {isEdit && (
             <EditAccount
               authUser={authUser}
-              onClose={closeUserProfileEdit}
+              onClose={() => setIsEdit(false)}
               loggedUserInfo={loggedUserInfo}
             />
           )}

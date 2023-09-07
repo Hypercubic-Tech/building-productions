@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 
 import styles from "./ImageUpload.module.css";
 
-const ImageUpload = ({ onImageUpload }) => {
+const ImageUpload = ({ onImageUpload, handleImageRemove }) => {
   const onDrop = useCallback(
     (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
@@ -41,6 +41,9 @@ const ImageUpload = ({ onImageUpload }) => {
           </svg>
           <span>სურათის ატვირთვა</span>
         </div>
+      </div>
+      <div className={styles.removeButton} onClick={handleImageRemove}>
+        წაშლა
       </div>
     </div>
   );

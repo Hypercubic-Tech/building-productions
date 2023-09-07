@@ -16,7 +16,7 @@ import 'lightgallery/css/lg-thumbnail.css';
 
 import styles from './Gallery.module.css'
 
-const Gallery = ({ setSelect }) => {
+const Gallery = ({ setSelect, getProjectById }) => {
     const router = useRouter();
     const { projectId } = router.query;
 
@@ -26,14 +26,16 @@ const Gallery = ({ setSelect }) => {
     const [isProjectImages, setIsProjectImages] = useState([]);
     const [isImageState, setIsImageState] = useState(false);
 
+    const [choosedImage, setChoosedImage] = useState(null);
+
     const getProductsHandler = async () => {
         await axios
             .get(
                 `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${projectId}&populate=image`
             )
             .then((res) => {
-                const data = res.data
-                setIsProjectImages(data?.data[0]?.attributes?.image?.data)
+                const data = res?.data
+                    setIsProjectImages(data?.data[0]?.attributes?.image?.data)
             })
     };
 
@@ -61,6 +63,7 @@ const Gallery = ({ setSelect }) => {
                     setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
                     getProductsHandler();
+                    getProjectById();
                     notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
                 });
         } catch (err) {
@@ -109,9 +112,30 @@ const Gallery = ({ setSelect }) => {
     const handleDeleteImage = async (imageId) => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${imageId}`)
             .then(() => {
-                getProductsHandler()
+                getProductsHandler();
+                getProjectById();
             })
         setImgSrc(null);
+    };
+
+    const setMainPicture = async () => {
+        await axios.put(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects/${projectId}`,
+            {
+                data: {
+                    main_img_id: choosedImage
+                },
+            }
+        )
+            .then((res) => {
+                notify(false, "ფოტოსურათი წარმატებით დაყენდა მთავარ ფოტოდ");
+                getProductsHandler();
+                getProjectById();
+            });
+    };
+
+    const choosedMainImg = (id) => {
+        setChoosedImage(id);
     };
 
     useEffect(() => {
@@ -127,6 +151,7 @@ const Gallery = ({ setSelect }) => {
                 )
                     .then(() => {
                         getProductsHandler();
+                        getProjectById();
                     });
             };
             userImageUpload();
@@ -138,6 +163,12 @@ const Gallery = ({ setSelect }) => {
             getProductsHandler();
         }
     }, [projectId]);
+
+    useEffect(() => {
+        if (choosedImage) {
+            setMainPicture();
+        }
+    }, [choosedImage]);
 
     return (
         <div className="modal fade show" style={{ zIndex: isImageState ? "0" : "100" }}>
@@ -152,43 +183,41 @@ const Gallery = ({ setSelect }) => {
                                 setSelect(null);
                             }}
                         >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={35}
-                                    height={35}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <rect
-                                        x={6}
-                                        y="17.3137"
-                                        width={16}
-                                        height={2}
-                                        rx={1}
-                                        transform="rotate(-45 6 17.3137)"
-                                        fill="#EB455F"
-                                    />
-                                    <rect
-                                        x="7.41422"
-                                        y={6}
-                                        width={16}
-                                        height={2}
-                                        rx={1}
-                                        transform="rotate(45 7.41422 6)"
-                                        fill="#EB455F"
-                                    />
-                                </svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={35}
+                                height={35}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+                                <rect
+                                    x={6}
+                                    y="17.3137"
+                                    width={16}
+                                    height={2}
+                                    rx={1}
+                                    transform="rotate(-45 6 17.3137)"
+                                    fill="#EB455F"
+                                />
+                                <rect
+                                    x="7.41422"
+                                    y={6}
+                                    width={16}
+                                    height={2}
+                                    rx={1}
+                                    transform="rotate(45 7.41422 6)"
+                                    fill="#EB455F"
+                                />
+                            </svg>
                         </div>
                     </div>
                     <div className="modal-body d-flex flex-wrap  py-sm-10 px-sm-10 container">
-                        <form id="kt_modal_add_user_form" className="form" style={{width:'100%'}}>
+                        <form id="kt_modal_add_user_form" className="form" style={{ width: '100%' }}>
                             <div style={{
                                 flexDirection: "column"
                             }}
                                 className="svg-icon svg-icon-2tx svg-icon-warning me-4 d-flex justify-content-center align-items-center">
-
-
-                                {isProjectImages && (
+                                {(
                                     <LightGallery plugins={[lgThumbnail, lgZoom]} className={styles.galleryItems} elementClassNames="custom-class-name" selector=".gallery-item">
                                         <div className={styles.galleryItems}>
                                             <div className={`${styles.galleryItem}`}>
@@ -217,33 +246,35 @@ const Gallery = ({ setSelect }) => {
                                                     </svg>
                                                 </div>
                                             </div>
-                                        {isProjectImages?.map((projectImg, index) => (
-                                            <div className={styles.galleryItem}>
-                                                <a
-                                                    key={projectImg?.id}
-                                                    href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
-                                                    className={`gallery-item`}
-                                                    onClick={toggleImages}
-                                                >
-                                                    <div className={styles.galleryItemImg}>
-                                                        <img
-                                                            key={index}
-                                                            src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
-                                                            className="img-responsive col-sm"
-                                                        />
+                                            {isProjectImages && isProjectImages?.map((projectImg, index) => {
+                                                return (
+                                                    <div key={index} className={styles.galleryItem}>
+                                                        <a
+                                                            key={projectImg?.id}
+                                                            href={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                            className={`gallery-item`}
+                                                            onClick={toggleImages}
+                                                        >
+                                                            <div className={styles.galleryItemImg}>
+                                                                <img
+                                                                    key={index}
+                                                                    src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${projectImg?.attributes?.url}`}
+                                                                    className="img-responsive col-sm"
+                                                                />
+                                                            </div>
+                                                        </a>
+                                                        <div className={styles.galleryItemBtns}>
+                                                            <div onClick={() => choosedMainImg(projectImg?.id)} className={styles.galleryItemBtn}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                                            </div>
+                                                            <div onClick={() => confirmHandler(projectImg?.id)} className={styles.galleryItemBtn}>
+                                                                <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M3.11537 16C2.65512 16 2.27083 15.8458 1.9625 15.5375C1.65417 15.2291 1.5 14.8448 1.5 14.3846V1.99996H0.5V0.999963H4.5V0.230713H10.5V0.999963H14.5V1.99996H13.5V14.3846C13.5 14.8448 13.3458 15.2291 13.0375 15.5375C12.7292 15.8458 12.3449 16 11.8846 16H3.11537ZM5.30768 13H6.3077V3.99996H5.30768V13ZM8.6923 13H9.69232V3.99996H8.6923V13Z" fill="#EB455F" />
+                                                                </svg>                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </a>
-                                                <div className={styles.galleryItemBtns}>
-                                                    <div className={styles.galleryItemBtn}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                                    </div>
-                                                    <div className={styles.galleryItemBtn}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="#EB455F"></rect><rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="#EB455F"></rect></svg>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        ))}
+                                                )
+                                            })}
                                         </div>
                                     </LightGallery>
                                 )}

@@ -11,6 +11,22 @@
   width: fit-content;
   white-space: nowrap;
   cursor: pointer;
+  gap: 10px;
+}
+
+.removeButton {
+  background: #ffffff;
+  border: 1px solid #6d749c;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.removeButton:hover {
+  background: #6d749c;
+  color: #ffffff;
 }
 
 .textAndSvg {

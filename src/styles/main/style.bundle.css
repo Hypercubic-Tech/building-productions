@@ -31949,7 +31949,6 @@ a:hover {
   align-items: stretch;
   flex-wrap: wrap;
   min-height: 70px;
-  padding: 0 2.25rem;
   background-color: transparent;
   border-bottom: 1px solid #eff2f5;
 }
@@ -32840,7 +32839,7 @@ a:hover {
   /* color: #fff; */
   opacity: 0.7;
 }
-.btn svg {
+.btn-primary svg {
     margin-right: 5px;
 }
 .lg-react-element {
@@ -41112,6 +41111,8 @@ code:not([class*="language-"]) {
 }
 .modal .modal-dialog {
   outline: 0 !important;
+    position: relative;
+    z-index: 10;
 }
 .modal.modal-sticky.modal-sticky-bottom-end {
   padding: 0 !important;
@@ -42982,6 +42983,7 @@ code:not([class*="language-"]) {
 .image-input.image-input-outline .image-input-wrapper {
   border: 3px solid #fff;
   box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
+    border-radius: 4px;
 }
 .symbol {
   display: inline-block;

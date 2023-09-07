@@ -1,7 +1,4 @@
 import { useState } from "react"
-import Faqs from "../ui/Faqs";
-
-// import axios from "axios";
 
 import styles from "./Faq.module.css"
 
@@ -26,9 +23,8 @@ const Faq = ({
             ხშირად დასმული კითხვები
           </h3>
           {faqData && faqData.map((item, index) => {
-            console.log(item, 'item')
             return (
-              <div className="faq">
+              <div key={index} className="faq">
                 <div onClick={() => hanlder(index)} className="relative justify-content-between d-flex align-items-center w-100 question fs-2 fw-bold pointer w-fit">
                   <div className={`${styles.borderBottom} w-100`}>{item.attributes.question}</div>
                   <svg className={` ${styles.faqArrow} ${visible === index ? styles.rotate : ""}`} width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,31 +41,7 @@ const Faq = ({
         </div>
       </div>
     </div>
-
-    // <div className={styles.bodyContainer}>
-    //     <h1 className={styles.h1}>Faq</h1>
-    //     <div className={styles.faq__list}>
-    //         {faqs && faqs?.map((item, index) => {
-    //             return (
-    //                 <div key={index} className={styles.faq__item}>
-    //                     <div className={styles.faq__questions} onClick={() => {
-    //                         if (index === active) {
-    //                             setActive(null);
-    //                         } else {
-    //                             setActive(index);
-    //                         }
-    //                     }} key={index} >
-    //                         {item?.attributes?.question}
-    //                         <div className={styles.plass} key={index + 1} >{active === index ? "-" : "+"}</div>
-    //                     </div>
-    //                     <div className={styles.faq__answers} style={{ display: active === index ? "block" : "none" }} key={index + 2}>{item?.attributes?.answer}</div>
-    //                 </div>
-    //             );
-    //         })
-    //         }
-    //     </div>
-    // </div>
-  )
-}
+  );
+};
 
 export default Faq;
