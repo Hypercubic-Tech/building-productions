@@ -18,7 +18,6 @@ const index = () => {
     const userId = useSelector(state => state.auth.user_id)
     const searchValue = useSelector(state => state.proj.searchType)
     const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-    // const isLoggedIn = loggedIn.payload.auth.loggedIn
     const [close, setClose] = useState(false);
     const [addProject, setAddProject] = useState(false);
     const [editProject, setEditProject] = useState(false);
@@ -27,6 +26,11 @@ const index = () => {
     const [defaultImage, setDefaultImage] = useState(null);
     const [pageIndex, setPageIndex] = useState(1);
 
+    const [cities, setCities] = useState(null);
+    const [propertyType, setPropertyType] = useState(null);
+    const [condition, setCondition] = useState(null);
+    const [currentCondition, setCurrentCondition] = useState(null);
+    const [categories, setCategories] = useState(null);
 
     let itemsPerPage = 8;
 
@@ -189,13 +193,83 @@ const index = () => {
         fetchData();
     }, [showProject]);
 
+    useEffect(() => {
+        const getCategoriesHandler = async () => {
+          try {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
+              .then((res) => {
+                const data = res.data;
+                setCategories(data.data)
+              })
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        const getCurrentConditionHandler = async () => {
+          try {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
+              .then((res) => {
+                const data = res.data;
+                setCurrentCondition(data.data)
+              })
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        const getConditionHandler = async () => {
+          try {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
+              .then((res) => {
+                const data = res.data;
+                setCondition(data.data)
+              })
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        const getCitiesHandler = async () => {
+          try {
+            await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
+              .then((res) => {
+                const data = res.data;
+                setCities(data.data)
+              })
+    
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        const getPropertyTypesHandler = async () => {
+          try {
+            axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
+              .then((res) => {
+                const data = res.data;
+                setPropertyType(data.data)
+              })
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        getCategoriesHandler();
+        getCurrentConditionHandler();
+        getConditionHandler();
+        getCitiesHandler();
+        getPropertyTypesHandler();
+      }, []);
+    
+
     return (
         <>
             {!isLoggedIn ? (
                 <Unauthorized />
             ) : (
                 <>
-                    <div className="container" style={{ position: 'relative' }}>
+                    <div className="container" style={{ position: 'relative'}}>
                         <img className={styles.projectBg} src="/images/projectBg.png" alt="bg" />
                         {projectsToMap?.length > 0 ? buttonWrap : ""}
                         <div className={`${styles.flexWrap} d-flex justify-content-center `}>
@@ -258,7 +332,7 @@ const index = () => {
                                 })
                             ) : (
                                 <div className={styles.wrap}>
-                                    <h2 className={` ${styles.notFound} geo-title `}>პროექტები ვერ მოიძებნა</h2>
+                                    <h2 className={`geo-title `}>პროექტები ვერ მოიძებნა</h2>
                                     {buttonWrap}
                                     {/* <BuildingBg /> */}
                                 </div>
@@ -286,8 +360,8 @@ const index = () => {
                             </ul>
                         </nav>}
                     </div>
-                    {addProject && <AddProject setShowProject={setShowProject} dismiss={dismissHandler} />}
-                    {editProject && <EditProject setEditProject={setEditProject} setShowProject={setShowProject} project={editProject} dismiss={dismissHandler} />}
+                    {addProject && <AddProject cities={cities} propertyType={propertyType} condition={condition} categories={categories} currentCondition={currentCondition} setShowProject={setShowProject} dismiss={dismissHandler} />}
+                    {editProject && <EditProject cities={cities} propertyType={propertyType} condition={condition} categories={categories} currentCondition={currentCondition} setEditProject={setEditProject} setShowProject={setShowProject} project={editProject} dismiss={dismissHandler} />}
                 </>
             )}
         </>
