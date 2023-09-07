@@ -148,10 +148,11 @@ const index = () => {
 
   useEffect(() => {
     loggedUserInfo();
-    handleUserImage();
-  }, [authUserId, session, isImageUpload]);
+  }, [session, authUserId]);
 
-  console.log("authUser:", authUser);
+  useEffect(() => {
+    handleUserImage();
+  }, [authUser, session, isImageUpload]);
 
   const authUserData = [
     {
