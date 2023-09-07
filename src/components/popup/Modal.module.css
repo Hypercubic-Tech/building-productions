@@ -163,10 +163,12 @@
 }
 .projectBg {
   position: absolute;
-  bottom: -50px;
-  opacity: .1;
   width: 100%;
-  z-index: -1;
+  height: 100vh;
+  /* bottom: -50px;
+  opacity: .1;
+  width: 100%; */
+  /* z-index: -1; */
 }
 .modalHeader h2 {
   font-size: 2em;

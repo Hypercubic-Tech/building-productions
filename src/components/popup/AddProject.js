@@ -6,18 +6,14 @@ import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 import Button from "../ui/Button";
 
-const AddProject = ({ dismiss, setShowProject }) => {
+const AddProject = ({cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject }) => {
   const userId = useSelector(state => state.auth.user_id)
 
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
-  const [cities, setCities] = useState(null);
-  const [propertyType, setPropertyType] = useState(null);
-  const [condition, setCondition] = useState(null);
-  const [currentCondition, setCurrentCondition] = useState(null);
-  const [categories, setCategories] = useState(null);
+  
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -73,7 +69,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
       return "pending";
     }
   };
-  
+
   const getStatusClassName = (stepIndex) => {
     if (stepIndex < step) {
       return "custom-completed";
@@ -142,75 +138,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
     createProjectHandler();
   };
 
-  useEffect(() => {
-    const getCategoriesHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-          .then((res) => {
-            const data = res.data;
-            setCategories(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getCurrentConditionHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCurrentCondition(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getConditionHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCondition(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getCitiesHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
-          .then((res) => {
-            const data = res.data;
-            setCities(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getPropertyTypesHandler = async () => {
-      try {
-        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
-          .then((res) => {
-            const data = res.data;
-            setPropertyType(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCategoriesHandler();
-    getCurrentConditionHandler();
-    getConditionHandler();
-    getCitiesHandler();
-    getPropertyTypesHandler();
-  }, []);
-
   return (
     <div
       style={{ display: close ? "none" : "" }}
@@ -228,8 +155,8 @@ const AddProject = ({ dismiss, setShowProject }) => {
           >
             <span className="svg-icon-1">
               პროცესის შეწყვეტა
-            <svg className="ms-4" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5.4 13.3077L9 9.7077L12.6 13.3077L13.3077 12.6L9.7077 9L13.3077 5.4L12.6 4.6923L9 8.2923L5.4 4.6923L4.6923 5.4L8.2923 9L4.6923 12.6L5.4 13.3077ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#EB455F"/>
+              <svg className="ms-4" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.4 13.3077L9 9.7077L12.6 13.3077L13.3077 12.6L9.7077 9L13.3077 5.4L12.6 4.6923L9 8.2923L5.4 4.6923L4.6923 5.4L8.2923 9L4.6923 12.6L5.4 13.3077ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#EB455F" />
               </svg>
             </span>
           </div>
@@ -247,7 +174,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                 >
                   <div className="stepper-icon">
                     <svg className="stepper-check fas fa-check" width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.54997 11.3078L0.58075 6.33855L1.2942 5.6251L5.54997 9.88087L14.7057 0.725098L15.4192 1.43855L5.54997 11.3078Z" fill="white"/>
+                      <path d="M5.54997 11.3078L0.58075 6.33855L1.2942 5.6251L5.54997 9.88087L14.7057 0.725098L15.4192 1.43855L5.54997 11.3078Z" fill="white" />
                     </svg>
                     <span className="stepper-number">1</span>
                   </div>
@@ -257,15 +184,15 @@ const AddProject = ({ dismiss, setShowProject }) => {
                   </div>
                 </div>
                 <svg className={` line ${getStatusClassName(1)}`} width="368" height="1" viewBox="0 0 368 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB"/>
+                  <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB" />
                 </svg>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(2)}`}
                   data-kt-stepper-element="nav"
                 >
                   <div className="stepper-icon">
-                  <svg className="stepper-check fas fa-check" width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.54997 11.3078L0.58075 6.33855L1.2942 5.6251L5.54997 9.88087L14.7057 0.725098L15.4192 1.43855L5.54997 11.3078Z" fill="white"/>
+                    <svg className="stepper-check fas fa-check" width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.54997 11.3078L0.58075 6.33855L1.2942 5.6251L5.54997 9.88087L14.7057 0.725098L15.4192 1.43855L5.54997 11.3078Z" fill="white" />
                     </svg>
                     <span className="stepper-number">2</span>
                   </div>
@@ -277,15 +204,15 @@ const AddProject = ({ dismiss, setShowProject }) => {
                   </div>
                 </div>
                 <svg className={` line ${getStatusClassName(2)}`} width="368" height="1" viewBox="0 0 368 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB"/>
+                  <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB" />
                 </svg>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(3)}`}
                   data-kt-stepper-element="nav"
                 >
                   <div className="stepper-icon">
-                  <svg className="stepper-check fas fa-check" width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.54997 11.3078L0.58075 6.33855L1.2942 5.6251L5.54997 9.88087L14.7057 0.725098L15.4192 1.43855L5.54997 11.3078Z" fill="white"/>
+                    <svg className="stepper-check fas fa-check" width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.54997 11.3078L0.58075 6.33855L1.2942 5.6251L5.54997 9.88087L14.7057 0.725098L15.4192 1.43855L5.54997 11.3078Z" fill="white" />
                     </svg>
                     <span className="stepper-number">3</span>
                   </div>
@@ -297,15 +224,15 @@ const AddProject = ({ dismiss, setShowProject }) => {
                   </div>
                 </div>
                 <svg className={` line ${getStatusClassName(3)}`} width="368" height="1" viewBox="0 0 368 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB"/>
+                  <line x1="4.37114e-08" y1="0.5" x2="368" y2="0.500032" stroke="#CFD3EB" />
                 </svg>
                 <div
                   className={`${"stepper-item"} ${getStatusClass(4)}`}
                   data-kt-stepper-element="nav"
                 >
                   <div className="stepper-icon">
-                  <svg className="stepper-check fas fa-check" width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.54997 11.3078L0.58075 6.33855L1.2942 5.6251L5.54997 9.88087L14.7057 0.725098L15.4192 1.43855L5.54997 11.3078Z" fill="white"/>
+                    <svg className="stepper-check fas fa-check" width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.54997 11.3078L0.58075 6.33855L1.2942 5.6251L5.54997 9.88087L14.7057 0.725098L15.4192 1.43855L5.54997 11.3078Z" fill="white" />
                     </svg>
                     <span className="stepper-number">4</span>
                   </div>
@@ -502,6 +429,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                   </div>
                 </div>
+
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -509,9 +437,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                   <div className="w-100">
                     <div className="fv-row">
                       <div className="fv-row">
-                      <label className="d-flex align-items-center fs-5 fw-bold mb-4">
-                        <span className="fw-bolder required georgian fs-4">მდგომარეობა</span>
-                      </label>
+                        <label className="d-flex align-items-center fs-5 fw-bold mb-4">
+                          <span className="fw-bolder required georgian fs-4">მდგომარეობა</span>
+                        </label>
                         {condition && condition.map((item, index) => {
                           return (
                             <label key={index} className="d-flex mb-5 flex-stack cursor-pointer">
@@ -523,27 +451,28 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                 </span>
                               </span>
                               <span className="form-check form-check-custom form-check-solid">
-                              <div className={styles.outline}>
-                                <input
-                                  id="input-validation-building"
-                                  onChange={(event) => {
-                                    setSendData((prevSendData) => ({
-                                      ...prevSendData,
-                                      condition: {
-                                        connect: [{ id: event.target.value }],
-                                      },
-                                    }));
-                                  }}
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  name="category"
-                                  value={item.id}
+                                <div className={styles.outline}>
+                                  <input
+                                    id={`radio-${index}`}
+                                    onChange={() => {
+                                      setSendData((prevSendData) => ({
+                                        ...prevSendData,
+                                        condition: {
+                                          connect: [{ id: item.id }],
+                                        },
+                                      }));
+                                    }}
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="category"
+                                    value={item.id}
                                   />
-                                  </div>
+                                </div>
                               </span>
                             </label>
                           )
                         })}
+
                       </div>
                     </div>
                     <div className="fv-row">
@@ -567,22 +496,22 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             </span>
                             <span className="form-check form-check-custom form-check-solid">
                               <div className={styles.outline}>
-                              <input
-                                id="input-validation"
-                                onChange={(event) => {
-                                  setSendData((prevSendData) => ({
-                                    ...prevSendData,
-                                    current_condition: {
-                                      connect: [{ id: event.target.value }],
-                                    },
-                                  }));
-                                }}
-                                className="form-check-input"
-                                type="checkbox"
-                                name="framework"
-                                value={item.id}
+                                <input
+                                  id="input-validation"
+                                  onChange={(event) => {
+                                    setSendData((prevSendData) => ({
+                                      ...prevSendData,
+                                      current_condition: {
+                                        connect: [{ id: event.target.value }],
+                                      },
+                                    }));
+                                  }}
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="framework"
+                                  value={item.id}
                                 />
-                                </div>
+                              </div>
                             </span>
                           </label>
                         )
@@ -630,20 +559,20 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                       className="form-check form-check-custom form-check-solid mb-2"
                                     >
                                       <div className={styles.outline}>
-                                      <input
-                                        onChange={handleCategoryChange}
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        value={item.id}
+                                        <input
+                                          onChange={handleCategoryChange}
+                                          className="form-check-input"
+                                          type="checkbox"
+                                          value={item.id}
                                         />
-                                        </div>
+                                      </div>
                                       <label
                                         onClick={(e) => e.preventDefault()}
                                         className="form-check-label georgian"
                                       >
                                         {item.attributes.title}
-                                        </label>
-                                      </div>
+                                      </label>
+                                    </div>
                                   );
                                 })}
                             </div>
@@ -680,9 +609,9 @@ const AddProject = ({ dismiss, setShowProject }) => {
                       className="btn red-ghost-btn georgian"
                     >
                       <span className="svg-icon-3 me-1">
-                      <svg className="me-2" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 12.2885L9.68848 11.6L7.58848 9.5H12.5V8.5H7.58848L9.68848 6.4L9 5.71152L5.71152 9L9 12.2885ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#EB455F"/>
-                      </svg>
+                        <svg className="me-2" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9 12.2885L9.68848 11.6L7.58848 9.5H12.5V8.5H7.58848L9.68848 6.4L9 5.71152L5.71152 9L9 12.2885ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#EB455F" />
+                        </svg>
                       </span>
                       უკან დაბრუნება
                     </button>
