@@ -269,7 +269,7 @@ const index = () => {
                 <Unauthorized />
             ) : (
                 <>
-                    <div className="container" style={{ position: 'relative'}}>
+                    <div className="container" style={{ position: 'relative', backgroundColor: 'none'}}>
                         <img className={styles.projectBg} src="/images/projectBg.png" alt="bg" />
                         {projectsToMap?.length > 0 ? buttonWrap : ""}
                         <div className={`${styles.flexWrap} d-flex justify-content-center `}>
