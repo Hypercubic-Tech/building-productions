@@ -176,6 +176,7 @@ const AddProduct = ({
                 .then((res) => {
                     const data = res.data;
                     setFilteredCrafts(data)
+                    console.log(data,'data')
                 })
         }
 
