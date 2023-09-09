@@ -6,18 +6,14 @@ import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 import Button from "../ui/Button";
 
-const AddProject = ({ dismiss, setShowProject }) => {
+const AddProject = ({cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject }) => {
   const userId = useSelector(state => state.auth.user_id)
 
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
-  const [cities, setCities] = useState(null);
-  const [propertyType, setPropertyType] = useState(null);
-  const [condition, setCondition] = useState(null);
-  const [currentCondition, setCurrentCondition] = useState(null);
-  const [categories, setCategories] = useState(null);
+  
   const [sendData, setSendData] = useState({
     title: "",
     address: "",
@@ -141,75 +137,6 @@ const AddProject = ({ dismiss, setShowProject }) => {
     setClose(true);
     createProjectHandler();
   };
-
-  useEffect(() => {
-    const getCategoriesHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
-          .then((res) => {
-            const data = res.data;
-            setCategories(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getCurrentConditionHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCurrentCondition(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getConditionHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
-          .then((res) => {
-            const data = res.data;
-            setCondition(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getCitiesHandler = async () => {
-      try {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
-          .then((res) => {
-            const data = res.data;
-            setCities(data.data)
-          })
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getPropertyTypesHandler = async () => {
-      try {
-        axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
-          .then((res) => {
-            const data = res.data;
-            setPropertyType(data.data)
-          })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCategoriesHandler();
-    getCurrentConditionHandler();
-    getConditionHandler();
-    getCitiesHandler();
-    getPropertyTypesHandler();
-  }, []);
 
   return (
     <div
@@ -502,7 +429,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div
                   className={getStatusClass(2)}
                   data-kt-stepper-element="content"
@@ -526,17 +453,17 @@ const AddProject = ({ dismiss, setShowProject }) => {
                               <span className="form-check form-check-custom form-check-solid">
                                 <div className={styles.outline}>
                                   <input
-                                    id="input-validation-building"
-                                    onChange={(event) => {
+                                    id={`radio-${index}`}
+                                    onChange={() => {
                                       setSendData((prevSendData) => ({
                                         ...prevSendData,
                                         condition: {
-                                          connect: [{ id: event.target.value }],
+                                          connect: [{ id: item.id }],
                                         },
                                       }));
                                     }}
                                     className="form-check-input"
-                                    type="checkbox"
+                                    type="radio"
                                     name="category"
                                     value={item.id}
                                   />
@@ -545,6 +472,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                             </label>
                           )
                         })}
+
                       </div>
                     </div>
                     <div className="fv-row">
@@ -579,7 +507,7 @@ const AddProject = ({ dismiss, setShowProject }) => {
                                     }));
                                   }}
                                   className="form-check-input"
-                                  type="checkbox"
+                                  type="radio"
                                   name="framework"
                                   value={item.id}
                                 />
