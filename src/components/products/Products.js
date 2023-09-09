@@ -31,8 +31,6 @@ const Products = ({
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [selectedValues, setSelectedValues] = useState([]);
 
   const [newStatusValue, setNewStatusValue] = useState(null);
   const [newCraftStatusValue, setNewCraftStatusValue] = useState(null);
@@ -141,6 +139,34 @@ const Products = ({
       }
     });
   };
+
+  const confirmHandler = (item) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
+        text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'წაშლა',
+        cancelButtonText: 'უარყოფა',
+        reverseButtons: true
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          deleteProductHandler(item);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('უარყოფილია', '');
+        }
+      });
+  }
 
   const confirmServiceEdit = async (selectedId, product) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -276,38 +302,6 @@ const Products = ({
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
 
-  const confirmHandler = (item) => {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-primary',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
-        text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'წაშლა',
-        cancelButtonText: 'უარყოფა',
-        reverseButtons: true
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          deleteProductHandler(item);
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('უარყოფილია', '');
-        }
-      });
-  };
-
-  const getActiveItem = (selectedId, product) => {
-    confirmEdit(+selectedId, product);
-  };
-
   const aggregatedProducts = {};
 
   totalSumProduct?.forEach((product) => {
@@ -331,20 +325,6 @@ const Products = ({
       };
     }
   });
-
-  const handleToggleDropdown = (productId) => {
-    setActiveDropdown(productId === activeDropdown ? null : productId);
-  };
-
-  const handleSelectOption = (value, product) => {
-    let productId = product.id
-    setSelectedValues((prevSelectedValues) => ({
-      ...prevSelectedValues,
-      [productId]: value,
-    }));
-    setActiveDropdown(null)
-    confirmServiceEdit(+value, product);
-  };
 
   useEffect(() => {
     if (projectId && productsToMap) {
