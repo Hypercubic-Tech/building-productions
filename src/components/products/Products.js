@@ -35,6 +35,7 @@ const Products = ({
   const [selectedValues, setSelectedValues] = useState([]);
 
   const [newStatusValue, setNewStatusValue] = useState(null);
+  const [newCraftStatusValue, setNewCraftStatusValue] = useState(null);
 
   let itemsPerPage = 5;
 
@@ -137,12 +138,6 @@ const Products = ({
         axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
-          .then(() => {
-            // window.location.reload();
-            // setNewStatusValue();
-            // setNewStatusValue(previousStatusValue);
-            console.log('i need some drill here')
-          });
       }
     });
   };
@@ -192,6 +187,7 @@ const Products = ({
           })
           .then(res => {
             dispatch(setProductState(res.data.data));
+            setNewCraftStatusValue(selectedId);
             notify(false, "პროდუქტი რედაქტირდა");
           })
           .catch(err => {
@@ -201,9 +197,6 @@ const Products = ({
         axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
-          .then(() => {
-            window.location.reload();
-          });
       }
     });
   };
@@ -459,8 +452,8 @@ const Products = ({
                 </tbody>
               )}
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
-                const initialSelectedValue = product?.attributes?.craft_status?.data?.id
-                const itemSelectedValues = selectedValues[product.id] || initialSelectedValue
+                const oldCraftStatusValue = product?.attributes?.craft_status?.data?.id
+                // const itemSelectedValues = selectedValues[product.id] || oldCraftStatusValue
                 const oldStatusValue = product?.attributes?.product_status?.data?.id;
 
 
@@ -516,28 +509,19 @@ const Products = ({
                               })}
                             </select>
                           ) : (
-                            <div className="dropdown">
-                              <div
-                                className="dropdown-toggle"
-                                onClick={() => handleToggleDropdown(product.id)}
-                              >
-                                {itemSelectedValues}
-                              </div>
-                              {activeDropdown === product.id && (
-                                <div style={{ display: "block" }} className="dropdown-menu">
-                                  {craftStatus &&
-                                    craftStatus.map((item) => (
-                                      <div
-                                        key={item.id}
-                                        className="dropdown-item"
-                                        onClick={() => handleSelectOption(item.id, product)}
-                                      >
-                                        {item.attributes.title}
-                                      </div>
-                                    ))}
-                                </div>
-                              )}
-                            </div>
+                            <select
+                              className="form-select"
+                              value={newCraftStatusValue || oldCraftStatusValue}
+                              onChange={(event) => {
+                                confirmServiceEdit(event.target.value, product)
+                              }}
+                            >
+                              {craftStatus && craftStatus.map((item) => {
+                                return (
+                                  <option key={item.id} value={item?.id}>{item?.attributes?.title}</option>
+                                );
+                              })}
+                            </select>
                           )}
                         </div>
                       </td>
