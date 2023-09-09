@@ -42,9 +42,9 @@ const ImageUpload = ({ onImageUpload, handleImageRemove }) => {
           <span>სურათის ატვირთვა</span>
         </div>
       </div>
-      <div className={styles.removeButton} onClick={handleImageRemove}>
+      {/* <div className={styles.removeButton} onClick={handleImageRemove}>
         წაშლა
-      </div>
+      </div> */}
     </div>
   );
 };
