@@ -34,6 +34,7 @@ const Products = ({
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [selectedValues, setSelectedValues] = useState([]);
 
+  const [newStatusValue, setNewStatusValue] = useState(null);
 
   let itemsPerPage = 5;
 
@@ -77,6 +78,7 @@ const Products = ({
   };
 
   const confirmEdit = async (selectedId, product) => {
+
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-primary',
@@ -125,6 +127,7 @@ const Products = ({
           })
           .then(res => {
             dispatch(setProductState(res.data.data));
+            setNewStatusValue(selectedId);
             notify(false, "პროდუქტი რედაქტირდა");
           })
           .catch(err => {
@@ -135,7 +138,10 @@ const Products = ({
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
           .then(() => {
-            window.location.reload();
+            // window.location.reload();
+            // setNewStatusValue();
+            // setNewStatusValue(previousStatusValue);
+            console.log('i need some drill here')
           });
       }
     });
@@ -455,6 +461,8 @@ const Products = ({
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
                 const initialSelectedValue = product?.attributes?.craft_status?.data?.id
                 const itemSelectedValues = selectedValues[product.id] || initialSelectedValue
+                const oldStatusValue = product?.attributes?.product_status?.data?.id;
+
 
                 return (
                   <tbody key={index}>
@@ -496,9 +504,9 @@ const Products = ({
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"
-                              defaultValue={product?.attributes?.product_status?.data?.id}
+                              value={newStatusValue || oldStatusValue}
                               onChange={(event) => {
-                                getActiveItem(event.target.value, product);
+                                confirmEdit(event.target.value, product)
                               }}
                             >
                               {productStatus && productStatus.map((item) => {
