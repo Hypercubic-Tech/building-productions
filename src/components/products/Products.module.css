@@ -11,12 +11,14 @@
     right: 5px;
     top: 20px;
     border-radius: 4px;
-    background-color: #BAD7E9;
+    /* background-color: #BAD7E9; */
     display: flex;
     /* flex-direction: column; */
     gap: 3px;
 }
-
+.m0 {
+    margin: 0px!important;
+}
 .modal .closeBtn {
     position: absolute;
     top: -5px;
