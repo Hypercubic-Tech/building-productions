@@ -15,6 +15,7 @@ import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
 import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
+
 import styles from "./Project.module.css";
 
 const Project = ({

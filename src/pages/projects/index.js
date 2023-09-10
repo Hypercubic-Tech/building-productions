@@ -11,8 +11,9 @@ import Swal from "sweetalert2";
 
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
-import styles from "../../components/popup/Modal.module.css";
 import Unauthorized from "../401";
+
+import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
     const userId = useSelector(state => state.auth.user_id)

@@ -48,7 +48,12 @@
 
 .wrapChild {
   width: calc(33.333% - 20px);
-  background: rgba(0,0,0,0.01);
+  background: #fff;
+  border: 1px solid #8D93B6;
+}
+
+.imgWrap {
+  border: 1px solid #8D93B6;
 }
 .cardLinkImg {
   position: relative;
