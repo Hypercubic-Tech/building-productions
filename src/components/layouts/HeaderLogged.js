@@ -111,45 +111,45 @@ function HeaderLogged() {
         </div>
         <div className="d-flex align-items-center">
           <div className="d-flex align-items-center flex-shrink-0">
-            <div
-              id="kt_header_search"
-              className="d-flex align-items-center w-lg-225px"
-              data-kt-search-keypress="true"
-              data-kt-search-min-length={2}
-              data-kt-search-enter="enter"
-              data-kt-search-layout="menu"
-              data-kt-search-responsive="lg"
-              data-kt-menu-trigger="auto"
-              data-kt-menu-permanent="true"
-              data-kt-menu-placement="bottom-end"
-            >
+            {isFilterOpen && (
               <div
-                data-kt-search-element="toggle"
-                className="d-flex d-lg-none align-items-center"
+                id="kt_header_search"
+                className="d-flex align-items-center w-lg-225px"
+                data-kt-search-keypress="true"
+                data-kt-search-min-length={2}
+                data-kt-search-enter="enter"
+                data-kt-search-layout="menu"
+                data-kt-search-responsive="lg"
+                data-kt-menu-trigger="auto"
+                data-kt-menu-permanent="true"
+                data-kt-menu-placement="bottom-end"
               >
-                <div className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px">
-                  <span className="svg-icon svg-icon-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M21.7 18.9L18.6 15.8C17.9 16.9 16.9 17.9 15.8 18.6L18.9 21.7C19.3 22.1 19.9 22.1 20.3 21.7L21.7 20.3C22.1 19.9 22.1 19.3 21.7 18.9Z"
-                        fill="black"
-                      />
-                      <path
-                        opacity="0.3"
-                        d="M11 20C6 20 2 16 2 11C2 6 6 2 11 2C16 2 20 6 20 11C20 16 16 20 11 20ZM11 4C7.1 4 4 7.1 4 11C4 14.9 7.1 18 11 18C14.9 18 18 14.9 18 11C18 7.1 14.9 4 11 4ZM8 11C8 9.3 9.3 8 11 8C11.6 8 12 7.6 12 7C12 6.4 11.6 6 11 6C8.2 6 6 8.2 6 11C6 11.6 6.4 12 7 12C7.6 12 8 11.6 8 11Z"
-                        fill="black"
-                      />
-                    </svg>
-                  </span>
+                <div
+                  data-kt-search-element="toggle"
+                  className="d-flex d-lg-none align-items-center"
+                >
+                  <div className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px">
+                    <span className="svg-icon svg-icon-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={24}
+                        height={24}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M21.7 18.9L18.6 15.8C17.9 16.9 16.9 17.9 15.8 18.6L18.9 21.7C19.3 22.1 19.9 22.1 20.3 21.7L21.7 20.3C22.1 19.9 22.1 19.3 21.7 18.9Z"
+                          fill="black"
+                        />
+                        <path
+                          opacity="0.3"
+                          d="M11 20C6 20 2 16 2 11C2 6 6 2 11 2C16 2 20 6 20 11C20 16 16 20 11 20ZM11 4C7.1 4 4 7.1 4 11C4 14.9 7.1 18 11 18C14.9 18 18 14.9 18 11C18 7.1 14.9 4 11 4ZM8 11C8 9.3 9.3 8 11 8C11.6 8 12 7.6 12 7C12 6.4 11.6 6 11 6C8.2 6 6 8.2 6 11C6 11.6 6.4 12 7 12C7.6 12 8 11.6 8 11Z"
+                          fill="black"
+                        />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
-              </div>
-              {isFilterOpen && (
                 <form
                   data-kt-search-element="form"
                   className="bg-white d-none d-lg-block w-100 mb-5 mb-lg-0 position-relative"
@@ -223,8 +223,8 @@ function HeaderLogged() {
                     </span>
                   </span>
                 </form>
-              )}
-            </div>
+              </div>
+            )}
             <div className="d-flex align-items-center ms-3 ms-lg-4">
               <Link
                 className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
