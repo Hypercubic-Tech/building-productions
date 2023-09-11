@@ -304,11 +304,9 @@ const Products = ({
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
 
   const aggregatedProducts = {};
-  console.log(aggregatedProducts, 'aggregaed')
 
   totalSumProduct?.forEach((product) => {
     const title = product?.attributes?.title;
-    console.log(totalSumProduct, 'sum')
     const unit = product?.attributes?.unit?.data?.attributes?.title; // i need to get all the units not only one value
     const categories = product?.attributes?.categories?.data[0]?.attributes?.title;
     const price = product?.attributes?.price;
@@ -366,11 +364,10 @@ const Products = ({
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
-                {console.log(product.unites, 'unites')}
                   <td>{product?.categories}</td>
                   <td className={styles.sumTableUnities}>{product?.unites.map((i, index) => {
                     return (
-                      <span>{i}</span>
+                      <span key={index}>{i}</span>
                     )
                   })}</td>
                   <td>{product?.quantity}</td>
@@ -576,27 +573,34 @@ const Products = ({
           )}
         </table>
         {!productsToMap?.length && activeCategoryId && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
-        {productsToMap.length > 5 && !activeCategoryId === null && <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
-              <a className="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <li className="page-item" onClick={handleChangePageIndex} key={index + 1}>
-                <a className="page-link" id={index + 1} href="#">
-                  {index + 1}
+        {productsToMap.length > 5 &&
+          <nav aria-label="Page navigation example">
+            {activeCategoryId === null ? (
+            ""
+            ) : (
+            <ul className="pagination">
+              <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
+                <a className="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-            ))}
-            <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
-              <a className="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>}
+              {Array.from({ length: totalPages }, (_, index) => (
+                <li className="page-item" onClick={handleChangePageIndex} key={index + 1}>
+                  <a className="page-link" id={index + 1} href="#">
+                    {index + 1}
+                  </a>
+                </li>
+              ))}
+              <li className="page-item" onClick={handleIncrementPageIndex} value={pageIndex}>
+                <a className="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          ) }
+          </nav>
+
+        }
       </div>
 
       {select === "exportPopUp" &&
