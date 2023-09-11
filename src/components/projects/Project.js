@@ -15,6 +15,7 @@ import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
 import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
+
 import styles from "./Project.module.css";
 
 const Project = ({
@@ -39,7 +40,7 @@ const Project = ({
 
   const products = useSelector(state => state.prod.products);
   const activeCategoryId = useSelector(state => state?.cats?.category);
-
+  console.log(activeCategoryId, 'active cat')
   const [select, setSelect] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
@@ -88,7 +89,8 @@ const Project = ({
       }
     }
     defaultProductCallBack()
-  }, [activeCategoryId, projectId])
+  }, [activeCategoryId, projectId]);
+
   return (
     <>
       {project && project.map((p, index) => {
@@ -171,7 +173,7 @@ const Project = ({
                   <div
                     className="d-flex align-items-center py-2 py-md-1"
                     onClick={() => {
-                      setSelect("dranings") 
+                      setSelect("dranings")
                     }}
                   >
                     <a
@@ -213,47 +215,49 @@ const Project = ({
                   <div className="card">
                     <div className="card-header border-0 pt-6">
                       <div className="card-title">
-                        <div className="d-flex align-items-center position-relative my-1">
-                          <span className="svg-icon svg-icon-1 position-absolute ms-6">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width={24}
-                              height={24}
-                              viewBox="0 0 24 24"
-                              fill="none"
-                            >
-                              <rect
-                                opacity="0.5"
-                                x="17.0365"
-                                y="15.1223"
-                                width="8.15546"
-                                height={2}
-                                rx={1}
-                                transform="rotate(45 17.0365 15.1223)"
-                                fill="black"
-                              />
-                              <path
-                                d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                fill="black"
-                              />
-                            </svg>
-                          </span>
-                          <input
-                            type="text"
-                            value={searchType}
-                            onChange={(e) => handleSearchChange(e)}
-                            data-kt-user-table-filter="search"
-                            className="form-control form-control-solid w-250px ps-14 georgian"
-                            placeholder="ძებნა"
-                          />
-                        </div>
+                        {activeCategoryId === null ? ("") : (
+                          <div className="d-flex align-items-center position-relative my-1">
+                            <span className="svg-icon svg-icon-1 position-absolute ms-6">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={24}
+                                height={24}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                              >
+                                <rect
+                                  opacity="0.5"
+                                  x="17.0365"
+                                  y="15.1223"
+                                  width="8.15546"
+                                  height={2}
+                                  rx={1}
+                                  transform="rotate(45 17.0365 15.1223)"
+                                  fill="black"
+                                />
+                                <path
+                                  d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                                  fill="black"
+                                />
+                              </svg>
+                            </span>
+                            <input
+                              type="text"
+                              value={searchType}
+                              onChange={(e) => handleSearchChange(e)}
+                              data-kt-user-table-filter="search"
+                              className="form-control form-control-solid w-250px ps-14 georgian"
+                              placeholder="ძებნა"
+                            />
+                          </div>
+                        )}
                       </div>
                       <div className="card-toolbar">
                         <div
                           className="d-flex justify-content-end"
                           data-kt-user-table-toolbar="base"
                         >
-                          <button
+                          < button
                             type="button"
                             onClick={() => {
                               setSelect("exportPopUp");
@@ -292,28 +296,30 @@ const Project = ({
                             </span>
                             <b>ეხპორტი</b>
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setSelect("add");
-                            }}
-                            className="btn btn-primary georgian"
-                            data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_add_user"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width={16}
-                              height={16}
-                              fill="currentColor"
-                              className="bi bi-send-plus-fill"
-                              viewBox="0 0 16 16"
+                          {activeCategoryId === null ? ("") : (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelect("add");
+                              }}
+                              className="btn btn-primary georgian"
+                              data-bs-toggle="modal"
+                              data-bs-target="#kt_modal_add_user"
                             >
-                              <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
-                              <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z" />
-                            </svg>
-                            <b>დამატება</b>
-                          </button>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={16}
+                                height={16}
+                                fill="currentColor"
+                                className="bi bi-send-plus-fill"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
+                                <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z" />
+                              </svg>
+                              <b>დამატება</b>
+                            </button>
+                          )}
                         </div>
                         <div
                           className="d-flex justify-content-end align-items-center d-none"

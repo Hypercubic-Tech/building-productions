@@ -9,6 +9,7 @@ import { deleteProductState, setProductState } from "../../store/slices/productS
 
 import ExportPopup from "../popup/ExportPopup"
 import notify from "../../utils/notify";
+
 import styles from "./Products.module.css";
 
 const Products = ({
@@ -31,9 +32,9 @@ const Products = ({
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [selectedValues, setSelectedValues] = useState([]);
 
+  const [newStatusValue, setNewStatusValue] = useState(null);
+  const [newCraftStatusValue, setNewCraftStatusValue] = useState(null);
 
   let itemsPerPage = 5;
 
@@ -77,6 +78,7 @@ const Products = ({
   };
 
   const confirmEdit = async (selectedId, product) => {
+
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-primary',
@@ -125,6 +127,7 @@ const Products = ({
           })
           .then(res => {
             dispatch(setProductState(res.data.data));
+            setNewStatusValue(selectedId);
             notify(false, "პროდუქტი რედაქტირდა");
           })
           .catch(err => {
@@ -134,12 +137,37 @@ const Products = ({
         axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
-          .then(() => {
-            window.location.reload();
-          });
       }
     });
   };
+
+  const confirmHandler = (item) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
+        text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'წაშლა',
+        cancelButtonText: 'უარყოფა',
+        reverseButtons: true
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          deleteProductHandler(item);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('უარყოფილია', '');
+        }
+      });
+  }
 
   const confirmServiceEdit = async (selectedId, product) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -186,6 +214,7 @@ const Products = ({
           })
           .then(res => {
             dispatch(setProductState(res.data.data));
+            setNewCraftStatusValue(selectedId);
             notify(false, "პროდუქტი რედაქტირდა");
           })
           .catch(err => {
@@ -195,9 +224,6 @@ const Products = ({
         axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`)
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია')
-          .then(() => {
-            window.location.reload();
-          });
       }
     });
   };
@@ -277,38 +303,6 @@ const Products = ({
   const servicePercentagePrice = parseFloat(productsTotal) * parseFloat(service_percentage) / 100;
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
 
-  const confirmHandler = (item) => {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-primary',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: 'დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა',
-        text: 'თანხმობის შემთხვევაში, პროექტი წაიშლება',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'წაშლა',
-        cancelButtonText: 'უარყოფა',
-        reverseButtons: true
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          deleteProductHandler(item);
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('უარყოფილია', '');
-        }
-      });
-  };
-
-  const getActiveItem = (selectedId, product) => {
-    confirmEdit(+selectedId, product);
-  };
-
   const aggregatedProducts = {};
 
   totalSumProduct?.forEach((product) => {
@@ -332,20 +326,6 @@ const Products = ({
       };
     }
   });
-
-  const handleToggleDropdown = (productId) => {
-    setActiveDropdown(productId === activeDropdown ? null : productId);
-  };
-
-  const handleSelectOption = (value, product) => {
-    let productId = product.id
-    setSelectedValues((prevSelectedValues) => ({
-      ...prevSelectedValues,
-      [productId]: value,
-    }));
-    setActiveDropdown(null)
-    confirmServiceEdit(+value, product);
-  };
 
   useEffect(() => {
     if (projectId && productsToMap) {
@@ -453,9 +433,11 @@ const Products = ({
                 </tbody>
               )}
               {productsToMap && productsToMap.slice(startIndex, endIndex).map((product, index) => {
-                const initialSelectedValue = product?.attributes?.craft_status?.data?.id
-                const itemSelectedValues = selectedValues[product.id] || initialSelectedValue
+                const oldCraftStatusValue = product?.attributes?.craft_status?.data?.id
+                // const itemSelectedValues = selectedValues[product.id] || oldCraftStatusValue
+                const oldStatusValue = product?.attributes?.product_status?.data?.id;
 
+                console.log(product?.attributes?.productLink)
                 return (
                   <tbody key={index}>
                     <tr>
@@ -478,11 +460,12 @@ const Products = ({
                       </td>
                       <td className="georgian">
                         {product.attributes.type === 'product' ? (
-                          <a href={`${product?.attributes?.productLink}`} target="_blank">
+                          <a href={product?.attributes?.productLink.startsWith('http') ? product?.attributes?.productLink : `http://${product?.attributes?.productLink}`} target="_blank">
                             {product?.attributes?.supplier?.data?.attributes?.title}
                           </a>
                         ) : " - "}
                       </td>
+
                       <td className="georgian">
                         {product?.attributes?.quantity}
                       </td>
@@ -496,9 +479,9 @@ const Products = ({
                           {product?.attributes?.type === "product" ? (
                             <select
                               className="form-select"
-                              defaultValue={product?.attributes?.product_status?.data?.id}
+                              value={newStatusValue || oldStatusValue}
                               onChange={(event) => {
-                                getActiveItem(event.target.value, product);
+                                confirmEdit(event.target.value, product)
                               }}
                             >
                               {productStatus && productStatus.map((item) => {
@@ -508,28 +491,19 @@ const Products = ({
                               })}
                             </select>
                           ) : (
-                            <div className="dropdown">
-                              <div
-                                className="dropdown-toggle"
-                                onClick={() => handleToggleDropdown(product.id)}
-                              >
-                                {itemSelectedValues}
-                              </div>
-                              {activeDropdown === product.id && (
-                                <div style={{ display: "block" }} className="dropdown-menu">
-                                  {craftStatus &&
-                                    craftStatus.map((item) => (
-                                      <div
-                                        key={item.id}
-                                        className="dropdown-item"
-                                        onClick={() => handleSelectOption(item.id, product)}
-                                      >
-                                        {item.attributes.title}
-                                      </div>
-                                    ))}
-                                </div>
-                              )}
-                            </div>
+                            <select
+                              className="form-select"
+                              value={newCraftStatusValue || oldCraftStatusValue}
+                              onChange={(event) => {
+                                confirmServiceEdit(event.target.value, product)
+                              }}
+                            >
+                              {craftStatus && craftStatus.map((item) => {
+                                return (
+                                  <option key={item.id} value={item?.id}>{item?.attributes?.title}</option>
+                                );
+                              })}
+                            </select>
                           )}
                         </div>
                       </td>
@@ -545,17 +519,15 @@ const Products = ({
                           <div className={styles.modal}>
 
                             <div onClick={() => { editHandler(product); setSelect(product?.attributes?.type === 'product' ? 'edit-product' : 'edit-service') }} className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}>
-                              <svg className="card-svg rotate-svg" width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <svg className={`${"card-svg rotate-svg"} ${styles.m0}`} width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M7.63449 18L7.27297 15.1077C6.95373 15.0115 6.60854 14.8603 6.23739 14.6538C5.86624 14.4474 5.55053 14.2263 5.29027 13.9904L2.62297 15.125L0.757568 11.875L3.06334 10.1365C3.03386 9.95576 3.0095 9.76954 2.99027 9.57788C2.97104 9.38621 2.96142 9.19999 2.96142 9.01923C2.96142 8.85128 2.97104 8.67467 2.99027 8.48942C3.0095 8.30417 3.03386 8.09553 3.06334 7.86348L0.757568 6.125L2.62297 2.91345L5.27104 4.02885C5.56976 3.78013 5.89283 3.55578 6.24027 3.35578C6.5877 3.15578 6.92553 3.00128 7.25374 2.8923L7.63449 0H11.3653L11.7268 2.91153C12.1102 3.04614 12.4489 3.20063 12.7432 3.375C13.0374 3.54935 13.3403 3.7673 13.6518 4.02885L16.3768 2.91345L18.2422 6.125L15.8595 7.92115C15.9147 8.12757 15.9454 8.31699 15.9518 8.48942C15.9582 8.66186 15.9614 8.83205 15.9614 9C15.9614 9.15513 15.955 9.31892 15.9422 9.49135C15.9294 9.66378 15.8999 9.87243 15.8537 10.1173L18.198 11.875L16.3326 15.125L13.6518 13.9712C13.3403 14.2327 13.0268 14.4571 12.7114 14.6442C12.3961 14.8314 12.0679 14.9795 11.7268 15.0885L11.3653 18H7.63449ZM9.47297 11.5C10.1704 11.5 10.7614 11.2577 11.246 10.7731C11.7307 10.2885 11.973 9.69743 11.973 9C11.973 8.30257 11.7307 7.71154 11.246 7.22693C10.7614 6.74231 10.1704 6.5 9.47297 6.5C8.77168 6.5 8.17969 6.74231 7.69699 7.22693C7.21431 7.71154 6.97297 8.30257 6.97297 9C6.97297 9.69743 7.21431 10.2885 7.69699 10.7731C8.17969 11.2577 8.77168 11.5 9.47297 11.5Z" fill="#FCFFE7" />
                               </svg>
-                              რედაქტირება
                             </div>
                             <div onClick={() => { confirmHandler(product?.id) }}
                               className="btn red-ghost-btn fw-boldest">
-                              <svg className="card-svg" width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <svg className={`${"card-svg"} ${styles.m0}`} width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3.11537 16C2.65512 16 2.27083 15.8458 1.9625 15.5375C1.65417 15.2291 1.5 14.8448 1.5 14.3846V1.99996H0.5V0.999963H4.5V0.230713H10.5V0.999963H14.5V1.99996H13.5V14.3846C13.5 14.8448 13.3458 15.2291 13.0375 15.5375C12.7292 15.8458 12.3449 16 11.8846 16H3.11537ZM5.30768 13H6.3077V3.99996H5.30768V13ZM8.6923 13H9.69232V3.99996H8.6923V13Z" fill="#EB455F" />
                               </svg>
-                              წაშლა
                             </div>
                             <svg className={styles.closeBtn} width="12" height="12" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M5.4 13.3077L9 9.7077L12.6 13.3077L13.3077 12.6L9.7077 9L13.3077 5.4L12.6 4.6923L9 8.2923L5.4 4.6923L4.6923 5.4L8.2923 9L4.6923 12.6L5.4 13.3077ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#EB455F" />
