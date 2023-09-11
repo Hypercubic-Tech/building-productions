@@ -34,3 +34,9 @@
 .closeBtn:hover path {
     fill: #2B3467;
 }
+
+.sumTableUnities {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}

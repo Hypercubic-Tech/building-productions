@@ -304,28 +304,35 @@ const Products = ({
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
 
   const aggregatedProducts = {};
+  console.log(aggregatedProducts, 'aggregaed')
 
   totalSumProduct?.forEach((product) => {
     const title = product?.attributes?.title;
-    const unit = product?.attributes?.unit?.data?.attributes?.title;
+    console.log(totalSumProduct, 'sum')
+    const unit = product?.attributes?.unit?.data?.attributes?.title; // i need to get all the units not only one value
     const categories = product?.attributes?.categories?.data[0]?.attributes?.title;
-    const quantity = product?.attributes?.quantity;
     const price = product?.attributes?.price;
     const key = `${categories}`;
 
-    if (aggregatedProducts[key]) {
-      aggregatedProducts[key].titles.push(title);
-      aggregatedProducts[key].quantity += quantity;
-    } else {
-      aggregatedProducts[key] = {
-        titles: [title],
-        unit,
-        quantity,
-        price,
-        categories
-      };
+    if (product.attributes.type === 'service') {
+      const quantity = product?.attributes?.quantity;
+
+      if (aggregatedProducts[key]) {
+        aggregatedProducts[key].titles.push(title);
+        aggregatedProducts[key].quantity += quantity;
+        aggregatedProducts[key].unites.push(unit);
+      } else {
+        aggregatedProducts[key] = {
+          titles: [title],
+          unites: [unit],
+          quantity,
+          price,
+          categories
+        };
+      }
     }
   });
+
 
   useEffect(() => {
     if (projectId && productsToMap) {
@@ -340,6 +347,7 @@ const Products = ({
       totalSumHandler();
     };
   }, [projectId, productsToMap]);
+
 
   return (
     <>
@@ -358,8 +366,13 @@ const Products = ({
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
+                {console.log(product.unites, 'unites')}
                   <td>{product?.categories}</td>
-                  <td>{product?.unit}</td>
+                  <td className={styles.sumTableUnities}>{product?.unites.map((i, index) => {
+                    return (
+                      <span>{i}</span>
+                    )
+                  })}</td>
                   <td>{product?.quantity}</td>
                   <td>{categorySums.find((item) => item.title === product?.categories)?.sum || 0} ლარი</td>
                 </tr>
@@ -437,7 +450,6 @@ const Products = ({
                 // const itemSelectedValues = selectedValues[product.id] || oldCraftStatusValue
                 const oldStatusValue = product?.attributes?.product_status?.data?.id;
 
-                console.log(product?.attributes?.productLink)
                 return (
                   <tbody key={index}>
                     <tr>
@@ -564,7 +576,7 @@ const Products = ({
           )}
         </table>
         {!productsToMap?.length && activeCategoryId && <div style={{ margin: '100px', textAlign: 'center' }}>პროდუქტი ვერ მოიძებნა!</div>}
-        {productsToMap.length > 5 && <nav aria-label="Page navigation example">
+        {productsToMap.length > 5 && !activeCategoryId === null && <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item" onClick={handleDecrementPageIndex} value={pageIndex}>
               <a className="page-link" href="#" aria-label="Previous">
