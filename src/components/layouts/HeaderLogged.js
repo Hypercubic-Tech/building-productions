@@ -227,7 +227,7 @@ function HeaderLogged() {
             )}
             <div className="d-flex align-items-center ms-3 ms-lg-4">
               <Link
-                className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
+                className="btn btn-texted btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light"
                 href="/projects"
               >
                 <span className="svg-icon-1">
@@ -244,6 +244,7 @@ function HeaderLogged() {
                     />
                   </svg>
                 </span>
+                <div className="btn-text">პროექტები</div>
               </Link>
             </div>
             {popup && (
@@ -255,7 +256,7 @@ function HeaderLogged() {
               <div
                 onClick={openModal}
                 className={` ${isModalOpen ? styles.activeBg : ""
-                  } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
+                  } btn btn-texted btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary`}
                 data-kt-menu-trigger="click"
                 data-kt-menu-attach="parent"
                 data-kt-menu-placement="bottom-end"
@@ -274,6 +275,7 @@ function HeaderLogged() {
                     />
                   </svg>
                 </span>
+                <div className="btn-text">მომხმარებელი</div>
                 {isModalOpen && (
                   <div className={styles.backdrop} onClick={closeModal}></div>
                 )}
