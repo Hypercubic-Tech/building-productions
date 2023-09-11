@@ -304,11 +304,9 @@ const Products = ({
   const totalSumPrice = parseFloat(totalProductPrice) + parseFloat(vatTotalPrice) + parseFloat(unforeseenExpensesPrice) + parseFloat(servicePercentagePrice);
 
   const aggregatedProducts = {};
-  console.log(aggregatedProducts, 'aggregaed')
 
   totalSumProduct?.forEach((product) => {
     const title = product?.attributes?.title;
-    console.log(totalSumProduct, 'sum')
     const unit = product?.attributes?.unit?.data?.attributes?.title; // i need to get all the units not only one value
     const categories = product?.attributes?.categories?.data[0]?.attributes?.title;
     const price = product?.attributes?.price;
@@ -332,7 +330,6 @@ const Products = ({
       }
     }
   });
-
 
   useEffect(() => {
     if (projectId && productsToMap) {
@@ -366,7 +363,6 @@ const Products = ({
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
-                {console.log(product.unites, 'unites')}
                   <td>{product?.categories}</td>
                   <td className={styles.sumTableUnities}>{product?.unites.map((i, index) => {
                     return (

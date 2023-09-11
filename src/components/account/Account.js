@@ -58,7 +58,6 @@ const index = () => {
           setImgSrc(data[0].url);
           setIsImageUpload(true);
           notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
-          console.log(data, "one");
         });
     } catch (err) {
       console.error(err);
@@ -69,7 +68,6 @@ const index = () => {
   const handleImageRemove = async () => {
     if (authUser[0]?.avatar) {
       const avatarId = authUser[0].avatar[0]?.id;
-      console.log("avatarId:", avatarId);
       if (avatarId) {
         await axios.delete(
           `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${avatarId}`
@@ -115,9 +113,7 @@ const index = () => {
       setImage(data[0]);
       setImgSrc(data[0].url);
       setIsImageUpload(true);
-      console.log(data, "gg");
       notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
-      console.log(data, "one");
     } catch (err) {
       console.error(err);
       notify(true, "სურათის ატვირთვა უარყოფილია");
