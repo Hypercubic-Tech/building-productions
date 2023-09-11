@@ -40,7 +40,7 @@ const Project = ({
 
   const products = useSelector(state => state.prod.products);
   const activeCategoryId = useSelector(state => state?.cats?.category);
-  console.log(activeCategoryId, 'active cat')
+  
   const [select, setSelect] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
