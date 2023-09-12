@@ -4105,6 +4105,10 @@ fieldset:disabled .btn {
     transform: scaleX(1);
     transition-delay: .1s;
 }
+.header {
+    position: relative;
+    z-index: 4;
+}
 .btn-texted:hover > .btn-text {
     max-width: 200px;
     transition-delay: 0s;

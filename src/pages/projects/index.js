@@ -275,7 +275,7 @@ const index = () => {
                     <div className="container" style={{ position: 'relative', backgroundColor: 'none'}}>
                         <img className={styles.projectBg} src="/images/projectBg.png" alt="bg" />
                         {projectsToMap?.length > 0 ? buttonWrap : ""}
-                        <div className={`${styles.flexWrap} d-flex justify-content-center `}>
+                        <div className={`${styles.flexWrap} d-flex justify-content-center `} style={{zIndex:1}}>
                             {/* <BuildingBg /> */}
                             {projectsToMap?.length > 0 ? (
                                 projectsToMap.slice(startIndex, endIndex).map((item, index) => {
