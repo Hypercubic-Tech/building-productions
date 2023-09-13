@@ -37,6 +37,7 @@ const Home = () => {
   const [isClosed, setIsClosed] = useState(true);
 
   const [faqData, setFaqData] = useState(null);
+  const [pricesData, setPricesData] = useState(null);
 
   const toggleModal = () => {
     setIsClosed(false);
@@ -51,6 +52,19 @@ const Home = () => {
       console.error(error);
     }
   };
+
+  const getPricesData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`);
+      const data = response.data;
+      setPricesData(data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+  // /api/payment-plans
+
 
   useEffect(() => {
     if (id_token) {
@@ -93,6 +107,7 @@ const Home = () => {
 
   useEffect(() => {
     getFaqData();
+    getPricesData();
   }, []);
 
   return (
@@ -107,7 +122,7 @@ const Home = () => {
         <Heading />
         <HowItWorks />
         <OurTeam />
-        <Price price={priceData} />
+        <Price pricesData={pricesData} price={priceData} />
         {/* <ContactUs /> */}
         <Faq faqData={faqData} />
         {id_token && isClosed && isAuthWithGoogle?.length === 0 && <SignedWithGoogleModal onClose={toggleModal} userEmail={userObject?.email} userToken={id_token} />}
