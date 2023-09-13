@@ -17,8 +17,13 @@ import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
   const userId = useSelector((state) => state.auth.user_id);
+
   const searchValue = useSelector((state) => state.proj.searchType);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const provider = useSelector((state) => state.auth.provider);
+
+  const [paymentPlan, setPaymentPlan] = useState(null);
+
   const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
@@ -286,12 +291,31 @@ const index = () => {
       }
     };
 
+    const loggedUserInfo = async () => {
+      let url;
+
+      if (provider === "google") {
+        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+      } else {
+        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
+      }
+      if (url) {
+        await axios.get(url).then((res) => {
+          const data = res.data;
+          setPaymentPlan(data);
+        });
+      }
+    };
+
+    loggedUserInfo();
     getCategoriesHandler();
     getCurrentConditionHandler();
     getConditionHandler();
     getCitiesHandler();
     getPropertyTypesHandler();
   }, []);
+
+  console.log(paymentPlan, 'user');
 
   return (
     <>
@@ -344,12 +368,12 @@ const index = () => {
                               src={
                                 (imageWithMainId &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                    imageWithMainId?.attributes?.url) ||
+                                  imageWithMainId?.attributes?.url) ||
                                 (item?.attributes?.image?.data?.[0]?.attributes
                                   ?.url &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                    item?.attributes?.image?.data?.[0]
-                                      ?.attributes?.url) ||
+                                  item?.attributes?.image?.data?.[0]
+                                    ?.attributes?.url) ||
                                 "/images/test-img.png"
                               }
                               className="card-img-top"

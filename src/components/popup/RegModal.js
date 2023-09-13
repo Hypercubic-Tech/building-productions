@@ -20,10 +20,10 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     password: "",
     phoneNumber: "",
     userType: "",
-    payment_plan: "1",
+    payment_plan: +pricesData[0].id,
+    payment_duration: "month",
     paymentMethod: "",
   });
-
   let errors = {
     stepOne: [],
     stepTwo: [],
@@ -68,11 +68,11 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { username, email, password, phoneNumber, userType, payment_plan, paymentMethod } = regData;
+    const { username, email, password, phoneNumber, userType, payment_plan, paymentMethod, payment_duration } = regData;
 
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
-        username, email, password, phoneNumber, userType, payment_plan, paymentMethod
+        username, email, password, phoneNumber, userType, payment_plan, paymentMethod, payment_duration
       })
         .then(() => {
           notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
@@ -276,6 +276,10 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                       onClick={() => {
                         setMonthly(true);
                         setAnnual(false);
+                        setRegData((prevSendData) => ({
+                          ...prevSendData,
+                          payment_duration: "month",
+                        }));
                       }}
                       className={`buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
                         monthly ? "active" : "",
@@ -288,6 +292,10 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                       onClick={() => {
                         setMonthly(false);
                         setAnnual(true);
+                        setRegData((prevSendData) => ({
+                          ...prevSendData,
+                          payment_duration: "year",
+                        }));
                       }}
                       className={`buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
                         annual ? "active" : "",
@@ -306,7 +314,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                   onChange={(e) => {
                     setRegData((prevSendData) => ({
                       ...prevSendData,
-                      payment_plan: e.target.value
+                      payment_plan: +e.target.value
                     }));
                     setPaymentPlanState(e.target.value)
                   }}
@@ -322,13 +330,13 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
 
               </div>
               {lossData && regData?.payment_plan?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>}
-              {regData.payment_plan === '1' && (
+              {regData.payment_plan === 1 && (
                 <PriceCard monthly={monthly} priceData={pricesData[0]} />
               )}
-              {regData.payment_plan === '2' && (
+              {regData.payment_plan === 2 && (
                 <PriceCard monthly={monthly} priceData={pricesData[1]} />
               )}
-              {regData.payment_plan === '3' && (
+              {regData.payment_plan === 3 && (
                 <PriceCard monthly={monthly} priceData={pricesData[2]} />
               )}
               <div className="d-flex justify-content-evenly">
@@ -346,17 +354,17 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                 <button
                   style={{ width: "43%" }}
                   className={` btn btn-success georgian ${styles.btn}`}
-                  type={regData?.payment_plan === "1" ? 'submit' : 'button'}
+                  type={regData?.payment_plan === 1 ? 'submit' : 'button'}
                   onClick={() => {
-                    if (regData?.payment_plan === "2" || regData?.payment_plan === "3") {
+                    if (regData?.payment_plan === 3 || regData?.payment_plan === 3) {
                       stepChangeHandler();
                     } 
                   }}
                 >
-                  {regData?.payment_plan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
+                  {regData?.payment_plan === 1 ? 'რეგისტრაცია' : 'შემდეგ'}
                 </button>
               </div>
-            </div>
+            </div>  
           </div>
         </div>
 

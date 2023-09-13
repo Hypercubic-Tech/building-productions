@@ -23,8 +23,9 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
     username: authUser[0]?.username,
     email: authUser[0]?.email,
     phoneNumber: authUser[0]?.phoneNumber,
-    paymentPlan: authUser[0]?.paymentPlan,
+    payment_plan: authUser[0]?.payment_plan,
     paymentMethod: authUser[0]?.paymentMethod,
+    payment_duration: authUser[0]?.payment_duration
   });
 
   console.log(authUser,'user')
@@ -60,7 +61,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
     if (
       step === 2 &&
       errors?.stepTwo?.length === 0 &&
-      editUserData?.paymentPlan
+      editUserData?.payment_plan
     ) {
       setStep(step + 1);
       setLossData(false);
@@ -113,7 +114,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
         username: editUserData?.username,
         email: editUserData?.email,
         phoneNumber: editUserData?.phoneNumber,
-        paymentPlan: editUserData?.paymentPlan,
+        paymentPlan: editUserData?.payment_plan,
         paymentMethod: {
           bank: "TBC",
           cardNumber: editUserData?.cardNumber,
@@ -123,6 +124,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
             year: editUserData?.year,
           },
         },
+        payment_duration: editUserData?.payment_duration,
       })
       .then((res) => {
         const data = res.data;
@@ -390,6 +392,10 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                       onClick={() => {
                         setMonthly(true);
                         setAnnual(false);
+                        setEditUserData((prevSendData) => ({
+                          ...prevSendData,
+                          payment_duration: "month",
+                        }));
                       }}
                       className={`buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
                         monthly ? "active" : "",
@@ -402,6 +408,10 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                       onClick={() => {
                         setMonthly(false);
                         setAnnual(true);
+                        setEditUserData((prevSendData) => ({
+                          ...prevSendData,
+                          payment_duration: "year",
+                        }));
                       }}
                       className={`buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
                         annual ? "active" : "",
@@ -416,16 +426,16 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                   required
                   style={{
                     borderColor:
-                      lossData && editUserData?.paymentPlan?.length === 0
+                      lossData && editUserData?.payment_plan?.length === 0
                         ? "red"
                         : "",
                   }}
                   className="form-select form-select-solid georgian"
-                  value={editUserData?.paymentPlan}
+                  value={editUserData?.payment_plan}
                   onChange={(e) => {
                     setEditUserData((prevSendData) => ({
                       ...prevSendData,
-                      paymentPlan: e.target.value,
+                      payment_plan: e.target.value,
                     }));
                   }}
                 >
@@ -443,17 +453,17 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
 
                 </select>
               </div>
-              {lossData && editUserData?.paymentPlan?.length === 0 && (
+              {lossData && editUserData?.payment_plan?.length === 0 && (
                 <p style={{ color: "red" }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>
               )}
               {/* here goes templates */}
-              {editUserData.paymentPlan === '1' && (
+              {editUserData.payment_plan === '1' && (
                 <PriceCard monthly={monthly} priceData={pricesData[0]} />
               )}
-              {editUserData.paymentPlan === '2' && (
+              {editUserData.payment_plan === '2' && (
                 <PriceCard monthly={monthly} priceData={pricesData[1]} />
               )}
-              {editUserData.paymentPlan === '3' && (
+              {editUserData.payment_plan === '3' && (
                 <PriceCard monthly={monthly} priceData={pricesData[2]} />
               )}
               <div className="d-flex justify-content-evenly">
@@ -472,17 +482,17 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                   style={{ width: "43%" }}
                   className={` btn btn-success georgian ${styles.btn}`}
                   type={
-                    editUserData?.paymentPlan === "free" ? "button" : "button"
+                    editUserData?.payment_plan === "free" ? "button" : "button"
                   }
                   onClick={() => {
-                    if (editUserData?.paymentPlan === "paid") {
+                    if (editUserData?.payment_plan === "paid") {
                       stepChangeHandler();
                     } else {
                       sendUserUpdatedInfo();
                     }
                   }}
                 >
-                  {editUserData?.paymentPlan === "free"
+                  {editUserData?.payment_plan === "free"
                     ? "რედაქტირება"
                     : "შემდეგ"}
                 </button>
