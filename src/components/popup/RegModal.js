@@ -1,10 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 
+import PriceCard from "../ui/PriceCard";
+
 import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
 
-const RegModal = ({ handleRegistration, onClose }) => {
+const RegModal = ({ handleRegistration, onClose, pricesData }) => {
+  const [annual, setAnnual] = useState(false);
+  const [monthly, setMonthly] = useState(true);
+
   const [step, setStep] = useState(1);
   const [lossData, setLossData] = useState(false);
   const [paymentPlanState, setPaymentPlanState] = useState(null);
@@ -15,7 +20,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
     password: "",
     phoneNumber: "",
     userType: "",
-    paymentPlan: "",
+    payment_plan: "1",
     paymentMethod: "",
   });
 
@@ -32,7 +37,7 @@ const RegModal = ({ handleRegistration, onClose }) => {
     } else {
       setLossData(true);
     }
-    if (step === 2 && errors?.stepTwo?.length === 0 && regData?.paymentPlan) {
+    if (step === 2 && errors?.stepTwo?.length === 0 && regData?.payment_plan) {
       setStep(step + 1);
       setLossData(false);
     }
@@ -63,11 +68,11 @@ const RegModal = ({ handleRegistration, onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { username, email, password, phoneNumber, userType, paymentPlan, paymentMethod } = regData;
+    const { username, email, password, phoneNumber, userType, payment_plan, paymentMethod } = regData;
 
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`, {
-        username, email, password, phoneNumber, userType, paymentPlan, paymentMethod
+        username, email, password, phoneNumber, userType, payment_plan, paymentMethod
       })
         .then(() => {
           notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
@@ -89,11 +94,11 @@ const RegModal = ({ handleRegistration, onClose }) => {
               onClick={onClose}
               className={`${styles.closeBtn}`}
               width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5.4 13.3077L9 9.7077L12.6 13.3077L13.3077 12.6L9.7077 9L13.3077 5.4L12.6 4.6923L9 8.2923L5.4 4.6923L4.6923 5.4L8.2923 9L4.6923 12.6L5.4 13.3077ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#1C1B1F"/>
+              <path d="M5.4 13.3077L9 9.7077L12.6 13.3077L13.3077 12.6L9.7077 9L13.3077 5.4L12.6 4.6923L9 8.2923L5.4 4.6923L4.6923 5.4L8.2923 9L4.6923 12.6L5.4 13.3077ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#1C1B1F" />
             </svg>
           </div>
           <div className={`${styles.registrationBtn} ${styles.cursorNone} text-muted `}>
-          უკვე დარეგისტრირებული ხარ?
+            უკვე დარეგისტრირებული ხარ?
           </div>
           <div
             onClick={() => handleRegistration(false)}
@@ -262,25 +267,70 @@ const RegModal = ({ handleRegistration, onClose }) => {
             <div className="d-grid gap-2 mt-n1">
               <div className="d-grid gap-2 mt-n1">
                 <label className="mt-2">აირჩიეთ გადახდის გეგმა:</label>
+                <div className="w-100 justify-content-start d-flex">
+                  <div
+                    className="buy-wrap nav-group landing-dark-bg d-inline-flex mb-15"
+                    data-kt-buttons="true"
+                  >
+                    <a
+                      onClick={() => {
+                        setMonthly(true);
+                        setAnnual(false);
+                      }}
+                      className={`buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
+                        monthly ? "active" : "",
+                      ]} `}
+                      data-kt-plan="month"
+                    >
+                      თვე
+                    </a>
+                    <a
+                      onClick={() => {
+                        setMonthly(false);
+                        setAnnual(true);
+                      }}
+                      className={`buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
+                        annual ? "active" : "",
+                      ]} `}
+                      data-kt-plan="annual"
+                    >
+                      წელი
+                    </a>
+                  </div>
+                </div>
                 <select
                   required
-                  style={{ borderColor: lossData && regData?.paymentPlan?.length === 0 ? "red" : "" }}
+                  style={{ borderColor: lossData && regData?.payment_plan?.length === 0 ? "red" : "" }}
                   className="form-select form-select-solid georgian"
                   defaultValue="აირჩიეთ გადახდის გეგმა"
                   onChange={(e) => {
                     setRegData((prevSendData) => ({
                       ...prevSendData,
-                      paymentPlan: e.target.value
+                      payment_plan: e.target.value
                     }));
                     setPaymentPlanState(e.target.value)
                   }}
                 >
-                  <option disabled defaultValue="აირჩიეთ გადახდის გეგმა">აირჩიეთ გადახდის გეგმა</option>
-                  <option id="1" value="free">უფასო</option>
-                  <option id="2" value="paid">ფასიანი</option>
+                  {pricesData && pricesData.map((item, index) => {
+                    return (
+                      <option key={index} value={item.id}>
+                        {item.attributes.name}
+                      </option>
+                    )
+                  })}
                 </select>
+
               </div>
-              {lossData && regData?.paymentPlan?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>}
+              {lossData && regData?.payment_plan?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>}
+              {regData.payment_plan === '1' && (
+                <PriceCard monthly={monthly} priceData={pricesData[0]} />
+              )}
+              {regData.payment_plan === '2' && (
+                <PriceCard monthly={monthly} priceData={pricesData[1]} />
+              )}
+              {regData.payment_plan === '3' && (
+                <PriceCard monthly={monthly} priceData={pricesData[2]} />
+              )}
               <div className="d-flex justify-content-evenly">
                 <button
                   className={` btn btn-success georgian ${styles.btn}`}
@@ -296,16 +346,14 @@ const RegModal = ({ handleRegistration, onClose }) => {
                 <button
                   style={{ width: "43%" }}
                   className={` btn btn-success georgian ${styles.btn}`}
-                  type={regData?.paymentPlan === "free" ? 'submit' : 'button'}
+                  type={regData?.payment_plan === "1" ? 'submit' : 'button'}
                   onClick={() => {
-                    if (regData?.paymentPlan === "paid") {
+                    if (regData?.payment_plan === "2" || regData?.payment_plan === "3") {
                       stepChangeHandler();
-                    } else if (regData?.paymentPlan.length === 0) {
-                      stepChangeHandler();
-                    }
+                    } 
                   }}
                 >
-                  {regData?.paymentPlan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
+                  {regData?.payment_plan === "free" ? 'რეგისტრაცია' : 'შემდეგ'}
                 </button>
               </div>
             </div>

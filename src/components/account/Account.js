@@ -11,6 +11,7 @@ import ImageUpload from "../ui/ImageUpload";
 import styles from "./Account.module.css";
 
 const index = () => {
+  const [pricesData, setPricesData] = useState(null);
   const [authUser, setAuthUser] = useState([]);
   const [imgSrc, setImgSrc] = useState(null);
   const [image, setImage] = useState(null);
@@ -19,6 +20,7 @@ const index = () => {
   const authUserId = useSelector((state) => state.auth.user_id);
   const provider = useSelector((state) => state.auth.provider);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+
   
   const { data: session } = useSession();
 
@@ -143,8 +145,21 @@ const index = () => {
     }
   };
 
+
+  const getPricesData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`);
+      const data = response.data;
+      setPricesData(data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
   useEffect(() => {
     loggedUserInfo();
+    getPricesData();
   }, [session, authUserId]);
 
   useEffect(() => {
@@ -183,8 +198,6 @@ const index = () => {
       value: authUser[0]?.paymentMethod === "tbc" ? "თბს ბანკი" : "",
     },
   ];
-
-  console.log(authUser, authUserId, "useri");
 
   return (
     <>
@@ -236,6 +249,7 @@ const index = () => {
             })}
           {isEdit && (
             <EditAccount
+              pricesData={pricesData}
               authUser={authUser}
               onClose={() => setIsEdit(false)}
               loggedUserInfo={loggedUserInfo}

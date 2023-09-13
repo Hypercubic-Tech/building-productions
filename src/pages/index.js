@@ -62,8 +62,6 @@ const Home = () => {
     }
 
   }
-  // /api/payment-plans
-
 
   useEffect(() => {
     let url;
