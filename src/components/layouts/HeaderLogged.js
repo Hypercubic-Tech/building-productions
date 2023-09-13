@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 import { useSpring, animated } from "react-spring";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import { useMobileWidth } from "../../hooks/useMobileWidth";
@@ -12,6 +12,7 @@ import {
   setAuthRole,
   setAuthUserId,
   setAuthState,
+  selectAuthState,
 } from "../../store/slices/authSlice";
 import { setSearchValue } from "../../store/slices/projectSlice";
 
@@ -34,6 +35,7 @@ function HeaderLogged() {
   const ref = useRef(null);
   const dispatch = useDispatch();
   const { data: session } = useSession();
+  const loggedIn = useSelector(selectAuthState);
 
   const router = useRouter();
   const { asPath } = router;
@@ -54,7 +56,7 @@ function HeaderLogged() {
   useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        closeModal();
+        setIsModalOpen(false);
       }
     }
 
@@ -66,11 +68,7 @@ function HeaderLogged() {
   }, [ref]);
 
   function openModal() {
-    setIsModalOpen((prevState) => !prevState);
-  }
-
-  function closeModal() {
-    setIsModalOpen(false);
+    setIsModalOpen(true);
   }
 
   const handleLogout = () => {
@@ -87,13 +85,10 @@ function HeaderLogged() {
       dispatch(setAuthEmail(null));
       dispatch(setAuthRole(null));
     }, 300);
-    closeModal();
+    setIsModalOpen(false);
   };
 
-  const handleGoogleLogout = () => {
-    signOut({
-      callbackUrl: `${window.location.origin}/`,
-    });
+  const handleGoogleLogout = async () => {
     setTimeout(() => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("email");
@@ -106,7 +101,10 @@ function HeaderLogged() {
       dispatch(setAuthEmail(null));
       dispatch(setAuthRole(null));
     }, 300);
-    closeModal();
+    setIsModalOpen(false);
+    await signOut({
+      callbackUrl: `${window.location.origin}/`,
+    });
   };
 
   useEffect(() => {
@@ -252,9 +250,6 @@ function HeaderLogged() {
                 <span className="svg-icon-1">
                   <ProfileSvg />
                 </span>
-                {isModalOpen && (
-                  <div className={styles.backdrop} onClick={closeModal}></div>
-                )}
               </div>
               {isModalOpen && (
                 <animated.div className="modal" style={animation}>
@@ -263,8 +258,8 @@ function HeaderLogged() {
                       <span>პროფილი</span>
                     </Link>
                     <div
-                      onClick={session ? handleGoogleLogout : handleLogout}
                       className={`${styles.hover} justify-content-between d-flex`}
+                      onClick={loggedIn ? handleGoogleLogout : handleLogout}
                     >
                       გასვლა
                       <LogOutSvg className={styles.closeBtn} />

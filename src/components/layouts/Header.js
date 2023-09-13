@@ -17,22 +17,24 @@ function Header() {
 
     if (accessToken && accessToken !== "") {
       dispatch(setAuthState(true));
-    }
+    } 
   }, [dispatch]);
 
   useEffect(() => {
     if (session && session.user) {
       dispatch(setAuthState(true));
+    } else {
+      dispatch(setAuthState(false));
     }
   }, [session, dispatch]);
 
   useEffect(() => {
-    if (loggedIn || session) {
+    if (loggedIn) {
       setHeader(<HeaderLogged />);
     } else {
       setHeader(<DefaultHeader />);
     }
-  }, [loggedIn]);
+  }, [loggedIn, session]);
 
   if (!header) {
     return <div></div>;
