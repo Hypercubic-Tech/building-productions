@@ -17,16 +17,16 @@ const index = () => {
   const [isImageUpload, setIsImageUpload] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const authUserId = useSelector((state) => state.auth.user_id);
-  const authEmail = useSelector((state) => state.auth.email);
+  const provider = useSelector((state) => state.auth.provider);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const { data: session } = useSession();
 
   const loggedUserInfo = async () => {
     let url;
 
-    if (session?.user) {
+    if (provider === "google") {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-    } else if (authUserId) {
+    } else {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
     }
     if (url) {
@@ -186,6 +186,8 @@ const index = () => {
       value: authUser[0]?.paymentMethod === "tbc" ? "თბს ბანკი" : "",
     },
   ];
+
+  console.log(authUser, authUserId, "useri");
 
   return (
     <>

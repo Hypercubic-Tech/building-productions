@@ -92,6 +92,7 @@ const AuthModal = ({ handleAuthorization, onClose }) => {
       console.error("Error during Google login:", error);
     }
   };
+
   return (
     <div className={`${styles.container}`}>
       <form onSubmit={handleSubmit}>
