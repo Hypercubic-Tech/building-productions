@@ -3,9 +3,7 @@ import { useState } from "react";
 const Price = ({ pricesData, price }) => {
   const [annual, setAnnual] = useState(false);
   const [monthly, setMonthly] = useState(true);
-  const [selected, setSelected] = useState(3);
-
-  console.log(pricesData)
+  const [selected, setSelected] = useState(1);
 
   return (
     <div className="mt-sm-n20">
