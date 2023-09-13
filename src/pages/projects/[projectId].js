@@ -48,7 +48,6 @@ const index = () => {
     }
   };
 
-
   useEffect(() => {
     const getSupplierHandler = async () => {
       await axios

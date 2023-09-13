@@ -11,8 +11,9 @@ import Swal from "sweetalert2";
 
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
-import styles from "../../components/popup/Modal.module.css";
 import Unauthorized from "../401";
+
+import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
     const userId = useSelector(state => state.auth.user_id)
@@ -269,10 +270,10 @@ const index = () => {
                 <Unauthorized />
             ) : (
                 <>
+                    <img className={styles.projectBg} src="/images/projectBg.png" alt="bg" />
                     <div className="container" style={{ position: 'relative', backgroundColor: 'none'}}>
-                        <img className={styles.projectBg} src="/images/projectBg.png" alt="bg" />
                         {projectsToMap?.length > 0 ? buttonWrap : ""}
-                        <div className={`${styles.flexWrap} d-flex justify-content-center `}>
+                        <div className={`${styles.flexWrap} d-flex justify-content-center `} style={{zIndex:1}}>
                             {/* <BuildingBg /> */}
                             {projectsToMap?.length > 0 ? (
                                 projectsToMap.slice(startIndex, endIndex).map((item, index) => {
