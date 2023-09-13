@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { setAuthAccessToken, setAuthEmail, setAuthUserId } from "../store/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
+import {
+  setAuthAccessToken,
+  setAuthEmail,
+  setAuthUserId,
+  setProvider,
+  setAuthRole,
+} from "../store/slices/authSlice";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 
 import Heading from "../components/main/Heading";
 import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
 import Price from "../components/main/Price";
-import ContactUs from "../components/main/ContactUs";
 import Faq from "../components/main/Faq";
-import SignedWithGoogleModal from "../components/popup/SignedWithGoogleModal";
 import notify from "../utils/notify";
 
 const priceData = {
@@ -30,22 +34,17 @@ const priceData = {
 const Home = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { id_token } = router.query;
-  const userObject = id_token ? jwt_decode(id_token) : null;
-
-  const [isAuthWithGoogle, setIsAuthWithGoogle] = useState(null);
-  const [isClosed, setIsClosed] = useState(true);
-
   const [faqData, setFaqData] = useState(null);
   const [pricesData, setPricesData] = useState(null);
 
-  const toggleModal = () => {
-    setIsClosed(false);
-  };
+  const { data: session } = useSession();
+  const authUserId = useSelector((state) => state.auth.user_id);
 
   const getFaqData = async () => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/FAQs`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/FAQs`
+      );
       const data = response.data;
       setFaqData(data?.data);
     } catch (error) {
@@ -67,43 +66,37 @@ const Home = () => {
 
 
   useEffect(() => {
-    if (id_token) {
+    let url;
 
-      const checkEmail = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email][$eq]=${userObject?.email}`)
-          .then((res) => {
-            const data = res.data;
-            setIsAuthWithGoogle(data)
-            if (data?.length === 0) {
+    const loggedUserInfo = async (url) => {
+      await axios.get(url).then((res) => {
+        const user = res.data[0];
 
-              localStorage.setItem("access_token", id_token);
-              localStorage.setItem("email", userObject?.email);
-              localStorage.setItem("userId", data[0]?.id);
+        if (user) {
+          localStorage.setItem("email", user?.email);
+          localStorage.setItem("userId", user?.id);
 
-              dispatch(setAuthUserId(data[0]?.id))
-              dispatch(setAuthAccessToken(id_token));
-              dispatch(setAuthEmail(userObject?.email));
-              // router.push('/');
-              notify(false, 'თქვენ წარმატებით გაიარეთ ავტორიზაცია!');
-            } else {
-              localStorage.setItem("access_token", id_token);
-              localStorage.setItem("email", userObject?.email);
-              localStorage.setItem("userId", data[0]?.id);
+          dispatch(setAuthUserId(user?.id));
+          dispatch(setAuthEmail(user?.email));
+          dispatch(setAuthRole(user?.role));
+          router.push("/");
+        }
+      });
+    };
 
-              dispatch(setAuthUserId(data[0]?.id))
-              dispatch(setAuthAccessToken(id_token));
-              dispatch(setAuthEmail(userObject?.email));
-
-              notify(false, 'თქვენ წარმატებით გაიარეთ ავტორიზაცია!');
-              router.push('/');
-            }
-          })
-
-      };
-
-      checkEmail();
+    if (session?.user) {
+      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+      dispatch(setAuthUserId(session?.id));
+      dispatch(setProvider("google"));
+      dispatch(setAuthAccessToken(session.jwt));
+    } else {
+      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
+      dispatch(setAuthUserId(authUserId));
+      dispatch(setProvider("locale"));
     }
-  }, [id_token]);
+
+    loggedUserInfo(url);
+  }, [session]);
 
   useEffect(() => {
     getFaqData();
@@ -125,7 +118,6 @@ const Home = () => {
         <Price pricesData={pricesData} price={priceData} />
         {/* <ContactUs /> */}
         <Faq faqData={faqData} />
-        {id_token && isClosed && isAuthWithGoogle?.length === 0 && <SignedWithGoogleModal onClose={toggleModal} userEmail={userObject?.email} userToken={id_token} />}
       </div>
     </div>
   );
