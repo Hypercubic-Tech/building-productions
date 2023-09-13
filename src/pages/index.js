@@ -7,7 +7,7 @@ import {
   setAuthEmail,
   setAuthUserId,
   setProvider,
-  setAuthRole
+  setAuthRole,
 } from "../store/slices/authSlice";
 import axios from "axios";
 
@@ -65,7 +65,6 @@ const Home = () => {
           dispatch(setAuthUserId(user?.id));
           dispatch(setAuthEmail(user?.email));
           dispatch(setAuthRole(user?.role));
-          notify(false, "თქვენ წარმატებით გაიარეთ ავტორიზაცია!");
           router.push("/");
         }
       });
@@ -83,6 +82,7 @@ const Home = () => {
     }
 
     loggedUserInfo(url);
+    // notify(false, "თქვენ წარმატებით გაიარეთ ავტორიზაცია!");
   }, [session]);
 
   useEffect(() => {
