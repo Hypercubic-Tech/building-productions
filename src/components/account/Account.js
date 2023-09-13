@@ -19,6 +19,7 @@ const index = () => {
   const authUserId = useSelector((state) => state.auth.user_id);
   const authEmail = useSelector((state) => state.auth.email);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  
   const { data: session } = useSession();
 
   const loggedUserInfo = async () => {

@@ -15,7 +15,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
         email: authUser[0]?.email,
         phoneNumber: authUser[0]?.phoneNumber,
         paymentPlan: authUser[0]?.paymentPlan,
-        paymentMethod: authUser[0]?.paymentMethod
+        paymentMethod: authUser[0]?.paymentMethod || null
     });
     const [changePassword, setChangePassword] = useState({
         currentPassword: '',
@@ -32,6 +32,8 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
         stepThree: [],
         stepFour: [],
     };
+
+    console.log(authUser);
 
     const stepChangeHandler = () => {
         if (step === 1 && errors?.stepOne?.length === 0 && editUserData?.username && editUserData?.email && editUserData?.phoneNumber) {
@@ -384,6 +386,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                                 >
                                     <option disabled value="აირჩიეთ გადახდის მეთოდი">აირჩიეთ გადახდის მეთოდი</option>
                                     <option id="1" value="tbc">TBC</option>
+
                                 </select>
                             </div>
                             {lossData && editUserData?.paymentMethod?.length === 0 && <p style={{ color: 'red' }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>}

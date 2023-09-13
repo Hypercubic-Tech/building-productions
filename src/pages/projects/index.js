@@ -263,9 +263,6 @@ const index = () => {
         getPropertyTypesHandler();
       }, []);
     
-
-      console.log(projectsToMap, 'hi')
-      console.log(projectData, 'data?')
     return (
         <>
             {!isLoggedIn ? (
