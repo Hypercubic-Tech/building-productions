@@ -129,9 +129,6 @@ function HeaderLogged() {
       }
     }
 
-    console.log(width, hideSearch);
-
-
     document.addEventListener("click", handleClickOutside);
 
     return () => {
