@@ -12,7 +12,6 @@ function Header() {
   const dispatch = useDispatch();
   const { data: session } = useSession();
 
-
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
 
@@ -28,12 +27,12 @@ function Header() {
   }, [session, dispatch]);
 
   useEffect(() => {
-    if (loggedIn || session !== undefined ) {
+    if (loggedIn || session) {
       setHeader(<HeaderLogged />);
     } else {
       setHeader(<DefaultHeader />);
     }
-  }, [loggedIn])
+  }, [loggedIn]);
 
   if (!header) {
     return <div></div>;
