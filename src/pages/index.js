@@ -65,7 +65,6 @@ const Home = () => {
           dispatch(setAuthUserId(user?.id));
           dispatch(setAuthEmail(user?.email));
           dispatch(setAuthRole(user?.role));
-          // notify(false, "თქვენ წარმატებით გაიარეთ ავტორიზაცია!");
           router.push("/");
         }
       });

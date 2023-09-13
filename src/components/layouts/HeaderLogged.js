@@ -16,6 +16,7 @@ import { setSearchValue } from "../../store/slices/projectSlice";
 import HeaderPopup from "../popup/HeaderPopup";
 
 import styles from "../layouts/HeaderLogged.module.css";
+import LogOutSvg from "../svg/LogOutSvg";
 
 function HeaderLogged() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -246,8 +247,9 @@ function HeaderLogged() {
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
                 onClick={openModal}
-                className={` ${isModalOpen ? styles.activeBg : ""
-                  } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
+                className={` ${
+                  isModalOpen ? styles.activeBg : ""
+                } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
                 data-kt-menu-trigger="click"
                 data-kt-menu-attach="parent"
                 data-kt-menu-placement="bottom-end"
@@ -282,19 +284,7 @@ function HeaderLogged() {
                         className={`${styles.hover} justify-content-between d-flex`}
                       >
                         გასვლა
-                        <svg
-                          className={styles.closeBtn}
-                          width="16"
-                          height="17"
-                          viewBox="0 0 16 17"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M1.80776 17C1.34751 17 0.963216 16.8458 0.654883 16.5375C0.346549 16.2292 0.192383 15.8449 0.192383 15.3846V1.61537C0.192383 1.15512 0.346549 0.770833 0.654883 0.4625C0.963216 0.154167 1.34751 0 1.80776 0H8.23086V1H1.80776C1.65392 1 1.51291 1.0641 1.38471 1.1923C1.25649 1.32052 1.19238 1.46154 1.19238 1.61537V15.3846C1.19238 15.5385 1.25649 15.6795 1.38471 15.8077C1.51291 15.9359 1.65392 16 1.80776 16H8.23086V17H1.80776ZM12.2693 12.0385L11.5674 11.3192L13.8866 9H5.23086V8H13.8866L11.5674 5.68075L12.2693 4.96152L15.8078 8.5L12.2693 12.0385Z"
-                            fill="#2B3467"
-                          />
-                        </svg>
+                        <LogOutSvg className={styles.closeBtn} />
                       </div>
                     </Link>
                   </div>
