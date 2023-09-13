@@ -29,11 +29,12 @@ const index = () => {
 
   const getProjectById = async () => {
     if (projectId) {
+      // console.log(projectId, 'id')
       try {
         const projectRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`);
         const projectData = projectRes.data?.data;
         setProject(projectData);
-
+        console.log(projectData)
         const productRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`);
         const productData = productRes.data;
         setProductOptions(productData);

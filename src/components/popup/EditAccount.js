@@ -6,8 +6,12 @@ import { setAuthAccessToken, setAuthEmail } from "../../store/slices/authSlice";
 import notify from "../../utils/notify";
 
 import styles from "../popup/RegModal.module.css";
+import PriceCard from "../ui/PriceCard";
 
-const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
+const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
+  const [annual, setAnnual] = useState(false);
+  const [monthly, setMonthly] = useState(true);
+
   const [step, setStep] = useState(1);
   const [lossData, setLossData] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
@@ -22,6 +26,8 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
     paymentPlan: authUser[0]?.paymentPlan,
     paymentMethod: authUser[0]?.paymentMethod,
   });
+
+  console.log(authUser,'user')
   const [changePassword, setChangePassword] = useState({
     currentPassword: "",
     password: "",
@@ -188,7 +194,9 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
     const formattedValue = numericValue.replace(/(\d{4})(?=\d)/g, "$1 ");
 
     return formattedValue;
-  }
+  };
+
+  console.log(editUserData, 'data finnal')
 
   return (
     <div className={`${styles.container}`}>
@@ -233,8 +241,8 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                 {editUserData?.userType === "company"
                   ? "კომპანიის სახელი"
                   : editUserData?.userType === "personal"
-                  ? "სრული სახელი"
-                  : "სახელი"}
+                    ? "სრული სახელი"
+                    : "სახელი"}
               </label>
             )}
             <input
@@ -369,8 +377,41 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
               </svg>
             </div>
             <div className="d-grid gap-2 mt-n1">
+              {/* payment type */}
+              {/* <Price pricesData={pricesData} /> */}
               <div className="d-grid gap-2 mt-n1">
                 <label className="mt-2">აირჩიეთ გადახდის გეგმა:</label>
+                <div className="w-100 justify-content-start d-flex">
+                  <div
+                    className="buy-wrap nav-group landing-dark-bg d-inline-flex mb-15"
+                    data-kt-buttons="true"
+                  >
+                    <a
+                      onClick={() => {
+                        setMonthly(true);
+                        setAnnual(false);
+                      }}
+                      className={`buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
+                        monthly ? "active" : "",
+                      ]} `}
+                      data-kt-plan="month"
+                    >
+                      თვე
+                    </a>
+                    <a
+                      onClick={() => {
+                        setMonthly(false);
+                        setAnnual(true);
+                      }}
+                      className={`buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
+                        annual ? "active" : "",
+                      ]} `}
+                      data-kt-plan="annual"
+                    >
+                      წელი
+                    </a>
+                  </div>
+                </div>
                 <select
                   required
                   style={{
@@ -391,16 +432,29 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                   <option disabled defaultValue="აირჩიეთ გადახდის გეგმა">
                     აირჩიეთ გადახდის გეგმა
                   </option>
-                  <option id="1" value="free">
-                    უფასო
-                  </option>
-                  <option id="2" value="paid">
-                    ფასიანი
-                  </option>
+                  {pricesData && pricesData.map((item, index) => {
+                    return (
+                      <option key={index} value={item.id}>
+                        {item.attributes.name}
+                      </option>
+                    )
+                  })}
+
+
                 </select>
               </div>
               {lossData && editUserData?.paymentPlan?.length === 0 && (
                 <p style={{ color: "red" }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>
+              )}
+              {/* here goes templates */}
+              {editUserData.paymentPlan === '1' && (
+                <PriceCard monthly={monthly} priceData={pricesData[0]} />
+              )}
+              {editUserData.paymentPlan === '2' && (
+                <PriceCard monthly={monthly} priceData={pricesData[1]} />
+              )}
+              {editUserData.paymentPlan === '3' && (
+                <PriceCard monthly={monthly} priceData={pricesData[2]} />
               )}
               <div className="d-flex justify-content-evenly">
                 <button
@@ -540,7 +594,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                       style={{
                         borderColor:
                           lossData &&
-                          changePassword?.currentPassword?.length <= 0
+                            changePassword?.currentPassword?.length <= 0
                             ? "red"
                             : "",
                         fontSize: "18px",
@@ -575,7 +629,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                       style={{
                         borderColor:
                           lossData &&
-                          changePassword?.currentPassword?.length <= 0
+                            changePassword?.currentPassword?.length <= 0
                             ? "red"
                             : "",
                         fontSize: "18px",
@@ -668,7 +722,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                       style={{
                         borderColor:
                           lossData &&
-                          changePassword?.currentPassword?.length <= 0
+                            changePassword?.currentPassword?.length <= 0
                             ? "red"
                             : "",
                       }}
@@ -719,8 +773,8 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                           lossData && changePassword?.password?.length < 6
                             ? "red"
                             : changePassword?.password?.length >= 6
-                            ? "green"
-                            : "",
+                              ? "green"
+                              : "",
                       }}
                     >
                       {lossData && changePassword?.password?.length < 6 ? (
@@ -742,7 +796,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
                       style={{
                         borderColor:
                           lossData &&
-                          changePassword?.passwordConfirmation?.length <= 0
+                            changePassword?.passwordConfirmation?.length <= 0
                             ? "red"
                             : "",
                       }}
@@ -762,23 +816,23 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo }) => {
 
                     {lossData &&
                       changePassword?.passwordConfirmation !==
-                        changePassword?.password && (
+                      changePassword?.password && (
                         <span
                           style={{
                             color:
                               lossData &&
-                              changePassword?.passwordConfirmation !==
+                                changePassword?.passwordConfirmation !==
                                 changePassword?.password
                                 ? "red"
                                 : lossData &&
                                   changePassword?.passwordConfirmation ===
-                                    changePassword?.password
-                                ? "green"
-                                : "",
+                                  changePassword?.password
+                                  ? "green"
+                                  : "",
                           }}
                         >
                           {lossData &&
-                          changePassword?.passwordConfirmation !==
+                            changePassword?.passwordConfirmation !==
                             changePassword?.password ? (
                             <i className="bi bi-x" />
                           ) : (

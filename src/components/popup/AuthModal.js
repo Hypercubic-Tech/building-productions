@@ -14,7 +14,7 @@ import notify from "../../utils/notify";
 
 import styles from "../popup/AuthModal.module.css";
 
-const AuthModal = ({ handleAuthorization, onClose }) => {
+const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
   const [lossData, setLossData] = useState(false);
   const [isForgot, setIsForgot] = useState(false);
   const [sessionStarted, setSessionStarted] = useState(false);

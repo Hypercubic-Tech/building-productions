@@ -9275,8 +9275,10 @@ fieldset:disabled .btn {
   word-break: break-word !important;
 }
 .text-white {
+  color: #fff;
+  transition: .6s;
   --bs-text-opacity: 1;
-  color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+  /* color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important; */
 }
 .text-light {
   --bs-text-opacity: 1;

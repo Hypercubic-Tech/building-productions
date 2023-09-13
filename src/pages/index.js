@@ -35,6 +35,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [faqData, setFaqData] = useState(null);
+  const [pricesData, setPricesData] = useState(null);
 
   const { data: session } = useSession();
   const authUserId = useSelector((state) => state.auth.user_id);
@@ -50,6 +51,17 @@ const Home = () => {
       console.error(error);
     }
   };
+
+  const getPricesData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`);
+      const data = response.data;
+      setPricesData(data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
 
   useEffect(() => {
     let url;
@@ -86,6 +98,7 @@ const Home = () => {
 
   useEffect(() => {
     getFaqData();
+    getPricesData();
   }, []);
 
   return (
@@ -100,7 +113,7 @@ const Home = () => {
         <Heading />
         <HowItWorks />
         <OurTeam />
-        <Price price={priceData} />
+        <Price pricesData={pricesData} price={priceData} />
         {/* <ContactUs /> */}
         <Faq faqData={faqData} />
       </div>
