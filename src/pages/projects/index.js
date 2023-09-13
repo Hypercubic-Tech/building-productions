@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-
-// import { setAuthState } from "../../store/slices/authSlice";
-
-import BuildingBg from "../../components/svg/BuildingBg";
+import { useSession } from "next-auth/react";
 
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -37,6 +34,9 @@ const index = () => {
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
+
+  const { data: session } = useSession();
+
 
   let itemsPerPage = 8;
 
