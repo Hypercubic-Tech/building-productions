@@ -3,6 +3,7 @@ import { useSpring, animated } from "react-spring";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
+import { useMobileWidth } from "../../hooks/useMobileWidth";
 import Link from "next/link";
 
 import {
@@ -25,6 +26,7 @@ import Search2Svg from "../svg/Search2Svg";
 import styles from "../layouts/HeaderLogged.module.css";
 
 function HeaderLogged() {
+  const [hideSearch, setHideSearch] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchType, setSearchType] = useState("");
@@ -35,6 +37,10 @@ function HeaderLogged() {
 
   const router = useRouter();
   const { asPath } = router;
+  const formRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  const { width } = useMobileWidth();
 
   const handleSearchChange = async (e) => {
     setSearchType(e.target.value);
@@ -68,35 +74,39 @@ function HeaderLogged() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("role");
-    localStorage.removeItem("userId");
-
-    dispatch(setAuthState(false));
-    dispatch(setAuthAccessToken(null));
-    dispatch(setAuthUserId(null));
-    dispatch(setAuthEmail(null));
-    dispatch(setAuthRole(null));
     router.push("/");
+    setTimeout(() => {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("email");
+      localStorage.removeItem("role");
+      localStorage.removeItem("userId");
+
+      dispatch(setAuthState(false));
+      dispatch(setAuthAccessToken(null));
+      dispatch(setAuthUserId(null));
+      dispatch(setAuthEmail(null));
+      dispatch(setAuthRole(null));
+    }, 300);
     closeModal();
   };
 
   const handleGoogleLogout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("role");
-    localStorage.removeItem("userId");
-
-    dispatch(setAuthState(false));
-    dispatch(setAuthAccessToken(null));
-    dispatch(setAuthUserId(null));
-    dispatch(setAuthEmail(null));
-    dispatch(setAuthRole(null));
-    closeModal();
     signOut({
       callbackUrl: `${window.location.origin}/`,
     });
+    setTimeout(() => {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("email");
+      localStorage.removeItem("role");
+      localStorage.removeItem("userId");
+
+      dispatch(setAuthState(false));
+      dispatch(setAuthAccessToken(null));
+      dispatch(setAuthUserId(null));
+      dispatch(setAuthEmail(null));
+      dispatch(setAuthRole(null));
+    }, 300);
+    closeModal();
   };
 
   useEffect(() => {
@@ -106,6 +116,28 @@ function HeaderLogged() {
       setIsFilterOpen(false);
     }
   }, [asPath]);
+
+  useEffect(() => {
+    if (width > 991) {
+      setHideSearch(true);
+    }
+    function handleClickOutside(event) {
+      if (formRef.current && !formRef.current.contains(event.target)) {
+        if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+          setHideSearch(true);
+        }
+      }
+    }
+
+    console.log(width, hideSearch);
+
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [width]);
 
   return (
     <div
@@ -143,17 +175,27 @@ function HeaderLogged() {
                 <div
                   data-kt-search-element="toggle"
                   className="d-flex d-lg-none align-items-center"
+                  style={{
+                    zIndex: !hideSearch ? "-1" : "9999",
+                    transitionDelay: !hideSearch ? "0s" : "0.5s",
+                  }}
                 >
                   <div className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px">
                     <span className="svg-icon svg-icon-2">
-                      <Search2Svg />
+                      <Search2Svg
+                        onClick={() => setHideSearch(false)}
+                        ref={buttonRef}
+                      />
                     </span>
                   </div>
                 </div>
                 <form
                   data-kt-search-element="form"
-                  className="bg-white d-none d-lg-block w-100 mb-5 mb-lg-0 position-relative"
+                  className={`bg-white d-lg-block w-100 mb-lg-0 position-relative ${
+                    hideSearch ? `${styles.hideSearch}` : `${styles.showSearch}`
+                  }`}
                   autoComplete="off"
+                  ref={formRef}
                 >
                   <input type="hidden" />
                   <span className="svg-icon svg-icon-2 svg-icon-gray-700 position-absolute top-50 translate-middle-y ms-4">
