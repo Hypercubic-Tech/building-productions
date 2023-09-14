@@ -12,7 +12,7 @@ import Unauthorized from "../401";
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { projectId } = router.query;
+  const { projectId, allowedProducts } = router.query;
   const loggedIn = useSelector(setAuthState);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
@@ -38,7 +38,6 @@ const index = () => {
         const productRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`);
         const productData = productRes.data;
         setProductOptions(productData);
-
         const categoryRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`);
         const categoryData = categoryRes.data.data;
         setProjectCategory(categoryData);
@@ -122,12 +121,14 @@ const index = () => {
     setEditProductItem(product);
   };
 
+  console.log(allowedProducts, 'allowedProducts')
   return (
     <>
       {!isLoggedIn ? (
         <Unauthorized />
       ) : (
         <Project
+          allowedProducts={allowedProducts}
           productStatus={productStatus}
           productOptions={productOptions}
           project={project}

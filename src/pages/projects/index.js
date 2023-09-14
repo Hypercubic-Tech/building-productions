@@ -37,6 +37,7 @@ const index = () => {
   const [categories, setCategories] = useState(null);
 
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
+  const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
 
   const { data: session } = useSession();
@@ -115,8 +116,10 @@ const index = () => {
   const allowedProjectsHandler = () => {
     if (paymentPlan?.payment_duration === 'month') {
       setAllowedProjectsCount(paymentPlan?.payment_plan.month_allowed_projects);
+      setAllowedProductsCount(paymentPlan?.payment_plan.month_allowed_products);
     } else {
       setAllowedProjectsCount(paymentPlan?.payment_plan.year_allowed_projects);
+      setAllowedProductsCount(paymentPlan?.payment_plan.year_allowed_products);
     }
   };
 
@@ -381,7 +384,7 @@ const index = () => {
                         <Link
                           href={{
                             pathname: `/projects/${item?.id}`,
-                            query: { projectId: item?.id },
+                            query: { projectId: item?.id, allowedProducts: allowedProductsCount },
                           }}
                           passHref
                           className={styles.cardLink}
