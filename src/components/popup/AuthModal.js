@@ -87,7 +87,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const result = await signIn();
+      await signIn();
     } catch (error) {
       console.error("Error during Google login:", error);
     }

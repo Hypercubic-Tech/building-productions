@@ -15,18 +15,12 @@ function Header() {
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
 
-    if (accessToken && accessToken !== "") {
-      dispatch(setAuthState(true));
-    } 
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (session && session.user) {
+    if ((accessToken && accessToken !== "") || session) {
       dispatch(setAuthState(true));
     } else {
       dispatch(setAuthState(false));
     }
-  }, [session, dispatch]);
+  }, [dispatch, session]);
 
   useEffect(() => {
     if (loggedIn) {

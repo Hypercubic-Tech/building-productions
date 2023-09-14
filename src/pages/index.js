@@ -86,7 +86,7 @@ const Home = () => {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
       dispatch(setAuthUserId(session?.id));
       dispatch(setProvider("google"));
-      dispatch(setAuthAccessToken(session.jwt));
+      dispatch(setAuthAccessToken(session?.jwt));
     } else {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
       dispatch(setAuthUserId(authUserId));
@@ -94,7 +94,7 @@ const Home = () => {
     }
 
     loggedUserInfo(url);
-  }, [session]);
+  }, [session, authUserId]);
 
   useEffect(() => {
     getFaqData();
