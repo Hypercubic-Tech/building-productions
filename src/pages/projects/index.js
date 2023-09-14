@@ -114,9 +114,9 @@ const index = () => {
 
   const allowedProjectsHandler = () => {
     if (paymentPlan?.payment_duration === 'month') {
-      setAllowedProjectsCount(paymentPlan?.payment_plan.month_allowed_projects);
+      setAllowedProjectsCount(paymentPlan?.payment_plan?.month_allowed_projects);
     } else {
-      setAllowedProjectsCount(paymentPlan?.payment_plan.year_allowed_projects);
+      setAllowedProjectsCount(paymentPlan?.payment_plan?.year_allowed_projects);
     }
   };
 
