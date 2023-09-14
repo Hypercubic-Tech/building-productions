@@ -84,6 +84,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     handleRegistration(true);
   };
 
+  console.log(regData.payment_plan)
   return (
     <div className={`${styles.container}`} >
       <form onSubmit={handleSubmit}>
@@ -356,7 +357,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                   className={` btn btn-success georgian ${styles.btn}`}
                   type={regData?.payment_plan === 1 ? 'submit' : 'button'}
                   onClick={() => {
-                    if (regData?.payment_plan === 3 || regData?.payment_plan === 3) {
+                    if (regData?.payment_plan === 2 || regData?.payment_plan === 3) {
                       stepChangeHandler();
                     } 
                   }}
