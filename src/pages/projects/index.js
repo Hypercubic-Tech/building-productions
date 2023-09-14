@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import notify from '../../utils/notify';
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import Unauthorized from "../401";
@@ -34,6 +35,9 @@ const index = () => {
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
+
+  const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
+  const [userProjectsLenght, setUserProjectsLenght] = useState(null);
 
   const { data: session } = useSession();
 
@@ -90,14 +94,30 @@ const index = () => {
   };
 
   const addProjectHandler = () => {
-    setAddProject(!addProject);
-    setClose(true);
+    if (userProjectsLenght < allowedProjectsCount) {
+      setAddProject(!addProject);
+      setClose(true);
+    } else if (allowedProjectsCount === 'უსასრულო') {
+      setAddProject(!addProject);
+      setClose(true);
+
+    } else {
+      notify(true, "პროექტის ატვირთვა უარყოფილია თქვენ ამოგეწურათ ლიმიტი");
+    }
   };
 
   const dismissHandler = () => {
     setEditProject(false);
     setAddProject(false);
     setClose(false);
+  };
+
+  const allowedProjectsHandler = () => {
+    if (paymentPlan?.payment_duration === 'month') {
+      setAllowedProjectsCount(paymentPlan?.payment_plan.month_allowed_projects);
+    } else {
+      setAllowedProjectsCount(paymentPlan?.payment_plan.year_allowed_projects);
+    }
   };
 
   const getProjectsData = async () => {
@@ -220,10 +240,15 @@ const index = () => {
     const fetchData = async () => {
       const data = await getProjectsData();
       setProjectData(data.data);
+      setUserProjectsLenght(data.data.length)
     };
 
     fetchData();
   }, [showProject]);
+
+  useEffect(() => {
+    allowedProjectsHandler()
+  }, [paymentPlan]);
 
   useEffect(() => {
     const getCategoriesHandler = async () => {
@@ -302,7 +327,7 @@ const index = () => {
       if (url) {
         await axios.get(url).then((res) => {
           const data = res.data;
-          setPaymentPlan(data);
+          setPaymentPlan(data[0]);
         });
       }
     };
@@ -314,8 +339,6 @@ const index = () => {
     getCitiesHandler();
     getPropertyTypesHandler();
   }, []);
-
-  console.log(paymentPlan, 'user');
 
   return (
     <>
