@@ -5,30 +5,28 @@ import axios from "axios";
 import { setAuthAccessToken, setAuthEmail } from "../../store/slices/authSlice";
 import notify from "../../utils/notify";
 
-import styles from "../popup/RegModal.module.css";
 import PriceCard from "../ui/PriceCard";
+import CloseBtn from "../svg/CloseBtn";
+import PaymentMethod from "./PaymentMethod";
+
+import styles from "../popup/RegModal.module.css";
 
 const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
   const [annual, setAnnual] = useState(false);
   const [monthly, setMonthly] = useState(true);
-
   const [step, setStep] = useState(1);
   const [lossData, setLossData] = useState(false);
   const [backBtn, setBackBtn] = useState(false);
-  const [cardNumberValue, setCardNumberValue] = useState("");
-  const [monthValue, setMonthValue] = useState("");
-  const [yearValue, setYearValue] = useState("");
-  const [inputValue, setInputValue] = useState("");
   const [editUserData, setEditUserData] = useState({
     username: authUser[0]?.username,
     email: authUser[0]?.email,
     phoneNumber: authUser[0]?.phoneNumber,
     payment_plan: authUser[0]?.payment_plan,
     paymentMethod: authUser[0]?.paymentMethod,
-    payment_duration: authUser[0]?.payment_duration
+    payment_duration: authUser[0]?.payment_duration,
   });
 
-  console.log(authUser,'user')
+  console.log(authUser, "user");
   const [changePassword, setChangePassword] = useState({
     currentPassword: "",
     password: "",
@@ -167,38 +165,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
       });
   };
 
-  const isValidCardNumber = (cardNum) => {
-    if (/[^0-9-\s]+/.test(cardNum)) return false;
-
-    let cardNumberWithoutDashes = cardNum.replace(/\D/g, "");
-
-    if (cardNumberWithoutDashes.length !== 16) return false;
-
-    let sum = 0;
-    let isEven = false;
-
-    for (let i = cardNumberWithoutDashes.length - 1; i >= 0; i--) {
-      let digit = parseInt(cardNumberWithoutDashes.charAt(i), 10);
-
-      if (isEven) {
-        if ((digit *= 2) > 9) digit -= 9;
-      }
-
-      sum += digit;
-      isEven = !isEven;
-    }
-
-    return sum % 10 === 0;
-  };
-
-  function formatCardNumber(cardNumber) {
-    const numericValue = cardNumber.replace(/\D/g, "");
-    const formattedValue = numericValue.replace(/(\d{4})(?=\d)/g, "$1 ");
-
-    return formattedValue;
-  };
-
-  console.log(editUserData, 'data finnal')
+  console.log(editUserData, "data finnal");
 
   return (
     <div className={`${styles.container}`}>
@@ -206,36 +173,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
         <div className={`${getStatusClass(1)} col`}>
           <div className="d-flex justify-content-between align-items-center mb-2">
             <div className="text-muted">რედაქტირება</div>
-            <svg
-              onClick={onClose}
-              className={`${styles.closeBtn}`}
-              width="64px"
-              height="64px"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                stroke="#CCCCCC"
-                strokeWidth="0.336"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                <g id="Menu / Close_MD">
-                  <path
-                    id="Vector"
-                    d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
-                    stroke="#000000"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </g>
-              </g>
-            </svg>
+            <CloseBtn onClick={onClose} className={`${styles.closeBtn}`} />
           </div>
           <div className="d-grid gap-2 mt-n1">
             {editUserData && (
@@ -243,8 +181,8 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                 {editUserData?.userType === "company"
                   ? "კომპანიის სახელი"
                   : editUserData?.userType === "personal"
-                    ? "სრული სახელი"
-                    : "სახელი"}
+                  ? "სრული სახელი"
+                  : "სახელი"}
               </label>
             )}
             <input
@@ -342,41 +280,11 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
             </span>
           )}
         </div>
-
         <div className={getStatusClass(2)}>
           <div className="col">
             <div className="d-flex justify-content-between align-items-center mb-2">
               <div className="text-muted">რედაქტირება</div>
-              <svg
-                onClick={onClose}
-                className={`${styles.closeBtn}`}
-                width="64px"
-                height="64px"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  stroke="#CCCCCC"
-                  strokeWidth="0.336"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  <g id="Menu / Close_MD">
-                    <path
-                      id="Vector"
-                      d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
-                      stroke="#000000"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </g>
-                </g>
-              </svg>
+              <CloseBtn onClick={onClose} className={`${styles.closeBtn}`} />
             </div>
             <div className="d-grid gap-2 mt-n1">
               {/* payment type */}
@@ -442,28 +350,27 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                   <option disabled defaultValue="აირჩიეთ გადახდის გეგმა">
                     აირჩიეთ გადახდის გეგმა
                   </option>
-                  {pricesData && pricesData.map((item, index) => {
-                    return (
-                      <option key={index} value={item.id}>
-                        {item.attributes.name}
-                      </option>
-                    )
-                  })}
-
-
+                  {pricesData &&
+                    pricesData.map((item, index) => {
+                      return (
+                        <option key={index} value={item.id}>
+                          {item.attributes.name}
+                        </option>
+                      );
+                    })}
                 </select>
               </div>
               {lossData && editUserData?.payment_plan?.length === 0 && (
                 <p style={{ color: "red" }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>
               )}
               {/* here goes templates */}
-              {editUserData.payment_plan === '1' && (
+              {editUserData.payment_plan === "1" && (
                 <PriceCard monthly={monthly} priceData={pricesData[0]} />
               )}
-              {editUserData.payment_plan === '2' && (
+              {editUserData.payment_plan === "2" && (
                 <PriceCard monthly={monthly} priceData={pricesData[1]} />
               )}
-              {editUserData.payment_plan === '3' && (
+              {editUserData.payment_plan === "3" && (
                 <PriceCard monthly={monthly} priceData={pricesData[2]} />
               )}
               <div className="d-flex justify-content-evenly">
@@ -504,167 +411,10 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
           <div className="col">
             <div className="d-flex justify-content-between align-items-center mb-2">
               <div className="text-muted">რედაქტირება</div>
-              <svg
-                onClick={onClose}
-                className={`${styles.closeBtn}`}
-                width="64px"
-                height="64px"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  stroke="#CCCCCC"
-                  strokeWidth="0.336"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  <g id="Menu / Close_MD">
-                    <path
-                      id="Vector"
-                      d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
-                      stroke="#000000"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </g>
-                </g>
-              </svg>
+              <CloseBtn onClick={onClose} className={`${styles.closeBtn}`} />
             </div>
-
             <div className="d-grid gap-2 mt-n1">
-              <div className="d-grid gap-2 mt-n1">
-                <h2 className="mt-2">Payment Method:</h2>
-                <input
-                  style={{
-                    borderColor:
-                      lossData && !isValidCardNumber(cardNumberValue)
-                        ? "red"
-                        : "",
-                  }}
-                  required
-                  min="0"
-                  className={`form-control ${styles.noArrow} ${styles.cardNumberInput}`}
-                  placeholder="Card Number"
-                  type="text"
-                  value={formatCardNumber(cardNumberValue)}
-                  onChange={(e) => {
-                    let value = e.target.value;
-                    value = value.replace(/\D/g, "");
-
-                    if (value.length <= 16) {
-                      setCardNumberValue(value);
-                      setEditUserData((prevSendData) => ({
-                        ...prevSendData,
-                        cardNumber: value,
-                      }));
-                    }
-                  }}
-                />
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <input
-                    style={{
-                      borderColor:
-                        lossData && changePassword?.currentPassword?.length <= 0
-                          ? "red"
-                          : "",
-                      width: "50%",
-                      fontSize: "18px",
-                    }}
-                    required
-                    min="0"
-                    className={`form-control ${styles.noArrow}`}
-                    placeholder="CVC"
-                    type="number"
-                    value={inputValue}
-                    onChange={(e) => {
-                      let value = e.target.value;
-                      if (/^\d{0,3}$/.test(value)) {
-                        setInputValue(value);
-                      }
-                      setEditUserData((prevSendData) => ({
-                        ...prevSendData,
-                        cvc: value,
-                      }));
-                    }}
-                  />
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "10px",
-                      width: "50%",
-                      alignItems: "center",
-                    }}
-                  >
-                    <input
-                      style={{
-                        borderColor:
-                          lossData &&
-                            changePassword?.currentPassword?.length <= 0
-                            ? "red"
-                            : "",
-                        fontSize: "18px",
-                      }}
-                      required
-                      min="0"
-                      max="12"
-                      className={`form-control ${styles.noArrow}`}
-                      placeholder="Month"
-                      type="number"
-                      value={monthValue}
-                      onChange={(e) => {
-                        let value = e.target.value;
-                        if (/^\d{0,2}$/.test(value)) {
-                          setMonthValue(value);
-                        }
-                        setEditUserData((prevSendData) => ({
-                          ...prevSendData,
-                          month: value,
-                        }));
-                      }}
-                    />
-                    <div
-                      style={{
-                        height: "80%",
-                        width: "4px",
-                        backgroundColor: "grey",
-                        transform: "rotate(18deg)",
-                      }}
-                    ></div>
-                    <input
-                      style={{
-                        borderColor:
-                          lossData &&
-                            changePassword?.currentPassword?.length <= 0
-                            ? "red"
-                            : "",
-                        fontSize: "18px",
-                      }}
-                      required
-                      min="5"
-                      max="99"
-                      className={`form-control ${styles.noArrow}`}
-                      placeholder="Year"
-                      type="number"
-                      value={yearValue}
-                      onChange={(e) => {
-                        let value = e.target.value;
-                        if (/^\d{0,2}$/.test(value)) {
-                          setYearValue(value);
-                        }
-                        setEditUserData((prevSendData) => ({
-                          ...prevSendData,
-                          year: value,
-                        }));
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
+              <PaymentMethod setEditUserData={setEditUserData} />
               {lossData && !editUserData?.paymentMethod && (
                 <p style={{ color: "red" }}>გთხოვთ აირჩიოთ გადახდის მეთოდი</p>
               )}
@@ -695,36 +445,10 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                 <div className="col">
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <div className="text-muted">რედაქტირება</div>
-                    <svg
+                    <CloseBtn
                       onClick={onClose}
                       className={`${styles.closeBtn}`}
-                      width="64px"
-                      height="64px"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                      <g
-                        id="SVGRepo_tracerCarrier"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        stroke="#CCCCCC"
-                        strokeWidth="0.336"
-                      ></g>
-                      <g id="SVGRepo_iconCarrier">
-                        <g id="Menu / Close_MD">
-                          <path
-                            id="Vector"
-                            d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"
-                            stroke="#000000"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          ></path>
-                        </g>
-                      </g>
-                    </svg>
+                    />
                   </div>
                   <div className="d-grid gap-2">
                     <label className="mt-2">აქტიური პაროლი:</label>
@@ -732,7 +456,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                       style={{
                         borderColor:
                           lossData &&
-                            changePassword?.currentPassword?.length <= 0
+                          changePassword?.currentPassword?.length <= 0
                             ? "red"
                             : "",
                       }}
@@ -783,8 +507,8 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                           lossData && changePassword?.password?.length < 6
                             ? "red"
                             : changePassword?.password?.length >= 6
-                              ? "green"
-                              : "",
+                            ? "green"
+                            : "",
                       }}
                     >
                       {lossData && changePassword?.password?.length < 6 ? (
@@ -806,7 +530,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
                       style={{
                         borderColor:
                           lossData &&
-                            changePassword?.passwordConfirmation?.length <= 0
+                          changePassword?.passwordConfirmation?.length <= 0
                             ? "red"
                             : "",
                       }}
@@ -826,23 +550,23 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
 
                     {lossData &&
                       changePassword?.passwordConfirmation !==
-                      changePassword?.password && (
+                        changePassword?.password && (
                         <span
                           style={{
                             color:
                               lossData &&
-                                changePassword?.passwordConfirmation !==
+                              changePassword?.passwordConfirmation !==
                                 changePassword?.password
                                 ? "red"
                                 : lossData &&
                                   changePassword?.passwordConfirmation ===
-                                  changePassword?.password
-                                  ? "green"
-                                  : "",
+                                    changePassword?.password
+                                ? "green"
+                                : "",
                           }}
                         >
                           {lossData &&
-                            changePassword?.passwordConfirmation !==
+                          changePassword?.passwordConfirmation !==
                             changePassword?.password ? (
                             <i className="bi bi-x" />
                           ) : (
