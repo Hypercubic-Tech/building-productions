@@ -6,14 +6,6 @@ const PaymentMethod = ({ setEditUserData }) => {
   const [monthValue, setMonthValue] = useState("");
   const [yearValue, setYearValue] = useState("");
   const [inputValue, setInputValue] = useState("");
-  const [paymentMethodData, setPaymentMethodData] = useState({
-    cardNumber: paymentMethodData?.cardNumber,
-    cvc: paymentMethodData?.cvc,
-    expiration: {
-      month: paymentMethodData?.month,
-      year: paymentMethodData?.year,
-    },
-  });
 
   const isValidCardNumber = (cardNum) => {
     if (/[^0-9-\s]+/.test(cardNum)) return false;
@@ -65,7 +57,7 @@ const PaymentMethod = ({ setEditUserData }) => {
 
           if (value.length <= 16) {
             setCardNumberValue(value);
-            setPaymentMethodData((prevSendData) => ({
+            setEditUserData((prevSendData) => ({
               ...prevSendData,
               cardNumber: value,
             }));
@@ -89,7 +81,7 @@ const PaymentMethod = ({ setEditUserData }) => {
             if (/^\d{0,3}$/.test(value)) {
               setInputValue(value);
             }
-            setPaymentMethodData((prevSendData) => ({
+            setEditUserData((prevSendData) => ({
               ...prevSendData,
               cvc: value,
             }));
@@ -117,7 +109,7 @@ const PaymentMethod = ({ setEditUserData }) => {
               if (/^\d{0,2}$/.test(value)) {
                 setMonthValue(value);
               }
-              setPaymentMethodData((prevSendData) => ({
+              setEditUserData((prevSendData) => ({
                 ...prevSendData,
                 month: value,
               }));
@@ -145,7 +137,7 @@ const PaymentMethod = ({ setEditUserData }) => {
               if (/^\d{0,2}$/.test(value)) {
                 setYearValue(value);
               }
-              setPaymentMethodData((prevSendData) => ({
+              setEditUserData((prevSendData) => ({
                 ...prevSendData,
                 year: value,
               }));
