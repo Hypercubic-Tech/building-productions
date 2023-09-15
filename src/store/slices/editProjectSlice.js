@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
@@ -6,19 +6,19 @@ const initialState = {
 };
 
 const editProjectSlice = createSlice({
-  name: 'updateProject',
+  name: "updateProject",
   initialState,
-  reducers: {   
+  reducers: {
     setUpdateProject(state, action) {
       state.updateProject = action.payload;
     },
-    extraReducers: {
-      [HYDRATE]: (state, action) => {
+    extraReducers: (builder) => {
+      builder.addCase(HYDRATE, (state, action) => {
         return {
           ...state,
           ...action.payload.authModal,
         };
-      },
+      });
     },
   },
 });

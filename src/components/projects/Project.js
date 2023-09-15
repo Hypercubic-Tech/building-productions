@@ -6,6 +6,8 @@ import axios from "axios";
 
 import { setCategory } from "../../store/slices/categorySlice";
 import { setProducts } from "../../store/slices/productSlice";
+import { notify } from "../../utils/notify";
+
 
 import Filter from "./Filter";
 import Products from "../products/Products";
@@ -31,7 +33,8 @@ const Project = ({
   productOptions,
   productStatus,
   defaultImage,
-  getProjectById
+  getProjectById,
+  allowedProducts
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -82,6 +85,17 @@ const Project = ({
     return acc + productTotal;
   }, 0);
 
+  const allowanceChecker = () => {
+    if (products.length < allowedProducts) {
+      setSelect("add");
+    } else if (allowedProducts === 'უსასრულო') {
+      setSelect('add');
+    } else {
+      // notify(false, "პროდუქტის ატვირთვა უარყოფილია თქვენ ამოგეწურათ ლიმიტი");
+      console.log('hi')
+    }
+  };
+
   useEffect(() => {
     const defaultProductCallBack = async () => {
       if (activeCategoryId && projectId) {
@@ -90,6 +104,7 @@ const Project = ({
     }
     defaultProductCallBack()
   }, [activeCategoryId, projectId]);
+  console.log(products, 'products');
 
   return (
     <>
@@ -298,9 +313,7 @@ const Project = ({
                           {activeCategoryId === null ? ("") : (
                             <button
                               type="button"
-                              onClick={() => {
-                                setSelect("add");
-                              }}
+                              onClick={() => allowanceChecker()}
                               className="btn btn-primary georgian"
                               data-bs-toggle="modal"
                               data-bs-target="#kt_modal_add_user"

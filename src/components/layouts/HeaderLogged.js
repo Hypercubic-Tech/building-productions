@@ -259,7 +259,7 @@ function HeaderLogged() {
                     </Link>
                     <div
                       className={`${styles.hover} justify-content-between d-flex`}
-                      onClick={loggedIn ? handleGoogleLogout : handleLogout}
+                      onClick={session ? handleGoogleLogout : handleLogout}
                     >
                       გასვლა
                       <LogOutSvg className={styles.closeBtn} />

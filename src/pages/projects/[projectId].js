@@ -12,7 +12,7 @@ import Unauthorized from "../401";
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { projectId, allowedProducts } = router.query;
+  const { projectId, allowedProducts} = router.query;
   const loggedIn = useSelector(setAuthState);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
@@ -101,7 +101,7 @@ const index = () => {
 
         .then((res) => {
           const data = res.data;
-          setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
+          setDefaultImage(data.data?.attributes?.NoImage?.data?.attributes?.url);
         });
     };
 
@@ -121,7 +121,6 @@ const index = () => {
     setEditProductItem(product);
   };
 
-  console.log(allowedProducts, 'allowedProducts');
   return (
     <>
       {!isLoggedIn ? (

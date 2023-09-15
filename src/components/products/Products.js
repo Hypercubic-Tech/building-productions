@@ -333,7 +333,7 @@ const Products = ({
 
 
   useEffect(() => {
-    if (projectId && productsToMap) {
+    if (activeCategoryId === null && projectId && productsToMap) {
       const totalSumHandler = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`)
           .then((res) => {
@@ -344,7 +344,7 @@ const Products = ({
 
       totalSumHandler();
     };
-  }, [projectId, productsToMap]);
+  }, [projectId, productsToMap, activeCategoryId]);
 
 
   return (
