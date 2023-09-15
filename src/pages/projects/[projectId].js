@@ -121,7 +121,7 @@ const index = () => {
     setEditProductItem(product);
   };
 
-  console.log(allowedProducts, 'allowedProducts')
+  console.log(allowedProducts, 'allowedProducts');
   return (
     <>
       {!isLoggedIn ? (
