@@ -115,11 +115,11 @@ const index = () => {
 
   const allowedProjectsHandler = () => {
     if (paymentPlan?.payment_duration === 'month') {
-      setAllowedProjectsCount(paymentPlan?.payment_plan.month_allowed_projects);
-      setAllowedProductsCount(paymentPlan?.payment_plan.month_allowed_products);
+      setAllowedProjectsCount(paymentPlan?.payment_plan?.month_allowed_projects);
+      setAllowedProductsCount(paymentPlan?.payment_plan?.month_allowed_products);
     } else {
-      setAllowedProjectsCount(paymentPlan?.payment_plan.year_allowed_projects);
-      setAllowedProductsCount(paymentPlan?.payment_plan.year_allowed_products);
+      setAllowedProjectsCount(paymentPlan?.payment_plan?.year_allowed_projects);
+      setAllowedProductsCount(paymentPlan?.payment_plan?.year_allowed_products);
     }
   };
 
