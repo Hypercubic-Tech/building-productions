@@ -55,8 +55,6 @@ const AddProject = ({
     },
   });
 
-  console.log(sessionUserId, userId, "ff");
-
   let errors = {
     stepOne: [],
     stepTwo: [],
@@ -507,7 +505,7 @@ const AddProject = ({
                           <input
                             className="custom-input form-control georgian form-control-solid"
                             placeholder="დღგ-ს გადამხდელი (%)"
-                            type="text"
+                            type="number"
                             onChange={(e) => {
                               setSendData((prevSendData) => ({
                                 ...prevSendData,
@@ -529,7 +527,7 @@ const AddProject = ({
                                 unforeseenExpenses: event.target.value,
                               }));
                             }}
-                            type="text"
+                            type="number"
                             className="custom-input form-control georgian form-control-solid"
                             placeholder="გაუთვალისწინებელი ხარჯები (%)"
                           />
@@ -546,7 +544,7 @@ const AddProject = ({
                             </label>
                             <input
                               className="custom-input form-control georgian form-control-solid"
-                              type="text"
+                              type="number"
                               id="flexSwitchCheckDefault"
                               placeholder="მომსახურების ხარჯები (%)"
                               onChange={(e) => {
