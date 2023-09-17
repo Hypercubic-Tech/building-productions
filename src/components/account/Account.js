@@ -9,8 +9,10 @@ import EditButton from "../ui/EditButton";
 import ImageUpload from "../ui/ImageUpload";
 
 import styles from "./Account.module.css";
+import LoadingPage from "../ui/LoadingPage";
 
 const index = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [pricesData, setPricesData] = useState(null);
   const [authUser, setAuthUser] = useState([]);
   const [imgSrc, setImgSrc] = useState(null);
@@ -21,7 +23,6 @@ const index = () => {
   const provider = useSelector((state) => state.auth.provider);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
-  
   const { data: session } = useSession();
 
   const loggedUserInfo = async () => {
@@ -36,6 +37,7 @@ const index = () => {
       await axios.get(url).then((res) => {
         const data = res.data;
         setAuthUser(data);
+        setIsLoading(false);
       });
     }
   };
@@ -145,17 +147,17 @@ const index = () => {
     }
   };
 
-
   const getPricesData = async () => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`
+      );
       const data = response.data;
       setPricesData(data?.data);
     } catch (error) {
       console.error(error);
     }
-
-  }
+  };
 
   useEffect(() => {
     loggedUserInfo();
@@ -201,7 +203,9 @@ const index = () => {
 
   return (
     <>
-      {!isLoggedIn ? (
+      {isLoading ? (
+        <LoadingPage />
+      ) : !isLoggedIn ? (
         <Unauthorized />
       ) : (
         <div className={`${styles.mainContainer} container`}>
