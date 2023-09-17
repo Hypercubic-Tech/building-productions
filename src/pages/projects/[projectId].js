@@ -12,7 +12,7 @@ import Unauthorized from "../401";
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { projectId, allowedProducts} = router.query;
+  const { projectId, allowedProducts, allowedExport} = router.query;
   const loggedIn = useSelector(setAuthState);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
 
@@ -128,6 +128,7 @@ const index = () => {
       ) : (
         <Project
           allowedProducts={allowedProducts}
+          allowedExport={allowedExport} 
           productStatus={productStatus}
           productOptions={productOptions}
           project={project}

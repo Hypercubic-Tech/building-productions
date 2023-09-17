@@ -36,6 +36,7 @@ const index = () => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
 
+  const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
   const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
@@ -114,6 +115,8 @@ const index = () => {
   };
 
   const allowedProjectsHandler = () => {
+    setAllowedExport(paymentPlan?.payment_plan.allowed_drawings);
+
     if (paymentPlan?.payment_duration === 'month') {
       setAllowedProjectsCount(paymentPlan?.payment_plan?.month_allowed_projects);
       setAllowedProductsCount(paymentPlan?.payment_plan?.month_allowed_products);
@@ -384,7 +387,7 @@ const index = () => {
                         <Link
                           href={{
                             pathname: `/projects/${item?.id}`,
-                            query: { projectId: item?.id, allowedProducts: allowedProductsCount },
+                            query: { projectId: item?.id, allowedProducts: allowedProductsCount, allowedExport: allowedExport },
                           }}
                           passHref
                           className={styles.cardLink}

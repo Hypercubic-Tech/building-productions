@@ -46,3 +46,16 @@
 .tableContainer {
     width: 100%;
 }
+
+
+.disabledBtn {
+    opacity: 0.7!important;
+    cursor: not-allowed!important;
+    background-color: rgb(78, 78, 78)!important;
+    color: #fff!important;
+    pointer-events: none;
+}
+
+.disabledBtn svg path {
+    stroke: #fff;
+}

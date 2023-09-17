@@ -34,11 +34,11 @@ const Project = ({
   productStatus,
   defaultImage,
   getProjectById,
-  allowedProducts
+  allowedProducts,
+  allowedExport
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
   const { projectId } = router.query;
 
   const products = useSelector(state => state.prod.products);
@@ -47,6 +47,9 @@ const Project = ({
   const [select, setSelect] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
+
+  const [allowedDrawings, setAllowedDrawings] = useState(false);
+  const [allowedProductsAdd, setAllowedProductsAdd] = useState(false);
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
@@ -87,12 +90,17 @@ const Project = ({
 
   const allowanceChecker = () => {
     if (products.length < allowedProducts) {
-      setSelect("add");
+      // setSelect("add");
+      setAllowedProductsAdd(true);
     } else if (allowedProducts === 'უსასრულო') {
-      setSelect('add');
+      // setSelect('add');
+      setAllowedProductsAdd(true);
+
     } else {
+      setSelect(null);
       // notify(false, "პროდუქტის ატვირთვა უარყოფილია თქვენ ამოგეწურათ ლიმიტი");
       console.log('hi')
+      setAllowedProductsAdd(false);
     }
   };
 
@@ -106,6 +114,10 @@ const Project = ({
   }, [activeCategoryId, projectId]);
   console.log(products, 'products');
 
+  useEffect(() => {
+    allowanceChecker()
+  }, [allowedProducts, allowedExport])
+console.log(allowedProductsAdd, 'allowe?')
   return (
     <>
       {project && project.map((p, index) => {
@@ -274,9 +286,9 @@ const Project = ({
                           < button
                             type="button"
                             onClick={() => {
-                              setSelect("exportPopUp");
+                              allowedDrawings && setSelect("exportPopUp");
                             }}
-                            className="btn btn-light-primary me-3 georgian"
+                            className={`${"btn btn-light-primary me-3 georgian"} ${!allowedDrawings && styles.disabledBtn}`}
                             data-bs-toggle="modal"
                             data-bs-target="#kt_modal_export_users"
                           >
@@ -313,8 +325,8 @@ const Project = ({
                           {activeCategoryId === null ? ("") : (
                             <button
                               type="button"
-                              onClick={() => allowanceChecker()}
-                              className="btn btn-primary georgian"
+                              onClick={() => allowedProductsAdd && setSelect('add')}
+                              className={`${"btn btn-primary georgian"} ${allowedProductsAdd ? "" : styles.disabledBtn}`}
                               data-bs-toggle="modal"
                               data-bs-target="#kt_modal_add_user"
                             >
