@@ -28,6 +28,7 @@ const Products = ({
   const { projectId } = router.query;
   const activeCategoryId = useSelector(state => state?.cats?.category);
   const products = useSelector(state => state.prod.products);
+  console.log(products, 'products');
 
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
@@ -36,7 +37,7 @@ const Products = ({
   const [newStatusValue, setNewStatusValue] = useState(null);
   const [newCraftStatusValue, setNewCraftStatusValue] = useState(null);
 
-  let itemsPerPage = 5;
+  let itemsPerPage = 10;
 
   let productsToMap = products;
 
@@ -346,7 +347,7 @@ const Products = ({
     };
   }, [projectId, productsToMap, activeCategoryId]);
 
-
+  console.log(productsToMap, 'aggregated')
   return (
     <>
       <div className="table-responsive">
