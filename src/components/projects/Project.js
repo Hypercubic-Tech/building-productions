@@ -98,8 +98,6 @@ const Project = ({
     }
   };
 
-  console.log(allProductsCount, 'count');
-  console.log(allowedProducts, 'allowed');
   useEffect(() => {
     const defaultProductCallBack = async () => {
       if (activeCategoryId && projectId) {
