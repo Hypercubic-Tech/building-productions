@@ -6,14 +6,16 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import notify from '../../utils/notify';
+import notify from "../../utils/notify";
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import Unauthorized from "../401";
 
 import styles from "../../components/popup/Modal.module.css";
+import LoadingPage from "../../components/ui/LoadingPage";
 
 const index = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const userId = useSelector((state) => state.auth.user_id);
 
   const searchValue = useSelector((state) => state.proj.searchType);
@@ -42,7 +44,6 @@ const index = () => {
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
 
   const { data: session } = useSession();
-
 
   let itemsPerPage = 8;
 
@@ -97,10 +98,9 @@ const index = () => {
     if (userProjectsLenght < allowedProjectsCount) {
       setAddProject(!addProject);
       setClose(true);
-    } else if (allowedProjectsCount === 'უსასრულო') {
+    } else if (allowedProjectsCount === "უსასრულო") {
       setAddProject(!addProject);
       setClose(true);
-
     } else {
       notify(true, "პროექტის ატვირთვა უარყოფილია თქვენ ამოგეწურათ ლიმიტი");
     }
@@ -126,6 +126,7 @@ const index = () => {
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
       );
       setShowProject(false);
+      setIsLoading(false);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -247,7 +248,7 @@ const index = () => {
   }, [showProject]);
 
   useEffect(() => {
-    allowedProjectsHandler()
+    allowedProjectsHandler();
   }, [paymentPlan]);
 
   useEffect(() => {
@@ -342,7 +343,9 @@ const index = () => {
 
   return (
     <>
-      {!isLoggedIn ? (
+      {isLoading ? (
+        <LoadingPage />
+      ) : !isLoggedIn ? (
         <Unauthorized />
       ) : (
         <>
@@ -391,12 +394,12 @@ const index = () => {
                               src={
                                 (imageWithMainId &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                  imageWithMainId?.attributes?.url) ||
+                                    imageWithMainId?.attributes?.url) ||
                                 (item?.attributes?.image?.data?.[0]?.attributes
                                   ?.url &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                  item?.attributes?.image?.data?.[0]
-                                    ?.attributes?.url) ||
+                                    item?.attributes?.image?.data?.[0]
+                                      ?.attributes?.url) ||
                                 "/images/test-img.png"
                               }
                               className="card-img-top"
