@@ -126,7 +126,6 @@ const index = () => {
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
       );
       setShowProject(false);
-      console.log(response, )
       return response.data;
     } catch (error) {
       console.error(error);
@@ -242,7 +241,6 @@ const index = () => {
       const data = await getProjectsData();
       setProjectData(data.data);
       setUserProjectsLenght(data?.meta?.pagination?.total)
-      console.log(data?.meta?.pagination?.total, 'console')
     };
 
     fetchData();
@@ -341,10 +339,7 @@ const index = () => {
     getCitiesHandler();
     getPropertyTypesHandler();
   }, []);
-  useEffect(() => {
-    console.log("Number of projects:", projectData?.length);
-  }, [projectData]);
-  console.log(projectsToMap)
+
   return (
     <>
       {!isLoggedIn ? (
