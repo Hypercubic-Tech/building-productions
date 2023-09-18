@@ -6,8 +6,6 @@ import axios from "axios";
 
 import { setCategory } from "../../store/slices/categorySlice";
 import { setProducts } from "../../store/slices/productSlice";
-import { notify } from "../../utils/notify";
-
 
 import Filter from "./Filter";
 import Products from "../products/Products";
@@ -48,8 +46,7 @@ const Project = ({
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState('');
 
-  const [allowedDrawings, setAllowedDrawings] = useState(false);
-  const [allowedProductsAdd, setAllowedProductsAdd] = useState(false);
+  const [allowedProductsAdd, setAllowedProductsAdd] = useState(true);
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
@@ -89,20 +86,18 @@ const Project = ({
   }, 0);
 
   const allowanceChecker = () => {
-    if (products.length < allowedProducts) {
-      // setSelect("add");
+    if (products.length < allowedProducts || allowedProducts === 'უსასრულო') {
+      setSelect('add');
       setAllowedProductsAdd(true);
-    } else if (allowedProducts === 'უსასრულო') {
-      // setSelect('add');
-      setAllowedProductsAdd(true);
-
-    } else {
+    } else if (products.length === allowedProducts) {
       setSelect(null);
-      // notify(false, "პროდუქტის ატვირთვა უარყოფილია თქვენ ამოგეწურათ ლიმიტი");
-      console.log('hi')
       setAllowedProductsAdd(false);
+    } else {
+      setAllowedProductsAdd(false)
+
     }
   };
+
 
   useEffect(() => {
     const defaultProductCallBack = async () => {
@@ -112,12 +107,7 @@ const Project = ({
     }
     defaultProductCallBack()
   }, [activeCategoryId, projectId]);
-  console.log(products, 'products');
 
-  useEffect(() => {
-    allowanceChecker()
-  }, [allowedProducts, allowedExport])
-console.log(allowedProductsAdd, 'allowe?')
   return (
     <>
       {project && project.map((p, index) => {
@@ -288,7 +278,7 @@ console.log(allowedProductsAdd, 'allowe?')
                             onClick={() => {
                               allowedDrawings && setSelect("exportPopUp");
                             }}
-                            className={`${"btn btn-light-primary me-3 georgian"} ${!allowedDrawings && styles.disabledBtn}`}
+                            className={`${"btn btn-light-primary me-3 georgian"} ${!allowedExport && styles.disabledBtn}`}
                             data-bs-toggle="modal"
                             data-bs-target="#kt_modal_export_users"
                           >
@@ -323,26 +313,31 @@ console.log(allowedProductsAdd, 'allowe?')
                             <b>ეხპორტი</b>
                           </button>
                           {activeCategoryId === null ? ("") : (
-                            <button
-                              type="button"
-                              onClick={() => allowedProductsAdd && setSelect('add')}
-                              className={`${"btn btn-primary georgian"} ${allowedProductsAdd ? "" : styles.disabledBtn}`}
-                              data-bs-toggle="modal"
-                              data-bs-target="#kt_modal_add_user"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width={16}
-                                height={16}
-                                fill="currentColor"
-                                className="bi bi-send-plus-fill"
-                                viewBox="0 0 16 16"
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                              <button
+                                type="button"
+                                onClick={allowanceChecker}
+                                className={`${"btn btn-primary georgian"} ${!allowedProductsAdd && styles.disabledBtn}`}
+                                data-bs-toggle="modal"
+                                data-bs-target="#kt_modal_add_user"
                               >
-                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
-                                <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z" />
-                              </svg>
-                              <b>დამატება</b>
-                            </button>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width={16}
+                                  height={16}
+                                  fill="currentColor"
+                                  className="bi bi-send-plus-fill"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
+                                  <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z" />
+                                </svg>
+                                <b>დამატება</b>
+                              </button>
+                              {!allowedProductsAdd && (
+                                <span style={{color: 'red', marginTop: '6px'}}>პროდუქტების დამატების ლიმიტი ამოიწურა</span>
+                              )}
+                            </div>
                           )}
                         </div>
                         <div

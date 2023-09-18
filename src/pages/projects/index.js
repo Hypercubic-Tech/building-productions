@@ -57,18 +57,16 @@ const index = () => {
     if (projectData && Array.isArray(projectData)) {
       projectsToMap = projectData.reduce((filteredProjects, project) => {
         const projectTitle = project?.attributes?.title?.toLowerCase();
-        const projectAddress = project?.attributes?.address?.toLowerCase(); // Added line
+        const projectAddress = project?.attributes?.address?.toLowerCase(); 
         if (
           projectTitle === lowercaseSearchType ||
           projectAddress === lowercaseSearchType
         ) {
-          // Modified line
           return [project];
         } else if (
           projectTitle.includes(lowercaseSearchType) ||
           projectAddress.includes(lowercaseSearchType)
         ) {
-          // Modified line
           return [...filteredProjects, project];
         }
         return filteredProjects;
@@ -115,14 +113,10 @@ const index = () => {
   };
 
   const allowedProjectsHandler = () => {
-    setAllowedExport(paymentPlan?.payment_plan.allowed_drawings);
-
     if (paymentPlan?.payment_duration === 'month') {
       setAllowedProjectsCount(paymentPlan?.payment_plan?.month_allowed_projects);
-      setAllowedProductsCount(paymentPlan?.payment_plan?.month_allowed_products);
     } else {
       setAllowedProjectsCount(paymentPlan?.payment_plan?.year_allowed_projects);
-      setAllowedProductsCount(paymentPlan?.payment_plan?.year_allowed_products);
     }
   };
 
@@ -132,6 +126,7 @@ const index = () => {
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
       );
       setShowProject(false);
+      console.log(response, )
       return response.data;
     } catch (error) {
       console.error(error);
@@ -246,7 +241,8 @@ const index = () => {
     const fetchData = async () => {
       const data = await getProjectsData();
       setProjectData(data.data);
-      setUserProjectsLenght(data.data.length)
+      setUserProjectsLenght(data?.meta?.pagination?.total)
+      console.log(data?.meta?.pagination?.total, 'console')
     };
 
     fetchData();
@@ -345,7 +341,10 @@ const index = () => {
     getCitiesHandler();
     getPropertyTypesHandler();
   }, []);
-
+  useEffect(() => {
+    console.log("Number of projects:", projectData?.length);
+  }, [projectData]);
+  console.log(projectsToMap)
   return (
     <>
       {!isLoggedIn ? (
@@ -387,7 +386,7 @@ const index = () => {
                         <Link
                           href={{
                             pathname: `/projects/${item?.id}`,
-                            query: { projectId: item?.id, allowedProducts: allowedProductsCount, allowedExport: allowedExport },
+                            query: { projectId: item?.id },
                           }}
                           passHref
                           className={styles.cardLink}

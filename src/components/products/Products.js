@@ -28,7 +28,6 @@ const Products = ({
   const { projectId } = router.query;
   const activeCategoryId = useSelector(state => state?.cats?.category);
   const products = useSelector(state => state.prod.products);
-  console.log(products, 'products');
 
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
@@ -347,7 +346,6 @@ const Products = ({
     };
   }, [projectId, productsToMap, activeCategoryId]);
 
-  console.log(productsToMap, 'aggregated')
   return (
     <>
       <div className="table-responsive">

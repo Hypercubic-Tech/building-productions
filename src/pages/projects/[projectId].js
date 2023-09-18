@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import { setCategory } from "../../store/slices/categorySlice";
-import { setAuthState } from "../../store/slices/authSlice";
 
 import Project from "../../components/projects/Project";
 import Unauthorized from "../401";
@@ -12,9 +11,11 @@ import Unauthorized from "../401";
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { projectId, allowedProducts, allowedExport} = router.query;
-  const loggedIn = useSelector(setAuthState);
+  const { projectId} = router.query;
+  
+  const userId = useSelector((state) => state.auth.user_id);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const provider = useSelector((state) => state.auth.provider);
 
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
@@ -27,14 +28,26 @@ const index = () => {
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
 
+  const [paymentPlan, setPaymentPlan] = useState(null);
+  const [allowedExport, setAllowedExport] = useState(false);
+  const [allowedProductsCount, setAllowedProductsCount] = useState(null);
+
+  const allowedProductsHandler = () => {
+    setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
+
+    if (paymentPlan?.payment_duration === 'month') {
+      setAllowedProductsCount(paymentPlan?.payment_plan?.month_allowed_products);
+    } else {
+      setAllowedProductsCount(paymentPlan?.payment_plan?.year_allowed_products);
+    }
+  };
+
   const getProjectById = async () => {
     if (projectId) {
-      // console.log(projectId, 'id')
       try {
         const projectRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`);
         const projectData = projectRes.data?.data;
         setProject(projectData);
-        console.log(projectData)
         const productRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`);
         const productData = productRes.data;
         setProductOptions(productData);
@@ -47,6 +60,10 @@ const index = () => {
       }
     }
   };
+
+  useEffect(() => {
+    allowedProductsHandler();
+  }, [paymentPlan]);
 
   useEffect(() => {
     const getSupplierHandler = async () => {
@@ -105,6 +122,23 @@ const index = () => {
         });
     };
 
+    const loggedUserInfo = async () => {
+      let url;
+  
+      if (provider === "google") {
+        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+      } else {
+        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
+      }
+      if (url) {
+        await axios.get(url).then((res) => {
+          const data = res.data;
+          setPaymentPlan(data[0]);
+        });
+      }
+    };
+
+    loggedUserInfo();
     getDefaultImage();
     getProductsStatusHandler();
     getCraftsStatusHandler();
@@ -127,7 +161,7 @@ const index = () => {
         <Unauthorized />
       ) : (
         <Project
-          allowedProducts={allowedProducts}
+          allowedProducts={allowedProductsCount}
           allowedExport={allowedExport} 
           productStatus={productStatus}
           productOptions={productOptions}
