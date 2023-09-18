@@ -13,7 +13,8 @@ const AddProduct = ({
     unit,
     suppliers,
     craftStatus,
-    productStatus
+    productStatus,
+    getProjectById
 }) => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -93,6 +94,7 @@ const AddProduct = ({
                     const data = res.data;
                     notify(false, "პროდუქტი დაემატა");
                     dispatch(setProductState(data.data));
+                    getProjectById();
                 })
         } catch (err) {
             notify(true, "პროდუქტის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
@@ -113,6 +115,7 @@ const AddProduct = ({
                     const data = res.data;
                     notify(false, "ხელობა დაემატა");
                     dispatch(setProductState(data.data));
+                    getProjectById();
                 })
         } catch (err) {
             notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");

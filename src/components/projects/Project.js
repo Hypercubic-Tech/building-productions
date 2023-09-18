@@ -87,7 +87,6 @@ const Project = ({
   }, 0);
 
   const allowanceChecker = () => {
-    console.log(products, 'hi')
     if (allProductsCount < allowedProducts || allowedProducts === 'უსასრულო') {
       setSelect('add');
       setAllowedProductsAdd(true);
@@ -99,7 +98,8 @@ const Project = ({
     }
   };
 
-
+  console.log(allProductsCount, 'count');
+  console.log(allowedProducts, 'allowed');
   useEffect(() => {
     const defaultProductCallBack = async () => {
       if (activeCategoryId && projectId) {
@@ -108,6 +108,18 @@ const Project = ({
     }
     defaultProductCallBack()
   }, [activeCategoryId, projectId]);
+
+
+  useEffect(() => {
+    if (allProductsCount < allowedProducts || allowedProducts === 'უსასრულო') {
+      setAllowedProductsAdd(true);
+    } else if (allProductsCount === allowedProducts) {
+      setAllowedProductsAdd(false);
+    } else {
+      setAllowedProductsAdd(false)
+    }
+  }, [products])
+
 
   return (
     <>
@@ -314,7 +326,7 @@ const Project = ({
                             <b>ეხპორტი</b>
                           </button>
                           {activeCategoryId === null ? ("") : (
-                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
                               <button
                                 type="button"
                                 onClick={allowanceChecker}
@@ -336,34 +348,15 @@ const Project = ({
                                 <b>დამატება</b>
                               </button>
                               {!allowedProductsAdd && (
-                                <span style={{color: 'red', marginTop: '6px'}}>პროდუქტების დამატების ლიმიტი ამოიწურა</span>
+                                <span style={{ color: 'red', marginTop: '6px' }}>პროდუქტების დამატების ლიმიტი ამოიწურა</span>
                               )}
                             </div>
                           )}
                         </div>
-                        <div
-                          className="d-flex justify-content-end align-items-center d-none"
-                          data-kt-user-table-toolbar="selected"
-                        >
-                          <div className="fw-bolder me-5">
-                            <span
-                              className="me-2"
-                              data-kt-user-table-select="selected_count"
-                            />
-                            Selected
-                          </div>
-                          <button
-                            type="button"
-                            className="btn btn-danger"
-                            data-kt-user-table-select="delete_selected"
-                          >
-                            Delete Selected
-                          </button>
-                        </div>
                         {select === "gallery" && <Gallery getProjectById={getProjectById} setSelect={setSelect} />}
                         {select === "dranings" && <Drawings getProjectById={getProjectById} setSelect={setSelect} />}
                         {select === "export" && <Export setSelect={setSelect} />}
-                        {select === "add" && <AddProduct project={productOptions} setSelect={setSelect} productStatus={productStatus} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
+                        {select === "add" && <AddProduct getProjectById={getProjectById} project={productOptions} setSelect={setSelect} productStatus={productStatus} craftStatus={craftStatus} crafts={crafts} unit={unit} allCategories={projectCategory} suppliers={suppliers}
                         />}
                         {select === "edit-product" &&
                           <EditProduct product={editProductItem}
@@ -389,6 +382,7 @@ const Project = ({
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
+                        getProjectById={getProjectById}
                         defaultImage={defaultImage}
                         productStatus={productStatus}
                         projectId={projectId}

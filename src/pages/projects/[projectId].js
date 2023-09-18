@@ -48,8 +48,9 @@ const index = () => {
       try {
         const projectRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`);
         const projectData = projectRes.data?.data;
-        setAllProductsCount(projectRes.data.data[0]?.attributes?.products?.data?.length,)
         setProject(projectData);
+        setAllProductsCount(projectRes.data.data[0]?.attributes?.products?.data?.length)
+
         const productRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`);
         const productData = productRes.data;
         setProductOptions(productData);
