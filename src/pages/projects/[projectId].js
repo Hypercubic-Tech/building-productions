@@ -11,8 +11,8 @@ import Unauthorized from "../401";
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { projectId} = router.query;
-  
+  const { projectId } = router.query;
+
   const userId = useSelector((state) => state.auth.user_id);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const provider = useSelector((state) => state.auth.provider);
@@ -31,6 +31,7 @@ const index = () => {
   const [paymentPlan, setPaymentPlan] = useState(null);
   const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProductsCount, setAllowedProductsCount] = useState(null);
+  const [allProductsCount, setAllProductsCount] = useState(null);
 
   const allowedProductsHandler = () => {
     setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
@@ -47,6 +48,7 @@ const index = () => {
       try {
         const projectRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`);
         const projectData = projectRes.data?.data;
+        setAllProductsCount(projectRes.data.data[0]?.attributes?.products?.data?.length,)
         setProject(projectData);
         const productRes = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`);
         const productData = productRes.data;
@@ -124,7 +126,7 @@ const index = () => {
 
     const loggedUserInfo = async () => {
       let url;
-  
+
       if (provider === "google") {
         url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
       } else {
@@ -161,8 +163,9 @@ const index = () => {
         <Unauthorized />
       ) : (
         <Project
+          allProductsCount={allProductsCount}
           allowedProducts={allowedProductsCount}
-          allowedExport={allowedExport} 
+          allowedExport={allowedExport}
           productStatus={productStatus}
           productOptions={productOptions}
           project={project}

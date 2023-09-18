@@ -33,7 +33,8 @@ const Project = ({
   defaultImage,
   getProjectById,
   allowedProducts,
-  allowedExport
+  allowedExport,
+  allProductsCount
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -86,15 +87,15 @@ const Project = ({
   }, 0);
 
   const allowanceChecker = () => {
-    if (products.length < allowedProducts || allowedProducts === 'უსასრულო') {
+    console.log(products, 'hi')
+    if (allProductsCount < allowedProducts || allowedProducts === 'უსასრულო') {
       setSelect('add');
       setAllowedProductsAdd(true);
-    } else if (products.length === allowedProducts) {
+    } else if (allProductsCount === allowedProducts) {
       setSelect(null);
       setAllowedProductsAdd(false);
     } else {
       setAllowedProductsAdd(false)
-
     }
   };
 
