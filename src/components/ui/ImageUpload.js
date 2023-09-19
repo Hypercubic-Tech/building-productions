@@ -38,11 +38,14 @@ const ImageUpload = ({ onImageUpload, handleImageRemove }) => {
           <span>სურათის ატვირთვა</span>
         </div>
       </div>
-      {uploadedImage && (
-        <div className={styles.removeButton} onClick={removeImage}>
+      {/* {uploadedImage && (
+        <div className={styles.removeButton} 
+        
+        onClick={removeImage}
+        >
           წაშლა
         </div>
-      )}
+      )} */}
     </div>
   );
 };

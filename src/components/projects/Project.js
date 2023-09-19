@@ -97,6 +97,7 @@ const Project = ({
       setAllowedProductsAdd(false)
     }
   };
+  console.log(allProductsCount, 'products')
 
   useEffect(() => {
     const defaultProductCallBack = async () => {
@@ -287,7 +288,7 @@ const Project = ({
                           < button
                             type="button"
                             onClick={() => {
-                              allowedDrawings && setSelect("exportPopUp");
+                              allowedExport && setSelect("exportPopUp");
                             }}
                             className={`${"btn btn-light-primary me-3 georgian"} ${!allowedExport && styles.disabledBtn}`}
                             data-bs-toggle="modal"
