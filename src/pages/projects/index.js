@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -11,8 +11,12 @@ import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import Unauthorized from "../401";
 
-import styles from "../../components/popup/Modal.module.css";
 import LoadingPage from "../../components/ui/LoadingPage";
+import DeleteBtn from "../../components/svg/DeleteBtn";
+import EditSvg from "../../components/svg/EditSvg";
+
+import styles from "../../components/popup/Modal.module.css";
+import MapSvg from "../../components/svg/MapSvg";
 
 const index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +62,7 @@ const index = () => {
     if (projectData && Array.isArray(projectData)) {
       projectsToMap = projectData.reduce((filteredProjects, project) => {
         const projectTitle = project?.attributes?.title?.toLowerCase();
-        const projectAddress = project?.attributes?.address?.toLowerCase(); 
+        const projectAddress = project?.attributes?.address?.toLowerCase();
         if (
           projectTitle === lowercaseSearchType ||
           projectAddress === lowercaseSearchType
@@ -94,7 +98,7 @@ const index = () => {
     }
   };
 
-  console.log(allowedProjectsCount)
+  console.log(allowedProjectsCount);
 
   const addProjectHandler = () => {
     if (userProjectsLenght < allowedProjectsCount) {
@@ -115,8 +119,10 @@ const index = () => {
   };
 
   const allowedProjectsHandler = () => {
-    if (paymentPlan?.payment_duration === 'month') {
-      setAllowedProjectsCount(paymentPlan?.payment_plan?.month_allowed_projects);
+    if (paymentPlan?.payment_duration === "month") {
+      setAllowedProjectsCount(
+        paymentPlan?.payment_plan?.month_allowed_projects
+      );
     } else {
       setAllowedProjectsCount(paymentPlan?.payment_plan?.year_allowed_projects);
     }
@@ -132,6 +138,7 @@ const index = () => {
       return response.data;
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
       return [];
     }
   };
@@ -243,7 +250,7 @@ const index = () => {
     const fetchData = async () => {
       const data = await getProjectsData();
       setProjectData(data.data);
-      setUserProjectsLenght(data?.meta?.pagination?.total)
+      setUserProjectsLenght(data?.meta?.pagination?.total);
     };
 
     fetchData();
@@ -409,20 +416,11 @@ const index = () => {
                             />
                           </div>
                           <div className={`card-body ${styles.cardTtl}`}>
-                            <div className="card-title fw-boldest">
+                            <div className="card-title" style={{opacity: ".8"}}>
                               {item?.attributes?.title}
                             </div>
                             <p className="card-text">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="#eb445f"
-                                className="bi bi-geo-alt-fill"
-                                viewBox="0 0 16 16"
-                              >
-                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
-                              </svg>
+                              <MapSvg />
                               {item?.attributes?.address}
                             </p>
                           </div>
@@ -432,39 +430,15 @@ const index = () => {
                             onClick={() => editHandler(item)}
                             className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
                           >
-                            <svg
-                              className="card-svg rotate-svg"
-                              width="19"
-                              height="18"
-                              viewBox="0 0 19 18"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M7.63449 18L7.27297 15.1077C6.95373 15.0115 6.60854 14.8603 6.23739 14.6538C5.86624 14.4474 5.55053 14.2263 5.29027 13.9904L2.62297 15.125L0.757568 11.875L3.06334 10.1365C3.03386 9.95576 3.0095 9.76954 2.99027 9.57788C2.97104 9.38621 2.96142 9.19999 2.96142 9.01923C2.96142 8.85128 2.97104 8.67467 2.99027 8.48942C3.0095 8.30417 3.03386 8.09553 3.06334 7.86348L0.757568 6.125L2.62297 2.91345L5.27104 4.02885C5.56976 3.78013 5.89283 3.55578 6.24027 3.35578C6.5877 3.15578 6.92553 3.00128 7.25374 2.8923L7.63449 0H11.3653L11.7268 2.91153C12.1102 3.04614 12.4489 3.20063 12.7432 3.375C13.0374 3.54935 13.3403 3.7673 13.6518 4.02885L16.3768 2.91345L18.2422 6.125L15.8595 7.92115C15.9147 8.12757 15.9454 8.31699 15.9518 8.48942C15.9582 8.66186 15.9614 8.83205 15.9614 9C15.9614 9.15513 15.955 9.31892 15.9422 9.49135C15.9294 9.66378 15.8999 9.87243 15.8537 10.1173L18.198 11.875L16.3326 15.125L13.6518 13.9712C13.3403 14.2327 13.0268 14.4571 12.7114 14.6442C12.3961 14.8314 12.0679 14.9795 11.7268 15.0885L11.3653 18H7.63449ZM9.47297 11.5C10.1704 11.5 10.7614 11.2577 11.246 10.7731C11.7307 10.2885 11.973 9.69743 11.973 9C11.973 8.30257 11.7307 7.71154 11.246 7.22693C10.7614 6.74231 10.1704 6.5 9.47297 6.5C8.77168 6.5 8.17969 6.74231 7.69699 7.22693C7.21431 7.71154 6.97297 8.30257 6.97297 9C6.97297 9.69743 7.21431 10.2885 7.69699 10.7731C8.17969 11.2577 8.77168 11.5 9.47297 11.5Z"
-                                fill="#FCFFE7"
-                              />
-                            </svg>
-                            რედაქტირება
+                            <EditSvg />
+                            <span>რედაქტირება</span>
                           </div>
                           <div
                             onClick={() => confirmHandler(item)}
                             className="btn red-ghost-btn fw-boldest"
                           >
-                            <svg
-                              className="card-svg"
-                              width="15"
-                              height="16"
-                              viewBox="0 0 15 16"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M3.11537 16C2.65512 16 2.27083 15.8458 1.9625 15.5375C1.65417 15.2291 1.5 14.8448 1.5 14.3846V1.99996H0.5V0.999963H4.5V0.230713H10.5V0.999963H14.5V1.99996H13.5V14.3846C13.5 14.8448 13.3458 15.2291 13.0375 15.5375C12.7292 15.8458 12.3449 16 11.8846 16H3.11537ZM5.30768 13H6.3077V3.99996H5.30768V13ZM8.6923 13H9.69232V3.99996H8.6923V13Z"
-                                fill="#EB455F"
-                              />
-                            </svg>
-                            წაშლა
+                            <DeleteBtn />
+                            <span>წაშლა</span>
                           </div>
                         </div>
                       </div>

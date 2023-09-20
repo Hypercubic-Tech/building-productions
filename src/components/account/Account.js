@@ -34,11 +34,15 @@ const index = () => {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
     }
     if (url) {
-      await axios.get(url).then((res) => {
-        const data = res.data;
-        setAuthUser(data);
-        setIsLoading(false);
-      });
+      await axios
+        .get(url)
+        .then((res) => {
+          const data = res.data;
+          setAuthUser(data);
+        })
+        .then(() => {
+          setIsLoading(false);
+        });
     }
   };
 
@@ -205,7 +209,7 @@ const index = () => {
     <>
       {isLoading ? (
         <LoadingPage />
-      ) : !isLoggedIn ? (
+      ) : !authUser ? (
         <Unauthorized />
       ) : (
         <div className={`${styles.mainContainer} container`}>

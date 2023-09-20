@@ -176,12 +176,14 @@ function HeaderLogged() {
                   }}
                 >
                   <div className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px">
-                    <span className="svg-icon svg-icon-2">
-                      <Search2Svg
-                        onClick={() => setHideSearch(false)}
-                        ref={buttonRef}
-                      />
-                    </span>
+                    <div
+                      onClick={() => setHideSearch(false)}
+                      ref={buttonRef}
+                      className="svg-icon svg-icon-2"
+                      style={{ padding: "5px" }}
+                    >
+                      <Search2Svg />
+                    </div>
                   </div>
                 </div>
                 <form

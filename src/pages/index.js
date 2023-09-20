@@ -94,7 +94,7 @@ const Home = () => {
     }
 
     loggedUserInfo(url);
-  }, [session, authUserId]);
+  }, [session]);
 
   useEffect(() => {
     getFaqData();
