@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 
 import { setCategory } from "../../store/slices/categorySlice";
@@ -12,6 +13,7 @@ const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
+  const { data: session } = useSession();
 
   const userId = useSelector((state) => state.auth.user_id);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
@@ -32,7 +34,7 @@ const index = () => {
   const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [allProductsCount, setAllProductsCount] = useState(null);
-
+console.log(paymentPlan)
   const allowedProductsHandler = () => {
     setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
 

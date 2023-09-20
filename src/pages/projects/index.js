@@ -94,6 +94,8 @@ const index = () => {
     }
   };
 
+  console.log(allowedProjectsCount)
+
   const addProjectHandler = () => {
     if (userProjectsLenght < allowedProjectsCount) {
       setAddProject(!addProject);
