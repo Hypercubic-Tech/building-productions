@@ -347,6 +347,10 @@ const Products = ({
     };
   }, [projectId, productsToMap, activeCategoryId]);
 
+  useEffect(() => {
+    setPageIndex(1);
+  }, [activeCategoryId]);
+
   return (
     <>
       <div className="table-responsive">
