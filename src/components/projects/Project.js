@@ -100,8 +100,8 @@ const Project = ({
       setAllowedProductsAdd(false)
     }
   };
-  console.log(allProductsCount, 'products')
-  console.log(allowedProducts, 'allowedProducts')
+  // console.log(allProductsCount, 'products')
+  // console.log(allowedProducts, 'allowedProducts')
 
   useEffect(() => {
     const defaultProductCallBack = async () => {

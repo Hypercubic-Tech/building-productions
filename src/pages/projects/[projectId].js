@@ -34,7 +34,7 @@ const index = () => {
   const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [allProductsCount, setAllProductsCount] = useState(null);
-console.log(paymentPlan)
+  
   const allowedProductsHandler = () => {
     setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
 

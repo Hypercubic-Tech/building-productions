@@ -35,11 +35,13 @@ const Gallery = ({ setSelect, getProjectById }) => {
             )
             .then((res) => {
                 const data = res?.data
-                    setIsProjectImages(data?.data[0]?.attributes?.image?.data)
+                setIsProjectImages(data?.data[0]?.attributes?.image?.data)
             })
     };
 
     const handleMediaUpload = async (files) => {
+        let upload_input = document.getElementById("fileInput");
+
         if (!files) {
             return;
         }
@@ -48,6 +50,9 @@ const Gallery = ({ setSelect, getProjectById }) => {
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             formData.append("files", file);
+            // formData.append("ref", "api::collection:collection");
+            // formData.append("refId", "collection's_record_id");
+            // formData.append("field", "file_field");
         }
 
         try {
@@ -64,6 +69,7 @@ const Gallery = ({ setSelect, getProjectById }) => {
                     setIsImageUpload(true);
                     getProductsHandler();
                     getProjectById();
+                    upload_input.value = "";
                     notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
                 });
         } catch (err) {
@@ -102,7 +108,6 @@ const Gallery = ({ setSelect, getProjectById }) => {
             .then((result) => {
                 if (result.isConfirmed) {
                     handleDeleteImage(imageId);
-                    notify(false, "სურათი წაიშალა")
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია', 'Error');
                 }
@@ -114,6 +119,7 @@ const Gallery = ({ setSelect, getProjectById }) => {
             .then(() => {
                 getProductsHandler();
                 getProjectById();
+                notify(false, "სურათი წაიშალა")
             })
         setImgSrc(null);
     };
@@ -223,6 +229,7 @@ const Gallery = ({ setSelect, getProjectById }) => {
                                             <div className={`${styles.galleryItem}`}>
                                                 <div className={`${styles.addBtn}`}>
                                                     <input
+                                                        id='fileInput'
                                                         style={{
                                                             width: "100%",
                                                             height: "100%",
@@ -234,7 +241,13 @@ const Gallery = ({ setSelect, getProjectById }) => {
                                                             cursor: "pointer"
                                                         }}
                                                         onChange={(e) => {
-                                                            handleMediaUpload(e.target.files);
+                                                            const files = e.target.files;
+                                                            const modifiedFiles = Array.from(files).map((file) => {
+                                                                const randomText = Math.random().toString(36).substring(7); // Generate random text
+                                                                const fileName = `${randomText}_${file.name}`; // Combine random text with original file name
+                                                                return new File([file], fileName, { type: file.type }); // Create a new File object with modified name
+                                                            });
+                                                            handleMediaUpload(modifiedFiles);
                                                         }}
                                                         type="file"
                                                         name="avatar"

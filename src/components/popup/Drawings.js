@@ -43,6 +43,9 @@ const Drawings = ({ setSelect }) => {
     }, [projectId]);
 
     const handleMediaUpload = async (files) => {
+        let upload_input = document.getElementById("fileInput");
+
+
         if (!files) {
             return;
         }
@@ -65,11 +68,11 @@ const Drawings = ({ setSelect }) => {
                     setImage(newImages);
                     setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
-                    notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
+                    notify(false, "არჩეული ნახაზი წარმატებით აიტვირთა");
                 });
         } catch (err) {
-            console.error(err);
-            notify(true, "სურათების ატვირთვა უარყოფილია");
+            console.log(err);
+            notify(true, "ნახაზის ატვირთვა უარყოფილია");
         }
     };
 
@@ -192,6 +195,7 @@ const Drawings = ({ setSelect }) => {
                                             <div className={`${styles.galleryItem}`}>
                                                 <div className={`${styles.addBtn}`}>
                                                     <input
+                                                        id='fileInput'
                                                         style={{
                                                             width: "100%",
                                                             height: "100%",
@@ -203,7 +207,13 @@ const Drawings = ({ setSelect }) => {
                                                             cursor: "pointer"
                                                         }}
                                                         onChange={(e) => {
-                                                            handleMediaUpload(e.target.files);
+                                                            const files = e.target.files;
+                                                            const modifiedFiles = Array.from(files).map((file) => {
+                                                                const randomText = Math.random().toString(36).substring(7); // Generate random text
+                                                                const fileName = `${randomText}_${file.name}`; // Combine random text with original file name
+                                                                return new File([file], fileName, { type: file.type }); // Create a new File object with modified name
+                                                            });
+                                                            handleMediaUpload(modifiedFiles);
                                                         }}
                                                         type="file"
                                                         name="avatar"
