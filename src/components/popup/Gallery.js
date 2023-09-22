@@ -50,9 +50,6 @@ const Gallery = ({ setSelect, getProjectById }) => {
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             formData.append("files", file);
-            // formData.append("ref", "api::collection:collection");
-            // formData.append("refId", "collection's_record_id");
-            // formData.append("field", "file_field");
         }
 
         try {
