@@ -9,14 +9,13 @@ import Swal from "sweetalert2";
 import notify from "../../utils/notify";
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
-import Unauthorized from "../401";
 
 import LoadingPage from "../../components/ui/LoadingPage";
 import DeleteBtn from "../../components/svg/DeleteBtn";
 import EditSvg from "../../components/svg/EditSvg";
+import MapSvg from "../../components/svg/MapSvg";
 
 import styles from "../../components/popup/Modal.module.css";
-import MapSvg from "../../components/svg/MapSvg";
 
 const index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -134,7 +133,6 @@ const index = () => {
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
       );
       setShowProject(false);
-      setIsLoading(false);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -338,6 +336,7 @@ const index = () => {
         await axios.get(url).then((res) => {
           const data = res.data;
           setPaymentPlan(data[0]);
+          setIsLoading(false);
         });
       }
     };
@@ -352,10 +351,8 @@ const index = () => {
 
   return (
     <>
-      {isLoading ? (
+      {!isLoggedIn || isLoading ? (
         <LoadingPage />
-      ) : !isLoggedIn ? (
-        <Unauthorized />
       ) : (
         <>
           <img
@@ -416,7 +413,10 @@ const index = () => {
                             />
                           </div>
                           <div className={`card-body ${styles.cardTtl}`}>
-                            <div className="card-title" style={{opacity: ".8"}}>
+                            <div
+                              className="card-title"
+                              style={{ opacity: ".8" }}
+                            >
                               {item?.attributes?.title}
                             </div>
                             <p className="card-text">
