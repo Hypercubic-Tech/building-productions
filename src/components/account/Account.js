@@ -4,12 +4,11 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import notify from "../../utils/notify";
 import EditAccount from "../../components/popup/EditAccount";
-import Unauthorized from "../../pages/401";
 import EditButton from "../ui/EditButton";
 import ImageUpload from "../ui/ImageUpload";
+import LoadingPage from "../ui/LoadingPage";
 
 import styles from "./Account.module.css";
-import LoadingPage from "../ui/LoadingPage";
 
 const index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -191,7 +190,7 @@ const index = () => {
     {
       id: 4,
       name: "მობილურის ნომერი",
-      value: authUser[0]?.phoneNumber,
+      value: authUser[0]?.phoneNumber ? authUser[0]?.phoneNumber : "გთხოვთ შეიყვანოთ ნომერი",
     },
     {
       id: 5,
@@ -207,10 +206,8 @@ const index = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || !authUser ? (
         <LoadingPage />
-      ) : !authUser ? (
-        <Unauthorized />
       ) : (
         <div className={`${styles.mainContainer} container`}>
           <div className={styles.imageContainer}>
@@ -237,17 +234,19 @@ const index = () => {
                   {authUserData.map((item) => {
                     return (
                       <div key={item.id}>
-                        {item.value && (
+                        {/* {item.value && ( */}
                           <>
                             <div className={styles.userInfoContainer}>
                               <h6 className={styles.infoType}>{item.name}</h6>
-                              <div className={styles.userInfo}>
-                                {item.value}
-                              </div>
+                              <input
+                                disabled={true}
+                                placeholder={item.value}
+                                className={styles.userInfo}
+                              />
                             </div>
                             <hr />
                           </>
-                        )}
+                        {/* )} */}
                       </div>
                     );
                   })}
