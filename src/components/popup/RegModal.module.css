@@ -68,3 +68,28 @@
 .registrationBtn:hover {
   color: #BAD7E9;
 }
+
+.noArrow::-webkit-inner-spin-button,
+.noArrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0; 
+}
+
+.cardNumberInput {
+  font-size: 20px;
+  letter-spacing: 5px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.cardNumberInput:focus {
+  border-color: #007bff; 
+}
+
+.cardNumberInput::after {
+  content: ' ';
+  display: inline-block;
+  width: 10px; 
+}
+

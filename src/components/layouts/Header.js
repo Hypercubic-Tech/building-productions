@@ -12,28 +12,23 @@ function Header() {
   const dispatch = useDispatch();
   const { data: session } = useSession();
 
-
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
 
-    if (accessToken && accessToken !== "") {
+    if ((accessToken && accessToken !== "") || session) {
       dispatch(setAuthState(true));
+    } else {
+      dispatch(setAuthState(false));
     }
-  }, [dispatch]);
+  }, [dispatch, session]);
 
   useEffect(() => {
-    if (session && session.user) {
-      dispatch(setAuthState(true));
-    }
-  }, [session, dispatch]);
-
-  useEffect(() => {
-    if (loggedIn || session !== undefined ) {
+    if (loggedIn) {
       setHeader(<HeaderLogged />);
     } else {
       setHeader(<DefaultHeader />);
     }
-  }, [loggedIn])
+  }, [loggedIn, session]);
 
   if (!header) {
     return <div></div>;

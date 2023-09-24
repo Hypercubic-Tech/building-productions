@@ -15,13 +15,13 @@ const modalSlice = createSlice({
     closeModal: (state) => {
       state.isOpen = false;
     },
-    extraReducers: {
-      [HYDRATE]: (state, action) => {
+    extraReducers: (builder) => {
+      builder.addCase(HYDRATE, (state, action) => {
         return {
           ...state,
           ...action.payload.authModal,
         };
-      },
+      });
     },
   },
 });

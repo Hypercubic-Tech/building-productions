@@ -50,7 +50,7 @@ function DefaultHeader() {
             <Link href="/">
                 <img
                   alt="Logo"
-                  src="/images/Logo.png"
+                  src="/images/calc.png"
                   className="logo-default h-lg-50px"
                 />
             </Link>

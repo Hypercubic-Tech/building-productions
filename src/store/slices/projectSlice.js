@@ -25,13 +25,13 @@ export const projectSlice = createSlice({
       state.searchType = action.payload;
     }
   },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(HYDRATE, (state, action) => {
       return {
         ...state,
         ...action.payload.proj,
       };
-    },
+    });
   },
 });
 

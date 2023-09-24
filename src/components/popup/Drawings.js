@@ -43,6 +43,9 @@ const Drawings = ({ setSelect }) => {
     }, [projectId]);
 
     const handleMediaUpload = async (files) => {
+        let upload_input = document.getElementById("fileInput");
+
+
         if (!files) {
             return;
         }
@@ -65,11 +68,11 @@ const Drawings = ({ setSelect }) => {
                     setImage(newImages);
                     setImgSrc(newImages[0].url);
                     setIsImageUpload(true);
-                    notify(false, "არჩეული სურათები წარმატებით აიტვირთა");
+                    notify(false, "არჩეული ნახაზი წარმატებით აიტვირთა");
                 });
         } catch (err) {
-            console.error(err);
-            notify(true, "სურათების ატვირთვა უარყოფილია");
+            console.log(err);
+            notify(true, "ნახაზის ატვირთვა უარყოფილია");
         }
     };
 
@@ -192,6 +195,7 @@ const Drawings = ({ setSelect }) => {
                                             <div className={`${styles.galleryItem}`}>
                                                 <div className={`${styles.addBtn}`}>
                                                     <input
+                                                        id='fileInput'
                                                         style={{
                                                             width: "100%",
                                                             height: "100%",
@@ -203,15 +207,23 @@ const Drawings = ({ setSelect }) => {
                                                             cursor: "pointer"
                                                         }}
                                                         onChange={(e) => {
-                                                            handleMediaUpload(e.target.files);
+                                                            const files = e.target.files;
+                                                            const modifiedFiles = Array.from(files).map((file) => {
+                                                                const randomText = Math.random().toString(36).substring(7); // Generate random text
+                                                                const fileName = `${randomText}_${file.name}`; // Combine random text with original file name
+                                                                return new File([file], fileName, { type: file.type }); // Create a new File object with modified name
+                                                            });
+                                                            handleMediaUpload(modifiedFiles);
                                                         }}
                                                         type="file"
                                                         name="avatar"
                                                         multiple />
-                                                    <span className='fw-boldest'>ფოტოს დამატება</span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-camera" viewBox="0 0 16 16">
-                                                        <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
-                                                        <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                                    <span className='fw-boldest'>ნახაზის ატვირთვა</span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <g stroke="#1C274C" strokeLinecap="round" strokeWidth="1.5">
+                                                            <path strokeLinejoin="round" d="M12 15V2m0 0l3 3.5M12 2L9 5.5"></path>
+                                                            <path d="M8 22h8c2.828 0 4.243 0 5.121-.878C22 20.242 22 18.829 22 16v-1c0-2.828 0-4.242-.879-5.121-.768-.768-1.946-.865-4.121-.877m-10 0c-2.175.012-3.353.109-4.121.877C2 10.758 2 12.172 2 15v1c0 2.829 0 4.243.879 5.122.3.3.662.497 1.121.627"></path>
+                                                        </g>
                                                     </svg>
                                                 </div>
                                             </div>

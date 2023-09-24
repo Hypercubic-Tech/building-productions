@@ -4,7 +4,7 @@ const EditButton = (props) => {
   return (
     <button
       {...props}
-      style={{ display: "flex", gap: "10px" }}
+      style={{ display: "flex", gap: "10px", maxWidth: "fit-content" }}
       className="btn btn-primary"
     >
       <svg
