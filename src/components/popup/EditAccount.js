@@ -26,7 +26,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
     payment_duration: authUser[0]?.payment_duration,
   });
 
-  console.log(authUser, "user");
+  // console.log(authUser, "user");
   const [changePassword, setChangePassword] = useState({
     currentPassword: "",
     password: "",
@@ -165,7 +165,7 @@ const EditAccount = ({ authUser, onClose, loggedUserInfo, pricesData }) => {
       });
   };
 
-  console.log(editUserData, "data finnal");
+  // console.log(editUserData, "data finnal");
 
   return (
     <div className={`${styles.container}`}>

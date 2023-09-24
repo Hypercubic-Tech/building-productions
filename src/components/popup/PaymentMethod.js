@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../popup/RegModal.module.css";
 
-const PaymentMethod = ({ setEditUserData }) => {
+const PaymentMethod = ({ setEditUserData, title, type }) => {
   const [cardNumberValue, setCardNumberValue] = useState("");
   const [monthValue, setMonthValue] = useState("");
   const [yearValue, setYearValue] = useState("");
@@ -40,7 +40,7 @@ const PaymentMethod = ({ setEditUserData }) => {
   
   return (
     <div className="d-grid gap-2 mt-n1">
-      <h2 className="mt-2">Payment Method:</h2>
+      <h2 className="mt-2">{title ? title : 'Payment Method:'}</h2>
       <input
         style={{
           backgroundColor: isValidCardNumber(cardNumberValue) ? "" : "red",

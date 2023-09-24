@@ -8,6 +8,9 @@ import EditButton from "../ui/EditButton";
 import ImageUpload from "../ui/ImageUpload";
 import LoadingPage from "../ui/LoadingPage";
 
+import EditAccount2 from "./EditAccount2";
+import EditSvg from "../svg/EditSvg";
+
 import styles from "./Account.module.css";
 
 const index = () => {
@@ -21,6 +24,10 @@ const index = () => {
   const authUserId = useSelector((state) => state.auth.user_id);
   const provider = useSelector((state) => state.auth.provider);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+
+  const [startEdit, setStartEdit] = useState(false);
+
+  const [userData, setUserData] = useState({});
 
   const { data: session } = useSession();
 
@@ -37,7 +44,20 @@ const index = () => {
         .get(url)
         .then((res) => {
           const data = res.data;
+          console.log(data, 'data???????');
           setAuthUser(data);
+          setUserData({
+            id: data[0]?.id,
+            username: data[0]?.username,
+            email: data[0]?.email,
+            phoneNumber: data[0]?.phoneNumber,
+            payment_duration: data[0]?.payment_duration,
+            payment_plan: data[0]?.payment_plan?.id.toString(),
+            cardNumber: data[0]?.card_number,
+            cvc: data[0]?.card_cvc,
+            month: data[0]?.card_month,
+            year: data[0]?.card_year
+          })
         })
         .then(() => {
           setIsLoading(false);
@@ -162,6 +182,7 @@ const index = () => {
     }
   };
 
+
   useEffect(() => {
     loggedUserInfo();
     getPricesData();
@@ -171,38 +192,35 @@ const index = () => {
     handleUserImage();
   }, [authUser, session, isImageUpload]);
 
-  const authUserData = [
-    {
-      id: 1,
-      name: "მომხმარებლის სახელი",
-      value: authUser[0]?.username,
-    },
-    {
-      id: 2,
-      name: "მომხმარებლის ტიპი",
-      value: authUser[0]?.userType === "company" ? "კომპანია" : "პერსონალური",
-    },
-    {
-      id: 3,
-      name: "იმეილი",
-      value: authUser[0]?.email,
-    },
-    {
-      id: 4,
-      name: "მობილურის ნომერი",
-      value: authUser[0]?.phoneNumber ? authUser[0]?.phoneNumber : "გთხოვთ შეიყვანოთ ნომერი",
-    },
-    {
-      id: 5,
-      name: "გადახდის გეგმა",
-      value: authUser[0]?.paymentPlan === "paid" ? "ფასიანი" : "უფასო",
-    },
-    {
-      id: 6,
-      name: "გადახდის მეთოდი",
-      value: authUser[0]?.paymentMethod === "tbc" ? "თბს ბანკი" : "",
-    },
-  ];
+  // console.log(authUser, 'user data');
+  // console.log(userData, 'daadadadad')
+  // const authUserData = [
+  //   {
+  //     id: 1,
+  //     name: "მომხმარებლის სახელი",
+  //     value: authUser[0]?.username,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "იმეილი",
+  //     value: authUser[0]?.email,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "მობილურის ნომერი",
+  //     value: authUser[0]?.phoneNumber ? authUser[0]?.phoneNumber : "გთხოვთ შეიყვანოთ ნომერი",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "გადახდის გეგმა",
+  //     value: authUser[0]?.paymentPlan === "paid" ? "ფასიანი" : "უფასო",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "გადახდის მეთოდი",
+  //     value: authUser[0]?.paymentMethod === "tbc" ? "თბს ბანკი" : "",
+  //   },
+  // ];
 
   return (
     <>
@@ -227,33 +245,22 @@ const index = () => {
               handleImageRemove={handleImageRemove}
             />
           </div>
-          {authUser.length > 0 &&
-            authUser?.map((user, index) => {
-              return (
-                <div className={styles.userInfoWrapper} key={index}>
-                  {authUserData.map((item) => {
-                    return (
-                      <div key={item.id}>
-                        {/* {item.value && ( */}
-                          <>
-                            <div className={styles.userInfoContainer}>
-                              <h6 className={styles.infoType}>{item.name}</h6>
-                              <input
-                                disabled={true}
-                                placeholder={item.value}
-                                className={styles.userInfo}
-                              />
-                            </div>
-                            <hr />
-                          </>
-                        {/* )} */}
-                      </div>
-                    );
-                  })}
-                  {!isEdit && <EditButton onClick={() => setIsEdit(true)} />}
-                </div>
-              );
-            })}
+          <div
+            style={{ height: '44px' }}
+            onClick={() => setStartEdit(!startEdit)}
+            className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
+          >
+            <EditSvg />
+            <span>რედაქტირება</span>
+          </div>
+          {authUser && (
+            <EditAccount2
+              authUserId={authUserId}
+              startEdit={startEdit}
+              userData={userData}
+              setUserData={setUserData}
+              pricesData={pricesData} />
+          )}
           {isEdit && (
             <EditAccount
               pricesData={pricesData}
