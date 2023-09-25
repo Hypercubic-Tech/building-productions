@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import notify from "../../utils/notify";
+
 import EditAccount from "../../components/popup/EditAccount";
 import EditButton from "../ui/EditButton";
 import ImageUpload from "../ui/ImageUpload";
 import LoadingPage from "../ui/LoadingPage";
-
 import EditAccount2 from "./EditAccount2";
 import EditSvg from "../svg/EditSvg";
 
@@ -51,11 +51,13 @@ const index = () => {
             email: data[0]?.email,
             phoneNumber: data[0]?.phoneNumber,
             payment_duration: data[0]?.payment_duration,
-            payment_plan: data[0]?.payment_plan?.id.toString(),
-            cardNumber: data[0]?.card_number,
-            cvc: data[0]?.card_cvc,
-            month: data[0]?.card_month,
-            year: data[0]?.card_year
+            payment_plan: {
+              connect: [{ id: data[0]?.payment_plan?.id.toString(), }],
+            },
+            card_number: data[0]?.card_number,
+            card_cvc: data[0]?.card_cvc,
+            card_month: data[0]?.card_month,
+            card_year: data[0]?.card_year
           })
         })
         .then(() => {
@@ -240,8 +242,13 @@ const index = () => {
               )) || <h2 className={styles.imageText}>Uploaded Image</h2>}
             </div>
             <ImageUpload
-              onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
+              // onImageUpload
               handleImageRemove={handleImageRemove}
+            />
+            <ImageUpload
+              type="account"
+              onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
+              quantity={10}
             />
           </div>
           <div
@@ -258,7 +265,10 @@ const index = () => {
               startEdit={startEdit}
               userData={userData}
               setUserData={setUserData}
-              pricesData={pricesData} />
+              setIsEdit={setStartEdit}
+              pricesData={pricesData}
+              loggedUserInfo={loggedUserInfo}
+            />
           )}
           {isEdit && (
             <EditAccount
