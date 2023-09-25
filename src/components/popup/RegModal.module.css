@@ -76,6 +76,12 @@
   margin: 0; 
 }
 
+.paymentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .cardNumberInput {
   font-size: 20px;
   letter-spacing: 5px;

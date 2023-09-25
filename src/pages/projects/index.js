@@ -237,7 +237,7 @@ const index = () => {
 
         .then((res) => {
           const data = res.data;
-          setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
+          setDefaultImage(data.data.attributes?.NoImage?.data?.attributes.url);
         });
     };
 

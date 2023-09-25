@@ -26,7 +26,6 @@ const index = () => {
   const [image, setImage] = useState(null);
   const [pricesData, setPricesData] = useState(null);
 
-
   const loggedUserInfo = async () => {
     let url;
 
@@ -48,13 +47,13 @@ const index = () => {
             phoneNumber: data[0]?.phoneNumber,
             payment_duration: data[0]?.payment_duration,
             payment_plan: {
-              connect: [{ id: data[0]?.payment_plan?.id.toString(), }],
+              connect: [{ id: data[0]?.payment_plan?.id.toString() }],
             },
             card_number: data[0]?.card_number,
             card_cvc: data[0]?.card_cvc,
             card_month: data[0]?.card_month,
-            card_year: data[0]?.card_year
-          })
+            card_year: data[0]?.card_year,
+          });
         })
         .then(() => {
           setIsLoading(false);
@@ -179,7 +178,6 @@ const index = () => {
     }
   };
 
-
   useEffect(() => {
     loggedUserInfo();
     getPricesData();
@@ -208,34 +206,33 @@ const index = () => {
               )) || <h2 className={styles.imageText}>Uploaded Image</h2>}
             </div>
             <ImageUpload
-              // onImageUpload
-              handleImageRemove={handleImageRemove}
-            />
-            <ImageUpload
               type="account"
               onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
               quantity={10}
+              handleImageRemove={handleImageRemove}
             />
           </div>
-          <div
-            style={{ height: '44px' }}
-            onClick={() => setStartEdit(!startEdit)}
-            className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
-          >
-            <EditSvg />
-            <span>რედაქტირება</span>
+          <div style={{width: "100%"}}>
+            {authUser && (
+              <EditAccount
+                authUserId={authUserId}
+                startEdit={startEdit}
+                userData={userData}
+                setUserData={setUserData}
+                setIsEdit={setStartEdit}
+                pricesData={pricesData}
+                loggedUserInfo={loggedUserInfo}
+              />
+            )}
+            <div
+              style={{ height: "44px" }}
+              onClick={() => setStartEdit(!startEdit)}
+              className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
+            >
+              <EditSvg />
+              <span>პროფილის რედაქტირება</span>
+            </div>
           </div>
-          {authUser && (
-            <EditAccount
-              authUserId={authUserId}
-              startEdit={startEdit}
-              userData={userData}
-              setUserData={setUserData}
-              setIsEdit={setStartEdit}
-              pricesData={pricesData}
-              loggedUserInfo={loggedUserInfo}
-            />
-          )}
         </div>
       )}
     </>
