@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import UploadSvg from "../svg/UploadSvg";
 import PictureUploadSvg from "../svg/PictureUploadSvg";
+import notify from "../../utils/notify";
 
 import styles from "./ImageUpload.module.css";
 
@@ -12,25 +13,28 @@ const ImageUpload = ({ onImageUpload, handleImageRemove, quantity, type }) => {
     (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
-        setUploadedImage(file);
-        onImageUpload(file);
+
+        if (file.type.startsWith("image/")) {
+          setUploadedImage(file);
+          onImageUpload(file);
+        } else {
+          notify(true, "შეცდომა: დასაშვებია მხოლოდ გამოსახულების ფაილები.");
+        }
       }
     },
     [onImageUpload]
   );
 
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    maxFiles: quantity,
+    multiple: true,
+  });
+
   const removeImage = () => {
     setUploadedImage(null);
     handleImageRemove();
   };
-
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: "image/*",
-    maxFiles: quantity,
-    type: "file",
-    multiple: true
-  });
 
   return (
     <>
