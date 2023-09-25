@@ -216,7 +216,7 @@ const EditAccount2 = ({
                 </div>
             )}
             <div style={{ opacity: !startEdit ? '0.7' : '1', transition: '0.6s', pointerEvents: !startEdit ? 'none' : 'all' }}>
-                <PaymentMethod title={'ბარათი ( TBC )'} setEditUserData={setUserData} />
+                <PaymentMethod title={'ბარათი ( TBC )'} setEditUserData={setUserData} userData={userData} />
             </div>
             <div
                 style={{ opacity: !startEdit ? '0.8' : '1', transition: '0.6s', pointerEvents: !startEdit ? 'none' : 'all' }}

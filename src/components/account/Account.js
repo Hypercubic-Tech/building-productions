@@ -44,7 +44,6 @@ const index = () => {
         .get(url)
         .then((res) => {
           const data = res.data;
-          console.log(data, 'data???????');
           setAuthUser(data);
           setUserData({
             id: data[0]?.id,
