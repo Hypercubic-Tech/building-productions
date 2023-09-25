@@ -3,7 +3,6 @@ import React from "react";
 const DeleteBtn = () => {
   return (
     <svg
-      className="card-svg"
       width="15"
       height="16"
       viewBox="0 0 15 16"

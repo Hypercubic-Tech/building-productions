@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import UploadSvg from "../svg/UploadSvg";
+import PictureUploadSvg from "../svg/PictureUploadSvg";
 
 import styles from "./ImageUpload.module.css";
-import UploadSvg from "../svg/UploadSvg";
 
-const ImageUpload = ({ onImageUpload, handleImageRemove }) => {
+const ImageUpload = ({ onImageUpload, handleImageRemove, quantity, type }) => {
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const onDrop = useCallback(
@@ -19,26 +20,30 @@ const ImageUpload = ({ onImageUpload, handleImageRemove }) => {
   );
 
   const removeImage = () => {
-    setUploadedImage(null); 
+    setUploadedImage(null);
     handleImageRemove();
   };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: "image/*",
-    maxFiles: 1,
+    maxFiles: quantity,
+    type: "file",
+    multiple: true
   });
 
   return (
-    <div className={styles.ImageUpload}>
-      <div {...getRootProps()} className="dropzone">
-        <input {...getInputProps()} />
-        <div className={styles.textAndSvg}>
-          <UploadSvg />
-          <span>სურათის ატვირთვა</span>
-        </div>
-      </div>
-      {/* {uploadedImage && (
+    <>
+      {type === "account" ? (
+        <div className={styles.ImageUpload}>
+          <div {...getRootProps()} className="dropzone">
+            <input {...getInputProps()} />
+            <div className={styles.textAndSvg}>
+              <UploadSvg />
+              <span>სურათის ატვირთვა</span>
+            </div>
+          </div>
+          {/* {uploadedImage && (
         <div className={styles.removeButton} 
         
         onClick={removeImage}
@@ -46,7 +51,17 @@ const ImageUpload = ({ onImageUpload, handleImageRemove }) => {
           წაშლა
         </div>
       )} */}
-    </div>
+        </div>
+      ) : type === "projects" ? (
+        <div className={styles.uploadSvgWrapper} {...getRootProps()}>
+          {/* <input {...getInputProps()} /> */}
+          <PictureUploadSvg />
+          <span>სურათის ატვირთვა</span>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 
