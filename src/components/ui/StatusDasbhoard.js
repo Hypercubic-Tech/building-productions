@@ -27,7 +27,7 @@ const StatusDashboard = () => {
                 .get(url)
                 .then((res) => {
                     const data = res.data;
-                    console.log(data[0]?.payment_plan, 'data')
+                    // console.log(data[0]?.payment_plan, 'data')
                     //   setAuthUser(data);
                     setUserStatus({
                         title: data[0]?.payment_plan?.name,
@@ -51,8 +51,8 @@ const StatusDashboard = () => {
     useEffect(() => {
         loggedUserInfo();
     }, [authUserId, provider]);
-    console.log(authUserId, provider)
-    console.log(userStatus)
+    // console.log(authUserId, provider)
+    // console.log(userStatus)
     return (
         <Fragment>
             {authUserId && (
