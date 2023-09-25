@@ -20,7 +20,8 @@ const Products = ({
   productStatus,
   craftStatus,
   select,
-  defaultImage
+  defaultImage,
+  allowedProductsHandler
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -163,6 +164,7 @@ const Products = ({
       .then((result) => {
         if (result.isConfirmed) {
           deleteProductHandler(item);
+          allowedProductsHandler();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire('უარყოფილია', '');
         }

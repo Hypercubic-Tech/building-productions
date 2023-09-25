@@ -1,0 +1,9 @@
+.outer {
+    position: fixed;
+    top: 83px;
+    left: 0;
+    background-color: red;
+    width: 250px;
+    height: 200px;
+    z-index: 999;
+}

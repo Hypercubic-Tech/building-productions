@@ -184,6 +184,7 @@ const index = () => {
         <LoadingPage />
       ) : (
         <Project
+        allowedProductsHandler={allowedProductsHandler}
           allProductsCount={allProductsCount}
           allowedProducts={allowedProductsCount}
           allowedExport={allowedExport}

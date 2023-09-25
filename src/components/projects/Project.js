@@ -34,8 +34,11 @@ const Project = ({
   getProjectById,
   allowedProducts,
   allowedExport,
-  allProductsCount
+  allProductsCount,
+  allowedProductsHandler
 }) => {
+  console.log(allowedProducts, 'allowed products')
+  console.log(allProductsCount, 'count')
   const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
@@ -386,6 +389,7 @@ const Project = ({
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
+                        allowedProductsHandler={allowedProductsHandler}
                         getProjectById={getProjectById}
                         defaultImage={defaultImage}
                         productStatus={productStatus}
