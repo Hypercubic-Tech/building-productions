@@ -1,0 +1,25 @@
+.inputs_control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 20px;
+}
+
+.inputs_control:first-child {
+    margin-top: 0px;
+}
+
+.priceing_switch {
+    gap: 6px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.priceing_switch a {
+    width: calc(50% - 8px);
+}
+
+.saveBtn {
+    margin-top: 40px;
+}
