@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styles from "../popup/RegModal.module.css";
 
-const PaymentMethod = ({ setEditUserData, title, type }) => {
-  const [cardNumberValue, setCardNumberValue] = useState("");
-  const [monthValue, setMonthValue] = useState("");
-  const [yearValue, setYearValue] = useState("");
-  const [inputValue, setInputValue] = useState("");
+const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
+  const [cardNumberValue, setCardNumberValue] = useState(userData?.card_number);
+  const [monthValue, setMonthValue] = useState(userData?.card_month);
+  const [yearValue, setYearValue] = useState(userData?.card_year);
+  const [inputValue, setInputValue] = useState(userData?.card_cvc);
 
   const isValidCardNumber = (cardNum) => {
     if (/[^0-9-\s]+/.test(cardNum)) return false;
@@ -31,12 +31,12 @@ const PaymentMethod = ({ setEditUserData, title, type }) => {
     return sum % 10 === 0;
   };
 
-  function formatCardNumber(cardNumber) {
-    const numericValue = cardNumber.replace(/\D/g, "");
-    const formattedValue = numericValue.replace(/(\d{4})(?=\d)/g, "$1 ");
+  // function formatCardNumber(cardNumber) {
+  //   const numericValue = cardNumber.replace(/\D/g, "");
+  //   const formattedValue = numericValue.replace(/(\d{4})(?=\d)/g, "$1 ");
 
-    return formattedValue;
-  }
+  //   return formattedValue;
+  // }
   
   return (
     <div className="d-grid gap-2 mt-n1">
@@ -50,7 +50,7 @@ const PaymentMethod = ({ setEditUserData, title, type }) => {
         className={`form-control ${styles.noArrow} ${styles.cardNumberInput}`}
         placeholder="Card Number"
         type="text"
-        value={formatCardNumber(cardNumberValue)}
+        value={cardNumberValue}
         onChange={(e) => {
           let value = e.target.value;
           value = value.replace(/\D/g, "");
@@ -59,7 +59,7 @@ const PaymentMethod = ({ setEditUserData, title, type }) => {
             setCardNumberValue(value);
             setEditUserData((prevSendData) => ({
               ...prevSendData,
-              cardNumber: value,
+              card_number: value,
             }));
           }
         }}
@@ -83,7 +83,7 @@ const PaymentMethod = ({ setEditUserData, title, type }) => {
             }
             setEditUserData((prevSendData) => ({
               ...prevSendData,
-              cvc: value,
+              card_cvc: value,
             }));
           }}
         />
@@ -111,7 +111,7 @@ const PaymentMethod = ({ setEditUserData, title, type }) => {
               }
               setEditUserData((prevSendData) => ({
                 ...prevSendData,
-                month: value,
+                card_month: value,
               }));
             }}
           />
@@ -139,7 +139,7 @@ const PaymentMethod = ({ setEditUserData, title, type }) => {
               }
               setEditUserData((prevSendData) => ({
                 ...prevSendData,
-                year: value,
+                card_year: value,
               }));
             }}
           />

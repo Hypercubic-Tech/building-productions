@@ -2,9 +2,14 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
+import { useDispatch } from "react-redux";
+
+import { setAuthEmail } from "../../store/slices/authSlice";
+
 import PriceCard from "../ui/PriceCard";
 import PaymentMethod from "../popup/PaymentMethod";
 
+import notify from '../../utils/notify';
 import styles from "./EditAccount.module.css";
 
 
@@ -13,11 +18,14 @@ const EditAccount2 = ({
     userData,
     setUserData,
     pricesData,
-    startEdit
+    startEdit,
+    loggedUserInfo,
+    setIsEdit
 }) => {
     // console.log(pricesData)
+    const dispatch = useDispatch();
 
-    console.log(userData, 'im here');
+    // console.log(userData, 'im here');
     const [annual, setAnnual] = useState();
     const [monthly, setMonthly] = useState();
 
@@ -83,42 +91,43 @@ const EditAccount2 = ({
     // console.log(userData, 'user data orig')
     // console.log(choosedPrice, 'price')
     // console.log(pricesData, 'prices data')
-
+    // console.log(userData)
     const sendUserUpdatedInfo = async () => {
-        await axios
-            .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUserId}`, {
-                username: editUserData?.username,
-                email: editUserData?.email,
-                phoneNumber: editUserData?.phoneNumber,
-                paymentPlan: editUserData?.payment_plan,
-                paymentMethod: {
-                    bank: "TBC",
-                    cardNumber: editUserData?.cardNumber,
-                    cvc: editUserData?.cvc,
-                    expiration: {
-                        month: editUserData?.month,
-                        year: editUserData?.year,
-                    },
-                },
-                payment_duration: editUserData?.payment_duration,
-            })
-            .then((res) => {
-                const data = res.data;
+        try {
+            await axios
+                .put(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUserId}`, {
+                    username: userData?.username,
+                    email: userData?.email,
+                    phoneNumber: userData?.phoneNumber,
+                    payment_duration: userData?.payment_duration,
+                    payment_plan: userData?.connect?.id,
+                    card_number: userData?.card_number,
+                    card_cvc: userData?.card_cvc,
+                    card_month: userData?.card_month,
+                    card_year: userData?.card_year
+                })
+                .then((res) => {
+                    const data = res.data;
 
-                dispatch(setAuthEmail(data?.email));
-                loggedUserInfo();
-                onClose();
+                    dispatch(setAuthEmail(data?.email));
+                    loggedUserInfo();
+                    setIsEdit(false)
+                    // onClose();
 
-                notify(false, "მომხმარებლის ინფორმაცია დარედაქტირდა");
-            })
-            .catch(() => {
-                notify(true, "მომხმარებლის ინფორმაციის რედაქტირება უარყოფილია");
-            });
+                    notify(false, "მომხმარებლის ინფორმაცია დარედაქტირდა");
+
+                })
+        } catch (error) {
+            console.log(error);
+            notify(true, "მომხმარებლის ინფორმაციის რედაქტირება უარყოფილია 123123123123");
+
+        }
+
     };
     return (
         <div>
-            {dynamicElements.map((el) => (
-                <div>
+            {dynamicElements.map((el, index) => (
+                <div key={index}>
                     <h3 style={{ opacity: !startEdit ? '0.7' : '1', transition: '0.6s' }}>{el.title}</h3>
                     <input type="text"
                         disabled={!startEdit}
@@ -174,11 +183,14 @@ const EditAccount2 = ({
                 <select
                     className="form-select form-select-solid georgian"
                     disabled={!startEdit}
-                    value={userData?.payment_plan?.id}
+                    value={userData?.payment_plan?.connect[0]?.id}
                     onChange={(e) => {
+                        // console.log(e.target.value)
                         setUserData((prevUserData) => ({
                             ...prevUserData,
-                            payment_plan: e.target.value
+                            payment_plan: {
+                                connect: [{ id: e.target.value }],
+                            },
                         }));
                         setChoosedPrice(e.target.value);
                     }}
@@ -198,17 +210,17 @@ const EditAccount2 = ({
             </div>
             {pricesData && (
                 <div style={{ opacity: !startEdit ? '0.7' : '1', transition: '0.6s' }}>
-                    {userData.payment_plan === "1" ? (
+                    {userData?.payment_plan?.connect[0]?.id === "1" ? (
                         <PriceCard monthly={monthly} priceData={pricesData[0]} />
                     ) : (
                         ""
                     )}
-                    {userData.payment_plan === "2" ? (
+                    {userData?.payment_plan?.connect[0]?.id === "2" ? (
                         <PriceCard monthly={monthly} priceData={pricesData[1]} />
                     ) : (
                         ""
                     )}
-                    {userData.payment_plan === "3" ? (
+                    {userData?.payment_plan?.connect[0]?.id === "3" ? (
                         <PriceCard monthly={monthly} priceData={pricesData[2]} />
                     ) : (
                         ""
