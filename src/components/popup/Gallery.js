@@ -170,8 +170,6 @@ const Gallery = ({ setSelect, getProjectById }) => {
     }
   }, [choosedImage]);
 
-  console.log("projectImage", image);
-
   return (
     <div
       className="modal fade show"
