@@ -4,32 +4,28 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import notify from "../../utils/notify";
 
-import EditAccount from "../../components/popup/EditAccount";
-import EditButton from "../ui/EditButton";
 import ImageUpload from "../ui/ImageUpload";
 import LoadingPage from "../ui/LoadingPage";
-import EditAccount2 from "./EditAccount2";
+import EditAccount from "./EditAccount";
 import EditSvg from "../svg/EditSvg";
 
 import styles from "./Account.module.css";
 
 const index = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [pricesData, setPricesData] = useState(null);
+  const { data: session } = useSession();
+
+  const provider = useSelector((state) => state.auth.provider);
+  const authUserId = useSelector((state) => state.auth.user_id);
+
   const [authUser, setAuthUser] = useState([]);
+  const [userData, setUserData] = useState({});
+  const [startEdit, setStartEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isImageUpload, setIsImageUpload] = useState(false);
   const [imgSrc, setImgSrc] = useState(null);
   const [image, setImage] = useState(null);
-  const [isImageUpload, setIsImageUpload] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const authUserId = useSelector((state) => state.auth.user_id);
-  const provider = useSelector((state) => state.auth.provider);
-  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const [pricesData, setPricesData] = useState(null);
 
-  const [startEdit, setStartEdit] = useState(false);
-
-  const [userData, setUserData] = useState({});
-
-  const { data: session } = useSession();
 
   const loggedUserInfo = async () => {
     let url;
@@ -193,36 +189,6 @@ const index = () => {
     handleUserImage();
   }, [authUser, session, isImageUpload]);
 
-  // console.log(authUser, 'user data');
-  // console.log(userData, 'daadadadad')
-  // const authUserData = [
-  //   {
-  //     id: 1,
-  //     name: "მომხმარებლის სახელი",
-  //     value: authUser[0]?.username,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "იმეილი",
-  //     value: authUser[0]?.email,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "მობილურის ნომერი",
-  //     value: authUser[0]?.phoneNumber ? authUser[0]?.phoneNumber : "გთხოვთ შეიყვანოთ ნომერი",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "გადახდის გეგმა",
-  //     value: authUser[0]?.paymentPlan === "paid" ? "ფასიანი" : "უფასო",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "გადახდის მეთოდი",
-  //     value: authUser[0]?.paymentMethod === "tbc" ? "თბს ბანკი" : "",
-  //   },
-  // ];
-
   return (
     <>
       {isLoading || !authUser ? (
@@ -260,21 +226,13 @@ const index = () => {
             <span>რედაქტირება</span>
           </div>
           {authUser && (
-            <EditAccount2
+            <EditAccount
               authUserId={authUserId}
               startEdit={startEdit}
               userData={userData}
               setUserData={setUserData}
               setIsEdit={setStartEdit}
               pricesData={pricesData}
-              loggedUserInfo={loggedUserInfo}
-            />
-          )}
-          {isEdit && (
-            <EditAccount
-              pricesData={pricesData}
-              authUser={authUser}
-              onClose={() => setIsEdit(false)}
               loggedUserInfo={loggedUserInfo}
             />
           )}

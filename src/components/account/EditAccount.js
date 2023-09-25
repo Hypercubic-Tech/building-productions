@@ -13,7 +13,7 @@ import notify from '../../utils/notify';
 import styles from "./EditAccount.module.css";
 
 
-const EditAccount2 = ({
+const EditAccount = ({
     authUserId,
     userData,
     setUserData,
@@ -91,7 +91,7 @@ const EditAccount2 = ({
     // console.log(userData, 'user data orig')
     // console.log(choosedPrice, 'price')
     // console.log(pricesData, 'prices data')
-    // console.log(userData)
+    // console.log(userData.payment_plan.connect[0].id)
     const sendUserUpdatedInfo = async () => {
         try {
             await axios
@@ -100,7 +100,11 @@ const EditAccount2 = ({
                     email: userData?.email,
                     phoneNumber: userData?.phoneNumber,
                     payment_duration: userData?.payment_duration,
-                    payment_plan: userData?.connect?.id,
+                    payment_plan: {
+                        connect: [
+                          { id: userData.payment_plan.connect[0].id }
+                        ]
+                      },
                     card_number: userData?.card_number,
                     card_cvc: userData?.card_cvc,
                     card_month: userData?.card_month,
@@ -244,4 +248,4 @@ const EditAccount2 = ({
         </div>
     );
 };
-export default EditAccount2;
+export default EditAccount;
