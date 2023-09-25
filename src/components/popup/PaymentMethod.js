@@ -40,7 +40,7 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
   
   return (
     <div className="d-grid gap-2 mt-n1">
-      <h2 className="mt-2">{title ? title : 'Payment Method:'}</h2>
+      <h3 className="mt-2">{title ? title : 'Payment Method:'}</h3>
       <input
         style={{
           backgroundColor: isValidCardNumber(cardNumberValue) ? "" : "red",

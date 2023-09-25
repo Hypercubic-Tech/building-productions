@@ -127,9 +127,10 @@ const EditAccount2 = ({
     return (
         <div>
             {dynamicElements.map((el, index) => (
-                <div key={index}>
+                <div className={styles.inputs_control} key={index}>
                     <h3 style={{ opacity: !startEdit ? '0.7' : '1', transition: '0.6s' }}>{el.title}</h3>
                     <input type="text"
+                        className='form-control'
                         disabled={!startEdit}
                         value={el.value}
                         onChange={el.onChange}
@@ -137,10 +138,10 @@ const EditAccount2 = ({
                     {!el.warning && <span> ! </span>}
                 </div>
             ))}
-            <div>
+            <div className={styles.priceing_switch}>
                 <div
                     style={{ opacity: !startEdit ? '0.7' : '1', transition: '0.6s', pointerEvents: !startEdit ? 'none' : 'auto' }}
-                    className="buy-wrap nav-group landing-dark-bg d-inline-flex mb-15"
+                    className={`${"buy-wrap nav-group landing-dark-bg d-inline-flex"}`}
                     data-kt-buttons="true"
                 >
                     <a
@@ -228,12 +229,15 @@ const EditAccount2 = ({
                 </div>
             )}
             <div style={{ opacity: !startEdit ? '0.7' : '1', transition: '0.6s', pointerEvents: !startEdit ? 'none' : 'all' }}>
-                <PaymentMethod title={'ბარათი ( TBC )'} setEditUserData={setUserData} userData={userData} />
+                {userData?.payment_plan?.connect[0]?.id > 1 &&
+                    <PaymentMethod title={'ბარათი ( TBC )'} setEditUserData={setUserData} userData={userData} />
+
+                }
             </div>
             <div
                 style={{ opacity: !startEdit ? '0.8' : '1', transition: '0.6s', pointerEvents: !startEdit ? 'none' : 'all' }}
                 onClick={sendUserUpdatedInfo}
-                className="btn btn-primary">
+                className={`${"btn btn-primary"} ${styles.saveBtn}`}>
                 შენახვა
             </div >
 
