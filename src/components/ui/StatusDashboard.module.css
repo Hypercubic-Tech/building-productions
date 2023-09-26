@@ -18,15 +18,18 @@
 .active {
     transform: translateX(0px);
 }
+
 .item {
     display: flex;
     /* align-items: center; */
     gap: 6px;
 }
+
 .item svg {
-    width: 30px;
+    width: 20px;
     height: 20px;
 }
+
 .btn {
     background-color: #FCFFE7;
     border-top-left-radius: 4px;
@@ -74,7 +77,55 @@
     padding-left: 34px;
     margin-top: 6px;
 }
-.item_warning svg{
+
+.item_warning svg {
     width: 15px;
     height: 15px;
+}
+
+.tooltip path {
+    transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+    cursor: pointer;
+}
+
+.tooltip:hover path {
+    stroke: black;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
+}
+
+.tooltipText {
+    visibility: hidden;
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 135%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.tooltipItem {
+    display: flex;
+    /* align-items: center; */
+    gap: 6px;
+}
+
+.tooltip:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
 }

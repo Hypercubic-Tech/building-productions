@@ -125,9 +125,71 @@ const StatusDashboard = () => {
                                         </svg>
                                         <p>{userStatus.p_title}</p>
                                     </div>
-                                    <div style={{ margin: '6px 0px 6px 20px' }} className={styles.item}>
-                                        <span style={{ fontSize: '12px' }}>პროექტების რაოდენობა -</span>
-                                        <span> {userStatus.all_projects}</span>
+                                    <div className={styles.item}>
+                                        <div className={styles.tooltip}>
+                                            <svg
+                                                widths='30px'
+                                                height='20px'
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="#7c839c"
+                                                version="1.1"
+                                                viewBox="0 0 24 24"
+                                                xmlSpace="preserve"
+                                            >
+                                                <path d="M12 0C5.38 0 0 5.38 0 12s5.38 12 12 12 12-5.38 12-12S18.62 0 12 0zm0 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm-1.5-12h3v8h-3v-8zm0-5h3v3h-3V5z"></path>
+                                            </svg>
+                                            <div className={styles.tooltipText}>
+                                                <div className={styles.tooltipItem}>
+                                                    <span>დაშვებული რაოდენობა -</span>
+                                                    <p>{userStatus.allowed_projects}</p>
+                                                </div>
+                                                <div className={styles.tooltipItem}>
+                                                    <span>ექსპორტი (pdf, exec) -</span>
+                                                    {userStatus.allowed_export && (
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="187"
+                                                            height="187"
+                                                            fill="none"
+                                                            stroke="#707070"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <g fill="#ababab">
+                                                                <path
+                                                                    d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"
+                                                                    opacity="0.5"
+                                                                ></path>
+                                                                <path d="M16.03 8.97a.75.75 0 010 1.06l-5 5a.75.75 0 01-1.06 0l-2-2a.75.75 0 111.06-1.06l1.47 1.47 2.235-2.236L14.97 8.97a.75.75 0 011.06 0z"></path>
+                                                            </g>
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                                <div className={styles.tooltipItem}>
+                                                    <span>მედია -</span>
+                                                    {userStatus.allowed_media && (
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="187"
+                                                            height="187"
+                                                            fill="none"
+                                                            stroke="#707070"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <g fill="#ababab">
+                                                                <path
+                                                                    d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"
+                                                                    opacity="0.5"
+                                                                ></path>
+                                                                <path d="M16.03 8.97a.75.75 0 010 1.06l-5 5a.75.75 0 01-1.06 0l-2-2a.75.75 0 111.06-1.06l1.47 1.47 2.235-2.236L14.97 8.97a.75.75 0 011.06 0z"></path>
+                                                            </g>
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span style={{ fontSize: '12px', whiteSpace: 'nowrap' }}>პროექტების რაოდენობა - <span> {userStatus.all_projects}</span></span>
+
                                     </div>
                                     {/* <div className={styles.item_warning}>
                                         <div className={styles.warning_inner}>
