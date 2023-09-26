@@ -10,7 +10,7 @@ import styles from './StatusDashboard.module.css';
 
 const StatusDashboard = () => {
     const dispatch = useDispatch();
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const userStatus = useSelector((state) => state.userStatus);
     const provider = useSelector((state) => state.auth.provider);
     const authUserId = useSelector((state) => state.auth.user_id);
@@ -23,7 +23,6 @@ const StatusDashboard = () => {
     const loggedUserInfo = async () => {
         setIsLoading(true);
         let url;
-
 
         if (provider === "google") {
             url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
@@ -76,6 +75,8 @@ const StatusDashboard = () => {
     useEffect(() => {
         dispatch(setUserStatus(userStatusUpdate));
     }, [userStatusUpdate]);
+
+    console.log(authUserId, 'id')
 
     return (
         <Fragment>
@@ -188,9 +189,10 @@ const StatusDashboard = () => {
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <span style={{ fontSize: '12px', whiteSpace: 'nowrap' }}>პროექტების რაოდენობა - <span> {userStatus.all_projects}</span></span>
-
+                                        <span style={{ fontSize: '12px', whiteSpace: 'nowrap', paddingTop: '2px' }}>
+                                            პროექტების რაოდენობა -
+                                            <span> {userStatus.all_projects}</span>
+                                        </span>
                                     </div>
                                     {/* <div className={styles.item_warning}>
                                         <div className={styles.warning_inner}>

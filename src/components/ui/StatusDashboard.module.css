@@ -121,7 +121,7 @@
 
 .tooltipItem {
     display: flex;
-    /* align-items: center; */
+    height: 30px;
     gap: 6px;
 }
 
