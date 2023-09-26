@@ -120,7 +120,6 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     handleRegistration(true);
   };
 
-  console.log(regData.payment_plan);
   return (
     <div className={`${styles.container}`}>
       <form onSubmit={handleSubmit}>

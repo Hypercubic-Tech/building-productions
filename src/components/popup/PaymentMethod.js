@@ -19,8 +19,6 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
     return formattedValue;
   }
 
-  console.log(isValidCardNumber(cardNumberValue));
-
   return (
     <div className={styles.paymentWrapper}>
       <h3 className="mt-2">{title ? title : "Payment Method:"}</h3>

@@ -98,10 +98,6 @@ const EditAccount = ({
     }
   }, [userData]);
 
-  // console.log(userData, 'user data orig')
-  // console.log(choosedPrice, 'price')
-  // console.log(pricesData, 'prices data')
-  // console.log(userData.payment_plan.connect[0].id)
   const sendUserUpdatedInfo = async () => {
     try {
       await axios

@@ -37,8 +37,6 @@ const Project = ({
   allProductsCount,
   allowedProductsHandler
 }) => {
-  console.log(allowedProducts, 'allowed products')
-  console.log(allProductsCount, 'count')
   const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
@@ -103,8 +101,6 @@ const Project = ({
       setAllowedProductsAdd(false)
     }
   };
-  // console.log(allProductsCount, 'products')
-  // console.log(allowedProducts, 'allowedProducts')
 
   useEffect(() => {
     const defaultProductCallBack = async () => {

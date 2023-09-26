@@ -70,7 +70,6 @@ const StatusDashboard = () => {
 
     useEffect(() => {
         loggedUserInfo();
-        console.log(userStatus, 'userStatus');
     }, [authUserId]);
 
     useEffect(() => {
