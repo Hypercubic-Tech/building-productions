@@ -10,6 +10,7 @@ import styles from './StatusDashboard.module.css';
 
 const StatusDashboard = () => {
     const dispatch = useDispatch();
+    const {data: session} = useSession();
     const userStatus = useSelector((state) => state.userStatus);
     const provider = useSelector((state) => state.auth.provider);
     const authUserId = useSelector((state) => state.auth.user_id);
