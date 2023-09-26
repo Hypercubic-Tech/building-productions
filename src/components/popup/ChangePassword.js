@@ -59,7 +59,7 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
           }}
           autoComplete="current-password"
           required
-          id="password"
+          id="password1"
           className="form-control"
           placeholder="******"
           type="password"
@@ -82,7 +82,7 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
           }}
           autoComplete="current-password"
           required
-          id="password"
+          id="password2"
           className="form-control"
           placeholder="******"
           type="password"
@@ -106,7 +106,7 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
           }}
           autoComplete="current-password"
           required
-          id="password"
+          id="password3"
           className="form-control"
           placeholder="******"
           type="password"
