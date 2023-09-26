@@ -8,7 +8,8 @@ const userStatusSlice = createSlice({
         allowed_projects: "",
         allowed_products: "",
         allowed_export: "",
-        allowed_media: ""
+        allowed_media: "",
+        all_projects: ""
     },
     reducers: {
         setUserStatus: (state, action) => {

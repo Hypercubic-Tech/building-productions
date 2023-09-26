@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import styles from "../popup/RegModal.module.css";
 
 const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
@@ -8,49 +9,33 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
   const [inputValue, setInputValue] = useState(userData?.card_cvc);
 
   const isValidCardNumber = (cardNum) => {
-    if (/[^0-9-\s]+/.test(cardNum)) return false;
-
-    let cardNumberWithoutDashes = cardNum.replace(/\D/g, "");
-
-    if (cardNumberWithoutDashes.length !== 16) return false;
-
-    let sum = 0;
-    let isEven = false;
-
-    for (let i = cardNumberWithoutDashes.length - 1; i >= 0; i--) {
-      let digit = parseInt(cardNumberWithoutDashes.charAt(i), 10);
-
-      if (isEven) {
-        if ((digit *= 2) > 9) digit -= 9;
-      }
-
-      sum += digit;
-      isEven = !isEven;
-    }
-
-    return sum % 10 === 0;
+    return cardNum?.length === 16 && /^\d+$/.test(cardNum);
   };
 
-  // function formatCardNumber(cardNumber) {
-  //   const numericValue = cardNumber.replace(/\D/g, "");
-  //   const formattedValue = numericValue.replace(/(\d{4})(?=\d)/g, "$1 ");
+  function formatCardNumber(cardNumber) {
+    const numericValue = cardNumber?.replace(/\D/g, "");
+    const formattedValue = numericValue?.replace(/(\d{4})(?=\d)/g, "$1 ");
 
-  //   return formattedValue;
-  // }
-  
+    return formattedValue;
+  }
+
+  console.log(isValidCardNumber(cardNumberValue));
+
   return (
-    <div className="d-grid gap-2 mt-n1">
-      <h3 className="mt-2">{title ? title : 'Payment Method:'}</h3>
+    <div className={styles.paymentWrapper}>
+      <h3 className="mt-2">{title ? title : "Payment Method:"}</h3>
       <input
         style={{
-          backgroundColor: isValidCardNumber(cardNumberValue) ? "" : "red",
+          borderColor: isValidCardNumber(cardNumberValue) ? "" : "red",
+          borderWidth: "1px",
+          borderStyle: "solid",
         }}
         required
         min="0"
         className={`form-control ${styles.noArrow} ${styles.cardNumberInput}`}
         placeholder="Card Number"
         type="text"
-        value={cardNumberValue}
+        value={formatCardNumber(cardNumberValue)}
         onChange={(e) => {
           let value = e.target.value;
           value = value.replace(/\D/g, "");

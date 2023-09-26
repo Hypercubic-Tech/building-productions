@@ -53,7 +53,7 @@ const index = () => {
             phoneNumber: data[0]?.phoneNumber,
             payment_duration: data[0]?.payment_duration,
             payment_plan: {
-              connect: [{ id: data[0]?.payment_plan?.id.toString(), }],
+              connect: [{ id: data[0]?.payment_plan?.id.toString() }],
             },
             card_number: data[0]?.card_number,
             card_cvc: data[0]?.card_cvc,
@@ -62,30 +62,31 @@ const index = () => {
           });
 
           // for user dashboard
-          setUserStatusUpdate((prevUserStatusUpdate) => ({
-            ...prevUserStatusUpdate,
-            username: data[0]?.username,
-            p_title: data[0]?.payment_plan?.name,
-            payment_duration: data[0]?.payment_duration,
-            allowed_export: data[0]?.payment_plan?.allowed_export,
-            allowed_media: data[0]?.payment_plan?.allowed_media,
-          }));
-
           if (data[0]?.payment_duration === 'month') {
-            setUserStatusUpdate((prevUserStatusUpdate) => ({
-              ...prevUserStatusUpdate,
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
               allowed_products: data[0]?.payment_plan?.month_allowed_products,
-            }));
-          } else {
-            setUserStatusUpdate((prevUserStatusUpdate) => ({
-              ...prevUserStatusUpdate,
+              all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
+            });
+          }
+          if (data[0]?.payment_duration === 'year') {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
               allowed_products: data[0]?.payment_plan?.year_allowed_products,
-            }));
+              all_projects: data[0]?.projects.lenght
+            });
           }
 
-          // dispatch(setUserStatus(userStatusUpdate));
         })
         .then(() => {
           setIsLoading(false);
@@ -210,7 +211,6 @@ const index = () => {
     }
   };
 
-
   useEffect(() => {
     loggedUserInfo();
     getPricesData();
@@ -219,6 +219,10 @@ const index = () => {
   useEffect(() => {
     handleUserImage();
   }, [authUser, session, isImageUpload]);
+
+  useEffect(() => {
+    dispatch(setUserStatus(userStatusUpdate));
+  }, [userStatusUpdate])
 
   return (
     <>
@@ -239,34 +243,33 @@ const index = () => {
               )) || <h2 className={styles.imageText}>Uploaded Image</h2>}
             </div>
             <ImageUpload
-              // onImageUpload
-              handleImageRemove={handleImageRemove}
-            />
-            <ImageUpload
               type="account"
               onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
               quantity={10}
+              handleImageRemove={handleImageRemove}
             />
           </div>
-          <div
-            style={{ height: '44px' }}
-            onClick={() => setStartEdit(!startEdit)}
-            className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
-          >
-            <EditSvg />
-            <span>რედაქტირება</span>
+          <div style={{ width: "100%" }}>
+            {authUser && (
+              <EditAccount
+                authUserId={authUserId}
+                startEdit={startEdit}
+                userData={userData}
+                setUserData={setUserData}
+                setIsEdit={setStartEdit}
+                pricesData={pricesData}
+                loggedUserInfo={loggedUserInfo}
+              />
+            )}
+            <div
+              style={{ height: "44px" }}
+              onClick={() => setStartEdit(!startEdit)}
+              className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
+            >
+              <EditSvg />
+              <span>პროფილის რედაქტირება</span>
+            </div>
           </div>
-          {authUser && (
-            <EditAccount
-              authUserId={authUserId}
-              startEdit={startEdit}
-              userData={userData}
-              setUserData={setUserData}
-              setIsEdit={setStartEdit}
-              pricesData={pricesData}
-              loggedUserInfo={loggedUserInfo}
-            />
-          )}
         </div>
       )}
     </>

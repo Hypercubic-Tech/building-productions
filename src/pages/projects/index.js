@@ -6,6 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import { setUserStatus } from "../../store/slices/statusSlice";
 import notify from "../../utils/notify";
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
@@ -14,8 +15,6 @@ import LoadingPage from "../../components/ui/LoadingPage";
 import DeleteBtn from "../../components/svg/DeleteBtn";
 import EditSvg from "../../components/svg/EditSvg";
 import MapSvg from "../../components/svg/MapSvg";
-
-import { setUserStatus } from "../../store/slices/statusSlice";
 
 import styles from "../../components/popup/Modal.module.css";
 
@@ -45,11 +44,10 @@ const index = () => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
 
+  const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
+  const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
-
-  const [userStatusUpdate, setUserStatusUpdate] = useState({});
-
 
   const { data: session } = useSession();
 
@@ -102,7 +100,8 @@ const index = () => {
     }
   };
 
-  console.log(allowedProjectsCount);
+  // console.log(allowedProjectsCount, 'count');
+  // console.log(userProjectsLenght, 'user projects ')
 
   const addProjectHandler = () => {
     if (userProjectsLenght < allowedProjectsCount) {
@@ -196,6 +195,7 @@ const index = () => {
       );
       const data = await getProjectsData();
       setProjectData(data.data);
+      dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
     } catch (error) {
       console.log(error);
     }
@@ -253,6 +253,8 @@ const index = () => {
     const fetchData = async () => {
       const data = await getProjectsData();
       setProjectData(data.data);
+      console.log(data?.meta?.pagination?.total)
+      dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
       setUserProjectsLenght(data?.meta?.pagination?.total);
     };
 
@@ -338,37 +340,40 @@ const index = () => {
         url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
       }
       if (url) {
-        await axios.get(url).then((res) => {
-          const data = res.data;
-          setPaymentPlan(data[0]);
+        try {
+          const response = await axios.get(url);
+          const data = response.data;
+          setPaymentPlan(data[0])
+          if (data[0]?.payment_duration === 'month') {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
+              allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
+              allowed_products: data[0]?.payment_plan?.month_allowed_products,
+              all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
+            });
+          }
+          if (data[0]?.payment_duration === 'year') {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
+              allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
+              allowed_products: data[0]?.payment_plan?.year_allowed_products,
+              all_projects: data[0]?.projects.lenght
+            });
+          }
 
-          setUserStatusUpdate((prevUserStatusUpdate) => ({
-            ...prevUserStatusUpdate,
-            username: data[0]?.username,
-            p_title: data[0]?.payment_plan?.name,
-            payment_duration: data[0]?.payment_duration,
-            allowed_export: data[0]?.payment_plan?.allowed_export,
-            allowed_media: data[0]?.payment_plan?.allowed_media,
-        }));
-
-        if (data[0]?.payment_duration === 'month') {
-            setUserStatusUpdate((prevUserStatusUpdate) => ({
-                ...prevUserStatusUpdate,
-                allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-                allowed_products: data[0]?.payment_plan?.month_allowed_products,
-            }));
-        } else {
-            setUserStatusUpdate((prevUserStatusUpdate) => ({
-                ...prevUserStatusUpdate,
-                allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-                allowed_products: data[0]?.payment_plan?.year_allowed_products,
-            }));
-        }
-
-        // dispatch(setUserStatus(userStatusUpdate));
-
+        } catch (error) {
+          console.error(error);
+        } finally {
           setIsLoading(false);
-        });
+        }
       }
     };
 
@@ -431,12 +436,12 @@ const index = () => {
                               src={
                                 (imageWithMainId &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                    imageWithMainId?.attributes?.url) ||
+                                  imageWithMainId?.attributes?.url) ||
                                 (item?.attributes?.image?.data?.[0]?.attributes
                                   ?.url &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                    item?.attributes?.image?.data?.[0]
-                                      ?.attributes?.url) ||
+                                  item?.attributes?.image?.data?.[0]
+                                    ?.attributes?.url) ||
                                 "/images/test-img.png"
                               }
                               className="card-img-top"

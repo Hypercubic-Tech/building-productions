@@ -1,25 +1,63 @@
+.mainWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.inputs_control_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 .inputs_control {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-.inputs_control:first-child {
-    margin-top: 0px;
+.userInfoTitle {
+  transition: 0.6s;
+  font-size: 16px;
+  color: #2b3467;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Noto Sans Georgian;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 200% */
+  text-transform: uppercase;
+}
+
+.bottomLine {
+  width: 100%;
+  background-color: #6d749c;
+  height: 1px;
 }
 
 .priceing_switch {
-    gap: 6px;
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
+  gap: 6px;
+  display: flex;
+  flex-direction: column;
 }
 
 .priceing_switch a {
-    width: calc(50% - 8px);
+  width: calc(50% - 8px);
 }
 
 .saveBtn {
-    margin-top: 40px;
+  margin: 10px 0;
+  width: fit-content;
+}
+
+.remove-arrows {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+@media screen and (max-width: 768px) {
+  .inputs_control {
+    grid-template-columns: 1fr;
+  }
+  .priceing_switch a {
+    width: 100%;
+  }
 }
