@@ -3,6 +3,7 @@ import React from "react";
 const EditSvg = () => {
   return (
     <svg
+      style={{ cursor: "pointer" }}
       className="card-svg rotate-svg"
       width="19"
       height="18"

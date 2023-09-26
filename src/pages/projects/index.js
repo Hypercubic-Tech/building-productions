@@ -44,9 +44,7 @@ const index = () => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
 
-  const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
-  const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
 
   const { data: session } = useSession();
@@ -250,7 +248,6 @@ const index = () => {
     const fetchData = async () => {
       const data = await getProjectsData();
       setProjectData(data.data);
-      console.log(data?.meta?.pagination?.total)
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
       setUserProjectsLenght(data?.meta?.pagination?.total);
     };
@@ -340,32 +337,7 @@ const index = () => {
         try {
           const response = await axios.get(url);
           const data = response.data;
-          setPaymentPlan(data[0])
-          if (data[0]?.payment_duration === 'month') {
-            setUserStatusUpdate({
-              username: data[0]?.username,
-              p_title: data[0]?.payment_plan?.name,
-              payment_duration: data[0]?.payment_duration,
-              allowed_export: data[0]?.payment_plan?.allowed_export,
-              allowed_media: data[0]?.payment_plan?.allowed_media,
-              allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.month_allowed_products,
-              all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
-            });
-          }
-          if (data[0]?.payment_duration === 'year') {
-            setUserStatusUpdate({
-              username: data[0]?.username,
-              p_title: data[0]?.payment_plan?.name,
-              payment_duration: data[0]?.payment_duration,
-              allowed_export: data[0]?.payment_plan?.allowed_export,
-              allowed_media: data[0]?.payment_plan?.allowed_media,
-              allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.year_allowed_products,
-              all_projects: data[0]?.projects.lenght
-            });
-          }
-
+          setPaymentPlan(data[0]);
         } catch (error) {
           console.error(error);
         } finally {
