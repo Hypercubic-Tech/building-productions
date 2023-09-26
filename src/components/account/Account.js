@@ -9,9 +9,9 @@ import LoadingPage from "../ui/LoadingPage";
 import EditAccount from "./EditAccount";
 import EditSvg from "../svg/EditSvg";
 import ChangePassword from "../popup/ChangePassword";
+import FingerprintSvg from "../svg/FingerprintSvg";
 
 import styles from "./Account.module.css";
-import FingerprintSvg from "../svg/FingerprintSvg";
 
 const index = () => {
   const { data: session } = useSession();
