@@ -11,6 +11,7 @@ import EditSvg from "../svg/EditSvg";
 import ChangePassword from "../popup/ChangePassword";
 
 import styles from "./Account.module.css";
+import FingerprintSvg from "../svg/FingerprintSvg";
 
 const index = () => {
   const { data: session } = useSession();
@@ -214,10 +215,7 @@ const index = () => {
                 quantity={10}
                 handleImageRemove={handleImageRemove}
               />
-              <EditSvg
-                fill="#2B3467"
-                onClick={() => setOpenPasswordPopup(true)}
-              />
+              <FingerprintSvg onClick={() => setOpenPasswordPopup(true)} />
             </div>
           </div>
           <div style={{ width: "100%" }}>
@@ -233,11 +231,14 @@ const index = () => {
               />
             )}
             <div
-              style={{ opacity: startEdit ? "0" : "1", pointerEvents: startEdit ?  "none" : "auto" }}
+              style={{
+                opacity: startEdit ? "0" : "1",
+                pointerEvents: startEdit ? "none" : "auto",
+              }}
               onClick={() => setStartEdit(!startEdit)}
               className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
             >
-              <EditSvg fill="white" />
+              <EditSvg/>
               <span>პროფილის რედაქტირება</span>
             </div>
           </div>
