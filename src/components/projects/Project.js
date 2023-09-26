@@ -327,7 +327,7 @@ const Project = ({
                                   />
                                 </svg>
                               </span>
-                              <b>ეხპორტი</b>
+                              <b>ექსპორტი</b>
                             </button>
                           ) : (
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
