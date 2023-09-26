@@ -34,7 +34,8 @@ const Project = ({
   getProjectById,
   allowedProducts,
   allowedExport,
-  allProductsCount
+  allProductsCount,
+  allowedProductsHandler
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -100,8 +101,6 @@ const Project = ({
       setAllowedProductsAdd(false)
     }
   };
-  // console.log(allProductsCount, 'products')
-  // console.log(allowedProducts, 'allowedProducts')
 
   useEffect(() => {
     const defaultProductCallBack = async () => {
@@ -386,6 +385,7 @@ const Project = ({
                     <div className="card-body pt-0">
                       <div className="summary">ჯამი: {total} ლარი</div>
                       <Products
+                        allowedProductsHandler={allowedProductsHandler}
                         getProjectById={getProjectById}
                         defaultImage={defaultImage}
                         productStatus={productStatus}

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import { setUserStatus } from "../../store/slices/statusSlice";
 import notify from "../../utils/notify";
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
@@ -18,6 +19,8 @@ import MapSvg from "../../components/svg/MapSvg";
 import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(true);
   const userId = useSelector((state) => state.auth.user_id);
 
@@ -41,9 +44,7 @@ const index = () => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
 
-  const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
-  const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
 
   const { data: session } = useSession();
@@ -96,8 +97,6 @@ const index = () => {
       setPageIndex(pageIndex + 1);
     }
   };
-
-  console.log(allowedProjectsCount);
 
   const addProjectHandler = () => {
     if (userProjectsLenght < allowedProjectsCount) {
@@ -191,6 +190,7 @@ const index = () => {
       );
       const data = await getProjectsData();
       setProjectData(data.data);
+      dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
     } catch (error) {
       console.log(error);
     }
@@ -237,7 +237,7 @@ const index = () => {
 
         .then((res) => {
           const data = res.data;
-          setDefaultImage(data.data.attributes?.NoImage?.data?.attributes.url);
+          setDefaultImage(data.data.attributes.NoImage.data.attributes.url);
         });
     };
 
@@ -248,6 +248,7 @@ const index = () => {
     const fetchData = async () => {
       const data = await getProjectsData();
       setProjectData(data.data);
+      dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
       setUserProjectsLenght(data?.meta?.pagination?.total);
     };
 
@@ -333,11 +334,15 @@ const index = () => {
         url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
       }
       if (url) {
-        await axios.get(url).then((res) => {
-          const data = res.data;
+        try {
+          const response = await axios.get(url);
+          const data = response.data;
           setPaymentPlan(data[0]);
+        } catch (error) {
+          console.error(error);
+        } finally {
           setIsLoading(false);
-        });
+        }
       }
     };
 
@@ -400,12 +405,12 @@ const index = () => {
                               src={
                                 (imageWithMainId &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                    imageWithMainId?.attributes?.url) ||
+                                  imageWithMainId?.attributes?.url) ||
                                 (item?.attributes?.image?.data?.[0]?.attributes
                                   ?.url &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                    item?.attributes?.image?.data?.[0]
-                                      ?.attributes?.url) ||
+                                  item?.attributes?.image?.data?.[0]
+                                    ?.attributes?.url) ||
                                 "/images/test-img.png"
                               }
                               className="card-img-top"

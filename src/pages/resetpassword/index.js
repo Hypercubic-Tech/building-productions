@@ -18,7 +18,6 @@ const RessetPassword = () => {
     }
 
     const privateCode = getQueryParam(window.location.href, "code");
-    console.log(privateCode);
 
     if (privateCode) {
       axios

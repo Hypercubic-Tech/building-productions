@@ -7,7 +7,6 @@ const TableExport = ({ totalSum, aggregatedProducts,
   service_percentage, servicePercentagePrice,
   totalSumPrice, select
 }) => {
-  console.log(aggregatedProducts)
   return (
     <div id="table2Id" style={{ paddingTop: "30px" }}>
       {select === "exportPopUp" && <div style={{ margin: "50px", marginTop: "30px" }} >

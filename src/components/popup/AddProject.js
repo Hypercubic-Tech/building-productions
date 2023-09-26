@@ -5,7 +5,6 @@ import axios from "axios";
 
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
-import Button from "../ui/Button";
 
 const AddProject = ({
   cities,

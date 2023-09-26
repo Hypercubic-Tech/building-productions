@@ -9,12 +9,12 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
   const [inputValue, setInputValue] = useState(userData?.card_cvc);
 
   const isValidCardNumber = (cardNum) => {
-    return cardNum.length === 16 && /^\d+$/.test(cardNum);
+    return cardNum?.length === 16 && /^\d+$/.test(cardNum);
   };
 
   function formatCardNumber(cardNumber) {
-    const numericValue = cardNumber.replace(/\D/g, "");
-    const formattedValue = numericValue.replace(/(\d{4})(?=\d)/g, "$1 ");
+    const numericValue = cardNumber?.replace(/\D/g, "");
+    const formattedValue = numericValue?.replace(/(\d{4})(?=\d)/g, "$1 ");
 
     return formattedValue;
   }
