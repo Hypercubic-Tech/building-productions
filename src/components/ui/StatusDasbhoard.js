@@ -129,7 +129,7 @@ const StatusDashboard = () => {
                                         <span style={{ fontSize: '12px' }}>პროექტების რაოდენობა -</span>
                                         <span> {userStatus.all_projects}</span>
                                     </div>
-                                    <div className={styles.item_warning}>
+                                    {/* <div className={styles.item_warning}>
                                         <div className={styles.warning_inner}>
                                             <svg
                                                 widths='30px'
@@ -229,7 +229,7 @@ const StatusDashboard = () => {
                                             )}
                                         </div>
 
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         )
