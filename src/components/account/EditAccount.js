@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setAuthEmail } from "../../store/slices/authSlice";
+import axios from "axios";
 import PriceCard from "../ui/PriceCard";
 import PaymentMethod from "../popup/PaymentMethod";
 import notify from "../../utils/notify";
+import ArrowDownSvg from "../svg/ArrowDownSvg";
 
 import styles from "./EditAccount.module.css";
-import ArrowDownSvg from "../svg/ArrowDownSvg";
 
 const EditAccount = ({
   authUserId,
@@ -22,9 +22,7 @@ const EditAccount = ({
 
   const [annual, setAnnual] = useState();
   const [monthly, setMonthly] = useState();
-
-  const [updateAccount, setUpdateAccount] = useState(false);
-  const [choosedPrice, setChoosedPrice] = useState(null);
+  const [initialValues, setInitialValues] = useState({});
 
   let dynamicElements = [
     {
@@ -98,10 +96,6 @@ const EditAccount = ({
     }
   }, [userData]);
 
-  // console.log(userData, 'user data orig')
-  // console.log(choosedPrice, 'price')
-  // console.log(pricesData, 'prices data')
-  // console.log(userData.payment_plan.connect[0].id)
   const sendUserUpdatedInfo = async () => {
     try {
       await axios
@@ -127,8 +121,6 @@ const EditAccount = ({
           dispatch(setAuthEmail(data?.email));
           loggedUserInfo();
           setIsEdit(false);
-          // onClose();
-
           notify(false, "მომხმარებლის ინფორმაცია დარედაქტირდა");
         });
     } catch (error) {
@@ -139,6 +131,16 @@ const EditAccount = ({
       );
     }
   };
+
+  useEffect(() => {
+    setInitialValues({ ...userData });
+  }, []);
+
+  const clearUserInfoChanges = () => {
+    setUserData({ ...initialValues });
+    setIsEdit(false);
+  };
+
   return (
     <div className={styles.mainWrapper}>
       {dynamicElements.map((el, index) => (
@@ -200,7 +202,6 @@ const EditAccount = ({
                   connect: [{ id: e.target.value }],
                 },
               }));
-              setChoosedPrice(e.target.value);
             }}
           >
             {pricesData &&
@@ -221,7 +222,7 @@ const EditAccount = ({
           maxHeight: startEdit ? "1000px" : "0",
           overflow: "hidden",
           transition: "0.6s",
-          width: "320px",
+          maxWidth: "320px",
         }}
       >
         <div
@@ -309,16 +310,34 @@ const EditAccount = ({
             />
           )}
         </div>
-        <div
-          style={{
-            opacity: !startEdit ? "0.8" : "1",
-            transition: "0.6s",
-            pointerEvents: !startEdit ? "none" : "all",
-          }}
-          onClick={sendUserUpdatedInfo}
-          className={`${"btn btn-primary"} ${styles.saveBtn}`}
-        >
-          შენახვა
+        <div>
+          <div
+            style={{
+              opacity: !startEdit ? "0.8" : "1",
+              transition: "0.6s",
+              pointerEvents: !startEdit ? "none" : "all",
+            }}
+            onClick={sendUserUpdatedInfo}
+            className={`${"fill-btn btn btn-primary fw-boldest"} ${
+              styles.saveBtn
+            }`}
+          >
+            შენახვა
+          </div>
+          '
+          <div
+            style={{
+              opacity: !startEdit ? "0.8" : "1",
+              transition: "0.6s",
+              pointerEvents: !startEdit ? "none" : "all",
+            }}
+            onClick={clearUserInfoChanges}
+            className={`${"fill-btn btn btn-primary fw-boldest"} ${
+              styles.saveBtn
+            }`}
+          >
+            გასუფთავება
+          </div>
         </div>
       </div>
     </div>

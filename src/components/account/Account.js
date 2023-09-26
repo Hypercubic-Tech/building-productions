@@ -8,6 +8,7 @@ import ImageUpload from "../ui/ImageUpload";
 import LoadingPage from "../ui/LoadingPage";
 import EditAccount from "./EditAccount";
 import EditSvg from "../svg/EditSvg";
+import ChangePassword from "../popup/ChangePassword";
 
 import styles from "./Account.module.css";
 
@@ -25,6 +26,7 @@ const index = () => {
   const [imgSrc, setImgSrc] = useState(null);
   const [image, setImage] = useState(null);
   const [pricesData, setPricesData] = useState(null);
+  const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
 
   const loggedUserInfo = async () => {
     let url;
@@ -205,14 +207,20 @@ const index = () => {
                 />
               )) || <h2 className={styles.imageText}>Uploaded Image</h2>}
             </div>
-            <ImageUpload
-              type="account"
-              onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
-              quantity={10}
-              handleImageRemove={handleImageRemove}
-            />
+            <div className={styles.imageUpload}>
+              <ImageUpload
+                type="account"
+                onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
+                quantity={10}
+                handleImageRemove={handleImageRemove}
+              />
+              <EditSvg
+                fill="#2B3467"
+                onClick={() => setOpenPasswordPopup(true)}
+              />
+            </div>
           </div>
-          <div style={{width: "100%"}}>
+          <div style={{ width: "100%" }}>
             {authUser && (
               <EditAccount
                 authUserId={authUserId}
@@ -225,14 +233,17 @@ const index = () => {
               />
             )}
             <div
-              style={{ height: "44px" }}
+              style={{ opacity: startEdit ? "0" : "1", pointerEvents: startEdit ?  "none" : "auto" }}
               onClick={() => setStartEdit(!startEdit)}
               className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
             >
-              <EditSvg />
+              <EditSvg fill="white" />
               <span>პროფილის რედაქტირება</span>
             </div>
           </div>
+          {openPasswordPopup && (
+            <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />
+          )}
         </div>
       )}
     </>
