@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import notify from "../../utils/notify";
+
+import { setUserStatus } from "../../store/slices/statusSlice";
 
 import ImageUpload from "../ui/ImageUpload";
 import LoadingPage from "../ui/LoadingPage";
@@ -12,6 +14,7 @@ import EditSvg from "../svg/EditSvg";
 import styles from "./Account.module.css";
 
 const index = () => {
+  const dispatch = useDispatch();
   const { data: session } = useSession();
 
   const provider = useSelector((state) => state.auth.provider);
@@ -25,6 +28,8 @@ const index = () => {
   const [imgSrc, setImgSrc] = useState(null);
   const [image, setImage] = useState(null);
   const [pricesData, setPricesData] = useState(null);
+
+  const [userStatusUpdate, setUserStatusUpdate] = useState({});
 
 
   const loggedUserInfo = async () => {
@@ -54,7 +59,33 @@ const index = () => {
             card_cvc: data[0]?.card_cvc,
             card_month: data[0]?.card_month,
             card_year: data[0]?.card_year
-          })
+          });
+
+          // for user dashboard
+          setUserStatusUpdate((prevUserStatusUpdate) => ({
+            ...prevUserStatusUpdate,
+            username: data[0]?.username,
+            p_title: data[0]?.payment_plan?.name,
+            payment_duration: data[0]?.payment_duration,
+            allowed_export: data[0]?.payment_plan?.allowed_export,
+            allowed_media: data[0]?.payment_plan?.allowed_media,
+          }));
+
+          if (data[0]?.payment_duration === 'month') {
+            setUserStatusUpdate((prevUserStatusUpdate) => ({
+              ...prevUserStatusUpdate,
+              allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
+              allowed_products: data[0]?.payment_plan?.month_allowed_products,
+            }));
+          } else {
+            setUserStatusUpdate((prevUserStatusUpdate) => ({
+              ...prevUserStatusUpdate,
+              allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
+              allowed_products: data[0]?.payment_plan?.year_allowed_products,
+            }));
+          }
+
+          // dispatch(setUserStatus(userStatusUpdate));
         })
         .then(() => {
           setIsLoading(false);

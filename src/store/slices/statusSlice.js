@@ -1,28 +1,24 @@
-// import { createSlice } from "@reduxjs/toolkit";
-// import { HYDRATE } from "next-redux-wrapper";
+import { createSlice } from '@reduxjs/toolkit';
 
-// const initialState = {
-//   duration: 'month',
-//     year
-// };
+const userStatusSlice = createSlice({
+    name: 'userStatus',
+    initialState: {
+        username: '',
+        p_title: '',
+        allowed_projects: "",
+        allowed_products: "",
+        allowed_export: "",
+        allowed_media: ""
+    },
+    reducers: {
+        setUserStatus: (state, action) => {
+            return {
+                ...state,
+                ...action.payload,
+            };
+        },
+    },
+});
 
-// const categorySlice = createSlice({
-//   name: "category",
-//   initialState,
-//   reducers: {
-//     setCategory(state, action) {
-//       state.category = action.payload;
-//     },
-//     extraReducers: (builder) => {
-//       builder.addCase(HYDRATE, (state, action) => {
-//         return {
-//           ...state,
-//           ...action.payload.authModal,
-//         };
-//       });
-//     },
-//   },
-// });
-
-// export const { setCategory } = categorySlice.actions;
-// export default categorySlice.reducer;
+export const { setUserStatus } = userStatusSlice.actions;
+export default userStatusSlice.reducer;

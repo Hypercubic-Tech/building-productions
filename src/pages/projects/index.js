@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -15,9 +15,13 @@ import DeleteBtn from "../../components/svg/DeleteBtn";
 import EditSvg from "../../components/svg/EditSvg";
 import MapSvg from "../../components/svg/MapSvg";
 
+import { setUserStatus } from "../../store/slices/statusSlice";
+
 import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(true);
   const userId = useSelector((state) => state.auth.user_id);
 
@@ -41,10 +45,11 @@ const index = () => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
 
-  const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
-  const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
+
+  const [userStatusUpdate, setUserStatusUpdate] = useState({});
+
 
   const { data: session } = useSession();
 
@@ -336,6 +341,32 @@ const index = () => {
         await axios.get(url).then((res) => {
           const data = res.data;
           setPaymentPlan(data[0]);
+
+          setUserStatusUpdate((prevUserStatusUpdate) => ({
+            ...prevUserStatusUpdate,
+            username: data[0]?.username,
+            p_title: data[0]?.payment_plan?.name,
+            payment_duration: data[0]?.payment_duration,
+            allowed_export: data[0]?.payment_plan?.allowed_export,
+            allowed_media: data[0]?.payment_plan?.allowed_media,
+        }));
+
+        if (data[0]?.payment_duration === 'month') {
+            setUserStatusUpdate((prevUserStatusUpdate) => ({
+                ...prevUserStatusUpdate,
+                allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
+                allowed_products: data[0]?.payment_plan?.month_allowed_products,
+            }));
+        } else {
+            setUserStatusUpdate((prevUserStatusUpdate) => ({
+                ...prevUserStatusUpdate,
+                allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
+                allowed_products: data[0]?.payment_plan?.year_allowed_products,
+            }));
+        }
+
+        // dispatch(setUserStatus(userStatusUpdate));
+
           setIsLoading(false);
         });
       }

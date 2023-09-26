@@ -8,6 +8,7 @@ import headerPopUpReducer from "./slices/headerModalSlice";
 import editProjectsReducer from "./slices/editProjectSlice";
 import { persistReducer, persistStore } from 'redux-persist';
 import categoryReducer from './slices/categorySlice';
+import statusReducer from "./slices/statusSlice";
 
 import storage from 'redux-persist/lib/storage';
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   headerPopUp: headerPopUpReducer,
   update: editProjectsReducer,
+  userStatus: statusReducer,
   cats: categoryReducer,
   [projectSlice.name]: projectSlice.reducer,
   [productSlice.name]: productSlice.reducer
