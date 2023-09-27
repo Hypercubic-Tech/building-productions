@@ -410,11 +410,16 @@ const Products = ({
         >
           {totalSum ? (
             <thead>
-              <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                <th>სამუშაო</th>
+              <tr
+                style={{ backgroundColor: "yellow", border: "1px solid black" }}
+              >
+                <th style={{ paddingLeft: "8px" }}>სამუშაო</th>
                 <th>ერთეული</th>
                 <th>რაოდენობა</th>
+                <th>სტატუსი</th>
+                <th>ხარჯი</th>
                 <th>ჯამი</th>
+                <th>ვალუტა</th>
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
                 <tr key={index}>
@@ -424,66 +429,82 @@ const Products = ({
                       return <span key={index}>{i}</span>;
                     })}
                   </td>
-                  <td>{product?.quantity}</td>
+                  <td>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</td>
                   <td>
-                    {categorySums.find(
+                    {categorySums?.find(
                       (item) => item.title === product?.categories
                     )?.sum || 0}{" "}
                     ლარი
                   </td>
                 </tr>
               ))}
-              <tr>
+              <tr style={{ border: "1px solid black" }}>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
-              <tr>
+              <tr style={{ border: "1px solid black" }}>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`სულ: ${
-                  Object.values(categorySums).reduce(
+                <td></td>
+                <td>სულ</td>
+                <td>{`${
+                  Object?.values(categorySums).reduce(
                     (total, category) => total + category.sum,
                     0
                   ) || 0
-                } ლარი`}</td>
+                } `}</td>
+                <td>ლარი</td>
               </tr>
-              <tr>
+              <tr style={{ border: "1px solid black" }}>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`დღგ ${parseInt(vatTotal)}%: ${
-                  vatTotalPrice.toFixed(2) || 0
-                } ლარი`}</td>
+                <td></td>
+                <td>{`დღგ ${parseInt(vatTotal)}%`}</td>
+                <td>{`${vatTotalPrice.toFixed(2) || 0}`}</td>
+                <td>ლარი</td>
               </tr>
-              <tr>
+              <tr style={{ border: "1px solid black" }}>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%: ${
-                  unforeseenExpensesPrice.toFixed(2) || 0
-                } ლარი`}</td>
+                <td></td>
+                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%`}</td>
+                <td>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</td>
+                <td>ლარი</td>
               </tr>
-              <tr>
+              <tr style={{ border: "1px solid black" }}>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`მომსახურეობა ${parseFloat(service_percentage)}%: ${
-                  servicePercentagePrice.toFixed(2) || 0
-                } ლარი`}</td>
+                <td></td>
+                <td>{`სერვისი ${parseFloat(service_percentage)}%`}</td>
+                <td>{`${servicePercentagePrice.toFixed(2) || 0}`}</td>
+                <td>ლარი</td>
               </tr>
-              <tr>
+              <tr style={{ border: "1px solid black" }}>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{`სულ ჯამი: ${totalSumPrice.toFixed(2) || 0} ლარი`}</td>
+                <td></td>
+                <td>სულ ჯამი</td>
+                <td>{`${totalSumPrice?.toFixed(2) || 0}`}</td>
+                <td>ლარი</td>
               </tr>
             </thead>
           ) : (
             <thead>
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                <th className="w-10px pe-2">
+                  <div className="form-check form-check-sm form-check-custom form-check-solid me-3"></div>
+                </th>
+                {/* min-w-125px */}
                 <th className="georgian">დასახელება</th>
                 <th className="georgian">მომწოდებელი</th>
                 <th className="georgian">რაოდენობა</th>
@@ -491,7 +512,9 @@ const Products = ({
                 <th className="georgian">ღირებულება</th>
                 <th className="georgian">ტიპი</th>
                 <th className="georgian">სტატუსი</th>
-                <th className="text-end min-w-100px georgian">ცვლილება</th>
+                {select === null && (
+                  <th className="text-end min-w-100px georgian">ცვლილება</th>
+                )}
               </tr>
             </thead>
           )}
