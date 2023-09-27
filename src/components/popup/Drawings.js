@@ -127,7 +127,7 @@ const Drawings = ({ setSelect }) => {
                     handleDeleteImage(imageId);
                     notify(false, "სურათი წაიშალა")
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire('ოპერაცია უარყოფილია', 'Error');
+                    notify(true, "ოპერაცია უარყოფილია");
                 }
             });
     };

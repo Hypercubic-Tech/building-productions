@@ -14,10 +14,58 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
     passwordConfirmation: "",
   });
 
+  const [validationErrors, setValidationErrors] = useState({
+    currentPassword: "",
+    password: "",
+    passwordConfirmation: "",
+  });
+
   const dispatch = useDispatch();
   const userJwt = useSelector((state) => state.auth.access_token);
 
+  const validatePassword = (password) => {
+    const uppercaseRegex = /[A-Z]/;
+    return password.length >= 9 && uppercaseRegex.test(password);
+  };
+
   const changeUserPassword = async () => {
+    setValidationErrors({
+      currentPassword: "",
+      password: "",
+      passwordConfirmation: "",
+    });
+
+    let hasErrors = false;
+
+    if (!validatePassword(changePassword.currentPassword)) {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        currentPassword:
+          "პაროლი უნდა შეიცავდეს მინიმუმ 9 სიმბოლოს და ერთ დიდ ასოს",
+      }));
+      hasErrors = true;
+    }
+
+    if (!validatePassword(changePassword.password)) {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        password: "პაროლი უნდა შეიცავდეს მინიმუმ 9 სიმბოლოს და ერთ დიდ ასოს",
+      }));
+      hasErrors = true;
+    }
+
+    if (changePassword.password !== changePassword.passwordConfirmation) {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        passwordConfirmation: "პაროლები არ ემთხვევა",
+      }));
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      return;
+    }
+
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/change-password`,
@@ -37,6 +85,7 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
       const data = res.data;
       dispatch(setAuthAccessToken(data?.jwt));
       notify(false, "მომხმარებლის პაროლი განახლებულია");
+      setOpenPasswordPopup(false);
     } catch (error) {
       notify(true, "მომხმარებლის პაროლი განახლება უარყოფილია");
       console.log(error);
@@ -54,8 +103,11 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
         <label className="mt-2">აქტიური პაროლი:</label>
         <input
           style={{
-            borderColor:
-              changePassword?.currentPassword?.length <= 0 ? "red" : "",
+            borderColor: validationErrors.currentPassword
+              ? "red"
+              : validationErrors.currentPassword === false
+              ? "green"
+              : "",
           }}
           autoComplete="current-password"
           required
@@ -68,17 +120,25 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
               ...prevSendData,
               currentPassword: e.target.value,
             }));
+            setValidationErrors((prevErrors) => ({
+              ...prevErrors,
+              currentPassword: "",
+            }));
           }}
         />
-        {changePassword?.currentPassword?.length < 6 && (
-          <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ პაროლი</p>
+        {validationErrors.currentPassword && (
+          <p style={{ color: "red" }}>{validationErrors.currentPassword}</p>
         )}
       </div>
       <div className="d-grid gap-2">
         <label className="mt-2">ახალი პაროლი:</label>
         <input
           style={{
-            borderColor: changePassword?.password?.length <= 0 ? "red" : "",
+            borderColor: validationErrors.password
+              ? "red"
+              : validationErrors.password === false
+              ? "green"
+              : "",
           }}
           autoComplete="current-password"
           required
@@ -91,18 +151,26 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
               ...prevSendData,
               password: e.target.value,
             }));
+            // Clear validation error when typing
+            setValidationErrors((prevErrors) => ({
+              ...prevErrors,
+              password: "",
+            }));
           }}
         />
-        {changePassword?.password?.length < 6 && (
-          <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ პაროლი</p>
+        {validationErrors.password && (
+          <p style={{ color: "red" }}>{validationErrors.password}</p>
         )}
       </div>
       <div className="d-grid gap-2">
         <label className="mt-2">დაადასტურეთ პაროლი:</label>
         <input
           style={{
-            borderColor:
-              changePassword?.passwordConfirmation?.length <= 0 ? "red" : "",
+            borderColor: validationErrors.passwordConfirmation
+              ? "red"
+              : validationErrors.passwordConfirmation === false
+              ? "green"
+              : "",
           }}
           autoComplete="current-password"
           required
@@ -115,44 +183,26 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
               ...prevSendData,
               passwordConfirmation: e.target.value,
             }));
+            setValidationErrors((prevErrors) => ({
+              ...prevErrors,
+              passwordConfirmation: "",
+            }));
           }}
         />
 
-        {changePassword?.passwordConfirmation !== changePassword?.password && (
-          <span
-            style={{
-              color:
-                changePassword?.passwordConfirmation !==
-                changePassword?.password
-                  ? "red"
-                  : changePassword?.passwordConfirmation ===
-                    changePassword?.password
-                  ? "green"
-                  : "",
-            }}
-          >
-            {changePassword?.passwordConfirmation !==
-            changePassword?.password ? (
-              <i className="bi bi-x" />
-            ) : (
-              <i className="bi bi-check2" />
-            )}
-            პაროლი ან განმეორებითი პაროლი არასწორია!
-          </span>
+        {validationErrors.passwordConfirmation && (
+          <p style={{ color: "red" }}>
+            {validationErrors.passwordConfirmation}
+          </p>
         )}
-
-        {changePassword?.passwordConfirmation?.length < 6 && (
-          <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ პაროლი</p>
-        )}
-
-        <button
-          className={` btn btn-success georgian ${styles.btn}`}
-          type="button"
-          onClick={changeUserPassword}
-        >
-          პაროლის შეცვლა
-        </button>
       </div>
+      <button
+        className={` btn btn-success georgian ${styles.btn}`}
+        type="button"
+        onClick={changeUserPassword}
+      >
+        პაროლის შეცვლა
+      </button>
     </div>
   );
 };

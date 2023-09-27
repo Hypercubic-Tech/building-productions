@@ -24,7 +24,7 @@ const Products = ({
   craftStatus,
   select,
   defaultImage,
-  allowedProductsHandler
+  allowedProductsHandler,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -42,7 +42,7 @@ const Products = ({
   const [newStatusValue, setNewStatusValue] = useState(null);
   const [newCraftStatusValue, setNewCraftStatusValue] = useState(null);
 
-  let itemsPerPage = 10;
+  let itemsPerPage = 3;
 
   let productsToMap = products;
 
@@ -190,7 +190,7 @@ const Products = ({
           deleteProductHandler(item);
           allowedProductsHandler();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire("უარყოფილია", "");
+          notify(true, "უარყოფილია");
         }
       });
   };
@@ -256,7 +256,7 @@ const Products = ({
             `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[id][$eq]=${product.id}`
           );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire("ოპერაცია უარყოფილია");
+          notify(true, "ოპერაცია უარყოფილია");
         }
       });
   };
