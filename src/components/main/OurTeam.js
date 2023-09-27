@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import styles from "./Home.module.css";
+
 const AboutCompany = () => {
   const [count, setCount] = useState(30);
   const [isCounting, setIsCounting] = useState(false);
@@ -106,12 +108,12 @@ const AboutCompany = () => {
       {/* pb-15 */}
         <div className="container">
           <div
-            className="custom-row d-flex align-center align-items-center mt-15 mb-18"
+            className={`${"custom-row d-flex align-center align-items-center mt-15 mb-18"} ${styles.our_team_item}`}
             id="achievements"
             data-kt-scroll-offset="{default: 100, lg: 150}"
           >
           <img className="team" src="/images/team.png" alt="banner"/>
-            <div className="w-50 responsive-w-100 responsive-justify-center ms-4">
+            <div className={`${"w-50 responsive-w-100 responsive-justify-center ms-4"} ${styles.our_team_subitem}`}>
             <h3 className="m-color fs-2hx fw-bold mb-5 georgian">
               ჩვენი გუნდი
             </h3>

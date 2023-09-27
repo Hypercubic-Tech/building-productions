@@ -217,7 +217,8 @@ const index = () => {
     setEditProductItem(product);
   };
 
-
+console.log(allowedProductsCount, 'allowed count');
+console.log(allProductsCount, 'all product count')
   return (
     <>
       {!isLoggedIn || isLoading ? (
