@@ -8,6 +8,7 @@ import { setCategory } from "../../store/slices/categorySlice";
 
 import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
+import { setUserStatus } from "../../store/slices/statusSlice";
 
 const index = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,9 @@ const index = () => {
   const [allowedExport, setAllowedExport] = useState(false);
   const [allowedProductsCount, setAllowedProductsCount] = useState(null);
   const [allProductsCount, setAllProductsCount] = useState(null);
-  
+
+  const [userStatusUpdate, setUserStatusUpdate] = useState(null);
+
   const allowedProductsHandler = () => {
     setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
 
@@ -153,42 +156,42 @@ const index = () => {
         url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
       }
       if (url) {
-         try {
-                const response = await axios.get(url);
-                const data = response.data;
+        try {
+          const response = await axios.get(url);
+          const data = response.data;
 
-                setPaymentPlan(data[0]);
+          setPaymentPlan(data[0]);
 
-                if (data[0]?.payment_duration === 'month') {
-                    setUserStatusUpdate({
-                        username: data[0]?.username,
-                        p_title: data[0]?.payment_plan?.name,
-                        payment_duration: data[0]?.payment_duration,
-                        allowed_export: data[0]?.payment_plan?.allowed_export,
-                        allowed_media: data[0]?.payment_plan?.allowed_media,
-                        allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-                        allowed_products: data[0]?.payment_plan?.month_allowed_products,
-                        all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
-                    });
-                }
-                if (data[0]?.payment_duration === 'year') {
-                    setUserStatusUpdate({
-                        username: data[0]?.username,
-                        p_title: data[0]?.payment_plan?.name,
-                        payment_duration: data[0]?.payment_duration,
-                        allowed_export: data[0]?.payment_plan?.allowed_export,
-                        allowed_media: data[0]?.payment_plan?.allowed_media,
-                        allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-                        allowed_products: data[0]?.payment_plan?.year_allowed_products,
-                        all_projects: data[0]?.projects.lenght
-                    });
-                }
+          if (data[0]?.payment_duration === 'month') {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
+              allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
+              allowed_products: data[0]?.payment_plan?.month_allowed_products,
+              all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
+            });
+          }
+          if (data[0]?.payment_duration === 'year') {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
+              allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
+              allowed_products: data[0]?.payment_plan?.year_allowed_products,
+              all_projects: data[0]?.projects.lenght
+            });
+          }
 
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setIsLoading(false);
-            }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsLoading(false);
+        }
       }
     };
 
@@ -203,11 +206,17 @@ const index = () => {
 
   useEffect(() => {
     getProjectById();
+    allowedProductsHandler();
   }, [projectId]);
+
+  useEffect(() => {
+    dispatch(setUserStatus(userStatusUpdate))
+  }, [userStatusUpdate]);
 
   const editHandler = (product) => {
     setEditProductItem(product);
   };
+
 
   return (
     <>
@@ -215,7 +224,7 @@ const index = () => {
         <LoadingPage />
       ) : (
         <Project
-        allowedProductsHandler={allowedProductsHandler}
+          allowedProductsHandler={allowedProductsHandler}
           allProductsCount={allProductsCount}
           allowedProducts={allowedProductsCount}
           allowedExport={allowedExport}

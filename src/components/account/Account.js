@@ -37,7 +37,6 @@ const index = () => {
 
   const loggedUserInfo = async () => {
     let url;
-
     if (provider === "google") {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
     } else {
@@ -215,8 +214,8 @@ const index = () => {
   };
 
   useEffect(() => {
-    loggedUserInfo();
     getPricesData();
+    loggedUserInfo();
   }, [session, authUserId]);
 
   useEffect(() => {
@@ -275,7 +274,7 @@ const index = () => {
               onClick={() => setStartEdit(!startEdit)}
               className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
             >
-              <EditSvg/>
+              <EditSvg />
               <span>პროფილის რედაქტირება</span>
             </div>
           </div>

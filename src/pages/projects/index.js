@@ -191,6 +191,8 @@ const index = () => {
       const data = await getProjectsData();
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
+      setUserProjectsLenght(data?.meta?.pagination?.total);
+
     } catch (error) {
       console.log(error);
     }
@@ -249,6 +251,7 @@ const index = () => {
       const data = await getProjectsData();
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
+      allowedProjectsHandler();
       setUserProjectsLenght(data?.meta?.pagination?.total);
     };
 
@@ -257,7 +260,7 @@ const index = () => {
 
   useEffect(() => {
     allowedProjectsHandler();
-  }, [paymentPlan]);
+  }, [paymentPlan, ]);
 
   useEffect(() => {
     const getCategoriesHandler = async () => {

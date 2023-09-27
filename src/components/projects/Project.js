@@ -37,6 +37,8 @@ const Project = ({
   allProductsCount,
   allowedProductsHandler
 }) => {
+  // console.log(allProductsCount, 'count');
+  // console.log(allowedProducts, 'allowed');
   const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
