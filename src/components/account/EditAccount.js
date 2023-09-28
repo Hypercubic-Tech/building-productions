@@ -8,6 +8,7 @@ import notify from "../../utils/notify";
 import ArrowDownSvg from "../svg/ArrowDownSvg";
 
 import styles from "./EditAccount.module.css";
+import EditSvg from "../svg/EditSvg";
 
 const EditAccount = ({
   authUserId,
@@ -17,6 +18,7 @@ const EditAccount = ({
   startEdit,
   loggedUserInfo,
   setIsEdit,
+  setStartEdit,
 }) => {
   const dispatch = useDispatch();
 
@@ -302,10 +304,16 @@ const EditAccount = ({
             />
           )}
         </div>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
           <div
             style={{
-              opacity: !startEdit ? "0.8" : "1",
+              opacity: !startEdit ? "0" : "1",
               transition: "0.6s",
               pointerEvents: !startEdit ? "none" : "all",
             }}
@@ -316,10 +324,9 @@ const EditAccount = ({
           >
             შენახვა
           </div>
-          '
           <div
             style={{
-              opacity: !startEdit ? "0.8" : "1",
+              opacity: !startEdit ? "0" : "1",
               transition: "0.6s",
               pointerEvents: !startEdit ? "none" : "all",
             }}
@@ -329,6 +336,18 @@ const EditAccount = ({
             }`}
           >
             გასუფთავება
+          </div>
+          <div
+            style={{
+              opacity: startEdit ? "0" : "1",
+              pointerEvents: startEdit ? "none" : "auto",
+              position: "absolute",
+            }}
+            onClick={() => setStartEdit(!startEdit)}
+            className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
+          >
+            <EditSvg />
+            <span>პროფილის რედაქტირება</span>
           </div>
         </div>
       </div>

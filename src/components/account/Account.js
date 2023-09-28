@@ -36,7 +36,6 @@ const index = () => {
 
   const loggedUserInfo = async () => {
     let url;
-
     if (provider === "google") {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
     } else {
@@ -214,8 +213,8 @@ const index = () => {
   };
 
   useEffect(() => {
-    loggedUserInfo();
     getPricesData();
+    loggedUserInfo();
   }, [session, authUserId]);
 
   useEffect(() => {
@@ -259,6 +258,7 @@ const index = () => {
               <EditAccount
                 authUserId={authUserId}
                 startEdit={startEdit}
+                setStartEdit={setStartEdit}
                 userData={userData}
                 setUserData={setUserData}
                 setIsEdit={setStartEdit}
@@ -266,17 +266,6 @@ const index = () => {
                 loggedUserInfo={loggedUserInfo}
               />
             )}
-            <div
-              style={{
-                opacity: startEdit ? "0" : "1",
-                pointerEvents: startEdit ? "none" : "auto",
-              }}
-              onClick={() => setStartEdit(!startEdit)}
-              className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
-            >
-              <EditSvg />
-              <span>პროფილის რედაქტირება</span>
-            </div>
           </div>
           {openPasswordPopup && (
             <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />

@@ -136,7 +136,7 @@ function HeaderLogged() {
 
   return (
     <div
-      style={{zIndex: '11'}}
+      style={{ zIndex: "11" }}
       id="kt_header"
       className="header"
       data-kt-sticky="true"

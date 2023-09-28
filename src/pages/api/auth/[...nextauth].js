@@ -26,6 +26,20 @@ export default NextAuth({
             }
           );
           const data = response.data;
+
+          if (data.user.payment_duration === null) {
+            await axios
+              .put(
+                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${data.user.id}`,
+                {
+                  payment_duration: 'month',
+                  payment_plan: {
+                    connect: [{ id: 1 }],
+                  },
+                }
+              )
+          }
+
           token.jwt = data.jwt;
           token.id = data.user.id;
         } catch (error) {

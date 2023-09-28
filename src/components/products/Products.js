@@ -42,7 +42,7 @@ const Products = ({
   const [newStatusValue, setNewStatusValue] = useState(null);
   const [newCraftStatusValue, setNewCraftStatusValue] = useState(null);
 
-  let itemsPerPage = 3;
+  let itemsPerPage = 5;
 
   let productsToMap = products;
 

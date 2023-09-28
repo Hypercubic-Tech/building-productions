@@ -115,7 +115,7 @@ const Home = () => {
         <OurTeam />
         <Price pricesData={pricesData} price={priceData} />
         {/* <ContactUs /> */}
-        <Faq faqData={faqData} />
+        {/* <Faq faqData={faqData} /> */}
       </div>
     </div>
   );

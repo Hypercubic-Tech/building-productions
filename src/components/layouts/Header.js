@@ -6,11 +6,14 @@ import { useSession } from "next-auth/react";
 import HeaderLogged from "./HeaderLogged";
 import DefaultHeader from "./DefaultHeader";
 
+import styles from "./HeaderLogged.module.css";
+
 function Header() {
   const [header, setHeader] = useState(null);
   const loggedIn = useSelector(selectAuthState);
   const dispatch = useDispatch();
   const { data: session } = useSession();
+  const userStatus = useSelector((state) => state.userStatus);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -34,7 +37,22 @@ function Header() {
     return <div></div>;
   }
 
-  return <>{header}</>;
+  return (
+    <>
+      {header}
+      {Number(userStatus.allowed_projects) - Number(userStatus.all_projects) <=
+      3 ? (
+        <div className={styles.warningMessage}>
+          თქვენი პროდუქტების დამატების ლიმიტი იწურება, დაგრჩათ{" "}
+          {Number(userStatus.allowed_projects) -
+            Number(userStatus.all_projects)}{" "}
+          პროექტი, გთხოვთ განაახლოთ გადახდის გეგმა !!!
+        </div>
+      ) : (
+        ""
+      )}
+    </>
+  );
 }
 
 export default Header;

@@ -14,6 +14,7 @@ const AddProject = ({
   currentCondition,
   dismiss,
   setShowProject,
+  setAddProject
 }) => {
   const userId = useSelector((state) => state.auth.user_id);
   const { data: session } = useSession();
@@ -154,6 +155,7 @@ const AddProject = ({
   const finishHandler = () => {
     setClose(true);
     createProjectHandler();
+    setAddProject(false);
   };
 
   return (
