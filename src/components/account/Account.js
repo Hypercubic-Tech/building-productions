@@ -34,7 +34,6 @@ const index = () => {
 
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
 
-
   const loggedUserInfo = async () => {
     let url;
 
@@ -61,11 +60,11 @@ const index = () => {
             card_number: data[0]?.card_number,
             card_cvc: data[0]?.card_cvc,
             card_month: data[0]?.card_month,
-            card_year: data[0]?.card_year
+            card_year: data[0]?.card_year,
           });
 
           // for user dashboard
-          if (data[0]?.payment_duration === 'month') {
+          if (data[0]?.payment_duration === "month") {
             setUserStatusUpdate({
               username: data[0]?.username,
               p_title: data[0]?.payment_plan?.name,
@@ -74,10 +73,11 @@ const index = () => {
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
               allowed_products: data[0]?.payment_plan?.month_allowed_products,
-              all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
+              all_projects:
+                data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
             });
           }
-          if (data[0]?.payment_duration === 'year') {
+          if (data[0]?.payment_duration === "year") {
             setUserStatusUpdate({
               username: data[0]?.username,
               p_title: data[0]?.payment_plan?.name,
@@ -86,10 +86,9 @@ const index = () => {
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
               allowed_products: data[0]?.payment_plan?.year_allowed_products,
-              all_projects: data[0]?.projects.lenght
+              all_projects: data[0]?.projects.lenght,
             });
           }
-
         })
         .then(() => {
           setIsLoading(false);
@@ -225,7 +224,7 @@ const index = () => {
 
   useEffect(() => {
     dispatch(setUserStatus(userStatusUpdate));
-  }, [userStatusUpdate])
+  }, [userStatusUpdate]);
 
   return (
     <>
@@ -275,7 +274,7 @@ const index = () => {
               onClick={() => setStartEdit(!startEdit)}
               className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
             >
-              <EditSvg/>
+              <EditSvg />
               <span>პროფილის რედაქტირება</span>
             </div>
           </div>

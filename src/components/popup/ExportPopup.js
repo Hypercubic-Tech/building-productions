@@ -5,8 +5,6 @@ import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 
 import TableExport from "./TableExport";
-import { RESPONSE_LIMIT_DEFAULT } from "next/dist/server/api-utils";
-import { LinearGradient } from "@react-pdf/renderer";
 import XsmallSvg from "../svg/XsmallSvg";
 
 const ExportPopup = ({

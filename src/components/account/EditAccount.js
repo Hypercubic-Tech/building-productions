@@ -216,15 +216,7 @@ const EditAccount = ({
           <ArrowDownSvg />
         </div>
       </div>
-      <div
-        className={styles.priceing_switch}
-        style={{
-          maxHeight: startEdit ? "1000px" : "0",
-          overflow: "hidden",
-          transition: "0.6s",
-          maxWidth: "320px",
-        }}
-      >
+      <div className={styles.priceing_switch}>
         <div
           style={{
             opacity: !startEdit ? "0.7" : "1",
