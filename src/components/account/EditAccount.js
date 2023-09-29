@@ -6,9 +6,9 @@ import PriceCard from "../ui/PriceCard";
 import PaymentMethod from "../popup/PaymentMethod";
 import notify from "../../utils/notify";
 import ArrowDownSvg from "../svg/ArrowDownSvg";
+import EditSvg from "../svg/EditSvg";
 
 import styles from "./EditAccount.module.css";
-import EditSvg from "../svg/EditSvg";
 
 const EditAccount = ({
   authUserId,
@@ -217,6 +217,10 @@ const EditAccount = ({
           </select>
           <ArrowDownSvg />
         </div>
+        <div
+          className={styles.bottomLine}
+          style={{ position: "absolute", bottom: "0" }}
+        ></div>
       </div>
       <div className={styles.priceing_switch}>
         <div
@@ -289,11 +293,13 @@ const EditAccount = ({
             )}
           </div>
         )}
+        <div className={styles.bottomLine}></div>
         <div
           style={{
             opacity: !startEdit ? "0.7" : "1",
             transition: "0.6s",
             pointerEvents: !startEdit ? "none" : "all",
+            marginTop: "20px",
           }}
         >
           {userData?.payment_plan?.connect[0]?.id > 1 && (
@@ -350,6 +356,7 @@ const EditAccount = ({
             <span>პროფილის რედაქტირება</span>
           </div>
         </div>
+        <div className={styles.bottomLine}></div>
       </div>
     </div>
   );

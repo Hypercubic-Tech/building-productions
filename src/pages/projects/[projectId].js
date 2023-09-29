@@ -162,7 +162,7 @@ const index = () => {
 
           setPaymentPlan(data[0]);
 
-          if (data[0]?.payment_duration === 'month') {
+          if (data[0]?.payment_duration === "month") {
             setUserStatusUpdate({
               username: data[0]?.username,
               p_title: data[0]?.payment_plan?.name,
@@ -171,10 +171,11 @@ const index = () => {
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
               allowed_products: data[0]?.payment_plan?.month_allowed_products,
-              all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
+              all_projects:
+                data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
             });
           }
-          if (data[0]?.payment_duration === 'year') {
+          if (data[0]?.payment_duration === "year") {
             setUserStatusUpdate({
               username: data[0]?.username,
               p_title: data[0]?.payment_plan?.name,
@@ -183,10 +184,9 @@ const index = () => {
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
               allowed_products: data[0]?.payment_plan?.year_allowed_products,
-              all_projects: data[0]?.projects.lenght
+              all_projects: data[0]?.projects.lenght,
             });
           }
-
         } catch (error) {
           console.error(error);
         } finally {
@@ -210,15 +210,15 @@ const index = () => {
   }, [projectId]);
 
   useEffect(() => {
-    dispatch(setUserStatus(userStatusUpdate))
+    dispatch(setUserStatus(userStatusUpdate));
   }, [userStatusUpdate]);
 
   const editHandler = (product) => {
     setEditProductItem(product);
   };
 
-console.log(allowedProductsCount, 'allowed count');
-console.log(allProductsCount, 'all product count')
+  console.log("rerender");
+
   return (
     <>
       {!isLoggedIn || isLoading ? (

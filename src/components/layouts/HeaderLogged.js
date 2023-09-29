@@ -257,7 +257,11 @@ function HeaderLogged() {
               {isModalOpen && (
                 <animated.div className="modal" style={animation}>
                   <div ref={ref} className={`${styles.modalWindow}`}>
-                    <Link href="/account" className={styles.hover}>
+                    <Link
+                      href="/account"
+                      className={styles.hover}
+                      onClick={() => setIsModalOpen(false)}
+                    >
                       <span>პროფილი</span>
                     </Link>
                     <div
