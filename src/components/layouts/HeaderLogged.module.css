@@ -117,3 +117,10 @@
     right: 15px;
   }
 }
+
+@media (max-width: 470px) {
+  .searchWrapper {
+    max-width: 130px;
+    max-height: 130px;
+  }
+}

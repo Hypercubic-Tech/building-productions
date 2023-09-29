@@ -154,11 +154,11 @@ function HeaderLogged() {
           </Link>
         </div>
         <div className="d-flex align-items-center">
-          <div className="d-flex align-items-center flex-shrink-0">
+          <div className="d-flex align-items-center flex-shrink-0" >
             {isFilterOpen && (
               <div
                 id="kt_header_search"
-                className="d-flex align-items-center w-lg-225px"
+                className={`d-flex align-items-center ${styles.searchWrapper}`}
                 data-kt-search-keypress="true"
                 data-kt-search-min-length={2}
                 data-kt-search-enter="enter"
