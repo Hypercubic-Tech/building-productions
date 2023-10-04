@@ -31,24 +31,12 @@ const index = () => {
   const [productOptions, setProductOptions] = useState(null);
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
-
   const [paymentPlan, setPaymentPlan] = useState(null);
   const [allowedExport, setAllowedExport] = useState(false);
-  const [allowedProductsCount, setAllowedProductsCount] = useState(null);
-  const [allProductsCount, setAllProductsCount] = useState(null);
-
   const [userStatusUpdate, setUserStatusUpdate] = useState(null);
 
   const allowedProductsHandler = () => {
     setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
-
-    if (paymentPlan?.payment_duration === "month") {
-      setAllowedProductsCount(
-        paymentPlan?.payment_plan?.month_allowed_products
-      );
-    } else {
-      setAllowedProductsCount(paymentPlan?.payment_plan?.year_allowed_products);
-    }
   };
 
   const getProjectById = async () => {
@@ -59,9 +47,6 @@ const index = () => {
         );
         const projectData = projectRes.data?.data;
         setProject(projectData);
-        setAllProductsCount(
-          projectRes.data.data[0]?.attributes?.products?.data?.length
-        );
 
         const productRes = await axios.get(
           `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`
@@ -170,7 +155,6 @@ const index = () => {
               allowed_export: data[0]?.payment_plan?.allowed_export,
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.month_allowed_products,
               all_projects:
                 data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
             });
@@ -183,7 +167,6 @@ const index = () => {
               allowed_export: data[0]?.payment_plan?.allowed_export,
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.year_allowed_products,
               all_projects: data[0]?.projects.lenght,
             });
           }
@@ -217,8 +200,6 @@ const index = () => {
     setEditProductItem(product);
   };
 
-  console.log("rerender");
-
   return (
     <>
       {!isLoggedIn || isLoading ? (
@@ -226,8 +207,6 @@ const index = () => {
       ) : (
         <Project
           allowedProductsHandler={allowedProductsHandler}
-          allProductsCount={allProductsCount}
-          allowedProducts={allowedProductsCount}
           allowedExport={allowedExport}
           productStatus={productStatus}
           productOptions={productOptions}

@@ -104,7 +104,6 @@ const AddProduct = ({
         defaultProductsHandler(activeCategoryId);
     };
 
-    // const []
     const handleCraftSubmit = async () => {
         try {
             await axios

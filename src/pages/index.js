@@ -16,20 +16,6 @@ import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
 import Price from "../components/main/Price";
 import Faq from "../components/main/Faq";
-import notify from "../utils/notify";
-
-const priceData = {
-  monthlyPrice: {
-    startup: 20,
-    business: 50,
-    enterprise: 100,
-  },
-  annualPrice: {
-    startup: 100,
-    business: 180,
-    enterprise: 360,
-  },
-};
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -113,7 +99,7 @@ const Home = () => {
         <Heading />
         <HowItWorks />
         <OurTeam />
-        <Price pricesData={pricesData} price={priceData} />
+        <Price pricesData={pricesData} />
         {/* <ContactUs /> */}
         <Faq faqData={faqData} />
       </div>

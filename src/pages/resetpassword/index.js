@@ -5,9 +5,11 @@ import notify from "../../utils/notify";
 import CloseBtn2 from "../../components/svg/CloseBtn2";
 
 import styles from "../../components/popup/AuthModal.module.css";
+import SowPasswordSvg from "../../components/svg/SowPasswordSvg";
 
 const RessetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validationErrors, setValidationErrors] = useState({
     newPassword: "",
@@ -82,34 +84,41 @@ const RessetPassword = () => {
       </Link>
       <div className="row">
         <div className="d-grid gap-2">
-          <label className="blue mt-2 fx">შეიყვანეთ ახალი პაროლი</label>
-          <input
-            autoComplete="current-password"
-            id="newPassword"
-            className="form-control"
-            placeholder="******"
-            type="password"
-            onChange={(e) => {
-              setNewPassword(e.target.value);
-              setValidationErrors((prevErrors) => ({
-                ...prevErrors,
-                newPassword: "",
-              }));
-            }}
-            style={{
-              borderColor: validationErrors.newPassword ? "red" : validationErrors.newPassword === false ? "green" : "",
-            }}
-          />
-          {validationErrors.newPassword && (
-            <p style={{ color: "red" }}>{validationErrors.newPassword}</p>
-          )}
+          <div style={{ position: "relative" }}>
+            <label className="blue mt-2 fx">შეიყვანეთ ახალი პაროლი</label>
+            <input
+              autoComplete="current-password"
+              id="newPassword"
+              className="form-control"
+              placeholder="******"
+              type={!showPassword ? "password" : "text"}
+              onChange={(e) => {
+                setNewPassword(e.target.value);
+                setValidationErrors((prevErrors) => ({
+                  ...prevErrors,
+                  newPassword: "",
+                }));
+              }}
+              style={{
+                borderColor: validationErrors.newPassword
+                  ? "red"
+                  : validationErrors.newPassword === false
+                  ? "green"
+                  : "",
+              }}
+            />
+            {validationErrors.newPassword && (
+              <p style={{ color: "red" }}>{validationErrors.newPassword}</p>
+            )}
+            <SowPasswordSvg onClick={() => setShowPassword(!showPassword)} />
+          </div>
           <label className="blue mt-2 fx">დაადასტურეთ ახალი პაროლი</label>
           <input
             autoComplete="current-password"
             id="confirmPassword"
             className="form-control"
             placeholder="******"
-            type="password"
+            type={!showPassword ? "password" : "text"}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
               setValidationErrors((prevErrors) => ({
@@ -118,7 +127,11 @@ const RessetPassword = () => {
               }));
             }}
             style={{
-              borderColor: validationErrors.confirmPassword ? "red" : validationErrors.confirmPassword === false ? "green" : "",
+              borderColor: validationErrors.confirmPassword
+                ? "red"
+                : validationErrors.confirmPassword === false
+                ? "green"
+                : "",
             }}
           />
           {validationErrors.confirmPassword && (

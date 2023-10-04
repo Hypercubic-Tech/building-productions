@@ -36,13 +36,9 @@ const Project = ({
   productStatus,
   defaultImage,
   getProjectById,
-  allowedProducts,
   allowedExport,
-  allProductsCount,
   allowedProductsHandler,
 }) => {
-  // console.log(allProductsCount, 'count');
-  // console.log(allowedProducts, 'allowed');
   const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
@@ -53,8 +49,6 @@ const Project = ({
   const [select, setSelect] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState("");
-
-  const [allowedProductsAdd, setAllowedProductsAdd] = useState(true);
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
@@ -99,18 +93,7 @@ const Project = ({
   }, 0);
 
   const allowanceChecker = () => {
-    if (allProductsCount < allowedProducts) {
-      setSelect("add");
-      setAllowedProductsAdd(true);
-    } else if (allowedProducts === "უსასრულო") {
-      setSelect("add");
-      setAllowedProductsAdd(true);
-    } else if (allProductsCount === allowedProducts) {
-      setSelect(null);
-      setAllowedProductsAdd(false);
-    } else {
-      setAllowedProductsAdd(false);
-    }
+    setSelect("add");
   };
 
   useEffect(() => {
@@ -121,16 +104,6 @@ const Project = ({
     };
     defaultProductCallBack();
   }, [activeCategoryId, projectId]);
-
-  useEffect(() => {
-    if (allProductsCount < allowedProducts || allowedProducts === "უსასრულო") {
-      setAllowedProductsAdd(true);
-    } else if (allProductsCount === allowedProducts) {
-      setAllowedProductsAdd(false);
-    } else {
-      setAllowedProductsAdd(false);
-    }
-  }, [products]);
 
   return (
     <>
@@ -310,22 +283,13 @@ const Project = ({
                               <button
                                 type="button"
                                 onClick={allowanceChecker}
-                                className={`${"btn btn-primary georgian"} ${
-                                  !allowedProductsAdd && styles.disabledBtn
-                                }`}
+                                className={`btn btn-primary georgian`}
                                 data-bs-toggle="modal"
                                 data-bs-target="#kt_modal_add_user"
                               >
                                 <AddSvg />
                                 <b>დამატება</b>
                               </button>
-                              {!allowedProductsAdd && (
-                                <span
-                                  style={{ color: "red", marginTop: "6px" }}
-                                >
-                                  პროდუქტების დამატების ლიმიტი ამოიწურა
-                                </span>
-                              )}
                             </div>
                           )}
                         </div>
@@ -383,12 +347,6 @@ const Project = ({
                       </div>
                     </div>
                     <div className="card-body pt-0">
-                      <div
-                        className="summary"
-                        style={{ fontSize: "16px", padding: "4px" }}
-                      >
-                        ჯამი: {total} ლარი
-                      </div>
                       <Products
                         allowedProductsHandler={allowedProductsHandler}
                         getProjectById={getProjectById}
@@ -403,6 +361,16 @@ const Project = ({
                         searchType={searchType}
                         select={select}
                       />
+                      <div
+                        className="summary"
+                        style={{
+                          fontSize: "16px",
+                          padding: "4px",
+                          textAlign: "end",
+                        }}
+                      >
+                        ჯამი: {total} ლარი
+                      </div>
                     </div>
                   </div>
                 </div>

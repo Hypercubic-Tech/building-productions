@@ -9,7 +9,6 @@ import { setUserStatus } from "../../store/slices/statusSlice";
 import ImageUpload from "../ui/ImageUpload";
 import LoadingPage from "../ui/LoadingPage";
 import EditAccount from "./EditAccount";
-import EditSvg from "../svg/EditSvg";
 import ChangePassword from "../popup/ChangePassword";
 import FingerprintSvg from "../svg/FingerprintSvg";
 
@@ -71,7 +70,6 @@ const index = () => {
               allowed_export: data[0]?.payment_plan?.allowed_export,
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.month_allowed_products,
               all_projects:
                 data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
             });
@@ -84,7 +82,6 @@ const index = () => {
               allowed_export: data[0]?.payment_plan?.allowed_export,
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.year_allowed_products,
               all_projects: data[0]?.projects.lenght,
             });
           }

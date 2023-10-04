@@ -42,6 +42,10 @@
   .our_team_subitem {
     margin-top: 30px;
   }
+
+  .ourTeamContainer {
+    margin-bottom: 50px;
+  }
 }
 /* END OF OUR TEAM */
 /* FAQ */
@@ -105,10 +109,12 @@
     display: inline-block;
   }
 
-
   .our_team_item img {
     width: 100%;
     height: fit-content;
+  }
+  .ourTeamContainer {
+    margin-bottom: 30px;
   }
 }
 

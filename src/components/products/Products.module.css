@@ -35,12 +35,6 @@
     fill: #2B3467;
 }
 
-.sumTableUnities {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-}
-
 .tableHead th {
     width: calc(100% / 7);
 }

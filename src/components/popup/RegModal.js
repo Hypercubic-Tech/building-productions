@@ -7,6 +7,7 @@ import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
 import CloseBtn2 from "../svg/CloseBtn2";
 import CloseBtnBG from "../svg/CloseBtnBG";
+import SowPasswordSvg from "../svg/SowPasswordSvg";
 
 const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   const [annual, setAnnual] = useState(false);
@@ -14,6 +15,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   const [passwordValid, setPasswordValid] = useState(false);
 
   const [step, setStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
   const [lossData, setLossData] = useState(false);
   const [paymentPlanState, setPaymentPlanState] = useState(null);
   const [backBtn, setBackBtn] = useState(false);
@@ -134,6 +136,8 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
 
     setPasswordValid(isValid);
   };
+
+  console.log(pricesData, "prs");
 
   return (
     <div className={`${styles.container}`}>
@@ -273,25 +277,29 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
           )}
         </div>
         <div className="d-grid gap-2">
-          <label className="mt-2">პაროლი</label>
-          <input
-            style={{
-              borderColor: lossData && regData.password.length < 6 ? "red" : "",
-            }}
-            autoComplete="new-password"
-            required
-            id="password"
-            className="form-control"
-            placeholder="********"
-            type="password"
-            onChange={(e) => {
-              setRegData((prevSendData) => ({
-                ...prevSendData,
-                password: e.target.value,
-              }));
-              isPasswordValid(e.target.value);
-            }}
-          />
+          <div style={{position: "relative"}}>
+            <label className="mt-2">პაროლი</label>
+            <input
+              style={{
+                borderColor:
+                  lossData && regData.password.length < 6 ? "red" : "",
+              }}
+              autoComplete="new-password"
+              required
+              id="password"
+              className="form-control"
+              placeholder="********"
+              type={!showPassword ? "password" : "text"}
+              onChange={(e) => {
+                setRegData((prevSendData) => ({
+                  ...prevSendData,
+                  password: e.target.value,
+                }));
+                isPasswordValid(e.target.value);
+              }}
+            />
+            <SowPasswordSvg onClick={() => setShowPassword(!showPassword)} />
+          </div>
           {lossData && !passwordValid && (
             <div>
               {regData.password.length < 9 && (
