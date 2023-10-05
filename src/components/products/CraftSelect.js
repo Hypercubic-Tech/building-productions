@@ -19,6 +19,7 @@ const CraftSelect = ({
         confirmServiceEdit(newCraftStatusValue, product);
       }}
     >
+      <option style={{ display: "none" }}>{defaultCraftStatusValue}</option>
       {craftStatus &&
         craftStatus.map((item) => (
           <option key={item.id} value={item.id}>

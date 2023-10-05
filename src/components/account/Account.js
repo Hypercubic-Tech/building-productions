@@ -261,6 +261,7 @@ const index = () => {
                 setIsEdit={setStartEdit}
                 pricesData={pricesData}
                 loggedUserInfo={loggedUserInfo}
+                authUser={authUser}
               />
             )}
           </div>

@@ -3,9 +3,6 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-
-import { setCategory } from "../../store/slices/categorySlice";
-
 import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
 import { setUserStatus } from "../../store/slices/statusSlice";
@@ -58,7 +55,6 @@ const index = () => {
         );
         const categoryData = categoryRes.data.data;
         setProjectCategory(categoryData);
-        dispatch(setCategory(categoryData[0]?.id));
       } catch (error) {
         console.log(error);
       }

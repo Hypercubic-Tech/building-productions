@@ -19,6 +19,7 @@ const EditAccount = ({
   loggedUserInfo,
   setIsEdit,
   setStartEdit,
+  authUser
 }) => {
   const dispatch = useDispatch();
 
@@ -166,11 +167,15 @@ const EditAccount = ({
               <div style={{ position: "relative" }}>
                 <select className="form-control" disabled={!startEdit}>
                   {el.title}
-                  {el.options.map((el, index) => (
-                    <option key={index} value={el.value}>
-                      {el.title}
-                    </option>
-                  ))}
+                  {el.options.map(
+                    (el, index) => (
+                      (
+                        <option key={index} value={el.value}>
+                          {el.title}
+                        </option>
+                      )
+                    )
+                  )}
                 </select>
                 <ArrowDownSvg />
               </div>

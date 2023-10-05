@@ -19,9 +19,10 @@ const ProductSelect = ({
         confirmEdit(newStatusValue, product);
       }}
     >
+      <option style={{ display: "none" }}>{defaultStatusValue}</option>
       {productStatus &&
         productStatus.map((item) => (
-          <option key={item.id} value={item.id}>
+          <option key={item.id} value={item.id} name={item.attributes.name}>
             {item.attributes.title}
           </option>
         ))}

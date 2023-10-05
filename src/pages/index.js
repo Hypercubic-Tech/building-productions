@@ -11,6 +11,7 @@ import {
 } from "../store/slices/authSlice";
 import axios from "axios";
 
+import { setCategory } from "../store/slices/categorySlice";
 import Heading from "../components/main/Heading";
 import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
@@ -40,14 +41,15 @@ const Home = () => {
 
   const getPricesData = async () => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`
+      );
       const data = response.data;
       setPricesData(data?.data);
     } catch (error) {
       console.error(error);
     }
-
-  }
+  };
 
   useEffect(() => {
     let url;
@@ -86,6 +88,16 @@ const Home = () => {
     getFaqData();
     getPricesData();
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      dispatch(setCategory(1));
+    };
+    router.events.on("routeChangeStart", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [dispatch, router]);
 
   return (
     <div
