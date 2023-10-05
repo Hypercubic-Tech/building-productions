@@ -137,10 +137,8 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     setPasswordValid(isValid);
   };
 
-  console.log(pricesData, "prs");
-
   return (
-    <div className={`${styles.container}`}>
+    <div className={`${styles.container}`} >
       <div className={`${getStatusClass(1)} col`}>
         <div className="d-flex justify-content-between align-items-center mb-2">
           <div className="text-muted">რეგისტრაცია</div>
