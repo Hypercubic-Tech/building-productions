@@ -3,9 +3,6 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-
-import { setCategory } from "../../store/slices/categorySlice";
-
 import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
 import { setUserStatus } from "../../store/slices/statusSlice";
@@ -31,24 +28,12 @@ const index = () => {
   const [productOptions, setProductOptions] = useState(null);
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
-
   const [paymentPlan, setPaymentPlan] = useState(null);
   const [allowedExport, setAllowedExport] = useState(false);
-  const [allowedProductsCount, setAllowedProductsCount] = useState(null);
-  const [allProductsCount, setAllProductsCount] = useState(null);
-
   const [userStatusUpdate, setUserStatusUpdate] = useState(null);
 
   const allowedProductsHandler = () => {
     setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
-
-    if (paymentPlan?.payment_duration === "month") {
-      setAllowedProductsCount(
-        paymentPlan?.payment_plan?.month_allowed_products
-      );
-    } else {
-      setAllowedProductsCount(paymentPlan?.payment_plan?.year_allowed_products);
-    }
   };
 
   const getProjectById = async () => {
@@ -59,9 +44,6 @@ const index = () => {
         );
         const projectData = projectRes.data?.data;
         setProject(projectData);
-        setAllProductsCount(
-          projectRes.data.data[0]?.attributes?.products?.data?.length
-        );
 
         const productRes = await axios.get(
           `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`
@@ -73,7 +55,6 @@ const index = () => {
         );
         const categoryData = categoryRes.data.data;
         setProjectCategory(categoryData);
-        dispatch(setCategory(categoryData[0]?.id));
       } catch (error) {
         console.log(error);
       }
@@ -162,7 +143,7 @@ const index = () => {
 
           setPaymentPlan(data[0]);
 
-          if (data[0]?.payment_duration === 'month') {
+          if (data[0]?.payment_duration === "month") {
             setUserStatusUpdate({
               username: data[0]?.username,
               p_title: data[0]?.payment_plan?.name,
@@ -170,11 +151,11 @@ const index = () => {
               allowed_export: data[0]?.payment_plan?.allowed_export,
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.month_allowed_products,
-              all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
+              all_projects:
+                data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
             });
           }
-          if (data[0]?.payment_duration === 'year') {
+          if (data[0]?.payment_duration === "year") {
             setUserStatusUpdate({
               username: data[0]?.username,
               p_title: data[0]?.payment_plan?.name,
@@ -182,11 +163,9 @@ const index = () => {
               allowed_export: data[0]?.payment_plan?.allowed_export,
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.year_allowed_products,
-              all_projects: data[0]?.projects.lenght
+              all_projects: data[0]?.projects.lenght,
             });
           }
-
         } catch (error) {
           console.error(error);
         } finally {
@@ -210,15 +189,13 @@ const index = () => {
   }, [projectId]);
 
   useEffect(() => {
-    dispatch(setUserStatus(userStatusUpdate))
+    dispatch(setUserStatus(userStatusUpdate));
   }, [userStatusUpdate]);
 
   const editHandler = (product) => {
     setEditProductItem(product);
   };
 
-console.log(allowedProductsCount, 'allowed count');
-console.log(allProductsCount, 'all product count')
   return (
     <>
       {!isLoggedIn || isLoading ? (
@@ -226,8 +203,6 @@ console.log(allProductsCount, 'all product count')
       ) : (
         <Project
           allowedProductsHandler={allowedProductsHandler}
-          allProductsCount={allProductsCount}
-          allowedProducts={allowedProductsCount}
           allowedExport={allowedExport}
           productStatus={productStatus}
           productOptions={productOptions}

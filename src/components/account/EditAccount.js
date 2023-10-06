@@ -6,6 +6,7 @@ import PriceCard from "../ui/PriceCard";
 import PaymentMethod from "../popup/PaymentMethod";
 import notify from "../../utils/notify";
 import ArrowDownSvg from "../svg/ArrowDownSvg";
+import EditSvg from "../svg/EditSvg";
 
 import styles from "./EditAccount.module.css";
 
@@ -17,6 +18,8 @@ const EditAccount = ({
   startEdit,
   loggedUserInfo,
   setIsEdit,
+  setStartEdit,
+  authUser
 }) => {
   const dispatch = useDispatch();
 
@@ -164,11 +167,15 @@ const EditAccount = ({
               <div style={{ position: "relative" }}>
                 <select className="form-control" disabled={!startEdit}>
                   {el.title}
-                  {el.options.map((el, index) => (
-                    <option key={index} value={el.value}>
-                      {el.title}
-                    </option>
-                  ))}
+                  {el.options.map(
+                    (el, index) => (
+                      (
+                        <option key={index} value={el.value}>
+                          {el.title}
+                        </option>
+                      )
+                    )
+                  )}
                 </select>
                 <ArrowDownSvg />
               </div>
@@ -215,16 +222,12 @@ const EditAccount = ({
           </select>
           <ArrowDownSvg />
         </div>
+        <div
+          className={styles.bottomLine}
+          style={{ position: "absolute", bottom: "0" }}
+        ></div>
       </div>
-      <div
-        className={styles.priceing_switch}
-        style={{
-          maxHeight: startEdit ? "1000px" : "0",
-          overflow: "hidden",
-          transition: "0.6s",
-          maxWidth: "320px",
-        }}
-      >
+      <div className={styles.priceing_switch}>
         <div
           style={{
             opacity: !startEdit ? "0.7" : "1",
@@ -295,11 +298,13 @@ const EditAccount = ({
             )}
           </div>
         )}
+        <div className={styles.bottomLine}></div>
         <div
           style={{
             opacity: !startEdit ? "0.7" : "1",
             transition: "0.6s",
             pointerEvents: !startEdit ? "none" : "all",
+            marginTop: "20px",
           }}
         >
           {userData?.payment_plan?.connect[0]?.id > 1 && (
@@ -310,10 +315,16 @@ const EditAccount = ({
             />
           )}
         </div>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
           <div
             style={{
-              opacity: !startEdit ? "0.8" : "1",
+              opacity: !startEdit ? "0" : "1",
               transition: "0.6s",
               pointerEvents: !startEdit ? "none" : "all",
             }}
@@ -324,10 +335,9 @@ const EditAccount = ({
           >
             შენახვა
           </div>
-          '
           <div
             style={{
-              opacity: !startEdit ? "0.8" : "1",
+              opacity: !startEdit ? "0" : "1",
               transition: "0.6s",
               pointerEvents: !startEdit ? "none" : "all",
             }}
@@ -338,7 +348,20 @@ const EditAccount = ({
           >
             გასუფთავება
           </div>
+          <div
+            style={{
+              opacity: startEdit ? "0" : "1",
+              pointerEvents: startEdit ? "none" : "auto",
+              position: "absolute",
+            }}
+            onClick={() => setStartEdit(!startEdit)}
+            className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
+          >
+            <EditSvg />
+            <span>პროფილის რედაქტირება</span>
+          </div>
         </div>
+        <div className={styles.bottomLine}></div>
       </div>
     </div>
   );

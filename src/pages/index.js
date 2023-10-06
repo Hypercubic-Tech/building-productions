@@ -11,25 +11,12 @@ import {
 } from "../store/slices/authSlice";
 import axios from "axios";
 
+import { setCategory } from "../store/slices/categorySlice";
 import Heading from "../components/main/Heading";
 import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
 import Price from "../components/main/Price";
 import Faq from "../components/main/Faq";
-import notify from "../utils/notify";
-
-const priceData = {
-  monthlyPrice: {
-    startup: 20,
-    business: 50,
-    enterprise: 100,
-  },
-  annualPrice: {
-    startup: 100,
-    business: 180,
-    enterprise: 360,
-  },
-};
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -54,14 +41,15 @@ const Home = () => {
 
   const getPricesData = async () => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`
+      );
       const data = response.data;
       setPricesData(data?.data);
     } catch (error) {
       console.error(error);
     }
-
-  }
+  };
 
   useEffect(() => {
     let url;
@@ -101,6 +89,16 @@ const Home = () => {
     getPricesData();
   }, []);
 
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      dispatch(setCategory(1));
+    };
+    router.events.on("routeChangeStart", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [dispatch, router]);
+
   return (
     <div
       id="kt_body"
@@ -113,9 +111,9 @@ const Home = () => {
         <Heading />
         <HowItWorks />
         <OurTeam />
-        <Price pricesData={pricesData} price={priceData} />
+        <Price pricesData={pricesData} />
         {/* <ContactUs /> */}
-        {/* <Faq faqData={faqData} /> */}
+        <Faq faqData={faqData} />
       </div>
     </div>
   );

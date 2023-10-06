@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import MastercardSvg from "../svg/MastercardSvg";
 
 import styles from "../popup/RegModal.module.css";
 
@@ -22,35 +23,41 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
   return (
     <div className={styles.paymentWrapper}>
       <h3 className="mt-2">{title ? title : "Payment Method:"}</h3>
-      <input
-        style={{
-          borderColor: isValidCardNumber(cardNumberValue) ? "" : "red",
-          borderWidth: "1px",
-          borderStyle: "solid",
-        }}
-        required
-        min="0"
-        className={`form-control ${styles.noArrow} ${styles.cardNumberInput}`}
-        placeholder="Card Number"
-        type="text"
-        value={formatCardNumber(cardNumberValue)}
-        onChange={(e) => {
-          let value = e.target.value;
-          value = value.replace(/\D/g, "");
-
-          if (value.length <= 16) {
-            setCardNumberValue(value);
-            setEditUserData((prevSendData) => ({
-              ...prevSendData,
-              card_number: value,
-            }));
-          }
-        }}
-      />
-      <div style={{ display: "flex", gap: "10px" }}>
+      <label className="mt-2" style={{ fontSize: "18px", fontWeight: "500" }}>
+        Card Number
+      </label>
+      <div style={{ position: "relative" }}>
         <input
           style={{
-            width: "50%",
+            // borderColor: isValidCardNumber(cardNumberValue) ? "" : "red",
+            borderWidth: "1px",
+            borderStyle: "solid",
+          }}
+          required
+          min="0"
+          className={`form-control ${styles.noArrow} ${styles.cardNumberInput}`}
+          placeholder="Card Number"
+          type="text"
+          value={formatCardNumber(cardNumberValue)}
+          onChange={(e) => {
+            let value = e.target.value;
+            value = value.replace(/\D/g, "");
+
+            if (value.length <= 16) {
+              setCardNumberValue(value);
+              setEditUserData((prevSendData) => ({
+                ...prevSendData,
+                card_number: value,
+              }));
+            }
+          }}
+        />
+        <MastercardSvg />
+      </div>
+      <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+        <input
+          style={{
+            width: "40%",
             fontSize: "18px",
           }}
           required
@@ -74,10 +81,18 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
           style={{
             display: "flex",
             gap: "10px",
-            width: "50%",
+            width: "60%",
             alignItems: "center",
           }}
         >
+          <div
+            style={{
+              height: "80%",
+              width: "4px",
+              backgroundColor: "grey",
+              transform: "rotate(18deg)",
+            }}
+          ></div>
           <input
             style={{ fontSize: "18px" }}
             required

@@ -43,7 +43,6 @@ const StatusDashboard = () => {
                         allowed_export: data[0]?.payment_plan?.allowed_export,
                         allowed_media: data[0]?.payment_plan?.allowed_media,
                         allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-                        allowed_products: data[0]?.payment_plan?.month_allowed_products,
                         all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
                     });
                 }
@@ -55,7 +54,6 @@ const StatusDashboard = () => {
                         allowed_export: data[0]?.payment_plan?.allowed_export,
                         allowed_media: data[0]?.payment_plan?.allowed_media,
                         allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-                        allowed_products: data[0]?.payment_plan?.year_allowed_products,
                         all_projects: data[0]?.projects.lenght
                     });
                 }

@@ -17,10 +17,12 @@ import GoogleSvg from "../svg/GoogleSvg";
 import CloseBtnBG from "../svg/CloseBtnBG";
 
 import styles from "../popup/AuthModal.module.css";
+import SowPasswordSvg from "../svg/SowPasswordSvg";
 
 const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
   const [lossData, setLossData] = useState(false);
   const [isForgot, setIsForgot] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [forgotData, setForgotData] = useState({
     email: "",
   });
@@ -161,7 +163,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
             {lossData && authData?.identifier?.length <= 0 && (
               <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ იმეილი</p>
             )}
-            <div className="d-grid gap-2">
+            <div className="d-grid gap-2" style={{ position: "relative" }}>
               <label className="blue mt-2 fx">პაროლი</label>
               <input
                 style={{
@@ -172,7 +174,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
                 id="password"
                 className="form-control"
                 placeholder="******"
-                type="password"
+                type={!showPassword ? "password" : "text"}
                 onChange={(e) => {
                   setAuthData((prevSendData) => ({
                     ...prevSendData,
@@ -180,6 +182,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
                   }));
                 }}
               />
+              <SowPasswordSvg onClick={() => setShowPassword(!showPassword)}/>
             </div>
             {lossData && authData?.password?.length <= 0 && (
               <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ პაროლი</p>

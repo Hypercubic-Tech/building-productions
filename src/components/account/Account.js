@@ -9,7 +9,6 @@ import { setUserStatus } from "../../store/slices/statusSlice";
 import ImageUpload from "../ui/ImageUpload";
 import LoadingPage from "../ui/LoadingPage";
 import EditAccount from "./EditAccount";
-import EditSvg from "../svg/EditSvg";
 import ChangePassword from "../popup/ChangePassword";
 import FingerprintSvg from "../svg/FingerprintSvg";
 
@@ -33,7 +32,6 @@ const index = () => {
   const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
 
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
-
 
   const loggedUserInfo = async () => {
     let url;
@@ -60,11 +58,11 @@ const index = () => {
             card_number: data[0]?.card_number,
             card_cvc: data[0]?.card_cvc,
             card_month: data[0]?.card_month,
-            card_year: data[0]?.card_year
+            card_year: data[0]?.card_year,
           });
 
           // for user dashboard
-          if (data[0]?.payment_duration === 'month') {
+          if (data[0]?.payment_duration === "month") {
             setUserStatusUpdate({
               username: data[0]?.username,
               p_title: data[0]?.payment_plan?.name,
@@ -72,11 +70,11 @@ const index = () => {
               allowed_export: data[0]?.payment_plan?.allowed_export,
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.month_allowed_products,
-              all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
+              all_projects:
+                data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
             });
           }
-          if (data[0]?.payment_duration === 'year') {
+          if (data[0]?.payment_duration === "year") {
             setUserStatusUpdate({
               username: data[0]?.username,
               p_title: data[0]?.payment_plan?.name,
@@ -84,11 +82,9 @@ const index = () => {
               allowed_export: data[0]?.payment_plan?.allowed_export,
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-              allowed_products: data[0]?.payment_plan?.year_allowed_products,
-              all_projects: data[0]?.projects.lenght
+              all_projects: data[0]?.projects.lenght,
             });
           }
-
         })
         .then(() => {
           setIsLoading(false);
@@ -224,7 +220,7 @@ const index = () => {
 
   useEffect(() => {
     dispatch(setUserStatus(userStatusUpdate));
-  }, [userStatusUpdate])
+  }, [userStatusUpdate]);
 
   return (
     <>
@@ -259,24 +255,15 @@ const index = () => {
               <EditAccount
                 authUserId={authUserId}
                 startEdit={startEdit}
+                setStartEdit={setStartEdit}
                 userData={userData}
                 setUserData={setUserData}
                 setIsEdit={setStartEdit}
                 pricesData={pricesData}
                 loggedUserInfo={loggedUserInfo}
+                authUser={authUser}
               />
             )}
-            <div
-              style={{
-                opacity: startEdit ? "0" : "1",
-                pointerEvents: startEdit ? "none" : "auto",
-              }}
-              onClick={() => setStartEdit(!startEdit)}
-              className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
-            >
-              <EditSvg />
-              <span>პროფილის რედაქტირება</span>
-            </div>
           </div>
           {openPasswordPopup && (
             <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />

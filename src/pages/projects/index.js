@@ -492,6 +492,7 @@ const index = () => {
           </div>
           {addProject && (
             <AddProject
+              setAddProject={setAddProject}
               cities={cities}
               propertyType={propertyType}
               condition={condition}

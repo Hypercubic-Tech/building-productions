@@ -12,6 +12,8 @@ import {
 
 import ExportPopup from "../popup/ExportPopup";
 import notify from "../../utils/notify";
+import ProductSelect from "./ProductSelect";
+import CraftSelect from "./CraftSelect";
 
 import styles from "./Products.module.css";
 
@@ -32,21 +34,14 @@ const Products = ({
   const { projectId } = router.query;
   const activeCategoryId = useSelector((state) => state?.cats?.category);
   const products = useSelector((state) => state.prod.products);
-
   const [productStatusValues, setProductStatusValues] = useState({});
   const [craftStatusValues, setCraftStatusValues] = useState({});
   const [activeItem, setActiveItem] = useState();
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
 
-  const [newStatusValue, setNewStatusValue] = useState(null);
-  const [newCraftStatusValue, setNewCraftStatusValue] = useState(null);
 
-<<<<<<< HEAD
-  let itemsPerPage = 5;
-=======
   let itemsPerPage = 3;
->>>>>>> 6d75267cee97df0343f3cf02d87d1e6dd5a85eed
 
   let productsToMap = products;
 
@@ -154,7 +149,6 @@ const Products = ({
             )
             .then((res) => {
               dispatch(setProductState(res.data.data));
-              setNewStatusValue(selectedId);
               notify(false, "პროდუქტი რედაქტირდა");
             })
             .catch((err) => {
@@ -249,7 +243,6 @@ const Products = ({
             )
             .then((res) => {
               dispatch(setProductState(res.data.data));
-              setNewCraftStatusValue(selectedId);
               notify(false, "პროდუქტი რედაქტირდა");
             })
             .catch((err) => {
@@ -426,20 +419,31 @@ const Products = ({
                 <th>ვალუტა</th>
               </tr>
               {Object.values(aggregatedProducts).map((product, index) => (
-                <tr key={index}>
-                  <td>{product?.categories}</td>
-                  <td className={styles.sumTableUnities}>
+                <tr key={index} style={{ border: "1px solid black" }}>
+                  <td style={{ paddingLeft: "8px" }}>{product?.categories}</td>
+                  <td>
                     {product?.unites.map((i, index) => {
                       return <span key={index}>{i}</span>;
                     })}
                   </td>
-                  <td>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</td>
                   <td>
                     {categorySums?.find(
                       (item) => item.title === product?.categories
                     )?.sum || 0}{" "}
-                    ლარი
                   </td>
+                  <td>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</td>
+                  <td>
+                    {" "}
+                    {categorySums?.find(
+                      (item) => item.title === product?.categories
+                    )?.sum || 0}{" "}
+                  </td>
+                  <td>
+                    {categorySums?.find(
+                      (item) => item.title === product?.categories
+                    )?.sum || 0}{" "}
+                  </td>
+                  <td>ლარი</td>
                 </tr>
               ))}
               <tr style={{ border: "1px solid black" }}>
@@ -505,15 +509,12 @@ const Products = ({
           ) : (
             <thead>
               <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                <th className="w-10px pe-2">
-                  <div className="form-check form-check-sm form-check-custom form-check-solid me-3"></div>
-                </th>
-                {/* min-w-125px */}
                 <th className="georgian">დასახელება</th>
                 <th className="georgian">მომწოდებელი</th>
                 <th className="georgian">რაოდენობა</th>
                 <th className="georgian">ერთეული</th>
                 <th className="georgian">ღირებულება</th>
+                <th className="georgian">ჯამი</th>
                 <th className="georgian">ტიპი</th>
                 <th className="georgian">სტატუსი</th>
                 {select === null && (
@@ -545,12 +546,12 @@ const Products = ({
                 productsToMap
                   .slice(startIndex, endIndex)
                   .map((product, index) => {
-                    const oldCraftStatusValue =
-                      product?.attributes?.craft_status?.data?.id;
-                    // const itemSelectedValues = selectedValues[product.id] || oldCraftStatusValue
-                    const oldStatusValue =
-                      product?.attributes?.product_status?.data?.id;
-
+                    const defaultStatusValue =
+                      product?.attributes?.product_status?.data?.attributes
+                        ?.title;
+                    const defaultCraftStatusValue =
+                      product?.attributes?.craft_status?.data?.attributes
+                        ?.title;
                     return (
                       <tbody key={index}>
                         <tr>
@@ -601,7 +602,6 @@ const Products = ({
                               " - "
                             )}
                           </td>
-
                           <td className="georgian">
                             {product?.attributes?.quantity}
                           </td>
@@ -612,6 +612,12 @@ const Products = ({
                             {product?.attributes?.price}
                           </td>
                           <td className="georgian">
+                            {(
+                              product?.attributes?.price *
+                              product?.attributes?.quantity
+                            ).toFixed(2)}
+                          </td>
+                          <td className="georgian">
                             {product?.attributes?.type === "product"
                               ? "პროდუქტი"
                               : "სერვისი"}
@@ -619,53 +625,29 @@ const Products = ({
                           <td className="georgian">
                             <div className="form-group">
                               {product?.attributes?.type === "product" ? (
-                                <select
-                                  className="form-select"
-                                  value={productStatusValues[product.id] || ""}
-                                  onChange={(event) => {
-                                    const newStatusValue = event.target.value;
-                                    setProductStatusValues(
-                                      (prevStatusValues) => ({
-                                        ...prevStatusValues,
-                                        [product.id]: newStatusValue,
-                                      })
-                                    );
-                                    confirmEdit(newStatusValue, product);
-                                  }}
-                                >
-                                  {productStatus &&
-                                    productStatus.map((item) => (
-                                      <option key={item.id} value={item?.id}>
-                                        {item.attributes.title}
-                                      </option>
-                                    ))}
-                                </select>
+                                <ProductSelect
+                                  key={product.id}
+                                  product={product}
+                                  productStatusValues={productStatusValues}
+                                  setProductStatusValues={
+                                    setProductStatusValues
+                                  }
+                                  productStatus={productStatus}
+                                  confirmEdit={confirmEdit}
+                                  defaultStatusValue={defaultStatusValue}
+                                />
                               ) : (
-                                <select
-                                  className="form-select"
-                                  value={craftStatusValues[product.id] || ""}
-                                  onChange={(event) => {
-                                    const newCraftStatusValue =
-                                      event.target.value;
-                                    setCraftStatusValues(
-                                      (prevStatusValues) => ({
-                                        ...prevStatusValues,
-                                        [product.id]: newCraftStatusValue,
-                                      })
-                                    );
-                                    confirmServiceEdit(
-                                      newCraftStatusValue,
-                                      product
-                                    );
-                                  }}
-                                >
-                                  {craftStatus &&
-                                    craftStatus.map((item) => (
-                                      <option key={item.id} value={item?.id}>
-                                        {item.attributes.title}
-                                      </option>
-                                    ))}
-                                </select>
+                                <CraftSelect
+                                  key={product.id}
+                                  product={product}
+                                  craftStatusValues={craftStatusValues}
+                                  setCraftStatusValues={setCraftStatusValues}
+                                  craftStatus={craftStatus}
+                                  confirmServiceEdit={confirmServiceEdit}
+                                  defaultCraftStatusValue={
+                                    defaultCraftStatusValue
+                                  }
+                                />
                               )}
                             </div>
                           </td>
@@ -752,27 +734,6 @@ const Products = ({
                                     fill="#EB455F"
                                   />
                                 </svg>
-                                {/* <div
-                              onClick={() => { editHandler(product); setSelect(product?.attributes?.type === 'product' ? 'edit-product' : 'edit-service') }}
-                              className="menu-item px-3"
-                            >
-                              <a className="menu-link px-3 georgian padding0">
-                                <i className="bi bi-pencil-fill" />
-                                &nbsp;გადაკეთება
-                              </a>
-                            </div>
-                            <div
-                              onClick={() => { confirmHandler(product?.id) }}
-                              className="menu-item px-3 padding8"
-                            >
-                              <a
-                                className="menu-link px-3 georgian padding0"
-                                data-kt-users-table-filter="delete_row"
-                              >
-                                <i className="bi bi-eraser-fill" />
-                                &nbsp;წაშლა
-                              </a>
-                            </div> */}
                               </div>
                             ) : (
                               ""
