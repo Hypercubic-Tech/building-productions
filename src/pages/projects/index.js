@@ -15,6 +15,7 @@ import LoadingPage from "../../components/ui/LoadingPage";
 import DeleteBtn from "../../components/svg/DeleteBtn";
 import EditSvg from "../../components/svg/EditSvg";
 import MapSvg from "../../components/svg/MapSvg";
+import AddProjectSvg from "../../components/svg/AddProjectSvg";
 
 import styles from "../../components/popup/Modal.module.css";
 
@@ -177,7 +178,7 @@ const index = () => {
         if (result.isConfirmed) {
           deleteProjectHandler(item);
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire("უარყოფილია", "");
+          notify(true, "პროექტის წაშლა უარყოფილია");
         }
       });
   };
@@ -212,19 +213,7 @@ const index = () => {
         type="button"
         className="btn btn-primary fill-btn fw-boldest"
       >
-        <svg
-          className="card-svg"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M11 12H13V9H16V7H13V4H11V7H8V9H11V12ZM6 16C5.45 16 4.97917 15.8042 4.5875 15.4125C4.19583 15.0208 4 14.55 4 14V2C4 1.45 4.19583 0.979167 4.5875 0.5875C4.97917 0.195833 5.45 0 6 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H6ZM2 20C1.45 20 0.979167 19.8042 0.5875 19.4125C0.195833 19.0208 0 18.55 0 18V4H2V18H16V20H2Z"
-            fill="white"
-          />
-        </svg>
+        <AddProjectSvg />
         დაამატე ობიექტი
       </button>
     </div>
@@ -370,7 +359,11 @@ const index = () => {
           />
           <div
             className="container"
-            style={{ position: "relative", backgroundColor: "none" }}
+            style={{
+              position: "relative",
+              backgroundColor: "none",
+              minHeight: "300px"
+            }}
           >
             {projectsToMap?.length > 0 ? buttonWrap : ""}
             <div
@@ -408,12 +401,12 @@ const index = () => {
                               src={
                                 (imageWithMainId &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                  imageWithMainId?.attributes?.url) ||
+                                    imageWithMainId?.attributes?.url) ||
                                 (item?.attributes?.image?.data?.[0]?.attributes
                                   ?.url &&
                                   process.env.NEXT_PUBLIC_BUILDING_URL +
-                                  item?.attributes?.image?.data?.[0]
-                                    ?.attributes?.url) ||
+                                    item?.attributes?.image?.data?.[0]
+                                      ?.attributes?.url) ||
                                 "/images/test-img.png"
                               }
                               className="card-img-top"
@@ -443,7 +436,7 @@ const index = () => {
                           </div>
                           <div
                             onClick={() => confirmHandler(item)}
-                            className="btn red-ghost-btn fw-boldest"
+                            className="btn red-ghost-btn fw-boldest btn-primary"
                           >
                             <DeleteBtn />
                             <span>წაშლა</span>

@@ -9,9 +9,39 @@ import styles from "../../components/popup/AuthModal.module.css";
 const RessetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [validationErrors, setValidationErrors] = useState({
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const validatePassword = (password) => {
+    const uppercaseRegex = /[A-Z]/;
+    return password.length >= 9 && uppercaseRegex.test(password);
+  };
 
   const handleResetPassword = async (event) => {
     event.preventDefault();
+    setValidationErrors({
+      newPassword: "",
+      confirmPassword: "",
+    });
+
+    if (!validatePassword(newPassword)) {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        newPassword: "პაროლი უნდა შეიცავდეს მინიმუმ 9 სიმბოლოს და ერთ დიდ ასოს",
+      }));
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "პაროლები არ ემთხვევა",
+      }));
+      return;
+    }
+
     function getQueryParam(url, param) {
       const queryParams = new URLSearchParams(new URL(url).search);
       return queryParams.get(param);
@@ -29,10 +59,6 @@ const RessetPassword = () => {
             passwordConfirmation: confirmPassword,
           }
         )
-        .then((response) => {
-          console.log("Your user's password has been reset.");
-          notify(false, "თქვენი პაროლი შეიცვალა");
-        })
         .then(() => {
           notify(false, "თქვენი პაროლი შეიცვალა");
           window.location.replace("/");
@@ -65,8 +91,18 @@ const RessetPassword = () => {
             type="password"
             onChange={(e) => {
               setNewPassword(e.target.value);
+              setValidationErrors((prevErrors) => ({
+                ...prevErrors,
+                newPassword: "",
+              }));
+            }}
+            style={{
+              borderColor: validationErrors.newPassword ? "red" : validationErrors.newPassword === false ? "green" : "",
             }}
           />
+          {validationErrors.newPassword && (
+            <p style={{ color: "red" }}>{validationErrors.newPassword}</p>
+          )}
           <label className="blue mt-2 fx">დაადასტურეთ ახალი პაროლი</label>
           <input
             autoComplete="current-password"
@@ -76,8 +112,18 @@ const RessetPassword = () => {
             type="password"
             onChange={(e) => {
               setConfirmPassword(e.target.value);
+              setValidationErrors((prevErrors) => ({
+                ...prevErrors,
+                confirmPassword: "",
+              }));
+            }}
+            style={{
+              borderColor: validationErrors.confirmPassword ? "red" : validationErrors.confirmPassword === false ? "green" : "",
             }}
           />
+          {validationErrors.confirmPassword && (
+            <p style={{ color: "red" }}>{validationErrors.confirmPassword}</p>
+          )}
         </div>
       </div>
       <div className="row">

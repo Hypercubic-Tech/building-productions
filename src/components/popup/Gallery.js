@@ -98,7 +98,7 @@ const Gallery = ({ setSelect, getProjectById }) => {
         if (result.isConfirmed) {
           handleDeleteImage(imageId);
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire("ოპერაცია უარყოფილია", "Error");
+          notify(true, "ოპერაცია უარყოფილია");
         }
       });
   };

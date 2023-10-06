@@ -40,3 +40,7 @@
     align-items: center;
     gap: 13px;
 }
+
+.tableHead th {
+    width: calc(100% / 7);
+}
