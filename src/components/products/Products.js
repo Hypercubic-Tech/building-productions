@@ -451,15 +451,6 @@ const Products = ({
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr style={{ border: "1px solid black" }}>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td>სულ</td>
                 <td>{`${
                   Object?.values(categorySums).reduce(

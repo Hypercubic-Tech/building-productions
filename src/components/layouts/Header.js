@@ -40,8 +40,9 @@ function Header() {
   return (
     <>
       {header}
-      {Number(userStatus.allowed_projects) - Number(userStatus.all_projects) <=
-      3 ? (
+      {loggedIn &&
+      Number(userStatus.allowed_projects) - Number(userStatus.all_projects) <=
+        3 ? (
         <div className={styles.warningMessage}>
           თქვენი პროდუქტების დამატების ლიმიტი იწურება, დაგრჩათ{" "}
           {Number(userStatus.allowed_projects) -
