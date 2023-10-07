@@ -29,6 +29,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     payment_duration: "month",
     paymentMethod: "",
   });
+
   let errors = {
     stepOne: [],
     stepTwo: [],
@@ -85,19 +86,8 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    let free_trial = 
-      regData.payment_plan > 0
-        ? new Date().toLocaleString('en-US', {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          hour12: true,
-        })
-        : false;
+    const now = new Date();
+    const trialExpires = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // Add seven days to the current date
 
     const {
       username,
@@ -108,28 +98,26 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
       payment_plan,
       paymentMethod,
       payment_duration,
-      free_trail
     } = regData;
-
+  
     try {
-      await axios
-        .post(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`,
-          {
-            username,
-            email,
-            password,
-            phoneNumber,
-            userType,
-            payment_plan,
-            paymentMethod,
-            payment_duration,
-            free_trail
-          }
-        )
-        .then(() => {
-          notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
-        });
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`,
+        {
+          username,
+          email,
+          password,
+          phoneNumber,
+          userType,
+          payment_plan,
+          paymentMethod,
+          payment_duration,
+          trial_used: regData.payment_plan === 1 ? true : false,
+          trial_expires: regData.payment_plan === 1 ? trialExpires : false,
+        }
+      );
+  
+      notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
     } catch (err) {
       notify(
         true,
