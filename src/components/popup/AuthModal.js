@@ -17,7 +17,6 @@ import GoogleSvg from "../svg/GoogleSvg";
 import CloseBtnBG from "../svg/CloseBtnBG";
 
 import styles from "../popup/AuthModal.module.css";
-import SowPasswordSvg from "../svg/SowPasswordSvg";
 
 const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
   const [lossData, setLossData] = useState(false);
@@ -183,7 +182,18 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
                   }));
                 }}
               />
-              <SowPasswordSvg onClick={() => setShowPassword(!showPassword)} />
+                <span
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "20px",
+                bottom: "10px",
+                fontSize: "16px",
+                cursor: "pointer",
+              }}
+            >
+              {!showPassword ? "show" : "hide"}
+            </span>
             </div>
             {lossData && authData?.password?.length <= 0 && (
               <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ პაროლი</p>

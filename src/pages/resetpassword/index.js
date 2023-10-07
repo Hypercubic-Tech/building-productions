@@ -5,7 +5,6 @@ import notify from "../../utils/notify";
 import CloseBtn2 from "../../components/svg/CloseBtn2";
 
 import styles from "../../components/popup/AuthModal.module.css";
-import SowPasswordSvg from "../../components/svg/SowPasswordSvg";
 
 const RessetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -110,7 +109,18 @@ const RessetPassword = () => {
             {validationErrors.newPassword && (
               <p style={{ color: "red" }}>{validationErrors.newPassword}</p>
             )}
-            <SowPasswordSvg onClick={() => setShowPassword(!showPassword)} />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "20px",
+                bottom: "10px",
+                fontSize: "16px",
+                cursor: "pointer",
+              }}
+            >
+              {!showPassword ? "show" : "hide"}
+            </span>
           </div>
           <label className="blue mt-2 fx">დაადასტურეთ ახალი პაროლი</label>
           <input
