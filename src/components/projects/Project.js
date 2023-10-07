@@ -360,17 +360,8 @@ const Project = ({
                         totalSum={totalSum}
                         searchType={searchType}
                         select={select}
+                        total={total}
                       />
-                      <div
-                        className="summary"
-                        style={{
-                          fontSize: "16px",
-                          padding: "4px",
-                          textAlign: "end",
-                        }}
-                      >
-                        ჯამი: {total} ლარი
-                      </div>
                     </div>
                   </div>
                 </div>
