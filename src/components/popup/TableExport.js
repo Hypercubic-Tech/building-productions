@@ -46,31 +46,33 @@ const TableExport = ({
               <th>ვალუტა</th>
             </tr>
             {Object.values(aggregatedProducts).map((product, index) => (
-              <tr key={index}>
-                <td>{product?.categories}</td>
+              <tr key={index} style={{ border: "1px solid black" }}>
+                <td style={{ paddingLeft: "8px" }}>{product?.categories}</td>
                 <td className={styles.sumTableUnities}>
                   {product?.unites.map((i, index) => {
                     return <span key={index}>{i}</span>;
                   })}
                 </td>
-                <td>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</td>
                 <td>
                   {categorySums?.find(
                     (item) => item.title === product?.categories
                   )?.sum || 0}{" "}
-                  ლარი
                 </td>
+                <td>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</td>
+                <td>
+                  {" "}
+                  {categorySums?.find(
+                    (item) => item.title === product?.categories
+                  )?.sum || 0}{" "}
+                </td>
+                <td>
+                  {categorySums?.find(
+                    (item) => item.title === product?.categories
+                  )?.sum || 0}{" "}
+                </td>
+                <td>ლარი</td>
               </tr>
             ))}
-            <tr style={{ border: "1px solid black" }}>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
             <tr style={{ border: "1px solid black" }}>
               <td></td>
               <td></td>

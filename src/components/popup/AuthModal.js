@@ -86,6 +86,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
         const message = `გთხოვთ შეამოწმოთ თქვენი ელ.ფოსტა`;
         notify(false, message);
         setIsForgot(true);
+        onClose();
       })
       .catch((error) => {
         if (!error.response.data.message) {
@@ -182,7 +183,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
                   }));
                 }}
               />
-              <SowPasswordSvg onClick={() => setShowPassword(!showPassword)}/>
+              <SowPasswordSvg onClick={() => setShowPassword(!showPassword)} />
             </div>
             {lossData && authData?.password?.length <= 0 && (
               <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ პაროლი</p>
