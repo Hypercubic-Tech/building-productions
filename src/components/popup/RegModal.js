@@ -87,6 +87,18 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    let free_trial = 
+      regData.payment_plan > 0
+        ? new Date().toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true,
+        })
+        : false;
+
     const {
       username,
       email,
@@ -96,6 +108,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
       payment_plan,
       paymentMethod,
       payment_duration,
+      free_trail
     } = regData;
 
     try {
@@ -111,6 +124,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
             payment_plan,
             paymentMethod,
             payment_duration,
+            free_trail
           }
         )
         .then(() => {
@@ -192,8 +206,8 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
               {regData?.userType === "company"
                 ? "კომპანიის სახელი"
                 : regData?.userType === "personal"
-                ? "სრული სახელი"
-                : "სახელი"}
+                  ? "სრული სახელი"
+                  : "სახელი"}
             </label>
           )}
           <input
@@ -225,7 +239,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
             style={{
               borderColor:
                 (lossData && regData.email.length <= 0) ||
-                (lossData && !regData.email.includes("@"))
+                  (lossData && !regData.email.includes("@"))
                   ? "red"
                   : "",
             }}
@@ -275,7 +289,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
           )}
         </div>
         <div className="d-grid gap-2">
-          <div style={{position: "relative"}}>
+          <div style={{ position: "relative" }}>
             <label className="mt-2">პაროლი</label>
             <input
               style={{
@@ -429,8 +443,11 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                   if (
                     regData?.payment_plan === 2 ||
                     regData?.payment_plan === 3
-                  ) {
+                  )  {
                     stepChangeHandler();
+                  }
+                  if (regData?.payment_plan === 1) {
+                    handleSubmit();
                   }
                 }}
               >
