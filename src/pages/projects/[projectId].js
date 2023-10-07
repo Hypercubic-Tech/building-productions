@@ -6,6 +6,7 @@ import axios from "axios";
 import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
 import { setUserStatus } from "../../store/slices/statusSlice";
+import {setCategory} from "../../store/slices/categorySlice";
 
 const index = () => {
   const dispatch = useDispatch();
@@ -195,6 +196,16 @@ const index = () => {
   const editHandler = (product) => {
     setEditProductItem(product);
   };
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      dispatch(setCategory(1));
+    };
+    router.events.on("routeChangeStart", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [dispatch, router]);
 
   return (
     <>
