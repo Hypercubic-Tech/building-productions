@@ -28,6 +28,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     payment_duration: "month",
     paymentMethod: "",
   });
+
   let errors = {
     stepOne: [],
     stepTwo: [],
@@ -84,8 +85,9 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
+    const now = new Date();
+    const trialExpires = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); 
+    
     const {
       username,
       email,
@@ -98,23 +100,23 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     } = regData;
 
     try {
-      await axios
-        .post(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`,
-          {
-            username,
-            email,
-            password,
-            phoneNumber,
-            userType,
-            payment_plan,
-            paymentMethod,
-            payment_duration,
-          }
-        )
-        .then(() => {
-          notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
-        });
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`,
+        {
+          username,
+          email,
+          password,
+          phoneNumber,
+          userType,
+          payment_plan,
+          paymentMethod,
+          payment_duration,
+          trial_used: regData.payment_plan === 1 ? true : false,
+          trial_expires: regData.payment_plan === 1 ? trialExpires : false,
+        }
+      );
+
+      notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
     } catch (err) {
       notify(
         true,
@@ -191,8 +193,8 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
               {regData?.userType === "company"
                 ? "კომპანიის სახელი"
                 : regData?.userType === "personal"
-                ? "სრული სახელი"
-                : "სახელი"}
+                  ? "სრული სახელი"
+                  : "სახელი"}
             </label>
           )}
           <input
@@ -224,7 +226,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
             style={{
               borderColor:
                 (lossData && regData.email.length <= 0) ||
-                (lossData && !regData.email.includes("@"))
+                  (lossData && !regData.email.includes("@"))
                   ? "red"
                   : "",
             }}
@@ -441,6 +443,9 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                     regData?.payment_plan === 3
                   ) {
                     stepChangeHandler();
+                  }
+                  if (regData?.payment_plan === 1) {
+                    handleSubmit();
                   }
                 }}
               >

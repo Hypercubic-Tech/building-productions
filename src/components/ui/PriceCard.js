@@ -34,6 +34,10 @@ const PriceCard = ({ priceData, monthly }) => {
           </span>
         </div>
         <div className="d-flex flex-stack mb-5">
+          <span>უფასო საცდელი დრო</span>
+          <span>7 დღე</span>
+        </div>
+        <div className="d-flex flex-stack mb-5">
           <span>პროდუქტების რაოდენობა</span>
           <span>უსასრულო</span>
         </div>

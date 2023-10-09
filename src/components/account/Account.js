@@ -55,6 +55,8 @@ const index = () => {
             payment_plan: {
               connect: [{ id: data[0]?.payment_plan?.id.toString() }],
             },
+            trial_expired: data[0]?.trial_expires,
+            trial_used: data[0]?.trial_used,
             card_number: data[0]?.card_number,
             card_cvc: data[0]?.card_cvc,
             card_month: data[0]?.card_month,

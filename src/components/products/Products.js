@@ -45,7 +45,8 @@ const Products = ({
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
 
-  let itemsPerPage = 5;
+
+  let itemsPerPage = 3;
 
   let productsToMap = products;
 
