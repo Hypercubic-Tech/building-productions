@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-
-import axios from "axios";
-import Swal from "sweetalert2";
-
 import { setUserStatus } from "../../store/slices/statusSlice";
+import axios from "axios";
+import Link from "next/link";
+import Swal from "sweetalert2";
 import notify from "../../utils/notify";
-import EditProject from "../../components/popup/EditProject";
-import AddProject from "../../components/popup/AddProject";
+
 
 import LoadingPage from "../../components/ui/LoadingPage";
+import EditProject from "../../components/popup/EditProject";
+import AddProject from "../../components/popup/AddProject";
 import DeleteBtn from "../../components/svg/DeleteBtn";
 import EditSvg from "../../components/svg/EditSvg";
 import MapSvg from "../../components/svg/MapSvg";
@@ -20,17 +19,7 @@ import AddProjectSvg from "../../components/svg/AddProjectSvg";
 import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
-  const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(true);
-  const userId = useSelector((state) => state.auth.user_id);
-
-  const searchValue = useSelector((state) => state.proj.searchType);
-  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const provider = useSelector((state) => state.auth.provider);
-
-  const [paymentPlan, setPaymentPlan] = useState(null);
-
   const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
@@ -38,23 +27,27 @@ const index = () => {
   const [projectData, setProjectData] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-
+  const [paymentPlan, setPaymentPlan] = useState(null);
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
   const [trialExpired, setTrialExpired] = useState(false);
+  
+  const userId = useSelector((state) => state.auth.user_id);
+  const searchValue = useSelector((state) => state.proj.searchType);
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const provider = useSelector((state) => state.auth.provider);
 
   const { data: session } = useSession();
+  const dispatch = useDispatch();
+
 
   let itemsPerPage = 8;
-
   let projectsToMap = projectData;
-
   const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
   const startIndex = (pageIndex - 1) * itemsPerPage;
   const endIndex = pageIndex * itemsPerPage;
