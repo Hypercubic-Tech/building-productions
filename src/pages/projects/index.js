@@ -7,7 +7,6 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import notify from "../../utils/notify";
 
-
 import LoadingPage from "../../components/ui/LoadingPage";
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
