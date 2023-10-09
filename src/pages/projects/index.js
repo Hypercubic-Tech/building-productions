@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-
+import { setUserStatus } from "../../store/slices/statusSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
-import { setUserStatus } from "../../store/slices/statusSlice";
 import notify from "../../utils/notify";
-import EditProject from "../../components/popup/EditProject";
-import AddProject from "../../components/popup/AddProject";
 
 import LoadingPage from "../../components/ui/LoadingPage";
+import AddProject from "../../components/popup/AddProject";
+import EditProject from "../../components/popup/EditProject";
 import DeleteBtn from "../../components/svg/DeleteBtn";
 import EditSvg from "../../components/svg/EditSvg";
 import MapSvg from "../../components/svg/MapSvg";
@@ -20,40 +19,31 @@ import AddProjectSvg from "../../components/svg/AddProjectSvg";
 import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
-  const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(true);
-  const userId = useSelector((state) => state.auth.user_id);
-
-  const searchValue = useSelector((state) => state.proj.searchType);
-  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const provider = useSelector((state) => state.auth.provider);
-
   const [paymentPlan, setPaymentPlan] = useState(null);
-
-  const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
   const [showProject, setShowProject] = useState(false);
   const [projectData, setProjectData] = useState(null);
-  const [defaultImage, setDefaultImage] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
 
+  const userId = useSelector((state) => state.auth.user_id);
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const provider = useSelector((state) => state.auth.provider);
+  const searchValue = useSelector((state) => state.proj.searchType);
+
   const { data: session } = useSession();
+  const dispatch = useDispatch();
 
   let itemsPerPage = 8;
-
   let projectsToMap = projectData;
-
   const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
   const startIndex = (pageIndex - 1) * itemsPerPage;
   const endIndex = pageIndex * itemsPerPage;
@@ -82,30 +72,11 @@ const index = () => {
     }
   }
 
-  const handleDecrementPageIndex = () => {
-    if (pageIndex > 1) {
-      setPageIndex(pageIndex - 1);
-    }
-  };
-
-  const handleChangePageIndex = (event) => {
-    const newPageIndex = parseInt(event.target.id);
-    setPageIndex(newPageIndex);
-  };
-
-  const handleIncrementPageIndex = () => {
-    if (pageIndex < totalPages) {
-      setPageIndex(pageIndex + 1);
-    }
-  };
-
   const addProjectHandler = () => {
     if (userProjectsLenght < allowedProjectsCount) {
       setAddProject(!addProject);
-      setClose(true);
     } else if (allowedProjectsCount === "უსასრულო") {
       setAddProject(!addProject);
-      setClose(true);
     } else {
       notify(true, "პროექტის ატვირთვა უარყოფილია თქვენ ამოგეწურათ ლიმიტი");
     }
@@ -114,17 +85,6 @@ const index = () => {
   const dismissHandler = () => {
     setEditProject(false);
     setAddProject(false);
-    setClose(false);
-  };
-
-  const allowedProjectsHandler = () => {
-    if (paymentPlan?.payment_duration === "month") {
-      setAllowedProjectsCount(
-        paymentPlan?.payment_plan?.month_allowed_projects
-      );
-    } else {
-      setAllowedProjectsCount(paymentPlan?.payment_plan?.year_allowed_projects);
-    }
   };
 
   const getProjectsData = async () => {
@@ -155,34 +115,6 @@ const index = () => {
     }
   };
 
-  const confirmHandler = (item) => {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: "btn btn-primary",
-        cancelButton: "btn btn-danger",
-      },
-      buttonsStyling: false,
-    });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: "დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა",
-        text: "თანხმობის შემთხვევაში, პროექტი წაიშლება",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "წაშლა",
-        cancelButtonText: "უარყოფა",
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          deleteProjectHandler(item);
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          notify(true, "პროექტის წაშლა უარყოფილია");
-        }
-      });
-  };
-
   const deleteProjectHandler = async (item) => {
     const projectId = item.id;
     try {
@@ -193,31 +125,20 @@ const index = () => {
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
       setUserProjectsLenght(data?.meta?.pagination?.total);
-
     } catch (error) {
       console.log(error);
     }
   };
 
-  let buttonWrap = (
-    <div className={`${styles.buttons} my-6`}>
-      <Link
-        type="button"
-        className="btn btn-primary ghost-btn fw-boldest"
-        href="/"
-      >
-        მთავარი გვერდი
-      </Link>
-      <button
-        onClick={addProjectHandler}
-        type="button"
-        className="btn btn-primary fill-btn fw-boldest"
-      >
-        <AddProjectSvg />
-        დაამატე ობიექტი
-      </button>
-    </div>
-  );
+  const allowedProjectsHandler = () => {
+    if (paymentPlan?.payment_duration === "month") {
+      setAllowedProjectsCount(
+        paymentPlan?.payment_plan?.month_allowed_projects
+      );
+    } else {
+      setAllowedProjectsCount(paymentPlan?.payment_plan?.year_allowed_projects);
+    }
+  };
 
   useEffect(() => {
     const getDefaultImage = async () => {
@@ -228,7 +149,6 @@ const index = () => {
 
         .then((res) => {
           const data = res.data;
-          setDefaultImage(data.data.attributes.NoImage.data?.attributes.url);
         });
     };
 
@@ -249,9 +169,31 @@ const index = () => {
 
   useEffect(() => {
     allowedProjectsHandler();
-  }, [paymentPlan, ]);
+  }, [paymentPlan]);
 
   useEffect(() => {
+    const loggedUserInfo = async () => {
+      let url;
+
+      if (provider === "google") {
+        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+      } else {
+        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
+      }
+      if (url) {
+        try {
+          const response = await axios.get(url);
+          const data = response.data;
+          setPaymentPlan(data[0]);
+          console.log(response, "es");
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
     const getCategoriesHandler = async () => {
       try {
         await axios
@@ -317,27 +259,6 @@ const index = () => {
       }
     };
 
-    const loggedUserInfo = async () => {
-      let url;
-
-      if (provider === "google") {
-        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-      } else {
-        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
-      }
-      if (url) {
-        try {
-          const response = await axios.get(url);
-          const data = response.data;
-          setPaymentPlan(data[0]);
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-
     loggedUserInfo();
     getCategoriesHandler();
     getCurrentConditionHandler();
@@ -345,6 +266,57 @@ const index = () => {
     getCitiesHandler();
     getPropertyTypesHandler();
   }, []);
+
+  const confirmHandler = (item) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "დაადასტურეთ, რომ ნადვილად გსურთ პროექტის წაშლა",
+        text: "თანხმობის შემთხვევაში, პროექტი წაიშლება",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "წაშლა",
+        cancelButtonText: "უარყოფა",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          deleteProjectHandler(item);
+          notify(false, "პროექტი წაიშალა");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          notify(true, "პროექტის წაშლა უარყოფილია");
+        }
+      });
+  };
+
+  let buttonWrap = (
+    <div className={`${styles.buttons} my-6`}>
+      <Link
+        type="button"
+        className="btn btn-primary ghost-btn fw-boldest"
+        href="/"
+      >
+        მთავარი გვერდი
+      </Link>
+      <button
+        onClick={addProjectHandler}
+        type="button"
+        className="btn btn-primary fill-btn fw-boldest"
+      >
+        <AddProjectSvg />
+        დაამატე ობიექტი
+      </button>
+    </div>
+  );
+
+  console.log(paymentPlan, categories, propertyType, condition, cities);
 
   return (
     <>
@@ -362,7 +334,7 @@ const index = () => {
             style={{
               position: "relative",
               backgroundColor: "none",
-              minHeight: "300px"
+              minHeight: "300px",
             }}
           >
             {projectsToMap?.length > 0 ? buttonWrap : ""}
@@ -450,7 +422,6 @@ const index = () => {
                 <div className={styles.wrap}>
                   <h2 className={`geo-title `}>პროექტები ვერ მოიძებნა</h2>
                   {buttonWrap}
-                  {/* <BuildingBg /> */}
                 </div>
               )}
             </div>
@@ -459,7 +430,7 @@ const index = () => {
                 <ul className="pagination">
                   <li
                     className="page-item"
-                    onClick={handleDecrementPageIndex}
+                    onClick={() => pageIndex > 1 && setPageIndex(pageIndex - 1)}
                     value={pageIndex}
                   >
                     <a className="page-link" href="#" aria-label="Previous">
@@ -469,7 +440,7 @@ const index = () => {
                   {Array.from({ length: totalPages }, (_, index) => (
                     <li
                       className="page-item"
-                      onClick={handleChangePageIndex}
+                      onClick={() => setPageIndex(parseInt(event.target.id))}
                       key={index + 1}
                     >
                       <a className="page-link" id={index + 1} href="#">
@@ -479,7 +450,9 @@ const index = () => {
                   ))}
                   <li
                     className="page-item"
-                    onClick={handleIncrementPageIndex}
+                    onClick={() =>
+                      pageIndex < totalPages && setPageIndex(pageIndex + 1)
+                    }
                     value={pageIndex}
                   >
                     <a className="page-link" href="#" aria-label="Next">
