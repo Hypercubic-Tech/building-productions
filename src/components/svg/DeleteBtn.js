@@ -1,8 +1,9 @@
 import React from "react";
 
-const DeleteBtn = () => {
+const DeleteBtn = (props) => {
   return (
     <svg
+      {...props}
       width="15"
       height="16"
       viewBox="0 0 15 16"

@@ -11,7 +11,6 @@ import {
 } from "../store/slices/authSlice";
 import axios from "axios";
 
-import { setCategory } from "../store/slices/categorySlice";
 import Heading from "../components/main/Heading";
 import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
@@ -88,16 +87,6 @@ const Home = () => {
     getFaqData();
     getPricesData();
   }, []);
-
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      dispatch(setCategory(1));
-    };
-    router.events.on("routeChangeStart", handleRouteChange);
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [dispatch, router]);
 
   return (
     <div

@@ -99,6 +99,8 @@ const EditAccount = ({
     }
   }, [userData]);
 
+  console.log(userData, authUser);
+
   const sendUserUpdatedInfo = async () => {
     try {
       await axios

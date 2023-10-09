@@ -7,7 +7,6 @@ import notify from "../../utils/notify";
 import styles from "../popup/RegModal.module.css";
 import CloseBtn2 from "../svg/CloseBtn2";
 import CloseBtnBG from "../svg/CloseBtnBG";
-import SowPasswordSvg from "../svg/SowPasswordSvg";
 
 const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   const [annual, setAnnual] = useState(false);
@@ -140,7 +139,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   };
 
   return (
-    <div className={`${styles.container}`} >
+    <div className={`${styles.container}`}>
       <div className={`${getStatusClass(1)} col`}>
         <div className="d-flex justify-content-between align-items-center mb-2">
           <div className="text-muted">რეგისტრაცია</div>
@@ -298,7 +297,18 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                 isPasswordValid(e.target.value);
               }}
             />
-            <SowPasswordSvg onClick={() => setShowPassword(!showPassword)} />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "20px",
+                bottom: "10px",
+                fontSize: "16px",
+                cursor: "pointer",
+              }}
+            >
+              {!showPassword ? "show" : "hide"}
+            </span>
           </div>
           {lossData && !passwordValid && (
             <div>
