@@ -27,6 +27,8 @@ const EditAccount = ({
   const [monthly, setMonthly] = useState();
   const [initialValues, setInitialValues] = useState({});
 
+  const [filteredPricesData, setFilteredPricesData] = useState();
+
   let dynamicElements = [
     {
       id: 0,
@@ -99,7 +101,8 @@ const EditAccount = ({
     }
   }, [userData]);
 
-  console.log(userData, authUser);
+  // console.log(userData, 'user data');
+  // console.log(authUser, 'auth user')
 
   const sendUserUpdatedInfo = async () => {
     try {
@@ -145,6 +148,14 @@ const EditAccount = ({
     setUserData({ ...initialValues });
     setIsEdit(false);
   };
+
+  useEffect(() => {
+    if (userData.trial_used) {
+      setFilteredPricesData(pricesData.filter(
+        (price) => price.id !== 1
+      ))
+    }
+  }, [pricesData]);
 
   return (
     <div className={styles.mainWrapper}>
@@ -213,8 +224,8 @@ const EditAccount = ({
               }));
             }}
           >
-            {pricesData &&
-              pricesData.map((item, index) => {
+            {filteredPricesData &&
+              filteredPricesData.map((item, index) => {
                 return (
                   <option key={index} value={item.id}>
                     {item.attributes.name}
@@ -331,9 +342,8 @@ const EditAccount = ({
               pointerEvents: !startEdit ? "none" : "all",
             }}
             onClick={sendUserUpdatedInfo}
-            className={`${"fill-btn btn btn-primary fw-boldest"} ${
-              styles.saveBtn
-            }`}
+            className={`${"fill-btn btn btn-primary fw-boldest"} ${styles.saveBtn
+              }`}
           >
             შენახვა
           </div>
@@ -344,9 +354,8 @@ const EditAccount = ({
               pointerEvents: !startEdit ? "none" : "all",
             }}
             onClick={clearUserInfoChanges}
-            className={`${"fill-btn btn btn-primary fw-boldest"} ${
-              styles.saveBtn
-            }`}
+            className={`${"fill-btn btn btn-primary fw-boldest"} ${styles.saveBtn
+              }`}
           >
             გასუფთავება
           </div>

@@ -118,14 +118,18 @@ const index = () => {
     setClose(false);
   };
 
-  console.log(paymentPlan, 'plan')
-
   const trialExpiredChecker = () => {
     const now = new Date();
-    const trialExpired = paymentPlan?.trial_expires
-    console.log(trialExpired, 'expired date');
-    console.log(now, 'date now')
-  }
+    const trialExpired = new Date(paymentPlan?.trial_expires);
+
+    if (now > trialExpired) {
+      setTrialExpired(true);
+      console.log('hi');
+    } else {
+      setTrialExpired(false);
+      console.log('ok')
+    }
+  };
 
   const allowedProjectsHandler = () => {
     if (paymentPlan?.payment_duration === "month") {
@@ -209,6 +213,18 @@ const index = () => {
     }
   };
 
+  const getDefaultImage = async () => {
+    await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`
+      )
+
+      .then((res) => {
+        const data = res.data;
+        setDefaultImage(data.data.attributes.NoImage.data?.attributes.url);
+      });
+  };
+
   let buttonWrap = (
     <div className={`${styles.buttons} my-6`}>
       <Link
@@ -230,20 +246,13 @@ const index = () => {
   );
 
   useEffect(() => {
-    const getDefaultImage = async () => {
-      await axios
-        .get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`
-        )
+    getDefaultImage()
+  }, [])
 
-        .then((res) => {
-          const data = res.data;
-          setDefaultImage(data.data.attributes.NoImage.data?.attributes.url);
-        });
-    };
-
-    getDefaultImage();
-  }, []);
+  useEffect(() => {
+    trialExpiredChecker();
+  },[]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -259,8 +268,7 @@ const index = () => {
 
   useEffect(() => {
     allowedProjectsHandler();
-    trialExpiredChecker();
-  }, [paymentPlan,]);
+  }, [paymentPlan]);
 
   useEffect(() => {
     const getCategoriesHandler = async () => {
@@ -368,139 +376,152 @@ const index = () => {
             src="/images/projectBg.png"
             alt="bg"
           />
-          <div
-            className="container"
-            style={{
-              position: "relative",
-              backgroundColor: "none",
-              minHeight: "300px"
-            }}
-          >
-            {projectsToMap?.length > 0 ? buttonWrap : ""}
+          {trialExpired ? (
+            <div className={styles.expired}>
+              <h2>უფასო საცდელი ვადა ამოიწურა გთხოვთ გაანახლოთ გადახდის მეთოდი</h2>
+              <Link
+                type="button"
+                className="btn btn-primary ghost-btn fw-boldest"
+                href="/account"
+              >
+                პროფილი
+              </Link>
+            </div>
+          ) : (
             <div
-              className={`${styles.flexWrap} d-flex justify-content-center `}
-              style={{ zIndex: 1 }}
+              className="container"
+              style={{
+                position: "relative",
+                backgroundColor: "none",
+                minHeight: "300px"
+              }}
             >
-              {/* <BuildingBg /> */}
-              {projectsToMap?.length > 0 ? (
-                projectsToMap.slice(startIndex, endIndex).map((item, index) => {
-                  const id = item?.attributes?.main_img_id;
-                  const imgId = parseInt(id);
-                  const imageWithMainId = item?.attributes?.image?.data?.find(
-                    (image) => image.id === imgId
-                  );
+              {projectsToMap?.length > 0 ? buttonWrap : ""}
+              <div
+                className={`${styles.flexWrap} d-flex justify-content-center `}
+                style={{ zIndex: 1 }}
+              >
+                {/* <BuildingBg /> */}
+                {projectsToMap?.length > 0 ? (
+                  projectsToMap.slice(startIndex, endIndex).map((item, index) => {
+                    const id = item?.attributes?.main_img_id;
+                    const imgId = parseInt(id);
+                    const imageWithMainId = item?.attributes?.image?.data?.find(
+                      (image) => image.id === imgId
+                    );
 
-                  return (
-                    <div
-                      key={index}
-                      className={`card-body ${styles.wrapChild} card`}
-                    >
+                    return (
                       <div
-                        className={`${styles.imgWrap} card`}
-                        style={{ paddingBottom: "20px" }}
+                        key={index}
+                        className={`card-body ${styles.wrapChild} card`}
                       >
-                        <Link
-                          href={{
-                            pathname: `/projects/${item?.id}`,
-                            query: { projectId: item?.id },
-                          }}
-                          passHref
-                          className={styles.cardLink}
+                        <div
+                          className={`${styles.imgWrap} card`}
+                          style={{ paddingBottom: "20px" }}
                         >
-                          <div className={styles.cardLinkImg}>
-                            <img
-                              src={
-                                (imageWithMainId &&
-                                  process.env.NEXT_PUBLIC_BUILDING_URL +
+                          <Link
+                            href={{
+                              pathname: `/projects/${item?.id}`,
+                              query: { projectId: item?.id },
+                            }}
+                            passHref
+                            className={styles.cardLink}
+                          >
+                            <div className={styles.cardLinkImg}>
+                              <img
+                                src={
+                                  (imageWithMainId &&
+                                    process.env.NEXT_PUBLIC_BUILDING_URL +
                                     imageWithMainId?.attributes?.url) ||
-                                (item?.attributes?.image?.data?.[0]?.attributes
-                                  ?.url &&
-                                  process.env.NEXT_PUBLIC_BUILDING_URL +
+                                  (item?.attributes?.image?.data?.[0]?.attributes
+                                    ?.url &&
+                                    process.env.NEXT_PUBLIC_BUILDING_URL +
                                     item?.attributes?.image?.data?.[0]
                                       ?.attributes?.url) ||
-                                "/images/test-img.png"
-                              }
-                              className="card-img-top"
-                              alt="project-img"
-                            />
-                          </div>
-                          <div className={`card-body ${styles.cardTtl}`}>
-                            <div
-                              className="card-title"
-                              style={{ opacity: ".8" }}
-                            >
-                              {item?.attributes?.title}
+                                  "/images/test-img.png"
+                                }
+                                className="card-img-top"
+                                alt="project-img"
+                              />
                             </div>
-                            <p className="card-text">
-                              <MapSvg />
-                              {item?.attributes?.address}
-                            </p>
-                          </div>
-                        </Link>
-                        <div className={`${styles.moodalButtons}`}>
-                          <div
-                            onClick={() => editHandler(item)}
-                            className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
-                          >
-                            <EditSvg />
-                            <span>რედაქტირება</span>
-                          </div>
-                          <div
-                            onClick={() => confirmHandler(item)}
-                            className="btn red-ghost-btn fw-boldest btn-primary"
-                          >
-                            <DeleteBtn />
-                            <span>წაშლა</span>
+                            <div className={`card-body ${styles.cardTtl}`}>
+                              <div
+                                className="card-title"
+                                style={{ opacity: ".8" }}
+                              >
+                                {item?.attributes?.title}
+                              </div>
+                              <p className="card-text">
+                                <MapSvg />
+                                {item?.attributes?.address}
+                              </p>
+                            </div>
+                          </Link>
+                          <div className={`${styles.moodalButtons}`}>
+                            <div
+                              onClick={() => editHandler(item)}
+                              className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
+                            >
+                              <EditSvg />
+                              <span>რედაქტირება</span>
+                            </div>
+                            <div
+                              onClick={() => confirmHandler(item)}
+                              className="btn red-ghost-btn fw-boldest btn-primary"
+                            >
+                              <DeleteBtn />
+                              <span>წაშლა</span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <div className={styles.wrap}>
-                  <h2 className={`geo-title `}>პროექტები ვერ მოიძებნა</h2>
-                  {buttonWrap}
-                  {/* <BuildingBg /> */}
-                </div>
-              )}
-            </div>
-            {projectsToMap?.length > itemsPerPage && (
-              <nav aria-label="Page navigation example" className="m-5 p-5">
-                <ul className="pagination">
-                  <li
-                    className="page-item"
-                    onClick={handleDecrementPageIndex}
-                    value={pageIndex}
-                  >
-                    <a className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  {Array.from({ length: totalPages }, (_, index) => (
+                    );
+                  })
+                ) : (
+                  <div className={styles.wrap}>
+                    <h2 className={`geo-title `}>პროექტები ვერ მოიძებნა</h2>
+                    {buttonWrap}
+                    {/* <BuildingBg /> */}
+                  </div>
+                )}
+              </div>
+              {projectsToMap?.length > itemsPerPage && (
+                <nav aria-label="Page navigation example" className="m-5 p-5">
+                  <ul className="pagination">
                     <li
                       className="page-item"
-                      onClick={handleChangePageIndex}
-                      key={index + 1}
+                      onClick={handleDecrementPageIndex}
+                      value={pageIndex}
                     >
-                      <a className="page-link" id={index + 1} href="#">
-                        {index + 1}
+                      <a className="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
                       </a>
                     </li>
-                  ))}
-                  <li
-                    className="page-item"
-                    onClick={handleIncrementPageIndex}
-                    value={pageIndex}
-                  >
-                    <a className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            )}
-          </div>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                      <li
+                        className="page-item"
+                        onClick={handleChangePageIndex}
+                        key={index + 1}
+                      >
+                        <a className="page-link" id={index + 1} href="#">
+                          {index + 1}
+                        </a>
+                      </li>
+                    ))}
+                    <li
+                      className="page-item"
+                      onClick={handleIncrementPageIndex}
+                      value={pageIndex}
+                    >
+                      <a className="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              )}
+            </div>
+          )}
           {addProject && (
             <AddProject
               setAddProject={setAddProject}
