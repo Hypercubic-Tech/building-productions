@@ -87,7 +87,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   const handleSubmit = async (event) => {
     const now = new Date();
     const trialExpires = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); 
-    
+      console.log(trialExpires)
     const {
       username,
       email,

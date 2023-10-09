@@ -35,7 +35,7 @@ const index = () => {
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
   const [trialExpired, setTrialExpired] = useState(false);
-  
+
   const userId = useSelector((state) => state.auth.user_id);
   const searchValue = useSelector((state) => state.proj.searchType);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
@@ -112,9 +112,11 @@ const index = () => {
 
   const trialExpiredChecker = () => {
     const now = new Date();
-    const trialExpired = new Date(paymentPlan?.trial_expires);
+    console.log(now, 'now')
+    const expiredDate = new Date(paymentPlan?.trial_expires);
+    console.log(expiredDate, 'expired')
 
-    if (now > trialExpired) {
+    if (now > expiredDate) {
       setTrialExpired(true);
       console.log('hi');
     } else {
@@ -242,11 +244,6 @@ const index = () => {
   }, [])
 
   useEffect(() => {
-    trialExpiredChecker();
-  },[]);
-  
-
-  useEffect(() => {
     const fetchData = async () => {
       const data = await getProjectsData();
       setProjectData(data.data);
@@ -260,6 +257,7 @@ const index = () => {
 
   useEffect(() => {
     allowedProjectsHandler();
+    trialExpiredChecker();
   }, [paymentPlan]);
 
   useEffect(() => {
@@ -368,7 +366,7 @@ const index = () => {
             src="/images/projectBg.png"
             alt="bg"
           />
-          {trialExpired ? (
+          {trialExpired && trialExpired ? (
             <div className={styles.expired}>
               <h2>უფასო საცდელი ვადა ამოიწურა გთხოვთ გაანახლოთ გადახდის მეთოდი</h2>
               <Link

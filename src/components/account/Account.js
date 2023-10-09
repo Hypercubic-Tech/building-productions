@@ -31,7 +31,24 @@ const index = () => {
   const [pricesData, setPricesData] = useState(null);
   const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
 
+  const [trialExpired, setTrialExpired] = useState(false);
+  const [trialExpiredDate, setTrialExpiredDate] = useState(null);
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
+  // console.log(trialExpired)
+  const trialExpiredChecker = () => {
+    const now = new Date();
+    // console.log(userDa, 'now')
+    const expiredDate = new Date(userData?.trial_expires);
+    console.log(expiredDate, 'expired')
+    setTrialExpiredDate(expiredDate)
+    if (now > expiredDate) {
+      setTrialExpired(true);
+      console.log('hi');
+    } else {
+      setTrialExpired(false);
+      console.log('ok')
+    }
+  };
 
   const loggedUserInfo = async () => {
     let url;
@@ -45,6 +62,7 @@ const index = () => {
         .get(url)
         .then((res) => {
           const data = res.data;
+          console.log(data, 'data')
           setAuthUser(data);
           setUserData({
             id: data[0]?.id,
@@ -55,7 +73,7 @@ const index = () => {
             payment_plan: {
               connect: [{ id: data[0]?.payment_plan?.id.toString() }],
             },
-            trial_expired: data[0]?.trial_expires,
+            trial_expires: data[0]?.trial_expires,
             trial_used: data[0]?.trial_used,
             card_number: data[0]?.card_number,
             card_cvc: data[0]?.card_cvc,
@@ -74,6 +92,8 @@ const index = () => {
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
               all_projects:
                 data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
+              trial_expires: data[0]?.trial_expires,
+              trial_used: data[0]?.trial_used,
             });
           }
           if (data[0]?.payment_duration === "year") {
@@ -85,10 +105,13 @@ const index = () => {
               allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
               all_projects: data[0]?.projects.lenght,
+              trial_expires: data[0]?.trial_expires,
+              trial_used: data[0]?.trial_used,
             });
           }
         })
         .then(() => {
+          trialExpiredChecker();
           setIsLoading(false);
         });
     }
@@ -214,6 +237,7 @@ const index = () => {
   useEffect(() => {
     getPricesData();
     loggedUserInfo();
+
   }, [session, authUserId]);
 
   useEffect(() => {
@@ -255,6 +279,7 @@ const index = () => {
           <div style={{ width: "100%" }}>
             {authUser && (
               <EditAccount
+                trialExpired={trialExpired}
                 authUserId={authUserId}
                 startEdit={startEdit}
                 setStartEdit={setStartEdit}
