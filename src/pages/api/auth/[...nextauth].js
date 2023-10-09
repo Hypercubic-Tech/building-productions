@@ -15,6 +15,9 @@ export default NextAuth({
 
     async jwt({ token, user, account }) {
       const isSignIn = user ? true : false;
+      const now = new Date();
+      const trialExpires = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
       if (isSignIn) {
         try {
           const response = await axios.get(
@@ -36,6 +39,8 @@ export default NextAuth({
                   payment_plan: {
                     connect: [{ id: 1 }],
                   },
+                  trial_expires: trialExpires,
+                  trial_used: true
                 }
               )
           }
