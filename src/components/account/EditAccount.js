@@ -19,7 +19,8 @@ const EditAccount = ({
   loggedUserInfo,
   setIsEdit,
   setStartEdit,
-  authUser
+  authUser,
+  trialExpired
 }) => {
   const dispatch = useDispatch();
 
@@ -105,6 +106,7 @@ const EditAccount = ({
   // console.log(authUser, 'auth user')
 
   const sendUserUpdatedInfo = async () => {
+    const now = new Date();
     try {
       await axios
         .put(
@@ -121,6 +123,8 @@ const EditAccount = ({
             card_cvc: userData?.card_cvc,
             card_month: userData?.card_month,
             card_year: userData?.card_year,
+            trial_used: true,
+            trial_expires: trialExpired ? null : now
           }
         )
         .then((res) => {
@@ -150,7 +154,7 @@ const EditAccount = ({
   };
 
   useEffect(() => {
-    if (userData.trial_used) {
+    if (userData.trial_used && trialExpired) {
       setFilteredPricesData(pricesData.filter(
         (price) => price.id !== 1
       ))
@@ -224,8 +228,8 @@ const EditAccount = ({
               }));
             }}
           >
-            {filteredPricesData &&
-              filteredPricesData.map((item, index) => {
+            {pricesData &&
+              pricesData.map((item, index) => {
                 return (
                   <option key={index} value={item.id}>
                     {item.attributes.name}

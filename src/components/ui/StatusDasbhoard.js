@@ -34,6 +34,7 @@ const StatusDashboard = () => {
             try {
                 const response = await axios.get(url);
                 const data = response.data;
+                console.log(data)
 
                 if (data[0]?.payment_duration === 'month') {
                     setUserStatusUpdate({
@@ -43,7 +44,9 @@ const StatusDashboard = () => {
                         allowed_export: data[0]?.payment_plan?.allowed_export,
                         allowed_media: data[0]?.payment_plan?.allowed_media,
                         allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-                        all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length
+                        all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
+                        trial_expires: data[0]?.trial_expires,
+                        trial_used: data[0]?.trial_used
                     });
                 }
                 if (data[0]?.payment_duration === 'year') {
@@ -54,7 +57,9 @@ const StatusDashboard = () => {
                         allowed_export: data[0]?.payment_plan?.allowed_export,
                         allowed_media: data[0]?.payment_plan?.allowed_media,
                         allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-                        all_projects: data[0]?.projects.lenght
+                        all_projects: data[0]?.projects.lenght,
+                        trial_expires: data[0]?.trial_expires,
+                        trial_used: data[0]?.trial_used
                     });
                 }
 
@@ -137,6 +142,12 @@ const StatusDashboard = () => {
                                                 <path d="M12 0C5.38 0 0 5.38 0 12s5.38 12 12 12 12-5.38 12-12S18.62 0 12 0zm0 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm-1.5-12h3v8h-3v-8zm0-5h3v3h-3V5z"></path>
                                             </svg>
                                             <div className={styles.tooltipText}>
+                                                {userStatus.trial_expires && (
+                                                    <div style={{flexDirection: "column", height: '44px'}} className={styles.tooltipItem}>
+                                                        <span>საცდელი ვერსიის ვადა -</span>
+                                                        <p>{userStatus.trial_expires}</p>
+                                                    </div>
+                                                )}
                                                 <div className={styles.tooltipItem}>
                                                     <span>დაშვებული რაოდენობა -</span>
                                                     <p>{userStatus.allowed_projects}</p>
@@ -162,15 +173,15 @@ const StatusDashboard = () => {
                                                         </svg>
                                                     ) : (
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                        <g fill="#fff">
-                                                          <path d="M8.004 9.418a1 1 0 111.414-1.414l2.588 2.588 2.585-2.585a1 1 0 111.414 1.414l-2.585 2.585 2.584 2.584a1 1 0 01-1.414 1.414l-2.584-2.584-2.585 2.585a1 1 0 01-1.414-1.414l2.585-2.585-2.588-2.588z"></path>
-                                                          <path
-                                                            fillRule="evenodd"
-                                                            d="M23 12c0 6.075-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1s11 4.925 11 11zM3.007 12a8.993 8.993 0 1017.986 0 8.993 8.993 0 00-17.986 0z"
-                                                            clipRule="evenodd"
-                                                          ></path>
-                                                        </g>
-                                                      </svg>
+                                                            <g fill="#fff">
+                                                                <path d="M8.004 9.418a1 1 0 111.414-1.414l2.588 2.588 2.585-2.585a1 1 0 111.414 1.414l-2.585 2.585 2.584 2.584a1 1 0 01-1.414 1.414l-2.584-2.584-2.585 2.585a1 1 0 01-1.414-1.414l2.585-2.585-2.588-2.588z"></path>
+                                                                <path
+                                                                    fillRule="evenodd"
+                                                                    d="M23 12c0 6.075-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1s11 4.925 11 11zM3.007 12a8.993 8.993 0 1017.986 0 8.993 8.993 0 00-17.986 0z"
+                                                                    clipRule="evenodd"
+                                                                ></path>
+                                                            </g>
+                                                        </svg>
                                                     )}
                                                 </div>
                                                 <div className={styles.tooltipItem}>
@@ -194,15 +205,15 @@ const StatusDashboard = () => {
                                                         </svg>
                                                     ) : (
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                        <g fill="#fff">
-                                                          <path d="M8.004 9.418a1 1 0 111.414-1.414l2.588 2.588 2.585-2.585a1 1 0 111.414 1.414l-2.585 2.585 2.584 2.584a1 1 0 01-1.414 1.414l-2.584-2.584-2.585 2.585a1 1 0 01-1.414-1.414l2.585-2.585-2.588-2.588z"></path>
-                                                          <path
-                                                            fillRule="evenodd"
-                                                            d="M23 12c0 6.075-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1s11 4.925 11 11zM3.007 12a8.993 8.993 0 1017.986 0 8.993 8.993 0 00-17.986 0z"
-                                                            clipRule="evenodd"
-                                                          ></path>
-                                                        </g>
-                                                      </svg>
+                                                            <g fill="#fff">
+                                                                <path d="M8.004 9.418a1 1 0 111.414-1.414l2.588 2.588 2.585-2.585a1 1 0 111.414 1.414l-2.585 2.585 2.584 2.584a1 1 0 01-1.414 1.414l-2.584-2.584-2.585 2.585a1 1 0 01-1.414-1.414l2.585-2.585-2.588-2.588z"></path>
+                                                                <path
+                                                                    fillRule="evenodd"
+                                                                    d="M23 12c0 6.075-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1s11 4.925 11 11zM3.007 12a8.993 8.993 0 1017.986 0 8.993 8.993 0 00-17.986 0z"
+                                                                    clipRule="evenodd"
+                                                                ></path>
+                                                            </g>
+                                                        </svg>
                                                     )}
                                                 </div>
                                             </div>
