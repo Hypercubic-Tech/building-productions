@@ -41,22 +41,20 @@ function Header() {
     <>
       {header}
       {loggedIn &&
-        Number(userStatus.allowed_projects) - Number(userStatus.all_projects) <=
-        3 ? (
+        Number(userStatus.allowed_projects) - Number(userStatus.all_projects) < 3 && Number(userStatus.allowed_projects) - Number(userStatus.all_projects) != 0 ? (
         <div className={styles.warningMessage}>
           თქვენი პროდუქტების დამატების ლიმიტი იწურება, დაგრჩათ{" "}
           {Number(userStatus.allowed_projects) -
             Number(userStatus.all_projects)}{" "}
           პროექტი, გთხოვთ განაახლოთ გადახდის გეგმა !!!
         </div>
-      ) : Number(userStatus.allowed_projects) - Number(userStatus.all_projects) ===
+      ) : loggedIn && Number(userStatus.allowed_projects) - Number(userStatus.all_projects) ==
         0 ? (
         <div className={styles.warningMessage}>
-          თქვენი პროდუქტების დამატების ლიმიტი ამოიწურა,
-          პროექტი, გთხოვთ განაახლოთ გადახდის გეგმა !!!
+          თქვენი პროდუქტების დამატების ლიმიტი ამოიწურა, გთხოვთ გაანახლოთ გადახდის გეგმა !!!
         </div>
       ) : (
-        ""
+        null
       )}
     </>
   );
