@@ -47,6 +47,7 @@ const index = () => {
 
   const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
   const [userProjectsLenght, setUserProjectsLenght] = useState(null);
+  const [trialExpired, setTrialExpired] = useState(false);
 
   const { data: session } = useSession();
 
@@ -116,6 +117,15 @@ const index = () => {
     setAddProject(false);
     setClose(false);
   };
+
+  console.log(paymentPlan, 'plan')
+
+  const trialExpiredChecker = () => {
+    const now = new Date();
+    const trialExpired = paymentPlan?.trial_expires
+    console.log(trialExpired, 'expired date');
+    console.log(now, 'date now')
+  }
 
   const allowedProjectsHandler = () => {
     if (paymentPlan?.payment_duration === "month") {
@@ -249,7 +259,8 @@ const index = () => {
 
   useEffect(() => {
     allowedProjectsHandler();
-  }, [paymentPlan, ]);
+    trialExpiredChecker();
+  }, [paymentPlan,]);
 
   useEffect(() => {
     const getCategoriesHandler = async () => {

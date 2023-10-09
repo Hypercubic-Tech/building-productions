@@ -99,7 +99,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
       paymentMethod,
       payment_duration,
     } = regData;
-  
+
     try {
       await axios.post(
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/auth/local/register`,
@@ -116,7 +116,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
           trial_expires: regData.payment_plan === 1 ? trialExpires : false,
         }
       );
-  
+
       notify(false, "თქვენ წარმატებით გაიარეთ რეგისტრაცია");
     } catch (err) {
       notify(
@@ -431,7 +431,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                   if (
                     regData?.payment_plan === 2 ||
                     regData?.payment_plan === 3
-                  )  {
+                  ) {
                     stepChangeHandler();
                   }
                   if (regData?.payment_plan === 1) {
