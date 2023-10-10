@@ -212,7 +212,7 @@ const index = () => {
   const editHandler = (product) => {
     setEditProductItem(product);
   };
- 
+  
   return (
     <>
       {!isLoggedIn || isLoading ? (
