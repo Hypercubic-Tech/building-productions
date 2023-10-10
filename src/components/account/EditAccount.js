@@ -52,8 +52,8 @@ const EditAccount = ({
       value: userData?.role,
       type: "select",
       options: [
-        { value: "user", title: "პერსონალური" },
-        { value: "admin", title: "კომპანია" },
+        { value: "person", title: "პერსონალური" },
+        { value: "company", title: "კომპანია" },
       ],
       onChange: (e) => {
         setUserData((prevUserData) => ({
@@ -107,6 +107,7 @@ const EditAccount = ({
 
   const sendUserUpdatedInfo = async () => {
     const now = new Date();
+    console.log(userData)
     try {
       await axios
         .put(

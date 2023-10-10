@@ -45,6 +45,28 @@ const index = () => {
   const dispatch = useDispatch();
 
 
+  const loggedUserInfo = async () => {
+    let url;
+
+    if (provider === "google") {
+      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+    } else {
+      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
+    }
+    if (url) {
+      try {
+        const response = await axios.get(url);
+        const data = response.data;
+        setPaymentPlan(data[0]);
+        console.log('im heree', data)
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   let itemsPerPage = 8;
   let projectsToMap = projectData;
   const totalPages = Math.ceil(projectsToMap?.length / itemsPerPage);
@@ -93,6 +115,8 @@ const index = () => {
   };
 
   const addProjectHandler = () => {
+    console.log(userProjectsLenght, 'lengh')
+    console.log(allowedProjectsCount, 'allowed')
     if (userProjectsLenght < allowedProjectsCount) {
       setAddProject(!addProject);
       setClose(true);
@@ -126,6 +150,7 @@ const index = () => {
   };
 
   const allowedProjectsHandler = () => {
+    console.log(paymentPlan)
     if (paymentPlan?.payment_duration === "month") {
       setAllowedProjectsCount(
         paymentPlan?.payment_plan?.month_allowed_projects
@@ -249,6 +274,7 @@ const index = () => {
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
       allowedProjectsHandler();
+      trialExpiredChecker();
       setUserProjectsLenght(data?.meta?.pagination?.total);
     };
 
@@ -326,28 +352,6 @@ const index = () => {
       }
     };
 
-    const loggedUserInfo = async () => {
-      let url;
-
-      if (provider === "google") {
-        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-      } else {
-        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
-      }
-      if (url) {
-        try {
-          const response = await axios.get(url);
-          const data = response.data;
-          setPaymentPlan(data[0]);
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    loggedUserInfo();
     getCategoriesHandler();
     getCurrentConditionHandler();
     getConditionHandler();
@@ -355,6 +359,9 @@ const index = () => {
     getPropertyTypesHandler();
   }, []);
 
+  useEffect(() => {
+    loggedUserInfo();
+  }, []);
   return (
     <>
       {!isLoggedIn || isLoading ? (
