@@ -15,11 +15,12 @@ import notify from "../../utils/notify";
 import ProductSelect from "./ProductSelect";
 import CraftSelect from "./CraftSelect";
 
-import styles from "./Products.module.css";
 import DeleteBtn from "../svg/DeleteBtn";
 import DeletSmall from "../svg/DeletSmall";
 import SettingsSvg from "../svg/SettingsSvg";
 import ThreeDotsSvg from "../svg/ThreeDotsSvg";
+
+import styles from "./Products.module.css";
 
 const Products = ({
   editHandler,
@@ -357,6 +358,7 @@ const Products = ({
         <table
           className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
           id="tableId"
+          s
         >
           {totalSum ? (
             <thead>
@@ -462,7 +464,7 @@ const Products = ({
                 <th className="georgian">ტიპი</th>
                 <th className="georgian">სტატუსი</th>
                 {select === null && (
-                  <th className="text-end min-w-100px georgian">ცვლილება</th>
+                  <th className="text-end max-w-100px georgian">ცვლილება</th>
                 )}
               </tr>
             </thead>
@@ -599,11 +601,7 @@ const Products = ({
                             onClick={() => changeModalHandler(product)}
                             className={`${"text-end"} ${styles.changeModal}`}
                           >
-                            <div
-                              className={`${"menu-item px-3 padding8"} ${
-                                styles.modalSvg
-                              }`}
-                            >
+                            <div className={`${"menu-item px-3 padding8"} }`}>
                               <ThreeDotsSvg />
                             </div>
                             {activeItem === product.id ? (
@@ -647,23 +645,30 @@ const Products = ({
                   })}
             </>
           )}
-          <tfoot>
-            {!totalSum && "exportPopUp" && (
-              <tr>
-                <td
-                  style={{
-                    fontSize: "16px",
-                    padding: "4px",
-                    textAlign: "end",
-                    position: "absolute",
-                    bottom: "0px",
-                    right: "20px",
-                  }}
-                >
-                  ჯამი: {total.toFixed(2)} ლარი
-                </td>
-              </tr>
-            )}
+          <tfoot
+            style={{
+              textAlign: "right",
+              whiteSpace: "nowrap",
+              positionr: "relative",
+              border: "none",
+            }}
+          >
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td
+                className="text-muted"
+                style={{ fontSize: "16px", paddingRight: "10px" }}
+              >
+                ჯამი: {total.toFixed(2)} ლარი
+              </td>
+            </tr>
           </tfoot>
         </table>
         {!productsToMap?.length && activeCategoryId && (
@@ -711,7 +716,6 @@ const Products = ({
           </nav>
         )}
       </div>
-
       {select === "exportPopUp" && (
         <ExportPopup
           setSelect={setSelect}
