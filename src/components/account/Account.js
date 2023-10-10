@@ -37,7 +37,7 @@ const index = () => {
   // console.log(trialExpired)
   const trialExpiredChecker = () => {
     const now = new Date();
-    // console.log(userDa, 'now')
+    console.log(now, 'now')
     const expiredDate = new Date(userData?.trial_expires);
     console.log(expiredDate, 'expired')
     setTrialExpiredDate(expiredDate)

@@ -577,15 +577,15 @@ const AddProduct = ({
                             (obj) => obj?.attributes?.title === e.target.value
                           );
                           setCraftImage(
-                            filteredArray[0].attributes.image.data.attributes
-                              .url
+                            filteredArray[0]?.attributes?.image?.data?.attributes
+                              ?.url
                           );
                           setCraftData((prevSendData) => ({
                             ...prevSendData,
                             title: e.target.value,
                             craft_img_url:
-                              filteredArray[0].attributes.image.data.attributes
-                                .url,
+                              filteredArray[0]?.attributes?.image?.data?.attributes
+                                ?.url,
                           }));
                         }}
                         name="count"

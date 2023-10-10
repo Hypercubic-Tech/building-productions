@@ -230,8 +230,9 @@ const EditAccount = ({
           >
             {pricesData &&
               pricesData.map((item, index) => {
+                const isDisabled = trialExpired && index === 0;
                 return (
-                  <option key={index} value={item.id}>
+                  <option disabled={isDisabled} key={index} value={item.id}>
                     {item.attributes.name}
                   </option>
                 );
