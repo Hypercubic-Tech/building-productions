@@ -23,7 +23,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     email: "",
     password: "",
     phoneNumber: "",
-    userType: "",
+    account_type: "",
     payment_plan: +pricesData[0].id,
     payment_duration: "month",
     paymentMethod: "",
@@ -41,7 +41,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     if (step === 1) {
       if (
         errors?.stepOne?.length === 0 &&
-        regData?.userType &&
+        regData?.account_type &&
         regData?.username &&
         regData?.email.includes("@") &&
         regData?.phoneNumber.length === 9 &&
@@ -87,16 +87,16 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   const handleSubmit = async (event) => {
     const now = new Date();
     const trialExpires = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); 
-      console.log(trialExpires)
+
     const {
       username,
       email,
       password,
       phoneNumber,
-      userType,
       payment_plan,
       paymentMethod,
       payment_duration,
+      account_type
     } = regData;
 
     try {
@@ -107,12 +107,12 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
           email,
           password,
           phoneNumber,
-          userType,
           payment_plan,
           paymentMethod,
           payment_duration,
           trial_used: regData.payment_plan === 1 ? true : false,
           trial_expires: regData.payment_plan === 1 ? trialExpires : false,
+          account_type
         }
       );
 
@@ -163,14 +163,14 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
               required
               style={{
                 borderColor:
-                  lossData && regData.userType.length <= 0 ? "red" : "",
+                  lossData && regData.account_type.length <= 0 ? "red" : "",
               }}
               className="form-select form-select-solid georgian"
               defaultValue="აირჩიეთ მომხმარებლის ტიპი"
               onChange={(e) => {
                 setRegData((prevSendData) => ({
                   ...prevSendData,
-                  userType: e.target.value,
+                  account_type: e.target.value,
                 }));
               }}
             >
@@ -184,15 +184,15 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                 კომპანია
               </option>
             </select>
-            {lossData && regData.userType.length <= 0 && (
+            {lossData && regData.account_type.length <= 0 && (
               <p style={{ color: "red" }}>გთხოვთ აირჩიოთ მომხმარებლის ტიპი</p>
             )}
           </div>
           {regData && (
             <label className="mt-2">
-              {regData?.userType === "company"
+              {regData?.account_type === "company"
                 ? "კომპანიის სახელი"
-                : regData?.userType === "personal"
+                : regData?.account_type === "personal"
                   ? "სრული სახელი"
                   : "სახელი"}
             </label>

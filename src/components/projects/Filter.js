@@ -14,8 +14,6 @@ const Filter = ({
 
   const activeCategoryId = useSelector((state) => state?.cats?.category);
 
-  console.log(activeCategoryId);
-
   return (
     <div className="container">
       <div className={styles.filterContainer}>

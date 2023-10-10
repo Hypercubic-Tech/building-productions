@@ -49,16 +49,16 @@ const EditAccount = ({
     {
       id: 1,
       title: "მომხმარებლის ტიპი",
-      value: userData?.role,
+      value: userData?.account_type === 'company' ? 'company' : 'personal',
       type: "select",
-      options: [
-        { value: "person", title: "პერსონალური" },
-        { value: "company", title: "კომპანია" },
-      ],
+      // options: [
+      //   { value: "personal", title: "პერსონალური" },
+      //   { value: "company", title: "კომპანია" },
+      // ],
       onChange: (e) => {
         setUserData((prevUserData) => ({
           ...prevUserData,
-          userType: e.target.value,
+          account_type: e.target.value,
         }));
       },
     },
@@ -102,12 +102,8 @@ const EditAccount = ({
     }
   }, [userData]);
 
-  // console.log(userData, 'user data');
-  // console.log(authUser, 'auth user')
-
   const sendUserUpdatedInfo = async () => {
     const now = new Date();
-    console.log(userData)
     try {
       await axios
         .put(
@@ -125,7 +121,8 @@ const EditAccount = ({
             card_month: userData?.card_month,
             card_year: userData?.card_year,
             trial_used: true,
-            trial_expires: trialExpired ? null : now
+            trial_expires: trialExpired ? null : now,
+            account_type: userData?.account_type
           }
         )
         .then((res) => {
@@ -183,17 +180,15 @@ const EditAccount = ({
               />
             ) : (
               <div style={{ position: "relative" }}>
-                <select className="form-control" disabled={!startEdit}>
+                <select onChange={(e) => el.onChange(e) } value={userData.account_type} className="form-control" disabled={!startEdit}>
                   {el.title}
-                  {el.options.map(
-                    (el, index) => (
-                      (
-                        <option key={index} value={el.value}>
-                          {el.title}
-                        </option>
-                      )
-                    )
-                  )}
+                  <option value='company'>
+                    კომპანია
+                  </option>
+                  <option value='personal'>
+                    პერსონალური
+                  </option>
+
                 </select>
                 <ArrowDownSvg />
               </div>
