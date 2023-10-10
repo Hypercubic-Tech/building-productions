@@ -21,6 +21,8 @@ const index = () => {
   const provider = useSelector((state) => state.auth.provider);
   const authUserId = useSelector((state) => state.auth.user_id);
 
+  const userStatus = useSelector((state) => state.userStatus);
+
   const [authUser, setAuthUser] = useState([]);
   const [userData, setUserData] = useState({});
   const [startEdit, setStartEdit] = useState(false);
@@ -32,14 +34,13 @@ const index = () => {
   const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
 
   const [trialExpired, setTrialExpired] = useState(false);
-  const [trialExpiredDate, setTrialExpiredDate] = useState(null);
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
- 
-  const trialExpiredChecker = () => {
+
+  console.log(userStatus, 'data')
+  const trialExpiredChecker = async () => {
     const now = new Date();
-    const expiredDate = new Date(userData?.trial_expires);
-    (expiredDate, 'expired')
-    setTrialExpiredDate(expiredDate)
+    const expiredDate = new Date(userStatus?.trial_expires);
+    console.log(expiredDate, 'expired')
     if (now > expiredDate) {
       setTrialExpired(true);
     } else {

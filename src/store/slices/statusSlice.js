@@ -6,7 +6,6 @@ const userStatusSlice = createSlice({
         username: '',
         p_title: '',
         allowed_projects: "",
-        allowed_products: "",
         allowed_export: "",
         allowed_media: "",
         all_projects: "",

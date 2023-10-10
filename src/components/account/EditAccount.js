@@ -120,8 +120,8 @@ const EditAccount = ({
             card_month: userData?.card_month,
             card_year: userData?.card_year,
             trial_used: true,
-            trial_expires: trialExpired ? null : now,
-            account_type: userData?.account_type,
+            trial_expires: trialExpired ? 'expired' : now,
+            account_type: userData?.account_type
           }
         )
         .then((res) => {
@@ -224,6 +224,8 @@ const EditAccount = ({
             {pricesData &&
               pricesData.map((item, index) => {
                 const isDisabled = trialExpired && index === 0;
+                // console.log(isDisabled)
+
                 return (
                   <option disabled={isDisabled} key={index} value={item.id}>
                     {item.attributes.name}

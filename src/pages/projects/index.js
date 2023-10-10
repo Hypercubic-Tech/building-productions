@@ -32,8 +32,6 @@ const index = () => {
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [allowedProjectsCount, setAllowedProjectsCount] = useState(null);
-  const [userProjectsLenght, setUserProjectsLenght] = useState(null);
   const [trialExpired, setTrialExpired] = useState(false);
 
   const userId = useSelector((state) => state.auth.user_id);
@@ -43,6 +41,10 @@ const index = () => {
 
   const { data: session } = useSession();
   const dispatch = useDispatch();
+
+  const userStatus = useSelector((state) => state.userStatus);
+
+  console.log(userStatus, 'status')
 
 
   const loggedUserInfo = async () => {
@@ -114,10 +116,10 @@ const index = () => {
   };
 
   const addProjectHandler = () => {
-    if (userProjectsLenght < allowedProjectsCount) {
+    if (userStatus?.all_projects < userStatus?.allowed_projects) {
       setAddProject(!addProject);
       setClose(true);
-    } else if (allowedProjectsCount === "უსასრულო") {
+    } else if (userStatus?.allowed_projects === "უსასრულო") {
       setAddProject(!addProject);
       setClose(true);
     } else {
@@ -131,24 +133,32 @@ const index = () => {
     setClose(false);
   };
 
-  const trialExpiredChecker = () => {
+  const trialExpiredChecker = async () => {
     const now = new Date();
-    const expiredDate = paymentPlan?.trial_expires != null ? new Date(paymentPlan?.trial_expires) : null;
+    const expiredDate = new Date(userStatus?.trial_expires);
 
-    if (now > expiredDate && expiredDate !== null) {
+    if (now > expiredDate) {
       setTrialExpired(true);
+      try {
+        await axios
+          .put(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUserId}`,
+            {
+              trial_used: true,
+              trial_expires: 'expired'
+            }
+          )
+          .then((res) => {
+            const data = res.data;
+            loggedUserInfo();
+            notify(false, "თქვენ ამოგეწურათ უფასო საცდელი ვადა");
+          });
+      } catch (error) {
+        console.log(error);
+      }
+      dispatch(setUserStatus({ trial_expires: "expired" }));
     } {
       setTrialExpired(false);
-    }
-  };
-
-  const allowedProjectsHandler = () => {
-    if (paymentPlan?.payment_duration === "month") {
-      setAllowedProjectsCount(
-        paymentPlan?.payment_plan?.month_allowed_projects
-      );
-    } else {
-      setAllowedProjectsCount(paymentPlan?.payment_plan?.year_allowed_projects);
     }
   };
 
@@ -217,8 +227,6 @@ const index = () => {
       const data = await getProjectsData();
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
-      setUserProjectsLenght(data?.meta?.pagination?.total);
-
     } catch (error) {
       console.log(error);
     }
@@ -265,18 +273,15 @@ const index = () => {
       const data = await getProjectsData();
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
-      allowedProjectsHandler();
       trialExpiredChecker();
-      setUserProjectsLenght(data?.meta?.pagination?.total);
     };
 
     fetchData();
   }, [showProject]);
 
   useEffect(() => {
-    allowedProjectsHandler();
     trialExpiredChecker();
-  }, [paymentPlan]);
+  }, [userStatus]);
 
   useEffect(() => {
     const getCategoriesHandler = async () => {
@@ -365,7 +370,7 @@ const index = () => {
             src="/images/projectBg.png"
             alt="bg"
           />
-          {trialExpired && trialExpired ? (
+          {userStatus.trial_expires === "expired" && userStatus.p_title === 'დამწყები'  ? (
             <div className={styles.expired}>
               <h2>უფასო საცდელი ვადა ამოიწურა გთხოვთ გაანახლოთ გადახდის მეთოდი</h2>
               <Link
