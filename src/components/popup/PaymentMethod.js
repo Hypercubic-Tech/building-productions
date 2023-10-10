@@ -38,7 +38,7 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
           className={`form-control ${styles.noArrow} ${styles.cardNumberInput}`}
           placeholder="Card Number"
           type="text"
-          value={formatCardNumber(cardNumberValue)}
+          value={formatCardNumber(cardNumberValue) || ""}
           onChange={(e) => {
             let value = e.target.value;
             value = value.replace(/\D/g, "");
@@ -65,7 +65,7 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
           className={`form-control ${styles.noArrow}`}
           placeholder="CVC"
           type="number"
-          value={inputValue}
+          value={inputValue || ""}
           onChange={(e) => {
             let value = e.target.value;
             if (/^\d{0,3}$/.test(value)) {
@@ -101,7 +101,7 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
             className={`form-control ${styles.noArrow}`}
             placeholder="Month"
             type="number"
-            value={monthValue}
+            value={monthValue || ""}
             onChange={(e) => {
               let value = e.target.value;
               if (/^\d{0,2}$/.test(value)) {
@@ -129,7 +129,7 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
             className={`form-control ${styles.noArrow}`}
             placeholder="Year"
             type="number"
-            value={yearValue}
+            value={yearValue || ""}
             onChange={(e) => {
               let value = e.target.value;
               if (/^\d{0,2}$/.test(value)) {
