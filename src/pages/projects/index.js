@@ -58,7 +58,6 @@ const index = () => {
         const response = await axios.get(url);
         const data = response.data;
         setPaymentPlan(data[0]);
-        console.log('im heree', data)
       } catch (error) {
         console.error(error);
       } finally {
@@ -115,8 +114,6 @@ const index = () => {
   };
 
   const addProjectHandler = () => {
-    console.log(userProjectsLenght, 'lengh')
-    console.log(allowedProjectsCount, 'allowed')
     if (userProjectsLenght < allowedProjectsCount) {
       setAddProject(!addProject);
       setClose(true);
@@ -136,21 +133,16 @@ const index = () => {
 
   const trialExpiredChecker = () => {
     const now = new Date();
-    console.log(now, 'now')
     const expiredDate = paymentPlan?.trial_expires != null ? new Date(paymentPlan?.trial_expires) : null;
-    console.log(expiredDate, 'expired')
 
     if (now > expiredDate && expiredDate !== null) {
       setTrialExpired(true);
-      console.log('hi');
     } {
       setTrialExpired(false);
-      console.log('ok')
     }
   };
 
   const allowedProjectsHandler = () => {
-    console.log(paymentPlan)
     if (paymentPlan?.payment_duration === "month") {
       setAllowedProjectsCount(
         paymentPlan?.payment_plan?.month_allowed_projects

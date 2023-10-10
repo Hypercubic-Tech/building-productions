@@ -34,17 +34,19 @@ const index = () => {
   const [trialExpired, setTrialExpired] = useState(false);
   const [trialExpiredDate, setTrialExpiredDate] = useState(null);
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> e7059209555ff3d1fd8f1cb8e4d45b9f4dd93e47
   const trialExpiredChecker = () => {
     const now = new Date();
     const expiredDate = new Date(userData?.trial_expires);
-    console.log(expiredDate, 'expired')
+    (expiredDate, 'expired')
     setTrialExpiredDate(expiredDate)
     if (now > expiredDate) {
       setTrialExpired(true);
-      console.log('hi');
     } else {
       setTrialExpired(false);
-      console.log('ok')
     }
   };
 
@@ -60,7 +62,6 @@ const index = () => {
         .get(url)
         .then((res) => {
           const data = res.data;
-          console.log(data, 'data')
           setAuthUser(data);
           setUserData({
             id: data[0]?.id,
@@ -77,6 +78,7 @@ const index = () => {
             card_cvc: data[0]?.card_cvc,
             card_month: data[0]?.card_month,
             card_year: data[0]?.card_year,
+            account_type: data[0]?.account_type
           });
 
           // for user dashboard
@@ -92,6 +94,7 @@ const index = () => {
                 data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
               trial_expires: data[0]?.trial_expires,
               trial_used: data[0]?.trial_used,
+              account_type: data[0]?.account_type
             });
           }
           if (data[0]?.payment_duration === "year") {
@@ -105,6 +108,7 @@ const index = () => {
               all_projects: data[0]?.projects.lenght,
               trial_expires: data[0]?.trial_expires,
               trial_used: data[0]?.trial_used,
+              account_type: data[0]?.account_type
             });
           }
         })
