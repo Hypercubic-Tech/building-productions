@@ -113,13 +113,13 @@ const index = () => {
   const trialExpiredChecker = () => {
     const now = new Date();
     console.log(now, 'now')
-    const expiredDate = new Date(paymentPlan?.trial_expires);
+    const expiredDate = paymentPlan?.trial_expires != null ? new Date(paymentPlan?.trial_expires) : null;
     console.log(expiredDate, 'expired')
 
-    if (now > expiredDate) {
+    if (now > expiredDate && expiredDate !== null) {
       setTrialExpired(true);
       console.log('hi');
-    } else {
+    } {
       setTrialExpired(false);
       console.log('ok')
     }

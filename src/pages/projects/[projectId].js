@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
-import axios from "axios";
+import Link from "next/link";
+import axios from "axios"
+  ;
 import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
+
 import { setUserStatus } from "../../store/slices/statusSlice";
-import {setCategory} from "../../store/slices/categorySlice";
+import { setCategory } from "../../store/slices/categorySlice";
 
 const index = () => {
   const dispatch = useDispatch();
@@ -33,8 +36,25 @@ const index = () => {
   const [allowedExport, setAllowedExport] = useState(false);
   const [userStatusUpdate, setUserStatusUpdate] = useState(null);
 
+  const [trialExpired, setTrialExpired] = useState(false);
+
   const allowedProductsHandler = () => {
     setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
+  };
+
+  const trialExpiredChecker = () => {
+    const now = new Date();
+    console.log(now, 'now')
+    const expiredDate = paymentPlan?.trial_expires != null ? new Date(paymentPlan?.trial_expires) : null;
+    console.log(expiredDate, 'expired')
+
+    if (now > expiredDate && expiredDate !== null) {
+      setTrialExpired(true);
+      console.log('hi');
+    } {
+      setTrialExpired(false);
+      console.log('ok')
+    }
   };
 
   const getProjectById = async () => {
@@ -63,6 +83,7 @@ const index = () => {
   };
 
   useEffect(() => {
+    trialExpiredChecker();
     allowedProductsHandler();
   }, [paymentPlan]);
 
@@ -211,6 +232,17 @@ const index = () => {
     <>
       {!isLoggedIn || isLoading ? (
         <LoadingPage />
+      ) : trialExpired ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'center', justifyContent: 'center' }}>
+          <h2>უფასო საცდელი ვადა ამოიწურა გთხოვთ გაანახლოთ გადახდის მეთოდი</h2>
+          <Link
+            type="button"
+            className="btn btn-primary ghost-btn fw-boldest"
+            href="/account"
+          >
+            პროფილი
+          </Link>
+        </div>
       ) : (
         <Project
           allowedProductsHandler={allowedProductsHandler}
