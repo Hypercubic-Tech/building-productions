@@ -11,6 +11,7 @@ const Filter = ({
   totalSumOnClick,
 }) => {
   const dispatch = useDispatch();
+
   const activeCategoryId = useSelector((state) => state?.cats?.category);
 
   return (

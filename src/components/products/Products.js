@@ -9,7 +9,6 @@ import {
   deleteProductState,
   setProductState,
 } from "../../store/slices/productSlice";
-import { setCategory } from "../../store/slices/categorySlice";
 
 import ExportPopup from "../popup/ExportPopup";
 import notify from "../../utils/notify";
@@ -350,7 +349,6 @@ const Products = ({
 
   useEffect(() => {
     setPageIndex(1);
-    dispatch(setCategory(1));
   }, [activeCategoryId]);
 
   return (
@@ -382,21 +380,21 @@ const Products = ({
                     })}
                   </td>
                   <td>
-                    {categorySums?.find(
-                      (item) => item.title === product?.categories
-                    )?.sum || 0}{" "}
+                    {categorySums
+                      ?.find((item) => item.title === product?.categories)
+                      ?.sum.toFixed(2) || 0}{" "}
                   </td>
                   <td>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</td>
                   <td>
                     {" "}
-                    {categorySums?.find(
-                      (item) => item.title === product?.categories
-                    )?.sum || 0}{" "}
+                    {categorySums
+                      ?.find((item) => item.title === product?.categories)
+                      ?.sum.toFixed(2) || 0}{" "}
                   </td>
                   <td>
-                    {categorySums?.find(
-                      (item) => item.title === product?.categories
-                    )?.sum || 0}{" "}
+                    {categorySums
+                      ?.find((item) => item.title === product?.categories)
+                      ?.sum.toFixed(2) || 0}{" "}
                   </td>
                   <td>ლარი</td>
                 </tr>
@@ -649,21 +647,24 @@ const Products = ({
                   })}
             </>
           )}
-          {!totalSum && "exportPopUp" && (
-            <div
-              className="summary"
-              style={{
-                fontSize: "16px",
-                padding: "4px",
-                textAlign: "end",
-                position: "absolute",
-                bottom: "0px",
-                right: "20px",
-              }}
-            >
-              ჯამი: {total} ლარი
-            </div>
-          )}
+          <tfoot>
+            {!totalSum && "exportPopUp" && (
+              <tr>
+                <td
+                  style={{
+                    fontSize: "16px",
+                    padding: "4px",
+                    textAlign: "end",
+                    position: "absolute",
+                    bottom: "0px",
+                    right: "20px",
+                  }}
+                >
+                  ჯამი: {total.toFixed(2)} ლარი
+                </td>
+              </tr>
+            )}
+          </tfoot>
         </table>
         {!productsToMap?.length && activeCategoryId && (
           <div style={{ margin: "100px", textAlign: "center" }}>
