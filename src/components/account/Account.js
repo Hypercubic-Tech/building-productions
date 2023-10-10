@@ -34,10 +34,7 @@ const index = () => {
   const [trialExpired, setTrialExpired] = useState(false);
   const [trialExpiredDate, setTrialExpiredDate] = useState(null);
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
-<<<<<<< HEAD
-=======
  
->>>>>>> e7059209555ff3d1fd8f1cb8e4d45b9f4dd93e47
   const trialExpiredChecker = () => {
     const now = new Date();
     const expiredDate = new Date(userData?.trial_expires);

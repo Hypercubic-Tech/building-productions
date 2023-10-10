@@ -19,8 +19,7 @@ const EditAccount = ({
   loggedUserInfo,
   setIsEdit,
   setStartEdit,
-  authUser,
-  trialExpired
+  trialExpired,
 }) => {
   const dispatch = useDispatch();
 
@@ -49,7 +48,7 @@ const EditAccount = ({
     {
       id: 1,
       title: "მომხმარებლის ტიპი",
-      value: userData?.account_type === 'company' ? 'company' : 'personal',
+      value: userData?.account_type === "company" ? "company" : "personal",
       type: "select",
       // options: [
       //   { value: "personal", title: "პერსონალური" },
@@ -122,7 +121,7 @@ const EditAccount = ({
             card_year: userData?.card_year,
             trial_used: true,
             trial_expires: trialExpired ? null : now,
-            account_type: userData?.account_type
+            account_type: userData?.account_type,
           }
         )
         .then((res) => {
@@ -144,7 +143,7 @@ const EditAccount = ({
 
   useEffect(() => {
     setInitialValues({ ...userData });
-  }, []);
+  }, [startEdit]);
 
   const clearUserInfoChanges = () => {
     setUserData({ ...initialValues });
@@ -153,9 +152,7 @@ const EditAccount = ({
 
   useEffect(() => {
     if (userData.trial_used && trialExpired) {
-      setFilteredPricesData(pricesData.filter(
-        (price) => price.id !== 1
-      ))
+      setFilteredPricesData(pricesData.filter((price) => price.id !== 1));
     }
   }, [pricesData]);
 
@@ -175,20 +172,20 @@ const EditAccount = ({
                 type={el.type}
                 className="form-control"
                 disabled={!startEdit}
-                value={el.value}
+                value={el.value || ""}
                 onChange={el.onChange}
               />
             ) : (
               <div style={{ position: "relative" }}>
-                <select onChange={(e) => el.onChange(e) } value={userData.account_type} className="form-control" disabled={!startEdit}>
+                <select
+                  onChange={(e) => el.onChange(e)}
+                  value={userData.account_type}
+                  className="form-control"
+                  disabled={!startEdit}
+                >
                   {el.title}
-                  <option value='company'>
-                    კომპანია
-                  </option>
-                  <option value='personal'>
-                    პერსონალური
-                  </option>
-
+                  <option value="company">კომპანია</option>
+                  <option value="personal">პერსონალური</option>
                 </select>
                 <ArrowDownSvg />
               </div>
@@ -343,8 +340,9 @@ const EditAccount = ({
               pointerEvents: !startEdit ? "none" : "all",
             }}
             onClick={sendUserUpdatedInfo}
-            className={`${"fill-btn btn btn-primary fw-boldest"} ${styles.saveBtn
-              }`}
+            className={`${"fill-btn btn btn-primary fw-boldest"} ${
+              styles.saveBtn
+            }`}
           >
             შენახვა
           </div>
@@ -355,8 +353,9 @@ const EditAccount = ({
               pointerEvents: !startEdit ? "none" : "all",
             }}
             onClick={clearUserInfoChanges}
-            className={`${"fill-btn btn btn-primary fw-boldest"} ${styles.saveBtn
-              }`}
+            className={`${"fill-btn btn btn-primary fw-boldest"} ${
+              styles.saveBtn
+            }`}
           >
             გასუფთავება
           </div>

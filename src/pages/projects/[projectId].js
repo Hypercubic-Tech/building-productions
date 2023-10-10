@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
@@ -212,7 +212,7 @@ const index = () => {
   const editHandler = (product) => {
     setEditProductItem(product);
   };
-
+ 
   return (
     <>
       {!isLoggedIn || isLoading ? (
