@@ -156,6 +156,7 @@ const EditAccount = ({
     }
   }, [pricesData]);
 
+  console.log(userData)
   return (
     <div className={styles.mainWrapper}>
       {dynamicElements.map((el, index) => (

@@ -26,7 +26,6 @@ const index = () => {
   const [projectData, setProjectData] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
-  const [paymentPlan, setPaymentPlan] = useState(null);
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
@@ -44,29 +43,26 @@ const index = () => {
 
   const userStatus = useSelector((state) => state.userStatus);
 
-  console.log(userStatus, 'status')
+  // const loggedUserInfo = async () => {
+  //   let url;
 
-
-  const loggedUserInfo = async () => {
-    let url;
-
-    if (provider === "google") {
-      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-    } else {
-      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
-    }
-    if (url) {
-      try {
-        const response = await axios.get(url);
-        const data = response.data;
-        setPaymentPlan(data[0]);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
+  //   if (provider === "google") {
+  //     url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+  //   } else {
+  //     url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
+  //   }
+  //   if (url) {
+  //     try {
+  //       const response = await axios.get(url);
+  //       const data = response.data;
+  //       console.log(data)
+  //     } catch (error) {
+  //       console.error(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  // };
 
   let itemsPerPage = 8;
   let projectsToMap = projectData;
@@ -142,7 +138,7 @@ const index = () => {
       try {
         await axios
           .put(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${authUserId}`,
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
             {
               trial_used: true,
               trial_expires: 'expired'
@@ -150,7 +146,7 @@ const index = () => {
           )
           .then((res) => {
             const data = res.data;
-            loggedUserInfo();
+            // loggedUserInfo();
             notify(false, "თქვენ ამოგეწურათ უფასო საცდელი ვადა");
           });
       } catch (error) {
@@ -335,7 +331,7 @@ const index = () => {
         console.log(error);
       }
     };
-
+    
     const getPropertyTypesHandler = async () => {
       try {
         axios
@@ -357,8 +353,11 @@ const index = () => {
   }, []);
 
   useEffect(() => {
-    loggedUserInfo();
-  }, []);
+    // loggedUserInfo();
+    setIsLoading(false)
+  }, [userStatus.trialExpired]);
+
+
   return (
     <>
       {!isLoggedIn || isLoading ? (

@@ -77,8 +77,8 @@ const StatusDashboard = () => {
     useEffect(() => {
         dispatch(setUserStatus(userStatusUpdate));
     }, [userStatusUpdate]);
-console.log(session, 'sess');
-console.log(authUserId, 'id')
+// console.log(session, 'sess');
+// console.log(authUserId, 'id')
     return (
         <Fragment>
             {session  && (

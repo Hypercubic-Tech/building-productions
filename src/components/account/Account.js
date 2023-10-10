@@ -36,11 +36,11 @@ const index = () => {
   const [trialExpired, setTrialExpired] = useState(false);
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
 
-  console.log(userStatus, 'data')
+  // console.log(userStatus, 'data')
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-    console.log(expiredDate, 'expired')
+    // console.log(expiredDate, 'expired')
     if (now > expiredDate) {
       setTrialExpired(true);
     } else {
