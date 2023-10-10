@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import { useMobileWidth } from "../../hooks/useMobileWidth";
 import Link from "next/link";
+import { setUserStatus } from "../../store/slices/statusSlice";
+
 
 import {
   setAuthAccessToken,
@@ -84,6 +86,19 @@ function HeaderLogged() {
       dispatch(setAuthUserId(null));
       dispatch(setAuthEmail(null));
       dispatch(setAuthRole(null));
+
+      dispatch(setUserStatus({ 
+        account_type: "",
+        all_projects: "",
+        allowed_export: "",
+        allowed_media: "",
+        allowed_projects: "",
+        p_title: "",
+        payment_duration: "",
+        trial_expires: "",
+        trial_used: "",
+        username: ""
+      }));
     }, 300);
     setIsModalOpen(false);
   };
@@ -100,6 +115,20 @@ function HeaderLogged() {
       dispatch(setAuthUserId(null));
       dispatch(setAuthEmail(null));
       dispatch(setAuthRole(null));
+
+      dispatch(setUserStatus({ 
+        account_type: "",
+        all_projects: "",
+        allowed_export: "",
+        allowed_media: "",
+        allowed_projects: "",
+        p_title: "",
+        payment_duration: "",
+        trial_expires: "",
+        trial_used: "",
+        username: ""
+      }));
+
     }, 300);
     setIsModalOpen(false);
     await signOut({
