@@ -269,7 +269,7 @@ const index = () => {
       const data = await getProjectsData();
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
-      // trialExpiredChecker();
+      trialExpiredChecker();
     };
 
     fetchData();
