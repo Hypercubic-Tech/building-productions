@@ -137,7 +137,6 @@ const index = () => {
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=categories,image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
       );
       setShowProject(false);
-      console.log(response.data)
       return response.data;
     } catch (error) {
       console.error(error);
