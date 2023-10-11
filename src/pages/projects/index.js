@@ -271,7 +271,7 @@ const index = () => {
             ) : (
                 <>
                     <img className={styles.projectBg} src="/images/projectBg.png" alt="bg" />
-                    <div className="container" style={{ position: 'relative', backgroundColor: 'none'}}>
+                    <div className="container" style={{ position: 'relative', backgroundColor: 'none', height: '80vh'}}>
                         {projectsToMap?.length > 0 ? buttonWrap : ""}
                         <div className={`${styles.flexWrap} d-flex justify-content-center `} style={{zIndex:1}}>
                             {/* <BuildingBg /> */}
@@ -332,7 +332,7 @@ const index = () => {
                                     )
                                 })
                             ) : (
-                                <div className={styles.wrap}>
+                                <div className={`${styles.wrap} ${styles.wrapNoItem}`}>
                                     <h2 className={`geo-title `}>პროექტები ვერ მოიძებნა</h2>
                                     {buttonWrap}
                                     {/* <BuildingBg /> */}
