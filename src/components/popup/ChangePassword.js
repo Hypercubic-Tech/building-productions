@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setAuthAccessToken } from "../../store/slices/authSlice";
 import notify from "../../utils/notify";
 import axios from "axios";
 import CloseBtn2 from "../svg/CloseBtn2";
-import { setAuthAccessToken } from "../../store/slices/authSlice";
 
 import styles from "../popup/RegModal.module.css";
 
@@ -151,7 +151,6 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
               ...prevSendData,
               password: e.target.value,
             }));
-            // Clear validation error when typing
             setValidationErrors((prevErrors) => ({
               ...prevErrors,
               password: "",

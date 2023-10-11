@@ -6,7 +6,6 @@ function Footer() {
     <div className={` landing-dark-separator cream-bg landing-dark-bg ${styles.zIndex}`}>
       <div className="container cream-bg">
         <div className="d-flex flex-column flex-md-row flex-stack py-7">
-        {/* py-lg-10 */}
           <div className="d-flex align-items-center order-2 order-md-1">
           <Link href="/">
                 <img

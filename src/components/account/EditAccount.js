@@ -50,10 +50,6 @@ const EditAccount = ({
       title: "მომხმარებლის ტიპი",
       value: userData?.account_type === "company" ? "კომპანია" : "პერსონალური",
       type: "select",
-      // options: [
-      //   { value: "personal", title: "პერსონალური" },
-      //   { value: "company", title: "კომპანია" },
-      // ],
       onChange: (e) => {
         setUserData((prevUserData) => ({
           ...prevUserData,

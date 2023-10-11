@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import { useMobileWidth } from "../../hooks/useMobileWidth";
-import Link from "next/link";
 import { setUserStatus } from "../../store/slices/statusSlice";
-
+import Link from "next/link";
 
 import {
   setAuthAccessToken,
