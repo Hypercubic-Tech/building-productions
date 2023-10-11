@@ -151,10 +151,10 @@ const EditAccount = ({
   };
 
   useEffect(() => {
-    if (userData.trial_used && trialExpired) {
+    if (userData.trial_expires === "expired") {
       setFilteredPricesData(pricesData.filter((price) => price.id !== 1));
     }
-  }, [pricesData]);
+  }, []);
 
   return (
     <div className={styles.mainWrapper}>
