@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useSession } from "next-auth/react";
 import { setUserStatus } from "../../store/slices/statusSlice";
 import axios from "axios";
 import Link from "next/link";
@@ -90,10 +89,8 @@ const index = () => {
   const addProjectHandler = () => {
     if (userStatus?.all_projects < userStatus?.allowed_projects) {
       setAddProject(!addProject);
-      setClose(true);
     } else if (userStatus?.allowed_projects === "უსასრულო") {
       setAddProject(!addProject);
-      setClose(true);
     } else {
       notify(true, "პროექტის ატვირთვა უარყოფილია თქვენ ამოგეწურათ ლიმიტი");
     }
@@ -102,7 +99,6 @@ const index = () => {
   const dismissHandler = () => {
     setEditProject(false);
     setAddProject(false);
-    setClose(false);
   };
 
   const trialExpiredChecker = async () => {
@@ -444,7 +440,6 @@ const index = () => {
                   <div className={styles.wrap}>
                     <h2 className={`geo-title `}>პროექტები ვერ მოიძებნა</h2>
                     {buttonWrap}
-                    {/* <BuildingBg /> */}
                   </div>
                 )}
               </div>

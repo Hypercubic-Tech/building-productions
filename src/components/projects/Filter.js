@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-
 import { setCategory } from "../../store/slices/categorySlice";
 import CheckedSvg from "../svg/CheckedSvg";
 

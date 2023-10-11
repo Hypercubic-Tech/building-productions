@@ -13,7 +13,6 @@ import AddProduct from "../popup/AddProduct";
 import Gallery from "../popup/Gallery";
 import EditProduct from "../popup/EditProduct";
 import EditService from "../popup/EditService";
-import Export from "../popup/Export";
 import Drawings from "../popup/Drawings";
 import ExportSvg from "../svg/ExportSvg";
 import Search2Svg from "../svg/Search2Svg";
@@ -291,7 +290,6 @@ const Project = ({
                   setSelect={setSelect}
                 />
               )}
-              {select === "export" && <Export setSelect={setSelect} />}
               {select === "add" && (
                 <AddProduct
                   getProjectById={getProjectById}

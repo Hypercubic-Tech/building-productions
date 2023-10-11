@@ -2,22 +2,19 @@ import { useState } from "react";
 import axios from "axios";
 
 import PriceCard from "../ui/PriceCard";
-
 import notify from "../../utils/notify";
-import styles from "../popup/RegModal.module.css";
 import CloseBtn2 from "../svg/CloseBtn2";
 import CloseBtnBG from "../svg/CloseBtnBG";
+
+import styles from "../popup/RegModal.module.css";
 
 const RegModal = ({ handleRegistration, onClose, pricesData }) => {
   const [annual, setAnnual] = useState(false);
   const [monthly, setMonthly] = useState(true);
   const [passwordValid, setPasswordValid] = useState(false);
-
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [lossData, setLossData] = useState(false);
-  const [paymentPlanState, setPaymentPlanState] = useState(null);
-  const [backBtn, setBackBtn] = useState(false);
   const [regData, setRegData] = useState({
     username: "",
     email: "",
@@ -69,7 +66,6 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
 
   const prevStepHandler = () => {
     if (step > 1) {
-      setBackBtn(true);
       setStep(step - 1);
     }
   };
@@ -86,7 +82,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
 
   const handleSubmit = async (event) => {
     const now = new Date();
-    const trialExpires = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); 
+    const trialExpires = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const {
       username,
@@ -96,7 +92,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
       payment_plan,
       paymentMethod,
       payment_duration,
-      account_type
+      account_type,
     } = regData;
 
     try {
@@ -112,7 +108,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
           payment_duration,
           trial_used: regData.payment_plan === 1 ? true : false,
           trial_expires: regData.payment_plan === 1 ? trialExpires : false,
-          account_type
+          account_type,
         }
       );
 
@@ -193,8 +189,8 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
               {regData?.account_type === "company"
                 ? "კომპანიის სახელი"
                 : regData?.account_type === "personal"
-                  ? "სრული სახელი"
-                  : "სახელი"}
+                ? "სრული სახელი"
+                : "სახელი"}
             </label>
           )}
           <input
@@ -226,7 +222,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
             style={{
               borderColor:
                 (lossData && regData.email.length <= 0) ||
-                  (lossData && !regData.email.includes("@"))
+                (lossData && !regData.email.includes("@"))
                   ? "red"
                   : "",
             }}
@@ -396,7 +392,6 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                     ...prevSendData,
                     payment_plan: +e.target.value,
                   }));
-                  setPaymentPlanState(e.target.value);
                 }}
               >
                 {pricesData &&

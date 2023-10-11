@@ -23,7 +23,6 @@ const EditProduct = ({
   const projectId = router.query.projectId;
   const productId = product?.id;
   const [lossProduct, setLossProduct] = useState(false);
-  const [toggle, setToggle] = useState(true);
   const [imgSrc, setImgSrc] = useState(
     product?.attributes?.image?.data?.attributes?.url
   );

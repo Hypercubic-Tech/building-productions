@@ -24,12 +24,10 @@ const Drawings = ({ setSelect }) => {
   const router = useRouter();
   const { projectId } = router.query;
 
-  const [imgSrc, setImgSrc] = useState(null);
   const [image, setImage] = useState([]);
   const [isImageUpload, setIsImageUpload] = useState(false);
   const [isProjectImages, setIsProjectImages] = useState([]);
   const [isImageState, setIsImageState] = useState(false);
-  const [copiedLink, setCopiedLink] = useState(null);
 
   const copyLinkToClipboard = (link) => {
     const tempInput = document.createElement("input");
@@ -38,13 +36,8 @@ const Drawings = ({ setSelect }) => {
     tempInput.select();
     document.execCommand("copy");
     document.body.removeChild(tempInput);
-    setCopiedLink(link);
 
-    notify(false, "Link copied to clipboard: " + link);
-
-    setTimeout(() => {
-      setCopiedLink(null);
-    }, 2000);
+    notify(false, "დაკოპირებულია: " + link);
   };
 
   const getProductsHandler = async () => {
@@ -89,7 +82,6 @@ const Drawings = ({ setSelect }) => {
             ? [...image, ...isProjectImages, ...res.data]
             : [...image, ...res.data];
           setImage(newImages);
-          setImgSrc(newImages[0].url);
           setIsImageUpload(true);
           notify(false, "არჩეული ნახაზი წარმატებით აიტვირთა");
         });
@@ -165,7 +157,6 @@ const Drawings = ({ setSelect }) => {
         getProductsHandler();
         setImage(image.filter((img) => img.id !== imageId));
       });
-    setImgSrc(null);
   };
 
   return (
@@ -229,11 +220,11 @@ const Drawings = ({ setSelect }) => {
                                 (file) => {
                                   const randomText = Math.random()
                                     .toString(36)
-                                    .substring(7); 
-                                  const fileName = `${randomText}_${file.name}`; 
+                                    .substring(7);
+                                  const fileName = `${randomText}_${file.name}`;
                                   return new File([file], fileName, {
                                     type: file.type,
-                                  }); 
+                                  });
                                 }
                               );
                               handleMediaUpload(modifiedFiles);

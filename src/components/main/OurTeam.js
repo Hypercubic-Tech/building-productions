@@ -102,10 +102,7 @@ const AboutCompany = () => {
 
   return (
     <div className={`mt-sm-n10 ${styles.ourTeamContainer}`}>
-      {/* <div className="landing-curve landing-dark-color">
-      </div> */}
       <div className="pt-18 landing-dark-bg">
-        {/* pb-15 */}
         <div className="container">
           <div
             className={`${"custom-row d-flex align-center align-items-center mt-15 mb-18"} ${

@@ -29,7 +29,6 @@ const PaymentMethod = ({ setEditUserData, title, type, userData }) => {
       <div style={{ position: "relative" }}>
         <input
           style={{
-            // borderColor: isValidCardNumber(cardNumberValue) ? "" : "red",
             borderWidth: "1px",
             borderStyle: "solid",
           }}
