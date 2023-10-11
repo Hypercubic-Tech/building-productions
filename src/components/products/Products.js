@@ -358,7 +358,6 @@ const Products = ({
         <table
           className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
           id="tableId"
-          s
         >
           {totalSum ? (
             <thead>
@@ -509,11 +508,11 @@ const Products = ({
                               <a>
                                 <div className="symbol-label georgian">
                                   <img
-                                    onError={(e) => {
-                                      e.target.src =
-                                        process.env.NEXT_PUBLIC_BUILDING_URL +
-                                        defaultImage;
-                                    }}
+                                    // onError={(e) => {
+                                    //   e.target.src =
+                                    //     process.env.NEXT_PUBLIC_BUILDING_URL +
+                                    //     defaultImage;
+                                    // }}
                                     src={
                                       product.attributes.type === "product"
                                         ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}`
@@ -645,31 +644,33 @@ const Products = ({
                   })}
             </>
           )}
-          <tfoot
-            style={{
-              textAlign: "right",
-              whiteSpace: "nowrap",
-              positionr: "relative",
-              border: "none",
-            }}
-          >
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td
-                className="text-muted"
-                style={{ fontSize: "16px", paddingRight: "10px" }}
-              >
-                ჯამი: {total.toFixed(2)} ლარი
-              </td>
-            </tr>
-          </tfoot>
+          {!totalSum && (
+            <tfoot
+              style={{
+                textAlign: "right",
+                whiteSpace: "nowrap",
+                positionr: "relative",
+                border: "none",
+              }}
+            >
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td
+                  className="text-muted"
+                  style={{ fontSize: "16px", paddingRight: "10px" }}
+                >
+                  ჯამი: {total.toFixed(2)} ლარი
+                </td>
+              </tr>
+            </tfoot>
+          )}
         </table>
         {!productsToMap?.length && activeCategoryId && (
           <div style={{ margin: "100px", textAlign: "center" }}>

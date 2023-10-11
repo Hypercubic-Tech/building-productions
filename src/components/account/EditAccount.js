@@ -48,7 +48,7 @@ const EditAccount = ({
     {
       id: 1,
       title: "მომხმარებლის ტიპი",
-      value: userData?.account_type === "company" ? "company" : "personal",
+      value: userData?.account_type === "company" ? "კომპანია" : "პერსონალური",
       type: "select",
       // options: [
       //   { value: "personal", title: "პერსონალური" },
@@ -120,8 +120,8 @@ const EditAccount = ({
             card_month: userData?.card_month,
             card_year: userData?.card_year,
             trial_used: true,
-            trial_expires: trialExpired ? 'expired' : now,
-            account_type: userData?.account_type
+            trial_expires: trialExpired ? "expired" : now,
+            account_type: userData?.account_type,
           }
         )
         .then((res) => {
@@ -156,7 +156,7 @@ const EditAccount = ({
     }
   }, [pricesData]);
 
-  console.log(userData)
+  console.log(userData);
   return (
     <div className={styles.mainWrapper}>
       {dynamicElements.map((el, index) => (
@@ -180,7 +180,7 @@ const EditAccount = ({
               <div style={{ position: "relative" }}>
                 <select
                   onChange={(e) => el.onChange(e)}
-                  value={userData.account_type}
+                  value={userData.account_type || ""}
                   className="form-control"
                   disabled={!startEdit}
                 >
