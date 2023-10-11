@@ -13,7 +13,6 @@ const Filter = ({
   const dispatch = useDispatch();
 
   const activeCategoryId = useSelector((state) => state?.cats?.category);
-
   return (
     <div className="container">
       <div className={styles.filterContainer}>

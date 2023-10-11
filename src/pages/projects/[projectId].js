@@ -19,6 +19,7 @@ const index = () => {
   const userId = useSelector((state) => state.auth.user_id);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const provider = useSelector((state) => state.auth.provider);
+  const activeCategoryId = useSelector((state) => state?.cats?.category);
 
   const [isLoading, setIsLoading] = useState(true);
   const [suppliers, setSuppliers] = useState(null);
@@ -71,6 +72,7 @@ const index = () => {
         );
         const categoryData = categoryRes.data.data;
         setProjectCategory(categoryData);
+        // dispatch(setCategory(categoryData[0].id));
       } catch (error) {
         console.log(error);
       }
@@ -190,6 +192,7 @@ const index = () => {
         }
       }
     };
+
 
     loggedUserInfo();
     getDefaultImage();
