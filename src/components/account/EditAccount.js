@@ -156,7 +156,6 @@ const EditAccount = ({
     }
   }, [pricesData]);
 
-  console.log(userData);
   return (
     <div className={styles.mainWrapper}>
       {dynamicElements.map((el, index) => (
@@ -225,8 +224,6 @@ const EditAccount = ({
             {pricesData &&
               pricesData.map((item, index) => {
                 const isDisabled = trialExpired && index === 0;
-                // console.log(isDisabled)
-
                 return (
                   <option disabled={isDisabled} key={index} value={item.id}>
                     {item.attributes.name}

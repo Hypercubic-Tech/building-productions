@@ -7,6 +7,8 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import notify from "../../utils/notify";
 
+import { setCategory } from "../../store/slices/categorySlice";
+
 import LoadingPage from "../../components/ui/LoadingPage";
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
@@ -19,50 +21,24 @@ import styles from "../../components/popup/Modal.module.css";
 
 const index = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
   const [showProject, setShowProject] = useState(false);
   const [projectData, setProjectData] = useState(null);
-  const [defaultImage, setDefaultImage] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [trialExpired, setTrialExpired] = useState(false);
 
   const userId = useSelector((state) => state.auth.user_id);
   const searchValue = useSelector((state) => state.proj.searchType);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const provider = useSelector((state) => state.auth.provider);
 
-  const { data: session } = useSession();
   const dispatch = useDispatch();
 
   const userStatus = useSelector((state) => state.userStatus);
-
-  // const loggedUserInfo = async () => {
-  //   let url;
-
-  //   if (provider === "google") {
-  //     url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-  //   } else {
-  //     url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
-  //   }
-  //   if (url) {
-  //     try {
-  //       const response = await axios.get(url);
-  //       const data = response.data;
-  //       console.log(data)
-  //     } catch (error) {
-  //       console.error(error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }
-  // };
 
   let itemsPerPage = 8;
   let projectsToMap = projectData;
@@ -134,7 +110,6 @@ const index = () => {
     const expiredDate = new Date(userStatus?.trial_expires);
 
     if (now > expiredDate) {
-      setTrialExpired(true);
       try {
         await axios
           .put(
@@ -153,17 +128,16 @@ const index = () => {
         console.log(error);
       }
       dispatch(setUserStatus({ trial_expires: "expired" }));
-    } {
-      setTrialExpired(false);
     }
   };
 
   const getProjectsData = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=categories,image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
       );
       setShowProject(false);
+      console.log(response.data)
       return response.data;
     } catch (error) {
       console.error(error);
@@ -228,17 +202,17 @@ const index = () => {
     }
   };
 
-  const getDefaultImage = async () => {
-    await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`
-      )
+  // const getDefaultImage = async () => {
+  //   await axios
+  //     .get(
+  //       `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`
+  //     )
 
-      .then((res) => {
-        const data = res.data;
-        setDefaultImage(data.data.attributes.NoImage.data?.attributes.url);
-      });
-  };
+  //     .then((res) => {
+  //       const data = res.data;
+  //       setDefaultImage(data.data.attributes.NoImage.data?.attributes.url);
+  //     });
+  // };
 
   let buttonWrap = (
     <div className={`${styles.buttons} my-6`}>
@@ -261,15 +235,10 @@ const index = () => {
   );
 
   useEffect(() => {
-    getDefaultImage()
-  }, [])
-
-  useEffect(() => {
     const fetchData = async () => {
       const data = await getProjectsData();
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data?.meta?.pagination?.total }));
-      trialExpiredChecker();
     };
 
     fetchData();
@@ -402,6 +371,7 @@ const index = () => {
                     const imageWithMainId = item?.attributes?.image?.data?.find(
                       (image) => image.id === imgId
                     );
+                    const lowestIdObject = item?.attributes?.categories.data.reduce((min, obj) => (obj.id < min.id ? obj : min), item?.attributes?.categories.data[0]);
 
                     return (
                       <div
@@ -417,6 +387,7 @@ const index = () => {
                               pathname: `/projects/${item?.id}`,
                               query: { projectId: item?.id },
                             }}
+                            onClick={() => dispatch(setCategory(lowestIdObject.id))}
                             passHref
                             className={styles.cardLink}
                           >

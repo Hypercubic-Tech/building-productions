@@ -166,8 +166,6 @@ const EditProduct = ({
     }
   };
 
-  // console.log(product, "product");
-
   return (
     <div
       style={{ display: "block", paddingLeft: "0px" }}
