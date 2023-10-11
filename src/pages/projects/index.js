@@ -90,10 +90,8 @@ const index = () => {
   const addProjectHandler = () => {
     if (userStatus?.all_projects < userStatus?.allowed_projects) {
       setAddProject(!addProject);
-      setClose(true);
     } else if (userStatus?.allowed_projects === "უსასრულო") {
       setAddProject(!addProject);
-      setClose(true);
     } else {
       notify(true, "პროექტის ატვირთვა უარყოფილია თქვენ ამოგეწურათ ლიმიტი");
     }
