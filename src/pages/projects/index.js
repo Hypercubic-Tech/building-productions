@@ -104,7 +104,6 @@ const index = () => {
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-
     if (now > expiredDate) {
       try {
         await axios
@@ -115,16 +114,11 @@ const index = () => {
               trial_expires: 'expired'
             }
           )
-          .then((res) => {
-            const data = res.data;
-            // loggedUserInfo();
-            notify(false, "თქვენ ამოგეწურათ უფასო საცდელი ვადა");
-          });
       } catch (error) {
         console.log(error);
       }
       dispatch(setUserStatus({ trial_expires: "expired" }));
-    }
+    } else if (typeof(expiredDate) === "object") {}
   };
 
   const getProjectsData = async () => {
