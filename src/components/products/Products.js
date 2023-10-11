@@ -508,11 +508,11 @@ const Products = ({
                               <a>
                                 <div className="symbol-label georgian">
                                   <img
-                                    // onError={(e) => {
-                                    //   e.target.src =
-                                    //     process.env.NEXT_PUBLIC_BUILDING_URL +
-                                    //     defaultImage;
-                                    // }}
+                                    onError={(e) => {
+                                      e.target.src =
+                                        process.env.NEXT_PUBLIC_BUILDING_URL +
+                                        defaultImage;
+                                    }}
                                     src={
                                       product.attributes.type === "product"
                                         ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}`
