@@ -80,7 +80,7 @@ const StatusDashboard = () => {
 
     return (
         <Fragment>
-            {session  && (
+            {session || authUserId && (
                 <Fragment>
                     {isLoading ? (
                         <div className={styles.outer}>
