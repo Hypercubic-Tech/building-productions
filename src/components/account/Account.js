@@ -39,10 +39,22 @@ const index = () => {
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-    if (now > expiredDate) {
-      setTrialExpired(true);
-    } else {
-      setTrialExpired(false);
+    console.log(now, 'now');
+    console.log(expiredDate, 'expires date')
+    if (now > expiredDate && typeof(expiredDate) !== "object") {
+      try {
+        await axios
+          .put(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
+            {
+              trial_used: true,
+              trial_expires: 'expired'
+            }
+          )
+      } catch (error) {
+        console.log(error);
+      }
+      dispatch(setUserStatus({ trial_expires: "expired" }));
     }
   };
 

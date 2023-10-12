@@ -104,7 +104,9 @@ const index = () => {
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-    if (now > expiredDate) {
+    console.log(now, 'now');
+    console.log(expiredDate, 'expires date')
+    if (now > expiredDate && typeof(expiredDate) !== "object") {
       try {
         await axios
           .put(
@@ -118,7 +120,7 @@ const index = () => {
         console.log(error);
       }
       dispatch(setUserStatus({ trial_expires: "expired" }));
-    } else if (typeof(expiredDate) === "object") {}
+    }
   };
 
   const getProjectsData = async () => {
