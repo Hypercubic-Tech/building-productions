@@ -393,7 +393,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="fs-5 fw-bold mb-2 georgian">
                         ლინკი
                       </label>
                       <input

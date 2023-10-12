@@ -530,11 +530,15 @@ const Products = ({
                             {product.attributes.type === "product" ? (
                               <a
                                 href={
-                                  product?.attributes?.productLink.startsWith(
-                                    "http"
+                                  product.attributes.productLink ? (
+                                    product?.attributes?.productLink.startsWith(
+                                      "http"
+                                    )
+                                      ? product?.attributes?.productLink
+                                      : `http://${product?.attributes?.productLink}`
+                                  ) : (
+                                    false
                                   )
-                                    ? product?.attributes?.productLink
-                                    : `http://${product?.attributes?.productLink}`
                                 }
                                 target="_blank"
                               >
