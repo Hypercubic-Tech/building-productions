@@ -315,7 +315,6 @@ const Products = ({
     parseFloat(servicePercentagePrice);
 
   const aggregatedProducts = {};
-  console.log(aggregatedProducts)
   totalSumProduct?.forEach((product) => {
     const title = product?.attributes?.title;
     const unit = product?.attributes?.unit?.data?.attributes?.title; // i need to get all the units not only one value
