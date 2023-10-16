@@ -223,7 +223,7 @@
 }
 
 .sum_table_item span:last-child {
-    justify-content: center;
+    justify-content: flex-end;
     display: flex;
 }
 
@@ -237,7 +237,7 @@
 }
 
 @media (max-width: 1200px) {
-    .table_head_item:last-child {
+    .table_head_item:last-child, .sum_table_item span:last-child  {
         justify-content: center;
     }
 }
