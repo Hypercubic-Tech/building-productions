@@ -463,7 +463,7 @@ const Products = ({
               )}
             </div>
             {totalSum ? (
-              <div>
+              <div className={styles.wrap}>
                 {Object.values(aggregatedProducts).map((product, index) => (
                   <div key={index} className={styles.sum_table_item}>
                     <span style={{ width: sum_table_head[0].width }}>{product?.categories}</span>
@@ -489,7 +489,7 @@ const Products = ({
                         ?.find((item) => item.title === product?.categories)
                         ?.sum.toFixed(2) || 0}{" "}
                     </span>
-                    <span style={{ width: sum_table_head[6].width }}>ლარი</span>
+                    <span style={{ width: sum_table_head[6].width, justifyContent: width < 1200 ? 'center' : 'flex-end'  }}>ლარი</span>
                   </div>
                 ))}
                 <div className={styles.sum_table_item_sc}>
