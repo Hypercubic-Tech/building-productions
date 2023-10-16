@@ -1,6 +1,7 @@
 .changeModal {
     position: relative;
 }
+
 .modal {
     position: absolute;
     transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
@@ -12,9 +13,11 @@
     display: flex;
     gap: 3px;
 }
+
 .m0 {
-    margin: 0px!important;
+    margin: 0px !important;
 }
+
 .modal .closeBtn {
     position: absolute;
     top: -5px;
@@ -88,16 +91,19 @@
 .actived_expand {
     pointer-events: all;
     opacity: 1;
-    
+
 }
+
 .table_head_item:last-child {
     justify-content: flex-end;
     display: flex;
 }
+
 .table_body_item:last-child {
     display: flex;
     overflow: visible;
 }
+
 .table_body_item span {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -113,16 +119,18 @@
 .pd_r {
     margin-right: 15px;
 }
+
 /* 
 .table_body_item:last-child {
     width: 6%;
 } */
 
 .actived_table_item {
-    height: fit-content!important;
+    height: fit-content !important;
     transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
 
 }
+
 .expanded_item {
     display: flex;
     flex-direction: column;
@@ -177,6 +185,7 @@
 .table_footer span {
     font-size: 16px;
 }
+
 /* .item_expand_btn:hover .item_expand_btn svg {
     transform: rotate(-30deg);
 } */
@@ -185,6 +194,47 @@
 .tableHead th {
     width: calc(100% / 7);
 } */
+.total_sum_table {
+    overflow-x: auto;
+}
+
+.sum_table_item {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #eff2f5;
+    padding: 15px 0px;
+}
+
+.total_sum_wrap {
+    width: 1200px;
+}
+
+.sum_table_item_sc {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sum_table_item_sc div {
+    gap: 6px;
+    display: flex;
+    font-size: 16px;
+}
+
+.sum_table_item span:last-child {
+    justify-content: center;
+    display: flex;
+}
+
+.custom_sub_item {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom_sub_item span:last-child {
+    justify-content: flex-start;
+}
 
 @media (max-width: 1200px) {
     .table_head_item:last-child {
