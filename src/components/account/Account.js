@@ -39,8 +39,6 @@ const index = () => {
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-    console.log(now, 'now');
-    console.log(expiredDate, 'expires date')
     if (now > expiredDate && typeof(expiredDate) !== "object") {
       try {
         await axios
