@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -9,6 +9,8 @@ import {
   deleteProductState,
   setProductState,
 } from "../../store/slices/productSlice";
+
+import { useMobileWidth } from "../../hooks/useMobileWidth";
 
 import ExportPopup from "../popup/ExportPopup";
 import notify from "../../utils/notify";
@@ -46,7 +48,13 @@ const Products = ({
   const [totalSumProduct, setTotalSumProduct] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);
 
-  let itemsPerPage = 3;
+  const [expandedItem, setExpandedItem] = useState(null);
+  console.log(expandedItem)
+  const [tableBody, setTableBody] = useState("Loading");
+  const { width } = useMobileWidth();
+  console.log(width, 'width')
+
+  let itemsPerPage = 7;
 
   let productsToMap = products;
 
@@ -83,6 +91,13 @@ const Products = ({
   const startIndex = (pageIndex - 1) * itemsPerPage;
   const endIndex = pageIndex * itemsPerPage;
 
+  const expandItemHandler = (id) => {
+    if (expandedItem !== id) {
+      setExpandedItem(id)
+    } else {
+      setExpandedItem(null)
+    }
+  };
   const handleDecrementPageIndex = () => {
     if (pageIndex > 1) {
       setPageIndex(pageIndex - 1);
@@ -331,6 +346,85 @@ const Products = ({
     }
   });
 
+  let mobile = width < 768 ? true : false;
+  console.log(mobile)
+  let table_head = !totalSum ? (
+    [
+      {
+        title: "დასახელება",
+        width: width < 1200 && !mobile ? "27%" : mobile ? "53%" : "20%",
+      },
+      {
+        title: "მომწოდებელი",
+        width: width < 1200 ? "0px" : "11%",
+      },
+      {
+        title: "რაოდენობა",
+        width: mobile ? "0px" : "13%",
+      },
+      {
+        title: "ერთეული",
+        width: width < 1200 ? "0px" : "9%",
+      },
+      {
+        title: "ღირებულება",
+        width: width < 1200 ? "0px" : "10%",
+      },
+      {
+        title: "ჯამი",
+        width: width < 1200 && !mobile ? "15%" : mobile ? "0px" : "11%",
+      },
+      {
+        title: "ტიპი",
+        width: mobile ? "0px" : "10%",
+      },
+      {
+        title: "სტატუსი",
+        width: width < 1200 && !mobile ? "20%" : mobile ? "35%" : "13%",
+      },
+      {
+        title: select === null ? "ცვლილება" : "",
+        width: width < 1200 && !mobile ? "15%" : mobile ? "25%" : "7%",
+      },
+    ]
+  ) : (
+    [
+      {
+        title: "სამუშაო",
+        width: "14,2%"
+      },
+      {
+        title: "ერთეული",
+        width: "14,2%"
+      },
+      {
+        title: "რაოდენობა",
+        width: "14,2%"
+      },
+      {
+        title: "სტატუსი",
+        width: "14,2%"
+      },
+      {
+        title: "ხარჯი",
+        width: "14,2%"
+      },
+      {
+        title: "ჯამი",
+        width: "14,2%"
+      },
+      {
+        title: "ვალუტა",
+        width: "14,2%"
+      }
+    ]);
+
+  const tableBodyChangeHandler = () => {
+    let normal = projectId && productsToMap;
+    let no_products = !productsToMap;
+    let loading = !projectId;
+  }
+
   useEffect(() => {
     if (activeCategoryId === null && projectId && productsToMap) {
       const totalSumHandler = async () => {
@@ -351,145 +445,93 @@ const Products = ({
   useEffect(() => {
     setPageIndex(1);
   }, [activeCategoryId]);
+  console.log(productsToMap, 'map');
 
+  const itemExpandHandler = () => {
+    console.log('hi')
+  }
   return (
     <>
-      <div className="table-responsive">
-        <table
-          className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
-          id="tableId"
-        >
+      <Fragment>
+        <div className={styles.table}>
+          <div className={styles.table_head}>
+            {table_head.map((item, index) => {
+              return (
+                <span key={index} style={{ width: item.width }} className={styles.table_head_item}>
+                  {item.title}
+                </span>
+              )
+            })}
+          </div>
           {totalSum ? (
-            <thead>
-              <tr
-                style={{ backgroundColor: "yellow", border: "1px solid black" }}
-              >
-                <th style={{ paddingLeft: "8px" }}>სამუშაო</th>
-                <th>ერთეული</th>
-                <th>რაოდენობა</th>
-                <th>სტატუსი</th>
-                <th>ხარჯი</th>
-                <th>ჯამი</th>
-                <th>ვალუტა</th>
-              </tr>
+            <div>
               {Object.values(aggregatedProducts).map((product, index) => (
-                <tr key={index} style={{ border: "1px solid black" }}>
-                  <td style={{ paddingLeft: "8px" }}>{product?.categories}</td>
-                  <td>
+                <div key={index} style={{ border: "1px solid black" }}>
+                  <p>{product?.categories}</p>
+                  <span>
                     {product?.unites.map((i, index) => {
                       return <span key={index}>{i}</span>;
                     })}
-                  </td>
-                  <td>
+                  </span>
+                  <span>
                     {categorySums
                       ?.find((item) => item.title === product?.categories)
                       ?.sum.toFixed(2) || 0}{" "}
-                  </td>
-                  <td>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</td>
-                  <td>
+                  </span>
+                  <span>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</span>
+                  <span>
                     {" "}
                     {categorySums
                       ?.find((item) => item.title === product?.categories)
                       ?.sum.toFixed(2) || 0}{" "}
-                  </td>
-                  <td>
+                  </span>
+                  <span>
                     {categorySums
                       ?.find((item) => item.title === product?.categories)
                       ?.sum.toFixed(2) || 0}{" "}
-                  </td>
-                  <td>ლარი</td>
-                </tr>
+                  </span>
+                  <span>ლარი</span>
+                </div>
               ))}
-              <tr style={{ border: "1px solid black" }}>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>სულ</td>
-                <td>{`${
-                  Object?.values(categorySums).reduce(
-                    (total, category) => total + category.sum,
-                    0
-                  ) || 0
-                } `}</td>
-                <td>ლარი</td>
-              </tr>
-              <tr style={{ border: "1px solid black" }}>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{`დღგ ${parseInt(vatTotal)}%`}</td>
-                <td>{`${vatTotalPrice.toFixed(2) || 0}`}</td>
-                <td>ლარი</td>
-              </tr>
-              <tr style={{ border: "1px solid black" }}>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%`}</td>
-                <td>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</td>
-                <td>ლარი</td>
-              </tr>
-              <tr style={{ border: "1px solid black" }}>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{`სერვისი ${parseFloat(service_percentage)}%`}</td>
-                <td>{`${servicePercentagePrice.toFixed(2) || 0}`}</td>
-                <td>ლარი</td>
-              </tr>
-              <tr style={{ border: "1px solid black" }}>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>სულ ჯამი</td>
-                <td>{`${totalSumPrice?.toFixed(2) || 0}`}</td>
-                <td>ლარი</td>
-              </tr>
-            </thead>
+              <div>
+                <span>სულ</span>
+                <span>{`${Object?.values(categorySums).reduce(
+                  (total, category) => total + category.sum,
+                  0
+                ) || 0
+                  } `}</span>
+                <span>ლარი</span>
+              </div>
+              <div>
+                <span>{`დღგ ${parseInt(vatTotal)}%`}</span>
+                <span>{`${vatTotalPrice.toFixed(2) || 0}`}</span>
+                <span>ლარი</span>
+              </div>
+              <div>
+                <span>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%`}</span>
+                <span>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</span>
+                <span>ლარი</span>
+              </div>
+              <div>
+                <span>{`სერვისი ${parseFloat(service_percentage)}%`}</span>
+                <span>{`${servicePercentagePrice.toFixed(2) || 0}`}</span>
+                <span>ლარი</span>
+              </div>
+              <div>
+                <span>სულ ჯამი</span>
+                <span>{`${totalSumPrice?.toFixed(2) || 0}`}</span>
+                <span>ლარი</span>
+              </div>
+            </div>
           ) : (
-            <thead>
-              <tr className="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                <th className="georgian">დასახელება</th>
-                <th className="georgian">მომწოდებელი</th>
-                <th className="georgian">რაოდენობა</th>
-                <th className="georgian">ერთეული</th>
-                <th className="georgian">ღირებულება</th>
-                <th className="georgian">ჯამი</th>
-                <th className="georgian">ტიპი</th>
-                <th className="georgian">სტატუსი</th>
-                {select === null && (
-                  <th className="text-end max-w-100px georgian">ცვლილება</th>
+            <Fragment>
+              <div className={styles.table_body}>
+                {!projectId && (
+                  <span className={styles.table_body_loading}>
+                    <span>Loading</span>
+                  </span>
                 )}
-              </tr>
-            </thead>
-          )}
-          {totalSum ? (
-            <tbody>
-              <tr></tr>
-            </tbody>
-          ) : (
-            <>
-              {!projectId && (
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="d-flex justify-content-center">
-                        <div className="spinner-border" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              )}
-              {productsToMap &&
-                productsToMap
-                  .slice(startIndex, endIndex)
+                {productsToMap && productsToMap.slice(startIndex, endIndex)
                   .map((product, index) => {
                     const defaultStatusValue =
                       product?.attributes?.product_status?.data?.attributes
@@ -498,47 +540,35 @@ const Products = ({
                       product?.attributes?.craft_status?.data?.attributes
                         ?.title;
                     return (
-                      <tbody key={index}>
-                        <tr>
-                          <td
-                            style={{ gap: "3px", alignItems: "center" }}
-                            className="d-flex align-items-center"
-                          >
-                            <div className="symbol symbol-circle symbol-50px overflow-hidden me-3 m20">
-                              <a>
-                                <div className="symbol-label georgian">
-                                  <img
-                                    onError={(e) => {
-                                      e.target.src =
-                                        process.env.NEXT_PUBLIC_BUILDING_URL +
-                                        defaultImage;
-                                    }}
-                                    src={
-                                      product.attributes.type === "product"
-                                        ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}`
-                                        : `${process.env.NEXT_PUBLIC_BUILDING_URL}${product.attributes.craft_img_url}`
-                                    }
-                                    alt="product img"
-                                    className="w-100"
-                                  />
-                                </div>
-                              </a>
-                            </div>
+                      <div className={`${styles.table_item_wrap} ${expandedItem === product.id && styles.actived_table_item}`}>
+                        <div key={index} className={`${styles.table_body_item_outer}`}>
+                          <span style={{ width: table_head[0]?.width }} className={styles.table_body_item}>
+                            <img
+                              onError={(e) => {
+                                e.target.src =
+                                  process.env.NEXT_PUBLIC_BUILDING_URL +
+                                  defaultImage;
+                              }}
+                              src={
+                                product.attributes.type === "product"
+                                  ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}`
+                                  : `${process.env.NEXT_PUBLIC_BUILDING_URL}${product.attributes.craft_img_url}`
+                              }
+                              alt="product img"
+                            />
                             <span>{product?.attributes?.title}</span>
-                          </td>
-                          <td className="georgian">
+                          </span>
+                          <span style={{ width: table_head[1]?.width }} className={styles.table_body_item}>
                             {product.attributes.type === "product" ? (
                               <a
                                 href={
                                   product.attributes.productLink ? (
                                     product?.attributes?.productLink.startsWith(
-                                      "http"
+                                      "https"
                                     )
                                       ? product?.attributes?.productLink
-                                      : `http://${product?.attributes?.productLink}`
-                                  ) : (
-                                    false
-                                  )
+                                      : `https://${product?.attributes?.productLink}`
+                                  ) : ("")
                                 }
                                 target="_blank"
                               >
@@ -550,28 +580,29 @@ const Products = ({
                             ) : (
                               " - "
                             )}
-                          </td>
-                          <td className="georgian">
+                          </span>
+                          <span style={{ width: table_head[2]?.width }} className={styles.table_body_item}>
                             {product?.attributes?.quantity}
-                          </td>
-                          <td className="georgian">
+                          </span>
+                          <span style={{ width: table_head[3]?.width }} className={styles.table_body_item}>
                             {product?.attributes?.unit?.data?.attributes?.title}
-                          </td>
-                          <td className="georgian">
+
+                          </span>
+                          <span style={{ width: table_head[4]?.width }} className={styles.table_body_item}>
                             {product?.attributes?.price}
-                          </td>
-                          <td className="georgian">
+                          </span>
+                          <span style={{ width: table_head[5]?.width }} className={styles.table_body_item}>
                             {(
                               product?.attributes?.price *
                               product?.attributes?.quantity
                             ).toFixed(2)}
-                          </td>
-                          <td className="georgian">
+                          </span>
+                          <span style={{ width: table_head[6]?.width }} className={styles.table_body_item}>
                             {product?.attributes?.type === "product"
                               ? "პროდუქტი"
                               : "სერვისი"}
-                          </td>
-                          <td className="georgian">
+                          </span>
+                          <span style={{ width: table_head[7]?.width }} className={`${styles.table_body_item} ${styles.pd_r}`}>
                             <div className="form-group">
                               {product?.attributes?.type === "product" ? (
                                 <ProductSelect
@@ -599,12 +630,9 @@ const Products = ({
                                 />
                               )}
                             </div>
-                          </td>
-                          <td
-                            onClick={() => changeModalHandler(product)}
-                            className={`${"text-end"} ${styles.changeModal}`}
-                          >
-                            <div className={`${"menu-item px-3 padding8"} }`}>
+                          </span>
+                          <span style={{ width: table_head[8]?.width, justifyContent: width < 1200 ? 'center' : 'flex-end' }} className={`${styles.table_body_item} ${styles.changeModal}`}>
+                            <div style={{ cursor: 'pointer', transform: width < 700 ? "rotate(-90deg)" : "" }} onClick={() => changeModalHandler(product)}>
                               <ThreeDotsSvg />
                             </div>
                             {activeItem === product.id ? (
@@ -621,9 +649,8 @@ const Products = ({
                                   className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
                                 >
                                   <SettingsSvg
-                                    className={`${"card-svg rotate-svg"} ${
-                                      styles.m0
-                                    }`}
+                                    className={`${"card-svg rotate-svg"} ${styles.m0
+                                      }`}
                                   />
                                 </div>
                                 <div
@@ -636,91 +663,152 @@ const Products = ({
                                     className={`${"card-svg"} ${styles.m0}`}
                                   />
                                 </div>
-                                <DeletSmall className={styles.closeBtn} />
+                                <DeletSmall onClick={() => setActiveItem(null)} className={styles.closeBtn} />
                               </div>
                             ) : (
                               ""
                             )}
-                          </td>
-                        </tr>
-                      </tbody>
-                    );
+                          </span>
+                        </div>
+                        {width < 1200 && (
+                          <div onClick={() => expandItemHandler(product.id)} className={`${styles.item_expand_btn} ${product.id === expandedItem ? styles.active_arrow : ""}`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -4.5 20 20">
+                              <g>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g fill="#2B3467" transform="translate(-180 -6684)">
+                                    <g transform="translate(56 160)">
+                                      <path d="M144 6525.39l-1.406-1.39-8.607 8.261-.918-.881.005.005-7.647-7.34-1.427 1.369 9.987 9.586 10.013-9.61"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+                          </div>
+                        )}
+                        {(
+                          <div className={`${styles.expanded_item} ${expandedItem === product.id ? styles.actived_expand : styles.deactived_expand}`}>
+                            <div className={styles.expanded_sub_item}>
+                              <span>ტიპი:</span>
+                              <span>
+                                {product?.attributes?.type === "product"
+                                  ? "პროდუქტი"
+                                  : "სერვისი"}
+                              </span>
+                            </div>
+                            <div className={styles.expanded_sub_item}>
+                              <span>მომწოდებელი:</span>
+                              <span>
+                                {product.attributes.type === "product" ? (
+                                  <a
+                                    href={
+                                      product.attributes.productLink ? (
+                                        product?.attributes?.productLink.startsWith(
+                                          "https"
+                                        )
+                                          ? product?.attributes?.productLink
+                                          : `https://${product?.attributes?.productLink}`
+                                      ) : ("")
+                                    }
+                                    target="_blank"
+                                  >
+                                    {
+                                      product?.attributes?.supplier?.data
+                                        ?.attributes?.title
+                                    }
+                                  </a>
+                                ) : (
+                                  " - "
+                                )}
+                              </span>
+                            </div>
+                            <div className={styles.expanded_sub_item}>
+                              <span>რაოდენობა:</span>
+                              <span>
+                                {product?.attributes?.quantity}
+                              </span>
+                            </div>
+                            <div className={styles.expanded_sub_item}>
+                              <span>ერთეული:</span>
+                              <span>
+                                {product?.attributes?.unit?.data?.attributes?.title}
+                              </span>
+                            </div>
+                            <div className={styles.expanded_sub_item}>
+                              <span>ღირებულება:</span>
+                              <span>
+                                {product?.attributes?.price}
+                              </span>
+                            </div>
+                            <div className={styles.expanded_sub_item}>
+                              <span>ჯამი:</span>
+                              <span>
+                                {(
+                                  product?.attributes?.price *
+                                  product?.attributes?.quantity
+                                ).toFixed(2)}                              </span>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    )
                   })}
-            </>
+
+              </div>
+              <div className={styles.table_footer}>
+                <span>ჯამი: {total.toFixed(2)} ლარი</span>
+              </div>
+            </Fragment>
           )}
-          {!totalSum && (
-            <tfoot
-              style={{
-                textAlign: "right",
-                whiteSpace: "nowrap",
-                positionr: "relative",
-                border: "none",
-              }}
-            >
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td
-                  className="text-muted"
-                  style={{ fontSize: "16px", paddingRight: "10px" }}
-                >
-                  ჯამი: {total.toFixed(2)} ლარი
-                </td>
-              </tr>
-            </tfoot>
-          )}
-        </table>
+        </div>
         {!productsToMap?.length && activeCategoryId && (
           <div style={{ margin: "100px", textAlign: "center" }}>
             პროდუქტი ვერ მოიძებნა!
           </div>
-        )}
-        {productsToMap.length > 5 && (
-          <nav aria-label="Page navigation example">
-            {activeCategoryId === null ? (
-              ""
-            ) : (
-              <ul className="pagination">
-                <li
-                  className="page-item"
-                  onClick={handleDecrementPageIndex}
-                  value={pageIndex}
-                >
-                  <a className="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                {Array.from({ length: totalPages }, (_, index) => (
+        )
+        }
+        {
+          productsToMap.length > itemsPerPage && (
+            <nav aria-label="Page navigation example">
+              {activeCategoryId === null ? (
+                ""
+              ) : (
+                <ul className="pagination">
                   <li
                     className="page-item"
-                    onClick={handleChangePageIndex}
-                    key={index + 1}
+                    onClick={handleDecrementPageIndex}
+                    value={pageIndex}
                   >
-                    <a className="page-link" id={index + 1} href="#">
-                      {index + 1}
+                    <a className="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                ))}
-                <li
-                  className="page-item"
-                  onClick={handleIncrementPageIndex}
-                  value={pageIndex}
-                >
-                  <a className="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            )}
-          </nav>
-        )}
-      </div>
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <li
+                      className="page-item"
+                      onClick={handleChangePageIndex}
+                      key={index + 1}
+                    >
+                      <a className="page-link" id={index + 1} href="#">
+                        {index + 1}
+                      </a>
+                    </li>
+                  ))}
+                  <li
+                    className="page-item"
+                    onClick={handleIncrementPageIndex}
+                    value={pageIndex}
+                  >
+                    <a className="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              )}
+            </nav>
+          )
+        }
+      </Fragment >
       {select === "exportPopUp" && (
         <ExportPopup
           setSelect={setSelect}
@@ -741,7 +829,8 @@ const Products = ({
           servicePercentagePrice={servicePercentagePrice}
           select={select}
         />
-      )}
+      )
+      }
     </>
   );
 };
