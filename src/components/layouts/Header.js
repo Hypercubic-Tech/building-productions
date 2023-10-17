@@ -43,15 +43,17 @@ function Header() {
       {loggedIn &&
         Number(userStatus.allowed_projects) - Number(userStatus.all_projects) < 3 && Number(userStatus.allowed_projects) - Number(userStatus.all_projects) != 0 ? (
         <div className={styles.warningMessage}>
-          თქვენი პროექტების დამატების ლიმიტი იწურება, დაგრჩათ{" "}
-          {Number(userStatus.allowed_projects) -
-            Number(userStatus.all_projects)}{" "}
-          პროექტი, გთხოვთ განაახლოთ გადახდის გეგმა !!!
+         <div class="container">
+           <span className='geo-title'>თქვენი პროექტების დამატების ლიმიტი იწურება, დაგრჩათ{" "}
+             {Number(userStatus.allowed_projects) -
+                 Number(userStatus.all_projects)}{" "}
+             პროექტი, გთხოვთ განაახლოთ გადახდის გეგმა !!!</span>
+         </div>
         </div>
       ) : loggedIn && Number(userStatus.allowed_projects) - Number(userStatus.all_projects) ==
         0 ? (
         <div className={styles.warningMessage}>
-          თქვენი პროექტების დამატების ლიმიტი ამოიწურა, გთხოვთ გაანახლოთ გადახდის გეგმა !!!
+          <div class="container"><span className='geo-title'>თქვენი პროექტების დამატების ლიმიტი ამოიწურა, გთხოვთ გაანახლოთ გადახდის გეგმა !!!</span></div>
         </div>
       ) : (
         null

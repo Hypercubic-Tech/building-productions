@@ -207,7 +207,7 @@ const index = () => {
       <div className={`${styles.buttons} my-6`}>
         <Link
             type="button"
-            className="btn btn-primary ghost-btn fw-boldest"
+            className="btn btn-primary ghost-btn fw-boldest geo-title"
             href="/"
         >
           მთავარი გვერდი
@@ -215,7 +215,7 @@ const index = () => {
         <button
             onClick={addProjectHandler}
             type="button"
-            className="btn btn-primary fill-btn fw-boldest"
+            className="btn btn-primary fill-btn fw-boldest geo-title"
         >
           <AddProjectSvg />
           დაამატე ობიექტი
@@ -399,8 +399,7 @@ const index = () => {
                                       </div>
                                       <div className={`card-body ${styles.cardTtl}`}>
                                         <div
-                                            className="card-title"
-                                            style={{ opacity: ".8" }}
+                                            className="card-title geo-title"
                                         >
                                           {item?.attributes?.title}
                                         </div>

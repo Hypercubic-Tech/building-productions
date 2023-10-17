@@ -40,7 +40,8 @@
 .toolbarAddress {
     display: flex;
     align-items: center;
-    color: #eb445f;
+    color: #2B3467;
+    opacity: .7;
 }
 
 .disabledBtn {

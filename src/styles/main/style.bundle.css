@@ -14,9 +14,23 @@
   font-family: 'Roboto-Regular';
   src: url('/fonts/Roboto-Regular.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'FiraGO';
+    src: url('/fonts/FiraGo/FiraGO-Regular.eot');
+    src: url('/fonts/FiraGo/FiraGO-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/FiraGo/FiraGO-Regular.woff2') format('woff2'),
+    url('/fonts/FiraGo/FiraGO-Regular.woff') format('woff'),
+    url('/fonts/FiraGo/FiraGO-Regular.ttf') format('truetype'),
+    url('/fonts/FiraGo/FiraGO-Regular.svg#FiraGO-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 .geo-title {
   font-family: 'FiraGO', 'NotoSans-Regular';
+  font-feature-settings: "case" on;
 }
 
 :root {
@@ -48394,7 +48408,7 @@ body {
     flex-direction: column;
     /* z-index: 2; */
     /* height: 160px; */
-    height: 80px;
+    height: 60px;
     transition: left ease;
     background-color: #FCFFE7;
   }

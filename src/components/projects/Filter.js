@@ -26,14 +26,14 @@ const Filter = ({
                 className={styles.filterBtn}
               >
                 <a
-                  className={`${styles.filterBtnIn} georgian ${
+                  className={`${styles.filterBtnIn} geo-title ${
                     activeCategoryId === item?.id
                       ? styles.filterBtnInActive
                       : ""
                   }`}
                 >
                   <span
-                    className={`menu-title georgian ${styles.item} fw-boldest`}
+                    className={`menu-title geo-title ${styles.item} fw-boldest`}
                   >
                     <div className={styles.iconParent}>
                       <img
@@ -61,7 +61,7 @@ const Filter = ({
               activeCategoryId === null ? styles.filterBtnInActive : ""
             }`}
           >
-            <span className={`menu-title georgian ${styles.item} fw-boldest`}>
+            <span className={`menu-title geo-title ${styles.item} fw-boldest`}>
               <div className={styles.iconParent}>
                 <CheckedSvg className={styles.icon} />
               </div>
