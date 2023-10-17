@@ -1,40 +1,30 @@
 .activeBg {
-  border-color: #2B3467;
+  border-color: #2b3467;
 }
 .modalWindow {
   background-color: #fff;
   align-items: center;
-  position: fixed;
+  position: absolute;
   z-index: 9;
   height: fit-content;
   width: 200px;
-  top: 70px;
-  right: 90px;
+  top: 40px;
+  right: 0px;
   border-radius: 4px;
-  box-shadow:
-  0 1px 1px hsl(0deg 0% 0% / 0.075),
-  0 2px 2px hsl(0deg 0% 0% / 0.075),
-  0 4px 4px hsl(0deg 0% 0% / 0.075),
-  0 8px 8px hsl(0deg 0% 0% / 0.075),
-  0 16px 16px hsl(0deg 0% 0% / 0.075);
+  box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+    0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
   -webkit-box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
-  0 2px 2px hsl(0deg 0% 0% / 0.075),
-  0 4px 4px hsl(0deg 0% 0% / 0.075),
-  0 8px 8px hsl(0deg 0% 0% / 0.075),
-  0 16px 16px hsl(0deg 0% 0% / 0.075);;
+    0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
   -moz-box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
-  0 2px 2px hsl(0deg 0% 0% / 0.075),
-  0 4px 4px hsl(0deg 0% 0% / 0.075),
-  0 8px 8px hsl(0deg 0% 0% / 0.075),
-  0 16px 16px hsl(0deg 0% 0% / 0.075);;
+    0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
   padding: 10px;
-  /* background-color: #FCFFE7; */
-}
-.modalWindow > div {
-  cursor: pointer;
-  display: inline-block;
-  width: 100%;
-  padding: 10px;
+  border: 1px solid #2B3467;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
 }
 .backdrop {
   cursor: pointer;
@@ -43,14 +33,39 @@
   width: 40px;
   z-index: 10;
 }
-.hover {
-  transition: color 0.2s ease, background-color 0.2s ease;
-  padding: 10px;
+.headerBtn {
+  cursor: pointer;
+  margin-left: 15px;
 }
-.hover:hover {
-  color: #070707;
-  background-color: #D9D9D9;
+.headerBtn svg {
+  width: 20px;
+}
+.headerBtn svg path {
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+}
+.headerBtn svg:hover path,.headerBtn.activeBg svg path {
+  fill: #BAD7E9;
+}
+.modalWindowBtn svg path{
+  fill: #2B3467!important;
+}
+.modalWindowBtn svg {
+  height: 14px!important;
+}
+.modalWindowBtn{
+  display: flex;
+  width: 100%;
+  height: 34px;
+  padding: 0px 15px;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0);
   border-radius: 4px;
+  cursor: pointer;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+}
+.modalWindowBtn:hover {
+  background: #BAD7E9;
+  border-color: #2B3467;
 }
 .closeBtn {
   width: 22px;
@@ -73,6 +88,28 @@
   width: 95%;
 }
 
+.hideSearch {
+  overflow: hidden;
+  transition: 0.5s ease;
+}
+
+.showSearch {
+  max-width: 100%;
+  max-height: 100%;
+  transition: max-width 0.5s ease;
+}
+
+.warningMessage {
+  color: #eb445f;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0px;
+  background: #bbd7e9;
+}
+.logo {
+  height: 35px;
+}
 /* end of popup element */
 
 @media (max-width: 768px) {
@@ -90,8 +127,25 @@
     width: 30px;
     height: 30px;
   }
+
+  .hideSearch {
+    max-width: 0;
+    max-height: 0;
+  }
+
+  .showSearch {
+    max-width: 100%;
+  }
+
   .modalWindow {
     top: 50px;
     right: 15px;
+  }
+}
+
+@media (max-width: 470px) {
+  .searchWrapper {
+    max-width: 130px;
+    max-height: 130px;
   }
 }

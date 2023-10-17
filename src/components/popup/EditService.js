@@ -8,6 +8,8 @@ import { setCategory } from "../../store/slices/categorySlice";
 
 import notify from '../../utils/notify';
 
+import styles from "./AddProduct.module.css";
+
 const EditService = ({
   product,
   unit,
@@ -19,7 +21,7 @@ const EditService = ({
 
   const projectId = router.query.projectId;
   const productId = product.id;
-  
+
   const activeCategoryId = useSelector(state => state.cats.category);
 
   const [lossProduct, setLossProduct] = useState(false);
@@ -96,65 +98,54 @@ const EditService = ({
   return (
     <div
       style={{ display: "block", paddingLeft: "0px" }}
-      className="modal fade show"
-      id="kt_modal_export_users"
+      className={`modal fade show ${styles.addProductModal}`}
       role="dialig"
       tabIndex={-1}
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered mw-650px">
-        <div className="modal-content">
+      <div className={`modal-dialog modal-dialog-centered mw-650px`}>
+        <div className="modal-content" style={{ borderRadius: '4px' }}>
           <div className="modal-header" id="kt_modal_add_user_header">
+            <h2>სერვისის რედაქტირება</h2>
             <div
-              className={` d-flex justify-content-center align-items-center w-100 p-2 `}
-            >
-              <h2>ხელობის რედაქტირება</h2>
-
-            </div>
-            <div
-              className="btn btn-icon btn-sm btn-active-icon-primary"
+              className={`${styles.modalClose}`}
               data-kt-users-modal-action="close"
+              onClick={() => {
+                setSelect(null);
+              }}
             >
-              <span
-                className="svg-icon svg-icon-1"
-                onClick={() => {
-                  setSelect(null);
-                }}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={35}
+                height={35}
+                viewBox="0 0 24 24"
+                fill="none"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <rect
-                    opacity="0.5"
-                    x={6}
-                    y="17.3137"
-                    width={16}
-                    height={2}
-                    rx={1}
-                    transform="rotate(-45 6 17.3137)"
-                    fill="black"
-                  />
-                  <rect
-                    x="7.41422"
-                    y={6}
-                    width={16}
-                    height={2}
-                    rx={1}
-                    transform="rotate(45 7.41422 6)"
-                    fill="black"
-                  />
-                </svg>
-              </span>
+                <rect
+                  x={6}
+                  y="17.3137"
+                  width={16}
+                  height={2}
+                  rx={1}
+                  transform="rotate(-45 6 17.3137)"
+                  fill="#EB455F"
+                />
+                <rect
+                  x="7.41422"
+                  y={6}
+                  width={16}
+                  height={2}
+                  rx={1}
+                  transform="rotate(45 7.41422 6)"
+                  fill="#EB455F"
+                />
+              </svg>
             </div>
           </div>
-          <div style={{ width: "90%" }} className="modal-body mx-5 mx-xl-15 my-7">
+          <div className="modal-body">
             <form id="kt_modal_add_user_form" className="form">
               <div
-                className="d-flex flex-column pe-7"
+                className="d-flex flex-column"
                 id="kt_modal_add_user_scroll"
                 data-kt-scroll="true"
                 data-kt-scroll-activate="{default: false, lg: true}"
@@ -163,9 +154,9 @@ const EditService = ({
                 data-kt-scroll-wrappers="#kt_modal_add_user_scroll"
                 data-kt-scroll-offset="300px"
               >
-                <div className="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                <div className={`notice d-flex rounded mb-9 p-6 ${styles.pictureContainer}`}>
                   <div className='d-flex flex-stack flex-grow-1'>
-                    {/* dasdasda */}
+
                     <img
                       src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`}
                       onError={(e) => {
@@ -178,7 +169,7 @@ const EditService = ({
                     />
                   </div>
                 </div>
-                <div className="row mb-5">
+                <div className={`row mb-5 ${styles.productInputs}`}>
                   <div className='w-100'>
                     <label className="required fs-5 fw-bold mb-2 georgian">
                       დასახელება
@@ -186,12 +177,12 @@ const EditService = ({
                     <select
                       onChange={(e) => {
                         const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.title === e.target.value);
-                        setCraftImage(filteredArray[0].attributes.image.data.attributes.url);
+                        setCraftImage(filteredArray[0]?.attributes?.image?.data?.attributes?.url);
                         setCraftTitle(e.target.value);
                         setCraftData((prevSendData) => ({
                           ...prevSendData,
                           title: e.target.value,
-                          craft_img_url: filteredArray[0].attributes.image.data.attributes.url
+                          craft_img_url: filteredArray[0]?.attributes?.image?.data?.attributes?.url
                         }));
                       }}
                       name="count"
@@ -203,7 +194,7 @@ const EditService = ({
                       {filteredCrafts &&
                         filteredCrafts?.data.map((item, index) => {
                           return (
-                            <option key={item?.id + index} image={item?.attributes?.image.data.attributes.url} value={item?.attributes?.title}>
+                            <option key={item?.id + index} value={item?.attributes?.title}>
                               {item?.attributes?.title}
                             </option>
                           );
@@ -216,6 +207,7 @@ const EditService = ({
                       რაოდენობა
                     </label>
                     <input
+                      onWheel={(e) => e.target.blur()}
                       onChange={(e) => {
                         setCraftData((prevSendData) => ({
                           ...prevSendData,
@@ -266,6 +258,7 @@ const EditService = ({
                       ღირეულება
                     </label>
                     <input
+                      onWheel={(e) => e.target.blur()}
                       onChange={(e) => {
                         setCraftData((prevSendData) => ({
                           ...prevSendData,
@@ -314,7 +307,7 @@ const EditService = ({
                 </div>
               </div>
               {lossProduct && <p style={{ color: 'red' }}>შეავსეთ ყველა (*) ველი!!!</p>}
-              <div className="text-center pt-15">
+              <div className="text-center">
                 <button
                   onClick={() => {
                     setSelect(null);

@@ -22,14 +22,14 @@ export const productSlice = createSlice({
             );
         },
     },
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.prod,
-            };
-        },
-    },
+    extraReducers: (builder) => {
+        builder.addCase(HYDRATE, (state, action) => {
+          return {
+            ...state,
+            ...action.payload.prod,
+          };
+        });
+      },
 });
 
 export const { setProductState, deleteProductState, setProducts } = productSlice.actions;

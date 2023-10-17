@@ -1,42 +1,127 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import notify from "../../utils/notify";
-import EditAccount from "../../components/popup/EditAccount";
-import Unauthorized from "../../pages/401";
-import EditButton from "../ui/EditButton";
+
+import { setUserStatus } from "../../store/slices/statusSlice";
+
 import ImageUpload from "../ui/ImageUpload";
+import LoadingPage from "../ui/LoadingPage";
+import EditAccount from "./EditAccount";
+import ChangePassword from "../popup/ChangePassword";
+import FingerprintSvg from "../svg/FingerprintSvg";
 
 import styles from "./Account.module.css";
 
 const index = () => {
+  const dispatch = useDispatch();
+  const { data: session } = useSession();
+
+  const provider = useSelector((state) => state.auth.provider);
+  const authUserId = useSelector((state) => state.auth.user_id);
+
+  const userStatus = useSelector((state) => state.userStatus);
+
   const [authUser, setAuthUser] = useState([]);
+  const [userData, setUserData] = useState({});
+  const [startEdit, setStartEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isImageUpload, setIsImageUpload] = useState(false);
   const [imgSrc, setImgSrc] = useState(null);
   const [image, setImage] = useState(null);
-  const [isImageUpload, setIsImageUpload] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [avatarId, setAvatarId] = useState(null);
-  const authUserId = useSelector((state) => state.auth.user_id);
-  const authEmail = useSelector((state) => state.auth.email);
-  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const { data: session } = useSession();
+  const [pricesData, setPricesData] = useState(null);
+  const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
+
+  const [trialExpired, setTrialExpired] = useState(false);
+  const [userStatusUpdate, setUserStatusUpdate] = useState({});
+
+  const trialExpiredChecker = async () => {
+    const now = new Date();
+    const expiredDate = new Date(userStatus?.trial_expires);
+    if (now > expiredDate && typeof(expiredDate) !== "object") {
+      try {
+        await axios
+          .put(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
+            {
+              trial_used: true,
+              trial_expires: 'expired'
+            }
+          )
+      } catch (error) {
+        console.log(error);
+      }
+      dispatch(setUserStatus({ trial_expires: "expired" }));
+    }
+  };
 
   const loggedUserInfo = async () => {
     let url;
-
-    if (session?.user) {
-      setAuthUser(session.user);
-    } else if (authUserId) {
-      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
+    if (provider === "google") {
+      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
     } else {
-      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${authEmail}&populate=*`;
+      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
     }
     if (url) {
-      await axios.get(url).then((res) => {
-        const data = res.data;
-        setAuthUser(data);
-      });
+      await axios
+        .get(url)
+        .then((res) => {
+          const data = res.data;
+          setAuthUser(data);
+          setUserData({
+            id: data[0]?.id,
+            username: data[0]?.username,
+            email: data[0]?.email,
+            phoneNumber: data[0]?.phoneNumber,
+            payment_duration: data[0]?.payment_duration,
+            payment_plan: {
+              connect: [{ id: data[0]?.payment_plan?.id.toString() }],
+            },
+            trial_expires: data[0]?.trial_expires,
+            trial_used: data[0]?.trial_used,
+            card_number: data[0]?.card_number,
+            card_cvc: data[0]?.card_cvc,
+            card_month: data[0]?.card_month,
+            card_year: data[0]?.card_year,
+            account_type: data[0]?.account_type
+          });
+
+          // for user dashboard
+          if (data[0]?.payment_duration === "month") {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
+              allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
+              all_projects:
+                data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
+              trial_expires: data[0]?.trial_expires,
+              trial_used: data[0]?.trial_used,
+              account_type: data[0]?.account_type
+            });
+          }
+          if (data[0]?.payment_duration === "year") {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
+              allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
+              all_projects: data[0]?.projects.lenght,
+              trial_expires: data[0]?.trial_expires,
+              trial_used: data[0]?.trial_used,
+              account_type: data[0]?.account_type
+            });
+          }
+        })
+        .then(() => {
+          trialExpiredChecker();
+          setIsLoading(false);
+        });
     }
   };
 
@@ -69,12 +154,8 @@ const index = () => {
   };
 
   const handleImageRemove = async () => {
-    console.log("authUser:", authUser);
-    console.log("authUser avatar:", authUser[0]?.avatar);
-  
     if (authUser[0]?.avatar) {
       const avatarId = authUser[0].avatar[0]?.id;
-      console.log("avatarId:", avatarId);
       if (avatarId) {
         await axios.delete(
           `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/upload/files/${avatarId}`
@@ -94,7 +175,6 @@ const index = () => {
         setIsImageUpload(false);
       });
   };
-  
 
   const handleMediaUpdate = async (img) => {
     if (!img) {
@@ -121,7 +201,6 @@ const index = () => {
       setImage(data[0]);
       setImgSrc(data[0].url);
       setIsImageUpload(true);
-      console.log("Ff");
       notify(false, "არჩეული სურათი წარმატებით აიტვირთა");
     } catch (err) {
       console.error(err);
@@ -150,20 +229,42 @@ const index = () => {
         });
     }
   };
+
+  const getPricesData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`
+      );
+      const data = response.data;
+      setPricesData(data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
+    getPricesData();
     loggedUserInfo();
+
+  }, [session, authUserId]);
+
+  useEffect(() => {
     handleUserImage();
-  }, [authUserId, session, isImageUpload]);
+  }, [authUser, session, isImageUpload]);
+
+  useEffect(() => {
+    dispatch(setUserStatus(userStatusUpdate));
+  }, [userStatusUpdate]);
 
   return (
     <>
-      {!isLoggedIn ? (
-        <Unauthorized />
+      {isLoading || !authUser ? (
+        <LoadingPage />
       ) : (
         <div className={`${styles.mainContainer} container`}>
           <div className={styles.imageContainer}>
             <div className={styles.imageBorder}>
-              {((authUser || session?.user) && imgSrc && (
+              {(imgSrc && (
                 <img
                   src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${imgSrc}`}
                   width={"100%"}
@@ -171,150 +272,36 @@ const index = () => {
                   style={{ borderRadius: "8px" }}
                   alt="Picture of the product"
                 />
-              )) || (
-                <h2
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  Uploaded Image
-                </h2>
-              )}
+              )) || <h2 className={styles.imageText}>Uploaded Image</h2>}
             </div>
-            <ImageUpload
-              onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
-              handleImageRemove={handleImageRemove}
-            />
+            <div className={styles.imageUpload}>
+              <ImageUpload
+                type="account"
+                onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
+                quantity={10}
+                handleImageRemove={handleImageRemove}
+              />
+              <FingerprintSvg onClick={() => setOpenPasswordPopup(true)} />
+            </div>
           </div>
-          {authUser.length > 0
-            ? authUser?.map((user, index) => {
-                return (
-                  <div className={styles.userInfoWrapper} key={index}>
-                    <div
-                      className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                    >
-                      <div className="col-sm-3">
-                        <h6 className="mb-0">მომხმარებლის სახელი</h6>
-                      </div>
-                      <div className={`col-sm-6 ${styles.userInfo}`}>
-                        {user?.username}
-                      </div>
-                    </div>
-                    <hr />
-                    <div
-                      className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                    >
-                      <div className="col-sm-3">
-                        <h6 className="mb-0">მომხმარებლის ტიპი</h6>
-                      </div>
-                      <div className={`col-sm-6 ${styles.userInfo}`}>
-                        {user?.userType === "company"
-                          ? "კომპანია"
-                          : "პერსონალური"}
-                      </div>
-                    </div>
-                    <hr />
-                    <div
-                      className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                    >
-                      <div className="col-sm-3">
-                        <h6 className="mb-0">იმეილი</h6>
-                      </div>
-                      <div className={`col-sm-6 ${styles.userInfo}`}>
-                        {user?.email}
-                      </div>
-                    </div>
-                    <hr />
-                    <div
-                      className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                    >
-                      <div className="col-sm-3">
-                        <h6 className="mb-0">მობილურის ნომერი</h6>
-                      </div>
-                      <div className={`col-sm-6 ${styles.userInfo}`}>
-                        {user?.phoneNumber}
-                      </div>
-                    </div>
-                    <hr />
-                    <div
-                      className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                    >
-                      <div className="col-sm-3">
-                        <h6 className="mb-0">გადახდის გეგმა</h6>
-                      </div>
-                      <div className={`col-sm-6 ${styles.userInfo}`}>
-                        {user?.paymentPlan === "paid" ? "ფასიანი" : "უფასო"}
-                      </div>
-                    </div>
-                    <hr />
-                    {user?.paymentPlan === "paid" && user?.paymentMethod && (
-                      <div
-                        className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                      >
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">გადახდის მეთოდი</h6>
-                        </div>
-                        <div className={`col-sm-6 ${styles.userInfo}`}>
-                          {user?.paymentMethod === "tbc" ? "თბს ბანკი" : ""}
-                        </div>
-                      </div>
-                    )}
-                    {user?.paymentPlan === "paid" && user?.paymentMethod && (
-                      <hr />
-                    )}
-                    {!isEdit && <EditButton onClick={() => setIsEdit(true)} />}
-                  </div>
-                );
-              })
-            : session?.user && (
-                <div className={styles.userInfoWrapper}>
-                  <div
-                    className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                  >
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">მომხმარებლის სახელი</h6>
-                    </div>
-                    <div className={`col-sm-6 ${styles.userInfo}`}>
-                      {session.user?.name}
-                    </div>
-                  </div>
-                  <hr />
-                  <div
-                    className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                  >
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">მომხმარებლის ტიპი</h6>
-                    </div>
-                    <div className={`col-sm-6 ${styles.userInfo}`}>
-                      {session.user?.userType === "company"
-                        ? "კომპანია"
-                        : "პერსონალური"}
-                    </div>
-                  </div>
-                  <hr />
-                  <div
-                    className={`d-flex pt-3 pb-3 ${styles.userInfoContainer}`}
-                  >
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">იმეილი</h6>
-                    </div>
-                    <div className={`col-sm-6 ${styles.userInfo}`}>
-                      {session.user?.email}
-                    </div>
-                  </div>
-                  <hr />
-                  {!isEdit && <EditButton onClick={() => setIsEdit(true)} />}
-                </div>
-              )}
-          {isEdit && (
-            <EditAccount
-              authUser={authUser}
-              onClose={() => setIsEdit(false)}
-              loggedUserInfo={loggedUserInfo}
-            />
+          <div style={{ width: "100%" }}>
+            {authUser && (
+              <EditAccount
+                trialExpired={trialExpired}
+                authUserId={authUserId}
+                startEdit={startEdit}
+                setStartEdit={setStartEdit}
+                userData={userData}
+                setUserData={setUserData}
+                setIsEdit={setStartEdit}
+                pricesData={pricesData}
+                loggedUserInfo={loggedUserInfo}
+                authUser={authUser}
+              />
+            )}
+          </div>
+          {openPasswordPopup && (
+            <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />
           )}
         </div>
       )}

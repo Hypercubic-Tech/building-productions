@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-
 import AddProject from "./AddProject";
-import EditProject from "./EditProject";
 import notify from "../../utils/notify";
 
 import styles from "./Modal.module.css";
@@ -11,8 +9,6 @@ import styles from "./Modal.module.css";
 const HeaderPopup = () => {
   const [close, setClose] = useState(false);
   const [addProject, setAddProject] = useState(false);
-  const [editProject, setEditProject] = useState(false);
-  const [editProjectData, setEditProjectData] = useState(null);
   const [projectData, setProjectData] = useState(null);
 
   const addProjectHandler = () => {
@@ -137,9 +133,6 @@ const HeaderPopup = () => {
         </div>
       </div>
       {addProject && <AddProject dismiss={dismissHandler} />}
-      {editProject && (
-        <EditProject data={editProjectData} dismiss={dismissHandler} getProjectsData={getProjectsData()}/>
-      )}
     </>
   );
 };
