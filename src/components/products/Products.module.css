@@ -24,6 +24,7 @@
     right: -5px;
     background-color: #BAD7E9;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .closeBtn path {
@@ -127,9 +128,8 @@
 } */
 
 .actived_table_item {
-    max-height: 500px !important;
+    max-height: 500px;
     transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
-
 }
 
 .expanded_item {
@@ -181,6 +181,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-top: 30px;
 }
 
 .table_footer span {
