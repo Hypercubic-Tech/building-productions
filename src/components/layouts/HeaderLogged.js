@@ -153,7 +153,7 @@ function HeaderLogged() {
             <img
               alt="Logo"
               src="/images/Logo.png"
-              className="logo-default h-lg-50px"
+              className={`${styles.logo}`}
             />
           </Link>
         </div>
@@ -228,9 +228,9 @@ function HeaderLogged() {
                 </form>
               </div>
             )}
-            <div className="d-flex align-items-center ms-3 ms-lg-4">
+            <div>
               <Link
-                className="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary btn-active-bg-light w-30px h-30px w-lg-40px h-lg-40px"
+                className={`${styles.headerBtn}`}
                 href="/projects"
               >
                 <span className="svg-icon-1">
@@ -243,11 +243,11 @@ function HeaderLogged() {
                 <HeaderPopup />
               </div>
             )}
-            <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
+            <div className={` `} style={{position: 'relative'}}>
               <div
                 onClick={openModal}
-                className={` ${isModalOpen ? styles.activeBg : ""
-                  } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
+                className={`${styles.headerBtn} ${isModalOpen ? styles.activeBg : ""
+                  }`}
                 data-kt-menu-trigger="click"
                 data-kt-menu-attach="parent"
                 data-kt-menu-placement="bottom-end"
@@ -255,27 +255,25 @@ function HeaderLogged() {
                 <span className="svg-icon-1">
                   <ProfileSvg />
                 </span>
-              </div>
-              {isModalOpen && (
-                <animated.div className="modal" style={animation}>
-                  <div ref={ref} className={`${styles.modalWindow}`}>
-                    <Link
-                      href="/account"
-                      className={styles.hover}
-                      onClick={() => setIsModalOpen(false)}
-                    >
-                      <span>პროფილი</span>
-                    </Link>
-                    <div
-                      className={`${styles.hover} justify-content-between d-flex`}
-                      onClick={session ? handleGoogleLogout : handleLogout}
-                    >
-                      გასვლა
-                      <LogOutSvg className={styles.closeBtn} />
+                {isModalOpen && (
+                    <div ref={ref} className={`${styles.modalWindow}`}>
+                      <Link
+                          href="/account"
+                          className={`${styles.modalWindowBtn} geo-title`}
+                          onClick={() => setIsModalOpen(false)}
+                      >
+                        პროფილი
+                      </Link>
+                      <div
+                          className={`${styles.modalWindowBtn} geo-title justify-content-between d-flex`}
+                          onClick={session ? handleGoogleLogout : handleLogout}
+                      >
+                        გასვლა
+                        <LogOutSvg className={styles.closeBtn} />
+                      </div>
                     </div>
-                  </div>
-                </animated.div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

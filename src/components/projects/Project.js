@@ -137,7 +137,7 @@ const Project = ({
                     <h2
                       className={`d-flex fw-bolder my-1 fs-3 georgian ${styles.toolbarAddress}`}
                     >
-                      <MapSvg style={{ marginBottom: "6px" }} />
+                      <MapSvg />
                       &nbsp;{p?.attributes?.address}
                     </h2>
                     <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
@@ -174,7 +174,7 @@ const Project = ({
                       }}
                     >
                       <a
-                        className="btn btn-light-primary fw-bolder georgian"
+                        className="btn btn-light-primary fw-bolder georgian geo-title"
                         data-kt-menu-trigger="click"
                         data-kt-menu-placement="bottom-end"
                       >
@@ -194,7 +194,7 @@ const Project = ({
                       }}
                     >
                       <a
-                        className="btn btn-primary fw-bolder georgian"
+                        className="btn btn-primary fw-bolder georgian geo-title"
                         data-bs-toggle="modal"
                         data-bs-target="#kt_modal_create_app"
                         id="kt_toolbar_primary_button"
