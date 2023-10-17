@@ -73,7 +73,6 @@ function HeaderLogged() {
   }
 
   const handleLogout = () => {
-    router.push("/");
     setTimeout(() => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("email");
@@ -85,20 +84,10 @@ function HeaderLogged() {
       dispatch(setAuthUserId(null));
       dispatch(setAuthEmail(null));
       dispatch(setAuthRole(null));
+      dispatch(setUserStatus(null));
 
-      dispatch(setUserStatus({ 
-        account_type: "",
-        all_projects: "",
-        allowed_export: "",
-        allowed_media: "",
-        allowed_projects: "",
-        p_title: "",
-        payment_duration: "",
-        trial_expires: "",
-        trial_used: "",
-        username: ""
-      }));
     }, 300);
+    router.push("/");
     setIsModalOpen(false);
   };
 
@@ -114,20 +103,7 @@ function HeaderLogged() {
       dispatch(setAuthUserId(null));
       dispatch(setAuthEmail(null));
       dispatch(setAuthRole(null));
-
-      dispatch(setUserStatus({ 
-        account_type: "",
-        all_projects: "",
-        allowed_export: "",
-        allowed_media: "",
-        allowed_projects: "",
-        p_title: "",
-        payment_duration: "",
-        trial_expires: "",
-        trial_used: "",
-        username: ""
-      }));
-
+      dispatch(setUserStatus(null));
     }, 300);
     setIsModalOpen(false);
     await signOut({
@@ -217,9 +193,8 @@ function HeaderLogged() {
                 </div>
                 <form
                   data-kt-search-element="form"
-                  className={`bg-white d-lg-block w-100 mb-lg-0 position-relative ${
-                    hideSearch ? `${styles.hideSearch}` : `${styles.showSearch}`
-                  }`}
+                  className={`bg-white d-lg-block w-100 mb-lg-0 position-relative ${hideSearch ? `${styles.hideSearch}` : `${styles.showSearch}`
+                    }`}
                   autoComplete="off"
                   ref={formRef}
                 >
@@ -271,9 +246,8 @@ function HeaderLogged() {
             <div className={` d-flex align-items-center ms-3 ms-lg-4 `}>
               <div
                 onClick={openModal}
-                className={` ${
-                  isModalOpen ? styles.activeBg : ""
-                } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
+                className={` ${isModalOpen ? styles.activeBg : ""
+                  } btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-30px h-30px w-lg-40px h-lg-40px `}
                 data-kt-menu-trigger="click"
                 data-kt-menu-attach="parent"
                 data-kt-menu-placement="bottom-end"

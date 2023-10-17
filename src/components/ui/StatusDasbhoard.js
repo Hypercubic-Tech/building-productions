@@ -10,11 +10,11 @@ import styles from './StatusDashboard.module.css';
 const StatusDashboard = () => {
     const dispatch = useDispatch();
     const { data: session } = useSession();
+
     const userStatus = useSelector((state) => state.userStatus);
     const provider = useSelector((state) => state.auth.provider);
     const authUserId = useSelector((state) => state.auth.user_id);
     const [active, setActive] = useState(false);
-
     const [userStatusUpdate, setUserStatusUpdate] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -72,7 +72,7 @@ const StatusDashboard = () => {
 
     useEffect(() => {
         loggedUserInfo();
-    }, [authUserId]);
+    }, [authUserId, session]);
 
     useEffect(() => {
         dispatch(setUserStatus(userStatusUpdate));
@@ -80,7 +80,7 @@ const StatusDashboard = () => {
 
     return (
         <Fragment>
-            {session || authUserId && (
+            {session || authUserId ? (
                 <Fragment>
                     {isLoading ? (
                         <div className={styles.outer}>
@@ -326,7 +326,8 @@ const StatusDashboard = () => {
                     )
                     }
                 </Fragment>
-            )}
+            ) : ""}
+
         </Fragment>
     );
 };
