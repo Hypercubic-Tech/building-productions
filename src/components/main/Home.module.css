@@ -1,19 +1,37 @@
+.heading_banner {
+  position: relative;
+  width: 50%;
+  display: flex;
+  gap: 32px;
+}
+
+.heading_bannerImg {
+  width: 50%;
+  position: relative;
+  padding-top: 67%;
+}
+.heading_bannerImg img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  object-fit: cover;
+}
+.heading_bannerImg:last-child {
+  top: 50px;
+}
+
 /* HEADING */
 
 @media (max-width: 767.98px) {
+  .heading_banner {
+    margin-left: auto;
+    gap: 15px;
+    margin-top: -115px;
+  }
   .heading_container {
     width: 100%;
-  }
-
-  .heading_banner {
-    position: relative;
-    width: 100%;
-    height: fit-content;
-  }
-
-  .heading_banner img {
-    width: 100% !important;
-    height: 100% !important;
   }
 }
 

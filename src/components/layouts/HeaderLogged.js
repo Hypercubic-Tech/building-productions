@@ -27,7 +27,7 @@ import Search2Svg from "../svg/Search2Svg";
 
 import styles from "../layouts/HeaderLogged.module.css";
 
-function HeaderLogged() {
+function HeaderLogged(props) {
   const [hideSearch, setHideSearch] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -142,7 +142,7 @@ function HeaderLogged() {
     <div
       style={{ zIndex: "11" }}
       id="kt_header"
-      className="header"
+      className={`header animateTY ${props.animate ? 'animate' : ''}`}
       data-kt-sticky="true"
       data-kt-sticky-name="header"
       data-kt-sticky-offset="{default: '200px', lg: '300px'}"

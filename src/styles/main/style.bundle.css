@@ -33,6 +33,32 @@
   font-feature-settings: "case" on;
 }
 
+.animateTY {
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99)!important;
+}
+.animateBY {
+    transform: translateY(10px);
+    opacity: 0;
+    transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99)!important;
+}
+.animateTY.animate,.animateBY.animate {
+    transform: translateY(0px);
+    opacity: 1;
+}
+.tD1.animate {
+    transition-delay: .1s!important;
+}
+.tD2.animate {
+    transition-delay: .2s!important;
+}
+.tD3.animate {
+    transition-delay: .3s!important;
+}
+.tD4.animate {
+    transition-delay: .4s!important;
+}
 :root {
   --bs-blue: #009ef6;
   --bs-indigo: #6610f2;
@@ -4121,6 +4147,7 @@ fieldset:disabled .btn {
 .header {
     position: relative;
     z-index: 4;
+    padding-top: 8px;
 }
 .btn-texted:hover > .btn-text {
     max-width: 200px;
@@ -49123,7 +49150,7 @@ main {
   padding-top: 128px;
 }
 .fs-lg-3x, .fs-3x {
-  font-size: 2rem !important;
+  font-size: 2.5rem !important;
 }
 .mb-320 {
   margin-bottom: 100px;

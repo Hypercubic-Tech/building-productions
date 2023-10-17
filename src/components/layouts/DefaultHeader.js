@@ -3,7 +3,7 @@ import Auth from "../popup/Auth";
 import { useSpring, animated } from "react-spring";
 import Link from "next/link";
 
-function DefaultHeader() {
+function DefaultHeader(props) {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const modalRef = useRef(null);
 
@@ -39,7 +39,7 @@ function DefaultHeader() {
 
   return (
       <div
-        className="landing-header header"
+        className={`landing-header header animateTY ${props.animate ? 'animate' : ''}`}
         data-kt-sticky="true"
         data-kt-sticky-name="landing-header"
         data-kt-sticky-offset="{default: '200px', lg: '300px'}"
