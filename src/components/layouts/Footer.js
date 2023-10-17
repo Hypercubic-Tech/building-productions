@@ -7,40 +7,40 @@ import styles from "./Footer.module.css"
 
 function Footer() {
   const DUMMY_FOOTER = [
-    {
-      id: 0,
-      title: "კომპანია",
-      sub_titles: [
-        {
-          id: 0,
-          title: "ჩვენ შესახებ",
-          href: "/",
-          svg: "",
-          target: "_blank"
-        },
-        {
-          id: 1,
-          title: "კონფიდენციალურობის პოლიტიკა",
-          href: "/",
-          svg: "",
-          target: "_blank"
-        },
-        {
-          id: 2,
-          title: "მომსახურების პირობები",
-          href: "/",
-          svg: "",
-          target: "_blank"
-        },
-        {
-          id: 3,
-          title: "ხშირად დასმული კითხვები",
-          href: "/",
-          svg: "",
-          target: "_blank"
-        }
-      ]
-    },
+    // {
+    //   id: 0,
+    //   title: "კომპანია",
+    //   sub_titles: [
+    //     {
+    //       id: 0,
+    //       title: "ჩვენ შესახებ",
+    //       href: "/",
+    //       svg: "",
+    //       target: "_blank"
+    //     },
+    //     {
+    //       id: 1,
+    //       title: "კონფიდენციალურობის პოლიტიკა",
+    //       href: "/",
+    //       svg: "",
+    //       target: "_blank"
+    //     },
+    //     {
+    //       id: 2,
+    //       title: "მომსახურების პირობები",
+    //       href: "/",
+    //       svg: "",
+    //       target: "_blank"
+    //     },
+    //     {
+    //       id: 3,
+    //       title: "ხშირად დასმული კითხვები",
+    //       href: "/",
+    //       svg: "",
+    //       target: "_blank"
+    //     }
+    //   ]
+    // },
     {
       id: 1,
       title: "კონტაქტი",
@@ -48,7 +48,7 @@ function Footer() {
         {
           id: 0,
           title: "+995 599 000 000",
-          href: "/",
+          href: "tel:+1234567890",
           svg: <PhoneSvg />,
           target: ""
         },
