@@ -177,12 +177,12 @@ const EditService = ({
                     <select
                       onChange={(e) => {
                         const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.title === e.target.value);
-                        setCraftImage(filteredArray[0].attributes.image.data.attributes.url);
+                        setCraftImage(filteredArray[0]?.attributes?.image?.data?.attributes?.url);
                         setCraftTitle(e.target.value);
                         setCraftData((prevSendData) => ({
                           ...prevSendData,
                           title: e.target.value,
-                          craft_img_url: filteredArray[0].attributes.image.data.attributes.url
+                          craft_img_url: filteredArray[0]?.attributes?.image?.data?.attributes?.url
                         }));
                       }}
                       name="count"

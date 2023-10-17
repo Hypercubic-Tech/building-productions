@@ -1,39 +1,117 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import notify from "../../utils/notify";
-import EditAccount from "../../components/popup/EditAccount";
-import Unauthorized from "../../pages/401";
-import EditButton from "../ui/EditButton";
+
+import { setUserStatus } from "../../store/slices/statusSlice";
+
 import ImageUpload from "../ui/ImageUpload";
+import LoadingPage from "../ui/LoadingPage";
+import EditAccount from "./EditAccount";
+import ChangePassword from "../popup/ChangePassword";
+import FingerprintSvg from "../svg/FingerprintSvg";
 
 import styles from "./Account.module.css";
 
 const index = () => {
+  const dispatch = useDispatch();
+  const { data: session } = useSession();
+
+  const provider = useSelector((state) => state.auth.provider);
+  const authUserId = useSelector((state) => state.auth.user_id);
+
+  const userStatus = useSelector((state) => state.userStatus);
+
   const [authUser, setAuthUser] = useState([]);
+  const [userData, setUserData] = useState({});
+  const [startEdit, setStartEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isImageUpload, setIsImageUpload] = useState(false);
   const [imgSrc, setImgSrc] = useState(null);
   const [image, setImage] = useState(null);
-  const [isImageUpload, setIsImageUpload] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const authUserId = useSelector((state) => state.auth.user_id);
-  const authEmail = useSelector((state) => state.auth.email);
-  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const { data: session } = useSession();
+  const [pricesData, setPricesData] = useState(null);
+  const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
+
+  const [trialExpired, setTrialExpired] = useState(false);
+  const [userStatusUpdate, setUserStatusUpdate] = useState({});
+
+  const trialExpiredChecker = async () => {
+    const now = new Date();
+    const expiredDate = new Date(userStatus?.trial_expires);
+    if (now > expiredDate) {
+      setTrialExpired(true);
+    } else {
+      setTrialExpired(false);
+    }
+  };
 
   const loggedUserInfo = async () => {
     let url;
-
-    if (session?.user) {
+    if (provider === "google") {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-    } else if (authUserId) {
+    } else {
       url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
     }
     if (url) {
-      await axios.get(url).then((res) => {
-        const data = res.data;
-        setAuthUser(data);
-      });
+      await axios
+        .get(url)
+        .then((res) => {
+          const data = res.data;
+          setAuthUser(data);
+          setUserData({
+            id: data[0]?.id,
+            username: data[0]?.username,
+            email: data[0]?.email,
+            phoneNumber: data[0]?.phoneNumber,
+            payment_duration: data[0]?.payment_duration,
+            payment_plan: {
+              connect: [{ id: data[0]?.payment_plan?.id.toString() }],
+            },
+            trial_expires: data[0]?.trial_expires,
+            trial_used: data[0]?.trial_used,
+            card_number: data[0]?.card_number,
+            card_cvc: data[0]?.card_cvc,
+            card_month: data[0]?.card_month,
+            card_year: data[0]?.card_year,
+            account_type: data[0]?.account_type
+          });
+
+          // for user dashboard
+          if (data[0]?.payment_duration === "month") {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
+              allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
+              all_projects:
+                data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
+              trial_expires: data[0]?.trial_expires,
+              trial_used: data[0]?.trial_used,
+              account_type: data[0]?.account_type
+            });
+          }
+          if (data[0]?.payment_duration === "year") {
+            setUserStatusUpdate({
+              username: data[0]?.username,
+              p_title: data[0]?.payment_plan?.name,
+              payment_duration: data[0]?.payment_duration,
+              allowed_export: data[0]?.payment_plan?.allowed_export,
+              allowed_media: data[0]?.payment_plan?.allowed_media,
+              allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
+              all_projects: data[0]?.projects.lenght,
+              trial_expires: data[0]?.trial_expires,
+              trial_used: data[0]?.trial_used,
+              account_type: data[0]?.account_type
+            });
+          }
+        })
+        .then(() => {
+          trialExpiredChecker();
+          setIsLoading(false);
+        });
     }
   };
 
@@ -142,51 +220,36 @@ const index = () => {
     }
   };
 
+  const getPricesData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/payment-plans`
+      );
+      const data = response.data;
+      setPricesData(data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
+    getPricesData();
     loggedUserInfo();
+
   }, [session, authUserId]);
 
   useEffect(() => {
     handleUserImage();
   }, [authUser, session, isImageUpload]);
 
-  const authUserData = [
-    {
-      id: 1,
-      name: "მომხმარებლის სახელი",
-      value: authUser[0]?.username,
-    },
-    {
-      id: 2,
-      name: "მომხმარებლის ტიპი",
-      value: authUser[0]?.userType === "company" ? "კომპანია" : "პერსონალური",
-    },
-    {
-      id: 3,
-      name: "იმეილი",
-      value: authUser[0]?.email,
-    },
-    {
-      id: 4,
-      name: "მობილურის ნომერი",
-      value: authUser[0]?.phoneNumber,
-    },
-    {
-      id: 5,
-      name: "გადახდის გეგმა",
-      value: authUser[0]?.paymentPlan === "paid" ? "ფასიანი" : "უფასო",
-    },
-    {
-      id: 6,
-      name: "გადახდის მეთოდი",
-      value: authUser[0]?.paymentMethod === "tbc" ? "თბს ბანკი" : "",
-    },
-  ];
+  useEffect(() => {
+    dispatch(setUserStatus(userStatusUpdate));
+  }, [userStatusUpdate]);
 
   return (
     <>
-      {!isLoggedIn ? (
-        <Unauthorized />
+      {isLoading || !authUser ? (
+        <LoadingPage />
       ) : (
         <div className={`${styles.mainContainer} container`}>
           <div className={styles.imageContainer}>
@@ -201,42 +264,34 @@ const index = () => {
                 />
               )) || <h2 className={styles.imageText}>Uploaded Image</h2>}
             </div>
-            <ImageUpload
-              onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
-              handleImageRemove={handleImageRemove}
-            />
+            <div className={styles.imageUpload}>
+              <ImageUpload
+                type="account"
+                onImageUpload={imgSrc ? handleMediaUpdate : handleMediaUpload}
+                quantity={10}
+                handleImageRemove={handleImageRemove}
+              />
+              <FingerprintSvg onClick={() => setOpenPasswordPopup(true)} />
+            </div>
           </div>
-          {authUser.length > 0 &&
-            authUser?.map((user, index) => {
-              return (
-                <div className={styles.userInfoWrapper} key={index}>
-                  {authUserData.map((item) => {
-                    return (
-                      <div key={item.id}>
-                        {item.value && (
-                          <>
-                            <div className={styles.userInfoContainer}>
-                              <h6 className={styles.infoType}>{item.name}</h6>
-                              <div className={styles.userInfo}>
-                                {item.value}
-                              </div>
-                            </div>
-                            <hr />
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
-                  {!isEdit && <EditButton onClick={() => setIsEdit(true)} />}
-                </div>
-              );
-            })}
-          {isEdit && (
-            <EditAccount
-              authUser={authUser}
-              onClose={() => setIsEdit(false)}
-              loggedUserInfo={loggedUserInfo}
-            />
+          <div style={{ width: "100%" }}>
+            {authUser && (
+              <EditAccount
+                trialExpired={trialExpired}
+                authUserId={authUserId}
+                startEdit={startEdit}
+                setStartEdit={setStartEdit}
+                userData={userData}
+                setUserData={setUserData}
+                setIsEdit={setStartEdit}
+                pricesData={pricesData}
+                loggedUserInfo={loggedUserInfo}
+                authUser={authUser}
+              />
+            )}
+          </div>
+          {openPasswordPopup && (
+            <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />
           )}
         </div>
       )}

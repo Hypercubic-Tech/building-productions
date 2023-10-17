@@ -1,8 +1,7 @@
 .toolbarContainer {
     width: 100%;
-    /* background: red; */
+    height: 400px;
     position: relative;
-    padding-top: 25%;
 }
 .toolbarImg {
     position: absolute;
@@ -43,6 +42,32 @@
     align-items: center;
     color: #eb445f;
 }
-.tableContainer {
-    width: 100%;
+
+.disabledBtn {
+    opacity: 0.7!important;
+    cursor: not-allowed!important;
+    background-color: rgb(78, 78, 78)!important;
+    color: #fff!important;
+    pointer-events: none;
 }
+
+.disabledBtn svg path {
+    stroke: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .toolbarContainer {
+        height: 300px;
+    }
+    .toolbarDescContainer {
+        background: rgba(255,255,255,.8);
+        border: 1px solid rgba(255,255,255,.9);
+    }
+    .toolbarDescContainer > div {
+        padding: 10px 0px;
+    }
+    .toolbarDesc {
+        bottom: 10px;
+    }
+}
+    
