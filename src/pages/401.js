@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "../styles/main.module.css";
 
 const Unauthorized = () => {
+    //Unauthorized
     return (
         <div className={styles.not_found}>
             <h1>401 - Unauthorized</h1>
