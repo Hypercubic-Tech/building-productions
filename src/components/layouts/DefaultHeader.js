@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Auth from "../popup/Auth";
 import { useSpring, animated } from "react-spring";
 import Link from "next/link";
+import styles from "./HeaderLogged.module.css";
 
 function DefaultHeader(props) {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -48,11 +49,11 @@ function DefaultHeader(props) {
           <div className="d-flex align-items-center justify-content-between width-100 cream-bg">
             <div className="d-flex align-items-center">
             <Link href="/">
-                <img
+              <img
                   alt="Logo"
-                  src="/images/calc.png"
-                  className="logo-default h-lg-50px"
-                />
+                  src="/images/Logo.png"
+                  className={`${styles.logo}`}
+              />
             </Link>
             </div>
             <div className="d-lg-block" id="kt_header_nav_wrapper">

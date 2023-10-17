@@ -134,7 +134,7 @@ const Heading = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div ref={modalRef}>
-                  <div>{showModal && <Auth onClose={handleClose} />}</div>
+                  {showModal && <Auth onClose={handleClose} />}
                 </div>
               </animated.div>
             )}
