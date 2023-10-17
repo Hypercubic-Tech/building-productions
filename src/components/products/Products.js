@@ -540,8 +540,8 @@ const Products = ({
                         product?.attributes?.craft_status?.data?.attributes
                           ?.title;
                       return (
-                        <div className={`${styles.table_item_wrap} ${expandedItem === product.id && styles.actived_table_item}`}>
-                          <div key={index} className={`${styles.table_body_item_outer}`}>
+                        <div key={index} className={`${styles.table_item_wrap} ${expandedItem === product.id && styles.actived_table_item}`}>
+                          <div className={`${styles.table_body_item_outer}`}>
                             <span style={{ width: table_head[0]?.width }} className={styles.table_body_item}>
                               <img
                                 onError={(e) => {
