@@ -107,7 +107,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
           paymentMethod,
           payment_duration,
           trial_used: regData.payment_plan === 1 ? true : false,
-          trial_expires: regData.payment_plan === 1 ? trialExpires : false,
+          trial_expires: regData.payment_plan === 1 ? trialExpires : "false",
           account_type,
         }
       );
@@ -152,7 +152,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
         >
           სისტემაში შესვლა
         </div>
-        <div className="d-grid gap-2 mt-n1">
+        <div style={{marginTop: '16px'}} className="d-grid gap-2">
           <div className="d-grid gap-2 mt-n1">
             <label className="mt-2">მომხმარებლის ტიპი</label>
             <select
@@ -340,7 +340,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
               <label className="mt-2">აირჩიეთ გადახდის გეგმა:</label>
               <div className="w-100 justify-content-start d-flex">
                 <div
-                  className="buy-wrap nav-group landing-dark-bg d-inline-flex mb-15"
+                  className="buy-wrap nav-group landing-dark-bg d-inline-flex"
                   data-kt-buttons="true"
                 >
                   <a

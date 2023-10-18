@@ -39,7 +39,7 @@ const index = () => {
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-    if (now > expiredDate && typeof(expiredDate) !== "object") {
+    if (now > expiredDate && typeof (expiredDate) !== "object") {
       try {
         await axios
           .put(
@@ -301,7 +301,9 @@ const index = () => {
             )}
           </div>
           {openPasswordPopup && (
-            <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />
+            <div className="modal">
+              <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />
+            </div>
           )}
         </div>
       )}

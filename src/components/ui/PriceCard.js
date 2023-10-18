@@ -12,7 +12,7 @@ const PriceCard = ({ priceData, monthly }) => {
           {Math.floor(
             (priceData.attributes.month_price /
               priceData.attributes.year_price) *
-              100
+            100
           )}
           % ფასდაკლება !
         </div>
@@ -33,10 +33,12 @@ const PriceCard = ({ priceData, monthly }) => {
               : priceData.attributes.year_allowed_projects}
           </span>
         </div>
-        <div className="d-flex flex-stack mb-5">
-          <span>უფასო საცდელი დრო</span>
-          <span>7 დღე</span>
-        </div>
+        {priceData[0] && (
+          <div className="d-flex flex-stack mb-5">
+            <span>უფასო საცდელი დრო</span>
+            <span>7 დღე</span>
+          </div>
+        )}
         <div className="d-flex flex-stack mb-5">
           <span>პროდუქტების რაოდენობა</span>
           <span>უსასრულო</span>
