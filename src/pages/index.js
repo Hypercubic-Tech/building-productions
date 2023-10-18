@@ -16,6 +16,8 @@ import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
 import Price from "../components/main/Price";
 import Faq from "../components/main/Faq";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -86,6 +88,8 @@ const Home = () => {
   useEffect(() => {
     getFaqData();
     getPricesData();
+    AOS.init();
+    AOS.refresh();
   }, []);
 
   return (

@@ -1,13 +1,18 @@
 import styles from './Home.module.css';
+import {useEffect, useState} from "react";
 
 const HowItWorks = () => {
+  const [animate, setAnimate] = useState(false);
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
   return (
     <div style={{ marginTop: "30px" }} className="mb-n10 mb-lg-n20 z-index-2">
       <div className="container">
         <div className="d-flex w-100 relative mt-169 align-items-center col-responsive">
           <div className="w-100 gy-10 mb-md-20">
             <div className="">
-              <div className="mb-17">
+              <div className={`mb-17 animateBY tD4 ${animate ? 'animate' : ''}`}>
                 <h3
                   className="geo-title fs-2hx text-dark mb-5 georgian fw-bold"
                   id="how-it-works"
@@ -39,7 +44,7 @@ const HowItWorks = () => {
                 </div>
               </div>
             </div>
-            <div className="">
+            <div className="" data-aos="fade-up">
               <div className={`${"mb-10 d-flex under-line justify-content-between"} ${styles.how_it_works_item}`}>
                 <div className="d-flex flex-center mb-5">
                   <span className="badge badge-circle badge-light-success p-5 me-3 fs-3">
@@ -57,7 +62,7 @@ const HowItWorks = () => {
                 </div>
               </div>
             </div>
-            <div className="">
+            <div className="" data-aos="fade-up">
               <div className={`${"mb-10 d-flex under-line justify-content-between"} ${styles.how_it_works_item}`}>
                 <div className="d-flex flex-center mb-5">
                   <span className="badge badge-circle badge-light-success p-5 me-3 fs-3">

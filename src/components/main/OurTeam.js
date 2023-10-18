@@ -101,7 +101,7 @@ const AboutCompany = () => {
   }, [isCounting2, count2]);
 
   return (
-    <div className={`mt-sm-n10 ${styles.ourTeamContainer}`}>
+    <div className={`mt-sm-n10 ${styles.ourTeamContainer}`} data-aos="fade-up">
       <div className="pt-18 landing-dark-bg">
         <div className="container">
           <div
