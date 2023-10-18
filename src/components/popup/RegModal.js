@@ -134,13 +134,17 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     setPasswordValid(isValid);
   };
 
+  let popupElement = (
+    <div className="d-flex justify-content-between align-items-center mb-2">
+      <div className="blue geo-title fs-1-5hx">რეგისტრაცია</div>
+      <CloseBtnBG onClick={onClose} className={`${styles.closeBtn}`} />
+    </div>
+  )
+
   return (
     <div className={`${styles.container}`}>
       <div className={`${getStatusClass(1)} col`}>
-        <div className="d-flex justify-content-between align-items-center mb-2">
-          <div className="blue geo-title fs-1-5hx">რეგისტრაცია</div>
-          <CloseBtnBG onClick={onClose} className={`${styles.closeBtn}`} />
-        </div>
+        {popupElement}
         <div
           className={`${styles.registrationBtn} ${styles.cursorNone} text-muted `}
         >
@@ -331,16 +335,13 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
       </div>
       <div className={getStatusClass(2)}>
         <div className="col">
-          <div className="d-flex justify-content-between align-items-center mb-2">
-            <div className="text-muted">რეგისტრაცია</div>
-            <CloseBtn2 onClick={onClose} className={`${styles.closeBtn}`} />
-          </div>
+          {popupElement}
           <div className="d-grid gap-2 mt-n1">
             <div className="d-grid gap-2 mt-n1">
-              <label className="mt-2">აირჩიეთ გადახდის გეგმა:</label>
+              <label className="blue mt-2 fx geo-title">აირჩიეთ გადახდის გეგმა:</label>
               <div className="w-100 justify-content-start d-flex">
                 <div
-                  className="buy-wrap nav-group landing-dark-bg d-inline-flex"
+                  className={`${styles.switcher} ${"buy-wrap nav-group landing-dark-bg d-inline-flex"}`}
                   data-kt-buttons="true"
                 >
                   <a
@@ -352,7 +353,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                         payment_duration: "month",
                       }));
                     }}
-                    className={`buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
+                    className={`geo-title buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
                       monthly ? "active" : "",
                     ]} `}
                     data-kt-plan="month"
@@ -368,7 +369,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                         payment_duration: "year",
                       }));
                     }}
-                    className={`buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
+                    className={`geo-title buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
                       annual ? "active" : "",
                     ]} `}
                     data-kt-plan="annual"
@@ -385,7 +386,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
                       ? "red"
                       : "",
                 }}
-                className="form-select form-select-solid georgian"
+                className="geo-title form-select form-select-solid georgian"
                 defaultValue="აირჩიეთ გადახდის გეგმა"
                 onChange={(e) => {
                   setRegData((prevSendData) => ({
@@ -405,7 +406,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
               </select>
             </div>
             {lossData && regData?.payment_plan?.length === 0 && (
-              <p style={{ color: "red" }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>
+              <p className="blue mt-2 fx geo-title" style={{ color: "red" }}>გთხოვთ აირჩიოთ გადახდის გეგმა</p>
             )}
             {regData.payment_plan === 1 && (
               <PriceCard monthly={monthly} priceData={pricesData[0]} />
@@ -452,10 +453,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
       </div>
       <div className={getStatusClass(3)}>
         <div className="col">
-          <div className="d-flex justify-content-between align-items-center mb-2">
-            <div className="text-muted">რეგისტრაცია</div>
-            <CloseBtn2 onClick={onClose} className={`${styles.closeBtn}`} />
-          </div>
+          {popupElement}
           <div className="d-grid gap-2 mt-n1">
             <div className="d-grid gap-2 mt-n1">
               <label className="mt-2">აირჩიეთ გადახდის მეთოდი:</label>
