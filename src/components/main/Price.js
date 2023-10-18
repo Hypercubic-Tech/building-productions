@@ -17,6 +17,7 @@ const Price = ({ pricesData }) => {
                 <div
                   className="buy-wrap nav-group landing-dark-bg d-inline-flex mb-15"
                   data-kt-buttons="true"
+                  data-aos="fade-up"
                 >
                   <a
                     onClick={() => {
@@ -48,7 +49,7 @@ const Price = ({ pricesData }) => {
                 {pricesData &&
                   pricesData.map((item, index) => {
                     return (
-                      <div key={index} className="col-xl-4">
+                      <div key={index} className="col-xl-4"  data-aos="fade-up">
                         <div className="d-flex h-100 align-items-center">
                           <div
                             className={`br-4 br-4 w-100 d-flex flex-column flex-center ${

@@ -278,7 +278,6 @@ function HeaderLogged(props) {
           </div>
         </div>
       </div>
-      <div className="separator" />
     </div>
   );
 }
