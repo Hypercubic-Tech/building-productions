@@ -138,7 +138,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
     <div className={`${styles.container}`}>
       <div className={`${getStatusClass(1)} col`}>
         <div className="d-flex justify-content-between align-items-center mb-2">
-          <div className="text-muted">რეგისტრაცია</div>
+          <div className="blue geo-title fs-1-5hx">რეგისტრაცია</div>
           <CloseBtnBG onClick={onClose} className={`${styles.closeBtn}`} />
         </div>
         <div
@@ -148,13 +148,13 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
         </div>
         <div
           onClick={() => handleRegistration(false)}
-          className={`${styles.registrationBtn} ${styles.borderBottom} `}
+          className={`${styles.registrationBtn} ${styles.borderBottom} geo-title `}
         >
           სისტემაში შესვლა
         </div>
-        <div style={{marginTop: '16px'}} className="d-grid gap-2">
+        <div style={{ marginTop: '16px' }} className="d-grid gap-2">
           <div className="d-grid gap-2 mt-n1">
-            <label className="mt-2">მომხმარებლის ტიპი</label>
+            <label className="blue mt-2 fx geo-title">მომხმარებლის ტიპი</label>
             <select
               required
               style={{
@@ -181,16 +181,16 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
               </option>
             </select>
             {lossData && regData.account_type.length <= 0 && (
-              <p style={{ color: "red" }}>გთხოვთ აირჩიოთ მომხმარებლის ტიპი</p>
+              <p className="blue fx geo-title" style={{ color: "red" }}>გთხოვთ აირჩიოთ მომხმარებლის ტიპი</p>
             )}
           </div>
           {regData && (
-            <label className="mt-2">
+            <label className="blue mt-2 fx geo-title">
               {regData?.account_type === "company"
                 ? "კომპანიის სახელი"
                 : regData?.account_type === "personal"
-                ? "სრული სახელი"
-                : "სახელი"}
+                  ? "სრული სახელი"
+                  : "სახელი"}
             </label>
           )}
           <input
@@ -211,18 +211,18 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
             }}
           />
           {lossData && regData.username.length < 3 && (
-            <p style={{ color: "red" }}>
+            <p className="blue mt-2 fx geo-title" style={{ color: "red" }}>
               სახელი უნდა შეიცავდეს მინიმუმ 3 სიმბოლოს
             </p>
           )}
         </div>
         <div className="d-grid gap-2 mt-n1">
-          <label className="mt-2">იმეილი</label>
+          <label className="blue mt-2 fx geo-title">იმეილი</label>
           <input
             style={{
               borderColor:
                 (lossData && regData.email.length <= 0) ||
-                (lossData && !regData.email.includes("@"))
+                  (lossData && !regData.email.includes("@"))
                   ? "red"
                   : "",
             }}
@@ -247,7 +247,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
           ) : null}
         </div>
         <div className="d-grid gap-2 mt-n1">
-          <label className="mt-2">ტელეფონის ნომერი</label>
+          <label className="blue mt-2 fx geo-title">ტელეფონის ნომერი</label>
           <input
             style={{
               borderColor:
@@ -268,12 +268,12 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
             }}
           />
           {lossData && regData.phoneNumber.length !== 9 && (
-            <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ მობილურის ნომერი</p>
+            <p className="blue mt-2 fx geo-title" style={{ color: "red" }}>გთხოვთ შეიყვანოთ მობილურის ნომერი</p>
           )}
         </div>
         <div className="d-grid gap-2">
           <div style={{ position: "relative" }}>
-            <label className="mt-2">პაროლი</label>
+            <label className="blue mt-2 fx geo-title">პაროლი</label>
             <input
               style={{
                 borderColor:
@@ -309,12 +309,12 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
           {lossData && !passwordValid && (
             <div>
               {regData.password.length < 9 && (
-                <p style={{ color: "red" }}>
+                <p className="blue mt-2 fx geo-title" style={{ color: "red" }}>
                   პაროლი უნდა შეიცავდეს მინიმუმ 9 სიმბოლოს
                 </p>
               )}
               {!/[A-Z]/.test(regData.password) && (
-                <p style={{ color: "red" }}>
+                <p className="blue mt-2 fx geo-title" style={{ color: "red" }}>
                   პაროლი უნდა შეიცავდეს მინიმუმ ერთ დიდ ასოს (A-Z)
                 </p>
               )}
@@ -325,7 +325,7 @@ const RegModal = ({ handleRegistration, onClose, pricesData }) => {
             type="button"
             onClick={stepChangeHandler}
           >
-            რეგისტრაცია
+            შემდეგი
           </button>
         </div>
       </div>

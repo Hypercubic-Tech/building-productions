@@ -2,6 +2,8 @@ import { Fragment, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserStatus } from "../../store/slices/statusSlice";
+import { setAuthState } from "../../store/slices/authSlice";
+
 
 import axios from "axios";
 
@@ -10,6 +12,8 @@ import styles from './StatusDashboard.module.css';
 const StatusDashboard = () => {
     const dispatch = useDispatch();
     const { data: session } = useSession();
+    const authStory = useSelector(setAuthState);
+    const isLoggedIn = authStory.payload.auth.loggedIn
 
     const userStatus = useSelector((state) => state.userStatus);
     const provider = useSelector((state) => state.auth.provider);
@@ -71,8 +75,10 @@ const StatusDashboard = () => {
     };
 
     useEffect(() => {
-        loggedUserInfo();
-    }, [authUserId, session]);
+        if (isLoggedIn) {
+            loggedUserInfo();
+        }
+    }, [isLoggedIn]);
 
     useEffect(() => {
         dispatch(setUserStatus(userStatusUpdate));
@@ -80,7 +86,7 @@ const StatusDashboard = () => {
 
     return (
         <Fragment>
-            {session || authUserId ? (
+            {isLoggedIn ? (
                 <Fragment>
                     {isLoading ? (
                         <div className={styles.outer}>

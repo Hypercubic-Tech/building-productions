@@ -72,7 +72,7 @@ const Heading = () => {
         <div className={`${styles.heading_main} container d-flex flex-center w-100 relative mt-169 col-responsive justify-content-between`}>
           {/* min-h-lg-500px min-h-350px px-9 */}
           <div
-            className={`${"text-center mb-5 mb-lg-10 py-10 py-lg-20"} ${
+            className={`${"mb-5 mb-lg-10 py-10 py-lg-20"} ${
               styles.heading_container
             }`}
           >
