@@ -8,8 +8,6 @@ import axios from "axios"
 import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
 
-import { setUserStatus } from "../../store/slices/statusSlice";
-
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -19,7 +17,7 @@ const index = () => {
   const userId = useSelector((state) => state.auth.user_id);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const provider = useSelector((state) => state.auth.provider);
-
+  const status = useSelector((state) => state.userStatus)
   const [isLoading, setIsLoading] = useState(true);
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
@@ -31,26 +29,6 @@ const index = () => {
   const [productOptions, setProductOptions] = useState(null);
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
-  const [paymentPlan, setPaymentPlan] = useState(null);
-  const [allowedExport, setAllowedExport] = useState(false);
-  const [userStatusUpdate, setUserStatusUpdate] = useState(null);
-
-  const [trialExpired, setTrialExpired] = useState(false);
-
-  const allowedProductsHandler = () => {
-    setAllowedExport(paymentPlan?.payment_plan?.allowed_export);
-  };
-
-  const trialExpiredChecker = () => {
-    const now = new Date();
-    const expiredDate = paymentPlan?.trial_expires != null ? new Date(paymentPlan?.trial_expires) : null;
-
-    if (now > expiredDate && expiredDate !== null) {
-      setTrialExpired(true);
-    } {
-      setTrialExpired(false);
-    }
-  };
 
   const getProjectById = async () => {
     if (projectId) {
@@ -71,16 +49,12 @@ const index = () => {
         );
         const categoryData = categoryRes.data.data;
         setProjectCategory(categoryData);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
   };
-
-  useEffect(() => {
-    trialExpiredChecker();
-    allowedProductsHandler();
-  }, [paymentPlan]);
 
   useEffect(() => {
     const getSupplierHandler = async () => {
@@ -145,54 +119,6 @@ const index = () => {
         });
     };
 
-    const loggedUserInfo = async () => {
-      let url;
-
-      if (provider === "google") {
-        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-      } else {
-        url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${userId}&populate=*`;
-      }
-      if (url) {
-        try {
-          const response = await axios.get(url);
-          const data = response.data;
-
-          setPaymentPlan(data[0]);
-
-          dispatch(setUserStatus({
-            username: data[0]?.username,
-            p_title: data[0]?.payment_plan?.name,
-            payment_duration: data[0]?.payment_duration,
-            allowed_export: data[0]?.payment_plan?.allowed_export,
-            allowed_media: data[0]?.payment_plan?.allowed_media,
-            all_projects: data[0]?.projects.length,
-            account_type: data[0]?.account_type,
-            trial_used: data[0]?.trial_used,
-            trial_expires: data[0]?.trial_expires,
-
-          }));
-
-          if (data[0]?.payment_duration === "month") {
-            setUserStatusUpdate({
-              allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-            });
-            dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.month_allowed_projects }));
-          }
-          if (data[0]?.payment_duration === "year") {
-            dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.year_allowed_projects }));
-
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-
-
-    loggedUserInfo();
     getDefaultImage();
     getProductsStatusHandler();
     getCraftsStatusHandler();
@@ -203,12 +129,7 @@ const index = () => {
 
   useEffect(() => {
     getProjectById();
-    allowedProductsHandler();
   }, [projectId]);
-
-  useEffect(() => {
-    dispatch(setUserStatus(userStatusUpdate));
-  }, [userStatusUpdate]);
 
   const editHandler = (product) => {
     setEditProductItem(product);
@@ -218,7 +139,7 @@ const index = () => {
     <>
       {!isLoggedIn || isLoading ? (
         <LoadingPage />
-      ) : trialExpired ? (
+      ) : status.trial_expires === 'expired' && status.p_title === "დამწყები" ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'center', justifyContent: 'center' }}>
           <h2>უფასო საცდელი ვადა ამოიწურა გთხოვთ გაანახლოთ გადახდის მეთოდი</h2>
           <Link
@@ -231,8 +152,7 @@ const index = () => {
         </div>
       ) : (
         <Project
-          allowedProductsHandler={allowedProductsHandler}
-          allowedExport={allowedExport}
+          allowedExport={status.allowed_export}
           productStatus={productStatus}
           productOptions={productOptions}
           project={project}

@@ -37,7 +37,6 @@ const Project = ({
   defaultImage,
   getProjectById,
   allowedExport,
-  allowedProductsHandler,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -330,7 +329,6 @@ const Project = ({
           </div>
           <div className="card-body pt-0">
             <Products
-              allowedProductsHandler={allowedProductsHandler}
               getProjectById={getProjectById}
               defaultImage={defaultImage}
               productStatus={productStatus}

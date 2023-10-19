@@ -9,6 +9,7 @@ import notify from "../../utils/notify";
 import { setCategory } from "../../store/slices/categorySlice";
 
 import LoadingPage from "../../components/ui/LoadingPage";
+import Unauthorized from "../401";
 import EditProject from "../../components/popup/EditProject";
 import AddProject from "../../components/popup/AddProject";
 import DeleteBtn from "../../components/svg/DeleteBtn";
@@ -104,22 +105,22 @@ const index = () => {
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-    console.log(expiredDate, 'expired');
-    console.log(now)
     if (expiredDate instanceof Date && isNaN(expiredDate) === false) {
-      try {
-        await axios
-          .put(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
-            {
-              trial_used: true,
-              trial_expires: 'expired'
-            }
-          )
-      } catch (error) {
-        console.log(error);
+      if (now > expiredDate) {
+        try {
+          await axios
+            .put(
+              `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
+              {
+                trial_used: true,
+                trial_expires: 'expired'
+              }
+            )
+          dispatch(setUserStatus({ trial_expires: "expired", trial_used: true }));
+        } catch (error) {
+          console.log(error);
+        }
       }
-      dispatch(setUserStatus({ trial_expires: "expired", trial_used: true }));
     }
   };
 
@@ -136,8 +137,6 @@ const index = () => {
       return [];
     }
   };
-
-  console.log(userStatus)
 
   const editHandler = async (item) => {
     let id = item.id;
@@ -230,7 +229,6 @@ const index = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getProjectsData();
-      console.log(data.meta.pagination.total, 'data?')
       setProjectData(data.data);
       dispatch(setUserStatus({ all_projects: data.meta.pagination.total }));
     };
@@ -323,7 +321,9 @@ const index = () => {
   console.log(userStatus)
   return (
     <>
-      {!isLoggedIn || isLoading ? (
+      {!isLoggedIn ? (
+        <Unauthorized />
+      ) : isLoading ? (
         <LoadingPage />
       ) : (
         <>

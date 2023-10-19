@@ -33,29 +33,30 @@ const index = () => {
   const [pricesData, setPricesData] = useState(null);
   const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
 
-  const [trialExpired, setTrialExpired] = useState(false);
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
+
 
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
     if (expiredDate instanceof Date && isNaN(expiredDate) === false) {
-      try {
-        await axios
-          .put(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
-            {
-              trial_used: true,
-              trial_expires: 'expired'
-            }
-          )
-        dispatch(setUserStatus({ trial_expires: "expired", trial_used: true }));
-      } catch (error) {
-        console.log(error);
+      if (now > expiredDate) {
+        try {
+          await axios
+            .put(
+              `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
+              {
+                trial_used: true,
+                trial_expires: 'expired'
+              }
+            )
+          dispatch(setUserStatus({ trial_expires: "expired", trial_used: true }));
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
-
   const loggedUserInfo = async () => {
     let url;
     if (provider === "google") {
@@ -100,7 +101,7 @@ const index = () => {
             trial_expires: data[0]?.trial_expires,
 
           }));
-          
+
           if (data[0]?.payment_duration === "month") {
             setUserStatusUpdate({
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
@@ -281,7 +282,7 @@ const index = () => {
           <div style={{ width: "100%" }}>
             {authUser && (
               <EditAccount
-                trialExpired={trialExpired}
+                trialExpired={userStatus.trial_expires}
                 authUserId={authUserId}
                 startEdit={startEdit}
                 setStartEdit={setStartEdit}

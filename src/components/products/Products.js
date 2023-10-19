@@ -437,8 +437,6 @@ const Products = ({
     setPageIndex(1);
   }, [activeCategoryId]);
 
-  console.log(productsToMap, 'prod')
-
   return (
     <>
       <Fragment>

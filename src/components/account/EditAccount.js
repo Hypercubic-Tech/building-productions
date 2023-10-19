@@ -27,7 +27,7 @@ const EditAccount = ({
   const [monthly, setMonthly] = useState();
   const [initialValues, setInitialValues] = useState({});
 
-  const [filteredPricesData, setFilteredPricesData] = useState();
+  const [filteredPricesData, setFilteredPricesData] = useState(pricesData);
 
   let dynamicElements = [
     {
@@ -48,7 +48,7 @@ const EditAccount = ({
     {
       id: 1,
       title: "მომხმარებლის ტიპი",
-      value: userData?.account_type === "company" ? "კომპანია" : "პერსონალური",
+      value: userData?.account_type,
       type: "select",
       onChange: (e) => {
         setUserData((prevUserData) => ({
@@ -57,20 +57,20 @@ const EditAccount = ({
         }));
       },
     },
-    {
-      id: 2,
-      title: "ელ-ფოსტა",
-      type: "text",
-      value: userData?.email,
-      placeholder: "გთხოვთ შეავსოთ მეილი",
-      onChange: (e) => {
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          email: e.target.value,
-        }));
-      },
-      warning: userData?.email ? true : false,
-    },
+    // {
+    //   id: 2,
+    //   title: "ელ-ფოსტა",
+    //   type: "text",
+    //   value: userData?.email,
+    //   placeholder: "გთხოვთ შეავსოთ მეილი",
+    //   onChange: (e) => {
+    //     setUserData((prevUserData) => ({
+    //       ...prevUserData,
+    //       email: e.target.value,
+    //     }));
+    //   },
+    //   warning: userData?.email ? true : false,
+    // },
     {
       id: 3,
       title: "ტელეფონის ნომერი",
@@ -96,7 +96,6 @@ const EditAccount = ({
       setMonthly(false);
     }
   }, [userData]);
-
   const sendUserUpdatedInfo = async () => {
     const now = new Date();
     try {
@@ -116,7 +115,7 @@ const EditAccount = ({
             card_month: userData?.card_month,
             card_year: userData?.card_year,
             trial_used: true,
-            trial_expires: trialExpired ? "expired" : now,
+            trial_expires: trialExpired === "expired" ? "expired" : userData.trial_expires,
             account_type: userData?.account_type,
           }
         )
@@ -147,7 +146,7 @@ const EditAccount = ({
   };
 
   useEffect(() => {
-    if (userData.trial_expires === "expired") {
+    if (userData.trial_expires === "expired" && userData.payment_plan.connect[0].id === 1) {
       setFilteredPricesData(pricesData.filter((price) => price.id !== 1));
     }
   }, []);
@@ -336,9 +335,8 @@ const EditAccount = ({
               pointerEvents: !startEdit ? "none" : "all",
             }}
             onClick={sendUserUpdatedInfo}
-            className={`${"fill-btn btn btn-primary fw-boldest"} ${
-              styles.saveBtn
-            }`}
+            className={`${"fill-btn btn btn-primary fw-boldest"} ${styles.saveBtn
+              }`}
           >
             შენახვა
           </div>
@@ -349,9 +347,8 @@ const EditAccount = ({
               pointerEvents: !startEdit ? "none" : "all",
             }}
             onClick={clearUserInfoChanges}
-            className={`${"fill-btn btn btn-primary fw-boldest"} ${
-              styles.saveBtn
-            }`}
+            className={`${"fill-btn btn btn-primary fw-boldest"} ${styles.saveBtn
+              }`}
           >
             გასუფთავება
           </div>
