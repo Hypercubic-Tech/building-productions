@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserStatus } from "../../store/slices/statusSlice";
 import { setAuthState } from "../../store/slices/authSlice";
 
-
 import axios from "axios";
 
 import styles from './StatusDashboard.module.css';
@@ -21,68 +20,68 @@ const StatusDashboard = () => {
     const [active, setActive] = useState(false);
     const [userStatusUpdate, setUserStatusUpdate] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    console.log(userStatus, 'userStatus')
+    // const loggedUserInfo = async () => {
+    //     setIsLoading(true);
+    //     let url;
 
-    const loggedUserInfo = async () => {
-        setIsLoading(true);
-        let url;
+    //     if (provider === "google") {
+    //         url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+    //     } else {
+    //         url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
+    //     }
 
-        if (provider === "google") {
-            url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-        } else {
-            url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
-        }
+    //     if (url) {
+    //         try {
+    //             const response = await axios.get(url);
+    //             const data = response.data;
 
-        if (url) {
-            try {
-                const response = await axios.get(url);
-                const data = response.data;
+    //             if (data[0]?.payment_duration === 'month') {
+    //                 setUserStatusUpdate({
+    //                     username: data[0]?.username,
+    //                     p_title: data[0]?.payment_plan?.name,
+    //                     payment_duration: data[0]?.payment_duration,
+    //                     allowed_export: data[0]?.payment_plan?.allowed_export,
+    //                     allowed_media: data[0]?.payment_plan?.allowed_media,
+    //                     allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
+    //                     all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
+    //                     trial_expires: data[0]?.trial_expires,
+    //                     trial_used: data[0]?.trial_used,
+    //                     account_type: data[0]?.account_type
+    //                 });
+    //             }
+    //             if (data[0]?.payment_duration === 'year') {
+    //                 setUserStatusUpdate({
+    //                     username: data[0]?.username,
+    //                     p_title: data[0]?.payment_plan?.name,
+    //                     payment_duration: data[0]?.payment_duration,
+    //                     allowed_export: data[0]?.payment_plan?.allowed_export,
+    //                     allowed_media: data[0]?.payment_plan?.allowed_media,
+    //                     allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
+    //                     all_projects: data[0]?.projects.lenght,
+    //                     trial_expires: data[0]?.trial_expires,
+    //                     trial_used: data[0]?.trial_used,
+    //                     account_type: data[0]?.account_type
+    //                 });
+    //             }
 
-                if (data[0]?.payment_duration === 'month') {
-                    setUserStatusUpdate({
-                        username: data[0]?.username,
-                        p_title: data[0]?.payment_plan?.name,
-                        payment_duration: data[0]?.payment_duration,
-                        allowed_export: data[0]?.payment_plan?.allowed_export,
-                        allowed_media: data[0]?.payment_plan?.allowed_media,
-                        allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-                        all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
-                        trial_expires: data[0]?.trial_expires,
-                        trial_used: data[0]?.trial_used,
-                        account_type: data[0]?.account_type
-                    });
-                }
-                if (data[0]?.payment_duration === 'year') {
-                    setUserStatusUpdate({
-                        username: data[0]?.username,
-                        p_title: data[0]?.payment_plan?.name,
-                        payment_duration: data[0]?.payment_duration,
-                        allowed_export: data[0]?.payment_plan?.allowed_export,
-                        allowed_media: data[0]?.payment_plan?.allowed_media,
-                        allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-                        all_projects: data[0]?.projects.lenght,
-                        trial_expires: data[0]?.trial_expires,
-                        trial_used: data[0]?.trial_used,
-                        account_type: data[0]?.account_type
-                    });
-                }
+    //         } catch (error) {
+    //             console.error(error);
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     }
+    // };
 
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-    };
+    // useEffect(() => {
+    //     if (isLoggedIn) {
+    //         loggedUserInfo();
+    //     }
+    // }, [isLoggedIn]);
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            loggedUserInfo();
-        }
-    }, [isLoggedIn]);
-
-    useEffect(() => {
-        dispatch(setUserStatus(userStatusUpdate));
-    }, [userStatusUpdate]);
+    // useEffect(() => {
+    //     dispatch(setUserStatus(userStatusUpdate));
+    // }, [userStatusUpdate]);
 
     return (
         <Fragment>

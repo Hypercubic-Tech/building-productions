@@ -160,28 +160,28 @@ const index = () => {
 
           setPaymentPlan(data[0]);
 
+          dispatch(setUserStatus({
+            username: data[0]?.username,
+            p_title: data[0]?.payment_plan?.name,
+            payment_duration: data[0]?.payment_duration,
+            allowed_export: data[0]?.payment_plan?.allowed_export,
+            allowed_media: data[0]?.payment_plan?.allowed_media,
+            all_projects: data[0]?.projects.length,
+            account_type: data[0]?.account_type,
+            trial_used: data[0]?.trial_used,
+            trial_expires: data[0]?.trial_expires,
+
+          }));
+
           if (data[0]?.payment_duration === "month") {
             setUserStatusUpdate({
-              username: data[0]?.username,
-              p_title: data[0]?.payment_plan?.name,
-              payment_duration: data[0]?.payment_duration,
-              allowed_export: data[0]?.payment_plan?.allowed_export,
-              allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-              all_projects:
-                data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
             });
+            dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.month_allowed_projects }));
           }
           if (data[0]?.payment_duration === "year") {
-            setUserStatusUpdate({
-              username: data[0]?.username,
-              p_title: data[0]?.payment_plan?.name,
-              payment_duration: data[0]?.payment_duration,
-              allowed_export: data[0]?.payment_plan?.allowed_export,
-              allowed_media: data[0]?.payment_plan?.allowed_media,
-              allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-              all_projects: data[0]?.projects.lenght,
-            });
+            dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.year_allowed_projects }));
+
           }
         } catch (error) {
           console.error(error);
@@ -213,7 +213,7 @@ const index = () => {
   const editHandler = (product) => {
     setEditProductItem(product);
   };
-  
+
   return (
     <>
       {!isLoggedIn || isLoading ? (
