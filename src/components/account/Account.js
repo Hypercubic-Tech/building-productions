@@ -39,7 +39,6 @@ const index = () => {
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-    console.log(expiredDate, 'expired')
     if (expiredDate instanceof Date && isNaN(expiredDate) === false) {
       try {
         await axios
@@ -69,7 +68,6 @@ const index = () => {
         .get(url)
         .then((res) => {
           const data = res.data;
-          console.log(data[0]?.projects.length, 'dataaa')
           setAuthUser(data);
           setUserData({
             id: data[0]?.id,
