@@ -157,7 +157,7 @@ const EditAccount = ({
         <div key={index} className={styles.inputs_control_wrapper}>
           <div className={styles.inputs_control}>
             <h3
-              className={styles.userInfoTitle}
+              className={`${styles.userInfoTitle} ${'geo-title'}`}
               style={{ opacity: !startEdit ? "0.7" : "1" }}
             >
               {el.title}
@@ -362,7 +362,7 @@ const EditAccount = ({
             className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
           >
             <EditSvg />
-            <span>პროფილის რედაქტირება</span>
+            <span className="geo-title">პროფილის რედაქტირება</span>
           </div>
         </div>
         <div className={styles.bottomLine}></div>

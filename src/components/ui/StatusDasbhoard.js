@@ -10,6 +10,7 @@ import styles from './StatusDashboard.module.css';
 
 const StatusDashboard = () => {
     const authStory = useSelector(setAuthState);
+    const authUserId = useSelector((state) => state.auth.user_id);
     const isLoggedIn = authStory.payload.auth.loggedIn;
 
     const dispatch = useDispatch();

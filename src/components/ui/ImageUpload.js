@@ -44,7 +44,7 @@ const ImageUpload = ({ onImageUpload, handleImageRemove, quantity, type }) => {
             <input {...getInputProps()} />
             <div className={styles.textAndSvg}>
               <UploadSvg />
-              <span>სურათის ატვირთვა</span>
+              <span className="geo-title">სურათის ატვირთვა</span>
             </div>
           </div>
           {/* {uploadedImage && (
@@ -60,7 +60,7 @@ const ImageUpload = ({ onImageUpload, handleImageRemove, quantity, type }) => {
         <div className={styles.uploadSvgWrapper} {...getRootProps()}>
           {/* <input {...getInputProps()} /> */}
           <PictureUploadSvg />
-          <span>სურათის ატვირთვა</span>
+          <span className="geo-title">სურათის ატვირთვა</span>
         </div>
       ) : (
         ""

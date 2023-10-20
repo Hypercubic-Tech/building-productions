@@ -141,10 +141,10 @@ const index = () => {
         <LoadingPage />
       ) : status.trial_expires === 'expired' && status.p_title === "დამწყები" ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'center', justifyContent: 'center' }}>
-          <h2>უფასო საცდელი ვადა ამოიწურა გთხოვთ გაანახლოთ გადახდის მეთოდი</h2>
+          <h2 className="geo-title">უფასო საცდელი ვადა ამოიწურა გთხოვთ გაანახლოთ გადახდის მეთოდი</h2>
           <Link
             type="button"
-            className="btn btn-primary ghost-btn fw-boldest"
+            className="btn btn-primary ghost-btn fw-boldest geo-title"
             href="/account"
           >
             პროფილი
