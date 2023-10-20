@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
 import { useSpring, animated } from "react-spring";
 
 import Auth from "../popup/Auth.js";
 
 const Price = ({ pricesData, log }) => {
+  const router = useRouter();
   const [annual, setAnnual] = useState(false);
   const [monthly, setMonthly] = useState(true);
   const [authModal, setAuthModal] = useState(false);
