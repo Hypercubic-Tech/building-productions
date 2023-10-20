@@ -97,7 +97,6 @@ const Home = () => {
     AOS.refresh();
   }, []);
 
-  console.log(authUserId);
   return (
     <div
       id="kt_body"

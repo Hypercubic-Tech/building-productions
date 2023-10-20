@@ -317,8 +317,6 @@ const index = () => {
     setIsLoading(false)
   }, [userStatus.trialExpired]);
 
-
-  console.log(userStatus)
   return (
     <>
       {!isLoggedIn ? (
