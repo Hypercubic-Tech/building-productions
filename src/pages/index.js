@@ -11,6 +11,7 @@ import {
 } from "../store/slices/authSlice";
 import axios from "axios";
 
+import { setAuthState } from "../store/slices/authSlice";
 import Heading from "../components/main/Heading";
 import HowItWorks from "../components/main/HowItWorks";
 import OurTeam from "../components/main/OurTeam";
@@ -24,9 +25,13 @@ const Home = () => {
   const router = useRouter();
   const [faqData, setFaqData] = useState(null);
   const [pricesData, setPricesData] = useState(null);
+  
 
   const { data: session } = useSession();
   const authUserId = useSelector((state) => state.auth.user_id);
+
+  const loggedIn = useSelector(setAuthState);
+  const log = loggedIn.payload.auth.loggedIn;
 
   const getFaqData = async () => {
     try {
@@ -92,6 +97,7 @@ const Home = () => {
     AOS.refresh();
   }, []);
 
+  console.log(authUserId);
   return (
     <div
       id="kt_body"
@@ -101,10 +107,10 @@ const Home = () => {
       className="bg-white position-relative"
     >
       <div className="d-flex flex-column flex-root">
-        <Heading />
+        <Heading log={log} />
         <HowItWorks />
         <OurTeam />
-        <Price pricesData={pricesData} />
+        <Price log={log} pricesData={pricesData} />
         <Faq faqData={faqData} />
       </div>
     </div>

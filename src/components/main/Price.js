@@ -1,14 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSpring, animated } from "react-spring";
 
-const Price = ({ pricesData }) => {
+import Auth from "../popup/Auth.js";
+
+const Price = ({ pricesData, log }) => {
   const [annual, setAnnual] = useState(false);
   const [monthly, setMonthly] = useState(true);
+  const [authModal, setAuthModal] = useState(false);
   const [selected, setSelected] = useState(1);
+
+  const [animate, setAnimate] = useState(false);
+
+  
+  const animation = useSpring({
+    opacity: authModal ? 1 : 0,
+    visibility: authModal ? "visible" : "hidden",
+  });
+  
+  const authModalHandler = () => {
+    if (log) {
+      router.push("/account");
+
+    } else {
+      setAuthModal(true);
+    }
+  };
 
   return (
     <div className="mt-sm-n20">
-      {/* <div className="landing-curve landing-dark-color">
-      </div> */}
       <div className="landing-dark-bg">
         <div>
           <div className="d-flex flex-column container pt-lg-20">
@@ -232,6 +251,8 @@ const Price = ({ pricesData }) => {
                             <a
                               onClick={() => {
                                 setSelected(item.id);
+                                authModalHandler()
+
                               }}
                               className={` border-none ${selected === item.id
                                 ? "btn btn-color-primary btn-active-light-primary btn-light br-4"
@@ -250,18 +271,15 @@ const Price = ({ pricesData }) => {
           </div>
         </div>
       </div>
-      {/* <div className="landing-curve landing-dark-color">
-        <svg
-          viewBox="15 12 1470 48"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z"
-            fill="currentColor"
-          />
-        </svg>
-      </div> */}
+      <animated.div
+        className="modal"
+        style={animation}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div>
+          {authModal && <Auth onClose={() => setAuthModal(false)} />}
+        </div>
+      </animated.div>
     </div>
   );
 };
