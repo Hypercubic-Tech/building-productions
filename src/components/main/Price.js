@@ -23,7 +23,6 @@ const Price = ({ pricesData, log }) => {
   const authModalHandler = () => {
     if (log) {
       router.push("/account");
-
     } else {
       setAuthModal(true);
     }
