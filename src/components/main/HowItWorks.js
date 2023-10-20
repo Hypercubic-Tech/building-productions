@@ -11,7 +11,7 @@ const HowItWorks = () => {
       <div className="container">
         <div className="d-flex w-100 relative mt-169 align-items-center col-responsive">
           <div className="w-100 gy-10 mb-md-20">
-            <div className="">
+            <div>
               <div className={`mb-17 animateBY tD4 ${animate ? 'animate' : ''}`}>
                 <h3
                   className="geo-title fs-2hx text-dark mb-5 georgian fw-bold"
@@ -27,16 +27,16 @@ const HowItWorks = () => {
                   ჩვენი პროგრამა თქვენთვის ნამდვილი აღმოჩენაა.
                 </div>
               </div>
-              <div className={`${"mb-10 d-flex under-line justify-content-between"} ${styles.how_it_works_item}`}>
-                <div className="d-flex flex-center mb-5">
+              <div className={` ${styles.how_it_works_item}`}>
+                <div className={`${styles.how_it_works_ttl}`}>
                   <span className="badge badge-circle badge-light-success p-5 me-3 fs-3">
                     1
                   </span>
-                  <div className="fw-bold fs-5 fs-lg-3 text-dark georgian">
+                  <div className="geo-title">
                     დარეგისტრირდი
                   </div>
                 </div>
-                <div className={`${"text-end fs-6 fs-lg-4 text-muted pb-6"} ${styles.how_it_works_subitem}`}>
+                <div className={`${styles.how_it_works_subitem}`}>
                   თუ თქვენ თავად აპირებთ თავად
                   გაუძღვეთ სარემონტო სამუშაოებს, მაშინ,
                   <br />
@@ -44,17 +44,17 @@ const HowItWorks = () => {
                 </div>
               </div>
             </div>
-            <div className="" data-aos="fade-up">
-              <div className={`${"mb-10 d-flex under-line justify-content-between"} ${styles.how_it_works_item}`}>
-                <div className="d-flex flex-center mb-5">
+            <div data-aos="fade-up">
+              <div className={` ${styles.how_it_works_item}`}>
+                <div className={`${styles.how_it_works_ttl}`}>
                   <span className="badge badge-circle badge-light-success p-5 me-3 fs-3">
                     2
                   </span>
-                  <div className="fw-bold fs-5 fs-lg-3 text-dark georgian">
+                  <div className="geo-title">
                     აირჩიეთ სამუშაოები
                   </div>
                 </div>
-                <div className={`${"text-end fs-6 fs-lg-4 text-muted pb-6"} ${styles.how_it_works_subitem}`}>
+                <div className={` ${styles.how_it_works_subitem}`}>
                   თუ თქვენ თავად აპირებთ თავად
                   გაუძღვეთ სარემონტო სამუშაოებს, მაშინ,
                   <br />
@@ -62,17 +62,17 @@ const HowItWorks = () => {
                 </div>
               </div>
             </div>
-            <div className="" data-aos="fade-up">
-              <div className={`${"mb-10 d-flex under-line justify-content-between"} ${styles.how_it_works_item}`}>
-                <div className="d-flex flex-center mb-5">
+            <div data-aos="fade-up">
+              <div className={` ${styles.how_it_works_item}`}>
+                <div className={`${styles.how_it_works_ttl}`}>
                   <span className="badge badge-circle badge-light-success p-5 me-3 fs-3">
                     3
                   </span>
-                  <div className="no-wrap fw-bold fs-5 fs-lg-3 text-dark georgian">
+                  <div className="geo-title">
                     დაიწყე დათვლა
                   </div>
                 </div>
-                <div className={`${"text-end fs-6 fs-lg-4 text-muted pb-6"} ${styles.how_it_works_subitem}`}>
+                <div className={`${styles.how_it_works_subitem}`}>
                   თუ თქვენ თავად აპირებთ თავად
                   გაუძღვეთ სარემონტო სამუშაოებს, მაშინ,
                   ჩვენი პროგრამა თქვენთვის ნამდვილი აღმოჩენაა.
