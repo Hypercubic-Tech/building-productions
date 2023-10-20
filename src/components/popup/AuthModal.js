@@ -18,7 +18,7 @@ import CloseBtnBG from "../svg/CloseBtnBG";
 
 import styles from "../popup/AuthModal.module.css";
 
-const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
+const AuthModal = ({ handleAuthorization, onClose}) => {
   const [lossData, setLossData] = useState(false);
   const [isForgot, setIsForgot] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -125,7 +125,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
           <div className="row">
             <div className="d-flex justify-content-between">
               <div className={`row gutter-zero`}>
-                <div className="blue">სისტემაში შესვლა</div>
+                <div className="blue geo-title fs-1-5hx">სისტემაში შესვლა</div>
                 <div
                   className={`${styles.registrationBtn} ${styles.cursorNone} text-muted `}
                 >
@@ -133,7 +133,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
                 </div>
                 <div
                   onClick={() => handleAuthorization(false)}
-                  className={`${styles.registrationBtn} ${styles.borderBottom} `}
+                  className={`${styles.registrationBtn} ${styles.borderBottom} geo-title`}
                 >
                   დარეგისტრირდი
                 </div>
@@ -141,7 +141,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
               <CloseBtnBG onClick={onClose} className={styles.closeBtn} />
             </div>
             <div className="d-grid gap-2">
-              <label className="blue mt-2 fx">იმეილი</label>
+              <label className="blue mt-2 fx geo-title">ელ-ფოსტა</label>
               <input
                 style={{
                   borderColor:
@@ -164,7 +164,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
               <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ იმეილი</p>
             )}
             <div className="d-grid gap-2" style={{ position: "relative" }}>
-              <label className="blue mt-2 fx">პაროლი</label>
+              <label className="blue mt-2 fx geo-title">პაროლი</label>
               <input
                 style={{
                   borderColor:
@@ -202,12 +202,14 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
               <span
                 onClick={forgotPassword}
                 style={{ paddingTop: "5px", cursor: "pointer" }}
+                className={`${styles.registrationBtn} ${styles.borderBottom} geo-title`}
               >
                 დაგავიწყდა პაროლი?
               </span>
               <button
                 className={`fill-btn btn btn-primary georgian ${styles.btn}`}
                 type="submit"
+                onClick={onClose()}
               >
                 შესვლა
               </button>

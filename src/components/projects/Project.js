@@ -37,7 +37,6 @@ const Project = ({
   defaultImage,
   getProjectById,
   allowedExport,
-  allowedProductsHandler,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -133,9 +132,9 @@ const Project = ({
               <div className={`${styles.toolbarDesc}`}>
                 <div className={`container ${styles.toolbarDescContainer}`}>
                   <div className="page-title d-flex flex-column me-3">
-                    <h1>{p?.attributes?.title}</h1>
+                    <h1 className="geo-title">{p?.attributes?.title}</h1>
                     <h2
-                      className={`d-flex fw-bolder my-1 fs-3 georgian ${styles.toolbarAddress}`}
+                      className={`d-flex fw-bolder my-1 fs-3 geo-title ${styles.toolbarAddress}`}
                     >
                       <MapSvg />
                       &nbsp;{p?.attributes?.address}
@@ -273,7 +272,7 @@ const Project = ({
                       data-bs-target="#kt_modal_add_user"
                     >
                       <AddSvg />
-                      <b>დამატება</b>
+                      <b className="geo-title">დამატება</b>
                     </button>
                   </div>
                 )}
@@ -330,7 +329,6 @@ const Project = ({
           </div>
           <div className="card-body pt-0">
             <Products
-              allowedProductsHandler={allowedProductsHandler}
               getProjectById={getProjectById}
               defaultImage={defaultImage}
               productStatus={productStatus}

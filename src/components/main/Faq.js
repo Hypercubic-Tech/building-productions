@@ -14,7 +14,7 @@ const Faq = ({ faqData }) => {
   };
 
   return (
-    <div className="container mb-320">
+    <div className="container mb-320 mt-20"  data-aos="fade-up">
       <div className="d-flex w-100 align-items-center custom-row responsive-justify-center">
         <div className={styles.width50}>
           <h3 className="m-color fs-2hx fw-bold mb-8 georgian">

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useSpring, animated } from "react-spring";
 import { setAuthState } from "../../store/slices/authSlice";
 
@@ -9,11 +9,8 @@ import Auth from "../popup/Auth.js";
 
 import styles from "./Home.module.css";
 
-const Heading = () => {
+const Heading = ({log}) => {
   const dispatch = useDispatch();
-
-  const loggedIn = useSelector(setAuthState);
-  const log = loggedIn.payload.auth.loggedIn;
   const modalRef = useRef(null);
 
   const [showModal, setShowModal] = useState(false);
@@ -59,25 +56,20 @@ const Heading = () => {
     ) {
       dispatch(setAuthState(true));
     }
-  }, [loggedIn, dispatch]);
+  }, [log, dispatch]);
 
   return (
     <div className="mb-0" id="home">
       <div
         className="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
-        // style={{
-        //   backgroundImage: "url(assets/media/svg/illustrations/landing.svg)",
-        // }}
       >
         <div className={`${styles.heading_main} container d-flex flex-center w-100 relative mt-169 col-responsive justify-content-between`}>
-          {/* min-h-lg-500px min-h-350px px-9 */}
           <div
-            className={`${"text-center mb-5 mb-lg-10 py-10 py-lg-20"} ${
+            className={`${"mb-5 mb-lg-10 py-10 py-lg-20"} ${
               styles.heading_container
             }`}
           >
             <h1 className={`text-start geo-title lh-base fw-bold f-rem2 fs-lg-3x mb-15 georgian animateBY tD2 ${animate  ? 'animate' : ''}`}>
-              {/* fs-2x */}
               გამოთვალე მარტივად
               <br />
               <span>

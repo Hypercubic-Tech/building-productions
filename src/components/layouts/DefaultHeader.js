@@ -60,7 +60,7 @@ function DefaultHeader(props) {
             </div>
             <div className="ms-1">
               <div
-                className={` btn georgian custom-btn `}
+                className={` btn geo-title custom-btn `}
                 onClick={handleAuthClick}
               >
                 <svg
@@ -86,7 +86,6 @@ function DefaultHeader(props) {
             </div>
           </div>
         </div>
-        <div className="separator" />
       </div>
   );
 }

@@ -33,29 +33,30 @@ const index = () => {
   const [pricesData, setPricesData] = useState(null);
   const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
 
-  const [trialExpired, setTrialExpired] = useState(false);
   const [userStatusUpdate, setUserStatusUpdate] = useState({});
+
 
   const trialExpiredChecker = async () => {
     const now = new Date();
     const expiredDate = new Date(userStatus?.trial_expires);
-    if (now > expiredDate && typeof(expiredDate) !== "object") {
-      try {
-        await axios
-          .put(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
-            {
-              trial_used: true,
-              trial_expires: 'expired'
-            }
-          )
-      } catch (error) {
-        console.log(error);
+    if (expiredDate instanceof Date && isNaN(expiredDate) === false) {
+      if (now > expiredDate) {
+        try {
+          await axios
+            .put(
+              `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
+              {
+                trial_used: true,
+                trial_expires: 'expired'
+              }
+            )
+          dispatch(setUserStatus({ trial_expires: "expired", trial_used: true }));
+        } catch (error) {
+          console.log(error);
+        }
       }
-      dispatch(setUserStatus({ trial_expires: "expired" }));
     }
   };
-
   const loggedUserInfo = async () => {
     let url;
     if (provider === "google") {
@@ -88,34 +89,28 @@ const index = () => {
           });
 
           // for user dashboard
+          dispatch(setUserStatus({
+            username: data[0]?.username,
+            p_title: data[0]?.payment_plan?.name,
+            payment_duration: data[0]?.payment_duration,
+            allowed_export: data[0]?.payment_plan?.allowed_export,
+            allowed_media: data[0]?.payment_plan?.allowed_media,
+            all_projects: data[0]?.projects.length,
+            account_type: data[0]?.account_type,
+            trial_used: data[0]?.trial_used,
+            trial_expires: data[0]?.trial_expires,
+
+          }));
+
           if (data[0]?.payment_duration === "month") {
             setUserStatusUpdate({
-              username: data[0]?.username,
-              p_title: data[0]?.payment_plan?.name,
-              payment_duration: data[0]?.payment_duration,
-              allowed_export: data[0]?.payment_plan?.allowed_export,
-              allowed_media: data[0]?.payment_plan?.allowed_media,
               allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-              all_projects:
-                data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
-              trial_expires: data[0]?.trial_expires,
-              trial_used: data[0]?.trial_used,
-              account_type: data[0]?.account_type
             });
+            dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.month_allowed_projects }));
           }
           if (data[0]?.payment_duration === "year") {
-            setUserStatusUpdate({
-              username: data[0]?.username,
-              p_title: data[0]?.payment_plan?.name,
-              payment_duration: data[0]?.payment_duration,
-              allowed_export: data[0]?.payment_plan?.allowed_export,
-              allowed_media: data[0]?.payment_plan?.allowed_media,
-              allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-              all_projects: data[0]?.projects.lenght,
-              trial_expires: data[0]?.trial_expires,
-              trial_used: data[0]?.trial_used,
-              account_type: data[0]?.account_type
-            });
+            dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.year_allowed_projects }));
+
           }
         })
         .then(() => {
@@ -287,7 +282,7 @@ const index = () => {
           <div style={{ width: "100%" }}>
             {authUser && (
               <EditAccount
-                trialExpired={trialExpired}
+                trialExpired={userStatus.trial_expires}
                 authUserId={authUserId}
                 startEdit={startEdit}
                 setStartEdit={setStartEdit}
@@ -301,7 +296,9 @@ const index = () => {
             )}
           </div>
           {openPasswordPopup && (
-            <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />
+            <div className="modal">
+              <ChangePassword setOpenPasswordPopup={setOpenPasswordPopup} />
+            </div>
           )}
         </div>
       )}

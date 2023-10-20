@@ -83,7 +83,7 @@ const EditService = ({
         })
         .then((res) => {
           const data = res.data;
-          notify(false, "ხელობა დაემატა");
+          notify(false, "სამუშაო რედაქტირდა");
           dispatch(setProductState(data.data));
         })
     } catch (err) {
@@ -106,7 +106,7 @@ const EditService = ({
       <div className={`modal-dialog modal-dialog-centered mw-650px`}>
         <div className="modal-content" style={{ borderRadius: '4px' }}>
           <div className="modal-header" id="kt_modal_add_user_header">
-            <h2>სერვისის რედაქტირება</h2>
+            <h2 className='geo-title'>სერვისის რედაქტირება</h2>
             <div
               className={`${styles.modalClose}`}
               data-kt-users-modal-action="close"
@@ -313,7 +313,7 @@ const EditService = ({
                     setSelect(null);
                   }}
                   type="reset"
-                  className="btn btn-light me-3"
+                  className="btn btn-light me-3 geo-title"
                   data-kt-users-modal-action="cancel"
                 >
                   გაუქმება
@@ -324,7 +324,7 @@ const EditService = ({
                   className="btn btn-primary"
                   data-kt-users-modal-action="submit"
                 >
-                  <span className="indicator-label">რედაქტირება</span>
+                  <span className="indicator-label geo-title">რედაქტირება</span>
                 </div>
               </div>
             </form>
