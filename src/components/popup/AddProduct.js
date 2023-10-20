@@ -116,7 +116,7 @@ const AddProduct = ({
         })
         .then((res) => {
           const data = res.data;
-          notify(false, "ხელობა დაემატა");
+          notify(false, "სამუშაო დაემატა");
           dispatch(setProductState(data.data));
           getProjectById();
         });
@@ -226,7 +226,7 @@ const AddProduct = ({
                 onClick={() => setToggle(false)}
                 className={`fw-bolder geo-title ${!toggle ? styles.active : ""}`}
               >
-                ხელობა
+                სამუშაო
               </div>
             </div>
             {toggle ? (

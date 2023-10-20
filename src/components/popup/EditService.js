@@ -83,7 +83,7 @@ const EditService = ({
         })
         .then((res) => {
           const data = res.data;
-          notify(false, "ხელობა დაემატა");
+          notify(false, "სამუშაო რედაქტირდა");
           dispatch(setProductState(data.data));
         })
     } catch (err) {

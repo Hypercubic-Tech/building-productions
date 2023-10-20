@@ -105,7 +105,6 @@ const Home = () => {
         <HowItWorks />
         <OurTeam />
         <Price pricesData={pricesData} />
-        {/* <ContactUs /> */}
         <Faq faqData={faqData} />
       </div>
     </div>

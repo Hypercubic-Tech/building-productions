@@ -105,7 +105,7 @@ const AboutCompany = () => {
       <div className="pt-18 landing-dark-bg">
         <div className="container">
           <div
-            className={`${"custom-row d-flex align-center align-items-center mt-15 mb-18"} ${
+            className={`${"d-flex align-center align-items-center mt-15 mb-18"} ${
               styles.our_team_item
             }`}
             id="achievements"

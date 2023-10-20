@@ -45,44 +45,26 @@ const Price = ({ pricesData }) => {
                   </a>
                 </div>
               </div>
-              <div className="row g-10">
+              <div className="row">
                 {pricesData &&
                   pricesData.map((item, index) => {
                     return (
-                      <div key={index} className="col-xl-4"  data-aos="fade-up">
+                      <div key={index} className="col-xl-4" data-aos="fade-up">
                         <div className="d-flex h-100 align-items-center">
                           <div
-                            className={`br-4 br-4 w-100 d-flex flex-column flex-center ${
-                              selected === item.id ? "bg-primary" : "bg-body"
-                            } py-15 px-10`}
+                            className={`br-4 br-4 w-100 d-flex flex-column flex-center ${selected === item.id ? "bg-primary" : "bg-body"
+                              } py-15 px-10`}
                           >
                             <div className="mb-7 text-center">
                               <h1
-                                className={`${
-                                  selected === item.id
-                                    ? "text-white mb-5 fw-boldest"
-                                    : "text-dark mb-5 fw-boldest"
-                                }`}
+                                className={`${'geo-title'} ${selected === item.id
+                                  ? "text-white mb-5 fw-boldest"
+                                  : "text-dark mb-5 fw-boldest"
+                                  }`}
                               >
                                 {item.attributes.name}
                               </h1>
-                              {/* <div
-                                  className={`${selected === 1
-                                      ? "text-white opacity-75 fw-bold mb-5"
-                                      : "text-gray-400 fw-bold mb-5"
-                                    }`}
-                                >
-                                  Best Settings for Startups
-                                </div> */}
                               <div className="text-center">
-                                {/* <span
-                                    className={`${selected === 1
-                                        ? "mb-2 text-white"
-                                        : "mb-2 text-primary"
-                                      }`}
-                                  >
-                                    $
-                                  </span> */}
                                 {item.attributes.name !== "დამწყები" && (
                                   <div
                                     style={{
@@ -95,17 +77,16 @@ const Price = ({ pricesData }) => {
                                     {Math.floor(
                                       (item.attributes.month_price /
                                         item.attributes.year_price) *
-                                        100
+                                      100
                                     )}
                                     % ფასდაკლება !
                                   </div>
                                 )}
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "fs-3x fw-bolder text-white"
-                                      : "fs-3x fw-bolder text-primary"
-                                  }`}
+                                  className={`${selected === item.id
+                                    ? "fs-3x fw-bolder text-white"
+                                    : "fs-3x fw-bolder text-primary"
+                                    }`}
                                 >
                                   {monthly
                                     ? `${item.attributes.month_price}`
@@ -117,62 +98,58 @@ const Price = ({ pricesData }) => {
                             <div className="w-100 mb-10">
                               <div className="d-flex flex-stack mb-5">
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "fw-bold fs-6 text-white opacity-75 py-2"
-                                      : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                    : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
+                                    }`}
                                 >
                                   პროექტების რაოდენობა
                                 </span>
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "svg-icon svg-icon-1 svg-icon-white text-white"
-                                      : "svg-icon svg-icon-1 svg-icon-success"
-                                  }`}
+                                  className={` ${'geo-title'} ${selected === item.id
+                                    ? "svg-icon svg-icon-1 svg-icon-white text-white"
+                                    : "svg-icon svg-icon-1 svg-icon-success"
+                                    }`}
                                 >
                                   {monthly
                                     ? item.attributes.month_allowed_projects
                                     : item.attributes.year_allowed_projects}
                                 </span>
                               </div>
-                              <div className="d-flex flex-stack mb-5">
-                                <span
-                                  className={`${
-                                    selected === item.id
+                              {item.id === 1 && (
+                                <div className="d-flex flex-stack mb-5">
+                                  <span
+                                    className={` ${'geo-title'} ${selected === item.id
                                       ? "fw-bold fs-6 text-white opacity-75 py-2"
                                       : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
-                                  }`}
-                                >
-                                  პროდუქტების რაოდენობა
-                                </span>
-                                <span
-                                  className={`${
-                                    selected === item.id
+                                      }`}
+                                  >
+                                    უფასო საცდელი ვადა
+                                  </span>
+                                  <span
+                                    className={`${'geo-title'} ${selected === item.id
                                       ? "svg-icon svg-icon-1 svg-icon-white text-white"
                                       : "svg-icon svg-icon-1 svg-icon-success"
-                                  }`}
-                                >
-                                  უსასრულო
-                                </span>
-                              </div>
+                                      }`}
+                                  >
+                                    7 დღე
+                                  </span>
+                                </div>
+                              )}
                               <div className="d-flex flex-stack mb-5">
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "fw-bold fs-6 text-white opacity-75 py-2"
-                                      : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                    : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
+                                    }`}
                                 >
                                   ფოტოსურათები &amp; ნახაზები
                                 </span>
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "svg-icon svg-icon-1 svg-icon-white"
-                                      : "svg-icon svg-icon-1 svg-icon-success"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "svg-icon svg-icon-1 svg-icon-white"
+                                    : "svg-icon svg-icon-1 svg-icon-success"
+                                    }`}
                                 >
                                   {item.attributes.allowed_media ? (
                                     <svg
@@ -207,20 +184,18 @@ const Price = ({ pricesData }) => {
                               </div>
                               <div className="d-flex flex-stack mb-5">
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "fw-bold fs-6 text-white opacity-75 py-2"
-                                      : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                    : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
+                                    }`}
                                 >
                                   ექსპორტი (pdf, execl)
                                 </span>
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "svg-icon svg-icon-1 svg-icon-white"
-                                      : "svg-icon svg-icon-1 svg-icon-success"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "svg-icon svg-icon-1 svg-icon-white"
+                                    : "svg-icon svg-icon-1 svg-icon-success"
+                                    }`}
                                 >
                                   {item.attributes.allowed_export ? (
                                     <svg
@@ -258,11 +233,10 @@ const Price = ({ pricesData }) => {
                               onClick={() => {
                                 setSelected(item.id);
                               }}
-                              className={` border-none ${
-                                selected === item.id
-                                  ? "btn btn-color-primary btn-active-light-primary btn-light br-4"
-                                  : "btn btn-primary br-4 br-4"
-                              }`}
+                              className={` border-none ${selected === item.id
+                                ? "btn btn-color-primary btn-active-light-primary btn-light br-4"
+                                : "btn btn-primary br-4 br-4"
+                                }`}
                             >
                               შეძენა
                             </a>
