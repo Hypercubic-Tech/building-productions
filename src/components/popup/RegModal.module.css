@@ -1,11 +1,10 @@
 .container {
+  width: 360px;
   z-index: 10;
   position: relative;
   background-color: white;
   padding: 20px;
-  width: 100%;
   border-radius: 8px;
-  max-width: 360px;
   box-shadow:
   0 1px 1px hsl(0deg 0% 0% / 0.075),
   0 2px 2px hsl(0deg 0% 0% / 0.075),
@@ -91,9 +90,22 @@
   border-color: #007bff; 
 }
 
+.switcher {
+  width: 100%;
+}
+
+.switcher a {
+  width: 50%;
+}
+
 .cardNumberInput::after {
   content: ' ';
   display: inline-block;
   width: 10px; 
 }
 
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}

@@ -1,48 +1,49 @@
 const PriceCard = ({ priceData, monthly }) => {
   return (
-    <div style={{ marginTop: "30px" }}>
-      {priceData.attributes.name !== "დამწყები" && (
-        <div
-          style={{
-            opacity: monthly ? "0" : "1",
-            fontSize: "20px",
-            paddingBottom: "5px",
-          }}
-        >
-          {Math.floor(
-            (priceData.attributes.month_price /
-              priceData.attributes.year_price) *
-              100
-          )}
-          % ფასდაკლება !
-        </div>
-      )}
+    <div>
+      <div
+        className="blue mt-2 fx geo-title"
+        style={{
+          opacity: priceData.attributes.name === "დამწყები" ? "0" : monthly ? "0" : "1",
+          fontSize: "20px",
+          paddingBottom: "5px",
+        }}
+      >
+        {Math.floor(
+          (priceData.attributes.month_price /
+            priceData.attributes.year_price) *
+          100
+        )}
+        % ფასდაკლება !
+      </div>
       <span>
         {monthly ? (
-          <h4>{priceData.attributes.month_price} $</h4>
+          <h4 className="blue mt-2 fx geo-title">{priceData.attributes.month_price} $</h4>
         ) : (
-          <h4>{priceData.attributes.year_price} $</h4>
+          <h4 className="blue mt-2 fx geo-title">{priceData.attributes.year_price} $</h4>
         )}
       </span>
       <div className="w-100 mb-10">
         <div className="d-flex flex-stack mb-5">
-          <span>პროექტების რაოდენობა</span>
+          <span className="blue mt-2 fx geo-title">პროექტების რაოდენობა</span>
           <span>
             {monthly
               ? priceData.attributes.month_allowed_projects
               : priceData.attributes.year_allowed_projects}
           </span>
         </div>
+        {priceData[0] && (
+          <div className="d-flex flex-stack mb-5">
+            <span className="blue mt-2 fx geo-title">უფასო საცდელი დრო</span>
+            <span className="blue mt-2 fx geo-title">7 დღე</span>
+          </div>
+        )}
         <div className="d-flex flex-stack mb-5">
-          <span>უფასო საცდელი დრო</span>
-          <span>7 დღე</span>
+          <span className="blue mt-2 fx geo-title">პროდუქტების რაოდენობა</span>
+          <span className="blue mt-2 fx geo-title">უსასრულო</span>
         </div>
         <div className="d-flex flex-stack mb-5">
-          <span>პროდუქტების რაოდენობა</span>
-          <span>უსასრულო</span>
-        </div>
-        <div className="d-flex flex-stack mb-5">
-          <span>ფოტოსურათები &amp; ნახაზები</span>
+          <span className="blue mt-2 fx geo-title">ფოტოსურათები &amp; ნახაზები</span>
           <span>
             {priceData.attributes.allowed_media ? (
               <svg
@@ -76,7 +77,7 @@ const PriceCard = ({ priceData, monthly }) => {
           </span>
         </div>
         <div className="d-flex flex-stack mb-5">
-          <span>ექსპორტი (pdf, execl)</span>
+          <span className="blue mt-2 fx geo-title">ექსპორტი (pdf, execl)</span>
           <span>
             {priceData.attributes.allowed_export ? (
               <svg

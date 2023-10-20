@@ -116,7 +116,7 @@ const AddProduct = ({
         })
         .then((res) => {
           const data = res.data;
-          notify(false, "ხელობა დაემატა");
+          notify(false, "სამუშაო დაემატა");
           dispatch(setProductState(data.data));
           getProjectById();
         });
@@ -203,7 +203,7 @@ const AddProduct = ({
       <div className={`modal-dialog modal-dialog-centered mw-650px`}>
         <div className="modal-content" style={{ borderRadius: "4px" }}>
           <div className="modal-header" id="kt_modal_add_user_header">
-            <h2>დაამატე პროდუქტი</h2>
+            <h2 className="geo-title">დაამატე პროდუქტი</h2>
             <div
               className={`${styles.modalClose}`}
               data-kt-users-modal-action="close"
@@ -218,15 +218,15 @@ const AddProduct = ({
             <div className={styles.productMode}>
               <div
                 onClick={() => setToggle(true)}
-                className={`fw-bolder ${toggle ? styles.active : ""} `}
+                className={`fw-bolder geo-title ${toggle ? styles.active : ""} `}
               >
                 პროდუქტი
               </div>
               <div
                 onClick={() => setToggle(false)}
-                className={`fw-bolder ${!toggle ? styles.active : ""}`}
+                className={`fw-bolder geo-title ${!toggle ? styles.active : ""}`}
               >
-                ხელობა
+                სამუშაო
               </div>
             </div>
             {toggle ? (
@@ -523,7 +523,7 @@ const AddProduct = ({
                       setSelect(null);
                     }}
                     type="reset"
-                    className="btn btn-light me-3"
+                    className="btn btn-light me-3 geo-title"
                     data-kt-users-modal-action="cancel"
                   >
                     გაუქმება
@@ -534,7 +534,7 @@ const AddProduct = ({
                     className="btn btn-primary"
                     data-kt-users-modal-action="submit"
                   >
-                    <span className="indicator-label">დაამატე</span>
+                    <span className="indicator-label geo-title">დაამატე</span>
                   </div>
                 </div>
               </form>

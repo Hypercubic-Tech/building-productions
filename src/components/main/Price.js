@@ -1,14 +1,36 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 
-const Price = ({ pricesData }) => {
+import { useSpring, animated } from "react-spring";
+
+import Auth from "../popup/Auth.js";
+
+const Price = ({ pricesData, log }) => {
+  const router = useRouter();
   const [annual, setAnnual] = useState(false);
   const [monthly, setMonthly] = useState(true);
+  const [authModal, setAuthModal] = useState(false);
   const [selected, setSelected] = useState(1);
+
+  const [animate, setAnimate] = useState(false);
+
+  
+  const animation = useSpring({
+    opacity: authModal ? 1 : 0,
+    visibility: authModal ? "visible" : "hidden",
+  });
+  
+  const authModalHandler = () => {
+    if (log) {
+      router.push("/account");
+
+    } else {
+      setAuthModal(true);
+    }
+  };
 
   return (
     <div className="mt-sm-n20">
-      {/* <div className="landing-curve landing-dark-color">
-      </div> */}
       <div className="landing-dark-bg">
         <div>
           <div className="d-flex flex-column container pt-lg-20">
@@ -45,44 +67,26 @@ const Price = ({ pricesData }) => {
                   </a>
                 </div>
               </div>
-              <div className="row g-10">
+              <div className="row">
                 {pricesData &&
                   pricesData.map((item, index) => {
                     return (
-                      <div key={index} className="col-xl-4"  data-aos="fade-up">
+                      <div key={index} className="col-xl-4" data-aos="fade-up">
                         <div className="d-flex h-100 align-items-center">
                           <div
-                            className={`br-4 br-4 w-100 d-flex flex-column flex-center ${
-                              selected === item.id ? "bg-primary" : "bg-body"
-                            } py-15 px-10`}
+                            className={`br-4 br-4 w-100 d-flex flex-column flex-center ${selected === item.id ? "bg-primary" : "bg-body"
+                              } py-15 px-10`}
                           >
                             <div className="mb-7 text-center">
                               <h1
-                                className={`${
-                                  selected === item.id
-                                    ? "text-white mb-5 fw-boldest"
-                                    : "text-dark mb-5 fw-boldest"
-                                }`}
+                                className={`${'geo-title'} ${selected === item.id
+                                  ? "text-white mb-5 fw-boldest"
+                                  : "text-dark mb-5 fw-boldest"
+                                  }`}
                               >
                                 {item.attributes.name}
                               </h1>
-                              {/* <div
-                                  className={`${selected === 1
-                                      ? "text-white opacity-75 fw-bold mb-5"
-                                      : "text-gray-400 fw-bold mb-5"
-                                    }`}
-                                >
-                                  Best Settings for Startups
-                                </div> */}
                               <div className="text-center">
-                                {/* <span
-                                    className={`${selected === 1
-                                        ? "mb-2 text-white"
-                                        : "mb-2 text-primary"
-                                      }`}
-                                  >
-                                    $
-                                  </span> */}
                                 {item.attributes.name !== "დამწყები" && (
                                   <div
                                     style={{
@@ -95,17 +99,16 @@ const Price = ({ pricesData }) => {
                                     {Math.floor(
                                       (item.attributes.month_price /
                                         item.attributes.year_price) *
-                                        100
+                                      100
                                     )}
                                     % ფასდაკლება !
                                   </div>
                                 )}
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "fs-3x fw-bolder text-white"
-                                      : "fs-3x fw-bolder text-primary"
-                                  }`}
+                                  className={`${selected === item.id
+                                    ? "fs-3x fw-bolder text-white"
+                                    : "fs-3x fw-bolder text-primary"
+                                    }`}
                                 >
                                   {monthly
                                     ? `${item.attributes.month_price}`
@@ -117,62 +120,58 @@ const Price = ({ pricesData }) => {
                             <div className="w-100 mb-10">
                               <div className="d-flex flex-stack mb-5">
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "fw-bold fs-6 text-white opacity-75 py-2"
-                                      : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                    : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
+                                    }`}
                                 >
                                   პროექტების რაოდენობა
                                 </span>
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "svg-icon svg-icon-1 svg-icon-white text-white"
-                                      : "svg-icon svg-icon-1 svg-icon-success"
-                                  }`}
+                                  className={` ${'geo-title'} ${selected === item.id
+                                    ? "svg-icon svg-icon-1 svg-icon-white text-white"
+                                    : "svg-icon svg-icon-1 svg-icon-success"
+                                    }`}
                                 >
                                   {monthly
                                     ? item.attributes.month_allowed_projects
                                     : item.attributes.year_allowed_projects}
                                 </span>
                               </div>
-                              <div className="d-flex flex-stack mb-5">
-                                <span
-                                  className={`${
-                                    selected === item.id
+                              {item.id === 1 && (
+                                <div className="d-flex flex-stack mb-5">
+                                  <span
+                                    className={` ${'geo-title'} ${selected === item.id
                                       ? "fw-bold fs-6 text-white opacity-75 py-2"
                                       : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
-                                  }`}
-                                >
-                                  პროდუქტების რაოდენობა
-                                </span>
-                                <span
-                                  className={`${
-                                    selected === item.id
+                                      }`}
+                                  >
+                                    უფასო საცდელი ვადა
+                                  </span>
+                                  <span
+                                    className={`${'geo-title'} ${selected === item.id
                                       ? "svg-icon svg-icon-1 svg-icon-white text-white"
                                       : "svg-icon svg-icon-1 svg-icon-success"
-                                  }`}
-                                >
-                                  უსასრულო
-                                </span>
-                              </div>
+                                      }`}
+                                  >
+                                    7 დღე
+                                  </span>
+                                </div>
+                              )}
                               <div className="d-flex flex-stack mb-5">
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "fw-bold fs-6 text-white opacity-75 py-2"
-                                      : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                    : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
+                                    }`}
                                 >
                                   ფოტოსურათები &amp; ნახაზები
                                 </span>
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "svg-icon svg-icon-1 svg-icon-white"
-                                      : "svg-icon svg-icon-1 svg-icon-success"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "svg-icon svg-icon-1 svg-icon-white"
+                                    : "svg-icon svg-icon-1 svg-icon-success"
+                                    }`}
                                 >
                                   {item.attributes.allowed_media ? (
                                     <svg
@@ -207,20 +206,18 @@ const Price = ({ pricesData }) => {
                               </div>
                               <div className="d-flex flex-stack mb-5">
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "fw-bold fs-6 text-white opacity-75 py-2"
-                                      : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "fw-bold fs-6 text-white opacity-75 py-2"
+                                    : "fw-bold fs-6 text-gray-800 text-start pe-3 py-2"
+                                    }`}
                                 >
                                   ექსპორტი (pdf, execl)
                                 </span>
                                 <span
-                                  className={`${
-                                    selected === item.id
-                                      ? "svg-icon svg-icon-1 svg-icon-white"
-                                      : "svg-icon svg-icon-1 svg-icon-success"
-                                  }`}
+                                  className={`${'geo-title'} ${selected === item.id
+                                    ? "svg-icon svg-icon-1 svg-icon-white"
+                                    : "svg-icon svg-icon-1 svg-icon-success"
+                                    }`}
                                 >
                                   {item.attributes.allowed_export ? (
                                     <svg
@@ -257,12 +254,13 @@ const Price = ({ pricesData }) => {
                             <a
                               onClick={() => {
                                 setSelected(item.id);
+                                authModalHandler()
+
                               }}
-                              className={` border-none ${
-                                selected === item.id
-                                  ? "btn btn-color-primary btn-active-light-primary btn-light br-4"
-                                  : "btn btn-primary br-4 br-4"
-                              }`}
+                              className={` border-none ${selected === item.id
+                                ? "btn btn-color-primary btn-active-light-primary btn-light br-4"
+                                : "btn btn-primary br-4 br-4"
+                                }`}
                             >
                               შეძენა
                             </a>
@@ -276,18 +274,15 @@ const Price = ({ pricesData }) => {
           </div>
         </div>
       </div>
-      {/* <div className="landing-curve landing-dark-color">
-        <svg
-          viewBox="15 12 1470 48"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z"
-            fill="currentColor"
-          />
-        </svg>
-      </div> */}
+      <animated.div
+        className="modal"
+        style={animation}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div>
+          {authModal && <Auth onClose={() => setAuthModal(false)} />}
+        </div>
+      </animated.div>
     </div>
   );
 };

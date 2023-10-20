@@ -5,9 +5,9 @@ import styles from "../styles/main.module.css";
 const Unauthorized = () => {
     return (
         <div className={styles.not_found}>
-            <h1>401 - Unauthorized</h1>
-            <p>Sorry, you are not authorized to access this page.</p>
-            <Link className={styles.button} href={'/'}>Go to main page</Link>
+            <p className="blue geo-title fs-1-5hx">გთხოვთ გაიაროთ ავტორიზაცია ან რეგისტრაცია.
+            </p>
+            <Link className={`${styles.button} ${'geo-title'}`} href={'/'}>მთავარ გვერდზე დაბრუნება</Link>
         </div>
     );
 };

@@ -66,53 +66,13 @@ const ExportPopup = ({
 
   return (
     <div className="modal fade show">
-      <div className="modal modal-dialog-centered custom-width">
+      <div className="modal modal-dialog-centered custom-width ">
         <div
-          className="modal-content custom-width"
+          className="modal-content custom-width custom-export-table"
           style={{ width: "90% ", height: "90%", margin: "5%" }}
         >
           <div className="modal-header" id="kt_modal_add_user_header">
-            <h3>ამოღება</h3>
-            <div
-              className=" w-1000"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: "15px",
-              }}
-            >
-              <label className="required fs-6 fw-bold form-label mb-2 georgian">
-                აირჩიეთ ფორმატი:
-              </label>
-              <div className=" mb-100">
-                <select
-                  name="format"
-                  data-control="select2"
-                  data-placeholder="აირჩიეთ ფორმატი"
-                  data-hide-search="true"
-                  className="form-select form-select-solid georgian"
-                  value={format}
-                  onChange={handleFormatChange}
-                >
-                  <option value="excel">Excel</option>
-                  <option value="pdf">PDF</option>
-                </select>
-              </div>
-              <div className="text-center">
-                <button
-                  className="btn btn-primary"
-                  data-kt-users-modal-action="submit"
-                  onClick={(event) => handleExport(event)}
-                >
-                  <span className="indicator-label georgian">გადმოწერა</span>
-                  <span className="indicator-progress georgian">
-                    გთხოვთ დაიცადოთ...
-                    <span className="spinner-border spinner-border-sm align-middle ms-2" />
-                  </span>
-                </button>
-              </div>
-            </div>
+            <h3 className="geo-title">ამოღება</h3>
             <div
               className="btn btn-icon btn-sm btn-active-icon-primary"
               data-kt-users-modal-action="close"
@@ -125,6 +85,39 @@ const ExportPopup = ({
               >
                 <XsmallSvg />
               </span>
+            </div>
+          </div>
+          <div
+            className="gap"
+            style={{padding: '21px'}}
+            >
+            <label className="required fs-6 fw-bold form-label mb-2 geo-title">
+              აირჩიეთ ფორმატი:
+            </label>
+            <div style={{gap: '6px'}} className="d-flex">
+              <select
+                name="format"
+                data-control="select2"
+                data-placeholder="აირჩიეთ ფორმატი"
+                data-hide-search="true"
+                className="form-select form-select-solid georgian"
+                value={format}
+                onChange={handleFormatChange}
+              >
+                <option value="excel">Excel</option>
+                <option value="pdf">PDF</option>
+              </select>
+              <button
+                className="btn btn-primary"
+                data-kt-users-modal-action="submit"
+                onClick={(event) => handleExport(event)}
+              >
+                <span className="indicator-label geo-title">გადმოწერა</span>
+                <span className="indicator-progress georgian">
+                  გთხოვთ დაიცადოთ...
+                  <span className="spinner-border spinner-border-sm align-middle ms-2" />
+                </span>
+              </button>
             </div>
           </div>
           <TableExport

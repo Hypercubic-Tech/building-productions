@@ -37,7 +37,6 @@ function HeaderLogged(props) {
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const loggedIn = useSelector(selectAuthState);
-
   const router = useRouter();
   const { asPath } = router;
   const formRef = useRef(null);
@@ -85,10 +84,10 @@ function HeaderLogged(props) {
       dispatch(setAuthEmail(null));
       dispatch(setAuthRole(null));
       dispatch(setUserStatus(null));
-
     }, 300);
-    router.push("/");
+
     setIsModalOpen(false);
+    router.push("/");
   };
 
   const handleGoogleLogout = async () => {
@@ -105,6 +104,7 @@ function HeaderLogged(props) {
       dispatch(setAuthRole(null));
       dispatch(setUserStatus(null));
     }, 300);
+
     setIsModalOpen(false);
     await signOut({
       callbackUrl: `${window.location.origin}/`,

@@ -188,6 +188,11 @@
     font-size: 16px;
 }
 
+.no_products {
+    margin: 75px;
+    text-align: center;
+}
+
 /* .item_expand_btn:hover .item_expand_btn svg {
     transform: rotate(-30deg);
 } */

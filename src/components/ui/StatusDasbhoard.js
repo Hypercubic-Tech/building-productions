@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
+import { setAuthState } from "../../store/slices/authSlice";
 import { setUserStatus } from "../../store/slices/statusSlice";
 
 import axios from "axios";
@@ -8,79 +9,119 @@ import axios from "axios";
 import styles from './StatusDashboard.module.css';
 
 const StatusDashboard = () => {
+    const authStory = useSelector(setAuthState);
+    const authUserId = useSelector((state) => state.auth.user_id);
+    const isLoggedIn = authStory.payload.auth.loggedIn;
+
     const dispatch = useDispatch();
+
     const { data: session } = useSession();
+    const provider = useSelector((state) => state.auth.provider);
+
 
     const userStatus = useSelector((state) => state.userStatus);
-    const provider = useSelector((state) => state.auth.provider);
-    const authUserId = useSelector((state) => state.auth.user_id);
     const [active, setActive] = useState(false);
-    const [userStatusUpdate, setUserStatusUpdate] = useState();
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const trialExpiredChecker = async () => {
+        const now = new Date();
+        const expiredDate = new Date(userStatus?.trial_expires);
+        if (expiredDate instanceof Date && isNaN(expiredDate) === false) {
+            if (now > expiredDate) {
+                try {
+                    await axios
+                        .put(
+                            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users/${userId}`,
+                            {
+                                trial_used: true,
+                                trial_expires: 'expired'
+                            }
+                        )
+                    dispatch(setUserStatus({ trial_expires: "expired", trial_used: true }));
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }
+    };
 
     const loggedUserInfo = async () => {
-        setIsLoading(true);
         let url;
-
         if (provider === "google") {
             url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
         } else {
             url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
         }
-
         if (url) {
-            try {
-                const response = await axios.get(url);
-                const data = response.data;
+            await axios
+                .get(url)
+                .then((res) => {
+                    const data = res.data;
+                    // setAuthUser(data);
+                    // setUserData({
+                    //     id: data[0]?.id,
+                    //     username: data[0]?.username,
+                    //     email: data[0]?.email,
+                    //     phoneNumber: data[0]?.phoneNumber,
+                    //     payment_duration: data[0]?.payment_duration,
+                    //     payment_plan: {
+                    //         connect: [{ id: data[0]?.payment_plan?.id.toString() }],
+                    //     },
+                    //     trial_expires: data[0]?.trial_expires,
+                    //     trial_used: data[0]?.trial_used,
+                    //     card_number: data[0]?.card_number,
+                    //     card_cvc: data[0]?.card_cvc,
+                    //     card_month: data[0]?.card_month,
+                    //     card_year: data[0]?.card_year,
+                    //     account_type: data[0]?.account_type
+                    // });
 
-                if (data[0]?.payment_duration === 'month') {
-                    setUserStatusUpdate({
+                    // for user dashboard
+                    dispatch(setUserStatus({
                         username: data[0]?.username,
                         p_title: data[0]?.payment_plan?.name,
                         payment_duration: data[0]?.payment_duration,
                         allowed_export: data[0]?.payment_plan?.allowed_export,
                         allowed_media: data[0]?.payment_plan?.allowed_media,
-                        allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
-                        all_projects: data[0]?.projects.length === 0 ? 0 : data[0]?.projects.length,
-                        trial_expires: data[0]?.trial_expires,
+                        all_projects: data[0]?.projects.length,
+                        account_type: data[0]?.account_type,
                         trial_used: data[0]?.trial_used,
-                        account_type: data[0]?.account_type
-                    });
-                }
-                if (data[0]?.payment_duration === 'year') {
-                    setUserStatusUpdate({
-                        username: data[0]?.username,
-                        p_title: data[0]?.payment_plan?.name,
-                        payment_duration: data[0]?.payment_duration,
-                        allowed_export: data[0]?.payment_plan?.allowed_export,
-                        allowed_media: data[0]?.payment_plan?.allowed_media,
-                        allowed_projects: data[0]?.payment_plan?.year_allowed_projects,
-                        all_projects: data[0]?.projects.lenght,
                         trial_expires: data[0]?.trial_expires,
-                        trial_used: data[0]?.trial_used,
-                        account_type: data[0]?.account_type
-                    });
-                }
 
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setIsLoading(false);
-            }
+                    }));
+
+                    if (data[0]?.payment_duration === "month") {
+                        // setUserStatusUpdate({
+                        //     allowed_projects: data[0]?.payment_plan?.month_allowed_projects,
+                        // });
+                        dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.month_allowed_projects }));
+                    }
+                    if (data[0]?.payment_duration === "year") {
+                        dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.year_allowed_projects }));
+
+                    }
+                })
+                .then(() => {
+                    trialExpiredChecker();
+                    setIsLoading(false);
+                });
         }
     };
 
     useEffect(() => {
-        loggedUserInfo();
-    }, [authUserId, session]);
+        if (userStatus.username) {
+            setIsLoading(false)
+        }
+    }, [userStatus])
 
     useEffect(() => {
-        dispatch(setUserStatus(userStatusUpdate));
-    }, [userStatusUpdate]);
-
+        if (isLoggedIn) {
+            loggedUserInfo();
+        }
+    }, [isLoggedIn])
     return (
         <Fragment>
-            {session || authUserId ? (
+            {isLoggedIn ? (
                 <Fragment>
                     {isLoading ? (
                         <div className={styles.outer}>
@@ -220,107 +261,6 @@ const StatusDashboard = () => {
                                         <span> {userStatus.all_projects}</span>
                                     </span>
                                 </div>
-                                {/* <div className={styles.item_warning}>
-                                        <div className={styles.warning_inner}>
-                                            <svg
-                                                widths='30px'
-                                                height='20px'
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="#7c839c"
-                                                version="1.1"
-                                                viewBox="0 0 24 24"
-                                                xmlSpace="preserve"
-                                            >
-                                                <path d="M12 0C5.38 0 0 5.38 0 12s5.38 12 12 12 12-5.38 12-12S18.62 0 12 0zm0 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm-1.5-12h3v8h-3v-8zm0-5h3v3h-3V5z"></path>
-                                            </svg>
-                                            <span>დაშვებული პროექტების რაოდენობა</span>
-                                        </div>
-                                        <p className={styles.warning_title}>{userStatus.allowed_projects}</p>
-                                    </div>
-                                    <div className={styles.item_warning}>
-                                        <div className={styles.warning_inner}>
-                                            <svg
-                                                widths='30px'
-                                                height='20px'
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="#7c839c"
-                                                version="1.1"
-                                                viewBox="0 0 24 24"
-                                                xmlSpace="preserve"
-                                            >
-                                                <path d="M12 0C5.38 0 0 5.38 0 12s5.38 12 12 12 12-5.38 12-12S18.62 0 12 0zm0 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm-1.5-12h3v8h-3v-8zm0-5h3v3h-3V5z"></path>
-                                            </svg>
-                                            <span>დაშვებული პროექტების რაოდენობა</span>
-                                        </div>
-                                        <p className={styles.warning_title}>{userStatus.allowed_products}</p>
-                                    </div>
-                                    <div className={styles.item_warning}>
-                                        <div className={styles.warning_inner}>
-                                            <svg
-                                                widths='30px'
-                                                height='20px'
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="#7c839c"
-                                                version="1.1"
-                                                viewBox="0 0 24 24"
-                                                xmlSpace="preserve"
-                                            >
-                                                <path d="M12 0C5.38 0 0 5.38 0 12s5.38 12 12 12 12-5.38 12-12S18.62 0 12 0zm0 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm-1.5-12h3v8h-3v-8zm0-5h3v3h-3V5z"></path>
-                                            </svg>
-                                            <span>ექსპორტი (pdf, exec)</span>
-                                            {userStatus.allowed_export && (
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <g>
-                                                    <path
-                                                        fill="#1C274C"
-                                                        d="M4.565 12.407a.75.75 0 10-1.13.986l1.13-.986zM7.143 16.5l-.565.493a.75.75 0 001.13 0l-.565-.493zm8.422-8.507a.75.75 0 10-1.13-.986l1.13.986zm-5.059 3.514a.75.75 0 001.13.986l-1.13-.986zm-.834 3.236a.75.75 0 10-1.13-.986l1.13.986zm-6.237-1.35l3.143 3.6 1.13-.986-3.143-3.6-1.13.986zm4.273 3.6l1.964-2.25-1.13-.986-1.964 2.25 1.13.986zm3.928-4.5l1.965-2.25-1.13-.986-1.965 2.25 1.13.986zm1.965-2.25l1.964-2.25-1.13-.986-1.964 2.25 1.13.986z"
-                                                    ></path>
-                                                    <path
-                                                        stroke="#1C274C"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="1.5"
-                                                        d="M20 7.563l-4.286 4.5M11 16l.429.563 2.143-2.25"
-                                                    ></path>
-                                                </g>
-                                            </svg>
-                                        )}
-                                        </div>
-                                    </div>
-                                    <div className={styles.item_warning}>
-                                        <div className={styles.warning_inner}>
-                                            <svg
-                                                widths='30px'
-                                                height='20px'
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="#7c839c"
-                                                version="1.1"
-                                                viewBox="0 0 24 24"
-                                                xmlSpace="preserve"
-                                            >
-                                                <path d="M12 0C5.38 0 0 5.38 0 12s5.38 12 12 12 12-5.38 12-12S18.62 0 12 0zm0 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm-1.5-12h3v8h-3v-8zm0-5h3v3h-3V5z"></path>
-                                            </svg>
-                                            <span>მედია</span>
-                                            {userStatus.allowed_media && (
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <g>
-                                                        <path
-                                                            fill="#1C274C"
-                                                            d="M4.565 12.407a.75.75 0 10-1.13.986l1.13-.986zM7.143 16.5l-.565.493a.75.75 0 001.13 0l-.565-.493zm8.422-8.507a.75.75 0 10-1.13-.986l1.13.986zm-5.059 3.514a.75.75 0 001.13.986l-1.13-.986zm-.834 3.236a.75.75 0 10-1.13-.986l1.13.986zm-6.237-1.35l3.143 3.6 1.13-.986-3.143-3.6-1.13.986zm4.273 3.6l1.964-2.25-1.13-.986-1.964 2.25 1.13.986zm3.928-4.5l1.965-2.25-1.13-.986-1.965 2.25 1.13.986zm1.965-2.25l1.964-2.25-1.13-.986-1.964 2.25 1.13.986z"
-                                                        ></path>
-                                                        <path
-                                                            stroke="#1C274C"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth="1.5"
-                                                            d="M20 7.563l-4.286 4.5M11 16l.429.563 2.143-2.25"
-                                                        ></path>
-                                                    </g>
-                                                </svg>
-                                            )}
-                                        </div>
-
-                                    </div> */}
                             </div>
                         </div>
                     )

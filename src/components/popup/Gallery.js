@@ -180,7 +180,7 @@ const Gallery = ({ setSelect, getProjectById }) => {
           <div
             className={`modal-header container py-sm-10 px-sm-10 ${styles.modalHeader}`}
           >
-            <h2>სურათები</h2>
+            <h2 className="geo-title">სურათები</h2>
             <div
               className={`${styles.modalClose}`}
               data-kt-users-modal-action="close"

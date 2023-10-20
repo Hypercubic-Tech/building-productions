@@ -763,7 +763,7 @@ const Products = ({
           </div>
         </div>
         {!productsToMap?.length && activeCategoryId && (
-          <div style={{ margin: "100px", textAlign: "center" }}>
+          <div className={styles.no_products}>
             პროდუქტი ვერ მოიძებნა!
           </div>
         )

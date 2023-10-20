@@ -49,9 +49,8 @@
 .mt20 {
   padding: 20px 0 0.75rem 0 !important;
 }
-
 .flexWrap {
-  gap: 60px;
+  gap: 30px;
   flex-wrap: wrap;
   justify-content: flex-start !important;
   margin-bottom: 60px;
@@ -59,7 +58,7 @@
 }
 
 .wrapChild {
-  width: calc(33.333% - 20px);
+  width: calc(33.333% - 20px); /* Adjusted width */
   background: #fff;
   border: 1px solid #8d93b6;
 }
@@ -219,6 +218,11 @@
 }
 
 @media (max-width: 767px) {
+
+  .buttons button svg{
+    display: none;
+  }
+
   .flexWrap {
     display: flex;
     justify-content: center !important;

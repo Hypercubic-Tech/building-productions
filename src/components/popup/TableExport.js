@@ -21,15 +21,15 @@ const TableExport = ({
   setSelect,
 }) => {
   return (
-    <div id="table2Id" style={{ paddingTop: "30px" }}>
+    <div id="table2Id" style={{ paddingTop: "20px", paddingLeft: '20px', overflowX: 'auto' }}>
       {select === "exportPopUp" && (
         <div style={{ margin: "50px", marginTop: "30px" }}>
           <ExportTableSvg />
         </div>
       )}
       <table
+        style={{width: '1200px'}}
         className="table align-middle table-row-dashed fs-6 gy-5 borderBottom"
-        style={{ width: "calc(100% - 100px)", marginLeft: "50px" }}
       >
         {totalSum ? (
           <thead>
