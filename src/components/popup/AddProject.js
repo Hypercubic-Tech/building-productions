@@ -165,14 +165,14 @@ const AddProject = ({
         <div
           className={`modal-header py-sm-10 px-sm-10 container ${styles.modalHeader}`}
         >
-          <h2 className="georgian">ობიექტის დამატება</h2>
+          <h2 className="geo-title">ობიექტის დამატება</h2>
           <div
             className="btn red-ghost-btn"
             // btn-sm btn-icon btn-active-color-primary
             data-bs-dismiss="modal"
             onClick={dismiss}
           >
-            <span className="svg-icon-1">
+            <span className="svg-icon-1 geo-title">
               პროცესის შეწყვეტა
               <svg
                 className="ms-4"
@@ -354,7 +354,7 @@ const AddProject = ({
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5">
-              <form className="form needs-validation" noValidate="novalidate">
+              <form className="form needs-validation custom-add-form" noValidate="novalidate">
                 <div
                   className={getStatusClass(1)}
                   data-kt-stepper-element="content"
@@ -743,7 +743,7 @@ const AddProject = ({
                       style={{ display: step === 1 ? "none" : "" }}
                       onClick={prevStepHandler}
                       type="button"
-                      className="btn red-ghost-btn georgian"
+                      className="btn red-ghost-btn geo-title custom-red-ghost-btn"
                     >
                       <span className="svg-icon-3 me-1">
                         <svg
@@ -773,8 +773,8 @@ const AddProject = ({
                       type="button"
                       className="btn btn-lg georgian btn-primary-custom"
                     >
-                      <span className="indicator-label georgian">დამატება</span>
-                      <span className="indicator-progress georgian">
+                      <span className="indicator-label geo-title">დამატება</span>
+                      <span className="indicator-progress geo-title">
                         გთხოვთ დაიცადოთ...
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
@@ -783,7 +783,7 @@ const AddProject = ({
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}
                       type="button"
-                      className="btn btn-lg georgian btn-primary-custom"
+                      className="btn btn-lg geo-title btn-primary-custom"
                     >
                       გაგრძელება
                     </button>

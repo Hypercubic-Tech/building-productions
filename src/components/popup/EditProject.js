@@ -5,7 +5,7 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({  cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject, project, setEditProject }) => {
+const EditProject = ({ cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject, project, setEditProject }) => {
   const userId = useSelector(state => state.auth.user_id)
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
@@ -158,7 +158,7 @@ const EditProject = ({  cities, propertyType, condition, categories, currentCond
     editProjectHandler();
   };
 
-  
+
   return (
     <div
       style={{ display: close ? "none" : "" }}
@@ -167,13 +167,13 @@ const EditProject = ({  cities, propertyType, condition, categories, currentCond
       <div className={styles.overlay}></div>
       <div className={` ${styles.mainBg} modal-content `}>
         <div className={`modal-header py-sm-10 px-sm-10 container ${styles.modalHeader}`}>
-          <h2 className="georgian">ობიექტის დამატება</h2>
+          <h2 className="georgian geo-title">ობიექტის დამატება</h2>
           <div
             className="btn red-ghost-btn"
             data-bs-dismiss="modal"
             onClick={dismiss}
           >
-            <span className="svg-icon-1">
+            <span className="svg-icon-1 geo-title">
               პროცესის შეწყვეტა
               <svg className="ms-4" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.4 13.3077L9 9.7077L12.6 13.3077L13.3077 12.6L9.7077 9L13.3077 5.4L12.6 4.6923L9 8.2923L5.4 4.6923L4.6923 5.4L8.2923 9L4.6923 12.6L5.4 13.3077ZM9.00335 18C7.7588 18 6.58872 17.7638 5.4931 17.2915C4.39748 16.8192 3.44444 16.1782 2.63397 15.3685C1.82352 14.5588 1.18192 13.6066 0.70915 12.512C0.236383 11.4174 0 10.2479 0 9.00335C0 7.7588 0.236158 6.58872 0.708475 5.4931C1.18081 4.39748 1.82183 3.44444 2.63153 2.63398C3.44123 1.82353 4.39337 1.18192 5.48795 0.709151C6.58255 0.236384 7.75212 0 8.99665 0C10.2412 0 11.4113 0.236158 12.5069 0.708475C13.6025 1.18081 14.5556 1.82182 15.366 2.63152C16.1765 3.44122 16.8181 4.39337 17.2908 5.48795C17.7636 6.58255 18 7.75212 18 8.99665C18 10.2412 17.7638 11.4113 17.2915 12.5069C16.8192 13.6025 16.1782 14.5556 15.3685 15.366C14.5588 16.1765 13.6066 16.8181 12.512 17.2909C11.4174 17.7636 10.2479 18 9.00335 18Z" fill="#EB455F" />
@@ -264,7 +264,7 @@ const EditProject = ({  cities, propertyType, condition, categories, currentCond
               </div>
             </div>
             <div className="flex-row-fluid py-lg-5">
-              <form className="form needs-validation" noValidate="novalidate">
+              <form className="form needs-validation custom-add-form" noValidate="novalidate">
 
                 <div
                   className={getStatusClass(1)}
@@ -624,7 +624,7 @@ const EditProject = ({  cities, propertyType, condition, categories, currentCond
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100 text-center">
-                    <h1 className="text-dark mb-3">მონაცემები შეყვანილია!</h1>
+                    <h1 className="text-dark mb-3 geo-title">მონაცემები შეყვანილია!</h1>
                     <div className="text-muted fw-bold fs-3">
                       დამატების ღილაკზე დაჭერით მონაცემები ბაზაში აიტვირთება.
                     </div>
@@ -643,7 +643,7 @@ const EditProject = ({  cities, propertyType, condition, categories, currentCond
                       style={{ display: step === 1 ? "none" : "" }}
                       onClick={prevStepHandler}
                       type="button"
-                      className="btn red-ghost-btn georgian"
+                      className="btn red-ghost-btn  custom-red-ghost-btn geo-title"
                     >
                       <span className="svg-icon-3 me-1">
                         <svg className="me-2" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -659,12 +659,12 @@ const EditProject = ({  cities, propertyType, condition, categories, currentCond
                       onClick={finishHandler}
                       style={{ display: step === 4 ? "" : "none" }}
                       type="button"
-                      className="btn btn-lg georgian btn-primary-custom"
+                      className="btn btn-lg georgian btn-primary-custom geo-title"
                     >
                       <span className="indicator-label georgian">
                         დამატება
                       </span>
-                      <span className="indicator-progress georgian">
+                      <span className="indicator-progress geo-title">
                         გთხოვთ დაიცადოთ...
                         <span className="spinner-border spinner-border-sm align-middle ms-2" />
                       </span>
@@ -673,7 +673,7 @@ const EditProject = ({  cities, propertyType, condition, categories, currentCond
                       style={{ display: step >= 4 ? "none" : "" }}
                       onClick={stepChangeHandler}
                       type="button"
-                      className="btn btn-lg georgian btn-primary-custom"
+                      className="btn btn-lg georgian btn-primary-custom geo-title"
                     >
                       გაგრძელება
                     </button>

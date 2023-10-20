@@ -169,7 +169,7 @@ const Drawings = ({ setSelect }) => {
           <div
             className={`modal-header container py-sm-10 px-sm-10 ${styles.modalHeader}`}
           >
-            <h2>ნახაზები</h2>
+            <h2 className="geo-title">ნახაზები</h2>
             <div
               className={`${styles.modalClose}`}
               data-kt-users-modal-action="close"
@@ -233,7 +233,7 @@ const Drawings = ({ setSelect }) => {
                             name="avatar"
                             multiple
                           />
-                          <span className="fw-boldest">ნახაზის ატვირთვა</span>
+                          <span className="fw-boldest geo-title">ნახაზის ატვირთვა</span>
                           <UploadSvg />
                         </div>
                       </div>
