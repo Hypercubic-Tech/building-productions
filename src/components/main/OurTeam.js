@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParallax } from "react-scroll-parallax";
 
 import styles from "./Home.module.css";
 
@@ -9,6 +10,10 @@ const AboutCompany = () => {
   const [count2, setCount2] = useState(1499950);
   const [isCounting1, setIsCounting1] = useState(false);
   const [isCounting2, setIsCounting2] = useState(false);
+
+  const parallax = useParallax({
+    speed: -10,
+  });
 
   useEffect(() => {
     function handleScroll() {
@@ -105,19 +110,17 @@ const AboutCompany = () => {
       <div className="pt-18 landing-dark-bg">
         <div className="container">
           <div
-            className={`${"d-flex align-center align-items-center mt-15 mb-18"} ${
-              styles.our_team_item
-            }`}
+            className={`${"d-flex align-center align-items-center mt-15 mb-18"} ${styles.our_team_item
+              }`}
             id="achievements"
             data-kt-scroll-offset="{default: 100, lg: 150}"
           >
-            <img className="team" src="/images/team.png" alt="banner" />
+            <img ref={parallax.ref}  className="team" src="/images/team.png" alt="banner" />
             <div
-              className={`${"w-50 responsive-w-100 responsive-justify-center ms-4"} ${
-                styles.our_team_subitem
-              }`}
+              className={`${"w-50 responsive-w-100 responsive-justify-center ms-4"} ${styles.our_team_subitem
+                }`}
             >
-              <h3 className="m-color fs-2hx fw-bold mb-5 georgian">
+              <h3 className="m-color fs-2hx fw-bold mb-5 geo-title">
                 ჩვენი გუნდი
               </h3>
               <div className="fs-2 light-text fw-bold georgian">
@@ -143,7 +146,7 @@ const AboutCompany = () => {
                       <p>{count}+</p>
                     </div>
                   </div>
-                  <span className="text-gray-600 fw-bold fs-5 lh-0">
+                  <span className="geo-title text-gray-600 fw-bold fs-5 lh-0">
                     პარტნიორი
                     <svg
                       className="custom-svg"
@@ -175,7 +178,7 @@ const AboutCompany = () => {
                       <p>{count1}+</p>
                     </div>
                   </div>
-                  <span className="text-gray-600 fw-bold fs-5 lh-0">
+                  <span className="geo-title text-gray-600 fw-bold fs-5 lh-0">
                     ობიექტი
                     <svg
                       className="custom-svg"
@@ -207,8 +210,8 @@ const AboutCompany = () => {
                       <p>{count2}+</p>
                     </div>
                   </div>
-                  <span className="text-gray-600 fw-bold fs-5 lh-0">
-                    დაზოგილი თანხა ლარში
+                  <span className="geo-title text-gray-600 fw-bold fs-5 lh-0">
+                    დაზოგილი თანხა
                     <svg
                       className="custom-svg"
                       width="104"
