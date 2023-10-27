@@ -18,9 +18,9 @@ const PriceCard = ({ priceData, monthly }) => {
       </div>
       <span>
         {monthly ? (
-          <h4 className="blue mt-2 fx geo-title">{priceData.attributes.month_price} $</h4>
+          <h4 style={{color: 'red', fontSize: '22px'}} className="mt-2 fx geo-title">{priceData.attributes.month_price} $</h4>
         ) : (
-          <h4 className="blue mt-2 fx geo-title">{priceData.attributes.year_price} $</h4>
+          <h4 style={{color: 'red', fontSize: '22px'}} className="mt-2 fx geo-title">{priceData.attributes.year_price} $</h4>
         )}
       </span>
       <div className="w-100 mb-10">

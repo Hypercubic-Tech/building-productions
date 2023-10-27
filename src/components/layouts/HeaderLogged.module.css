@@ -117,6 +117,28 @@
   text-align: center;
   padding: 10px 0px;
   background: #bbd7e9;
+  z-index: 9;
+  position: relative;
+}
+
+.warningMessage_close {
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+  color: #2B3467;
+  font-size: 14px;
+
+}
+
+.warningInner {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  
+}
+
+.warningMessage_close:hover {
+  color: #eb445f;
 }
 
 .logo {
