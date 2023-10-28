@@ -67,6 +67,67 @@
 .tD4.animate {
   transition-delay: .4s !important;
 }
+.profile-picture {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 1px solid #BAD7E9;
+    overflow: hidden;
+    position: relative;
+}
+.profile-picture img {
+    position: absolute;
+    display: flex;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    object-fit: cover;
+    transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+}
+.profile-picture:hover img {
+    transform: scale(1.05);
+}
+.profile-picture-btns {
+    position: absolute;
+    display: flex;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+    background: rgba(235,68,95,.8);
+    transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+    opacity: 0;
+    gap: 10px;
+}
+.profile-picture:hover .profile-picture-btns {
+    opacity: 1;
+}
+.profile-picture-btns div {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    cursor: pointer;
+    transition: 0.6s cubic-bezier(0.79, 0.01, 0.15, 0.99);
+}
+.profile-picture-btns div:hover {
+    opacity: .7;
+    transform: scale(1.05);
+}
+.profile-picture-btns div input {
+    position: absolute;
+    display: flex;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
 
 :root {
   --bs-blue: #009ef6;
