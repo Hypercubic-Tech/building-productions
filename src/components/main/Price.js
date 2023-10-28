@@ -23,7 +23,6 @@ const Price = ({ pricesData, log }) => {
   const authModalHandler = () => {
     if (log) {
       router.push("/account");
-
     } else {
       setAuthModal(true);
     }
@@ -46,7 +45,7 @@ const Price = ({ pricesData, log }) => {
                       setMonthly(true);
                       setAnnual(false);
                     }}
-                    className={`buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
+                    className={`geo-title buy-btn custom-padding me-2 btn btn-color-gray-600 btn-active btn-active-success me-2 ${[
                       monthly ? "active" : "",
                     ]} `}
                     data-kt-plan="month"
@@ -58,7 +57,7 @@ const Price = ({ pricesData, log }) => {
                       setMonthly(false);
                       setAnnual(true);
                     }}
-                    className={`buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
+                    className={`geo-title buy-btn custom-padding btn btn-color-gray-600 btn-active btn-active-success ${[
                       annual ? "active" : "",
                     ]} `}
                     data-kt-plan="annual"
@@ -106,9 +105,12 @@ const Price = ({ pricesData, log }) => {
                                 )}
                                 <span
                                   className={`${selected === item.id
-                                    ? "fs-3x fw-bolder text-white"
-                                    : "fs-3x fw-bolder text-primary"
+                                    ? "fs-3x fw-bolder"
+                                    : "fs-3x fw-bolder"
                                     }`}
+                                    style={{color: '#EB455F'}}
+
+
                                 >
                                   {monthly
                                     ? `${item.attributes.month_price}`

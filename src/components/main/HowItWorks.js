@@ -3,9 +3,11 @@ import {useEffect, useState} from "react";
 
 const HowItWorks = () => {
   const [animate, setAnimate] = useState(false);
+
   useEffect(() => {
     setAnimate(true);
   }, []);
+
   return (
     <div style={{ marginTop: "30px" }} className="mb-n10 mb-lg-n20 z-index-2">
       <div className="container">
@@ -32,7 +34,7 @@ const HowItWorks = () => {
                   <span className="badge badge-circle badge-light-success p-5 me-3 fs-3">
                     1
                   </span>
-                  <div className="geo-title">
+                  <div className="fw-bold fs-5 fs-lg-3 text-dark geo-title">
                     დარეგისტრირდი
                   </div>
                 </div>
@@ -50,7 +52,7 @@ const HowItWorks = () => {
                   <span className="badge badge-circle badge-light-success p-5 me-3 fs-3">
                     2
                   </span>
-                  <div className="geo-title">
+                  <div className="fw-bold fs-5 fs-lg-3 text-dark geo-title">
                     აირჩიეთ სამუშაოები
                   </div>
                 </div>
@@ -68,7 +70,7 @@ const HowItWorks = () => {
                   <span className="badge badge-circle badge-light-success p-5 me-3 fs-3">
                     3
                   </span>
-                  <div className="geo-title">
+                  <div className="no-wrap fw-bold fs-5 fs-lg-3 text-dark geo-title">
                     დაიწყე დათვლა
                   </div>
                 </div>

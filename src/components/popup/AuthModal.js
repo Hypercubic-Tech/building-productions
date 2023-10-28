@@ -18,7 +18,7 @@ import CloseBtnBG from "../svg/CloseBtnBG";
 
 import styles from "../popup/AuthModal.module.css";
 
-const AuthModal = ({ handleAuthorization, onClose}) => {
+const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
   const [lossData, setLossData] = useState(false);
   const [isForgot, setIsForgot] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -58,6 +58,7 @@ const AuthModal = ({ handleAuthorization, onClose}) => {
         dispatch(setAuthUserId(data.user.id));
 
         notify(false, "თქვენ გაიარეთ ავტორიზაცია");
+        window.location.reload();
       })
       .catch(() => {
         notify(true, "იმეილი ან პაროლი არასწორია, გთხოვთ ცადოთ თავიდან");
@@ -209,7 +210,6 @@ const AuthModal = ({ handleAuthorization, onClose}) => {
               <button
                 className={`fill-btn btn btn-primary georgian ${styles.btn}`}
                 type="submit"
-                onClick={onClose()}
               >
                 შესვლა
               </button>

@@ -19,10 +19,13 @@ import Search2Svg from "../svg/Search2Svg";
 import LinerSvg from "../svg/LinerSvg";
 import AddSvg from "../svg/AddSvg";
 import MapSvg from "../svg/MapSvg";
+import CopySvg from "../svg/CopySvg";
 
 import styles from "./Project.module.css";
 
 const Project = ({
+  isLoggedIn,
+  sharedLink,
   project,
   crafts,
   unit,
@@ -120,10 +123,10 @@ const Project = ({
                 src={
                   (imageWithMainId &&
                     process.env.NEXT_PUBLIC_BUILDING_URL +
-                      imageWithMainId?.attributes?.url) ||
+                    imageWithMainId?.attributes?.url) ||
                   (p?.attributes?.image?.data?.[0]?.attributes?.url &&
                     process.env.NEXT_PUBLIC_BUILDING_URL +
-                      p?.attributes?.image?.data?.[0]?.attributes?.url) ||
+                    p?.attributes?.image?.data?.[0]?.attributes?.url) ||
                   "/images/test-img.png"
                 }
                 alt="main-photo"
@@ -202,6 +205,21 @@ const Project = ({
                         ნახაზები
                       </a>
                     </div>
+                    <div
+                      style={{marginLeft: '0.75rem'}}
+                      className="d-flex align-items-center py-2 py-md-1"
+                      onClick={() => console.log('hi')}
+                    >
+                      <a
+                        className="btn btn-primary fw-bolder georgian geo-title "
+                        data-bs-toggle="modal"
+                        data-bs-target="#kt_modal_create_app"
+                        id="kt_toolbar_primary_button"
+                      >
+                        <CopySvg />
+                        გაზიარება
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -246,9 +264,8 @@ const Project = ({
                     onClick={() => {
                       allowedExport && setSelect("exportPopUp");
                     }}
-                    className={`${"btn btn-light-primary me-3 georgian"} ${
-                      !allowedExport && styles.disabledBtn
-                    }`}
+                    className={`${"btn btn-light-primary me-3 georgian"} ${!allowedExport && styles.disabledBtn
+                      }`}
                     data-bs-toggle="modal"
                     data-bs-target="#kt_modal_export_users"
                   >

@@ -9,15 +9,13 @@ import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
 
 const index = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
-  const { data: session } = useSession();
+  const shareLink = window.location.href;
 
-  const userId = useSelector((state) => state.auth.user_id);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const provider = useSelector((state) => state.auth.provider);
   const status = useSelector((state) => state.userStatus)
+
   const [isLoading, setIsLoading] = useState(true);
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
@@ -135,9 +133,11 @@ const index = () => {
     setEditProductItem(product);
   };
 
+  console.log(isLoggedIn)
+
   return (
     <>
-      {!isLoggedIn || isLoading ? (
+      {isLoading ? (
         <LoadingPage />
       ) : status.trial_expires === 'expired' && status.p_title === "დამწყები" ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'center', justifyContent: 'center' }}>
@@ -152,6 +152,8 @@ const index = () => {
         </div>
       ) : (
         <Project
+          isLoggedIn={isLoggedIn}
+          shareLink={shareLink}
           allowedExport={status.allowed_export}
           productStatus={productStatus}
           productOptions={productOptions}
