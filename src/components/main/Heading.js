@@ -59,7 +59,10 @@ const Heading = ({log}) => {
   }, [log, dispatch]);
 
   const parallax = useParallax({
-    speed: -15,
+    speed: -10,
+  });
+  const parallaxSec = useParallax({
+    speed: -5,
   });
 
   return (
@@ -137,7 +140,7 @@ const Heading = ({log}) => {
           </div>
           <div className={styles.heading_banner}>
             <div className={`${styles.heading_bannerImg} animateBY tD3 ${animate  ? 'animate' : ''}`}>
-              <img  ref={parallax.ref} src="/images/landing/banner1.png" alt="banner" />
+              <img  ref={parallaxSec.ref} src="/images/landing/banner1.png" alt="banner" />
             </div>
             <div className={`${styles.heading_bannerImg} animateBY tD4 ${animate  ? 'animate' : ''}`}>
               <img ref={parallax.ref} src="/images/landing/banner2.png" alt="banner2" />
