@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-
+import copy from 'copy-to-clipboard';
 import axios from "axios";
 
 import { setCategory } from "../../store/slices/categorySlice";
@@ -22,6 +22,7 @@ import MapSvg from "../svg/MapSvg";
 import CopySvg from "../svg/CopySvg";
 
 import styles from "./Project.module.css";
+import notify from "../../utils/notify";
 
 const Project = ({
   isLoggedIn,
@@ -206,9 +207,13 @@ const Project = ({
                       </a>
                     </div>
                     <div
-                      style={{marginLeft: '0.75rem'}}
+                      style={{ marginLeft: '0.75rem' }}
                       className="d-flex align-items-center py-2 py-md-1"
-                      onClick={() => console.log('hi')}
+                      onClick={() => {
+                        copy(sharedLink);
+                        notify(false, "ლინკი დაკოპირდა")
+                        console.log('URL copied:', sharedLink);
+                      }}
                     >
                       <a
                         className="btn btn-primary fw-bolder georgian geo-title "
