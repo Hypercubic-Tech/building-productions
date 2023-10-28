@@ -208,9 +208,7 @@ const Project = ({
                     <div
                       style={{marginLeft: '0.75rem'}}
                       className="d-flex align-items-center py-2 py-md-1"
-                      onClick={() => {
-                        setSelect("dranings");
-                      }}
+                      onClick={() => console.log('hi')}
                     >
                       <a
                         className="btn btn-primary fw-bolder georgian geo-title "
