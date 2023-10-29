@@ -44,7 +44,6 @@ function HeaderLogged(props) {
   const buttonRef = useRef(null);
 
   const userStatus = useSelector((state) => state.userStatus);
-  console.log(userStatus, 'user')
 
   const { width } = useMobileWidth();
 

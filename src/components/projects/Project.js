@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import copy from 'copy-to-clipboard';
 import axios from "axios";
 
 import { setCategory } from "../../store/slices/categorySlice";
@@ -26,7 +25,8 @@ import notify from "../../utils/notify";
 
 const Project = ({
   isLoggedIn,
-  sharedLink,
+  readOnly,
+  hashedUrl,
   project,
   crafts,
   unit,
@@ -107,6 +107,72 @@ const Project = ({
     };
     defaultProductCallBack();
   }, [activeCategoryId, projectId]);
+
+  const generateSharedProjectHandler = async () => {
+    const allSharedProjects = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects`);
+    const sharedProjects = allSharedProjects.data.data;
+
+    if (sharedProjects.some((item) => item.attributes.hash === hashedUrl)) {
+      copyUrl();
+      notify(false, 'ლინკი დაკოპირებულია');
+    } else {
+      try {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects`,
+          {
+            data: {
+              hash: hashedUrl,
+              projects: {
+                connect: [{ id: projectId }],
+              },
+            },
+          }
+        );
+        copyUrl();
+        notify(false, 'ლინკი გენერირდა და დაკოპირდა')
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  // if(exsist) {
+  //   console.log('copied')
+  // }
+  // if(ok) {
+  //   const response = await axios.post(
+  //     `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects`,
+  //     {
+  //       data: {
+  //         hash: hashedUrl,
+  //         projects: {
+  //           connect: [{ id: projectId }],
+  //         },
+  //       },
+  //     }
+  //   );
+  //   copyUrl();
+  //   if (response.status === 200) {
+  //     notify("ლინკი დაგენერირდა და დაკოპირებულია");
+  //   }
+
+  //   if (response.status === 400) {
+  //     notify("ლინკი დაკოპირებულია");
+  //   }
+  // }
+
+  const copyUrl = () => {
+    const copyText = `http://localhost:3000/share/${hashedUrl}`;
+
+    navigator.clipboard.writeText(copyText)
+      .then(() => {
+        console.log("URL copied to clipboard");
+      })
+      .catch((error) => {
+        console.error("Failed to copy URL to clipboard", error);
+      });
+  };
+
 
   return (
     <>
@@ -210,9 +276,9 @@ const Project = ({
                       style={{ marginLeft: '0.75rem' }}
                       className="d-flex align-items-center py-2 py-md-1"
                       onClick={() => {
-                        copy(sharedLink);
-                        notify(false, "ლინკი დაკოპირდა")
-                        console.log('URL copied:', sharedLink);
+                        generateSharedProjectHandler()
+                        // copyUrl();
+                        // notify(false, "ლინკი დაკოპირდა")
                       }}
                     >
                       <a

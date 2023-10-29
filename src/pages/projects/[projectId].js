@@ -34,7 +34,7 @@ const index = () => {
     setEditProductItem(product);
   };
 
-  console.log(hashedUrl)
+  // console.log(hashedUrl)
   const getProjectById = async () => {
     if (projectId) {
       try {
@@ -144,13 +144,13 @@ const index = () => {
       const data = encoder.encode(url);
       const hashBuffer = await crypto.subtle.digest('SHA-256', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashedUrl = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+      const hashedUrl = hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
       return hashedUrl;
     }
 
     const shareLink = window.location.href;
 
-    hashUrl(shareLink).then(hashed => {
+    hashUrl(shareLink).then((hashed) => {
       setHashedUrl(hashed);
     });
   }, []);
@@ -174,8 +174,8 @@ const index = () => {
         </div>
       ) : (
         <Project
+          hashedUrl={hashedUrl}
           isLoggedIn={isLoggedIn}
-          shareLink={hashedUrl}
           allowedExport={status.allowed_export}
           productStatus={productStatus}
           productOptions={productOptions}
