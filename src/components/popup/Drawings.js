@@ -20,7 +20,7 @@ import DeleteBtn from "../svg/DeleteBtn";
 
 import styles from "./Gallery.module.css";
 
-const Drawings = ({ setSelect }) => {
+const Drawings = ({ setSelect, readOnly }) => {
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -159,6 +159,7 @@ const Drawings = ({ setSelect }) => {
       });
   };
 
+  console.log(isProjectImages, 'sasdas')
   return (
     <div
       className="modal fade show"
@@ -200,43 +201,45 @@ const Drawings = ({ setSelect }) => {
                     selector=".gallery-item"
                   >
                     <div className={styles.galleryItems}>
+                        {!readOnly && (
                       <div className={`${styles.galleryItem}`}>
-                        <div className={`${styles.addBtn}`}>
-                          <input
-                            id="fileInput"
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              overflow: "hidden",
-                              zIndex: "0",
-                              opacity: "0",
-                              top: "0px",
-                              position: "absolute",
-                              cursor: "pointer",
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-                              const modifiedFiles = Array.from(files).map(
-                                (file) => {
-                                  const randomText = Math.random()
-                                    .toString(36)
-                                    .substring(7);
-                                  const fileName = `${randomText}_${file.name}`;
-                                  return new File([file], fileName, {
-                                    type: file.type,
-                                  });
-                                }
-                              );
-                              handleMediaUpload(modifiedFiles);
-                            }}
-                            type="file"
-                            name="avatar"
-                            multiple
-                          />
-                          <span className="fw-boldest geo-title">ნახაზის ატვირთვა</span>
-                          <UploadSvg />
-                        </div>
+                          <div className={`${styles.addBtn}`}>
+                            <input
+                              id="fileInput"
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                overflow: "hidden",
+                                zIndex: "0",
+                                opacity: "0",
+                                top: "0px",
+                                position: "absolute",
+                                cursor: "pointer",
+                              }}
+                              onChange={(e) => {
+                                const files = e.target.files;
+                                const modifiedFiles = Array.from(files).map(
+                                  (file) => {
+                                    const randomText = Math.random()
+                                      .toString(36)
+                                      .substring(7);
+                                    const fileName = `${randomText}_${file.name}`;
+                                    return new File([file], fileName, {
+                                      type: file.type,
+                                    });
+                                  }
+                                );
+                                handleMediaUpload(modifiedFiles);
+                              }}
+                              type="file"
+                              name="avatar"
+                              multiple
+                            />
+                            <span className="fw-boldest geo-title">ნახაზის ატვირთვა</span>
+                            <UploadSvg />
+                          </div>
                       </div>
+                        )}
                       {isProjectImages?.map((projectImg, index) => (
                         <div key={index} className={styles.galleryItem}>
                           <a
@@ -273,6 +276,9 @@ const Drawings = ({ setSelect }) => {
                           </div>
                         </div>
                       ))}
+                      {isProjectImages.length === 0 && (
+                        <p className={styles.no_photo}>ნახაზები არ არის დამატებული</p>
+                      )}
                     </div>
                   </LightGallery>
                 }

@@ -24,7 +24,6 @@ import styles from "./Project.module.css";
 import notify from "../../utils/notify";
 
 const Project = ({
-  isLoggedIn,
   readOnly,
   hashedUrl,
   project,
@@ -52,6 +51,8 @@ const Project = ({
   const [select, setSelect] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState("");
+
+  const [animate, setAnimate] = useState(false);
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
@@ -174,6 +175,10 @@ const Project = ({
   };
 
 
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
+
   return (
     <>
       {project &&
@@ -185,7 +190,7 @@ const Project = ({
           );
 
           return (
-            <div key={index} className={styles.toolbarContainer}>
+            <div key={index} className={`${styles.toolbarContainer} animateBY tD2 ${animate  ? 'animate' : ''}`}>
               <img
                 src={
                   (imageWithMainId &&
@@ -204,7 +209,7 @@ const Project = ({
                   <div className="page-title d-flex flex-column me-3">
                     <h1 className="geo-title">{p?.attributes?.title}</h1>
                     <h2
-                      className={`d-flex fw-bolder my-1 fs-3 geo-title ${styles.toolbarAddress}`}
+                      className={`d-flex fw-bolder my-1 fs-3 ${styles.toolbarAddress}`}
                     >
                       <MapSvg />
                       &nbsp;{p?.attributes?.address}
@@ -272,25 +277,27 @@ const Project = ({
                         ნახაზები
                       </a>
                     </div>
-                    <div
-                      style={{ marginLeft: '0.75rem' }}
-                      className="d-flex align-items-center py-2 py-md-1"
-                      onClick={() => {
-                        generateSharedProjectHandler()
-                        // copyUrl();
-                        // notify(false, "ლინკი დაკოპირდა")
-                      }}
-                    >
-                      <a
-                        className="btn btn-primary fw-bolder georgian geo-title "
-                        data-bs-toggle="modal"
-                        data-bs-target="#kt_modal_create_app"
-                        id="kt_toolbar_primary_button"
+                    {!readOnly && (
+                      <div
+                        style={{ marginLeft: '0.75rem' }}
+                        className="d-flex align-items-center py-2 py-md-1"
+                        onClick={() => {
+                          generateSharedProjectHandler()
+                          // copyUrl();
+                          // notify(false, "ლინკი დაკოპირდა")
+                        }}
                       >
-                        <CopySvg />
-                        გაზიარება
-                      </a>
-                    </div>
+                        <a
+                          className="btn btn-primary fw-bolder georgian geo-title "
+                          data-bs-toggle="modal"
+                          data-bs-target="#kt_modal_create_app"
+                          id="kt_toolbar_primary_button"
+                        >
+                          <CopySvg />
+                          გაზიარება
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -302,7 +309,7 @@ const Project = ({
         filterProductCategory={filterProductCategory}
         projectCategory={projectCategory}
       />
-      <div id="kt_content_container" className={`container`}>
+      <div id="kt_content_container" className={`${'container'} animateBY tD4 ${animate  ? 'animate' : ''}`}>
         <div className="card">
           <div className="card-header border-0 pt-6">
             <div className="card-title">
@@ -325,59 +332,66 @@ const Project = ({
               )}
             </div>
             <div className="card-toolbar">
-              <div
-                className="d-flex justify-content-end"
-                data-kt-user-table-toolbar="base"
-              >
-                {activeCategoryId === null ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      allowedExport && setSelect("exportPopUp");
-                    }}
-                    className={`${"btn btn-light-primary me-3 georgian"} ${!allowedExport && styles.disabledBtn
-                      }`}
-                    data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_export_users"
-                  >
-                    <span className="svg-icon svg-icon-2">
-                      <ExportSvg />
-                    </span>
-                    <b>ექსპორტი</b>
-                  </button>
-                ) : (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
+              {!readOnly ? (
+                <div
+                  className="d-flex justify-content-end"
+                  data-kt-user-table-toolbar="base"
+                >
+                  {activeCategoryId === null ? (
                     <button
                       type="button"
-                      onClick={allowanceChecker}
-                      className={`btn btn-primary georgian`}
+                      onClick={() => {
+                        allowedExport && setSelect("exportPopUp");
+                      }}
+                      className={`${"btn btn-light-primary me-3 georgian"} ${!allowedExport && styles.disabledBtn
+                        }`}
                       data-bs-toggle="modal"
-                      data-bs-target="#kt_modal_add_user"
+                      data-bs-target="#kt_modal_export_users"
                     >
-                      <AddSvg />
-                      <b className="geo-title">დამატება</b>
+                      <span className="svg-icon svg-icon-2">
+                        <ExportSvg />
+                      </span>
+                      <b>ექსპორტი</b>
                     </button>
-                  </div>
-                )}
-              </div>
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={allowanceChecker}
+                        className={`btn btn-primary georgian`}
+                        data-bs-toggle="modal"
+                        data-bs-target="#kt_modal_add_user"
+                      >
+                        <AddSvg />
+                        <b className="geo-title">დამატება</b>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+
               {select === "gallery" && (
                 <Gallery
+                  readOnly={readOnly}
                   getProjectById={getProjectById}
                   setSelect={setSelect}
                 />
               )}
               {select === "dranings" && (
                 <Drawings
+                  readOnly={readOnly}
                   getProjectById={getProjectById}
                   setSelect={setSelect}
                 />
               )}
-              {select === "add" && (
+              {select === "add" && !readOnly && (
                 <AddProduct
                   getProjectById={getProjectById}
                   project={productOptions}
@@ -390,7 +404,7 @@ const Project = ({
                   suppliers={suppliers}
                 />
               )}
-              {select === "edit-product" && (
+              {select === "edit-product" && !readOnly && (
                 <EditProduct
                   product={editProductItem}
                   setSelect={setSelect}
@@ -402,7 +416,7 @@ const Project = ({
                   suppliers={suppliers}
                 />
               )}
-              {select === "edit-service" && (
+              {select === "edit-service" && !readOnly && (
                 <EditService
                   product={editProductItem}
                   setSelect={setSelect}

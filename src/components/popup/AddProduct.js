@@ -255,7 +255,7 @@ const AddProduct = ({
                             alt="Picture of the product"
                         />
                     )}
-                    <div class="profile-picture-btns">
+                    <div className="profile-picture-btns">
                       <div>
                         <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M10.0495 1.99999L3.2078 9.24165C2.94947 9.51665 2.69947 10.0583 2.64947 10.4333L2.34114 13.1333C2.2328 14.1083 2.9328 14.775 3.89947 14.6083L6.5828 14.15C6.9578 14.0833 7.4828 13.8083 7.74114 13.525L14.5828 6.28332C15.7661 5.03332 16.2995 3.60832 14.4578 1.86665C12.6245 0.141654 11.2328 0.749987 10.0495 1.99999Z" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>

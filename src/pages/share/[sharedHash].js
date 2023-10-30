@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingPage from "../../components/ui/LoadingPage";
@@ -8,31 +8,138 @@ const SharedProjectPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [project, setProject] = useState(null);
 
+    const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+    const status = useSelector((state) => state.userStatus)
+
+    const [suppliers, setSuppliers] = useState(null);
+    const [unit, setUnit] = useState(null);
+    const [crafts, setCrafts] = useState(null);
+    const [craftStatus, setCraftStatus] = useState(null);
+    const [productStatus, setProductStatus] = useState(null);
+    const [projectCategory, setProjectCategory] = useState(null);
+    const [productOptions, setProductOptions] = useState(null);
+    const [editProductItem, setEditProductItem] = useState(null);
+    const [defaultImage, setDefaultImage] = useState(null);
+
+
     const pathname = window.location.pathname;
     const lastSlashIndex = pathname.lastIndexOf('/');
     const hashedId = pathname.substring(lastSlashIndex + 1);
 
-    useEffect(() => {
-        const fetchProjectData = async () => {
-            console.log(hashedId, 'id');
-
+    const getProjectById = async () => {
+        if (hashedId) {
             try {
-                const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects?hash_eq=${hashedId}&populate=categories`
+                const id_response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects?populate=projects&filters[hash][$eq]=${hashedId}`
                 );
-                const sharedProject = response.data[0];
+                const project_id = id_response.data?.data[0]?.attributes?.projects?.data[0]?.id;
 
-                setProject(sharedProject);
-                setIsLoading(false);
+                if (project_id) {
+                    try {
+                        const projectRes = await axios.get(
+                            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${project_id}`
+                        );
+                        const projectData = projectRes.data?.data;
+                        setProject(projectData);
+
+                        const productRes = await axios.get(
+                            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${project_id}`
+                        );
+                        const productData = productRes.data;
+                        setProductOptions(productData);
+                        const categoryRes = await axios.get(
+                            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${project_id}`
+                        );
+                        const categoryData = categoryRes.data.data;
+                        setProjectCategory(categoryData);
+
+                        setIsLoading(false);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
             } catch (error) {
-                console.log(error);
-                setIsLoading(false);
+                console.log(error)
             }
+        }
+    }
+    useEffect(() => {
+        getProjectById();
+    }, [hashedId]);
+
+    useEffect(() => {
+        const getSupplierHandler = async () => {
+            await axios
+                .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/suppliers`)
+                .then((res) => {
+                    const data = res.data;
+                    setSuppliers(data.data);
+                });
         };
 
-        if (hashedId) {
-            fetchProjectData();
-        }
+        const getUnitHandler = async () => {
+            await axios
+                .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/units`)
+                .then((res) => {
+                    const data = res.data;
+                    setUnit(data.data);
+                });
+        };
+
+        const getCraftsHandler = async () => {
+            await axios
+                .get(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=image,categories`
+                )
+                .then((res) => {
+                    const data = res.data;
+                    setCrafts(data.data);
+                });
+        };
+
+        const getCraftsStatusHandler = async () => {
+            await axios
+                .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/craft-statuses`)
+                .then((res) => {
+                    const data = res.data;
+                    setCraftStatus(data.data);
+                });
+        };
+
+        const getProductsStatusHandler = async () => {
+            await axios
+                .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/product-statuses`)
+
+                .then((res) => {
+                    const data = res.data;
+                    setProductStatus(data.data);
+                });
+        };
+
+        const getDefaultImage = async () => {
+            await axios
+                .get(
+                    `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/default-image?populate=NoImage`
+                )
+
+                .then((res) => {
+                    const data = res.data;
+                    setDefaultImage(
+                        data.data?.attributes?.NoImage?.data?.attributes?.url
+                    );
+                });
+        };
+
+        getDefaultImage();
+        getProductsStatusHandler();
+        getCraftsStatusHandler();
+        getCraftsHandler();
+        getSupplierHandler();
+        getUnitHandler();
+    }, []);
+
+    useEffect(() => {
+        getProjectById();
     }, [hashedId]);
 
     console.log(project, 'prkj')
@@ -45,9 +152,24 @@ const SharedProjectPage = () => {
     }
 
     return (
-        <div>
-            hi there
-        </div>
+        <Project
+            readOnly={true}
+            // hashedUrl={hashedUrl}
+            isLoggedIn={isLoggedIn}
+            allowedExport={status.allowed_export}
+            productStatus={productStatus}
+            productOptions={productOptions}
+            project={project}
+            craftStatus={craftStatus}
+            crafts={crafts}
+            suppliers={suppliers}
+            unit={unit}
+            projectCategory={projectCategory}
+            // editHandler={editHandler}
+            editProductItem={editProductItem}
+            defaultImage={defaultImage}
+            getProjectById={getProjectById}
+        />
     );
 };
 
