@@ -289,7 +289,7 @@ const AddProduct = ({
                   </div>
                   <div className={`row mb-5 ${styles.productInputs}`}>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         დასახელება
                       </label>
                       <input
@@ -307,7 +307,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         მომწოდებელი
                       </label>
                       <select
@@ -339,7 +339,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="fs-5 fw-bold mb-2 georgian">
+                      <label className="fs-5 fw-bold mb-2 geo-title">
                         ლინკი
                       </label>
                       <input
@@ -357,7 +357,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         რაოდენობა
                       </label>
                       <input
@@ -376,7 +376,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         ერთეული
                       </label>
                       <select
@@ -408,7 +408,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         ღირეულება
                       </label>
                       <input
@@ -427,7 +427,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         სტატუსი
                       </label>
                       <select
@@ -487,7 +487,7 @@ const AddProduct = ({
             ) : (
               <form id="kt_modal_add_user_form" className="form">
                 <div
-                  className="d-flex flex-column"
+                  className="d-flex"
                   id="kt_modal_add_user_scroll"
                   data-kt-scroll="true"
                   data-kt-scroll-activate="{default: false, lg: true}"
@@ -497,24 +497,19 @@ const AddProduct = ({
                   data-kt-scroll-offset="300px"
                 >
                   <div
-                    className={`notice d-flex rounded mb-9 p-6 ${styles.pictureContainer}`}
+                      className={`profile-picture ${styles.addProductPic}`}
                   >
-                    <div className="d-flex flex-stack flex-grow-1">
-                      <img
+                    <img
                         src={`${process.env.NEXT_PUBLIC_BUILDING_URL}${craftImage}`}
                         onError={(e) => {
                           e.target.src = "/images/test-img.png";
                         }}
-                        width={125}
-                        height={125}
-                        style={{ borderRadius: "8px" }}
                         alt="Picture of the product"
-                      />
-                    </div>
+                    />s
                   </div>
                   <div className={`row mb-5 ${styles.productInputs}`}>
                     <div className="w-100">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         დასახელება
                       </label>
                       <select
@@ -558,7 +553,7 @@ const AddProduct = ({
                       </select>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         რაოდენობა
                       </label>
                       <input
@@ -577,7 +572,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         ერთეული
                       </label>
                       <select
@@ -609,7 +604,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         ღირეულება
                       </label>
                       <input
@@ -628,7 +623,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="w-100 col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         სტატუსი
                       </label>
                       <select
@@ -672,7 +667,7 @@ const AddProduct = ({
                       setSelect(null);
                     }}
                     type="reset"
-                    className="btn btn-light me-3"
+                    className="btn btn-light me-3 geo-title"
                     data-kt-users-modal-action="cancel"
                   >
                     გაუქმება
@@ -683,7 +678,7 @@ const AddProduct = ({
                     className="btn btn-primary"
                     data-kt-users-modal-action="submit"
                   >
-                    <span className="indicator-label">დაამატე</span>
+                    <span className="indicator-label geo-title">დაამატე</span>
                   </div>
                 </div>
               </form>
