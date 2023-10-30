@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { SessionProvider } from "next-auth/react"
 import { ParallaxProvider } from 'react-scroll-parallax';
 
+//App component
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
