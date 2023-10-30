@@ -32,6 +32,8 @@ const index = () => {
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
 
+  const [animate, setAnimate] = useState(false);
+
   const userId = useSelector((state) => state.auth.user_id);
   const searchValue = useSelector((state) => state.proj.searchType);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
@@ -207,7 +209,7 @@ const index = () => {
   // };
 
   let buttonWrap = (
-    <div className={`${styles.buttons} my-6`}>
+    <div className={`${styles.buttons} ${'my-6'}  ${'animateBY tD2'} ${animate ? 'animate' : ''}`}>
       <Link
         type="button"
         className="btn btn-primary ghost-btn fw-boldest geo-title"
@@ -317,6 +319,12 @@ const index = () => {
     setIsLoading(false)
   }, [userStatus.trialExpired]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimate(true);
+    }, 500);
+  }, []);
+  
   return (
     <>
       {!isLoggedIn ? (
@@ -331,7 +339,7 @@ const index = () => {
             alt="bg"
           />
           {userStatus.trial_expires === "expired" && userStatus.p_title === 'დამწყები' ? (
-            <div className={styles.expired}>
+            <div className={`${styles.expired} ${'animateBY tD2'} ${animate ? 'animate' : ''}`}>
               <h2>უფასო საცდელი ვადა ამოიწურა გთხოვთ გაანახლოთ გადახდის მეთოდი</h2>
               <Link
                 type="button"
@@ -368,7 +376,7 @@ const index = () => {
                     return (
                       <div
                         key={index}
-                        className={`card-body ${styles.wrapChild} card`}
+                        className={`card-body ${styles.wrapChild} card  ${'animateBY tD3'} ${animate ? 'animate' : ''}`}
                       >
                         <div
                           className={`${styles.imgWrap} card`}
@@ -433,14 +441,14 @@ const index = () => {
                     );
                   })
                 ) : (
-                  <div className={styles.wrap}>
-                    <h2 className={`geo-title `}>პროექტები ვერ მოიძებნა</h2>
+                  <div className={`${styles.wrap}  ${'animateBY tD2'} ${animate ? 'animate' : ''}`}>
+                    <h2 className={`geo-title`}>პროექტები ვერ მოიძებნა</h2>
                     {buttonWrap}
                   </div>
                 )}
               </div>
               {projectsToMap?.length > itemsPerPage && (
-                <nav aria-label="Page navigation example" className="m-5 p-5">
+                <nav aria-label="Page navigation example" className={`${"m-5 p-5"}  ${'animateBY tD2'} ${animate ? 'animate' : ''}`}>
                   <ul className="pagination">
                     <li
                       className="page-item"

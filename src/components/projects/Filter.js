@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory } from "../../store/slices/categorySlice";
 import CheckedSvg from "../svg/CheckedSvg";
@@ -10,11 +11,17 @@ const Filter = ({
   totalSumOnClick,
 }) => {
   const dispatch = useDispatch();
-
   const activeCategoryId = useSelector((state) => state?.cats?.category);
+
+  const [animate, setAnimate] = useState(false)
+
+
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
   return (
     <div className="container">
-      <div className={styles.filterContainer}>
+      <div className={`${styles.filterContainer} animateBY tD3 ${animate  ? 'animate' : ''}`}>
         {projectCategory &&
           projectCategory.map((item, index) => {
             return (

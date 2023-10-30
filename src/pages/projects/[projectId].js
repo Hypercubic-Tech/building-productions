@@ -9,15 +9,13 @@ import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
 
 const index = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
-  const { data: session } = useSession();
+  // const shareLink = window.location.href;
 
-  const userId = useSelector((state) => state.auth.user_id);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const provider = useSelector((state) => state.auth.provider);
   const status = useSelector((state) => state.userStatus)
+
   const [isLoading, setIsLoading] = useState(true);
   const [suppliers, setSuppliers] = useState(null);
   const [unit, setUnit] = useState(null);
@@ -30,6 +28,13 @@ const index = () => {
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
 
+  const [hashedUrl, setHashedUrl] = useState(null);
+
+  const editHandler = (product) => {
+    setEditProductItem(product);
+  };
+
+  // console.log(hashedUrl)
   const getProjectById = async () => {
     if (projectId) {
       try {
@@ -49,6 +54,7 @@ const index = () => {
         );
         const categoryData = categoryRes.data.data;
         setProjectCategory(categoryData);
+
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -131,13 +137,27 @@ const index = () => {
     getProjectById();
   }, [projectId]);
 
-  const editHandler = (product) => {
-    setEditProductItem(product);
-  };
+
+  useEffect(() => {
+    async function hashUrl(url) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(url);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashedUrl = hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
+      return hashedUrl;
+    }
+
+    const shareLink = window.location.href;
+
+    hashUrl(shareLink).then((hashed) => {
+      setHashedUrl(hashed);
+    });
+  }, []);
 
   return (
     <>
-      {!isLoggedIn || isLoading ? (
+      {isLoading ? (
         <LoadingPage />
       ) : status.trial_expires === 'expired' && status.p_title === "დამწყები" ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'center', justifyContent: 'center' }}>
@@ -152,6 +172,8 @@ const index = () => {
         </div>
       ) : (
         <Project
+          hashedUrl={hashedUrl}
+          isLoggedIn={isLoggedIn}
           allowedExport={status.allowed_export}
           productStatus={productStatus}
           productOptions={productOptions}

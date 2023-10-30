@@ -110,6 +110,14 @@
 .galleryItemBtn:hover svg {
   stroke: #fff;
 }
+
+.no_photo {
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 100%;
+}
 @media (max-width: 1199px) {
   .galleryItem {
     width: calc(33.33% - 20px);

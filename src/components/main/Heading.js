@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-
 import { useDispatch } from "react-redux";
+import { useParallax } from "react-scroll-parallax";
 import { useSpring, animated } from "react-spring";
 import { setAuthState } from "../../store/slices/authSlice";
 
@@ -58,6 +58,13 @@ const Heading = ({log}) => {
     }
   }, [log, dispatch]);
 
+  const parallax = useParallax({
+    speed: -10,
+  });
+  const parallaxSec = useParallax({
+    speed: -5,
+  });
+
   return (
     <div className="mb-0" id="home">
       <div
@@ -73,14 +80,14 @@ const Heading = ({log}) => {
               გამოთვალე მარტივად
               <br />
               <span>
-                <span id="kt_landing_hero_text">სარემონტო ხარჯთაღრიცხვა!</span>
+                <span id="kt_landing_hero_text geo-title">სარემონტო ხარჯთაღრიცხვა!</span>
               </span>
             </h1>
             {log ? (
               <Link href="/projects" className={`animateBY tD3 ${animate  ? 'animate' : ''}`}>
                 <div className="btn-bordered">
                   <div
-                    className="btn btn-primary georgian fill-btn"
+                    className="btn btn-primary geo-title fill-btn"
                     data-bs-toggle="modal"
                     data-bs-target="#kt_modal_create_app"
                     id="kt_toolbar_primary_button"
@@ -114,7 +121,7 @@ const Heading = ({log}) => {
                         />
                       </g>
                     </svg>
-                    <b>გამოთვალე!</b>
+                    <b className="geo-title">გამოთვალე!</b>
                   </div>
                 </div>
               </div>
@@ -133,10 +140,10 @@ const Heading = ({log}) => {
           </div>
           <div className={styles.heading_banner}>
             <div className={`${styles.heading_bannerImg} animateBY tD3 ${animate  ? 'animate' : ''}`}>
-              <img src="/images/landing/banner1.png" alt="banner" />
+              <img  ref={parallaxSec.ref} src="/images/landing/banner1.png" alt="banner" />
             </div>
             <div className={`${styles.heading_bannerImg} animateBY tD4 ${animate  ? 'animate' : ''}`}>
-              <img src="/images/landing/banner2.png" alt="banner2" />
+              <img ref={parallax.ref} src="/images/landing/banner2.png" alt="banner2" />
             </div>
           </div>
         </div>

@@ -18,6 +18,8 @@ const index = () => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
 
+  const [animate, setAnimate] = useState(false);
+
   const provider = useSelector((state) => state.auth.provider);
   const authUserId = useSelector((state) => state.auth.user_id);
 
@@ -251,13 +253,19 @@ const index = () => {
     dispatch(setUserStatus(userStatusUpdate));
   }, [userStatusUpdate]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimate(true);
+    }, 500);
+  }, []);
+
   return (
     <>
       {isLoading || !authUser ? (
         <LoadingPage />
       ) : (
         <div className={`${styles.mainContainer} container`}>
-          <div className={styles.imageContainer}>
+          <div className={`${styles.imageContainer} ${'animateBY tD2'} ${animate ? 'animate' : ""}`}>
             <div className={styles.imageBorder}>
               {(imgSrc && (
                 <img
@@ -267,7 +275,7 @@ const index = () => {
                   style={{ borderRadius: "8px" }}
                   alt="Picture of the product"
                 />
-              )) || <h2 className={styles.imageText}>Uploaded Image</h2>}
+              )) || <h2 className={`${styles.imageText} ${'geo-title'}`}>ატვირთეთ ფოტოსურათი</h2>}
             </div>
             <div className={styles.imageUpload}>
               <ImageUpload
@@ -276,10 +284,13 @@ const index = () => {
                 quantity={10}
                 handleImageRemove={handleImageRemove}
               />
-              <FingerprintSvg onClick={() => setOpenPasswordPopup(true)} />
+              <span className={`${styles.reset_password_btn} ${'geo-title'}`} onClick={() => setOpenPasswordPopup(true)}>
+                <FingerprintSvg />
+                პაროლის შეცვლა
+              </span>
             </div>
           </div>
-          <div style={{ width: "100%" }}>
+          <div className={`${styles.edit_panel}`}>
             {authUser && (
               <EditAccount
                 trialExpired={userStatus.trial_expires}

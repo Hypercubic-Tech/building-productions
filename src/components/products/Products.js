@@ -25,6 +25,7 @@ import ThreeDotsSvg from "../svg/ThreeDotsSvg";
 import styles from "./Products.module.css";
 
 const Products = ({
+  readOnly,
   editHandler,
   setSelect,
   totalSum,
@@ -33,13 +34,15 @@ const Products = ({
   craftStatus,
   select,
   defaultImage,
-  allowedProductsHandler,
   total,
+  projectId
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { projectId } = router.query;
+  // const { projectId } = router.query;
+
+  console.log(projectId)
   const activeCategoryId = useSelector((state) => state?.cats?.category);
   const products = useSelector((state) => state.prod.products);
   const [productStatusValues, setProductStatusValues] = useState({});
@@ -177,7 +180,6 @@ const Products = ({
       .then((result) => {
         if (result.isConfirmed) {
           deleteProductHandler(item);
-          allowedProductsHandler();
           notify(false, "პროდუქტი წაიშალა");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           notify(true, "უარყოფილია");
@@ -437,6 +439,7 @@ const Products = ({
     setPageIndex(1);
   }, [activeCategoryId]);
 
+  console.log(readOnly, 'hi')
   return (
     <>
       <Fragment>
@@ -446,7 +449,7 @@ const Products = ({
               {totalSum ? (
                 sum_table_head.map((item, index) => {
                   return (
-                    <span key={index} style={{ width: item.width }} className={styles.table_head_item}>
+                    <span key={index} style={{ width: item.width }} className={`${styles.table_head_item} ${'geo-title'}`}>
                       {item.title}
                     </span>
                   )
@@ -454,7 +457,7 @@ const Products = ({
               ) : (
                 table_head.map((item, index) => {
                   return (
-                    <span key={index} style={{ width: item.width, }} className={styles.table_head_item}>
+                    <span key={index} style={{ width: item.width, }} className={`${styles.table_head_item} ${'geo-title'}`}>
                       {item.title}
                     </span>
                   )
@@ -488,7 +491,7 @@ const Products = ({
                         ?.find((item) => item.title === product?.categories)
                         ?.sum.toFixed(2) || 0}{" "}
                     </span>
-                    <span style={{ width: sum_table_head[6].width, justifyContent: width < 1200 ? 'center' : 'flex-end'  }}>ლარი</span>
+                    <span style={{ width: sum_table_head[6].width, justifyContent: width < 1200 ? 'center' : 'flex-end' }}>ლარი</span>
                   </div>
                 ))}
                 <div className={styles.sum_table_item_sc}>
@@ -528,7 +531,7 @@ const Products = ({
                 <div className={styles.table_body}>
                   {!projectId && (
                     <span className={styles.table_body_loading}>
-                      <span>Loading</span>
+                      {/* <span>Loading</span> */}
                     </span>
                   )}
                   {productsToMap && productsToMap.slice(startIndex, endIndex)
@@ -604,35 +607,41 @@ const Products = ({
                             </span>
                             <span style={{ width: table_head[7]?.width }} className={`${styles.table_body_item} ${styles.pd_r}`}>
                               <div className="form-group">
-                                {product?.attributes?.type === "product" ? (
-                                  <ProductSelect
-                                    key={product.id}
-                                    product={product}
-                                    productStatusValues={productStatusValues}
-                                    setProductStatusValues={
-                                      setProductStatusValues
-                                    }
-                                    productStatus={productStatus}
-                                    confirmEdit={confirmEdit}
-                                    defaultStatusValue={defaultStatusValue}
-                                  />
+                                {readOnly ? (
+                                  defaultStatusValue || defaultCraftStatusValue
                                 ) : (
-                                  <CraftSelect
-                                    key={product.id}
-                                    product={product}
-                                    craftStatusValues={craftStatusValues}
-                                    setCraftStatusValues={setCraftStatusValues}
-                                    craftStatus={craftStatus}
-                                    confirmServiceEdit={confirmServiceEdit}
-                                    defaultCraftStatusValue={
-                                      defaultCraftStatusValue
-                                    }
-                                  />
+                                  <Fragment>
+                                    {product?.attributes?.type === "product" ? (
+                                      <ProductSelect
+                                        key={product.id}
+                                        product={product}
+                                        productStatusValues={productStatusValues}
+                                        setProductStatusValues={
+                                          setProductStatusValues
+                                        }
+                                        productStatus={productStatus}
+                                        confirmEdit={confirmEdit}
+                                        defaultStatusValue={defaultStatusValue}
+                                      />
+                                    ) : (
+                                      <CraftSelect
+                                        key={product.id}
+                                        product={product}
+                                        craftStatusValues={craftStatusValues}
+                                        setCraftStatusValues={setCraftStatusValues}
+                                        craftStatus={craftStatus}
+                                        confirmServiceEdit={confirmServiceEdit}
+                                        defaultCraftStatusValue={
+                                          defaultCraftStatusValue
+                                        }
+                                      />
+                                    )}
+                                  </Fragment>
                                 )}
                               </div>
                             </span>
                             <span style={{ width: table_head[8]?.width, justifyContent: width < 1200 ? 'center' : 'flex-end' }} className={`${styles.table_body_item} ${styles.changeModal}`}>
-                              <div style={{ cursor: 'pointer', transform: width < 700 ? "rotate(-90deg)" : "" }} onClick={() => changeModalHandler(product)}>
+                              <div className={readOnly && styles.disabled_edit} style={{ cursor: 'pointer', transform: width < 700 ? "rotate(-90deg)" : "" }} onClick={() => changeModalHandler(product)}>
                                 <ThreeDotsSvg />
                               </div>
                               {activeItem === product.id ? (
@@ -688,7 +697,7 @@ const Products = ({
                           {(
                             <div className={`${styles.expanded_item} ${expandedItem === product.id ? styles.actived_expand : styles.deactived_expand}`}>
                               <div className={styles.expanded_sub_item}>
-                                <span>ტიპი:</span>
+                                <span className="geo-title">ტიპი:</span>
                                 <span>
                                   {product?.attributes?.type === "product"
                                     ? "პროდუქტი"
@@ -696,7 +705,7 @@ const Products = ({
                                 </span>
                               </div>
                               <div className={styles.expanded_sub_item}>
-                                <span>მომწოდებელი:</span>
+                                <span className="geo-title">მომწოდებელი:</span>
                                 <span>
                                   {product.attributes.type === "product" ? (
                                     <a
@@ -722,25 +731,25 @@ const Products = ({
                                 </span>
                               </div>
                               <div className={styles.expanded_sub_item}>
-                                <span>რაოდენობა:</span>
+                                <span className="geo-title">რაოდენობა:</span>
                                 <span>
                                   {product?.attributes?.quantity}
                                 </span>
                               </div>
                               <div className={styles.expanded_sub_item}>
-                                <span>ერთეული:</span>
+                                <span className="geo-title">ერთეული:</span>
                                 <span>
                                   {product?.attributes?.unit?.data?.attributes?.title}
                                 </span>
                               </div>
                               <div className={styles.expanded_sub_item}>
-                                <span>ღირებულება:</span>
+                                <span className="geo-title">ღირებულება:</span>
                                 <span>
                                   {product?.attributes?.price}
                                 </span>
                               </div>
                               <div className={styles.expanded_sub_item}>
-                                <span>ჯამი:</span>
+                                <span className="geo-title">ჯამი:</span>
                                 <span>
                                   {(
                                     product?.attributes?.price *
@@ -756,7 +765,7 @@ const Products = ({
 
                 </div>
                 <div className={styles.table_footer}>
-                  <span>ჯამი: {total.toFixed(2)} ლარი</span>
+                  <span className="geo-title">ჯამი: {total.toFixed(2)} ლარი</span>
                 </div>
               </Fragment>
             )}

@@ -19,7 +19,7 @@ import ImageUpload from "../ui/ImageUpload";
 
 import styles from "./Gallery.module.css";
 
-const Gallery = ({ setSelect, getProjectById }) => {
+const Gallery = ({ setSelect, getProjectById, readOnly }) => {
   const [image, setImage] = useState([]);
   const [projectImage, setProjectImage] = useState();
   const [isImageUpload, setIsImageUpload] = useState(false);
@@ -211,15 +211,17 @@ const Gallery = ({ setSelect, getProjectById }) => {
                     selector=".gallery-item"
                   >
                     <div className={styles.galleryItems}>
-                      <div className={`${styles.galleryItem}`}>
-                        <div className={`${styles.addBtn}`}>
-                          <ImageUpload
-                            type="projects"
-                            onImageUpload={handleMediaUpload}
-                            quantity={10}
-                          />
+                      {!readOnly && (
+                        <div className={`${styles.galleryItem}`}>
+                          <div className={`${styles.addBtn}`}>
+                            <ImageUpload
+                              type="projects"
+                              onImageUpload={handleMediaUpload}
+                              quantity={10}
+                            />
+                          </div>
                         </div>
-                      </div>
+                      )}
                       {projectImage &&
                         projectImage?.map((projectImg, index) => {
                           return (
@@ -255,6 +257,10 @@ const Gallery = ({ setSelect, getProjectById }) => {
                             </div>
                           );
                         })}
+                      {/* {projectImage. = 0 && 'hi' } */}
+                      {projectImage === null || projectImage === undefined && (
+                        <p  className={styles.no_photo}>სურათები არ არის დამატებული</p>
+                      )}
                     </div>
                   </LightGallery>
                 }

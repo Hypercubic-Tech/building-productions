@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-
 import axios from "axios";
 
 import { setCategory } from "../../store/slices/categorySlice";
@@ -19,10 +18,15 @@ import Search2Svg from "../svg/Search2Svg";
 import LinerSvg from "../svg/LinerSvg";
 import AddSvg from "../svg/AddSvg";
 import MapSvg from "../svg/MapSvg";
+import CopySvg from "../svg/CopySvg";
 
 import styles from "./Project.module.css";
+import notify from "../../utils/notify";
 
 const Project = ({
+  readOnly,
+  projectIdR,
+  hashedUrl,
   project,
   crafts,
   unit,
@@ -49,6 +53,8 @@ const Project = ({
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState("");
 
+  const [animate, setAnimate] = useState(false);
+
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
   };
@@ -60,7 +66,7 @@ const Project = ({
     if (id) {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[categories][id]=${id}`
         );
         const data = response.data.data;
         dispatch(setProducts(data));
@@ -68,20 +74,26 @@ const Project = ({
       } catch (error) {
         console.error(error);
       }
+    } else {
+      console.log(id, 'not defined')
     }
   };
 
   const filterProductCategory = async (id) => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`
-      );
-      const data = response.data;
-      dispatch(setProducts(data.data));
-      dispatch(setCategory(id));
-      setTotalSum(false);
-    } catch (error) {
-      console.error(error);
+    if (id) {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[categories][id]=${id}`
+        );
+        const data = response.data;
+        dispatch(setProducts(data.data));
+        dispatch(setCategory(id));
+        setTotalSum(false);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.log(id, 'not defined')
     }
   };
 
@@ -97,12 +109,58 @@ const Project = ({
 
   useEffect(() => {
     const defaultProductCallBack = async () => {
-      if (activeCategoryId && projectId) {
+      if (activeCategoryId && projectId || activeCategoryId && projectIdR) {
         await defaultProductsHandler(activeCategoryId);
       }
     };
     defaultProductCallBack();
-  }, [activeCategoryId, projectId]);
+  }, [activeCategoryId, projectId || projectIdR, activeCategoryId]);
+
+  const generateSharedProjectHandler = async () => {
+    const allSharedProjects = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects`);
+    const sharedProjects = allSharedProjects.data.data;
+
+    if (sharedProjects.some((item) => item.attributes.hash === hashedUrl)) {
+      copyUrl();
+      notify(false, 'ლინკი დაკოპირებულია');
+    } else {
+      try {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects`,
+          {
+            data: {
+              hash: hashedUrl,
+              projects: {
+                connect: [{ id: projectId || projectIdR }],
+              },
+            },
+          }
+        );
+        copyUrl();
+        notify(false, 'ლინკი გენერირდა და დაკოპირდა')
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const copyUrl = () => {
+    const copyText = `http://localhost:3000/share/${hashedUrl}`;
+
+    navigator.clipboard.writeText(copyText)
+      .then(() => {
+        console.log("URL copied to clipboard");
+      })
+      .catch((error) => {
+        console.error("Failed to copy URL to clipboard", error);
+      });
+  };
+
+
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
+
 
   return (
     <>
@@ -115,15 +173,15 @@ const Project = ({
           );
 
           return (
-            <div key={index} className={styles.toolbarContainer}>
+            <div key={index} className={`${styles.toolbarContainer} animateBY tD2 ${animate ? 'animate' : ''}`}>
               <img
                 src={
                   (imageWithMainId &&
                     process.env.NEXT_PUBLIC_BUILDING_URL +
-                      imageWithMainId?.attributes?.url) ||
+                    imageWithMainId?.attributes?.url) ||
                   (p?.attributes?.image?.data?.[0]?.attributes?.url &&
                     process.env.NEXT_PUBLIC_BUILDING_URL +
-                      p?.attributes?.image?.data?.[0]?.attributes?.url) ||
+                    p?.attributes?.image?.data?.[0]?.attributes?.url) ||
                   "/images/test-img.png"
                 }
                 alt="main-photo"
@@ -134,7 +192,7 @@ const Project = ({
                   <div className="page-title d-flex flex-column me-3">
                     <h1 className="geo-title">{p?.attributes?.title}</h1>
                     <h2
-                      className={`d-flex fw-bolder my-1 fs-3 geo-title ${styles.toolbarAddress}`}
+                      className={`d-flex fw-bolder my-1 fs-3 ${styles.toolbarAddress}`}
                     >
                       <MapSvg />
                       &nbsp;{p?.attributes?.address}
@@ -202,6 +260,27 @@ const Project = ({
                         ნახაზები
                       </a>
                     </div>
+                    {!readOnly && (
+                      <div
+                        style={{ marginLeft: '0.75rem' }}
+                        className="d-flex align-items-center py-2 py-md-1"
+                        onClick={() => {
+                          generateSharedProjectHandler()
+                          // copyUrl();
+                          // notify(false, "ლინკი დაკოპირდა")
+                        }}
+                      >
+                        <a
+                          className="btn btn-primary fw-bolder georgian geo-title "
+                          data-bs-toggle="modal"
+                          data-bs-target="#kt_modal_create_app"
+                          id="kt_toolbar_primary_button"
+                        >
+                          <CopySvg />
+                          გაზიარება
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -213,7 +292,7 @@ const Project = ({
         filterProductCategory={filterProductCategory}
         projectCategory={projectCategory}
       />
-      <div id="kt_content_container" className={`container`}>
+      <div id="kt_content_container" className={`${'container'} animateBY tD4 ${animate ? 'animate' : ''}`}>
         <div className="card">
           <div className="card-header border-0 pt-6">
             <div className="card-title">
@@ -236,60 +315,66 @@ const Project = ({
               )}
             </div>
             <div className="card-toolbar">
-              <div
-                className="d-flex justify-content-end"
-                data-kt-user-table-toolbar="base"
-              >
-                {activeCategoryId === null ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      allowedExport && setSelect("exportPopUp");
-                    }}
-                    className={`${"btn btn-light-primary me-3 georgian"} ${
-                      !allowedExport && styles.disabledBtn
-                    }`}
-                    data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_export_users"
-                  >
-                    <span className="svg-icon svg-icon-2">
-                      <ExportSvg />
-                    </span>
-                    <b>ექსპორტი</b>
-                  </button>
-                ) : (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
+              {!readOnly ? (
+                <div
+                  className="d-flex justify-content-end"
+                  data-kt-user-table-toolbar="base"
+                >
+                  {activeCategoryId === null ? (
                     <button
                       type="button"
-                      onClick={allowanceChecker}
-                      className={`btn btn-primary georgian`}
+                      onClick={() => {
+                        allowedExport && setSelect("exportPopUp");
+                      }}
+                      className={`${"btn btn-light-primary me-3 georgian"} ${!allowedExport && styles.disabledBtn
+                        }`}
                       data-bs-toggle="modal"
-                      data-bs-target="#kt_modal_add_user"
+                      data-bs-target="#kt_modal_export_users"
                     >
-                      <AddSvg />
-                      <b className="geo-title">დამატება</b>
+                      <span className="svg-icon svg-icon-2">
+                        <ExportSvg />
+                      </span>
+                      <b>ექსპორტი</b>
                     </button>
-                  </div>
-                )}
-              </div>
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={allowanceChecker}
+                        className={`btn btn-primary georgian`}
+                        data-bs-toggle="modal"
+                        data-bs-target="#kt_modal_add_user"
+                      >
+                        <AddSvg />
+                        <b className="geo-title">დამატება</b>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+
               {select === "gallery" && (
                 <Gallery
+                  readOnly={readOnly}
                   getProjectById={getProjectById}
                   setSelect={setSelect}
                 />
               )}
               {select === "dranings" && (
                 <Drawings
+                  readOnly={readOnly}
                   getProjectById={getProjectById}
                   setSelect={setSelect}
                 />
               )}
-              {select === "add" && (
+              {select === "add" && !readOnly && (
                 <AddProduct
                   getProjectById={getProjectById}
                   project={productOptions}
@@ -302,7 +387,7 @@ const Project = ({
                   suppliers={suppliers}
                 />
               )}
-              {select === "edit-product" && (
+              {select === "edit-product" && !readOnly && (
                 <EditProduct
                   product={editProductItem}
                   setSelect={setSelect}
@@ -314,7 +399,7 @@ const Project = ({
                   suppliers={suppliers}
                 />
               )}
-              {select === "edit-service" && (
+              {select === "edit-service" && !readOnly && (
                 <EditService
                   product={editProductItem}
                   setSelect={setSelect}
@@ -329,10 +414,11 @@ const Project = ({
           </div>
           <div className="card-body pt-0">
             <Products
+              readOnly={readOnly}
               getProjectById={getProjectById}
               defaultImage={defaultImage}
               productStatus={productStatus}
-              projectId={projectId}
+              projectId={projectId || projectIdR}
               craftStatus={craftStatus}
               editHandler={editHandler}
               allProduct={allProduct}
