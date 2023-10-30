@@ -25,6 +25,7 @@ import notify from "../../utils/notify";
 
 const Project = ({
   readOnly,
+  projectIdR,
   hashedUrl,
   project,
   crafts,
@@ -65,7 +66,7 @@ const Project = ({
     if (id) {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[categories][id]=${id}`
         );
         const data = response.data.data;
         dispatch(setProducts(data));
@@ -73,20 +74,26 @@ const Project = ({
       } catch (error) {
         console.error(error);
       }
+    } else {
+      console.log(id, 'not defined')
     }
   };
 
   const filterProductCategory = async (id) => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`
-      );
-      const data = response.data;
-      dispatch(setProducts(data.data));
-      dispatch(setCategory(id));
-      setTotalSum(false);
-    } catch (error) {
-      console.error(error);
+    if (id) {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[categories][id]=${id}`
+        );
+        const data = response.data;
+        dispatch(setProducts(data.data));
+        dispatch(setCategory(id));
+        setTotalSum(false);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.log(id, 'not defined')
     }
   };
 
@@ -102,12 +109,12 @@ const Project = ({
 
   useEffect(() => {
     const defaultProductCallBack = async () => {
-      if (activeCategoryId && projectId) {
+      if (activeCategoryId && projectId || activeCategoryId && projectIdR) {
         await defaultProductsHandler(activeCategoryId);
       }
     };
     defaultProductCallBack();
-  }, [activeCategoryId, projectId]);
+  }, [activeCategoryId, projectId || projectIdR, activeCategoryId]);
 
   const generateSharedProjectHandler = async () => {
     const allSharedProjects = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects`);
@@ -124,7 +131,7 @@ const Project = ({
             data: {
               hash: hashedUrl,
               projects: {
-                connect: [{ id: projectId }],
+                connect: [{ id: projectId || projectIdR }],
               },
             },
           }
@@ -136,31 +143,6 @@ const Project = ({
       }
     }
   };
-
-  // if(exsist) {
-  //   console.log('copied')
-  // }
-  // if(ok) {
-  //   const response = await axios.post(
-  //     `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects`,
-  //     {
-  //       data: {
-  //         hash: hashedUrl,
-  //         projects: {
-  //           connect: [{ id: projectId }],
-  //         },
-  //       },
-  //     }
-  //   );
-  //   copyUrl();
-  //   if (response.status === 200) {
-  //     notify("ლინკი დაგენერირდა და დაკოპირებულია");
-  //   }
-
-  //   if (response.status === 400) {
-  //     notify("ლინკი დაკოპირებულია");
-  //   }
-  // }
 
   const copyUrl = () => {
     const copyText = `http://localhost:3000/share/${hashedUrl}`;
@@ -179,6 +161,7 @@ const Project = ({
     setAnimate(true);
   }, []);
 
+
   return (
     <>
       {project &&
@@ -190,7 +173,7 @@ const Project = ({
           );
 
           return (
-            <div key={index} className={`${styles.toolbarContainer} animateBY tD2 ${animate  ? 'animate' : ''}`}>
+            <div key={index} className={`${styles.toolbarContainer} animateBY tD2 ${animate ? 'animate' : ''}`}>
               <img
                 src={
                   (imageWithMainId &&
@@ -309,7 +292,7 @@ const Project = ({
         filterProductCategory={filterProductCategory}
         projectCategory={projectCategory}
       />
-      <div id="kt_content_container" className={`${'container'} animateBY tD4 ${animate  ? 'animate' : ''}`}>
+      <div id="kt_content_container" className={`${'container'} animateBY tD4 ${animate ? 'animate' : ''}`}>
         <div className="card">
           <div className="card-header border-0 pt-6">
             <div className="card-title">
@@ -431,10 +414,11 @@ const Project = ({
           </div>
           <div className="card-body pt-0">
             <Products
+              readOnly={readOnly}
               getProjectById={getProjectById}
               defaultImage={defaultImage}
               productStatus={productStatus}
-              projectId={projectId}
+              projectId={projectId || projectIdR}
               craftStatus={craftStatus}
               editHandler={editHandler}
               allProduct={allProduct}

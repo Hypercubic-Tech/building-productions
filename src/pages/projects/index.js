@@ -442,7 +442,7 @@ const index = () => {
                   })
                 ) : (
                   <div className={`${styles.wrap}  ${'animateBY tD2'} ${animate ? 'animate' : ''}`}>
-                    <h2 className={`geo-title `}>პროექტები ვერ მოიძებნა</h2>
+                    <h2 className={`geo-title`}>პროექტები ვერ მოიძებნა</h2>
                     {buttonWrap}
                   </div>
                 )}

@@ -366,7 +366,6 @@ function HeaderLogged(props) {
                               {item.svg}
                               {item?.list?.length && item.list.length > 0 ? (
                                 item.list.map((l, index) => {
-                                  console.log(l)
                                   return (
                                     <span key={index} className={styles.dashboard_tootlip}>
                                       <span className="geo-title">{l.title}</span>

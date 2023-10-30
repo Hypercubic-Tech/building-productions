@@ -155,8 +155,6 @@ const index = () => {
     });
   }, []);
 
-  console.log(isLoggedIn)
-
   return (
     <>
       {isLoading ? (

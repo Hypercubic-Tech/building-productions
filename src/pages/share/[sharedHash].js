@@ -21,6 +21,8 @@ const SharedProjectPage = () => {
     const [editProductItem, setEditProductItem] = useState(null);
     const [defaultImage, setDefaultImage] = useState(null);
 
+    const [projectIdR, setProjectIdR] = useState(null);
+
 
     const pathname = window.location.pathname;
     const lastSlashIndex = pathname.lastIndexOf('/');
@@ -33,7 +35,7 @@ const SharedProjectPage = () => {
                     `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects?populate=projects&filters[hash][$eq]=${hashedId}`
                 );
                 const project_id = id_response.data?.data[0]?.attributes?.projects?.data[0]?.id;
-
+                setProjectIdR(project_id)
                 if (project_id) {
                     try {
                         const projectRes = await axios.get(
@@ -142,7 +144,6 @@ const SharedProjectPage = () => {
         getProjectById();
     }, [hashedId]);
 
-    console.log(project, 'prkj')
     if (isLoading) {
         return <LoadingPage />;
     }
@@ -153,6 +154,7 @@ const SharedProjectPage = () => {
 
     return (
         <Project
+            projectIdR={projectIdR}
             readOnly={true}
             // hashedUrl={hashedUrl}
             isLoggedIn={isLoggedIn}

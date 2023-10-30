@@ -34,13 +34,15 @@ const Products = ({
   craftStatus,
   select,
   defaultImage,
-  allowedProductsHandler,
   total,
+  projectId
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { projectId } = router.query;
+  // const { projectId } = router.query;
+
+  console.log(projectId)
   const activeCategoryId = useSelector((state) => state?.cats?.category);
   const products = useSelector((state) => state.prod.products);
   const [productStatusValues, setProductStatusValues] = useState({});
@@ -178,7 +180,6 @@ const Products = ({
       .then((result) => {
         if (result.isConfirmed) {
           deleteProductHandler(item);
-          allowedProductsHandler();
           notify(false, "პროდუქტი წაიშალა");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           notify(true, "უარყოფილია");
@@ -438,6 +439,7 @@ const Products = ({
     setPageIndex(1);
   }, [activeCategoryId]);
 
+  console.log(readOnly, 'hi')
   return (
     <>
       <Fragment>
@@ -529,7 +531,7 @@ const Products = ({
                 <div className={styles.table_body}>
                   {!projectId && (
                     <span className={styles.table_body_loading}>
-                      <span>Loading</span>
+                      {/* <span>Loading</span> */}
                     </span>
                   )}
                   {productsToMap && productsToMap.slice(startIndex, endIndex)
@@ -605,35 +607,41 @@ const Products = ({
                             </span>
                             <span style={{ width: table_head[7]?.width }} className={`${styles.table_body_item} ${styles.pd_r}`}>
                               <div className="form-group">
-                                {product?.attributes?.type === "product" ? (
-                                  <ProductSelect
-                                    key={product.id}
-                                    product={product}
-                                    productStatusValues={productStatusValues}
-                                    setProductStatusValues={
-                                      setProductStatusValues
-                                    }
-                                    productStatus={productStatus}
-                                    confirmEdit={confirmEdit}
-                                    defaultStatusValue={defaultStatusValue}
-                                  />
+                                {readOnly ? (
+                                  defaultStatusValue || defaultCraftStatusValue
                                 ) : (
-                                  <CraftSelect
-                                    key={product.id}
-                                    product={product}
-                                    craftStatusValues={craftStatusValues}
-                                    setCraftStatusValues={setCraftStatusValues}
-                                    craftStatus={craftStatus}
-                                    confirmServiceEdit={confirmServiceEdit}
-                                    defaultCraftStatusValue={
-                                      defaultCraftStatusValue
-                                    }
-                                  />
+                                  <Fragment>
+                                    {product?.attributes?.type === "product" ? (
+                                      <ProductSelect
+                                        key={product.id}
+                                        product={product}
+                                        productStatusValues={productStatusValues}
+                                        setProductStatusValues={
+                                          setProductStatusValues
+                                        }
+                                        productStatus={productStatus}
+                                        confirmEdit={confirmEdit}
+                                        defaultStatusValue={defaultStatusValue}
+                                      />
+                                    ) : (
+                                      <CraftSelect
+                                        key={product.id}
+                                        product={product}
+                                        craftStatusValues={craftStatusValues}
+                                        setCraftStatusValues={setCraftStatusValues}
+                                        craftStatus={craftStatus}
+                                        confirmServiceEdit={confirmServiceEdit}
+                                        defaultCraftStatusValue={
+                                          defaultCraftStatusValue
+                                        }
+                                      />
+                                    )}
+                                  </Fragment>
                                 )}
                               </div>
                             </span>
                             <span style={{ width: table_head[8]?.width, justifyContent: width < 1200 ? 'center' : 'flex-end' }} className={`${styles.table_body_item} ${styles.changeModal}`}>
-                              <div style={{ cursor: 'pointer', transform: width < 700 ? "rotate(-90deg)" : "" }} onClick={() => changeModalHandler(product)}>
+                              <div className={readOnly && styles.disabled_edit} style={{ cursor: 'pointer', transform: width < 700 ? "rotate(-90deg)" : "" }} onClick={() => changeModalHandler(product)}>
                                 <ThreeDotsSvg />
                               </div>
                               {activeItem === product.id ? (

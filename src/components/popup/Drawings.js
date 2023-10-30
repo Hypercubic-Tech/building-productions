@@ -159,7 +159,6 @@ const Drawings = ({ setSelect, readOnly }) => {
       });
   };
 
-  console.log(isProjectImages, 'sasdas')
   return (
     <div
       className="modal fade show"
@@ -276,7 +275,7 @@ const Drawings = ({ setSelect, readOnly }) => {
                           </div>
                         </div>
                       ))}
-                      {isProjectImages.length === 0 && (
+                      {isProjectImages?.length === 0 || isProjectImages === null && (
                         <p className={styles.no_photo}>ნახაზები არ არის დამატებული</p>
                       )}
                     </div>
