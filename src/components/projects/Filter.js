@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory } from "../../store/slices/categorySlice";
+
 import CheckedSvg from "../svg/CheckedSvg";
 
 import styles from "./Filter.module.css";
@@ -15,10 +16,10 @@ const Filter = ({
 
   const [animate, setAnimate] = useState(false)
 
-
   useEffect(() => {
     setAnimate(true);
   }, []);
+
   return (
     <div className="container">
       <div className={`${styles.filterContainer} animateBY tD3 ${animate  ? 'animate' : ''}`}>

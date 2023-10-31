@@ -57,3 +57,7 @@
 .productInputs {
     width: calc(100% - 150px);
 }
+
+.category_name {
+    font-size: 14px;
+}

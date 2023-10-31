@@ -42,7 +42,6 @@ const Products = ({
 
   // const { projectId } = router.query;
 
-  console.log(projectId)
   const activeCategoryId = useSelector((state) => state?.cats?.category);
   const products = useSelector((state) => state.prod.products);
   const [productStatusValues, setProductStatusValues] = useState({});
@@ -551,40 +550,58 @@ const Products = ({
                         <div key={index} className={`${styles.table_item_wrap} ${expandedItem === product.id && styles.actived_table_item}`}>
                           <div className={`${styles.table_body_item_outer}`}>
                             <span style={{ width: table_head[0]?.width }} className={styles.table_body_item}>
-                              <img
-                                onError={(e) => {
-                                  e.target.src =
-                                    process.env.NEXT_PUBLIC_BUILDING_URL +
-                                    defaultImage;
-                                }}
-                                src={
-                                  product.attributes.type === "product"
-                                    ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}`
-                                    : `${process.env.NEXT_PUBLIC_BUILDING_URL}${product.attributes.craft_img_url}`
+                              {product.attributes.type === 'product' ? (
+                                <a style={{
+                                  gap: '7px',
+                                  display: 'flex'
+                                }} href={
+                                  product.attributes.productLink ? (
+                                    product?.attributes?.productLink.startsWith(
+                                      "https"
+                                    )
+                                      ? product?.attributes?.productLink
+                                      : `https://${product?.attributes?.productLink}`
+                                  ) : ("")
                                 }
-                                alt="product img"
-                              />
-                              <span>{product?.attributes?.title}</span>
+                                  target="_blank">
+                                  <img
+                                    onError={(e) => {
+                                      e.target.src =
+                                        process.env.NEXT_PUBLIC_BUILDING_URL +
+                                        defaultImage;
+                                    }}
+                                    src={
+                                      product.attributes.type === "product"
+                                        ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}`
+                                        : `${process.env.NEXT_PUBLIC_BUILDING_URL}${product.attributes.craft_img_url}`
+                                    }
+                                    alt="product img"
+                                  />
+                                  <span>{product?.attributes?.title}</span>
+                                </a>
+                              ) : (
+                                <Fragment>
+                                  <img
+                                    onError={(e) => {
+                                      e.target.src =
+                                        process.env.NEXT_PUBLIC_BUILDING_URL +
+                                        defaultImage;
+                                    }}
+                                    src={
+                                      product.attributes.type === "product"
+                                        ? `${process.env.NEXT_PUBLIC_BUILDING_URL}${product?.attributes?.image?.data?.attributes?.url}`
+                                        : `${process.env.NEXT_PUBLIC_BUILDING_URL}${product.attributes.craft_img_url}`
+                                    }
+                                    alt="product img"
+                                  />
+                                  <span>{product?.attributes?.title}</span>
+                                </Fragment>
+                              )}
                             </span>
                             <span style={{ width: table_head[1]?.width }} className={styles.table_body_item}>
                               {product.attributes.type === "product" ? (
-                                <a
-                                  href={
-                                    product.attributes.productLink ? (
-                                      product?.attributes?.productLink.startsWith(
-                                        "https"
-                                      )
-                                        ? product?.attributes?.productLink
-                                        : `https://${product?.attributes?.productLink}`
-                                    ) : ("")
-                                  }
-                                  target="_blank"
-                                >
-                                  {
-                                    product?.attributes?.supplier?.data
-                                      ?.attributes?.title
-                                  }
-                                </a>
+                                product?.attributes?.supplier?.data
+                                  ?.attributes?.title
                               ) : (
                                 " - "
                               )}

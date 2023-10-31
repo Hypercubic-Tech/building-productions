@@ -11,6 +11,7 @@ import XredSvg from "../svg/XredSvg";
 import styles from "./AddProduct.module.css";
 
 const AddProduct = ({
+  projectCategory,
   setSelect,
   unit,
   suppliers,
@@ -23,15 +24,14 @@ const AddProduct = ({
 
   const projectId = router.query.projectId;
   const activeCategoryId = useSelector((state) => state.cats.category);
-  const activeCategoryName = useSelector((state) => state.cats)
-  console.log(activeCategoryName, 'name')
-
   const [lossProduct, setLossProduct] = useState(false);
   const [toggle, setToggle] = useState(true);
   const [imgSrc, setImgSrc] = useState(null);
   const [image, setImage] = useState(null);
   const [filteredCrafts, setFilteredCrafts] = useState();
   const [craftImage, setCraftImage] = useState();
+  const [categoryName, setCategoryName] = useState(null);
+  console.log(categoryName, 'name of exact category')
 
   const [productData, setProductData] = useState({
     image: image,
@@ -76,6 +76,11 @@ const AddProduct = ({
     },
     craft_img_url: "",
   });
+
+  const getCategoryName = () => {
+    let category_name = projectCategory.find((item) => item.id === activeCategoryId);
+    setCategoryName(category_name.attributes.title);
+  };
 
   const defaultProductsHandler = async (id) => {
     try {
@@ -191,10 +196,10 @@ const AddProduct = ({
         });
     };
 
+    getCategoryName()
     getCraftsByCategory();
   }, []);
 
-  console.log(activeCategoryId, 'active category id')
   return (
     <div
       style={{ display: "block", paddingLeft: "0px" }}
@@ -208,8 +213,11 @@ const AddProduct = ({
           <div className="modal-header" id="kt_modal_add_user_header">
             <h2 className="geo-title">{
               toggle ? "დაამატე პროდუქტი" : "დაამატე სამუშაო"
-            }</h2>
-            <p>{}</p>
+
+            }
+              <p className={styles.category_name}>({categoryName})</p>
+
+            </h2>
             <div
               className={`${styles.modalClose}`}
               data-kt-users-modal-action="close"
@@ -295,7 +303,7 @@ const AddProduct = ({
                   </div>
                   <div className={`row mb-5 ${styles.productInputs}`}>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         დასახელება
                       </label>
                       <input
@@ -313,7 +321,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         მომწოდებელი
                       </label>
                       <select
@@ -345,7 +353,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="fs-5 fw-bold mb-2 georgian">
+                      <label className="fs-5 fw-bold mb-2 geo-title">
                         ლინკი
                       </label>
                       <input
@@ -363,7 +371,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         რაოდენობა
                       </label>
                       <input
@@ -382,7 +390,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         ერთეული
                       </label>
                       <select
@@ -414,7 +422,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         ღირეულება
                       </label>
                       <input
@@ -433,7 +441,7 @@ const AddProduct = ({
                       <div className="fv-plugins-message-container invalid-feedback"></div>
                     </div>
                     <div className="col-md-12 fv-row fv-plugins-icon-container">
-                      <label className="required fs-5 fw-bold mb-2 georgian">
+                      <label className="required fs-5 fw-bold mb-2 geo-title">
                         სტატუსი
                       </label>
                       <select

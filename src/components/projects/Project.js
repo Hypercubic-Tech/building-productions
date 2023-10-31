@@ -376,6 +376,7 @@ const Project = ({
               )}
               {select === "add" && !readOnly && (
                 <AddProduct
+                  projectCategory={projectCategory}
                   getProjectById={getProjectById}
                   project={productOptions}
                   setSelect={setSelect}
