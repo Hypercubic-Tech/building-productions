@@ -49,7 +49,6 @@ const StatusDashboard = () => {
         let url;
         if (provider === "google") {
             url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
-            console.log('google?')
         } else {
             url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
         }
@@ -109,8 +108,6 @@ const StatusDashboard = () => {
                 });
         }
     };
-
-    console.log(userStatus, 'are u real?')
 
     useEffect(() => {
         if (isLoggedIn) {
