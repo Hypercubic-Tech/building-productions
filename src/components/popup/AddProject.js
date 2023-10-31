@@ -86,7 +86,6 @@ const AddProject = ({
       step === 1 &&
       errors.stepOne.length === 0 &&
       sendData.address &&
-      sendData.phoneNumber &&
       sendData.area &&
       sendData.city.connect[0].id &&
       sendData.property_type.connect[0].id
@@ -157,6 +156,8 @@ const AddProject = ({
     createProjectHandler();
     setAddProject(false);
   };
+
+  console.log(step, 'stp')
 
   return (
     <div style={{ display: close ? "none" : "" }} className={`${styles.modal}`}>
@@ -435,7 +436,7 @@ const AddProject = ({
                           </div>
                           <div className="col-6">
                             <label className="required fs-6 fw-bold form-label georgian mb-2">
-                              ფართობი
+                              ფართობი (მ²)
                             </label>
                             <input
                               id="area"
@@ -476,7 +477,7 @@ const AddProject = ({
                             />
                           </div>
                           <div className="col-6">
-                            <label className="required fs-6 fw-bold form-label georgian mb-2">
+                            <label className="fs-6 fw-bold form-label georgian mb-2">
                               ტელეფონი
                             </label>
                             <input
@@ -500,7 +501,7 @@ const AddProject = ({
                         <div className={`${styles.inputWrap} col-4 `}>
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                             <span className={` georgian `}>
-                              დღგ-ს გადამხდელი
+                              დღგ-ს გადამხდელი (%)
                             </span>
                           </label>
                           <input
@@ -518,7 +519,7 @@ const AddProject = ({
                         <div className={`${styles.inputWrap} col-4 `}>
                           <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                             <span className={` georgian `}>
-                              გაუთვალისწინებელი ხარჯები
+                              გაუთვალისწინებელი ხარჯები (%)
                             </span>
                           </label>
                           <input
@@ -540,7 +541,7 @@ const AddProject = ({
                           >
                             <label className="d-flex align-items-center fs-5 fw-bold mb-2">
                               <span className={` georgian `}>
-                                მომსახურეობის ხარჯები{" "}
+                                მომსახურეობის ხარჯები (%)
                               </span>
                             </label>
                             <input
@@ -740,7 +741,7 @@ const AddProject = ({
                 <div className="d-flex flex-stack pt-10">
                   <div>
                     <button
-                      style={{ display: step === 1 ? "none" : "" }}
+                      style={{ opacity: step === 1 ? "0" : "1" }}
                       onClick={prevStepHandler}
                       type="button"
                       className="btn red-ghost-btn geo-title custom-red-ghost-btn"

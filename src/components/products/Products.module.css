@@ -225,6 +225,7 @@
 .sum_table_item_sc {
     margin-top: 30px;
     display: flex;
+    align-items: flex-end;
     flex-direction: column;
     gap: 6px;
 }

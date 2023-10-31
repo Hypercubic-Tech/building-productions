@@ -53,36 +53,80 @@ function HeaderLogged(props) {
   };
 
   useEffect(() => {
-    setUserDashboard([
-      {
-        svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <g stroke="#1C274C" strokeWidth="1.5">
-            <circle cx="12" cy="6" r="4"></circle>
-            <path
-              strokeLinecap="round"
-              d="M19.997 18c.003-.164.003-.331.003-.5 0-2.485-3.582-4.5-8-4.5s-8 2.015-8 4.5S4 22 12 22c2.231 0 3.84-.157 5-.437"
-            ></path>
-          </g>
-        </svg>,
-        data: userStatus.username,
-        list: []
-      },
-      {
-        svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <g stroke="#1C274C" strokeLinecap="round" strokeWidth="1.5">
-            <path d="M6.88 18.15v-2.07M12 18.15v-4.14M17.12 18.15v-6.22M17.12 5.85l-.46.54a18.882 18.882 0 01-9.78 6.04"></path>
-            <path strokeLinejoin="round" d="M14.19 5.85h2.93v2.92"></path>
-            <path
-              strokeLinejoin="round"
-              d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7z"
-            ></path>
-          </g>
-        </svg>,
-        data: userStatus.p_title,
-        list: []
-      },
-      {
-        svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    if (userStatus.username) {
+      setUserDashboard([
+        {
+          svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <g stroke="#1C274C" strokeWidth="1.5">
+              <circle cx="12" cy="6" r="4"></circle>
+              <path
+                strokeLinecap="round"
+                d="M19.997 18c.003-.164.003-.331.003-.5 0-2.485-3.582-4.5-8-4.5s-8 2.015-8 4.5S4 22 12 22c2.231 0 3.84-.157 5-.437"
+              ></path>
+            </g>
+          </svg>,
+          data: userStatus.username,
+          list: []
+        },
+        {
+          svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <g stroke="#1C274C" strokeLinecap="round" strokeWidth="1.5">
+              <path d="M6.88 18.15v-2.07M12 18.15v-4.14M17.12 18.15v-6.22M17.12 5.85l-.46.54a18.882 18.882 0 01-9.78 6.04"></path>
+              <path strokeLinejoin="round" d="M14.19 5.85h2.93v2.92"></path>
+              <path
+                strokeLinejoin="round"
+                d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7z"
+              ></path>
+            </g>
+          </svg>,
+          data: userStatus.p_title,
+          list: []
+        },
+        {
+          svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <g>
+              <path
+                stroke="#1C274C"
+                strokeLinecap="round"
+                strokeWidth="1.5"
+                d="M12 17v-6"
+              ></path>
+              <circle
+                cx="1"
+                cy="1"
+                r="1"
+                fill="#1C274C"
+                transform="matrix(1 0 0 -1 11 9)"
+              ></circle>
+              <path
+                stroke="#1C274C"
+                strokeLinecap="round"
+                strokeWidth="1.5"
+                d="M7 3.338A9.954 9.954 0 0112 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"
+              ></path>
+            </g>
+          </svg>,
+          data: `${userStatus.all_projects} - პროექტი`,
+          list: [
+            // {
+            //   title: 'დაშვებული რაოდენობა',
+            //   data: userStatus.allowed_projects
+            // },
+            // {
+            //   title: 'ექსპორტი (pdf, execl)',
+            //   data: userStatus.allowed_projects
+            // },
+            // {
+            //   title: 'მედია (ნახაზები, გალერია)',
+            //   data: userStatus.allowed_projects
+            // },
+            // {
+            //   title: 'საცდელი ვადა',
+            //   data: userStatus.trial_expires
+            // }
+          ]
+        },
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <g>
             <path
               stroke="#1C274C"
@@ -104,52 +148,11 @@ function HeaderLogged(props) {
               d="M7 3.338A9.954 9.954 0 0112 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"
             ></path>
           </g>
-        </svg>,
-        data: `${userStatus.all_projects} - პროექტი`,
-        list: [
-          // {
-          //   title: 'დაშვებული რაოდენობა',
-          //   data: userStatus.allowed_projects
-          // },
-          // {
-          //   title: 'ექსპორტი (pdf, execl)',
-          //   data: userStatus.allowed_projects
-          // },
-          // {
-          //   title: 'მედია (ნახაზები, გალერია)',
-          //   data: userStatus.allowed_projects
-          // },
-          // {
-          //   title: 'საცდელი ვადა',
-          //   data: userStatus.trial_expires
-          // }
-        ]
-      },
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <g>
-          <path
-            stroke="#1C274C"
-            strokeLinecap="round"
-            strokeWidth="1.5"
-            d="M12 17v-6"
-          ></path>
-          <circle
-            cx="1"
-            cy="1"
-            r="1"
-            fill="#1C274C"
-            transform="matrix(1 0 0 -1 11 9)"
-          ></circle>
-          <path
-            stroke="#1C274C"
-            strokeLinecap="round"
-            strokeWidth="1.5"
-            d="M7 3.338A9.954 9.954 0 0112 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"
-          ></path>
-        </g>
-      </svg>
-    ]);
-  }, [userStatus])
+        </svg>
+      ]);
+    }
+  }, [userStatus]);
+
 
   // const animation = useSpring({
   //   opacity: isModalOpen ? 1 : 0,

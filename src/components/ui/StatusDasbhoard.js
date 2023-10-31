@@ -18,7 +18,6 @@ const StatusDashboard = () => {
     const { data: session } = useSession();
     const provider = useSelector((state) => state.auth.provider);
 
-
     const userStatus = useSelector((state) => state.userStatus);
     const [active, setActive] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -46,9 +45,11 @@ const StatusDashboard = () => {
     };
 
     const loggedUserInfo = async () => {
+
         let url;
         if (provider === "google") {
             url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+            console.log('google?')
         } else {
             url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
         }
@@ -57,6 +58,7 @@ const StatusDashboard = () => {
                 .get(url)
                 .then((res) => {
                     const data = res.data;
+                    console.log(data)
                     // setAuthUser(data);
                     // setUserData({
                     //     id: data[0]?.id,
@@ -108,11 +110,7 @@ const StatusDashboard = () => {
         }
     };
 
-    useEffect(() => {
-        if (userStatus.username) {
-            setIsLoading(false)
-        }
-    }, [userStatus])
+    console.log(userStatus, 'are u real?')
 
     useEffect(() => {
         if (isLoggedIn) {

@@ -439,7 +439,6 @@ const Products = ({
     setPageIndex(1);
   }, [activeCategoryId]);
 
-  console.log(readOnly, 'hi')
   return (
     <>
       <Fragment>
@@ -496,33 +495,39 @@ const Products = ({
                 ))}
                 <div className={styles.sum_table_item_sc}>
                   <div>
-                    <span>სულ</span>
+                    <span className="geo-title">სულ:</span>
                     <span>{`${Object?.values(categorySums).reduce(
                       (total, category) => total + category.sum,
                       0
                     ) || 0
                       } `}</span>
-                    <span>ლარი</span>
+                    <span className="geo-title">ლარი</span>
                   </div>
+                  {vatTotal > 0 && (
+                    <div>
+                      <span className="geo-title">{`დღგ: ${parseInt(vatTotal)}%`}</span>
+                      <span>{`${vatTotalPrice.toFixed(2) || 0}`}</span>
+                      <span className="geo-title">ლარი</span>
+                    </div>
+                  )}
+                  {unforeseenExpenses > 0 && (
+                    <div>
+                      <span className="geo-title">{`გაუთ.ხარჯი: ${parseFloat(unforeseenExpenses)}%`}</span>
+                      <span>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</span>
+                      <span className="geo-title">ლარი</span>
+                    </div>
+                  )}
+                  {service_percentage > 0 && (
+                    <div>
+                      <span>{`სერვისი ${parseFloat(service_percentage)}%`}</span>
+                      <span>{`${servicePercentagePrice.toFixed(2) || 0}`}</span>
+                      <span>ლარი</span>
+                    </div>
+                  )}
                   <div>
-                    <span>{`დღგ ${parseInt(vatTotal)}%`}</span>
-                    <span>{`${vatTotalPrice.toFixed(2) || 0}`}</span>
-                    <span>ლარი</span>
-                  </div>
-                  <div>
-                    <span>{`გაუთ.ხარჯი ${parseFloat(unforeseenExpenses)}%`}</span>
-                    <span>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</span>
-                    <span>ლარი</span>
-                  </div>
-                  <div>
-                    <span>{`სერვისი ${parseFloat(service_percentage)}%`}</span>
-                    <span>{`${servicePercentagePrice.toFixed(2) || 0}`}</span>
-                    <span>ლარი</span>
-                  </div>
-                  <div>
-                    <span>სულ ჯამი</span>
+                    <span className="geo-title">სულ ჯამი</span>
                     <span>{`${totalSumPrice?.toFixed(2) || 0}`}</span>
-                    <span>ლარი</span>
+                    <span className="geo-title">ლარი</span>
                   </div>
                 </div>
               </div>
