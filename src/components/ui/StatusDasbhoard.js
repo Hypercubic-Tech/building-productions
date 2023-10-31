@@ -57,27 +57,6 @@ const StatusDashboard = () => {
                 .get(url)
                 .then((res) => {
                     const data = res.data;
-                    console.log(data)
-                    // setAuthUser(data);
-                    // setUserData({
-                    //     id: data[0]?.id,
-                    //     username: data[0]?.username,
-                    //     email: data[0]?.email,
-                    //     phoneNumber: data[0]?.phoneNumber,
-                    //     payment_duration: data[0]?.payment_duration,
-                    //     payment_plan: {
-                    //         connect: [{ id: data[0]?.payment_plan?.id.toString() }],
-                    //     },
-                    //     trial_expires: data[0]?.trial_expires,
-                    //     trial_used: data[0]?.trial_used,
-                    //     card_number: data[0]?.card_number,
-                    //     card_cvc: data[0]?.card_cvc,
-                    //     card_month: data[0]?.card_month,
-                    //     card_year: data[0]?.card_year,
-                    //     account_type: data[0]?.account_type
-                    // });
-
-                    // for user dashboard
                     dispatch(setUserStatus({
                         username: data[0]?.username,
                         p_title: data[0]?.payment_plan?.name,
