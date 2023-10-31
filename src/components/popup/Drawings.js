@@ -200,8 +200,8 @@ const Drawings = ({ setSelect, readOnly }) => {
                     selector=".gallery-item"
                   >
                     <div className={styles.galleryItems}>
-                        {!readOnly && (
-                      <div className={`${styles.galleryItem}`}>
+                      {!readOnly && (
+                        <div className={`${styles.galleryItem}`}>
                           <div className={`${styles.addBtn}`}>
                             <input
                               id="fileInput"
@@ -237,8 +237,8 @@ const Drawings = ({ setSelect, readOnly }) => {
                             <span className="fw-boldest geo-title">ნახაზის ატვირთვა</span>
                             <UploadSvg />
                           </div>
-                      </div>
-                        )}
+                        </div>
+                      )}
                       {isProjectImages?.map((projectImg, index) => (
                         <div key={index} className={styles.galleryItem}>
                           <a
