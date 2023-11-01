@@ -74,6 +74,7 @@ const AddProduct = ({
       connect: [{ id: null }],
     },
     craft_img_url: "",
+    custom_craft_name: "",
   });
 
   const getCategoryName = () => {
@@ -198,6 +199,8 @@ const AddProduct = ({
     getCategoryName()
     getCraftsByCategory();
   }, []);
+
+  console.log(craftData, 'craft data');
 
   return (
     <div
@@ -568,8 +571,28 @@ const AddProduct = ({
                               </option>
                             );
                           })}
+                        <option value='other'>სხვა</option>
                       </select>
+                      {craftData.title === 'other' && (
+                        <div className="mt-2">
+                          <input
+                            onWheel={(e) => e.target.blur()}
+                            onChange={(e) => {
+                              setCraftData((prevSendData) => ({
+                                ...prevSendData,
+                                custom_craft_name: e.target.value,
+                              }));
+                            }}
+                            type="text"
+                            className="form-control form-control-solid georgian"
+                            placeholder="გთხოვთ ხელით შეიყვანოთ დასახელება"
+                            name="title"
+                          />
+                          <div className="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+                      )}
                     </div>
+
                     <div className="col-md-4 fv-row fv-plugins-icon-container">
                       <label className="required fs-5 fw-bold mb-2 georgian">
                         რაოდენობა

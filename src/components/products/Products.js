@@ -554,7 +554,8 @@ const Products = ({
                               {product.attributes.type === 'product' ? (
                                 <a style={{
                                   gap: '7px',
-                                  display: 'flex'
+                                  display: 'flex',
+                                  alignItems: 'center'
                                 }} href={
                                   product.attributes.productLink ? (
                                     product?.attributes?.productLink.startsWith(
@@ -595,7 +596,7 @@ const Products = ({
                                     }
                                     alt="product img"
                                   />
-                                  <span>{product?.attributes?.title}</span>
+                                  <span>{product?.attributes?.title === 'other' ? product?.attributes?.custom_craft_name : product?.attributes?.title}</span>
                                 </Fragment>
                               )}
                             </span>
