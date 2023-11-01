@@ -25,6 +25,7 @@ import ThreeDotsSvg from "../svg/ThreeDotsSvg";
 import styles from "./Products.module.css";
 
 const Products = ({
+  showProject,
   readOnly,
   editHandler,
   setSelect,
@@ -432,7 +433,7 @@ const Products = ({
 
       totalSumHandler();
     }
-  }, [projectId, productsToMap, activeCategoryId]);
+  }, [projectId, productsToMap, activeCategoryId, showProject]);
 
   useEffect(() => {
     setPageIndex(1);

@@ -28,6 +28,17 @@ const index = () => {
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
 
+  const [showProject, setShowProject] = useState(false);
+
+
+  // for projec
+
+  const [cities, setCities] = useState(null);
+  const [propertyType, setPropertyType] = useState(null);
+  const [condition, setCondition] = useState(null);
+  const [currentCondition, setCurrentCondition] = useState(null);
+  const [categories, setCategories] = useState(null);
+
   const [hashedUrl, setHashedUrl] = useState(null);
 
   const editHandler = (product) => {
@@ -63,6 +74,72 @@ const index = () => {
   };
 
   useEffect(() => {
+    const getCategoriesHandler = async () => {
+      try {
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories`)
+          .then((res) => {
+            const data = res.data;
+            setCategories(data.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getCurrentConditionHandler = async () => {
+      try {
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/current-conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCurrentCondition(data.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getConditionHandler = async () => {
+      try {
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/conditions`)
+          .then((res) => {
+            const data = res.data;
+            setCondition(data.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getCitiesHandler = async () => {
+      try {
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/cities`)
+          .then((res) => {
+            const data = res.data;
+            setCities(data.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getPropertyTypesHandler = async () => {
+      try {
+        axios
+          .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/property-types`)
+          .then((res) => {
+            const data = res.data;
+            setPropertyType(data.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
     const getSupplierHandler = async () => {
       await axios
         .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/suppliers`)
@@ -131,6 +208,11 @@ const index = () => {
     getCraftsHandler();
     getSupplierHandler();
     getUnitHandler();
+    getCategoriesHandler();
+    getCurrentConditionHandler();
+    getConditionHandler();
+    getCitiesHandler();
+    getPropertyTypesHandler();
   }, []);
 
   useEffect(() => {
@@ -172,6 +254,8 @@ const index = () => {
         </div>
       ) : (
         <Project
+          showProject={showProject}
+          setShowProject={setShowProject}
           hashedUrl={hashedUrl}
           isLoggedIn={isLoggedIn}
           allowedExport={status.allowed_export}
@@ -187,6 +271,11 @@ const index = () => {
           editProductItem={editProductItem}
           defaultImage={defaultImage}
           getProjectById={getProjectById}
+          propertyType={propertyType}
+          cities={cities}
+          condition={condition}
+          currentCondition={currentCondition}
+          categories={categories}
         />
       )}
     </>

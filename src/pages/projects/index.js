@@ -23,6 +23,7 @@ const index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [addProject, setAddProject] = useState(false);
   const [editProject, setEditProject] = useState(false);
+  console.log(editProject, 'edit project in indexks')
   const [showProject, setShowProject] = useState(false);
   const [projectData, setProjectData] = useState(null);
   const [pageIndex, setPageIndex] = useState(1);

@@ -6,6 +6,7 @@ import axios from "axios";
 import { setCategory } from "../../store/slices/categorySlice";
 import { setProducts } from "../../store/slices/productSlice";
 
+import EditProject from "../popup/EditProject";
 import Filter from "./Filter";
 import Products from "../products/Products";
 import AddProduct from "../popup/AddProduct";
@@ -18,12 +19,15 @@ import Search2Svg from "../svg/Search2Svg";
 import LinerSvg from "../svg/LinerSvg";
 import AddSvg from "../svg/AddSvg";
 import MapSvg from "../svg/MapSvg";
+import EditSvg from "../svg/EditSvg"
 import CopySvg from "../svg/CopySvg";
 
 import styles from "./Project.module.css";
 import notify from "../../utils/notify";
 
 const Project = ({
+  showProject,
+  setShowProject,
   readOnly,
   projectIdR,
   hashedUrl,
@@ -41,6 +45,11 @@ const Project = ({
   defaultImage,
   getProjectById,
   allowedExport,
+  cities,
+  propertyType,
+  condition,
+  currentCondition,
+  categories
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -49,11 +58,19 @@ const Project = ({
   const products = useSelector((state) => state.prod.products);
   const activeCategoryId = useSelector((state) => state?.cats?.category);
 
+  const [editProject, setEditProject] = useState(null);
   const [select, setSelect] = useState(null);
   const [totalSum, setTotalSum] = useState(false);
   const [searchType, setSearchType] = useState("");
 
   const [animate, setAnimate] = useState(false);
+
+
+  const dismissHandler = () => {
+    setSelect(null);
+    setEditProject(null);
+    // setAddProject(false);
+  };
 
   const handleSearchChange = (e) => {
     setSearchType(e.target.value);
@@ -61,6 +78,24 @@ const Project = ({
   const totalSumTable = () => {
     setTotalSum(true);
   };
+
+
+  const edit_project_handler = async (item) => {
+    let id = item[0].id
+
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?filters[id][$eq]=${id}&populate=*`
+      );
+      const data = response.data;
+      setEditProject(data);
+      setSelect("edit-project")
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // edit_project_handler()
 
   const defaultProductsHandler = async (id) => {
     if (id) {
@@ -156,12 +191,11 @@ const Project = ({
       });
   };
 
-
   useEffect(() => {
     setAnimate(true);
   }, []);
 
-
+  console.log(editProject, 'edit project')
   return (
     <>
       {project &&
@@ -249,6 +283,7 @@ const Project = ({
                       onClick={() => {
                         setSelect("dranings");
                       }}
+
                     >
                       <a
                         className="btn btn-primary fw-bolder georgian geo-title"
@@ -281,9 +316,18 @@ const Project = ({
                         </a>
                       </div>
                     )}
+                    <div
+                      style={{ marginLeft: 'auto', display: 'flex' }}
+                      onClick={() => edit_project_handler(project)}
+                      className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
+                    >
+                      <EditSvg />
+                      <span>რედაქტირება</span>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
           );
         })}
@@ -359,7 +403,21 @@ const Project = ({
               ) : (
                 ""
               )}
-
+              {select === "edit-project" && (
+                <EditProject
+                  setSelect={setSelect}
+                  cities={cities}
+                  propertyType={propertyType}
+                  condition={condition}
+                  categories={categories}
+                  currentCondition={currentCondition}
+                  setShowProject={setShowProject}
+                  project={editProject}
+                  setEditProject={setEditProject}
+                  dismiss={dismissHandler}
+                  getProjectById={getProjectById}
+                />
+              )}
               {select === "gallery" && (
                 <Gallery
                   readOnly={readOnly}
@@ -415,6 +473,7 @@ const Project = ({
           </div>
           <div className="card-body pt-0">
             <Products
+              showProject={showProject}
               readOnly={readOnly}
               getProjectById={getProjectById}
               defaultImage={defaultImage}

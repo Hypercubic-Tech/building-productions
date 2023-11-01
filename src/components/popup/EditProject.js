@@ -5,12 +5,11 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({ cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject, project, setEditProject }) => {
+const EditProject = ({ cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject, project, setEditProject, getProjectById, setSelect }) => {
   const userId = useSelector(state => state.auth.user_id)
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
   const [close, setClose] = useState(false);
-
   const [propertyOption, setPropertyOption] = useState(project?.data[0]?.attributes?.property_type?.data?.id);
   const [cityOption, setCityOption] = useState(project?.data[0]?.attributes.city?.data?.id);
   const [conditionOption, setConditionOption] = useState(project?.data[0]?.attributes?.condition?.data?.id);
@@ -144,7 +143,8 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
       })
         .then(() => {
           setShowProject(true);
-          setEditProject(false);
+          getProjectById();
+          setSelect(null);
           notify(false, "პროექტი რედაქტირდა");
         });
     } catch (error) {
