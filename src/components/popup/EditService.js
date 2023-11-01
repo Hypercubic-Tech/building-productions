@@ -28,12 +28,7 @@ const EditService = ({
   const [filteredCrafts, setFilteredCrafts] = useState();
   const [craftImage, setCraftImage] = useState(product?.attributes?.craft_img_url);
   const [craftTitle, setCraftTitle] = useState();
-  console.log(craftTitle, 'title')
 
-  // let filteredCraftId = filteredCrafts.data.find((item) => item.title === product.attributes.title);
-  // console.log(filteredCraftId)
-  // console.log(craftTitle, 'title')
-  // console.log(product)
   const [craftUnit, setCraftUnit] = useState(product?.attributes?.unit?.data?.id);
   const [craftStatusOption, setCraftStatusOption] = useState(product?.attributes?.craft_status?.data?.id);
 
@@ -66,15 +61,12 @@ const EditService = ({
 
     // Check if filteredCraftId is defined and log it
     if (filteredCraftId) {
-      console.log(filteredCraftId, 'hi');
       setCraftTitle(filteredCraftId.id)
     } else {
       console.log("No matching element found in filteredCrafts.data");
     }
   }
 
-
-  console.log(filteredCrafts, 'cratfts');
   useEffect(() => {
     const getCraftsByCategory = async () => {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)

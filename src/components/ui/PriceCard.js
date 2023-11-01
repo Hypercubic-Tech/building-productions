@@ -1,5 +1,4 @@
 const PriceCard = ({ priceData, monthly }) => {
-  console.log(priceData)
   return (
     <div>
       <div

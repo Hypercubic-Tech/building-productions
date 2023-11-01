@@ -427,8 +427,6 @@ const Products = ({
     setPageIndex(1);
   }, [activeCategoryId]);
 
-  console.log(aggregatedProducts, 'dfuq');
-  console.log(categorySums, 'sumss')
   return (
     <Fragment>
       <Fragment>
@@ -457,10 +455,6 @@ const Products = ({
               <div className={styles.wrap}>
                 {Object.values(aggregatedProducts).map((product, index) => (
                   <div key={index} className={styles.sum_table_item}>
-                    {
-                      console.log(product, 'orduisdnsjkn')
-
-                    }
                     <span style={{ width: sum_table_head[0].width }}>{product?.categories}</span>
                     <span style={{ width: sum_table_head[1].width }} className={styles.custom_sub_item}>
                       {product?.unites.map((i, index) => {
@@ -504,27 +498,27 @@ const Products = ({
                   </div>
                   {vatTotal > 0 && (
                     <div>
-                      <span className="geo-title">{`დღგ: ${parseInt(vatTotal)}%`}</span>
+                      <span className="geo-title">{`დღგ: ${parseInt(vatTotal)}%`} - </span>
                       <span>{`${vatTotalPrice.toFixed(2) || 0}`}</span>
                       <span className="geo-title">₾</span>
                     </div>
                   )}
                   {unforeseenExpenses > 0 && (
                     <div>
-                      <span className="geo-title">{`გაუთ.ხარჯი: ${parseFloat(unforeseenExpenses)}%`}</span>
+                      <span className="geo-title">{`გაუთ.ხარჯი: ${parseFloat(unforeseenExpenses)}%`} - </span>
                       <span>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</span>
                       <span className="geo-title">₾</span>
                     </div>
                   )}
                   {service_percentage > 0 && (
                     <div>
-                      <span>{`სერვისი ${parseFloat(service_percentage)}%`}</span>
+                      <span className="geo-title">{`სერვისი: ${parseFloat(service_percentage)}%`} - </span>
                       <span>{`${servicePercentagePrice.toFixed(2) || 0}`}</span>
                       <span>₾</span>
                     </div>
                   )}
                   <div>
-                    <span className="geo-title">სულ ჯამი</span>
+                    <span className="geo-title">სულ ჯამი:</span>
                     <span>{`${totalSumPrice?.toFixed(2) || 0}`}</span>
                     <span className="geo-title">₾</span>
                   </div>
