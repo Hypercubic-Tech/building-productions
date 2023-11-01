@@ -311,14 +311,16 @@ const Project = ({
                         </a>
                       </div>
                     )}
-                    <div
-                      style={{ marginLeft: 'auto', display: 'flex' }}
-                      onClick={() => edit_project_handler(project)}
-                      className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
-                    >
-                      <EditSvg />
-                      <span>რედაქტირება</span>
-                    </div>
+                    {!readOnly && (
+                      <div
+                        style={{ marginLeft: 'auto', display: 'flex' }}
+                        onClick={() => edit_project_handler(project)}
+                        className={`fill-btn rotate-svg-btn btn btn-primary fw-boldest`}
+                      >
+                        <EditSvg />
+                        <span>რედაქტირება</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

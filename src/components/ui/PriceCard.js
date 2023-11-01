@@ -1,4 +1,5 @@
 const PriceCard = ({ priceData, monthly }) => {
+  console.log(priceData)
   return (
     <div>
       <div
@@ -32,16 +33,12 @@ const PriceCard = ({ priceData, monthly }) => {
               : priceData.attributes.year_allowed_projects}
           </span>
         </div>
-        {priceData[0] && (
+        {priceData.id === 1 && (
           <div className="d-flex flex-stack mb-5">
             <span className="blue mt-2 fx geo-title">უფასო საცდელი დრო</span>
             <span className="blue mt-2 fx geo-title">7 დღე</span>
           </div>
         )}
-        <div className="d-flex flex-stack mb-5">
-          <span className="blue mt-2 fx geo-title">პროდუქტების რაოდენობა</span>
-          <span className="blue mt-2 fx geo-title">უსასრულო</span>
-        </div>
         <div className="d-flex flex-stack mb-5">
           <span className="blue mt-2 fx geo-title">ფოტოსურათები &amp; ნახაზები</span>
           <span>

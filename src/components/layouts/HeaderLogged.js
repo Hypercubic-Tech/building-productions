@@ -57,7 +57,7 @@ function HeaderLogged(props) {
       setUserDashboard([
         {
           svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <g stroke="#1C274C" strokeWidth="1.5">
+            <g stroke="#fff" strokeWidth="1.5">
               <circle cx="12" cy="6" r="4"></circle>
               <path
                 strokeLinecap="round"
@@ -70,7 +70,7 @@ function HeaderLogged(props) {
         },
         {
           svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <g stroke="#1C274C" strokeLinecap="round" strokeWidth="1.5">
+            <g stroke="#fff" strokeLinecap="round" strokeWidth="1.5">
               <path d="M6.88 18.15v-2.07M12 18.15v-4.14M17.12 18.15v-6.22M17.12 5.85l-.46.54a18.882 18.882 0 01-9.78 6.04"></path>
               <path strokeLinejoin="round" d="M14.19 5.85h2.93v2.92"></path>
               <path
@@ -86,7 +86,7 @@ function HeaderLogged(props) {
           svg: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <g>
               <path
-                stroke="#1C274C"
+                stroke="#fff"
                 strokeLinecap="round"
                 strokeWidth="1.5"
                 d="M12 17v-6"
@@ -95,11 +95,11 @@ function HeaderLogged(props) {
                 cx="1"
                 cy="1"
                 r="1"
-                fill="#1C274C"
+                fill="#fff"
                 transform="matrix(1 0 0 -1 11 9)"
               ></circle>
               <path
-                stroke="#1C274C"
+                stroke="#fff"
                 strokeLinecap="round"
                 strokeWidth="1.5"
                 d="M7 3.338A9.954 9.954 0 0112 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"
@@ -129,7 +129,7 @@ function HeaderLogged(props) {
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <g>
             <path
-              stroke="#1C274C"
+              stroke="#fff"
               strokeLinecap="round"
               strokeWidth="1.5"
               d="M12 17v-6"
@@ -138,11 +138,11 @@ function HeaderLogged(props) {
               cx="1"
               cy="1"
               r="1"
-              fill="#1C274C"
+              fill="#fff"
               transform="matrix(1 0 0 -1 11 9)"
             ></circle>
             <path
-              stroke="#1C274C"
+              stroke="#fff"
               strokeLinecap="round"
               strokeWidth="1.5"
               d="M7 3.338A9.954 9.954 0 0112 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"
@@ -373,8 +373,8 @@ function HeaderLogged(props) {
                                   item.list.map((l, index) => {
                                     return (
                                       <span key={index} className={styles.dashboard_tootlip}>
-                                        <span className="geo-title">{l.title}</span>
-                                        <span className="geo-title">{l.data}</span>
+                                        <span className={`${"geo-title"} ${styles.wTitle}`}>{l.title}</span>
+                                        <span className={`${"geo-title"} ${styles.wTitle}`}>{l.data}</span>
                                       </span>
                                     )
                                   })
@@ -382,7 +382,7 @@ function HeaderLogged(props) {
                                   ""
                                 )}
                               </span>
-                              <span className="geo-title">
+                              <span className={`${"geo-title"} ${styles.wTitle}`}>
                                 {item.data}
                               </span>
                             </div>
