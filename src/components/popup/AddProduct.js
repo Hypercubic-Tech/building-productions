@@ -126,7 +126,6 @@ const AddProduct = ({
           notify(false, "სამუშაო დაემატა");
           dispatch(setProductState(data.data));
           getProjectById();
-          console.log(data)
         });
     } catch (err) {
       notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
@@ -200,8 +199,6 @@ const AddProduct = ({
     getCategoryName()
     getCraftsByCategory();
   }, []);
-
-  // console.log(craftData, 'craft data');
 
   return (
     <div

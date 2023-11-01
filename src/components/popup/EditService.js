@@ -195,18 +195,18 @@ const EditService = ({
                       დასახელება
                     </label>
                     <select
-                      value={'34'}
-                      // onChange={(e) => {
-                      //   const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.id === e.target.value);
-                      //   setCraftImage(filteredArray[0]?.attributes?.image?.data?.attributes?.url);
-                      //   console.log(filteredArray, 'ara');
-                      //   // setCraftTitle(e.target.value);
-                      //   setCraftData((prevSendData) => ({
-                      //     ...prevSendData,
-                      //     title: e.target.value,
-                      //     craft_img_url: filteredArray[0]?.attributes?.image?.data?.attributes?.url
-                      //   }));
-                      // }}
+                      value={craftData.title}
+                      onChange={(e) => {
+                        const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.id === e.target.value);
+                        setCraftImage(filteredArray[0]?.attributes?.image?.data?.attributes?.url);
+                        console.log(e.target, 'ara');
+                        // setCraftTitle(e.target.value);
+                        setCraftData((prevSendData) => ({
+                          ...prevSendData,
+                          title: e.target.value,
+                          craft_img_url: filteredArray[0]?.attributes?.image?.data?.attributes?.url
+                        }));
+                      }}
                       name="title"
                       className="form-select form-select-solid georgian"
                       data-placeholder="დასახელება"
@@ -215,7 +215,7 @@ const EditService = ({
                       {filteredCrafts &&
                         filteredCrafts?.data.map((item, index) => {
                           return (
-                            <option key={item?.id + index} value={item?.id}>
+                            <option key={item?.id + index} value={item?.attributes?.title}>
                               {item?.attributes?.title}
                             </option>
                           );
