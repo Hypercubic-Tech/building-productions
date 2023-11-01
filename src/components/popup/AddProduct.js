@@ -126,6 +126,7 @@ const AddProduct = ({
           notify(false, "სამუშაო დაემატა");
           dispatch(setProductState(data.data));
           getProjectById();
+          console.log(data)
         });
     } catch (err) {
       notify(true, "ხელობის დამატება უარყოფილია, გთხოვთ შეავსოთ ყველა ველი");
@@ -200,7 +201,7 @@ const AddProduct = ({
     getCraftsByCategory();
   }, []);
 
-  console.log(craftData, 'craft data');
+  // console.log(craftData, 'craft data');
 
   return (
     <div
@@ -559,7 +560,6 @@ const AddProduct = ({
                           {" "}
                           აირჩიეთ დასახელება
                         </option>
-                        ;+
                         {filteredCrafts &&
                           filteredCrafts?.data.map((item, index) => {
                             return (
@@ -583,7 +583,7 @@ const AddProduct = ({
                                 custom_craft_name: e.target.value,
                               }));
                             }}
-                            type="text"
+                            type="number"
                             className="form-control form-control-solid georgian"
                             placeholder="გთხოვთ ხელით შეიყვანოთ დასახელება"
                             name="title"

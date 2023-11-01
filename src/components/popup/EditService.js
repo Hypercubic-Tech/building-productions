@@ -27,7 +27,13 @@ const EditService = ({
   const [lossProduct, setLossProduct] = useState(false);
   const [filteredCrafts, setFilteredCrafts] = useState();
   const [craftImage, setCraftImage] = useState(product?.attributes?.craft_img_url);
-  const [craftTitle, setCraftTitle] = useState(product?.attributes?.title);
+  const [craftTitle, setCraftTitle] = useState();
+  console.log(craftTitle, 'title')
+
+  // let filteredCraftId = filteredCrafts.data.find((item) => item.title === product.attributes.title);
+  // console.log(filteredCraftId)
+  // console.log(craftTitle, 'title')
+  // console.log(product)
   const [craftUnit, setCraftUnit] = useState(product?.attributes?.unit?.data?.id);
   const [craftStatusOption, setCraftStatusOption] = useState(product?.attributes?.craft_status?.data?.id);
 
@@ -48,9 +54,27 @@ const EditService = ({
     craft_status: {
       connect: [{ id: product?.attributes?.craft_status?.data?.id }]
     },
-    craft_img_url: product?.attributes?.craft_img_url
+    craft_img_url: product?.attributes?.craft_img_url,
+    custom_craft_name: product?.attributes?.custom_craft_name
   });
 
+  const getCraftId = () => {
+    const productTitle = product.attributes.title.trim();
+
+    // Use the find method to get the element with the matching title
+    const filteredCraftId = filteredCrafts?.data.find((item) => item.attributes.title.trim() === productTitle);
+
+    // Check if filteredCraftId is defined and log it
+    if (filteredCraftId) {
+      console.log(filteredCraftId, 'hi');
+      setCraftTitle(filteredCraftId.id)
+    } else {
+      console.log("No matching element found in filteredCrafts.data");
+    }
+  }
+
+
+  console.log(filteredCrafts, 'cratfts');
   useEffect(() => {
     const getCraftsByCategory = async () => {
       await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
@@ -59,8 +83,13 @@ const EditService = ({
           setFilteredCrafts(data)
         })
     }
+
     getCraftsByCategory();
   }, []);
+
+  useEffect(() => {
+    getCraftId();
+  }, [filteredCrafts])
 
   const defaultProductsHandler = async (id, pageIndex) => {
     if (id) {
@@ -93,7 +122,6 @@ const EditService = ({
     defaultProductsHandler(activeCategoryId);
     setSelect(null);
   };
-
 
   return (
     <div
@@ -175,18 +203,19 @@ const EditService = ({
                       დასახელება
                     </label>
                     <select
-                      onChange={(e) => {
-                        const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.title === e.target.value);
-                        setCraftImage(filteredArray[0]?.attributes?.image?.data?.attributes?.url);
-                        setCraftTitle(e.target.value);
-                        setCraftData((prevSendData) => ({
-                          ...prevSendData,
-                          title: e.target.value,
-                          craft_img_url: filteredArray[0]?.attributes?.image?.data?.attributes?.url
-                        }));
-                      }}
-                      name="count"
-                      defaultValue={craftTitle}
+                      value={'34'}
+                      // onChange={(e) => {
+                      //   const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.id === e.target.value);
+                      //   setCraftImage(filteredArray[0]?.attributes?.image?.data?.attributes?.url);
+                      //   console.log(filteredArray, 'ara');
+                      //   // setCraftTitle(e.target.value);
+                      //   setCraftData((prevSendData) => ({
+                      //     ...prevSendData,
+                      //     title: e.target.value,
+                      //     craft_img_url: filteredArray[0]?.attributes?.image?.data?.attributes?.url
+                      //   }));
+                      // }}
+                      name="title"
                       className="form-select form-select-solid georgian"
                       data-placeholder="დასახელება"
                     >
@@ -194,13 +223,33 @@ const EditService = ({
                       {filteredCrafts &&
                         filteredCrafts?.data.map((item, index) => {
                           return (
-                            <option key={item?.id + index} value={item?.attributes?.title}>
+                            <option key={item?.id + index} value={item?.id}>
                               {item?.attributes?.title}
                             </option>
                           );
                         })
                       }
+                      <option value="other">სხვა</option>
                     </select>
+                    {craftData.title === 'other' && (
+                      <div className="mt-2">
+                        <input
+                          value={craftData.custom_craft_name}
+                          onWheel={(e) => e.target.blur()}
+                          onChange={(e) => {
+                            setCraftData((prevSendData) => ({
+                              ...prevSendData,
+                              custom_craft_name: e.target.value,
+                            }));
+                          }}
+                          type="text"
+                          className="form-control form-control-solid georgian"
+                          placeholder="გთხოვთ ხელით შეიყვანოთ დასახელება"
+                          name="title"
+                        />
+                        <div className="fv-plugins-message-container invalid-feedback"></div>
+                      </div>
+                    )}
                   </div>
                   <div className="col-md-4 fv-row fv-plugins-icon-container">
                     <label className="required fs-5 fw-bold mb-2 georgian">

@@ -390,32 +390,20 @@ const Products = ({
     [
       {
         title: "სამუშაო",
-        width: "15%"
+        width: "25%"
       },
       {
         title: "ერთეული",
-        width: "15%"
+        width: "25%"
       },
       {
         title: "რაოდენობა",
-        width: "10%"
-      },
-      {
-        title: "სტატუსი",
-        width: "15%"
-      },
-      {
-        title: "ხარჯი",
-        width: "15%"
+        width: "25%"
       },
       {
         title: "ჯამი",
-        width: "15%"
+        width: "25%"
       },
-      {
-        title: "ვალუტა",
-        width: "15%"
-      }
     ];
 
   useEffect(() => {
@@ -439,8 +427,10 @@ const Products = ({
     setPageIndex(1);
   }, [activeCategoryId]);
 
+  console.log(aggregatedProducts, 'dfuq');
+  console.log(categorySums, 'sumss')
   return (
-    <>
+    <Fragment>
       <Fragment>
         <div className={`${styles.table} ${totalSum ? styles.total_sum_table : ""}`}>
           <div className={totalSum ? styles.total_sum_wrap : ""}>
@@ -467,6 +457,10 @@ const Products = ({
               <div className={styles.wrap}>
                 {Object.values(aggregatedProducts).map((product, index) => (
                   <div key={index} className={styles.sum_table_item}>
+                    {
+                      console.log(product, 'orduisdnsjkn')
+
+                    }
                     <span style={{ width: sum_table_head[0].width }}>{product?.categories}</span>
                     <span style={{ width: sum_table_head[1].width }} className={styles.custom_sub_item}>
                       {product?.unites.map((i, index) => {
@@ -474,12 +468,18 @@ const Products = ({
                       })}
                     </span>
                     <span style={{ width: sum_table_head[2].width }}>
+                      {/* {categorySums
+                        ?.find((item) => item.title === product?.categories)
+                        ?.sum.toFixed(2) || 0}{" "} */}
+                      {product.quantity}
+
+                    </span>
+                    <span style={{ width: sum_table_head[3].width }}>
                       {categorySums
                         ?.find((item) => item.title === product?.categories)
-                        ?.sum.toFixed(2) || 0}{" "}
+                        ?.sum.toFixed(2) || 0}{" "}₾
                     </span>
-                    <span style={{ width: sum_table_head[3].width }}>{product?.status ? "შეძენილია" : "არ არის შეძენილი"}</span>
-                    <span style={{ width: sum_table_head[4].width }}>
+                    {/* <span style={{ width: sum_table_head[4].width }}>
                       {" "}
                       {categorySums
                         ?.find((item) => item.title === product?.categories)
@@ -489,8 +489,7 @@ const Products = ({
                       {categorySums
                         ?.find((item) => item.title === product?.categories)
                         ?.sum.toFixed(2) || 0}{" "}
-                    </span>
-                    <span style={{ width: sum_table_head[6].width, justifyContent: width < 1200 ? 'center' : 'flex-end' }}>ლარი</span>
+                    </span> */}
                   </div>
                 ))}
                 <div className={styles.sum_table_item_sc}>
@@ -501,33 +500,33 @@ const Products = ({
                       0
                     ) || 0
                       } `}</span>
-                    <span className="geo-title">ლარი</span>
+                    <span className="geo-title">₾</span>
                   </div>
                   {vatTotal > 0 && (
                     <div>
                       <span className="geo-title">{`დღგ: ${parseInt(vatTotal)}%`}</span>
                       <span>{`${vatTotalPrice.toFixed(2) || 0}`}</span>
-                      <span className="geo-title">ლარი</span>
+                      <span className="geo-title">₾</span>
                     </div>
                   )}
                   {unforeseenExpenses > 0 && (
                     <div>
                       <span className="geo-title">{`გაუთ.ხარჯი: ${parseFloat(unforeseenExpenses)}%`}</span>
                       <span>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</span>
-                      <span className="geo-title">ლარი</span>
+                      <span className="geo-title">₾</span>
                     </div>
                   )}
                   {service_percentage > 0 && (
                     <div>
                       <span>{`სერვისი ${parseFloat(service_percentage)}%`}</span>
                       <span>{`${servicePercentagePrice.toFixed(2) || 0}`}</span>
-                      <span>ლარი</span>
+                      <span>₾</span>
                     </div>
                   )}
                   <div>
                     <span className="geo-title">სულ ჯამი</span>
                     <span>{`${totalSumPrice?.toFixed(2) || 0}`}</span>
-                    <span className="geo-title">ლარი</span>
+                    <span className="geo-title">₾</span>
                   </div>
                 </div>
               </div>
@@ -789,7 +788,7 @@ const Products = ({
 
                 </div>
                 <div className={styles.table_footer}>
-                  <span className="geo-title">ჯამი: {total.toFixed(2)} ლარი</span>
+                  <span className="geo-title">ჯამი: {total.toFixed(2)} ₾</span>
                 </div>
               </Fragment>
             )}
@@ -799,49 +798,46 @@ const Products = ({
           <div className={styles.no_products}>
             პროდუქტი ვერ მოიძებნა!
           </div>
-        )
-        }
-        {
-          productsToMap.length > itemsPerPage && (
-            <nav aria-label="Page navigation example">
-              {activeCategoryId === null ? (
-                ""
-              ) : (
-                <ul className="pagination">
+        )}
+        {productsToMap.length > itemsPerPage && (
+          <nav aria-label="Page navigation example">
+            {activeCategoryId === null ? (
+              ""
+            ) : (
+              <ul className="pagination">
+                <li
+                  className="page-item"
+                  onClick={handleDecrementPageIndex}
+                  value={pageIndex}
+                >
+                  <a className="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                {Array.from({ length: totalPages }, (_, index) => (
                   <li
                     className="page-item"
-                    onClick={handleDecrementPageIndex}
-                    value={pageIndex}
+                    onClick={handleChangePageIndex}
+                    key={index + 1}
                   >
-                    <a className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
+                    <a className="page-link" id={index + 1} href="#">
+                      {index + 1}
                     </a>
                   </li>
-                  {Array.from({ length: totalPages }, (_, index) => (
-                    <li
-                      className="page-item"
-                      onClick={handleChangePageIndex}
-                      key={index + 1}
-                    >
-                      <a className="page-link" id={index + 1} href="#">
-                        {index + 1}
-                      </a>
-                    </li>
-                  ))}
-                  <li
-                    className="page-item"
-                    onClick={handleIncrementPageIndex}
-                    value={pageIndex}
-                  >
-                    <a className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              )}
-            </nav>
-          )
-        }
+                ))}
+                <li
+                  className="page-item"
+                  onClick={handleIncrementPageIndex}
+                  value={pageIndex}
+                >
+                  <a className="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            )}
+          </nav>
+        )}
       </Fragment >
       {select === "exportPopUp" && (
         <ExportPopup
@@ -863,9 +859,8 @@ const Products = ({
           servicePercentagePrice={servicePercentagePrice}
           select={select}
         />
-      )
-      }
-    </>
+      )}
+    </Fragment>
   );
 };
 
