@@ -45,7 +45,6 @@ const index = () => {
     setEditProductItem(product);
   };
 
-  // console.log(hashedUrl)
   const getProjectById = async () => {
     if (projectId) {
       try {

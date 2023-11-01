@@ -159,11 +159,6 @@ const Drawings = ({ setSelect, readOnly }) => {
       });
   };
 
-  if (isProjectImages?.length === 0) {
-    console.log('hi')
-  }
-  console.log(`${isProjectImages}`);
-
   return (
     <div
       className="modal fade show"

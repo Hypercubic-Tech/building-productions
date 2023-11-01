@@ -31,7 +31,6 @@ const AddProduct = ({
   const [filteredCrafts, setFilteredCrafts] = useState();
   const [craftImage, setCraftImage] = useState();
   const [categoryName, setCategoryName] = useState(null);
-  console.log(categoryName, 'name of exact category')
 
   const [productData, setProductData] = useState({
     image: image,

@@ -157,8 +157,6 @@ const AddProject = ({
     setAddProject(false);
   };
 
-  console.log(step, 'stp')
-
   return (
     <div style={{ display: close ? "none" : "" }} className={`${styles.modal}`}>
       <div className={styles.overlay}></div>

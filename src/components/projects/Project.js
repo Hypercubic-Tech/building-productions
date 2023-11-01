@@ -109,8 +109,6 @@ const Project = ({
       } catch (error) {
         console.error(error);
       }
-    } else {
-      console.log(id, 'not defined')
     }
   };
 
@@ -127,8 +125,6 @@ const Project = ({
       } catch (error) {
         console.error(error);
       }
-    } else {
-      console.log(id, 'not defined')
     }
   };
 
@@ -184,7 +180,7 @@ const Project = ({
 
     navigator.clipboard.writeText(copyText)
       .then(() => {
-        console.log("URL copied to clipboard");
+        // console.log("URL copied to clipboard");
       })
       .catch((error) => {
         console.error("Failed to copy URL to clipboard", error);
@@ -195,7 +191,6 @@ const Project = ({
     setAnimate(true);
   }, []);
 
-  console.log(editProject, 'edit project')
   return (
     <>
       {project &&
