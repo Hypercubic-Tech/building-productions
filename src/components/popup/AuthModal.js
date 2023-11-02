@@ -17,6 +17,8 @@ import GoogleSvg from "../svg/GoogleSvg";
 import CloseBtnBG from "../svg/CloseBtnBG";
 
 import styles from "../popup/AuthModal.module.css";
+import ShowEyeSvg from "../svg/ShowEyeSvg";
+import HideEyeSvg from "../svg/HideEyeSvg";
 
 const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
   const [lossData, setLossData] = useState(false);
@@ -183,18 +185,22 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
                   }));
                 }}
               />
-                <span
-              onClick={() => setShowPassword(!showPassword)}
-              style={{
-                position: "absolute",
-                right: "20px",
-                bottom: "10px",
-                fontSize: "16px",
-                cursor: "pointer",
-              }}
-            >
-              {!showPassword ? "show" : "hide"}
-            </span>
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "20px",
+                  bottom: "10px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                }}
+              >
+                {!showPassword ? (
+                  <ShowEyeSvg />
+                ) : (
+                  <HideEyeSvg />
+                )}
+              </span>
             </div>
             {lossData && authData?.password?.length <= 0 && (
               <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ პაროლი</p>
@@ -230,7 +236,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
               <div>
                 <div
                   // onClick={() => handleAuthorization(false)}
-                  className={`${styles.registrationBtn} row `}
+                  className={`${styles.registrationBtn} row geo-title `}
                 >
                   პაროლის აღდგენა
                 </div>
@@ -238,7 +244,7 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
               <CloseBtn2 onClick={onClose} className={styles.closeBtn} />
             </div>
             <div className="d-grid gap-2">
-              <label className="mt-2 fx">იმეილი:</label>
+              <label className="mt-2 fx geo-title">იმეილი:</label>
               <input
                 style={{
                   borderColor:
@@ -258,11 +264,11 @@ const AuthModal = ({ handleAuthorization, onClose, pricesData }) => {
               />
             </div>
             {lossData && forgotData?.email?.length <= 0 && (
-              <p style={{ color: "red" }}>გთხოვთ შეიყვანოთ იმეილი</p>
+              <p className="geo-title" style={{ color: "red" }}>გთხოვთ შეიყვანოთ იმეილი</p>
             )}
             <div className="d-grid gap-2 mt-2">
               <button
-                className={` btn btn-success georgian ${styles.btn}`}
+                className={` btn btn-success geo-title ${styles.btn}`}
                 type="button"
                 onClick={forgotPasswordHandler}
               >

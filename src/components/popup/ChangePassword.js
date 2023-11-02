@@ -1,13 +1,21 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+
 import { setAuthAccessToken } from "../../store/slices/authSlice";
 import notify from "../../utils/notify";
-import axios from "axios";
+
 import CloseBtn2 from "../svg/CloseBtn2";
+import HideEyeSvg from "../svg/HideEyeSvg";
+import ShowEyeSvg from "../svg/ShowEyeSvg";
 
 import styles from "../popup/RegModal.module.css";
 
 const ChangePassword = ({ setOpenPasswordPopup }) => {
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [showPassword3, setShowPassword3] = useState(false);
+
   const [changePassword, setChangePassword] = useState({
     currentPassword: "",
     password: "",
@@ -99,15 +107,15 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
         onClick={() => setOpenPasswordPopup(false)}
         style={{ position: "absolute", top: "10px", right: "10px" }}
       />
-      <div className="d-grid gap-2">
-        <label className="mt-2">აქტიური პაროლი:</label>
+      <div style={{ position: 'relative' }} className="d-grid gap-2">
+        <label className="mt-2 geo-title">აქტიური პაროლი:</label>
         <input
           style={{
             borderColor: validationErrors.currentPassword
               ? "red"
               : validationErrors.currentPassword === false
-              ? "green"
-              : "",
+                ? "green"
+                : "",
           }}
           autoComplete="current-password"
           required
@@ -126,19 +134,35 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
             }));
           }}
         />
+        <span
+          onClick={() => setShowPassword1(!showPassword1)}
+          style={{
+            position: "absolute",
+            right: "20px",
+            bottom: "10px",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          {!showPassword1 ? (
+            <ShowEyeSvg />
+          ) : (
+            <HideEyeSvg />
+          )}
+        </span>
         {validationErrors.currentPassword && (
-          <p style={{ color: "red" }}>{validationErrors.currentPassword}</p>
+          <p className="geo-title" style={{ color: "red" }}>{validationErrors.currentPassword}</p>
         )}
       </div>
-      <div className="d-grid gap-2">
-        <label className="mt-2">ახალი პაროლი:</label>
+      <div style={{ position: 'relative' }} className="d-grid gap-2">
+        <label className="mt-2 geo-title">ახალი პაროლი:</label>
         <input
           style={{
             borderColor: validationErrors.password
               ? "red"
               : validationErrors.password === false
-              ? "green"
-              : "",
+                ? "green"
+                : "",
           }}
           autoComplete="current-password"
           required
@@ -157,19 +181,35 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
             }));
           }}
         />
+        <span
+          onClick={() => setShowPassword2(!showPassword2)}
+          style={{
+            position: "absolute",
+            right: "20px",
+            bottom: "10px",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          {!showPassword2 ? (
+            <ShowEyeSvg />
+          ) : (
+            <HideEyeSvg />
+          )}
+        </span>
         {validationErrors.password && (
-          <p style={{ color: "red" }}>{validationErrors.password}</p>
+          <p className="geo-title" style={{ color: "red" }}>{validationErrors.password}</p>
         )}
       </div>
-      <div className="d-grid gap-2">
-        <label className="mt-2">დაადასტურეთ პაროლი:</label>
+      <div style={{ position: 'relative' }} className="d-grid gap-2">
+        <label className="mt-2 geo-title">დაადასტურეთ პაროლი:</label>
         <input
           style={{
             borderColor: validationErrors.passwordConfirmation
               ? "red"
               : validationErrors.passwordConfirmation === false
-              ? "green"
-              : "",
+                ? "green"
+                : "",
           }}
           autoComplete="current-password"
           required
@@ -188,15 +228,30 @@ const ChangePassword = ({ setOpenPasswordPopup }) => {
             }));
           }}
         />
-
+        <span
+          onClick={() => setShowPassword3(!showPassword3)}
+          style={{
+            position: "absolute",
+            right: "20px",
+            bottom: "10px",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          {!showPassword3 ? (
+            <ShowEyeSvg />
+          ) : (
+            <HideEyeSvg />
+          )}
+        </span>
         {validationErrors.passwordConfirmation && (
-          <p style={{ color: "red" }}>
+          <p className="geo-title" style={{ color: "red" }}>
             {validationErrors.passwordConfirmation}
           </p>
         )}
       </div>
       <button
-        className={` btn btn-success georgian ${styles.btn}`}
+        className={` btn btn-success geo-title w-100 ${styles.btn}`}
         type="button"
         onClick={changeUserPassword}
       >
