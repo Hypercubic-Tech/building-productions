@@ -45,6 +45,7 @@ const Products = ({
 
   const activeCategoryId = useSelector((state) => state?.cats?.category);
   const products = useSelector((state) => state.prod.products);
+  const [orderedProducts, setOrderedProducts] = useState(null);
   const [productStatusValues, setProductStatusValues] = useState({});
   const [craftStatusValues, setCraftStatusValues] = useState({});
   const [activeItem, setActiveItem] = useState();
@@ -343,6 +344,53 @@ const Products = ({
       }
     }
   });
+  const orderByCategory = () => {
+    let result = {};
+
+    if (totalSumProduct && totalSumProduct.length > 0) {
+      totalSumProduct.forEach(product => {
+        const categories = product.attributes.categories.data;
+
+        categories.forEach(category => {
+          const categoryTitle = category.attributes.title;
+
+          if (!result[categoryTitle]) {
+            result[categoryTitle] = {
+              title: categoryTitle,
+              items: [],
+              unit: [],
+              quantity: 0,
+              price: 0
+            };
+          }
+
+          const categoryItem = result[categoryTitle];
+          const itemIndex = categoryItem.items.findIndex(item => item.title === product.title);
+
+          if (itemIndex === -1) {
+            const unitData = product.attributes.unit.data;
+            const unitIndex = categoryItem.unit.findIndex(unit => unit.id === unitData.id);
+
+            if (unitIndex === -1) {
+              categoryItem.items.push({
+                title: product.attributes.title,
+                unit: unitData,
+                price: product.attributes.price,
+                type: product.attributes.type,
+                quantity: product.attributes.quantity
+              });
+              categoryItem.unit.push(unitData);
+            }
+          }
+
+          categoryItem.quantity += product.attributes.quantity;
+          categoryItem.price += product.attributes.price * product.attributes.quantity;
+        });
+      });
+    }
+
+    setOrderedProducts(Object.values(result));
+  };
 
   let mobile = width < 768 ? true : false;
 
@@ -420,6 +468,7 @@ const Products = ({
       };
 
       totalSumHandler();
+      orderByCategory();
     }
   }, [projectId, productsToMap, activeCategoryId, showProject]);
 
@@ -452,78 +501,132 @@ const Products = ({
               )}
             </div>
             {totalSum ? (
-              <div className={styles.wrap}>
-                {Object.values(aggregatedProducts).map((product, index) => (
-                  <div key={index} className={styles.sum_table_item}>
-                    <span style={{ width: sum_table_head[0].width }}>{product?.categories}</span>
-                    <span style={{ width: sum_table_head[1].width }} className={styles.custom_sub_item}>
-                      {product?.unites.map((i, index) => {
-                        return <span key={index}>{i}</span>;
-                      })}
-                    </span>
-                    <span style={{ width: sum_table_head[2].width }}>
-                      {/* {categorySums
-                        ?.find((item) => item.title === product?.categories)
-                        ?.sum.toFixed(2) || 0}{" "} */}
-                      {product.quantity}
+              <Fragment>
+                <div className={styles.table_body}>
+                  {orderedProducts && orderedProducts.map((item, index) => {
+                    return (
+                      <div key={index} className={`${styles.table_item_wrap} ${expandedItem === item.title + index && styles.actived_table_item}`}>
+                        <div className={`${styles.table_body_item_outer}`}>
+                          <span style={{ width: sum_table_head[0]?.width }} className={styles.table_body_item}>
+                            {item.title}
+                          </span>
+                          <span key={index} style={{ width: sum_table_head[1]?.width }} className={styles.table_body_item}>
+                            {item.unit.map((item, index) => {
+                              return (
+                                <span key={index}>{item.attributes.title}</span>
+                              )
+                            })}
+                          </span>
+                          <span style={{ width: sum_table_head[2]?.width }} className={styles.table_body_item}>
+                            {item?.quantity}
+                          </span>
+                          <span style={{ width: sum_table_head[3]?.width }} className={styles.table_body_item}>
+                            {item?.price}
+                          </span>
+                        </div>
+                        <div onClick={() => expandItemHandler(item.title + index)} className={`${styles.item_expand_btn} ${item.title + index === expandedItem ? styles.active_arrow : ""}`}>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -4.5 20 20">
+                            <g>
+                              <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                <g fill="#2B3467" transform="translate(-180 -6684)">
+                                  <g transform="translate(56 160)">
+                                    <path d="M144 6525.39l-1.406-1.39-8.607 8.261-.918-.881.005.005-7.647-7.34-1.427 1.369 9.987 9.586 10.013-9.61"></path>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                          </svg>
+                        </div>
+                        <div className={`${styles.expanded_item} ${expandedItem === item.title + index ? styles.actived_expand : styles.deactived_expand}`}>
+                          {item.items && item.items.map((sub, index) => {
+                            return (
+                              <Fragment key={index} >
+                                <div className={styles.expanded_sub_item}>
+                                  <span className="geo-title">ტიპი:</span>
+                                  <span>
+                                    {sub.type}
+                                  </span>
+                                </div>
+                                <div className={styles.expanded_sub_item}>
+                                  <span className="geo-title">დასახელება:</span>
+                                  <span>
+                                    {sub.title}
+                                  </span>
+                                </div>
+                                <div className={styles.expanded_sub_item}>
+                                  <span className="geo-title">რაოდენობა:</span>
+                                  <span>
+                                    {sub.quantity}
+                                  </span>
+                                </div>
+                                <div className={styles.expanded_sub_item}>
+                                  <span className="geo-title">ერთეული:</span>
+                                  <span>
+                                    {sub.unit.attributes.title}
+                                  </span>
+                                </div>
+                                <div className={styles.expanded_sub_item}>
+                                  <span className="geo-title">ღირებულება:</span>
+                                  <span>
+                                    {sub.quantity}
+                                  </span>
+                                </div>
+                                <div className={`${styles.sub_item_last} ${styles.expanded_sub_item}`}>
+                                  <span className="geo-title">ჯამი:</span>
+                                  <span>
+                                    {sub.price * sub.quantity.toFixed(2)}
+                                  </span>
+                                </div>
+                              </Fragment>
+                            )
+                          })}
+                        </div>
+                      </div>
 
-                    </span>
-                    <span style={{ width: sum_table_head[3].width }}>
-                      {categorySums
-                        ?.find((item) => item.title === product?.categories)
-                        ?.sum.toFixed(2) || 0}{" "}₾
-                    </span>
-                    {/* <span style={{ width: sum_table_head[4].width }}>
-                      {" "}
-                      {categorySums
-                        ?.find((item) => item.title === product?.categories)
-                        ?.sum.toFixed(2) || 0}{" "}
-                    </span>
-                    <span style={{ width: sum_table_head[5].width }}>
-                      {categorySums
-                        ?.find((item) => item.title === product?.categories)
-                        ?.sum.toFixed(2) || 0}{" "}
-                    </span> */}
-                  </div>
-                ))}
-                <div className={styles.sum_table_item_sc}>
-                  <div>
-                    <span className="geo-title">სულ:</span>
-                    <span>{`${Object?.values(categorySums).reduce(
-                      (total, category) => total + category.sum,
-                      0
-                    ) || 0
-                      } `}</span>
-                    <span className="geo-title">₾</span>
-                  </div>
-                  {vatTotal > 0 && (
+                    )
+                  })}
+
+                </div>
+                <div className={styles.table_footer}>
+                  <div className={styles.sum_table_item_sc}>
                     <div>
-                      <span className="geo-title">{`დღგ: ${parseInt(vatTotal)}%`} - </span>
-                      <span>{`${vatTotalPrice.toFixed(2) || 0}`}</span>
+                      <span className="geo-title">სულ:</span>
+                      <span>{`${Object?.values(categorySums).reduce(
+                        (total, category) => total + category.sum,
+                        0
+                      ) || 0
+                        } `}</span>
                       <span className="geo-title">₾</span>
                     </div>
-                  )}
-                  {unforeseenExpenses > 0 && (
+                    {vatTotal > 0 && (
+                      <div>
+                        <span className="geo-title">{`დღგ: ${parseInt(vatTotal)}%`} - </span>
+                        <span>{`${vatTotalPrice.toFixed(2) || 0}`}</span>
+                        <span className="geo-title">₾</span>
+                      </div>
+                    )}
+                    {unforeseenExpenses > 0 && (
+                      <div>
+                        <span className="geo-title">{`გაუთ.ხარჯი: ${parseFloat(unforeseenExpenses)}%`} - </span>
+                        <span>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</span>
+                        <span className="geo-title">₾</span>
+                      </div>
+                    )}
+                    {service_percentage > 0 && (
+                      <div>
+                        <span className="geo-title">{`სერვისი: ${parseFloat(service_percentage)}%`} - </span>
+                        <span>{`${servicePercentagePrice.toFixed(2) || 0}`}</span>
+                        <span>₾</span>
+                      </div>
+                    )}
                     <div>
-                      <span className="geo-title">{`გაუთ.ხარჯი: ${parseFloat(unforeseenExpenses)}%`} - </span>
-                      <span>{`${unforeseenExpensesPrice.toFixed(2) || 0}`}</span>
+                      <span className="geo-title">სულ ჯამი:</span>
+                      <span>{`${totalSumPrice?.toFixed(2) || 0}`}</span>
                       <span className="geo-title">₾</span>
                     </div>
-                  )}
-                  {service_percentage > 0 && (
-                    <div>
-                      <span className="geo-title">{`სერვისი: ${parseFloat(service_percentage)}%`} - </span>
-                      <span>{`${servicePercentagePrice.toFixed(2) || 0}`}</span>
-                      <span>₾</span>
-                    </div>
-                  )}
-                  <div>
-                    <span className="geo-title">სულ ჯამი:</span>
-                    <span>{`${totalSumPrice?.toFixed(2) || 0}`}</span>
-                    <span className="geo-title">₾</span>
                   </div>
                 </div>
-              </div>
+              </Fragment>
             ) : (
               <Fragment>
                 <div className={styles.table_body}>
