@@ -475,8 +475,6 @@ const Products = ({
     orderByCategory();
   }, [totalSumHandler]);
 
-  console.log(activeCategoryId, 'cat id');
-  console.log(totalSum, '?s')
   return (
     <Fragment>
       <Fragment>
@@ -545,7 +543,7 @@ const Products = ({
                                 <div className={styles.expanded_sub_item}>
                                   <span className="geo-title">ტიპი:</span>
                                   <span>
-                                    {sub.type}
+                                    {sub.type === 'product' ? "პროდუქტი" : 'სამუშაო'}
                                   </span>
                                 </div>
                                 <div className={styles.expanded_sub_item}>
