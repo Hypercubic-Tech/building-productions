@@ -39,9 +39,6 @@ const Products = ({
   projectId
 }) => {
   const dispatch = useDispatch();
-  const router = useRouter();
-
-  // const { projectId } = router.query;
 
   const activeCategoryId = useSelector((state) => state?.cats?.category);
   const products = useSelector((state) => state.prod.products);
@@ -91,6 +88,18 @@ const Products = ({
   const totalPages = Math.ceil(productsToMap.length / itemsPerPage);
   const startIndex = (pageIndex - 1) * itemsPerPage;
   const endIndex = pageIndex * itemsPerPage;
+
+  const totalSumHandler = async () => {
+    console.log('hi')
+    await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
+      )
+      .then((res) => {
+        const data = res.data;
+        setTotalSumProduct(data.data);
+      });
+  };
 
   const expandItemHandler = (id) => {
     if (expandedItem !== id) {
@@ -455,34 +464,26 @@ const Products = ({
     ];
 
   useEffect(() => {
-    if (activeCategoryId === null && projectId && productsToMap) {
-      const totalSumHandler = async () => {
-        await axios
-          .get(
-            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
-          )
-          .then((res) => {
-            const data = res.data;
-            setTotalSumProduct(data.data);
-          });
-      };
-
-      totalSumHandler();
-      orderByCategory();
-    }
-  }, [projectId, productsToMap, activeCategoryId, showProject]);
-
-  useEffect(() => {
     setPageIndex(1);
   }, [activeCategoryId]);
 
+  useEffect(() => {
+    totalSumHandler();
+  }, [activeCategoryId, projectId, showProject]);
+
+  useEffect(() => {
+    orderByCategory();
+  }, [totalSumHandler]);
+
+  console.log(activeCategoryId, 'cat id');
+  console.log(totalSum, '?s')
   return (
     <Fragment>
       <Fragment>
-        <div className={`${styles.table} ${totalSum ? styles.total_sum_table : ""}`}>
+        <div className={`${styles.table} ${totalSum || activeCategoryId === null ? styles.total_sum_table : ""}`}>
           <div className={totalSum ? styles.total_sum_wrap : ""}>
             <div className={styles.table_head}>
-              {totalSum ? (
+              {totalSum || activeCategoryId === null ? (
                 sum_table_head.map((item, index) => {
                   return (
                     <span key={index} style={{ width: item.width }} className={`${styles.table_head_item} ${'geo-title'}`}>
@@ -500,7 +501,7 @@ const Products = ({
                 })
               )}
             </div>
-            {totalSum ? (
+            {totalSum || activeCategoryId === null ? (
               <Fragment>
                 <div className={styles.table_body}>
                   {orderedProducts && orderedProducts.map((item, index) => {
