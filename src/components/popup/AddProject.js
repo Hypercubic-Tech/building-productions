@@ -26,6 +26,7 @@ const AddProject = ({
   const [backBtn, setBackBtn] = useState(false);
 
   const [sendData, setSendData] = useState({
+    project_type: "",
     title: "",
     address: "",
     phoneNumber: "",
@@ -87,6 +88,7 @@ const AddProject = ({
       errors.stepOne.length === 0 &&
       sendData.address &&
       sendData.area &&
+      sendData.project_type &&
       sendData.city.connect[0].id &&
       sendData.property_type.connect[0].id
     ) {
@@ -141,7 +143,6 @@ const AddProject = ({
           data: sendData,
         })
         .then((res) => {
-          const data = res.data;
           setShowProject(true);
           notify(false, "პროექტი დაემატა");
         });
@@ -359,6 +360,40 @@ const AddProject = ({
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
+                    <div className="fv-row mb-10">
+                      <label
+                        className="d-flex align-items-center fs-5 fw-bold mb-2 form-label"
+                      // htmlFor="validationCustom04"
+                      >
+                        <span className="required georgian">პროექტის ტიპი</span>
+                        <i
+                          className="fas fa-exclamation-circle ms-2 fs-7"
+                          title="მიუთითეთ პროექტის ტიპი"
+                        />
+                      </label>
+                      <select
+                        required
+                        // id="property"
+                        defaultValue="none"
+                        onChange={(event) => {
+                          setSendData((prevSendData) => ({
+                            ...prevSendData,
+                            project_type: event.target.value
+                          }));
+                        }}
+                        className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
+                      >
+                        <option value="none" disabled hidden>
+                          აირჩიერ პროექტის ტიპი
+                        </option>
+                        <option value='build'>
+                          სამშენებლო
+                        </option>
+                        <option value='repair'>
+                          სარემონტო
+                        </option>
+                      </select>
+                    </div>
                     <div className="fv-row mb-10">
                       <label
                         className="d-flex align-items-center fs-5 fw-bold mb-2 form-label"

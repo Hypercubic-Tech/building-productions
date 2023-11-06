@@ -31,6 +31,7 @@ const index = () => {
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
+  const [select, setSelect] = useState(null)
 
   const [animate, setAnimate] = useState(false);
 
@@ -324,7 +325,7 @@ const index = () => {
       setAnimate(true);
     }, 500);
   }, []);
-  
+
   return (
     <>
       {!isLoggedIn ? (
@@ -366,6 +367,7 @@ const index = () => {
                 {/* <BuildingBg /> */}
                 {projectsToMap?.length > 0 ? (
                   projectsToMap.slice(startIndex, endIndex).map((item, index) => {
+                    console.log(item, 'item')
                     const id = item?.attributes?.main_img_id;
                     const imgId = parseInt(id);
                     const imageWithMainId = item?.attributes?.image?.data?.find(
@@ -414,9 +416,12 @@ const index = () => {
                               >
                                 {item?.attributes?.title}
                               </div>
-                              <p className="card-text">
+                              <p className="card-text geo-title">
                                 <MapSvg />
                                 {item?.attributes?.address}
+                              </p>
+                              <p style={{color: 'black'}} className="card-text geo-title">
+                                ტიპი: {item.attributes.project_type === 'repair' ? "სარემონტო" : "სამშენებლო"}
                               </p>
                             </div>
                           </Link>
@@ -498,6 +503,8 @@ const index = () => {
           )}
           {editProject && (
             <EditProject
+              getProjectById={getProjectsData}
+              setSelect={setSelect}
               cities={cities}
               propertyType={propertyType}
               condition={condition}

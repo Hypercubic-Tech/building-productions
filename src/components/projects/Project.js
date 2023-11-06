@@ -228,6 +228,9 @@ const Project = ({
                     </h2>
                     <ul className="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
                       <li className="breadcrumb-item text-gray-600 georgian">
+                        {p?.attributes?.project_type === 'repair' ? 'სარემონტო' : 'სამშენებლო'}
+                      </li>
+                      <li className="breadcrumb-item text-gray-600 georgian">
                         {p?.attributes?.city?.data?.attributes?.city}
                       </li>
                       <li className="breadcrumb-item text-gray-600 georgian">

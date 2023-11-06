@@ -90,7 +90,6 @@ const Products = ({
   const endIndex = pageIndex * itemsPerPage;
 
   const totalSumHandler = async () => {
-    console.log('hi')
     await axios
       .get(
         `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id][$eq]=${projectId}`
@@ -329,7 +328,7 @@ const Products = ({
   const aggregatedProducts = {};
   totalSumProduct?.forEach((product) => {
     const title = product?.attributes?.title;
-    const unit = product?.attributes?.unit?.data?.attributes?.title; // i need to get all the units not only one value
+    const unit = product?.attributes?.unit?.data?.attributes?.title;
     const categories =
       product?.attributes?.categories?.data[0]?.attributes?.title;
     const price = product?.attributes?.price;
@@ -469,11 +468,8 @@ const Products = ({
 
   useEffect(() => {
     totalSumHandler();
-  }, [activeCategoryId, projectId, showProject]);
-
-  useEffect(() => {
     orderByCategory();
-  }, [totalSumHandler]);
+  }, [activeCategoryId, projectId, showProject]);
 
   return (
     <Fragment>

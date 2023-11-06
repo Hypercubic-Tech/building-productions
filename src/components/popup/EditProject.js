@@ -5,7 +5,7 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({ cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject, project, setEditProject, getProjectById, setSelect }) => {
+const EditProject = ({ cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject, project,  getProjectById, setSelect }) => {
   const userId = useSelector(state => state.auth.user_id)
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
@@ -16,6 +16,7 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
   const [currentConditionOption, setCurrentConditionOption] = useState(project?.data[0]?.attributes?.current_condition?.data?.id);
 
   const [sendData, setSendData] = useState({
+    project_type: project.data[0].attributes.project_type,
     title: project.data[0].attributes.title,
     address: project.data[0].attributes.address,
     phoneNumber: project.data[0].attributes.phoneNumber,
@@ -271,6 +272,39 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
                   data-kt-stepper-element="content"
                 >
                   <div className="w-100">
+                    <div className="fv-row mb-10">
+                      <label
+                        className="d-flex align-items-center fs-5 fw-bold mb-2 form-label"
+                      // htmlFor="validationCustom04"
+                      >
+                        <span className="required georgian">პროექტის ტიპი</span>
+                        <i
+                          className="fas fa-exclamation-circle ms-2 fs-7"
+                          title="მიუთითეთ პროექტის ტიპი"
+                        />
+                      </label>
+                      <select
+                        required
+                        value={sendData.project_type}
+                        onChange={(event) => {
+                          setSendData((prevSendData) => ({
+                            ...prevSendData,
+                            project_type: event.target.value
+                          }));
+                        }}
+                        className={`${"form-select"} ${"form-select-solid"} ${"georgian"}`}
+                      >
+                        <option value="none" disabled hidden>
+                          აირჩიერ პროექტის ტიპი
+                        </option>
+                        <option value='build'>
+                          სამშენებლო
+                        </option>
+                        <option value='repair'>
+                          სარემონტო
+                        </option>
+                      </select>
+                    </div>
                     <div className="fv-row mb-10">
                       <label className="d-flex align-items-center fs-5 fw-bold mb-2 form-label" htmlFor="validationCustom04">
                         <span className="required georgian">ქონების ტიპი</span>
