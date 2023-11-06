@@ -27,7 +27,7 @@ const index = () => {
   const [productOptions, setProductOptions] = useState(null);
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
-
+  const [projectType, setProjectType] = useState(null);
   const [showProject, setShowProject] = useState(false);
 
 
@@ -52,19 +52,34 @@ const index = () => {
           `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=*&filters[id][$eq]=${projectId}`
         );
         const projectData = projectRes.data?.data;
+        setProjectType(projectData[0].attributes.project_type)
         setProject(projectData);
 
-        const productRes = await axios.get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`
-        );
-        const productData = productRes.data;
-        setProductOptions(productData);
-        const categoryRes = await axios.get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`
-        );
-        const categoryData = categoryRes.data.data;
-        setProjectCategory(categoryData);
+        if (projectData[0].attributes.project_type === 'build') {
+          const productRes = await axios.get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.category-builds&filters[id][$eq]=${projectId}`
+          );
+          const productData = productRes.data;
+          setProductOptions(productData);
+          const categoryRes = await axios.get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/category-builds?populate=*&filters[projects][id][$eq]=${projectId}`
+          );
+          const categoryData = categoryRes.data.data;
+          setProjectCategory(categoryData);
 
+        } else {
+          const productRes = await axios.get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${projectId}`
+          );
+          const productData = productRes.data;
+          setProductOptions(productData);
+          const categoryRes = await axios.get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${projectId}`
+          );
+          const categoryData = categoryRes.data.data;
+          setProjectCategory(categoryData);
+
+        }
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -253,6 +268,7 @@ const index = () => {
         </div>
       ) : (
         <Project
+          projectType={projectType}
           showProject={showProject}
           setShowProject={setShowProject}
           hashedUrl={hashedUrl}

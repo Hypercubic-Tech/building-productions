@@ -8,6 +8,7 @@ import styles from "./Modal.module.css";
 
 const AddProject = ({
   cities,
+  buildCategories,
   propertyType,
   condition,
   categories,
@@ -43,6 +44,10 @@ const AddProject = ({
     categories: {
       connect: [],
       disconnect: [],
+    },
+    category_builds: {
+      connect: [],
+      disconnect: []
     },
     current_condition: {
       connect: [{ id: null }],
@@ -110,12 +115,14 @@ const AddProject = ({
       step === 3 &&
       errors.stepThree.length === 0 &&
       sendData.title &&
-      sendData.categories.connect.length > 0
+      sendData.categories.connect.length || sendData.category_builds.connect.length > 0
     ) {
       setStep(step + 1);
       setLoss(false);
     }
   };
+
+  console.log(sendData, 'final')
 
   const prevStepHandler = () => {
     if (step > 1) {
@@ -131,6 +138,18 @@ const AddProject = ({
         ...prevState,
         categories: {
           connect: [...prevState.categories.connect, { id: categoryId }],
+        },
+      }));
+    }
+  };
+
+  const handleBuldCategoryChange = (e) => {
+    const categoryId = e.target.value;
+    if (!sendData.category_builds.connect.some((cat) => cat.id === categoryId)) {
+      setSendData((prevState) => ({
+        ...prevState,
+        category_builds: {
+          connect: [...prevState.category_builds.connect, { id: categoryId }],
         },
       }));
     }
@@ -725,9 +744,10 @@ const AddProject = ({
                         </label>
                         <div className="row fv-row">
                           <div className="col-12">
-                            <div className={`${styles.customGap} d-flex`}>
-                              {categories &&
-                                categories.map((item, index) => {
+                            {sendData.project_type === 'build' ? (
+                              <div className={`${styles.customGap} d-flex`}>
+                              {buildCategories &&
+                                buildCategories.map((item, index) => {
                                   return (
                                     <div
                                       key={index}
@@ -735,7 +755,7 @@ const AddProject = ({
                                     >
                                       <div className={styles.outline}>
                                         <input
-                                          onChange={handleCategoryChange}
+                                          onChange={handleBuldCategoryChange}
                                           className="form-check-input"
                                           type="checkbox"
                                           value={item.id}
@@ -751,6 +771,34 @@ const AddProject = ({
                                   );
                                 })}
                             </div>
+                            ) : (
+                              <div className={`${styles.customGap} d-flex`}>
+                                {categories &&
+                                  categories.map((item, index) => {
+                                    return (
+                                      <div
+                                        key={index}
+                                        className="form-check form-check-custom form-check-solid mb-2"
+                                      >
+                                        <div className={styles.outline}>
+                                          <input
+                                            onChange={handleCategoryChange}
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            value={item.id}
+                                          />
+                                        </div>
+                                        <label
+                                          onClick={(e) => e.preventDefault()}
+                                          className="form-check-label georgian"
+                                        >
+                                          {item.attributes.title}
+                                        </label>
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

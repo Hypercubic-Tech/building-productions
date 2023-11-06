@@ -580,7 +580,7 @@ const AddProduct = ({
                                 custom_craft_name: e.target.value,
                               }));
                             }}
-                            type="number"
+                            type="text"
                             className="form-control form-control-solid georgian"
                             placeholder="გთხოვთ ხელით შეიყვანოთ დასახელება"
                             name="title"

@@ -26,6 +26,7 @@ import styles from "./Project.module.css";
 import notify from "../../utils/notify";
 
 const Project = ({
+  projectType,
   showProject,
   setShowProject,
   readOnly,

@@ -31,6 +31,7 @@ const index = () => {
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
+  const [buildCategories, setBuildCategories] = useState(null);
   const [select, setSelect] = useState(null)
 
   const [animate, setAnimate] = useState(false);
@@ -130,7 +131,7 @@ const index = () => {
   const getProjectsData = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=categories,image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
+        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=categories,category_builds,image,main_img_url&filters[users_permissions_user][id][$eq]=${userId}`
       );
       setShowProject(false);
       return response.data;
@@ -257,6 +258,19 @@ const index = () => {
       }
     };
 
+    const getBuildCategories = async () => {
+      try {
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/category-builds`)
+          .then((res) => {
+            const data = res.data;
+            setBuildCategories(data.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     const getCurrentConditionHandler = async () => {
       try {
         await axios
@@ -310,6 +324,7 @@ const index = () => {
     };
 
     getCategoriesHandler();
+    getBuildCategories();
     getCurrentConditionHandler();
     getConditionHandler();
     getCitiesHandler();
@@ -367,7 +382,6 @@ const index = () => {
                 {/* <BuildingBg /> */}
                 {projectsToMap?.length > 0 ? (
                   projectsToMap.slice(startIndex, endIndex).map((item, index) => {
-                    console.log(item, 'item')
                     const id = item?.attributes?.main_img_id;
                     const imgId = parseInt(id);
                     const imageWithMainId = item?.attributes?.image?.data?.find(
@@ -420,7 +434,7 @@ const index = () => {
                                 <MapSvg />
                                 {item?.attributes?.address}
                               </p>
-                              <p style={{color: 'black'}} className="card-text geo-title">
+                              <p style={{ color: 'black' }} className="card-text geo-title">
                                 ტიპი: {item.attributes.project_type === 'repair' ? "სარემონტო" : "სამშენებლო"}
                               </p>
                             </div>
@@ -491,6 +505,7 @@ const index = () => {
           )}
           {addProject && (
             <AddProject
+              buildCategories={buildCategories}
               setAddProject={setAddProject}
               cities={cities}
               propertyType={propertyType}
@@ -503,6 +518,7 @@ const index = () => {
           )}
           {editProject && (
             <EditProject
+              buildCategories={buildCategories}
               getProjectById={getProjectsData}
               setSelect={setSelect}
               cities={cities}
