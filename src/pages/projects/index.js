@@ -382,12 +382,17 @@ const index = () => {
                 {/* <BuildingBg /> */}
                 {projectsToMap?.length > 0 ? (
                   projectsToMap.slice(startIndex, endIndex).map((item, index) => {
+                    console.log(item, 'itme')
                     const id = item?.attributes?.main_img_id;
                     const imgId = parseInt(id);
                     const imageWithMainId = item?.attributes?.image?.data?.find(
                       (image) => image.id === imgId
                     );
-                    const lowestIdObject = item?.attributes?.categories.data.reduce((min, obj) => (obj.id < min.id ? obj : min), item?.attributes?.categories.data[0]);
+                    const lowestIdObject = item.attributes.project_type === 'repair' ?  (
+                      item?.attributes?.categories.data.reduce((min, obj) => (obj.id < min.id ? obj : min), item?.attributes?.categories.data[0]) 
+                    ) : (
+                      item?.attributes?.category_builds.data.reduce((min, obj) => (obj.id < min.id ? obj : min), item?.attributes?.category_builds.data[0]) 
+                    )
 
                     return (
                       <div
@@ -399,10 +404,7 @@ const index = () => {
                           style={{ paddingBottom: "20px" }}
                         >
                           <Link
-                            href={{
-                              pathname: `/projects/${item?.id}`,
-                              query: { projectId: item?.id },
-                            }}
+                            href={`/projects/${item?.id}`}
                             onClick={() => dispatch(setCategory(lowestIdObject.id))}
                             passHref
                             className={styles.cardLink}
@@ -430,12 +432,12 @@ const index = () => {
                               >
                                 {item?.attributes?.title}
                               </div>
+                              <p style={{ color: 'black' }} className="card-text geo-title">
+                                ტიპი: {item.attributes.project_type === 'repair' ? "სარემონტო" : "სამშენებლო"}
+                              </p>
                               <p className="card-text geo-title">
                                 <MapSvg />
                                 {item?.attributes?.address}
-                              </p>
-                              <p style={{ color: 'black' }} className="card-text geo-title">
-                                ტიპი: {item.attributes.project_type === 'repair' ? "სარემონტო" : "სამშენებლო"}
                               </p>
                             </div>
                           </Link>

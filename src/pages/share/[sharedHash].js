@@ -22,12 +22,12 @@ const SharedProjectPage = () => {
     const [defaultImage, setDefaultImage] = useState(null);
 
     const [projectIdR, setProjectIdR] = useState(null);
-
+    const [projectType, setProjectType] = useState(null);
 
     const pathname = window.location.pathname;
     const lastSlashIndex = pathname.lastIndexOf('/');
     const hashedId = pathname.substring(lastSlashIndex + 1);
-
+    console.log(projectType, '???')
     const getProjectById = async () => {
         if (hashedId) {
             try {
@@ -35,6 +35,7 @@ const SharedProjectPage = () => {
                     `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects?populate=projects&filters[hash][$eq]=${hashedId}`
                 );
                 const project_id = id_response.data?.data[0]?.attributes?.projects?.data[0]?.id;
+                setProjectType(id_response.data?.data[0]?.attributes?.projects?.data[0]?.attributes?.project_type)
                 setProjectIdR(project_id)
                 if (project_id) {
                     try {
@@ -43,19 +44,33 @@ const SharedProjectPage = () => {
                         );
                         const projectData = projectRes.data?.data;
                         setProject(projectData);
+                        if (projectType === 'repair') {
+                            const productRes = await axios.get(
+                                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${project_id}`
+                            );
+                            const productData = productRes.data;
+                            setProductOptions(productData);
+                            const categoryRes = await axios.get(
+                                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${project_id}`
+                            );
+                            const categoryData = categoryRes.data.data;
+                            setProjectCategory(categoryData);
 
-                        const productRes = await axios.get(
-                            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.categories&filters[id][$eq]=${project_id}`
-                        );
-                        const productData = productRes.data;
-                        setProductOptions(productData);
-                        const categoryRes = await axios.get(
-                            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/categories?populate=*&filters[projects][id][$eq]=${project_id}`
-                        );
-                        const categoryData = categoryRes.data.data;
-                        setProjectCategory(categoryData);
+                            setIsLoading(false);
+                        } else {
+                            const productRes = await axios.get(
+                                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/projects?populate=products.category-builds&filters[id][$eq]=${project_id}`
+                            );
+                            const productData = productRes.data;
+                            setProductOptions(productData);
+                            const categoryRes = await axios.get(
+                                `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/category-builds?populate=*&filters[projects][id][$eq]=${project_id}`
+                            );
+                            const categoryData = categoryRes.data.data;
+                            setProjectCategory(categoryData);
 
-                        setIsLoading(false);
+                            setIsLoading(false);
+                        }
                     } catch (error) {
                         console.log(error);
                     }
@@ -139,10 +154,6 @@ const SharedProjectPage = () => {
         getSupplierHandler();
         getUnitHandler();
     }, []);
-
-    useEffect(() => {
-        getProjectById();
-    }, [hashedId]);
 
     if (isLoading) {
         return <LoadingPage />;

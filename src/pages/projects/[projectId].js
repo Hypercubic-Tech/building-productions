@@ -45,6 +45,7 @@ const index = () => {
     setEditProductItem(product);
   };
 
+
   const getProjectById = async () => {
     if (projectId) {
       try {
@@ -232,7 +233,6 @@ const index = () => {
   useEffect(() => {
     getProjectById();
   }, [projectId]);
-
 
   useEffect(() => {
     async function hashUrl(url) {
