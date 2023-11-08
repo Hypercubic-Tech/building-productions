@@ -11,6 +11,8 @@ import notify from '../../utils/notify';
 import styles from "./AddProduct.module.css";
 
 const EditService = ({
+  projectType,
+  buildCrafts,
   product,
   unit,
   setSelect,
@@ -56,26 +58,37 @@ const EditService = ({
   const getCraftId = () => {
     const productTitle = product.attributes.title.trim();
 
-    // Use the find method to get the element with the matching title
     const filteredCraftId = filteredCrafts?.data.find((item) => item.attributes.title.trim() === productTitle);
 
-    // Check if filteredCraftId is defined and log it
     if (filteredCraftId) {
       setCraftTitle(filteredCraftId.id)
-    } else {
-      console.log("No matching element found in filteredCrafts.data");
     }
   }
 
   useEffect(() => {
     const getCraftsByCategory = async () => {
-      await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`)
-        .then((res) => {
-          const data = res.data;
-          setFilteredCrafts(data)
-        })
-    }
+      if (projectType === 'repair') {
+        await axios
+          .get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`
+          )
+          .then((res) => {
+            const data = res.data;
+            setFilteredCrafts(data);
+          });
+      } else {
+        await axios
+          .get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/craft-images-builds?populate=category_builds,image&filters[category_builds][id][$eq]=${activeCategoryId}`
+          )
+          .then((res) => {
+            const data = res.data;
+            setFilteredCrafts(data);
+          });
+      }
+    };
 
+    // getCategoryName()
     getCraftsByCategory();
   }, []);
 

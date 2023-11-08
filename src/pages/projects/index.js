@@ -102,7 +102,8 @@ const index = () => {
   };
 
   const dismissHandler = () => {
-    setEditProject(false);
+    setEditProject(null);
+    setSelect(null);
     setAddProject(false);
   };
 
@@ -151,6 +152,7 @@ const index = () => {
       );
       const data = response.data;
       setEditProject(data);
+      setSelect('edit')
     } catch (error) {
       console.log(error);
     }
@@ -518,7 +520,7 @@ const index = () => {
               dismiss={dismissHandler}
             />
           )}
-          {editProject && (
+          {select === 'edit' && (
             <EditProject
               buildCategories={buildCategories}
               getProjectById={getProjectsData}

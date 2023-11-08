@@ -11,6 +11,8 @@ import XredSvg from "../svg/XredSvg";
 import styles from "./AddProduct.module.css";
 
 const AddProduct = ({
+  projectType,
+  buildCrafts,
   projectCategory,
   setSelect,
   unit,
@@ -186,14 +188,25 @@ const AddProduct = ({
 
   useEffect(() => {
     const getCraftsByCategory = async () => {
-      await axios
+      if (projectType === 'repair') {
+        await axios
+          .get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`
+          )
+          .then((res) => {
+            const data = res.data;
+            setFilteredCrafts(data);
+          });
+      } else {
+        await axios
         .get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/crafts?populate=categories,image&filters[categories][id][$eq]=${activeCategoryId}`
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/craft-images-builds?populate=category_builds,image&filters[category_builds][id][$eq]=${activeCategoryId}`
         )
         .then((res) => {
           const data = res.data;
           setFilteredCrafts(data);
         });
+      }
     };
 
     getCategoryName()

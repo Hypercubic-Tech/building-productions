@@ -27,6 +27,8 @@ import notify from "../../utils/notify";
 
 const Project = ({
   projectType,
+  buildCategories,
+  buildCrafts,
   showProject,
   setShowProject,
   readOnly,
@@ -52,6 +54,8 @@ const Project = ({
   currentCondition,
   categories
 }) => {
+  console.log(projectType, 'type');
+  console.log(buildCrafts, 'build crafts')
   const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
@@ -95,8 +99,6 @@ const Project = ({
       console.log(error);
     }
   };
-
-  // edit_project_handler()
 
   const defaultProductsHandler = async (id) => {
     if (id) {
@@ -146,7 +148,7 @@ const Project = ({
       }
     };
     defaultProductCallBack();
-  }, [activeCategoryId, projectId || projectIdR, activeCategoryId]);
+  }, [activeCategoryId, projectId, projectIdR]);
 
   const generateSharedProjectHandler = async () => {
     const allSharedProjects = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/shared-projects`);
@@ -409,6 +411,7 @@ const Project = ({
                   setSelect={setSelect}
                   cities={cities}
                   propertyType={propertyType}
+                  buildCategories={buildCategories}
                   condition={condition}
                   categories={categories}
                   currentCondition={currentCondition}
@@ -435,6 +438,7 @@ const Project = ({
               )}
               {select === "add" && !readOnly && (
                 <AddProduct
+                  projectType={projectType}
                   projectCategory={projectCategory}
                   getProjectById={getProjectById}
                   project={productOptions}
@@ -442,6 +446,7 @@ const Project = ({
                   productStatus={productStatus}
                   craftStatus={craftStatus}
                   crafts={crafts}
+                  buildCrafts={buildCrafts}
                   unit={unit}
                   allCategories={projectCategory}
                   suppliers={suppliers}
@@ -449,6 +454,7 @@ const Project = ({
               )}
               {select === "edit-product" && !readOnly && (
                 <EditProduct
+                  projectType={projectType}
                   product={editProductItem}
                   setSelect={setSelect}
                   craftStatus={craftStatus}
@@ -461,10 +467,12 @@ const Project = ({
               )}
               {select === "edit-service" && !readOnly && (
                 <EditService
+                  projectType={projectType}
                   product={editProductItem}
                   setSelect={setSelect}
                   craftStatus={craftStatus}
                   crafts={crafts}
+                  buildCrafts={buildCrafts}
                   unit={unit}
                   allCategories={projectCategory}
                   suppliers={suppliers}

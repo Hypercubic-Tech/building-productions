@@ -5,7 +5,7 @@ import axios from "axios";
 import notify from "../../utils/notify";
 import styles from "./Modal.module.css";
 
-const EditProject = ({ cities, propertyType, condition, categories, currentCondition, dismiss, setShowProject, project,  getProjectById, setSelect }) => {
+const EditProject = ({ cities, buildCategories, propertyType, condition, categories, currentCondition, dismiss, setShowProject, project, getProjectById, setSelect }) => {
   const userId = useSelector(state => state.auth.user_id)
   const [step, setStep] = useState(1);
   const [loss, setLoss] = useState(false);
@@ -14,7 +14,6 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
   const [cityOption, setCityOption] = useState(project?.data[0]?.attributes.city?.data?.id);
   const [conditionOption, setConditionOption] = useState(project?.data[0]?.attributes?.condition?.data?.id);
   const [currentConditionOption, setCurrentConditionOption] = useState(project?.data[0]?.attributes?.current_condition?.data?.id);
-
   const [sendData, setSendData] = useState({
     project_type: project.data[0].attributes.project_type,
     title: project.data[0].attributes.title,
@@ -45,9 +44,15 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
       ]
     },
     categories: {
-      connect: project.data[0].attributes.categories.data.map((category) => ({
-        id: category.id,
-      })),
+      connect: project.data[0].attributes.categories.data.map((category) => (
+        { id: category.id }
+      )),
+      disconnect: []
+    },
+    category_builds: {
+      connect: project.data[0].attributes.category_builds.data.map((category) => (
+        { id: category.id }
+      )),
       disconnect: []
     },
     service_percentage: project?.data[0]?.attributes?.service_percentage,
@@ -113,6 +118,34 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
     }
   };
 
+  const handleBuildCategories = (event) => {
+    const categoryId = parseInt(event.target.value);
+
+    if (event.target.checked) {
+      const sendDataCategories = [...sendData.category_builds.connect, { id: categoryId }];
+
+      setSendData((prevState) => ({
+        ...prevState,
+        category_builds: {
+          ...prevState.category_builds,
+          connect: sendDataCategories,
+          disconnect: prevState.category_builds.disconnect.filter((item) => item.id !== categoryId),
+        },
+      }));
+    } else {
+      const sendDataCategories = sendData.category_builds.connect.filter((item) => item.id !== categoryId);
+
+      setSendData((prevState) => ({
+        ...prevState,
+        category_builds: {
+          ...prevState.category_builds,
+          connect: sendDataCategories,
+          disconnect: [...prevState.category_builds.disconnect, { id: categoryId }],
+        },
+      }));
+    }
+  };
+
   const stepChangeHandler = () => {
     if (step === 1 && errors.stepOne.length === 0 && sendData.address && sendData.phoneNumber && sendData.area && sendData.city.connect[0].id && sendData.property_type.connect[0].id) {
       setStep(step + 1);
@@ -120,11 +153,11 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
     } else {
       setLoss(true);
     }
-    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id) {
+    if (step === 2 && errors.stepTwo.length === 0 && sendData.condition.connect[0].id && sendData.current_condition.connect[0].id || sendData.category_builds.connect[0].id) {
       setStep(step + 1);
       setLoss(false);
     }
-    if (step === 3 && errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0 || sendData.categories.disconnect.length > 0) {
+    if (step === 3 && errors.stepThree.length === 0 && sendData.title && sendData.categories.connect.length > 0 || sendData.categories.disconnect.length > 0 || sendData.category_builds.disconnect.length > 0) {
       setStep(step + 1)
       setLoss(false)
     }
@@ -475,6 +508,7 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
                             </label>
                             <input
                               className="custom-input form-control georgian form-control-solid"
+
                               type="text"
                               value={sendData.service_percentage}
                               id="flexSwitchCheckDefault"
@@ -619,33 +653,63 @@ const EditProject = ({ cities, propertyType, condition, categories, currentCondi
                         </label>
                         <div className="row fv-row">
                           <div className="col-12">
-                            <div className={`${styles.customGap} d-flex`}>
-                              {categories &&
-                                categories.map((item, index) => {
-                                  return (
-                                    <div
-                                      key={index}
-                                      className="form-check form-check-custom form-check-solid mb-2"
-                                    >
-                                      <div className={styles.outline}>
-                                        <input
-                                          onChange={handleCheckboxChange}
-                                          className="form-check-input"
-                                          type="checkbox"
-                                          defaultChecked={sendData?.categories?.connect?.some((cat) => cat?.id === item?.id)}
-                                          value={item.id}
-                                        />
-                                      </div>
-                                      <label
-                                        onClick={(e) => e.preventDefault()}
-                                        className="form-check-label georgian"
+                            {sendData.project_type === 'build' ? (
+                              <div className={`${styles.customGap} d-flex`}>
+                                {buildCategories &&
+                                  buildCategories.map((item, index) => {
+                                    return (
+                                      <div
+                                        key={index}
+                                        className="form-check form-check-custom form-check-solid mb-2"
                                       >
-                                        {item.attributes.title}
-                                      </label>
-                                    </div>
-                                  );
-                                })}
-                            </div>
+                                        <div className={styles.outline}>
+                                          <input
+                                            onChange={handleBuildCategories}
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            defaultChecked={sendData?.category_builds?.connect?.some((cat) => cat?.id === item?.id)}
+                                            value={item.id}
+                                          />
+                                        </div>
+                                        <label
+                                          onClick={(e) => e.preventDefault()}
+                                          className="form-check-label georgian"
+                                        >
+                                          {item.attributes.title}
+                                        </label>
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+                            ) : (
+                              <div className={`${styles.customGap} d-flex`}>
+                                {categories &&
+                                  categories.map((item, index) => {
+                                    return (
+                                      <div
+                                        key={index}
+                                        className="form-check form-check-custom form-check-solid mb-2"
+                                      >
+                                        <div className={styles.outline}>
+                                          <input
+                                            onChange={handleCheckboxChange}
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            defaultChecked={sendData?.categories?.connect?.some((cat) => cat?.id === item?.id)}
+                                            value={item.id}
+                                          />
+                                        </div>
+                                        <label
+                                          onClick={(e) => e.preventDefault()}
+                                          className="form-check-label georgian"
+                                        >
+                                          {item.attributes.title}
+                                        </label>
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

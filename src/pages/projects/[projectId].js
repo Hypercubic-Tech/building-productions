@@ -11,8 +11,6 @@ import LoadingPage from "../../components/ui/LoadingPage";
 const index = () => {
   const router = useRouter();
   const { projectId } = router.query;
-  // const shareLink = window.location.href;
-
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const status = useSelector((state) => state.userStatus)
 
@@ -28,17 +26,15 @@ const index = () => {
   const [editProductItem, setEditProductItem] = useState(null);
   const [defaultImage, setDefaultImage] = useState(null);
   const [projectType, setProjectType] = useState(null);
+  const [buildCategories, setBuildCategories] = useState(null);
   const [showProject, setShowProject] = useState(false);
-
-
-  // for projec
 
   const [cities, setCities] = useState(null);
   const [propertyType, setPropertyType] = useState(null);
   const [condition, setCondition] = useState(null);
   const [currentCondition, setCurrentCondition] = useState(null);
   const [categories, setCategories] = useState(null);
-
+  const [buildCrafts, setBuildCrafts] = useState(null);
   const [hashedUrl, setHashedUrl] = useState(null);
 
   const editHandler = (product) => {
@@ -96,6 +92,19 @@ const index = () => {
           .then((res) => {
             const data = res.data;
             setCategories(data.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getBuildCategories = async () => {
+      try {
+        await axios
+          .get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/category-builds`)
+          .then((res) => {
+            const data = res.data;
+            setBuildCategories(data.data);
           });
       } catch (error) {
         console.log(error);
@@ -173,6 +182,17 @@ const index = () => {
         });
     };
 
+    const getBuildCrafts = async () => {
+      await axios
+        .get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/craft-images-builds?populate=image,category_builds`
+        )
+        .then((res) => {
+          const data = res.data;
+          setBuildCrafts(data.data);
+        });
+    };
+
     const getCraftsHandler = async () => {
       await axios
         .get(
@@ -217,9 +237,11 @@ const index = () => {
         });
     };
 
+    getBuildCategories()
     getDefaultImage();
     getProductsStatusHandler();
     getCraftsStatusHandler();
+    getBuildCrafts();
     getCraftsHandler();
     getSupplierHandler();
     getUnitHandler();
@@ -276,6 +298,8 @@ const index = () => {
           allowedExport={status.allowed_export}
           productStatus={productStatus}
           productOptions={productOptions}
+          buildCrafts={buildCrafts}
+          buildCategories={buildCategories}
           project={project}
           craftStatus={craftStatus}
           crafts={crafts}
