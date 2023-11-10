@@ -43,7 +43,10 @@ const EditService = ({
     },
     price: product.attributes.price,
     categories: {
-      connect: [{ id: activeCategoryId }],
+      connect: projectType === 'repair' ? [{ id: activeCategoryId }] : [],
+    },
+    category_builds: {
+      connect: projectType === 'build' ? [{ id: activeCategoryId }] : [],
     },
     project: {
       connect: [{ id: projectId }]
@@ -96,16 +99,26 @@ const EditService = ({
     getCraftId();
   }, [filteredCrafts])
 
-  const defaultProductsHandler = async (id, pageIndex) => {
-    if (id) {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`);
+  const defaultProductsHandler = async (id) => {
+    try {
+      if (projectType === 'repair') {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`
+        );
         const data = response.data;
         dispatch(setProducts(data.data));
         dispatch(setCategory(id));
-      } catch (error) {
-        console.error(error);
+      } else {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[category_builds][id]=${id}`
+        );
+        const data = response.data;
+        dispatch(setProducts(data.data));
+        dispatch(setCategory(id));
       }
+
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -212,7 +225,6 @@ const EditService = ({
                       onChange={(e) => {
                         const filteredArray = filteredCrafts?.data.filter(obj => obj?.attributes?.id === e.target.value);
                         setCraftImage(filteredArray[0]?.attributes?.image?.data?.attributes?.url);
-                        console.log(e.target, 'ara');
                         // setCraftTitle(e.target.value);
                         setCraftData((prevSendData) => ({
                           ...prevSendData,

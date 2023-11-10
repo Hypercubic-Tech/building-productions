@@ -384,7 +384,6 @@ const index = () => {
                 {/* <BuildingBg /> */}
                 {projectsToMap?.length > 0 ? (
                   projectsToMap.slice(startIndex, endIndex).map((item, index) => {
-                    console.log(item, 'itme')
                     const id = item?.attributes?.main_img_id;
                     const imgId = parseInt(id);
                     const imageWithMainId = item?.attributes?.image?.data?.find(

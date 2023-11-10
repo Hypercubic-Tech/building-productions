@@ -54,8 +54,6 @@ const Project = ({
   currentCondition,
   categories
 }) => {
-  console.log(projectType, 'type');
-  console.log(buildCrafts, 'build crafts')
   const dispatch = useDispatch();
   const router = useRouter();
   const { projectId } = router.query;
@@ -102,31 +100,58 @@ const Project = ({
 
   const defaultProductsHandler = async (id) => {
     if (id) {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[categories][id]=${id}`
-        );
-        const data = response.data.data;
-        dispatch(setProducts(data));
-        dispatch(setCategory(id));
-      } catch (error) {
-        console.error(error);
+      if (projectType === 'repair') {
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[categories][id]=${id}`
+          );
+          const data = response.data.data;
+          dispatch(setProducts(data));
+          dispatch(setCategory(id));
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[category_builds][id]=${id}`
+          );
+          const data = response.data.data;
+          dispatch(setProducts(data));
+          dispatch(setCategory(id));
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   };
 
   const filterProductCategory = async (id) => {
     if (id) {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[categories][id]=${id}`
-        );
-        const data = response.data;
-        dispatch(setProducts(data.data));
-        dispatch(setCategory(id));
-        setTotalSum(false);
-      } catch (error) {
-        console.error(error);
+      if (projectType === 'repair') {
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[categories][id]=${id}`
+          );
+          const data = response.data;
+          dispatch(setProducts(data.data));
+          dispatch(setCategory(id));
+          setTotalSum(false);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId || projectIdR}&filters[category_builds][id]=${id}`
+          );
+          const data = response.data;
+          dispatch(setProducts(data.data));
+          dispatch(setCategory(id));
+          setTotalSum(false);
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   };
@@ -408,6 +433,7 @@ const Project = ({
               )}
               {select === "edit-project" && (
                 <EditProject
+                  projectType={projectType}
                   setSelect={setSelect}
                   cities={cities}
                   propertyType={propertyType}

@@ -27,7 +27,7 @@ const SharedProjectPage = () => {
     const pathname = window.location.pathname;
     const lastSlashIndex = pathname.lastIndexOf('/');
     const hashedId = pathname.substring(lastSlashIndex + 1);
-    console.log(projectType, '???')
+    
     const getProjectById = async () => {
         if (hashedId) {
             try {

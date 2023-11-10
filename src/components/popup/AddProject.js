@@ -122,8 +122,6 @@ const AddProject = ({
     }
   };
 
-  console.log(sendData, 'final')
-
   const prevStepHandler = () => {
     if (step > 1) {
       setBackBtn(true);

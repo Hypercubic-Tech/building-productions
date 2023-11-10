@@ -48,7 +48,10 @@ const AddProduct = ({
     },
     price: 0,
     categories: {
-      connect: [{ id: activeCategoryId }],
+      connect: projectType === 'repair' ? [{ id: activeCategoryId }] : [],
+    },
+    category_builds: {
+      connect: projectType === 'build' ? [{ id: activeCategoryId }] : [],
     },
     project: {
       connect: [{ id: projectId }],
@@ -67,7 +70,10 @@ const AddProduct = ({
     },
     price: 0,
     categories: {
-      connect: [{ id: activeCategoryId }],
+      connect: projectType === 'repair' ? [{ id: activeCategoryId }] : [],
+    },
+    category_builds: {
+      connect: projectType === 'build' ? [{ id: activeCategoryId }] : [],
     },
     project: {
       connect: [{ id: projectId }],
@@ -86,12 +92,22 @@ const AddProduct = ({
 
   const defaultProductsHandler = async (id) => {
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`
-      );
-      const data = response.data;
-      dispatch(setProducts(data.data));
-      dispatch(setCategory(id));
+      if (projectType === 'repair') {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[categories][id]=${id}`
+        );
+        const data = response.data;
+        dispatch(setProducts(data.data));
+        dispatch(setCategory(id));
+      } else {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/products?populate=*&filters[project][id]=${projectId}&filters[category_builds][id]=${id}`
+        );
+        const data = response.data;
+        dispatch(setProducts(data.data));
+        dispatch(setCategory(id));
+      }
+
     } catch (error) {
       console.error(error);
     }
@@ -199,13 +215,13 @@ const AddProduct = ({
           });
       } else {
         await axios
-        .get(
-          `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/craft-images-builds?populate=category_builds,image&filters[category_builds][id][$eq]=${activeCategoryId}`
-        )
-        .then((res) => {
-          const data = res.data;
-          setFilteredCrafts(data);
-        });
+          .get(
+            `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/craft-images-builds?populate=category_builds,image&filters[category_builds][id][$eq]=${activeCategoryId}`
+          )
+          .then((res) => {
+            const data = res.data;
+            setFilteredCrafts(data);
+          });
       }
     };
 
