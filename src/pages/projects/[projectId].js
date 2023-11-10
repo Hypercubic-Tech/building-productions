@@ -4,15 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios"
-  ;
+
+import { setUserStatus } from "../../store/slices/statusSlice";
+
 import Project from "../../components/projects/Project";
 import LoadingPage from "../../components/ui/LoadingPage";
 
 const index = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
+  const { data: session } = useSession();
   const { projectId } = router.query;
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
-  const status = useSelector((state) => state.userStatus)
+  const provider = useSelector((state) => state.auth.provider);
+  const authUserId = useSelector((state) => state.auth.user_id);
+  const status = useSelector((state) => state.userStatus);
 
   const [isLoading, setIsLoading] = useState(true);
   const [suppliers, setSuppliers] = useState(null);
@@ -41,6 +47,43 @@ const index = () => {
     setEditProductItem(product);
   };
 
+  const loggedUserInfo = async () => {
+    let url;
+    if (provider === "google") {
+      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[email]=${session?.user.email}&populate=*`;
+    } else {
+      url = `${process.env.NEXT_PUBLIC_BUILDING_URL}/api/users?filters[id]=${authUserId}&populate=*`;
+    }
+    if (url) {
+      await axios
+        .get(url)
+        .then((res) => {
+          const data = res.data;
+          dispatch(setUserStatus({
+            username: data[0]?.username,
+            p_title: data[0]?.payment_plan?.name,
+            payment_duration: data[0]?.payment_duration,
+            allowed_export: data[0]?.payment_plan?.allowed_export,
+            allowed_media: data[0]?.payment_plan?.allowed_media,
+            all_projects: data[0]?.projects.length,
+            account_type: data[0]?.account_type,
+            trial_used: data[0]?.trial_used,
+            trial_expires: data[0]?.trial_expires,
+
+          }));
+
+          if (data[0]?.payment_duration === "month") {
+            dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.month_allowed_projects }));
+          }
+          if (data[0]?.payment_duration === "year") {
+            dispatch(setUserStatus({ allowed_projects: data[0]?.payment_plan?.year_allowed_projects }));
+          }
+        })
+        .then(() => {
+          setIsLoading(false);
+        });
+    }
+  };
 
   const getProjectById = async () => {
     if (projectId) {
@@ -255,6 +298,10 @@ const index = () => {
   useEffect(() => {
     getProjectById();
   }, [projectId]);
+
+  useEffect(() => {
+    loggedUserInfo();
+  }, [provider, isLoggedIn, session])
 
   useEffect(() => {
     async function hashUrl(url) {

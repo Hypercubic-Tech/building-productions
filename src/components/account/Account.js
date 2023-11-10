@@ -24,7 +24,6 @@ const index = () => {
   const authUserId = useSelector((state) => state.auth.user_id);
 
   const userStatus = useSelector((state) => state.userStatus);
-
   const [authUser, setAuthUser] = useState([]);
   const [userData, setUserData] = useState({});
   const [startEdit, setStartEdit] = useState(false);

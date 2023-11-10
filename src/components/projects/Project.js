@@ -508,6 +508,7 @@ const Project = ({
           </div>
           <div className="card-body pt-0">
             <Products
+              projectType={projectType}
               showProject={showProject}
               readOnly={readOnly}
               getProjectById={getProjectById}

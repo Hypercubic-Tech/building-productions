@@ -26,6 +26,7 @@ import styles from "./Products.module.css";
 
 const Products = ({
   showProject,
+  projectType,
   readOnly,
   editHandler,
   setSelect,
@@ -354,10 +355,11 @@ const Products = ({
   });
   const orderByCategory = () => {
     let result = {};
-
+    console.log(totalSumProduct, 'hi')
+    
     if (totalSumProduct && totalSumProduct.length > 0) {
       totalSumProduct.forEach(product => {
-        const categories = product.attributes.categories.data;
+        const categories = projectType === 'repair' ? product.attributes.categories.data : product.attributes.category_builds.data;
 
         categories.forEach(category => {
           const categoryTitle = category.attributes.title;

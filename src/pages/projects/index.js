@@ -39,6 +39,7 @@ const index = () => {
   const userId = useSelector((state) => state.auth.user_id);
   const searchValue = useSelector((state) => state.proj.searchType);
   const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const status = useSelector((state) => state.userStatus)
 
   const dispatch = useDispatch();
 

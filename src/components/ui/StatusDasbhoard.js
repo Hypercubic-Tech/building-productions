@@ -9,14 +9,13 @@ import axios from "axios";
 import styles from './StatusDashboard.module.css';
 
 const StatusDashboard = () => {
+    const dispatch = useDispatch();
+    const { data: session } = useSession();
+   
     const authStory = useSelector(setAuthState);
     const authUserId = useSelector((state) => state.auth.user_id);
-    const isLoggedIn = authStory.payload.auth.loggedIn;
-
-    const dispatch = useDispatch();
-
-    const { data: session } = useSession();
     const provider = useSelector((state) => state.auth.provider);
+    const isLoggedIn = authStory.payload.auth.loggedIn; 
 
     const userStatus = useSelector((state) => state.userStatus);
     const [active, setActive] = useState(false);
@@ -89,10 +88,15 @@ const StatusDashboard = () => {
     };
 
     useEffect(() => {
-        if (isLoggedIn) {
-            loggedUserInfo();
-        }
-    }, [isLoggedIn])
+        const fetchData = async () => {
+            if (isLoggedIn) {
+                await loggedUserInfo();
+            }
+        };
+
+        fetchData();
+    }, [isLoggedIn]);
+
 };
 
 export default StatusDashboard;
