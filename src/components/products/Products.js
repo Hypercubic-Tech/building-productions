@@ -471,7 +471,7 @@ const Products = ({
   useEffect(() => {
     totalSumHandler();
     orderByCategory();
-  }, [activeCategoryId, projectId, showProject]);
+  }, [activeCategoryId, projectId, showProject, products]);
 
   return (
     <Fragment>
