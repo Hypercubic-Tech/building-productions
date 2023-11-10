@@ -264,7 +264,7 @@ const Products = ({
   if (totalSumProduct && totalSumProduct.length > 0) {
     totalSumProduct.forEach((product) => {
       const categoryTitle =
-        product?.attributes?.categories?.data[0]?.attributes?.title;
+        projectType === 'repair' ? product?.attributes?.categories?.data[0]?.attributes?.title : product?.attributes?.category_builds?.data[0]?.attributes?.title;
       const quantity = parseInt(product?.attributes?.quantity);
       const price = parseFloat(product?.attributes?.price);
 
@@ -356,7 +356,7 @@ const Products = ({
   const orderByCategory = () => {
     let result = {};
     console.log(totalSumProduct, 'hi')
-    
+
     if (totalSumProduct && totalSumProduct.length > 0) {
       totalSumProduct.forEach(product => {
         const categories = projectType === 'repair' ? product.attributes.categories.data : product.attributes.category_builds.data;
@@ -518,7 +518,7 @@ const Products = ({
                             {item?.quantity}
                           </span>
                           <span style={{ width: sum_table_head[3]?.width }} className={styles.table_body_item}>
-                            {item?.price}
+                            {item?.price}₾
                           </span>
                         </div>
                         <div onClick={() => expandItemHandler(item.title + index)} className={`${styles.item_expand_btn} ${item.title + index === expandedItem ? styles.active_arrow : ""}`}>
