@@ -20,6 +20,7 @@ const TableExport = ({
   select,
   setSelect,
 }) => {
+  console.log(aggregatedProducts, 'in table export')
   return (
     <div id="table2Id" style={{ paddingTop: "20px", paddingLeft: '20px', overflowX: 'auto' }}>
       {select === "exportPopUp" && (

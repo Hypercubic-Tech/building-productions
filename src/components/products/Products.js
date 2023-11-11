@@ -353,9 +353,9 @@ const Products = ({
       }
     }
   });
+
   const orderByCategory = () => {
     let result = {};
-    console.log(totalSumProduct, 'hi')
 
     if (totalSumProduct && totalSumProduct.length > 0) {
       totalSumProduct.forEach(product => {

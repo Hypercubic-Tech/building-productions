@@ -47,6 +47,7 @@ const index = () => {
     setEditProductItem(product);
   };
 
+  console.log(status, 'status')
   const loggedUserInfo = async () => {
     let url;
     if (provider === "google") {
@@ -69,7 +70,6 @@ const index = () => {
             account_type: data[0]?.account_type,
             trial_used: data[0]?.trial_used,
             trial_expires: data[0]?.trial_expires,
-
           }));
 
           if (data[0]?.payment_duration === "month") {

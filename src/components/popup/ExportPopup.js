@@ -26,6 +26,7 @@ const ExportPopup = ({
   service_percentage,
   select,
 }) => {
+  // console.log(aggregatedProducts, 'products')
   const [format, setFormat] = useState("excel");
 
   const handleFormatChange = (e) => {
