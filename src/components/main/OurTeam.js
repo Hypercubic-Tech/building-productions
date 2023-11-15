@@ -115,21 +115,18 @@ const AboutCompany = () => {
             id="achievements"
             data-kt-scroll-offset="{default: 100, lg: 150}"
           >
-            <img ref={parallax.ref}  className="team" src="/images/team.png" alt="banner" />
+            <img ref={parallax.ref} className="team" src="/images/team.png" alt="banner" />
             <div
               className={`${"w-50 responsive-w-100 responsive-justify-center ms-4"} ${styles.our_team_subitem
                 }`}
             >
               <h3 className="m-color fs-2hx fw-bold mb-5 geo-title">
-                ჩვენი გუნდი
+                კომპანიის შესახებ
               </h3>
               <div className="fs-2 light-text fw-bold georgian">
-                კომპანია „ReCounter“ დაარსდა 2022 წელს და პირველად საქართველოში
-                <br />
-                შესაძლებელი გავხადეთ მიიღოთ მაქსიმალურად ზუსტი სარემონტო
-                ხარჯთაღრიცხა <br />
-                ჩვენი პლატფორმის დახმარებით.
+                კომპანია „ReCount.Ge“ დაარსდა 2023 წელს. ჩვენ შესაძლებელს ვხდით მიიღოთ  სარემონტო ხარჯთაღრიცხვა თქვენივე შევსებულ ინფორმაციაზე დაყდნობით და ასევე განახორჩიელოთ პროდუქციის შეძენა ონლაინ ჩვენს პლათფორმაზე ტრანსპორტირებით.
               </div>
+
             </div>
           </div>
           <div className="d-flex flex-center">
@@ -248,11 +245,10 @@ const AboutCompany = () => {
             სატარიფო გეგმები, ამ გზით თქვენ შეძლებთ თქვენზე მორგებული სატარიფო
             გეგმის შეძენას და ჩვენი ვებ-აპლიკაციის გამოყენებას.
             <br />
+            <br />
             ჩვენი პლატფორმის გამოყენების შედეგად თქვენ მიიღებთ:
             <br />
-            სწორი რიგითობით გაწერილ, დეტალურად ჩაშლილ, საბაზრო ფასებზე ან/და
-            თქვენივე სურვილისამებრ მითითებული ღირებულებაზე დაყრდნობით დათვლილ
-            სარემონტო ხარჯთაღრიცხვას.
+            სწორი რიგითობით გაწერილ, დეტალურად ჩაშლილ, საბაზრო, საბითუმო, საცალო, ფასებზე დაყრდნობით დათვლილ და მაქსიმალურ სიზუსტემდე მიყვანილ სარემონტო ხარჯთაღრიცხვას.
           </div>
           {/* <div className="fs-2 fw-bold text-muted text-center">
             <a
@@ -264,7 +260,7 @@ const AboutCompany = () => {
           </div> */}
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
